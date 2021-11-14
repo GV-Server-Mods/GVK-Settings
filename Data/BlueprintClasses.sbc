@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<BlueprintClasses>
+		<Class>
+			<Id>
+				<TypeId>BlueprintClassDefinition</TypeId>
+				<SubtypeId>PlayerConsumables</SubtypeId>
+			</Id>
+			<DisplayName>Player Consumables</DisplayName>
+			<Description>Player Consumables</Description>
+			<Icon>Textures\GUI\Icons\buttons\Ammos.dds</Icon>
+			<HighlightIcon>Textures\GUI\Icons\buttons\Ammos.dds</HighlightIcon>
+			<FocusIcon>Textures\GUI\Icons\buttons\Ammos_focus.dds</FocusIcon>
+			<InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
+		</Class>
+		<Class>
+			<Id>
+				<TypeId>BlueprintClassDefinition</TypeId>
+				<SubtypeId>ShipConsumables</SubtypeId>
+			</Id>
+			<DisplayName>Ship Consumables</DisplayName>
+			<Description>Ship Consumables</Description>
+            <Icon>Textures\GUI\Icons\buttons\Consumables.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\Consumables.dds</HighlightIcon>
+            <FocusIcon>Textures\GUI\Icons\buttons\ConsumablesFocus.dds</FocusIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
+		</Class>
+	</BlueprintClasses>
+	<BlueprintClassEntries>
+		<Entry Class="ShipConsumables" BlueprintSubtypeId="Canvas"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Medkit"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Powerkit"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="SemiAutoPistolMagazine"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="FullAutoPistolMagazine"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="ElitePistolMagazine"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="AutomaticRifleGun_Mag_20rd"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="RapidFireAutomaticRifleGun_Mag_50rd"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="PreciseAutomaticRifleGun_Mag_5rd"/>
+		<Entry Class="PlayerConsumables" BlueprintSubtypeId="UltimateAutomaticRifleGun_Mag_30rd"/>
+	</BlueprintClassEntries>
+</Definitions>

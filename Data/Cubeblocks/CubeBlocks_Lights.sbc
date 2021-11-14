@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_ReflectorBlockDefinition">
+			<Id>
+				<TypeId>ReflectorLight</TypeId>
+				<SubtypeId>LargeBlockFrontLight</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_ReflectorLight</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\light.dds</Icon>
+			<Description>Description_ReflectorLight</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\light.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="8"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="InteriorPlate" Count="20"/>
+				<Component Subtype="Construction" Count="15"/>
+				<Component Subtype="BulletproofGlass" Count="4"/>
+			</Components>
+			<CriticalComponent Subtype="Construction" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0.2" StartY="0.2" EndX="0.8" EndY="0.8" Default="true"/>
+				<MountPoint Side="Left" StartX="0.5" StartY="0.38" EndX="0.9" EndY="0.62"/>
+				<MountPoint Side="Right" StartX="0.1" StartY="0.38" EndX="0.5" EndY="0.62"/>
+				<MountPoint Side="Bottom" StartX="0.38" StartY="0.5" EndX="0.62" EndY="0.9"/>
+				<MountPoint Side="Top" StartX="0.38" StartY="0.1" EndX="0.62" EndY="0.5"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\LightConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\LightConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\LightConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>ReflectorLight</BlockPairName>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<LightRadius Min="2" Max="10" Default="5"/>
+			<LightReflectorRadius Min="10" Max="160" Default="120"/>
+			<LightFalloff Min="1" Max="3" Default="1.5"/>
+			<LightIntensity Min="0.5" Max="5" Default="1"/>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>0.001</RequiredPowerInput>
+			<Flare>SpotlightLarge</Flare>
+			<ReflectorThickness>11</ReflectorThickness>
+			<ReflectorTexture>Textures\Lights\reflector_large.dds</ReflectorTexture>
+			<ReflectorConeDegrees>52</ReflectorConeDegrees>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>25</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ReflectorBlockDefinition">
+			<Id>
+				<TypeId>ReflectorLight</TypeId>
+				<SubtypeId>SmallBlockFrontLight</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_ReflectorLight</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\light.dds</Icon>
+			<Description>Description_ReflectorLight</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\light.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="InteriorPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="BulletproofGlass" Count="2"/>
+			</Components>
+			<CriticalComponent Subtype="Construction" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="1" EndY="1"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="1" EndY="1"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="1" EndY="1"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="1" EndY="1"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\LightConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\LightConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>ReflectorLight</BlockPairName>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>7</BuildTimeSeconds>
+			<LightRadius Min="1" Max="5" Default="5"/>
+			<LightReflectorRadius Min="10" Max="120" Default="120"/>
+			<LightFalloff Min="1" Max="3" Default="1.5"/>
+			<LightIntensity Min="0.5" Max="5" Default="3"/>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>0.0002</RequiredPowerInput>
+			<Flare>SpotlightSmall</Flare>
+			<ReflectorThickness>2.5</ReflectorThickness>
+			<ReflectorTexture>Textures\Lights\reflector_small.dds</ReflectorTexture>
+			<ReflectorConeDegrees>52</ReflectorConeDegrees>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>25</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+        <Definition xsi:type="MyObjectBuilder_ReflectorBlockDefinition">
+            <Id>
+                <TypeId>ReflectorLight</TypeId>
+                <SubtypeId>OffsetSpotlight</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Block_OffsetSpotlight</DisplayName>
+            <Icon>Textures\GUI\Icons\Cubes\CarLight2_Racing.dds</Icon>
+            <Description>Description_OffsetLight</Description>
+            <CubeSize>Small</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="1" y="1" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Model>Models\Cubes\Small\CarLight2_Racing.mwm</Model>
+            <Components>
+                <Component Subtype="Construction" Count="2" />
+                <Component Subtype="BulletproofGlass" Count="1" />
+            </Components>
+            <CriticalComponent Subtype="BulletproofGlass" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Bottom" ExclusionMask="3" PropertiesMask="3" StartX="0" StartY="0" EndX="1" EndY="0.5" />
+            </MountPoints>
+            <IsStandAlone>false</IsStandAlone>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\CarLight1_Racing_Construction1.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\CarLight1_Racing_Construction2.mwm" />
+            </BuildProgressModels>
+            <BlockPairName>OffsetSpotlight</BlockPairName>
+            <MirroringZ>Y</MirroringZ>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>4</BuildTimeSeconds>
+            <LightRadius Min="1" Max="5" Default="5" />
+            <LightReflectorRadius Min="10" Max="60" Default="60" />
+            <LightFalloff Min="1" Max="3" Default="1.5" />
+            <LightIntensity Min="0.5" Max="5" Default="3" />
+            <ResourceSinkGroup>Utility</ResourceSinkGroup>
+            <RequiredPowerInput>0.0002</RequiredPowerInput>
+            <Flare>SpotlightSmall</Flare>
+            <ReflectorThickness>2.5</ReflectorThickness>
+            <ReflectorTexture>Textures\Lights\reflector_small.dds</ReflectorTexture>
+            <ReflectorConeDegrees>52</ReflectorConeDegrees>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+            <DestroySound>PoofExplosionCat2</DestroySound>
+            <PCU>25</PCU>
+            <IsAirTight>false</IsAirTight>
+            <DLC>ScrapRace</DLC>
+        </Definition>
+	</CubeBlocks>
+</Definitions>
