@@ -1,8 +1,8 @@
 ---
 name: Problem Report
-about: Create a report to help us improve
-title: "[BUG]"
-labels: bug
+about: Something technical is negatively impacting gameplay
+title: "[Problem Report]"
+labels: Problem
 assignees: ''
 
 ---
