@@ -28,6 +28,7 @@ namespace MikeDude.ArmorBalance
         public const float heavyArmorLargeDeformationMod = 0.3f; //varies for every block
         public const float heavyArmorSmallDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
         public const float heavyArmorSmallDeformationMod = 0.3f; //varies for every block
+
 		
         private bool isInit = false;
 
@@ -39,6 +40,15 @@ namespace MikeDude.ArmorBalance
 
 
                 MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
+				MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
+				MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
+				MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
+
+
+                if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
+                {
+					blockDef.PCU = (int) 0;	
+				}					
 
 				//light armor
                 if (blockDef != null && (blockDef.EdgeType == "Light" && (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
@@ -54,6 +64,7 @@ namespace MikeDude.ArmorBalance
                         blockDef.GeneralDamageMultiplier = lightArmorSmallDamageMod;
                         blockDef.DeformationRatio = lightArmorSmallDeformationMod;
                     }
+					//blockDef.PCU = lightArmorPCU;
                 }
 				//heavy armor
                 if (blockDef != null && (blockDef.EdgeType == "Heavy" && (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
@@ -69,6 +80,7 @@ namespace MikeDude.ArmorBalance
                         blockDef.GeneralDamageMultiplier = heavyArmorSmallDamageMod;
                         blockDef.DeformationRatio = heavyArmorSmallDeformationMod;
                     }
+					//blockDef.PCU = blastDoorPCU;
                 }
             }
         }
