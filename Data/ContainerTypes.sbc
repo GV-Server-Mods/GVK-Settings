@@ -14,7 +14,14 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="0" AmountMax="100000">
+				<Item AmountMin="100" AmountMax="1000">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Ice</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="100000">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>PhysicalObject</TypeId>
@@ -86,80 +93,73 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="1" CountMax="3">
+		<ContainerType CountMin="3" CountMax="5">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Small</SubtypeId>
 			</Id>
 			<Items>
 				<Item AmountMin="1" AmountMax="5">
-					<Frequency>2</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1000" AmountMax="10000">
-					<Frequency>2</Frequency>
+				<!-- <Item AmountMin="1000" AmountMax="100000">
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				</Item> -->
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="1" AmountMax="3">
+					<Frequency>0.3</Frequency> <!-- normally 0.5 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
@@ -184,138 +184,110 @@
 						<SubtypeId>NATO_25x184mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
+				<Item AmountMin="5" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Flak</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Cannon</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
-					<Frequency>0.25</Frequency>
-					<Id>
-						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Railgun</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
-					<Id>
-						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_MAC</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missile200mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Missile</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
-					<Id>
-						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Missiles_Torpedo</SubtypeId>
-					</Id>
-				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="5">
+		<ContainerType CountMin="3" CountMax="5">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Medium</SubtypeId>
 			</Id>
 			<Items>
 				<Item AmountMin="1" AmountMax="5">
-					<Frequency>2</Frequency>
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1000" AmountMax="10000">
-					<Frequency>2</Frequency>
+				<!-- <Item AmountMin="1000" AmountMax="10000">
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				</Item> -->
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="1" AmountMax="3">
+					<Frequency>0.3</Frequency> <!-- normally 0.5 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
@@ -340,21 +312,21 @@
 						<SubtypeId>NATO_25x184mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
+				<Item AmountMin="5" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Flak</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
@@ -368,28 +340,28 @@
 						<SubtypeId>Ballistics_Railgun</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_MAC</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missile200mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Missile</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
@@ -398,84 +370,77 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="4" CountMax="6">
+		<ContainerType CountMin="3" CountMax="5">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Large</SubtypeId>
 			</Id>
 			<Items>
 				<Item AmountMin="1" AmountMax="5">
-					<Frequency>2</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1000" AmountMax="10000">
-					<Frequency>2</Frequency>
+				<!-- <Item AmountMin="1000" AmountMax="100000">
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				</Item> -->
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="1" AmountMax="3">
+					<Frequency>0.3</Frequency> <!-- normally 0.5 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
+				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.01</Frequency>
+					<Frequency>0.05</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Data_Core</SubtypeId>
@@ -496,57 +461,57 @@
 						<SubtypeId>NATO_25x184mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
+				<Item AmountMin="5" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Flak</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="10">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Cannon</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
+				<Item AmountMin="2" AmountMax="15">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Railgun</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="5">
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_MAC</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missile200mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="30">
+				<Item AmountMin="10" AmountMax="50">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Missile</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+				<Item AmountMin="1" AmountMax="5">
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Torpedo</SubtypeId>
