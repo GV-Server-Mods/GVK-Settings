@@ -29,6 +29,15 @@ namespace MikeDude.ArmorBalance
         public const float heavyArmorSmallDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
         public const float heavyArmorSmallDeformationMod = 0.3f; //varies for every block
 
+        public const float realWheelDamageMod = 0.5f; //1.0 Vanilla
+        public const float realWheel5x5DamageMod = 0.33333f; //1.0 Vanilla
+        public const float suspensionDamageMod = 0.5f; //1.0 Vanilla
+        public const float rotorDamageMod = 0.5f; //1.0 Vanilla
+        public const float hingeDamageMod = 0.5f; //1.0 Vanilla
+
+		public const int drillPCU = 2000;
+		public const int pistonBasePCU = 1000;
+		public const float beaconMaxRadius = 150000;
 		
         private bool isInit = false;
 
@@ -43,6 +52,15 @@ namespace MikeDude.ArmorBalance
 				MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
 				MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
 				MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
+				MyShipDrillDefinition drillDef = def as MyShipDrillDefinition;
+				MyPistonBaseDefinition pistonBaseDef = def as MyPistonBaseDefinition;
+				MyBeaconDefinition beaconDef = def as MyBeaconDefinition;
+				//MyWheelModelsDefinition realWheelDef = def as MyWheelModelsDefinition;
+				MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
+				//MyMotorRotorDefinition rotorDef = def as MyMotorRotorDefinition;
+				MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
+				//MyMotorAdvancedRotorDefinition advRotorDef = def as MyMotorAdvancedRotorDefinition;
+				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
 
 
                 if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
@@ -81,6 +99,50 @@ namespace MikeDude.ArmorBalance
                         blockDef.DeformationRatio = heavyArmorSmallDeformationMod;
                     }
 					//blockDef.PCU = blastDoorPCU;
+                }
+                if (suspensionDef != null)
+                {
+                    suspensionDef.GeneralDamageMultiplier = suspensionDamageMod;
+                }
+                if (statorDef != null)
+                {
+                    statorDef.GeneralDamageMultiplier = rotorDamageMod;
+                }
+                if (advStatorDef != null)
+                {
+                    advStatorDef.GeneralDamageMultiplier = rotorDamageMod;
+                }
+                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
+                {
+                    blockDef.GeneralDamageMultiplier = realWheelDamageMod;
+					
+					if (blockDef.Id.SubtypeName.Contains("5x5"))
+					{
+						blockDef.GeneralDamageMultiplier = realWheel5x5DamageMod;
+					}
+                }
+                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))) 
+                {
+                    blockDef.GeneralDamageMultiplier = rotorDamageMod;
+                }
+                if (drillDef != null)
+                {
+					drillDef.PCU = drillPCU;			
+                }
+                if (pistonBaseDef != null)
+                {
+					pistonBaseDef.PCU = pistonBasePCU;			
+                }
+                if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
+                {
+                    sorterDef.PCU = 0;
+                }
+                if (beaconDef != null)
+                {
+					if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
+					{
+						beaconDef.MaxBroadcastRadius = beaconMaxRadius;
+					}
                 }
             }
         }
