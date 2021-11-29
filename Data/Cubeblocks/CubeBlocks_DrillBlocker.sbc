@@ -45,7 +45,7 @@
 			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
-			<MaxBroadcastRadius>500</MaxBroadcastRadius>
+			<MaxBroadcastRadius>1500</MaxBroadcastRadius>
 			<Flare></Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
