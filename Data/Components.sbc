@@ -239,6 +239,26 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_SpecialPackage1</SubtypeId>
+			</Id>
+			<DisplayName>Special Package</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ContractPackage.dds</Icon>
+            <Size>
+                <X>0.5</X>
+                <Y>0.5</Y>
+                <Z>0.5</Z>
+            </Size>
+            <Mass>100</Mass>
+            <Volume>125</Volume>
+            <Model>Models\Components\ContractPackage.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Unobtanium</SubtypeId>
 			</Id>
 			<DisplayName>Unobtanium</DisplayName>
@@ -254,7 +274,7 @@
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
+			<CanPlayerOrder>false</CanPlayerOrder>
 		</Component>
 	</Components>
 </Definitions>

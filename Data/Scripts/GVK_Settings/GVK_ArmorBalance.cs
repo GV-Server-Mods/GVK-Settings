@@ -61,6 +61,7 @@ namespace MikeDude.ArmorBalance
 				MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
 				//MyMotorAdvancedRotorDefinition advRotorDef = def as MyMotorAdvancedRotorDefinition;
 				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
+				MyThrustDefinition thrustDef = def as MyThrustDefinition;//thruster
 
 
                 if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
@@ -144,14 +145,26 @@ namespace MikeDude.ArmorBalance
 						beaconDef.MaxBroadcastRadius = beaconMaxRadius;
 					}
                 }
+				//Thrusters
+                if (thrustDef != null && thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
+                {
+					thrustDef.MinPlanetaryInfluence = -1.3f;
+					thrustDef.MaxPlanetaryInfluence = 1f;
+					thrustDef.EffectivenessAtMaxInfluence = 1f;
+					thrustDef.EffectivenessAtMinInfluence = 0f;
+					thrustDef.NeedsAtmosphereForInfluence = false; //bool
+					thrustDef.ConsumptionFactorPerG = 1f;
+					thrustDef.SlowdownFactor = 1f;
+					thrustDef.FuelConverter.Efficiency = 0.5f;
+                }
             }
         }
         
-        public override bool UpdatedBeforeInit()
+        /*public override bool UpdatedBeforeInit()
         {
             DoWork();
             return true;
-        }
+        }*/
 
         public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
         {
