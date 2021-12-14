@@ -11,7 +11,7 @@
 			<CooldownSeconds>200</CooldownSeconds>
 			<Prefab>Kharak Respawn Rover</Prefab>
 			<MinimalAirDensity>0.7</MinimalAirDensity>
-			<PlanetDeployAltitude>10</PlanetDeployAltitude>
+			<PlanetDeployAltitude>8</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
 			<InitialLinearVelocity x="0" y="0" z="0"/>
 			<InitialAngularVelocity x="0" y="0" z="0"/>
