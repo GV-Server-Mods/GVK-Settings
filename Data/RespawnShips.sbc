@@ -9,9 +9,9 @@
 			<DisplayName>Kharak Respawn Rover</DisplayName>
 			<Icon>Textures\GUI\Icons\RespawnShips\KharakRespawnRover.png</Icon>
 			<CooldownSeconds>200</CooldownSeconds>
-			<Prefab>Kharak Respawn Rover</Prefab>
-			<MinimalAirDensity>0.7</MinimalAirDensity>
-			<PlanetDeployAltitude>8</PlanetDeployAltitude>
+			<Prefab>KASSPOD</Prefab>
+			<MinimalAirDensity>0.8</MinimalAirDensity>
+			<PlanetDeployAltitude>50</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
 			<InitialLinearVelocity x="0" y="0" z="0"/>
 			<InitialAngularVelocity x="0" y="0" z="0"/>
