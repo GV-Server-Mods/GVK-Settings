@@ -1,0 +1,2126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>1x1RightEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Right Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspension1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="75"/>
+				<Component Subtype="Construction" Count="75"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="SmallTube" Count="60"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspension1x1Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspension1x1Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>1x1RightEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>1x1LeftEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<PrimarySound>BlockWheel1x1</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<PropulsionForce>200000</PropulsionForce>
+			<RotorPart>EliteRealWheel1x1</RotorPart>
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>1x1LeftEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Left Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspension1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="75"/>
+				<Component Subtype="Construction" Count="75"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="SmallTube" Count="60"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspension1x1Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspension1x1Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>1x1LeftEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>1x1RightEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<PrimarySound>BlockWheel1x1</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<PropulsionForce>200000</PropulsionForce>
+			<RotorPart>EliteRealWheel1x1mirrored</RotorPart>
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>3x3RightEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Right Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="75"/>
+				<Component Subtype="Construction" Count="75"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="SmallTube" Count="60"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspensionConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspensionConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>3x3RightEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>3x3LeftEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<PrimarySound>BlockWheel3x3</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>10</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<PropulsionForce>600000</PropulsionForce>
+			<RotorPart>EliteRealWheel</RotorPart>
+			<!-- The max angle (radians) that steer angle slider can go to. -->
+			<MaxSteer>0.8</MaxSteer>
+			<!-- Min/Max height sets the physical boundaries of the suspension as well as the height slider limits. -->
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>3x3LeftEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Left Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="75"/>
+				<Component Subtype="Construction" Count="75"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="SmallTube" Count="60"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.80"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspensionConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspensionConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>3x3LeftEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>3x3RightEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<PrimarySound>BlockWheel3x3</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>10</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<PropulsionForce>600000</PropulsionForce>
+			<RotorPart>EliteRealWheelmirrored</RotorPart>
+			<!-- The max angle (radians) that steer angle slider can go to. -->
+			<MaxSteer>0.8</MaxSteer>
+			<!-- Min/Max height sets the physical boundaries of the suspension as well as the height slider limits. -->
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>5x5RightEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Right Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="2" y="3" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspensionLarge.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="200"/>
+				<Component Subtype="Construction" Count="200"/>
+				<Component Subtype="LargeTube" Count="100"/>
+				<Component Subtype="Motor" Count="100"/>
+				<Component Subtype="SmallTube" Count="150"/>
+				<Component Subtype="SteelPlate" Count="150"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.2" StartY="0.8" EndX="1.8" EndY="2.2" Default="true"/>
+				<MountPoint Side="Left" StartX="0.9" StartY="0" EndX="2.1" EndY="1.25"/>
+				<MountPoint Side="Right" StartX="0.9" StartY="0" EndX="2.1" EndY="1.25"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>5x5RightEliteSuspension</BlockPairName>
+			<MirroringY>ZThenOffsetX</MirroringY>
+			<MirroringZ>YThenOffsetX</MirroringZ>
+			<MirroringBlock>5x5LeftEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>30</BuildTimeSeconds>
+			<PrimarySound>BlockWheel5x5</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>15</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<PropulsionForce>1000000</PropulsionForce>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel5x5</RotorPart>
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>5x5LeftEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Left Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="2" y="3" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\MotorSuspensionLarge.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="200"/>
+				<Component Subtype="Construction" Count="200"/>
+				<Component Subtype="LargeTube" Count="100"/>
+				<Component Subtype="Motor" Count="100"/>
+				<Component Subtype="SmallTube" Count="150"/>
+				<Component Subtype="SteelPlate" Count="150"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.2" StartY="0.8" EndX="1.8" EndY="2.2" Default="true"/>
+				<MountPoint Side="Left" StartX="0.9" StartY="0" EndX="2.1" EndY="1.25"/>
+				<MountPoint Side="Right" StartX="0.9" StartY="0" EndX="2.1" EndY="1.25"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\MotorSuspensionLargeConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>5x5LeftEliteSuspension</BlockPairName>
+			<MirroringY>ZThenOffsetX</MirroringY>
+			<MirroringZ>YThenOffsetX</MirroringZ>
+			<MirroringBlock>5x5RightEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>30</BuildTimeSeconds>
+			<PrimarySound>BlockWheel5x5</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>15</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.02</RequiredIdlePowerInput>
+			<PropulsionForce>1000000</PropulsionForce>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel5x5mirrored</RotorPart>
+			<MinHeight>-1.5</MinHeight>
+			<MaxHeight>1.3</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.005</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>1x1RightSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Right Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="Construction" Count="35"/>
+				<Component Subtype="Motor" Count="5"/>
+				<Component Subtype="SmallTube" Count="10"/>
+				<Component Subtype="SteelPlate" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>1x1RightEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>1x1LeftSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<PrimarySound>BlockWheel1x1</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel1x1</RotorPart>
+			<PropulsionForce>1200</PropulsionForce>
+			<MinHeight>-0.32</MinHeight>
+			<MaxHeight>0.26</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>1x1LeftSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Left Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="Construction" Count="35"/>
+				<Component Subtype="Motor" Count="5"/>
+				<Component Subtype="SmallTube" Count="10"/>
+				<Component Subtype="SteelPlate" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>1x1LeftEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>1x1RightSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<PrimarySound>BlockWheel1x1</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel1x1mirrored</RotorPart>
+			<PropulsionForce>1200</PropulsionForce>
+			<MinHeight>-0.32</MinHeight>
+			<MaxHeight>0.26</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>3x3RightSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Right Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="Construction" Count="35"/>
+				<Component Subtype="Motor" Count="5"/>
+				<Component Subtype="SmallTube" Count="10"/>
+				<Component Subtype="SteelPlate" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>3x3RightEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>3x3LeftSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<PrimarySound>BlockWheel3x3</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel</RotorPart>
+			<PropulsionForce>19200</PropulsionForce>
+			<MinHeight>-0.32</MinHeight>
+			<MaxHeight>0.26</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>3x3LeftSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Left Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspension.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="Construction" Count="35"/>
+				<Component Subtype="Motor" Count="5"/>
+				<Component Subtype="SmallTube" Count="10"/>
+				<Component Subtype="SteelPlate" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
+				<MountPoint Side="Left" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Right" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Front" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+				<MountPoint Side="Back" StartX="0.25" StartY="0" EndX="0.75" EndY="0.83"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>3x3LeftEliteSuspension</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>3x3RightSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<PrimarySound>BlockWheel3x3</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheelmirrored</RotorPart>
+			<PropulsionForce>19200</PropulsionForce>
+			<MinHeight>-0.32</MinHeight>
+			<MaxHeight>0.26</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>5x5RightSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Right Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="2" y="3" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspensionLarge.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="50"/>
+				<Component Subtype="Construction" Count="60"/>
+				<Component Subtype="Motor" Count="10"/>
+				<Component Subtype="SmallTube" Count="20"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.3" StartY="0.7" EndX="1.7" EndY="2.3" Default="true"/>
+				<MountPoint Side="Left" StartX="0.8" StartY="0" EndX="2.2" EndY="1.2"/>
+				<MountPoint Side="Right" StartX="0.8" StartY="0" EndX="2.2" EndY="1.2"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionLargeConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionLargeConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>5x5RightEliteSuspension</BlockPairName>
+			<MirroringY>ZThenOffsetX</MirroringY>
+			<MirroringZ>YThenOffsetX</MirroringZ>
+			<MirroringBlock>5x5LeftSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<PrimarySound>BlockWheel5x5</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel5x5</RotorPart>
+			<PropulsionForce>48000</PropulsionForce>
+			<MinHeight>-0.50</MinHeight>
+			<MaxHeight>0.35</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_MotorSuspensionDefinition">
+			<Id>
+				<TypeId>MotorSuspension</TypeId>
+				<SubtypeId>5x5LeftSmallEliteSuspension</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Left Small Elite Wheel Suspension</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Suspension</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="2" y="3" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\MotorSuspensionLarge.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
+			<DeformationRatio>0.1</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<Components>
+				<Component Subtype="SteelPlate" Count="50"/>
+				<Component Subtype="Construction" Count="60"/>
+				<Component Subtype="Motor" Count="10"/>
+				<Component Subtype="SmallTube" Count="20"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.3" StartY="0.7" EndX="1.7" EndY="2.3" Default="true"/>
+				<MountPoint Side="Left" StartX="0.8" StartY="0" EndX="2.2" EndY="1.2"/>
+				<MountPoint Side="Right" StartX="0.8" StartY="0" EndX="2.2" EndY="1.2"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\MotorSuspensionLargeConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\MotorSuspensionLargeConstruction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>5x5LeftEliteSuspension</BlockPairName>
+			<MirroringY>ZThenOffsetX</MirroringY>
+			<MirroringZ>YThenOffsetX</MirroringZ>
+			<MirroringBlock>5x5RightSmallEliteSuspension</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<PrimarySound>BlockWheel5x5</PrimarySound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>5</RequiredPowerInput>
+			<RequiredIdlePowerInput>0.01</RequiredIdlePowerInput>
+			<MaxForceMagnitude>1E9</MaxForceMagnitude>
+			<DangerousTorqueThreshold>3.36E+07</DangerousTorqueThreshold>
+			<RotorPart>EliteRealWheel5x5mirrored</RotorPart>
+			<PropulsionForce>48000</PropulsionForce>
+			<MinHeight>-0.50</MinHeight>
+			<MaxHeight>0.35</MaxHeight>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<SafetyDetach>5</SafetyDetach>
+			<SafetyDetachMax>5</SafetyDetachMax>
+			<AxleFriction>200000</AxleFriction>
+			<SteeringSpeed>0.015</SteeringSpeed>
+			<AirShockMinSpeed>10</AirShockMinSpeed>
+			<AirShockMaxSpeed>25</AirShockMaxSpeed>
+			<AirShockActivationDelay>60</AirShockActivationDelay>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>250</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheel1x1</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>1x1 Elite Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\large\WheelSuspension1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="Construction" Count="100"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension1x1Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension1x1Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel1x1</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteRealWheel1x1mirrored</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheel</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>3x3 Elite Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="2" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\WheelSuspension3x3.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="30"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Construction" Count="125"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension3x3Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension3x3Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteRealWheelmirrored</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheel5x5</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>5x5 Elite Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="3" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\WheelSuspension5x5.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="80"/>
+				<Component Subtype="LargeTube" Count="80"/>
+				<Component Subtype="Construction" Count="300"/>
+				<Component Subtype="SteelPlate" Count="80"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension5x5Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension5x5Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel5x5</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>30</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheel5x5mirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>5x5 Elite Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="3" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\WheelSuspension5x5mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="80"/>
+				<Component Subtype="LargeTube" Count="80"/>
+				<Component Subtype="Construction" Count="300"/>
+				<Component Subtype="SteelPlate" Count="80"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension5x5Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension5x5Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel5x5mirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>30</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheelmirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>3z3 Elite Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="2" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\WheelSuspension3x3mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="30"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Construction" Count="125"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension3x3Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension3x3Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheelmirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteRealWheel</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteRealWheel1x1mirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>1x1 Elite Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\large\WheelSuspension1x1mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="Construction" Count="100"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WheelSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WheelSuspension1x1Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WheelSuspension1x1Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel1x1mirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<!-- <Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteWheel5x5</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Elite Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel5x5.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="2" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Wheel5x5.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="40"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Construction" Count="150"/>
+				<Component Subtype="SteelPlate" Count="40"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\Wheel5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\Wheel5x5Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\Wheel5x5Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="1" StartY="1" EndX="4" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="1" StartY="1" EndX="4" EndY="4"/>
+			</MountPoints>
+			<BlockPairName>EliteWheel5x5</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<Public>true</Public>
+			<BuildTimeSeconds>30</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteWheel3x3</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Elite Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel3x3.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="1" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Wheel3x3.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="30"/>
+				<Component Subtype="LargeTube" Count="30"/>
+				<Component Subtype="Construction" Count="125"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\Wheel3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\Wheel3x3Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\Wheel3x3Construction_3.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="0.6" StartY="0.6" EndX="2.4" EndY="2.4"/>
+				<MountPoint Side="Bottom" StartX="0.6" StartY="0.6" EndX="2.4" EndY="2.4"/>
+			</MountPoints>
+			<BlockPairName>EliteWheel3x3</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<Public>true</Public>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
+			<DestroySound>PoofExplosionCat3</DestroySound>
+			<PCU>125</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteWheel1x1</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Elite Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel1x1.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Wheel1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="100"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\Wheel1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\Wheel1x1Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\Wheel1x1Construction_3.mwm"/>
+			</BuildProgressModels>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="0.25" StartY="0.25" EndX="0.75" EndY="0.75"/>
+				<MountPoint Side="Bottom" StartX="0.25" StartY="0.25" EndX="0.75" EndY="0.75"/>
+			</MountPoints>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>EliteWheel1x1</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<Public>true</Public>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition> -->
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheel1x1</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>1x1 Elite Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="LargeTube" Count="25"/>
+				<Component Subtype="Construction" Count="50"/>
+				<Component Subtype="SteelPlate" Count="25"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension1x1Construction_2.mwm"/>
+			</BuildProgressModels>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>EliteRealWheel1x1</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteSmallRealWheel1x1mirrored</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Small</DestroyEffect>
+			<DestroySound>PoofExplosionCat1</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheel</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>3x3 Elite Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="1" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension3x3.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Construction" Count="50"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension3x3Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteSmallRealWheelmirrored</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Small</DestroyEffect>
+			<DestroySound>PoofExplosionCat1</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheel5x5</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>5x5 Elite Small Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Right.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="2" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension5x5.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="30"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="Construction" Count="150"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension5x5Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel5x5</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheel1x1mirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>1x1 Elite Small Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension1x1Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension1x1mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Construction" Count="25"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension1x1Construction_2.mwm"/>
+			</BuildProgressModels>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<BlockPairName>EliteRealWheel1x1mirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteRealWheel1x1</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Small</DestroyEffect>
+			<DestroySound>PoofExplosionCat1</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheelmirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>3x3 Elite Small Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension3x3Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="1" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension3x3mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Construction" Count="50"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension3x3Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheelmirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringBlock>EliteSmallRealWheel</MirroringBlock>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Small</DestroyEffect>
+			<DestroySound>PoofExplosionCat1</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallRealWheel5x5mirrored</SubtypeId>
+			</Id>
+			<Public>false</Public>
+			<DisplayName>5x5 Elite Small Left Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\WheelSuspension5x5Left.dds</Icon>
+			<Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="2" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\WheelSuspension5x5mirrored.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<PhysicalMaterial>Wheel</PhysicalMaterial>
+			<Components>
+				<Component Subtype="SteelPlate" Count="30"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="Construction" Count="150"/>
+				<Component Subtype="SteelPlate" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WheelSuspension5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WheelSuspension5x5Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<!--Possible settings Both,InVoxel,OutsideVoxel,Volumetric. If volumetric set than MaxAllowed and MinAllowed will be used.-->
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="0" EndY="0"/>
+			</MountPoints>
+			<BlockPairName>EliteRealWheel5x5mirrored</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition>
+		<!-- <Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallWheel5x5</SubtypeId>
+			</Id>
+			<DisplayName>5x5 Elite Small Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel5x5.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="5" y="2" z="5"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\Wheel5x5.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="LargeTube" Count="10"/>
+				<Component Subtype="Construction" Count="75"/>
+				<Component Subtype="SteelPlate" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\Wheel5x5Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\Wheel5x5Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="1" StartY="1" EndX="4" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="1" StartY="1" EndX="4" EndY="4"/>
+			</MountPoints>
+			<BlockPairName>EliteWheel5x5</BlockPairName>
+			<DeformationRatio>0.3</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<Public>true</Public>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>125</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallWheel3x3</SubtypeId>
+			</Id>
+			<DisplayName>3x3 Elite Small Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel3x3.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="1" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\Wheel3x3.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Construction" Count="50"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\Wheel3x3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\Wheel3x3Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="0.6" StartY="0.6" EndX="2.4" EndY="2.4"/>
+				<MountPoint Side="Bottom" StartX="0.6" StartY="0.6" EndX="2.4" EndY="2.4"/>
+			</MountPoints>
+			<BlockPairName>EliteWheel3x3</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<Public>true</Public>
+			<BuildTimeSeconds>15</BuildTimeSeconds>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
+			<DestroySound>PoofExplosionCat2</DestroySound>
+			<PCU>25</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Wheel</TypeId>
+				<SubtypeId>EliteSmallWheel1x1</SubtypeId>
+			</Id>
+			<DisplayName>1x1 Elite Small Right Wheel</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Wheel1x1.dds</Icon><Icon>Textures\GUI\Icons\Items\Elite_Icon_Overlay.dds</Icon>
+			<Description>Description_Wheel</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Small\Wheel1x1.mwm</Model>
+			<UseModelIntersection>true</UseModelIntersection>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Construction" Count="25"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\Wheel1x1Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\Wheel1x1Construction_2.mwm"/>
+			</BuildProgressModels>
+			<VoxelPlacement>
+				<StaticMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0</MinAllowed>
+				</StaticMode>
+				<DynamicMode>
+					<PlacementMode>OutsideVoxel</PlacementMode>
+					<MaxAllowed>0.2</MaxAllowed>
+					<MinAllowed>0.01</MinAllowed>
+				</DynamicMode>
+			</VoxelPlacement>
+			<MountPoints>
+				<MountPoint Side="Top" StartX="0.25" StartY="0.25" EndX="0.75" EndY="0.75"/>
+				<MountPoint Side="Bottom" StartX="0.25" StartY="0.25" EndX="0.75" EndY="0.75"/>
+			</MountPoints>
+			<BlockPairName>EliteWheel1x1</BlockPairName>
+			<UsesDeformation>false</UsesDeformation>
+			<DeformationRatio>0.3</DeformationRatio>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<Public>true</Public>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyed_Small</DestroyEffect>
+			<DestroySound>PoofExplosionCat1</DestroySound>
+			<PCU>125</PCU>
+			<IsAirTight>false</IsAirTight>
+		</Definition> -->
+	</CubeBlocks>
+</Definitions>
