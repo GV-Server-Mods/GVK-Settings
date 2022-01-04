@@ -17,10 +17,11 @@
 			<Model>Models\Cubes\Large\beacon.mwm</Model>
 			<Components>
 				<Component Subtype="Computer" Count="1"/>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="SteelPlate" Count="40"/>
+				<Component Subtype="Construction" Count="100"/>
+				<Component Subtype="SteelPlate" Count="200"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
+			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true"/>
 				<MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9"/>
@@ -68,14 +69,15 @@
 			<Model>Models\Cubes\Small\beacon.mwm</Model>
 			<Components>
 				<Component Subtype="Computer" Count="1"/>
-				<Component Subtype="Construction" Count="3"/>
-				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
 				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm"/>
 				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm"/>
 			</BuildProgressModels>
+			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
 			<BlockPairName>Beacon</BlockPairName>
 			<MirroringY>Z</MirroringY>
 			<EdgeType>Light</EdgeType>

@@ -27,6 +27,7 @@
 		</Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>
+		<Entry Class="Components" BlueprintSubtypeId="GVK_SmallCaliber_Tech" />
 		<Entry Class="ShipConsumables" BlueprintSubtypeId="Canvas"/>
 		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Medkit"/>
 		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Powerkit"/>

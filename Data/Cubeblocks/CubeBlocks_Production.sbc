@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- added for custom blueprint classes -->
 		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
 			<Id>
 				<TypeId>Assembler</TypeId>
@@ -75,6 +76,7 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
+		<!-- added for custom blueprint classes -->
 		<Definition xsi:type="MyObjectBuilder_SurvivalKitDefinition">
 			<Id>
 				<TypeId>SurvivalKit</TypeId>
@@ -152,6 +154,7 @@
       <AssemblerPriority>0</AssemblerPriority> -->
 			<PCU>140</PCU>
 		</Definition>
+		<!-- added for custom blueprint classes -->
 		<Definition xsi:type="MyObjectBuilder_SurvivalKitDefinition">
 			<Id>
 				<TypeId>SurvivalKit</TypeId>

@@ -30,13 +30,14 @@ namespace MikeDude.ArmorBalance
         public const float heavyArmorSmallDeformationMod = 0.3f; //varies for every block
 
         public const float realWheelDamageMod = 0.5f; //1.0 Vanilla
-        public const float realWheel5x5DamageMod = 0.33333f; //1.0 Vanilla
+        public const float realWheel5x5DamageMod = 0.5f; //1.0 Vanilla
         public const float suspensionDamageMod = 0.5f; //1.0 Vanilla
         public const float rotorDamageMod = 0.5f; //1.0 Vanilla
         public const float hingeDamageMod = 0.5f; //1.0 Vanilla
+		public const float gyroDamageMod = 2; //1.0 Vanilla
 
 		public const int drillPCU = 2000;
-		public const int pistonBasePCU = 1000;
+		public const int pistonBasePCU = 2000;
 		public const float beaconMaxRadius = 150000;
 		
         private bool isInit = false;
@@ -62,6 +63,7 @@ namespace MikeDude.ArmorBalance
 				//MyMotorAdvancedRotorDefinition advRotorDef = def as MyMotorAdvancedRotorDefinition;
 				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
 				MyThrustDefinition thrustDef = def as MyThrustDefinition;//thruster
+				MyGyroDefinition gyroDef = def as MyGyroDefinition;//thruster
 
 
                 if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
@@ -148,14 +150,19 @@ namespace MikeDude.ArmorBalance
 				//Thrusters
                 if (thrustDef != null && thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
                 {
-					thrustDef.MinPlanetaryInfluence = -1.3f;
+					thrustDef.MinPlanetaryInfluence = 0.5f;
 					thrustDef.MaxPlanetaryInfluence = 1f;
 					thrustDef.EffectivenessAtMaxInfluence = 1f;
-					thrustDef.EffectivenessAtMinInfluence = 0f;
-					thrustDef.NeedsAtmosphereForInfluence = false; //bool
-					thrustDef.ConsumptionFactorPerG = 1f;
+					thrustDef.EffectivenessAtMinInfluence = 0.5f;
+					//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
+					//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
+					thrustDef.ConsumptionFactorPerG = -9.1f;
 					thrustDef.SlowdownFactor = 1f;
-					thrustDef.FuelConverter.Efficiency = 0.5f;
+					thrustDef.FuelConverter.Efficiency = 0.019f;
+                }
+                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //&& (gyroDef.Id.SubtypeName.Equals("LargeBlockGyro") || gyroDef.Id.SubtypeName.Equals("SmallBlockGyro"))
+                {
+                    blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
             }
         }

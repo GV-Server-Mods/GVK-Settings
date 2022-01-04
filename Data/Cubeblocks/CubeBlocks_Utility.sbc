@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<Definition xsi:type="MyObjectBuilder_JumpDriveDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_JumpDriveDefinition" Enabled="true">
 			<Id>
 				<TypeId>JumpDrive</TypeId>
 				<SubtypeId>LargeJumpDrive</SubtypeId>
@@ -49,12 +49,12 @@
 			<ResourceSinkGroup>Charging</ResourceSinkGroup>
 			<RequiredPowerInput>32</RequiredPowerInput>
 			<PowerNeededForJump>3</PowerNeededForJump>
-			<MaxJumpDistance>2000000</MaxJumpDistance>
+			<MaxJumpDistance>1</MaxJumpDistance>
 			<MaxJumpMass>1250000</MaxJumpMass>
 			<EmissiveColorPreset>Extended</EmissiveColorPreset>
 			<DestroyEffect>Explosion_Warhead_30</DestroyEffect>
 			<DestroySound>WepLrgWarheadExpl</DestroySound>
-			<PCU>100</PCU>
+			<PCU>1000</PCU>
 			<IsAirTight>true</IsAirTight>
 		</Definition>
 	</CubeBlocks>
