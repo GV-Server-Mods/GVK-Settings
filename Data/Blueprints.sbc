@@ -8,7 +8,8 @@
 			</Id>
 			<DisplayName>Atmo Thruster Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -23,6 +24,7 @@
 			<DisplayName>Hydrogen Thruster Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Hydro_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -36,11 +38,27 @@
 			</Id>
 			<DisplayName>Ion Thruster Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechHover.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Ion_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Ion_Tech"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>GVK_Hover_Tech</SubtypeId>
+			</Id>
+			<DisplayName>Hover Engine Tech</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Hover_Icon_Overlay.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hover_Tech"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
@@ -51,11 +69,14 @@
 			<DisplayName>Ballistic Weapons Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\SmallCaliber_Icon_Overlay.dds</Icon>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+				<Item Amount="70" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="600" TypeId="Ingot" SubtypeId="Silver" />
+				<Item Amount="80" TypeId="Ingot" SubtypeId="Iron" />
 			</Prerequisites>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_SmallCaliber_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>300</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -64,7 +85,8 @@
 			</Id>
 			<DisplayName>Ballistic Weapons Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechLargeCalWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\LargeCaliber_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -78,7 +100,8 @@
 			</Id>
 			<DisplayName>Missile Weapons Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechMissile.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Missile_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -93,6 +116,7 @@
 			<DisplayName>Laser Weapons Tech</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Laser_Icon_Overlay.dds</Icon>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -111,7 +135,7 @@
 			</Prerequisites>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Defense_Tech"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint> -->
+		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
@@ -125,7 +149,7 @@
 			</Prerequisites>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Oxygen_Tech"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint>
+		</Blueprint> -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>

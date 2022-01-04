@@ -8,7 +8,8 @@
 			</Id>
 			<DisplayName>[Tech] Atmo Thrusters</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -30,6 +31,7 @@
 			<DisplayName>[Tech] Hydrogen Thrusters</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Hydro_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -51,6 +53,29 @@
 			<DisplayName>[Tech] Ion Thrusters</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Ion_Icon_Overlay.dds</Icon>
+            <Size>
+                <X>0.1</X>
+                <Y>0.1</Y>
+                <Z>0.2</Z>
+            </Size>
+            <Mass>0.250</Mass>
+            <Volume>0.2</Volume>
+            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>20</MaxIntegrity>
+			<Health>14</Health>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Hover_Tech</SubtypeId>
+			</Id>
+			<DisplayName>[Tech] Hover Engines</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechHover.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Hover_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -72,6 +97,7 @@
 			<DisplayName>[Tech] Small Caliber Weapons</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\SmallCaliber_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -92,7 +118,8 @@
 			</Id>
 			<DisplayName>[Tech] Large Caliber Weapons</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechLargeCalWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\LargeCaliber_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -113,7 +140,8 @@
 			</Id>
 			<DisplayName>[Tech] Missile Weapons</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechMissile.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Missile_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -135,6 +163,7 @@
 			<DisplayName>[Tech] Laser Weapons</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Laser_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
@@ -167,7 +196,7 @@
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component> -->
+		</Component>
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
@@ -188,7 +217,7 @@
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
+		</Component> -->
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
