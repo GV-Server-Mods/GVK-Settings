@@ -20,14 +20,14 @@ namespace MikeDude.ArmorBalance
     public class ArmorBalance : MySessionComponentBase
     {
         public const float lightArmorLargeDamageMod = 1f; //1.0 Vanilla
-        public const float lightArmorLargeDeformationMod = 0.5f; //varies for every block
+        public const float lightArmorLargeDeformationMod = 0.4f; //varies for every block
         public const float lightArmorSmallDamageMod = 1f; //1.0 Vanilla
-        public const float lightArmorSmallDeformationMod = 0.5f; //varies for every block
+        public const float lightArmorSmallDeformationMod = 0.4f; //varies for every block
 
         public const float heavyArmorLargeDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
-        public const float heavyArmorLargeDeformationMod = 0.3f; //varies for every block
+        public const float heavyArmorLargeDeformationMod = 0.2f; //varies for every block
         public const float heavyArmorSmallDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
-        public const float heavyArmorSmallDeformationMod = 0.3f; //varies for every block
+        public const float heavyArmorSmallDeformationMod = 0.2f; //varies for every block
 
         public const float realWheelDamageMod = 0.5f; //1.0 Vanilla
         public const float realWheel5x5DamageMod = 0.5f; //1.0 Vanilla
