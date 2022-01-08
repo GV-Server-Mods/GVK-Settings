@@ -39,8 +39,8 @@
 			<MirroringZ>Y</MirroringZ>
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>20</BuildTimeSeconds>
-			<LightRadius Min="2" Max="10" Default="5"/>
-			<LightReflectorRadius Min="10" Max="160" Default="120"/>
+			<LightRadius Min="2" Max="20" Default="10"/>
+			<LightReflectorRadius Min="10" Max="320" Default="160"/>
 			<LightFalloff Min="1" Max="3" Default="1.5"/>
 			<LightIntensity Min="0.5" Max="5" Default="1"/>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
@@ -94,7 +94,7 @@
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>7</BuildTimeSeconds>
 			<LightRadius Min="1" Max="5" Default="5"/>
-			<LightReflectorRadius Min="10" Max="120" Default="120"/>
+			<LightReflectorRadius Min="10" Max="240" Default="120"/>
 			<LightFalloff Min="1" Max="3" Default="1.5"/>
 			<LightIntensity Min="0.5" Max="5" Default="3"/>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
@@ -142,7 +142,7 @@
             <EdgeType>Light</EdgeType>
             <BuildTimeSeconds>4</BuildTimeSeconds>
             <LightRadius Min="1" Max="5" Default="5" />
-            <LightReflectorRadius Min="10" Max="60" Default="60" />
+            <LightReflectorRadius Min="10" Max="120" Default="60" />
             <LightFalloff Min="1" Max="3" Default="1.5" />
             <LightIntensity Min="0.5" Max="5" Default="3" />
             <ResourceSinkGroup>Utility</ResourceSinkGroup>
