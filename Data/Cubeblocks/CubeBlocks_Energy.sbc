@@ -18,12 +18,7 @@
 			<Components>
 				<Component Subtype="SteelPlate" Count="20"/>
 				<Component Subtype="Construction" Count="10"/>
-				<Component Subtype="PowerCell" Count="80">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="PowerCell" Count="80"/>
 				<Component Subtype="Computer" Count="25"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="60"/>
@@ -77,12 +72,7 @@
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
 				<Component Subtype="Construction" Count="2"/>
-				<Component Subtype="PowerCell" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="PowerCell" Count="20"/>
 				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Construction" Count="3"/>
 				<Component Subtype="SteelPlate" Count="20"/>
@@ -135,12 +125,7 @@
 			<Components>
 				<Component Subtype="SteelPlate" Count="2"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="PowerCell" Count="2">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="PowerCell" Count="2"/>
 				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="2"/>
