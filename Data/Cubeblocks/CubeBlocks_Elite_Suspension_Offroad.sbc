@@ -841,7 +841,7 @@
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="2" y="3" z="2"/>
 			<ModelOffset x="0" y="0" z="0"/>
-			<Model>Models\Cubes\Small\MotorSuspension3x3_Racing.mwm</Model>
+			<Model>Models\Cubes\Small\MotorSuspension5x5_Racing.mwm</Model>
 			<UseModelIntersection>true</UseModelIntersection>
 			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
 			<DeformationRatio>0.1</DeformationRatio>
