@@ -146,6 +146,10 @@ namespace MikeDude.ArmorBalance
 					{
 						beaconDef.MaxBroadcastRadius = beaconMaxRadius;
 					}
+					if (beaconDef.Id.SubtypeName.Contains("BlockBeacon"))
+					{
+						beaconDef.PCU = 1; //this is so TopGrid doesn't pick random numbers when parent grid has 0 PCU.
+					}
                 }
 				//Thrusters
                 if (thrustDef != null && thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
