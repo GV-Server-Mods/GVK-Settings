@@ -6,43 +6,26 @@
       <CubeGrids>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>119318442274248095</EntityId>
+          <EntityId>138226372774307493</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>119318442274248095</Name>
+          <Name>138226372774307493</Name>
           <PositionAndOrientation>
             <Position x="0" y="0" z="0" />
-            <Forward x="-0.148224935" y="-0.856690168" z="-0.494076282" />
-            <Up x="0.411356539" y="-0.5077338" z="0.756962538" />
+            <Forward x="0.100498155" y="-0.333883762" z="-0.937241554" />
+            <Up x="0.7965263" y="-0.5374776" z="0.276881218" />
             <Orientation>
-              <X>0.169053212</X>
-              <Y>0.4736907</Y>
-              <Z>0.8516384</Z>
-              <W>-0.147479653</W>
+              <X>0.0317945331</X>
+              <Y>0.1742651</Y>
+              <Z>0.8762009</Z>
+              <W>-0.448210657</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
-          <ComponentContainer>
-            <Components>
-              <ComponentData>
-                <TypeId>MyModStorageComponent</TypeId>
-                <Component xsi:type="MyObjectBuilder_ModStorageComponent">
-                  <Storage>
-                    <dictionary>
-                      <item>
-                        <Key>29ffd684-13d7-4045-bf76-cd48bf80e36a</Key>
-                        <Value>CAAQABiAgAEiACgAMAA6AEIASgBVAAAAAFobCQAAAAAAAAAAIQAAAAAAAAAAOQAAAAAAAAAAYhsJAAAAAAAAAAAhAAAAAAAAAAA5AAAAAAAAAABqCgjQ39fFhMwBEARyAHgAgAEAiAEBkAEAmQEAAAAAAAAAAKgBALABALoBGwkAAAAAAAAAACEAAAAAAAAAADkAAAAAAADwv8IBGwkAAAAAAAAAACEAAAAAAADwPzkAAAAAAAAAAMoBCgjQ39fFhMwBEATSATwIABAAGAAgACgAMAE4AEAASABQAFgAYABoAHAAeACAAQCIAQCQAQCYAQCgAQCoAQCwAQC4AQDAAQDIAQDaATwIABAAGAAgACgAMAA4AEAASABQAFgAYABoAHAAeACAAQCIAQCQAQCYAQCgAQCoAQGwAQG4AQHAAQHIAQHiAQA=</Value>
-                      </item>
-                    </dictionary>
-                  </Storage>
-                </Component>
-              </ComponentData>
-            </Components>
-          </ComponentContainer>
           <GridSizeEnum>Small</GridSizeEnum>
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3mirrored</SubtypeName>
-              <EntityId>131089288093215041</EntityId>
+              <EntityId>125819424728858545</EntityId>
               <Min x="-6" y="-3" z="-5" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -53,7 +36,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <TopBlockId>124545414419605848</TopBlockId>
+              <TopBlockId>95385484458569738</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -81,7 +64,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>140484935937669274</EntityId>
+              <EntityId>104737541923091111</EntityId>
               <Min x="-5" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -119,7 +102,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3mirrored</SubtypeName>
-              <EntityId>77714336926542881</EntityId>
+              <EntityId>83580346686963837</EntityId>
               <Min x="4" y="-3" z="-5" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -130,7 +113,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <TopBlockId>87917758448671338</TopBlockId>
+              <TopBlockId>137624170597044253</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -157,7 +140,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2Slope</SubtypeName>
-              <EntityId>127225442981801814</EntityId>
+              <EntityId>96788791131970936</EntityId>
               <Min x="6" y="1" z="0" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -171,7 +154,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallTextPanel</SubtypeName>
-              <EntityId>121483995087927834</EntityId>
+              <EntityId>87994031345214803</EntityId>
               <Min x="5" y="2" z="-1" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -259,7 +242,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>108291191592751541</EntityId>
+              <EntityId>119297578971397194</EntityId>
               <Min x="2" y="1" z="1" />
               <IntegrityPercent>0.499992371</IntegrityPercent>
               <BuildPercent>0.499992371</BuildPercent>
@@ -276,7 +259,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>122285141871908948</EntityId>
+              <EntityId>122189752746140039</EntityId>
               <Min x="4" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -349,7 +332,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Door">
               <SubtypeName>SmallSideDoor</SubtypeName>
-              <EntityId>87868334480536703</EntityId>
+              <EntityId>102997237613971018</EntityId>
               <Min x="-3" y="-1" z="0" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -397,7 +380,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_SolarPanel">
               <SubtypeName>SmallBlockSolarPanel</SubtypeName>
-              <EntityId>107329911185428584</EntityId>
+              <EntityId>100544012889864104</EntityId>
               <Min x="-6" y="4" z="-5" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -418,7 +401,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallTextPanel</SubtypeName>
-              <EntityId>136059234597183851</EntityId>
+              <EntityId>120980131868924823</EntityId>
               <Min x="5" y="2" z="-5" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -539,7 +522,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>105122556607075054</EntityId>
+              <EntityId>132450724817767797</EntityId>
               <Min x="2" y="1" z="-6" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -547,7 +530,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>98744808604293576</EntityId>
+              <EntityId>82499425442396402</EntityId>
               <Min x="-2" y="1" z="-6" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -562,7 +545,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_Flat_1</SubtypeName>
-              <EntityId>90973312698486105</EntityId>
+              <EntityId>134098902586524942</EntityId>
               <Min x="-12" y="-1" z="-1" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -715,7 +698,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_LandingGear">
               <SubtypeName>SmallBlockLandingGear</SubtypeName>
-              <EntityId>79525331251217371</EntityId>
+              <EntityId>138970764617458427</EntityId>
               <Min x="6" y="-2" z="-4" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -760,7 +743,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_RadioAntenna">
               <SubtypeName>SmallBlockRadioAntenna</SubtypeName>
-              <EntityId>124328074932133072</EntityId>
+              <EntityId>100744856953564953</EntityId>
               <Min x="4" y="3" z="-2" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -794,7 +777,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2Slope</SubtypeName>
-              <EntityId>139651210100953819</EntityId>
+              <EntityId>122460896156605920</EntityId>
               <Min x="6" y="1" z="-2" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -802,7 +785,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>134247007225186626</EntityId>
+              <EntityId>101013637621780021</EntityId>
               <Min x="-5" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -944,7 +927,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>129028349412011470</EntityId>
+              <EntityId>75790844464443057</EntityId>
               <Min x="2" y="1" z="0" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1033,7 +1016,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2Slope</SubtypeName>
-              <EntityId>130790063943919551</EntityId>
+              <EntityId>105344679812935179</EntityId>
               <Min x="6" y="1" z="-4" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -1048,7 +1031,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>142743742407212884</EntityId>
+              <EntityId>128798032785135391</EntityId>
               <Min x="-6" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1115,7 +1098,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2Slope</SubtypeName>
-              <EntityId>84444373484061651</EntityId>
+              <EntityId>80407077526090094</EntityId>
               <Min x="6" y="1" z="-3" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -1246,7 +1229,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallBlockSmallLight</SubtypeName>
-              <EntityId>96286476490716479</EntityId>
+              <EntityId>124494829273063368</EntityId>
               <Min x="-1" y="2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1276,7 +1259,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2SideLeft</SubtypeName>
-              <EntityId>125303222232630407</EntityId>
+              <EntityId>76869981869642064</EntityId>
               <Min x="6" y="1" z="1" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -1315,7 +1298,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>75840843675937592</EntityId>
+              <EntityId>138353687119775512</EntityId>
               <Min x="-9" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1374,7 +1357,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_AirVent">
               <SubtypeName>SmallAirVent</SubtypeName>
-              <EntityId>111453754230960754</EntityId>
+              <EntityId>101735498861223396</EntityId>
               <Min x="7" y="-1" z="-2" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -1390,7 +1373,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3</SubtypeName>
-              <EntityId>115551807270725627</EntityId>
+              <EntityId>125883158453420305</EntityId>
               <Min x="6" y="-2" z="-5" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1434,7 +1417,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3</SubtypeName>
-              <EntityId>79122769771799080</EntityId>
+              <EntityId>77245476689104797</EntityId>
               <Min x="4" y="-3" z="-2" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1445,7 +1428,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <TopBlockId>74231584237826694</TopBlockId>
+              <TopBlockId>91785603037096863</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -1585,7 +1568,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>133702001628821800</EntityId>
+              <EntityId>123861774902892211</EntityId>
               <Min x="-5" y="-1" z="-4" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1626,7 +1609,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>132878887756932537</EntityId>
+              <EntityId>135743806473099688</EntityId>
               <Min x="-8" y="1" z="-1" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1634,7 +1617,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>SmallBlockMediumContainer</SubtypeName>
-              <EntityId>139792510544938641</EntityId>
+              <EntityId>126625220699705351</EntityId>
               <Min x="-9" y="0" z="-4" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -1645,8 +1628,31 @@
                   <ComponentData>
                     <TypeId>MyInventoryBase</TypeId>
                     <Component xsi:type="MyObjectBuilder_Inventory">
-                      <Items />
-                      <nextItemId>0</nextItemId>
+                      <Items>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>10</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
+                            <SubtypeName>AutomaticRifleGun_Mag_20rd</SubtypeName>
+                            <ProjectilesCount>0</ProjectilesCount>
+                          </PhysicalContent>
+                          <ItemId>0</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>2</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_Component">
+                            <SubtypeName>Canvas</SubtypeName>
+                          </PhysicalContent>
+                          <ItemId>1</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
+                            <SubtypeName>AutomaticRifleItem</SubtypeName>
+                          </PhysicalContent>
+                          <ItemId>2</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                      </Items>
+                      <nextItemId>3</nextItemId>
                       <Volume>3.375</Volume>
                       <Mass>9223372036854.775807</Mass>
                       <MaxItemCount>2147483647</MaxItemCount>
@@ -1785,7 +1791,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>108650824515594457</EntityId>
+              <EntityId>133808269323818122</EntityId>
               <Min x="1" y="1" z="-7" />
               <IntegrityPercent>0.499992371</IntegrityPercent>
               <BuildPercent>0.499992371</BuildPercent>
@@ -2038,7 +2044,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_1</SubtypeName>
-              <EntityId>142851495023392671</EntityId>
+              <EntityId>86687579694076090</EntityId>
               <Min x="-11" y="3" z="-4" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -2177,7 +2183,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Parachute">
               <SubtypeName>SmParachute</SubtypeName>
-              <EntityId>72939617509200583</EntityId>
+              <EntityId>76627321136000663</EntityId>
               <Min x="4" y="3" z="-3" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -2232,7 +2238,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_Flat_1</SubtypeName>
-              <EntityId>90583745248684378</EntityId>
+              <EntityId>92785227356743816</EntityId>
               <Min x="-11" y="0" z="-6" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2331,7 +2337,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>87665376799719240</EntityId>
+              <EntityId>141369695935389781</EntityId>
               <Min x="0" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -2345,7 +2351,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>73552465682146339</EntityId>
+              <EntityId>142118649796906750</EntityId>
               <Min x="-7" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -2353,7 +2359,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>82992182321816458</EntityId>
+              <EntityId>94927943927388188</EntityId>
               <Min x="2" y="1" z="-7" />
               <IntegrityPercent>0.499992371</IntegrityPercent>
               <BuildPercent>0.499992371</BuildPercent>
@@ -2389,7 +2395,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenGenerator">
               <SubtypeName>OxygenGeneratorSmall</SubtypeName>
-              <EntityId>131391675742116900</EntityId>
+              <EntityId>94194475063161156</EntityId>
               <Min x="-8" y="0" z="-7" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -2464,7 +2470,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>140702588210314357</EntityId>
+              <EntityId>113688115098698567</EntityId>
               <Min x="-1" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -2472,7 +2478,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallWheel1x1</SubtypeName>
-              <EntityId>134851581655185434</EntityId>
+              <EntityId>86794493717782199</EntityId>
               <Min x="4" y="-3" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -2501,7 +2507,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>112598113728522724</EntityId>
+              <EntityId>99079839605650095</EntityId>
               <Min x="-4" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -2529,7 +2535,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>SmallBlockSmallBatteryBlock</SubtypeName>
-              <EntityId>121253484492654936</EntityId>
+              <EntityId>136996182274141583</EntityId>
               <Min x="-8" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -2540,7 +2546,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <CurrentStoredPower>0.0474276841</CurrentStoredPower>
+              <CurrentStoredPower>0.047320012</CurrentStoredPower>
               <ProducerEnabled>true</ProducerEnabled>
               <MaxStoredPower>0</MaxStoredPower>
               <SemiautoEnabled>false</SemiautoEnabled>
@@ -2601,7 +2607,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2Slope</SubtypeName>
-              <EntityId>129714951235799250</EntityId>
+              <EntityId>94845264118809599</EntityId>
               <Min x="6" y="1" z="-6" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -2660,7 +2666,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>137810472356223280</EntityId>
+              <EntityId>84577450944738116</EntityId>
               <Min x="-2" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -2768,7 +2774,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipConnector">
               <SubtypeName>ConnectorMedium</SubtypeName>
-              <EntityId>102043067657945725</EntityId>
+              <EntityId>108221134625919100</EntityId>
               <Min x="-11" y="0" z="-4" />
               <BlockOrientation Forward="Left" Up="Backward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -2781,7 +2787,7 @@
                     <TypeId>MyInventoryBase</TypeId>
                     <Component xsi:type="MyObjectBuilder_Inventory">
                       <Items />
-                      <nextItemId>0</nextItemId>
+                      <nextItemId>2</nextItemId>
                       <Volume>1.152</Volume>
                       <Mass>9223372036854.775807</Mass>
                       <MaxItemCount>2147483647</MaxItemCount>
@@ -2799,7 +2805,7 @@
                       <TimerEnabled>true</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>70</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>60</FramesFromLastTrigger>
                       <TimerTickInFrames>80</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -2848,7 +2854,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_RemoteControl">
               <SubtypeName>SmallBlockRemoteControl</SubtypeName>
-              <EntityId>138798957984075884</EntityId>
+              <EntityId>74951366110580962</EntityId>
               <Min x="6" y="0" z="-3" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -2890,7 +2896,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2SideRight</SubtypeName>
-              <EntityId>142787662082448713</EntityId>
+              <EntityId>98042271250131255</EntityId>
               <Min x="6" y="1" z="-7" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.2777778" y="-0.9558823" z="0.06666672" />
@@ -2898,7 +2904,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3</SubtypeName>
-              <EntityId>111347440692199453</EntityId>
+              <EntityId>96274818198922145</EntityId>
               <Min x="6" y="-2" z="-1" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3002,7 +3008,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ButtonPanel">
               <SubtypeName>ButtonPanelSmall</SubtypeName>
-              <EntityId>123162054350203039</EntityId>
+              <EntityId>129329110287589313</EntityId>
               <Min x="-3" y="1" z="-5" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3023,7 +3029,7 @@
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>126121689936955677</BlockEntityId>
+                      <BlockEntityId>96405740872345474</BlockEntityId>
                     </Data>
                   </Slot>
                 </Slots>
@@ -3073,7 +3079,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>103202211285290028</EntityId>
+              <EntityId>142722813719973545</EntityId>
               <Min x="1" y="1" z="-6" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3175,7 +3181,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Beacon">
               <SubtypeName>SmallBlockBeacon</SubtypeName>
-              <EntityId>109529414705970951</EntityId>
+              <EntityId>132748349522368499</EntityId>
               <Min x="3" y="-1" z="-3" />
               <IntegrityPercent>0.8333333</IntegrityPercent>
               <BuildPercent>0.8333333</BuildPercent>
@@ -3194,7 +3200,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>78401514155677252</EntityId>
+              <EntityId>134559846825352761</EntityId>
               <Min x="5" y="1" z="0" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3208,7 +3214,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>75078079535804647</EntityId>
+              <EntityId>87724873544913245</EntityId>
               <Min x="5" y="1" z="-6" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3216,7 +3222,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>SmallBlockBatteryBlock</SubtypeName>
-              <EntityId>135465206000977856</EntityId>
+              <EntityId>104077476639641996</EntityId>
               <Min x="-9" y="3" z="-4" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3228,7 +3234,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <CurrentStoredPower>0.0525694937</CurrentStoredPower>
+              <CurrentStoredPower>0.05041922</CurrentStoredPower>
               <ProducerEnabled>true</ProducerEnabled>
               <MaxStoredPower>0</MaxStoredPower>
               <SemiautoEnabled>false</SemiautoEnabled>
@@ -3295,7 +3301,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>134708379634115961</EntityId>
+              <EntityId>115161388880077603</EntityId>
               <Min x="5" y="1" z="-7" />
               <IntegrityPercent>0.625</IntegrityPercent>
               <BuildPercent>0.625</BuildPercent>
@@ -3312,7 +3318,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmor2x1SlopedSideTipPanelLightInv</SubtypeName>
-              <EntityId>94785568495063940</EntityId>
+              <EntityId>109660278139463759</EntityId>
               <Min x="7" y="-1" z="-7" />
               <BlockOrientation Forward="Right" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3327,7 +3333,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>78489184844642230</EntityId>
+              <EntityId>134322324717920432</EntityId>
               <Min x="6" y="-1" z="1" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3342,7 +3348,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallWheel1x1</SubtypeName>
-              <EntityId>140571476668512117</EntityId>
+              <EntityId>139602123835681440</EntityId>
               <Min x="-6" y="-3" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3414,7 +3420,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>84259070504542261</EntityId>
+              <EntityId>77284693063195373</EntityId>
               <Min x="6" y="-1" z="-1" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3422,7 +3428,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>76876482014620049</EntityId>
+              <EntityId>121618283151931575</EntityId>
               <Min x="-3" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3442,7 +3448,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>106244592770579127</EntityId>
+              <EntityId>90668518561783052</EntityId>
               <Min x="6" y="-1" z="-2" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3450,7 +3456,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>142278130005381134</EntityId>
+              <EntityId>108156777008971461</EntityId>
               <Min x="6" y="-1" z="-4" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3458,7 +3464,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>105186114946923104</EntityId>
+              <EntityId>114756007488847929</EntityId>
               <Min x="6" y="-1" z="-3" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3472,7 +3478,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>111267039135075787</EntityId>
+              <EntityId>79860552001387597</EntityId>
               <Min x="5" y="1" z="1" />
               <IntegrityPercent>0.625</IntegrityPercent>
               <BuildPercent>0.625</BuildPercent>
@@ -3515,7 +3521,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ReflectorLight">
               <SubtypeName>SmallBlockFrontLight</SubtypeName>
-              <EntityId>79665134463442661</EntityId>
+              <EntityId>139442022171617530</EntityId>
               <Min x="6" y="-1" z="0" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3526,7 +3532,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <Radius>10</Radius>
+              <Radius>5</Radius>
               <ReflectorRadius>120</ReflectorRadius>
               <ColorGreen>0.921568632</ColorGreen>
               <ColorBlue>0.8117647</ColorBlue>
@@ -3547,7 +3553,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OreDetector">
               <SubtypeName>SmallBlockOreDetector</SubtypeName>
-              <EntityId>126121689936955677</EntityId>
+              <EntityId>96405740872345474</EntityId>
               <Min x="-8" y="-2" z="-1" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3564,7 +3570,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ReflectorLight">
               <SubtypeName>SmallBlockFrontLight</SubtypeName>
-              <EntityId>80664648848828326</EntityId>
+              <EntityId>87275823967415576</EntityId>
               <Min x="6" y="-1" z="-6" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -3575,7 +3581,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <Radius>10</Radius>
+              <Radius>5</Radius>
               <ReflectorRadius>120</ReflectorRadius>
               <ColorGreen>0.921568632</ColorGreen>
               <ColorBlue>0.8117647</ColorBlue>
@@ -3621,7 +3627,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>SmallBlockSmallBatteryBlock</SubtypeName>
-              <EntityId>128978661484983599</EntityId>
+              <EntityId>142314029902994743</EntityId>
               <Min x="-8" y="-1" z="-2" />
               <BlockOrientation Forward="Left" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3633,7 +3639,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <CurrentStoredPower>0.04742731</CurrentStoredPower>
+              <CurrentStoredPower>0.04732021</CurrentStoredPower>
               <ProducerEnabled>true</ProducerEnabled>
               <MaxStoredPower>0</MaxStoredPower>
               <SemiautoEnabled>false</SemiautoEnabled>
@@ -3654,7 +3660,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>SmallBlockSmallBatteryBlock</SubtypeName>
-              <EntityId>132613857676822533</EntityId>
+              <EntityId>85156641053020422</EntityId>
               <Min x="-8" y="-1" z="-4" />
               <BlockOrientation Forward="Left" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3666,7 +3672,7 @@
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <CurrentStoredPower>0.0474272631</CurrentStoredPower>
+              <CurrentStoredPower>0.0473201461</CurrentStoredPower>
               <ProducerEnabled>true</ProducerEnabled>
               <MaxStoredPower>0</MaxStoredPower>
               <SemiautoEnabled>false</SemiautoEnabled>
@@ -3708,7 +3714,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Gyro">
               <SubtypeName>SmallBlockGyro</SubtypeName>
-              <EntityId>78374068586344837</EntityId>
+              <EntityId>112794447703908003</EntityId>
               <Min x="-4" y="-1" z="-4" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3790,7 +3796,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>92983646695323103</EntityId>
+              <EntityId>87909950268794897</EntityId>
               <Min x="-8" y="-1" z="-3" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -3837,7 +3843,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Parachute">
               <SubtypeName>SmParachute</SubtypeName>
-              <EntityId>139266216474100463</EntityId>
+              <EntityId>122139024247825350</EntityId>
               <Min x="-10" y="3" z="-3" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -3905,14 +3911,14 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>83110881294264467</EntityId>
+              <EntityId>93276148590441007</EntityId>
               <Min x="5" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_SurvivalKit">
               <SubtypeName>SurvivalKit</SubtypeName>
-              <EntityId>93248357649600015</EntityId>
+              <EntityId>109311289014157695</EntityId>
               <Min x="-6" y="0" z="-5" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4006,7 +4012,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                       <TimerEnabled>true</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>40</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>30</FramesFromLastTrigger>
                       <TimerTickInFrames>60</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -4024,11 +4030,11 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
               <RepeatAssembleEnabled>false</RepeatAssembleEnabled>
               <RepeatDisassembleEnabled>false</RepeatDisassembleEnabled>
               <SlaveEnabled>false</SlaveEnabled>
-              <SpawnName>SASS 5POD</SpawnName>
+              <SpawnName>KASSPOD</SpawnName>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>SmallSuspension3x3</SubtypeName>
-              <EntityId>136087685673914847</EntityId>
+              <EntityId>124037669597223052</EntityId>
               <Min x="-6" y="-3" z="-2" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4039,7 +4045,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <TopBlockId>134833101634791614</TopBlockId>
+              <TopBlockId>90507430823657433</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -4067,7 +4073,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>103892772712416258</EntityId>
+              <EntityId>119867632390022509</EntityId>
               <Min x="-10" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4088,7 +4094,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>95465927407087310</EntityId>
+              <EntityId>86255242492931868</EntityId>
               <Min x="-8" y="1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -4102,7 +4108,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallBlockSmallLight</SubtypeName>
-              <EntityId>118355691431946103</EntityId>
+              <EntityId>127857601698595743</EntityId>
               <Min x="-11" y="1" z="0" />
               <BlockOrientation Forward="Left" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4126,7 +4132,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallBlockSmallLight</SubtypeName>
-              <EntityId>109583225784817605</EntityId>
+              <EntityId>110316867077081913</EntityId>
               <Min x="-11" y="1" z="-6" />
               <BlockOrientation Forward="Left" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4150,7 +4156,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_1</SubtypeName>
-              <EntityId>131210249613793519</EntityId>
+              <EntityId>109075596706507456</EntityId>
               <Min x="-11" y="3" z="-2" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4237,7 +4243,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>138080223658003360</EntityId>
+              <EntityId>73210827843726702</EntityId>
               <Min x="6" y="3" z="-6" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4310,7 +4316,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>134841986839429269</EntityId>
+              <EntityId>137233855978363596</EntityId>
               <Min x="6" y="3" z="-4" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4383,7 +4389,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>89353852899174751</EntityId>
+              <EntityId>77546347204913375</EntityId>
               <Min x="6" y="3" z="-2" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4456,7 +4462,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>117220080997381416</EntityId>
+              <EntityId>125765532033998056</EntityId>
               <Min x="6" y="3" z="0" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4529,7 +4535,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmor2x1SlopedSideTipPanelLight</SubtypeName>
-              <EntityId>134345853655592085</EntityId>
+              <EntityId>119235333220229759</EntityId>
               <Min x="7" y="-1" z="1" />
               <BlockOrientation Forward="Right" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4551,7 +4557,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolS</SubtypeName>
-              <EntityId>142127207105014253</EntityId>
+              <EntityId>106540667783443462</EntityId>
               <Min x="0" y="0" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4565,7 +4571,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolD</SubtypeName>
-              <EntityId>138130309483894521</EntityId>
+              <EntityId>123168102220573443</EntityId>
               <Min x="-1" y="-1" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -4573,7 +4579,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolO</SubtypeName>
-              <EntityId>110902425106327053</EntityId>
+              <EntityId>95489526860031578</EntityId>
               <Min x="0" y="-1" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -4581,7 +4587,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolP</SubtypeName>
-              <EntityId>121398036147539872</EntityId>
+              <EntityId>92470341301216155</EntityId>
               <Min x="1" y="-1" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -4589,7 +4595,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolA</SubtypeName>
-              <EntityId>111218939180624203</EntityId>
+              <EntityId>73131960929133953</EntityId>
               <Min x="1" y="0" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4597,7 +4603,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolS</SubtypeName>
-              <EntityId>109989591811851069</EntityId>
+              <EntityId>98861810265992545</EntityId>
               <Min x="-1" y="0" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4605,7 +4611,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>75109948652388930</EntityId>
+              <EntityId>137542684465583532</EntityId>
               <Min x="1" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4613,7 +4619,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeSmall</SubtypeName>
-              <EntityId>72641361202595615</EntityId>
+              <EntityId>137752303710330913</EntityId>
               <Min x="2" y="-1" z="-5" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4621,21 +4627,21 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>82393641671355366</EntityId>
+              <EntityId>129809081878855907</EntityId>
               <Min x="3" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>SmallBlockConveyor</SubtypeName>
-              <EntityId>85028608540211355</EntityId>
+              <EntityId>122556507586747682</EntityId>
               <Min x="6" y="-1" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>SmallBlockSmallBatteryBlock</SubtypeName>
-              <EntityId>142707554884135048</EntityId>
+              <EntityId>138633572661107267</EntityId>
               <Min x="-8" y="-1" z="-1" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -4646,7 +4652,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <Enabled>true</Enabled>
-              <CurrentStoredPower>0.0474300645</CurrentStoredPower>
+              <CurrentStoredPower>0.04732279</CurrentStoredPower>
               <ProducerEnabled>true</ProducerEnabled>
               <MaxStoredPower>0</MaxStoredPower>
               <SemiautoEnabled>false</SemiautoEnabled>
@@ -4676,7 +4682,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Gyro">
               <SubtypeName>SmallBlockGyro</SubtypeName>
-              <EntityId>93073276000156702</EntityId>
+              <EntityId>101183844986069437</EntityId>
               <Min x="-4" y="-1" z="-2" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4710,7 +4716,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>91452088072880513</EntityId>
+              <EntityId>89308068357555139</EntityId>
               <Min x="3" y="1" z="-6" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4718,7 +4724,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>133246584893053917</EntityId>
+              <EntityId>92707554041167239</EntityId>
               <Min x="3" y="1" z="-7" />
               <IntegrityPercent>0.625</IntegrityPercent>
               <BuildPercent>0.625</BuildPercent>
@@ -4728,7 +4734,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>137965000082431256</EntityId>
+              <EntityId>143822698173580461</EntityId>
               <Min x="3" y="1" z="1" />
               <IntegrityPercent>0.625</IntegrityPercent>
               <BuildPercent>0.625</BuildPercent>
@@ -4738,7 +4744,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>91587829708103280</EntityId>
+              <EntityId>98248805163018067</EntityId>
               <Min x="3" y="1" z="0" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4746,7 +4752,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>120935871546826157</EntityId>
+              <EntityId>83783203634520438</EntityId>
               <Min x="-1" y="1" z="-6" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4754,7 +4760,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallWindow1x2FlatInv</SubtypeName>
-              <EntityId>100163216465533156</EntityId>
+              <EntityId>131575150610802780</EntityId>
               <Min x="-1" y="1" z="-7" />
               <IntegrityPercent>0.625</IntegrityPercent>
               <BuildPercent>0.625</BuildPercent>
@@ -4770,7 +4776,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_AirVent">
               <SubtypeName>SmallAirVent</SubtypeName>
-              <EntityId>124557414705465699</EntityId>
+              <EntityId>72342590469746647</EntityId>
               <Min x="7" y="-1" z="-3" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4807,7 +4813,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_AirVent">
               <SubtypeName>SmallAirVent</SubtypeName>
-              <EntityId>136493811845473623</EntityId>
+              <EntityId>124890154530155077</EntityId>
               <Min x="3" y="0" z="-5" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4823,7 +4829,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallSymbolK</SubtypeName>
-              <EntityId>108096546279662166</EntityId>
+              <EntityId>96281576371189279</EntityId>
               <Min x="2" y="0" z="-7" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4843,7 +4849,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallBlockLight_1corner</SubtypeName>
-              <EntityId>143483142162987247</EntityId>
+              <EntityId>104986352701361178</EntityId>
               <Min x="0" y="2" z="1" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -4867,7 +4873,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallBlockLight_1corner</SubtypeName>
-              <EntityId>117722204341585083</EntityId>
+              <EntityId>104839494929480019</EntityId>
               <Min x="0" y="2" z="-7" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -4897,7 +4903,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Cockpit">
               <SubtypeName>OpenCockpitSmall</SubtypeName>
-              <EntityId>88555284497812706</EntityId>
+              <EntityId>74900874047322527</EntityId>
               <Min x="3" y="0" z="-4" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -4917,22 +4923,15 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                           <ItemId>0</ItemId>
                         </MyObjectBuilder_InventoryItem>
                         <MyObjectBuilder_InventoryItem>
-                          <Amount>10</Amount>
+                          <Amount>5</Amount>
                           <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
-                            <SubtypeName>NATO_5p56x45mm</SubtypeName>
+                            <SubtypeName>AutomaticRifleGun_Mag_20rd</SubtypeName>
                             <ProjectilesCount>0</ProjectilesCount>
                           </PhysicalContent>
-                          <ItemId>1</ItemId>
-                        </MyObjectBuilder_InventoryItem>
-                        <MyObjectBuilder_InventoryItem>
-                          <Amount>2</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_Component">
-                            <SubtypeName>Canvas</SubtypeName>
-                          </PhysicalContent>
-                          <ItemId>2</ItemId>
+                          <ItemId>3</ItemId>
                         </MyObjectBuilder_InventoryItem>
                       </Items>
-                      <nextItemId>3</nextItemId>
+                      <nextItemId>4</nextItemId>
                       <Volume>1</Volume>
                       <Mass>9223372036854.775807</Mass>
                       <MaxItemCount>2147483647</MaxItemCount>
@@ -4958,7 +4957,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>107329911185428584</BlockEntityId>
+                      <BlockEntityId>100544012889864104</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -4966,7 +4965,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>SwitchLock</Action>
-                      <BlockEntityId>102043067657945725</BlockEntityId>
+                      <BlockEntityId>108221134625919100</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -4974,7 +4973,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>SwitchLock</Action>
-                      <BlockEntityId>79525331251217371</BlockEntityId>
+                      <BlockEntityId>138970764617458427</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -4982,7 +4981,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>109529414705970951</BlockEntityId>
+                      <BlockEntityId>132748349522368499</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -4990,7 +4989,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>124328074932133072</BlockEntityId>
+                      <BlockEntityId>100744856953564953</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -4998,7 +4997,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>126121689936955677</BlockEntityId>
+                      <BlockEntityId>96405740872345474</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5006,7 +5005,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>78374068586344837</BlockEntityId>
+                      <BlockEntityId>112794447703908003</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5015,7 +5014,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Recharge</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Batteries</GroupName>
                     </Data>
                   </Slot>
@@ -5025,7 +5024,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Parachutes</GroupName>
                     </Data>
                   </Slot>
@@ -5035,7 +5034,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Lights</GroupName>
                     </Data>
                   </Slot>
@@ -5045,7 +5044,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Braking</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Wheels</GroupName>
                     </Data>
                   </Slot>
@@ -5055,7 +5054,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Add Top Part</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Wheels</GroupName>
                     </Data>
                   </Slot>
@@ -5067,7 +5066,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>H2 Thrusters</GroupName>
                     </Data>
                   </Slot>
@@ -5076,7 +5075,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>SwitchLock</Action>
-                      <BlockEntityId>102043067657945725</BlockEntityId>
+                      <BlockEntityId>108221134625919100</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5084,7 +5083,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>SwitchLock</Action>
-                      <BlockEntityId>79525331251217371</BlockEntityId>
+                      <BlockEntityId>138970764617458427</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5092,7 +5091,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>109529414705970951</BlockEntityId>
+                      <BlockEntityId>132748349522368499</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5100,7 +5099,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>124328074932133072</BlockEntityId>
+                      <BlockEntityId>100744856953564953</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5108,7 +5107,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>126121689936955677</BlockEntityId>
+                      <BlockEntityId>96405740872345474</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5116,7 +5115,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>108069240309973300</BlockEntityId>
+                      <BlockEntityId>129034758782120236</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -5125,7 +5124,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Recharge</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Batteries</GroupName>
                     </Data>
                   </Slot>
@@ -5135,7 +5134,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Parachutes</GroupName>
                     </Data>
                   </Slot>
@@ -5145,7 +5144,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Stockpile</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>H2 Tanks</GroupName>
                     </Data>
                   </Slot>
@@ -5155,7 +5154,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Lights</GroupName>
                     </Data>
                   </Slot>
@@ -5165,7 +5164,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Braking</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Wheels</GroupName>
                     </Data>
                   </Slot>
@@ -5175,7 +5174,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Add Top Part</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Wheels</GroupName>
                     </Data>
                   </Slot>
@@ -5185,7 +5184,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>88555284497812706</BlockEntityId>
+                      <BlockEntityId>74900874047322527</BlockEntityId>
                       <GroupName>Gyroscopes</GroupName>
                     </Data>
                   </Slot>
@@ -5199,18 +5198,18 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                 <SlotsGamepad />
               </BuildToolbar>
               <PilotRelativeWorld>
-                <Position x="0.21310223639011383" y="-1.1211777925491333" z="2.6952779293060303" />
-                <Forward x="-0.111880906" y="-0.22192651" z="-0.9686233" />
-                <Up x="-0.07894317" y="0.973647237" z="-0.213959247" />
+                <Position x="0.61796587705612183" y="-1.1881747245788574" z="2.4647128582000732" />
+                <Forward x="-0.17225945" y="-0.179814339" z="-0.9685006" />
+                <Up x="-0.213126838" y="0.966712654" z="-0.141575217" />
                 <Orientation>
-                  <X>-0.109897792</X>
-                  <Y>0.06008977</Y>
-                  <Z>0.03314726</Z>
-                  <W>0.99157095</W>
+                  <X>-0.08140299</X>
+                  <Y>0.09551563</Y>
+                  <Z>0.100086033</Z>
+                  <W>0.9870325</W>
                 </Orientation>
               </PilotRelativeWorld>
               <PilotGunDefinition xsi:nil="true" />
-              <IsInFirstPersonView>false</IsInFirstPersonView>
+              <IsInFirstPersonView>true</IsInFirstPersonView>
               <OxygenLevel>0</OxygenLevel>
               <PilotJetpackEnabled xsi:nil="true" />
               <TextPanels>
@@ -5272,7 +5271,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_1</SubtypeName>
-              <EntityId>85959422162581385</EntityId>
+              <EntityId>92022512884125528</EntityId>
               <Min x="0" y="2" z="-1" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5346,7 +5345,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallTextPanel</SubtypeName>
-              <EntityId>127025447209172904</EntityId>
+              <EntityId>109395904955208758</EntityId>
               <Min x="0" y="2" z="-5" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -5451,7 +5450,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenTank">
               <SubtypeName>OxygenTankSmall</SubtypeName>
-              <EntityId>135562703192148352</EntityId>
+              <EntityId>77299080266944898</EntityId>
               <Min x="-6" y="0" z="-1" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -5506,7 +5505,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ButtonPanel">
               <SubtypeName>ButtonPanelSmall</SubtypeName>
-              <EntityId>85347320872495230</EntityId>
+              <EntityId>104571366600498497</EntityId>
               <Min x="-2" y="1" z="-1" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5528,7 +5527,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>85347320872495230</BlockEntityId>
+                      <BlockEntityId>104571366600498497</BlockEntityId>
                       <GroupName>Lights</GroupName>
                     </Data>
                   </Slot>
@@ -5547,7 +5546,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_AirVent">
               <SubtypeName>SmallAirVent</SubtypeName>
-              <EntityId>109506004450974021</EntityId>
+              <EntityId>105144827678354222</EntityId>
               <Min x="7" y="-1" z="-4" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -5563,7 +5562,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>144001135491670938</EntityId>
+              <EntityId>120211105703308211</EntityId>
               <Min x="5" y="-1" z="1" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5571,7 +5570,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>128931345304369086</EntityId>
+              <EntityId>121085534183241837</EntityId>
               <Min x="5" y="-1" z="-7" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5579,7 +5578,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorSlopedPanelLight</SubtypeName>
-              <EntityId>118652975799912022</EntityId>
+              <EntityId>85196790716353533</EntityId>
               <Min x="3" y="-1" z="-7" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5587,7 +5586,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorSlopedPanelLight</SubtypeName>
-              <EntityId>141937289052589135</EntityId>
+              <EntityId>144006242267354465</EntityId>
               <Min x="3" y="-1" z="1" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5595,7 +5594,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>75946986176843972</EntityId>
+              <EntityId>118489005571970076</EntityId>
               <Min x="-6" y="-1" z="1" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5603,7 +5602,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>101633285237061608</EntityId>
+              <EntityId>90238112775168177</EntityId>
               <Min x="-6" y="-1" z="-7" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5611,7 +5610,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorSlopedPanelLight</SubtypeName>
-              <EntityId>89732184854374095</EntityId>
+              <EntityId>120144627149439804</EntityId>
               <Min x="-7" y="-1" z="-7" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5619,7 +5618,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorSlopedPanelLight</SubtypeName>
-              <EntityId>123181847009085757</EntityId>
+              <EntityId>116135140572057213</EntityId>
               <Min x="-7" y="-1" z="1" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5627,7 +5626,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>110934368038998719</EntityId>
+              <EntityId>115192833505196345</EntityId>
               <Min x="4" y="-1" z="-7" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5635,7 +5634,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>108770978943873720</EntityId>
+              <EntityId>116333298001409831</EntityId>
               <Min x="4" y="-1" z="1" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5643,7 +5642,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>108539493187724322</EntityId>
+              <EntityId>76316770949318805</EntityId>
               <Min x="-5" y="-1" z="-7" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5651,7 +5650,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>120000774627312850</EntityId>
+              <EntityId>135701971271279721</EntityId>
               <Min x="-5" y="-1" z="1" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5698,7 +5697,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>SmallArmorPanelLight</SubtypeName>
-              <EntityId>143580525254635138</EntityId>
+              <EntityId>124604180758813124</EntityId>
               <Min x="6" y="-1" z="-7" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.102777779" y="-0.8" z="0.49" />
@@ -5809,7 +5808,7 @@ Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) 
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_Flat_1</SubtypeName>
-              <EntityId>103360658952922780</EntityId>
+              <EntityId>107810316711551337</EntityId>
               <Min x="-7" y="2" z="-8" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5884,7 +5883,7 @@ ACCESS</PublicDescription>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>99543263414223430</EntityId>
+              <EntityId>80701686086300209</EntityId>
               <Min x="-11" y="3" z="-6" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -5957,7 +5956,7 @@ ACCESS</PublicDescription>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>SmallBlockCorner_LCD_2</SubtypeName>
-              <EntityId>104411481553854032</EntityId>
+              <EntityId>130122040226642538</EntityId>
               <Min x="-11" y="3" z="0" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.102777779" y="-0.74" z="-0.05" />
@@ -6566,27 +6565,27 @@ ACCESS</PublicDescription>
             </OxygenRoom>
             <OxygenRoom OxygenAmount="0">
               <StartingPosition>
-                <X>3</X>
-                <Y>0</Y>
-                <Z>-5</Z>
+                <X>-1</X>
+                <Y>-1</Y>
+                <Z>-1</Z>
               </StartingPosition>
             </OxygenRoom>
           </OxygenRooms>
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>108762548605979272</EntityId>
+          <EntityId>139894868047745941</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>108762548605979272</Name>
+          <Name>139894868047745941</Name>
           <PositionAndOrientation>
-            <Position x="1.5394892692565918" y="-0.91461181640625" z="-4.6946516036987305" />
-            <Forward x="-0.6828482" y="0.4500427" z="-0.5754823" />
-            <Up x="-0.14822486" y="-0.8566901" z="-0.494076163" />
+            <Position x="1.324188232421875" y="2.45977783203125" z="-3.8016357421875" />
+            <Forward x="0.5963168" y="0.7742797" z="-0.211888909" />
+            <Up x="0.100498155" y="-0.333883882" z="-0.9372413" />
             <Orientation>
-              <X>0.376112521</X>
-              <Y>-0.266079366</Y>
-              <Z>0.8870651</Z>
-              <W>-0.02926883</W>
+              <X>-0.285290062</X>
+              <Y>-0.5591646</Y>
+              <Z>0.7652135</Z>
+              <W>0.142803431</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -6594,7 +6593,7 @@ ACCESS</PublicDescription>
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallRealWheelmirrored</SubtypeName>
-              <EntityId>124545414419605848</EntityId>
+              <EntityId>95385484458569738</EntityId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
@@ -6608,18 +6607,18 @@ ACCESS</PublicDescription>
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>72552346125786406</EntityId>
+          <EntityId>97848197543483661</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>72552346125786406</Name>
+          <Name>97848197543483661</Name>
           <PositionAndOrientation>
-            <Position x="-2.9569454193115234" y="-1.3698501586914063" z="-2.5563511848449707" />
-            <Forward x="-0.6825675" y="0.4501415" z="-0.575738" />
-            <Up x="-0.148224875" y="-0.8566901" z="-0.494076073" />
+            <Position x="-1.656768798828125" y="-1.41204833984375" z="-2.7419891357421875" />
+            <Forward x="0.5963169" y="0.7742797" z="-0.211888909" />
+            <Up x="0.10049814" y="-0.3338839" z="-0.9372413" />
             <Orientation>
-              <X>0.375938475</X>
-              <Y>-0.266085058</Y>
-              <Z>0.8871389</Z>
-              <W>-0.0292166118</W>
+              <X>-0.2852901</X>
+              <Y>-0.559164643</Y>
+              <Z>0.76521343</Z>
+              <W>0.14280346</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -6627,7 +6626,7 @@ ACCESS</PublicDescription>
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallRealWheelmirrored</SubtypeName>
-              <EntityId>87917758448671338</EntityId>
+              <EntityId>137624170597044253</EntityId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
@@ -6641,18 +6640,18 @@ ACCESS</PublicDescription>
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>86855639956037205</EntityId>
+          <EntityId>96649448374911332</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>86855639956037205</Name>
+          <Name>96649448374911332</Name>
           <PositionAndOrientation>
-            <Position x="-1.8668103218078613" y="0.53544807434082031" z="-0.62164878845214844" />
-            <Forward x="0.682112038" y="-0.450301468" z="0.576151669" />
-            <Up x="0.148224816" y="0.8566903" z="0.494075954" />
+            <Position x="-2.529449462890625" y="-1.26824951171875" z="0.04705810546875" />
+            <Forward x="-0.5963174" y="-0.774279356" z="0.2118882" />
+            <Up x="-0.100498155" y="0.333884031" z="0.9372413" />
             <Orientation>
-              <X>-0.0291319657</X>
-              <Y>0.8872583</Y>
-              <Z>0.266094416</Z>
-              <W>-0.375656515</W>
+              <X>0.1428036</X>
+              <Y>0.7652132</Y>
+              <Z>0.5591648</Z>
+              <W>0.28529048</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -6660,7 +6659,7 @@ ACCESS</PublicDescription>
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallRealWheel</SubtypeName>
-              <EntityId>74231584237826694</EntityId>
+              <EntityId>91785603037096863</EntityId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
@@ -6674,18 +6673,18 @@ ACCESS</PublicDescription>
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>72491468896032012</EntityId>
+          <EntityId>121132673609601083</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>72491468896032012</Name>
+          <Name>121132673609601083</Name>
           <PositionAndOrientation>
-            <Position x="2.6299022436141968" y="0.990687370300293" z="-2.7600321769714355" />
-            <Forward x="0.6821964" y="-0.450272083" z="0.5760754" />
-            <Up x="0.148224875" y="0.8566902" z="0.494076133" />
+            <Position x="0.4515380859375" y="2.60357666015625" z="-1.012603759765625" />
+            <Forward x="-0.59631747" y="-0.7742794" z="0.211888373" />
+            <Up x="-0.100498155" y="0.333884031" z="0.9372414" />
             <Orientation>
-              <X>-0.0291476287</X>
-              <Y>0.887236238</Y>
-              <Z>0.266092718</Z>
-              <W>-0.3757086</W>
+              <X>0.142803609</X>
+              <Y>0.765213251</Y>
+              <Z>0.5591647</Z>
+              <W>0.28529045</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -6693,7 +6692,7 @@ ACCESS</PublicDescription>
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>SmallRealWheel</SubtypeName>
-              <EntityId>134833101634791614</EntityId>
+              <EntityId>90507430823657433</EntityId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
