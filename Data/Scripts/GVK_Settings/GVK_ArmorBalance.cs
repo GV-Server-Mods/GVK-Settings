@@ -157,7 +157,7 @@ namespace MikeDude.ArmorBalance
 					thrustDef.MinPlanetaryInfluence = 0.5f;
 					thrustDef.MaxPlanetaryInfluence = 1f;
 					thrustDef.EffectivenessAtMaxInfluence = 1f;
-					thrustDef.EffectivenessAtMinInfluence = 0.5f;
+					thrustDef.EffectivenessAtMinInfluence = 0.75f;
 					//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
 					//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
 					thrustDef.ConsumptionFactorPerG = -9.1f;
