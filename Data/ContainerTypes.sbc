@@ -511,7 +511,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="3" AmountMax="15">
-					<Frequency>0.25</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_Railgun</SubtypeId>
