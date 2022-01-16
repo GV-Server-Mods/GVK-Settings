@@ -126,7 +126,7 @@
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
-			<AssemblySpeed>0.3</AssemblySpeed>
+			<AssemblySpeed>0.6</AssemblySpeed>
 			<StandbyPowerConsumption>0.015</StandbyPowerConsumption>
 			<OperationalPowerConsumption>0.2</OperationalPowerConsumption>
 			<InventoryMaxVolume>2</InventoryMaxVolume>
@@ -202,7 +202,7 @@
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
-			<AssemblySpeed>0.3</AssemblySpeed>
+			<AssemblySpeed>0.6</AssemblySpeed>
 			<ScreenAreas>
 				<ScreenArea Name="CockpitScreen_01" DisplayName="Top panel"/>
 				<ScreenArea Name="CockpitScreen_02" DisplayName="Bottom panel"/>
