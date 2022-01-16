@@ -39,8 +39,8 @@
 			<MirroringZ>Y</MirroringZ>
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>20</BuildTimeSeconds>
-			<LightRadius Min="2" Max="20" Default="10"/>
-			<LightReflectorRadius Min="10" Max="320" Default="160"/>
+			<LightRadius Min="2" Max="40" Default="20"/>
+			<LightReflectorRadius Min="10" Max="640" Default="160"/>
 			<LightFalloff Min="1" Max="3" Default="1.5"/>
 			<LightIntensity Min="0.5" Max="5" Default="1"/>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
@@ -48,7 +48,7 @@
 			<Flare>SpotlightLarge</Flare>
 			<ReflectorThickness>11</ReflectorThickness>
 			<ReflectorTexture>Textures\Lights\reflector_large.dds</ReflectorTexture>
-			<ReflectorConeDegrees>52</ReflectorConeDegrees>
+			<ReflectorConeDegrees>60</ReflectorConeDegrees>
 			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<DestroyEffect>BlockDestroyed_Large</DestroyEffect>
@@ -94,7 +94,7 @@
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>7</BuildTimeSeconds>
 			<LightRadius Min="1" Max="5" Default="5"/>
-			<LightReflectorRadius Min="10" Max="240" Default="120"/>
+			<LightReflectorRadius Min="10" Max="480" Default="120"/>
 			<LightFalloff Min="1" Max="3" Default="1.5"/>
 			<LightIntensity Min="0.5" Max="5" Default="3"/>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
@@ -102,7 +102,7 @@
 			<Flare>SpotlightSmall</Flare>
 			<ReflectorThickness>2.5</ReflectorThickness>
 			<ReflectorTexture>Textures\Lights\reflector_small.dds</ReflectorTexture>
-			<ReflectorConeDegrees>52</ReflectorConeDegrees>
+			<ReflectorConeDegrees>60</ReflectorConeDegrees>
 			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
@@ -142,7 +142,7 @@
             <EdgeType>Light</EdgeType>
             <BuildTimeSeconds>4</BuildTimeSeconds>
             <LightRadius Min="1" Max="5" Default="5" />
-            <LightReflectorRadius Min="10" Max="120" Default="60" />
+            <LightReflectorRadius Min="10" Max="240" Default="60" />
             <LightFalloff Min="1" Max="3" Default="1.5" />
             <LightIntensity Min="0.5" Max="5" Default="3" />
             <ResourceSinkGroup>Utility</ResourceSinkGroup>
@@ -150,7 +150,7 @@
             <Flare>SpotlightSmall</Flare>
             <ReflectorThickness>2.5</ReflectorThickness>
             <ReflectorTexture>Textures\Lights\reflector_small.dds</ReflectorTexture>
-            <ReflectorConeDegrees>52</ReflectorConeDegrees>
+            <ReflectorConeDegrees>60</ReflectorConeDegrees>
             <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
             <DamagedSound>ParticleElectrical</DamagedSound>
             <DestroyEffect>BlockDestroyed_Medium</DestroyEffect>
