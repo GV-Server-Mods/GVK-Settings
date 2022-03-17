@@ -28,6 +28,8 @@ namespace MikeDude.ArmorBalance
         public const float heavyArmorLargeDeformationMod = 0.2f; //varies for every block
         public const float heavyArmorSmallDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
         public const float heavyArmorSmallDeformationMod = 0.2f; //varies for every block
+	
+		public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
 
         public const float realWheelDamageMod = 0.5f; //1.0 Vanilla
         public const float realWheel5x5DamageMod = 0.5f; //1.0 Vanilla
@@ -56,15 +58,17 @@ namespace MikeDude.ArmorBalance
 				MyShipDrillDefinition drillDef = def as MyShipDrillDefinition;
 				MyPistonBaseDefinition pistonBaseDef = def as MyPistonBaseDefinition;
 				MyBeaconDefinition beaconDef = def as MyBeaconDefinition;
-				//MyWheelModelsDefinition realWheelDef = def as MyWheelModelsDefinition;
 				MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
-				//MyMotorRotorDefinition rotorDef = def as MyMotorRotorDefinition;
 				MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
-				//MyMotorAdvancedRotorDefinition advRotorDef = def as MyMotorAdvancedRotorDefinition;
 				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
 				MyThrustDefinition thrustDef = def as MyThrustDefinition;//thruster
 				MyGyroDefinition gyroDef = def as MyGyroDefinition;//thruster
 
+
+                if (blockDef != null)
+                {
+					blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;	
+				}					
 
                 if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
                 {
@@ -103,19 +107,23 @@ namespace MikeDude.ArmorBalance
                     }
 					//blockDef.PCU = blastDoorPCU;
                 }
-                if (suspensionDef != null)
+                //suspension
+				if (suspensionDef != null)
                 {
                     suspensionDef.GeneralDamageMultiplier = suspensionDamageMod;
                 }
-                if (statorDef != null)
+                //rotors (includes hinges)
+				if (statorDef != null)
                 {
                     statorDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
-                if (advStatorDef != null)
+                //adv rotors
+				if (advStatorDef != null)
                 {
                     advStatorDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
-                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
+                //suspension wheels
+				if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
                 {
                     blockDef.GeneralDamageMultiplier = realWheelDamageMod;
 					
@@ -124,23 +132,28 @@ namespace MikeDude.ArmorBalance
 						blockDef.GeneralDamageMultiplier = realWheel5x5DamageMod;
 					}
                 }
-                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))) 
+                //rotor and hinge top parts
+				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))) 
                 {
                     blockDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
-                if (drillDef != null)
+                //drills
+				if (drillDef != null)
                 {
 					drillDef.PCU = drillPCU;			
                 }
-                if (pistonBaseDef != null)
+                //pistons
+				if (pistonBaseDef != null)
                 {
 					pistonBaseDef.PCU = pistonBasePCU;			
                 }
-                if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
+                //actual conveyor sorters (non weapons)
+				if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
                 {
                     sorterDef.PCU = 0;
                 }
-                if (beaconDef != null)
+                //Drillblocker
+				if (beaconDef != null)
                 {
 					if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
 					{
@@ -164,7 +177,8 @@ namespace MikeDude.ArmorBalance
 					thrustDef.SlowdownFactor = 1f;
 					thrustDef.FuelConverter.Efficiency = 0.019f;
                 }
-                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //&& (gyroDef.Id.SubtypeName.Equals("LargeBlockGyro") || gyroDef.Id.SubtypeName.Equals("SmallBlockGyro"))
+                //gyros
+				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //&& (gyroDef.Id.SubtypeName.Equals("LargeBlockGyro") || gyroDef.Id.SubtypeName.Equals("SmallBlockGyro"))
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
