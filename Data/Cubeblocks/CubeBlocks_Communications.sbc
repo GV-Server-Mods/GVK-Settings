@@ -44,7 +44,7 @@
 			<!-- Beacon properties -->
 			<!-- Antenna info-->
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
-			<MaxBroadcastRadius>50000</MaxBroadcastRadius>
+			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
@@ -86,7 +86,7 @@
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<!-- Beacon properties -->
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
-			<MaxBroadcastRadius>50000</MaxBroadcastRadius>
+			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
 			<Flare>BeaconSmall</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<!-- End Beacon Props-->
