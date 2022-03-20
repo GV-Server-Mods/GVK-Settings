@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
@@ -9,16 +9,13 @@ using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
 using System.Collections.Generic;
-using Sandbox.Game.Entities;
-using Sandbox.Game.Weapons;
 
-namespace DrillBlocker_NoDrill
+namespace LimitedProdZone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Drill), false)]
-    public class DrillBlocker_Drill : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Refinery), false)]
+    public class LimitedProdZone_Refinery : MyGameLogicComponent
     {
-
-        private IMyShipDrill shipDrill;
+        private IMyRefinery refinery;
         private IMyPlayer client;
         private bool isServer;
         private bool inZone;
@@ -28,8 +25,8 @@ namespace DrillBlocker_NoDrill
         {
             base.Init(objectBuilder);
 
-            shipDrill = (Entity as IMyShipDrill);
-            if (shipDrill != null)
+            refinery = (Entity as IMyRefinery);
+            if (refinery != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
@@ -45,7 +42,7 @@ namespace DrillBlocker_NoDrill
 
             if (isServer)
             {
-                shipDrill.IsWorkingChanged += shipDrillWorkingStateChange;
+                refinery.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -57,20 +54,24 @@ namespace DrillBlocker_NoDrill
             {
                 if (isServer)
                 {
-                    //if (!shipDrill.Enabled) return;
+                    if (!refinery.Enabled) return;
 
                     foreach (var beacon in beaconList)
-                    {
-
+                    {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-
-                        if (Vector3D.Distance(shipDrill.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                        if (Vector3D.DistanceSquared(refinery.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
                         {
-                            inZone = true;
-                            shipDrill.Enabled = false;
-                            ApplyDamageDrill();
-                            return;
+                            string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                            bool isBasicRefinery = false;
+                            isBasicRefinery = strSubBlockType.Contains("Basic");
+
+                            if (isBasicRefinery == false)
+                            {
+								inZone = true;
+								refinery.Enabled = false;
+								return;
+                            }
                         }
                     }
 
@@ -83,42 +84,27 @@ namespace DrillBlocker_NoDrill
             }
         }
 
-        private void shipDrillWorkingStateChange(IMyCubeBlock block)
+        private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!shipDrill.Enabled)
+            if (!refinery.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(shipDrill.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                    if (Vector3D.DistanceSquared(refinery.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
                     {
-                        shipDrill.Enabled = false;
-                        ApplyDamageDrill();
+                        string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                        Boolean isBasicRefinery = false;
+                        isBasicRefinery = strSubBlockType.Contains("Basic");
+
+                        if (isBasicRefinery == false)
+                        {
+							refinery.Enabled = false;
+                        }
                     }
-
-                }
-
+                }               
             }
-
-        }
-
-        private void ApplyDamageDrill()
-        {
-            try
-            {
-                IMySlimBlock b = shipDrill.SlimBlock;
-                IMyEntity entity = shipDrill.Parent;
-                IMyCubeGrid grid = entity as IMyCubeGrid;
-                var damage = grid.GridSizeEnum.Equals(MyCubeSize.Large) ? 1.0f : 0.5f;
-                b.DecreaseMountLevel(damage, null, true);
-                b.ApplyAccumulatedDamage();
-            }
-            catch (Exception exc)
-            {
-                MyLog.Default.WriteLineAndConsole($"Failed to apply damage: {exc}");
-            }
-
         }
 
         public override void Close()
@@ -137,15 +123,15 @@ namespace DrillBlocker_NoDrill
                 return;
             }
 
-            var D_Block = Entity as IMyShipDrill;
+            var Block = Entity as IMyRefinery;
 
-            if (D_Block == null) return;
+            if (Block == null) return;
 
             try
             {
                 if (isServer)
                 {
-                    shipDrill.IsWorkingChanged -= shipDrillWorkingStateChange;
+                    refinery.IsWorkingChanged -= WorkingStateChange;
                 }
 
             }
@@ -155,8 +141,7 @@ namespace DrillBlocker_NoDrill
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-
+            //Unregister any handlers here
         }
     }
 }
-*/

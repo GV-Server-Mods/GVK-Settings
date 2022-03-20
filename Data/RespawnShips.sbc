@@ -6,10 +6,10 @@
 				<TypeId>RespawnShipDefinition</TypeId>
 				<SubtypeId>RespawnPlanetPod</SubtypeId>
 			</Id>
-			<DisplayName>Kharak Respawn Rover</DisplayName>
-			<Icon>Textures\GUI\Icons\RespawnShips\KharakRespawnRover.png</Icon>
+			<DisplayName>CHADPOD</DisplayName>
+			<Icon>Textures\GUI\Icons\RespawnShips\CHADPOD.png</Icon>
 			<CooldownSeconds>200</CooldownSeconds>
-			<Prefab>KASSPOD</Prefab>
+			<Prefab>CHADPOD</Prefab>
 			<MinimalAirDensity>0.8</MinimalAirDensity>
 			<PlanetDeployAltitude>50</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
