@@ -64,7 +64,7 @@ namespace LimitedProdZone
                         {
                             string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                             bool isBasicRefinery = false;
-                            isBasicRefinery = strSubBlockType.Contains("Basic");
+                            isBasicRefinery = strSubBlockType.Contains("Blast Furnace");
 
                             if (isBasicRefinery == false)
                             {
@@ -96,7 +96,7 @@ namespace LimitedProdZone
                     {
                         string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                         Boolean isBasicRefinery = false;
-                        isBasicRefinery = strSubBlockType.Contains("Basic");
+                        isBasicRefinery = strSubBlockType.Contains("Blast Furnace");
 
                         if (isBasicRefinery == false)
                         {
