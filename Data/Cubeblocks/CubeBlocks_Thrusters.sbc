@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<!-- Region Thrust-->
+		<!-- Ion Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -388,7 +388,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<!--HydrogenThrusters-->
+		<!-- Hydrogen Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -816,7 +816,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<!--HydrogenThrusters End-->
+		<!-- Atmo Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -1239,6 +1239,5 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<!-- End Region Thrust-->
 	</CubeBlocks>
 </Definitions>
