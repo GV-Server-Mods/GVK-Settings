@@ -76,6 +76,77 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
+        <Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
+            <Id>
+                <TypeId>Assembler</TypeId>
+                <SubtypeId>BasicAssembler</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Block_BasicAssembler</DisplayName>
+            <Icon>Textures\GUI\Icons\Cubes\basicAssembler.dds</Icon>
+            <Description>Description_AssemblerBasic</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="1" y="1" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Model>Models\Cubes\Large\BasicAssembler.mwm</Model>
+            <Components>
+                <Component Subtype="SteelPlate" Count="60" />
+                <Component Subtype="Construction" Count="40" />
+                <Component Subtype="Motor" Count="10" />
+                <Component Subtype="Display" Count="4" />
+                <Component Subtype="Computer" Count="80" />
+                <Component Subtype="SteelPlate" Count="20" />
+            </Components>
+            <CriticalComponent Subtype="Computer" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="1" EndY="1" />
+                <MountPoint Side="Back" StartX="0" StartY="0" EndX="1" EndY="1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true" />
+                <MountPoint Side="Top" StartX="0" StartY="0" EndX="1" EndY="1" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="1" EndY="1" />
+                <MountPoint Side="Right" StartX="0" StartY="0" EndX="1" EndY="1" />
+            </MountPoints>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BasicAssembler_Construction1.mwm" />
+                <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BasicAssembler_Construction2.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BasicAssembler_Construction3.mwm" />
+            </BuildProgressModels>
+            <BlockPairName>BasicAssembler</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>40</BuildTimeSeconds>
+            <ResourceSinkGroup>Factory</ResourceSinkGroup>
+            <InventoryMaxVolume>2</InventoryMaxVolume>
+            <InventorySize>
+                <X>1</X>
+                <Y>1</Y>
+                <Z>1</Z>
+            </InventorySize>
+            <StandbyPowerConsumption>0.001</StandbyPowerConsumption>
+            <OperationalPowerConsumption>0.28</OperationalPowerConsumption>
+            <BlueprintClasses>
+                <Class>SimpleComponents</Class>
+                <Class>Tools</Class>
+                <Class>PlayerConsumables</Class>
+                <Class>BasicShipConsumables</Class>
+            </BlueprintClasses>
+            <AssemblySpeed>0.7</AssemblySpeed>
+            <DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+            <DamagedSound>ParticleHeavyMech</DamagedSound>
+            <PrimarySound>BlockAssembler</PrimarySound>
+            <ActionSound>BlockAssemblerProcess</ActionSound>
+            <DestroyEffect>Explosion_Missile</DestroyEffect>
+            <DestroySound>WepSmallMissileExpl</DestroySound>
+            <PCU>40</PCU>
+            <MirroringY>Z</MirroringY>
+            <MirroringZ>Y</MirroringZ>
+            <IsAirTight>true</IsAirTight>
+            <TieredUpdateTimes>
+                <unsignedInt>60</unsignedInt>
+                <unsignedInt>120</unsignedInt>
+                <unsignedInt>240</unsignedInt>
+            </TieredUpdateTimes>
+        </Definition>
 		<!-- added for custom blueprint classes -->
 		<Definition xsi:type="MyObjectBuilder_SurvivalKitDefinition">
 			<Id>
