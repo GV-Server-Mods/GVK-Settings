@@ -6,7 +6,7 @@
 				<TypeId>SafeZoneBlock</TypeId>
 				<SubtypeId>SafeZoneBlock</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_SafeZone</DisplayName>
+			<DisplayName>Safezone Generator (Zone 0 Only)</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneBlock.dds</Icon>
 			<Description>Description_SafeZone</Description>
 			<CubeSize>Large</CubeSize>
@@ -49,8 +49,8 @@
 			<MinSafeZoneRadius>10</MinSafeZoneRadius>
 			<DefaultSafeZoneRadius>10</DefaultSafeZoneRadius>
 			<SafeZoneActivationTimeS>120</SafeZoneActivationTimeS>
-			<MaxSafeZonePowerDrainkW>100000</MaxSafeZonePowerDrainkW>
-			<MinSafeZonePowerDrainkW>1000</MinSafeZonePowerDrainkW>
+			<MaxSafeZonePowerDrainkW>1000</MaxSafeZonePowerDrainkW>
+			<MinSafeZonePowerDrainkW>50</MinSafeZonePowerDrainkW>
 			<SafeZoneUpkeep>0</SafeZoneUpkeep>
 			<SafeZoneUpkeepTimeM>60</SafeZoneUpkeepTimeM>
 			<!-- End Safezone Props-->
