@@ -39,7 +39,7 @@
 			</BuildProgressModels>
 			<BuildTimeSeconds>30</BuildTimeSeconds>
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
-			<BlockPairName>DrillBlocker</BlockPairName>
+			<BlockPairName>LimitedProdZone</BlockPairName>
 			<EdgeType>Light</EdgeType>
 			<MirroringY>Z</MirroringY>
 			<MirroringZ>Y</MirroringZ>
