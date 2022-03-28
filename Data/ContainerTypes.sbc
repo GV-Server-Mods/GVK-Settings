@@ -135,7 +135,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+					<Frequency>0.2</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
@@ -184,18 +184,25 @@
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="5" AmountMax="30">
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Flak</SubtypeId>
+						<SubtypeId>AutocannonClip</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Cannon</SubtypeId>
+						<SubtypeId>MediumCalibreAmmo</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="20">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>LargeCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="50">
@@ -263,7 +270,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+					<Frequency>0.2</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
@@ -312,32 +319,39 @@
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="5" AmountMax="30">
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Flak</SubtypeId>
+						<SubtypeId>AutocannonClip</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Cannon</SubtypeId>
+						<SubtypeId>MediumCalibreAmmo</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="20">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>LargeCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Railgun</SubtypeId>
+						<SubtypeId>SmallRailgunAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="3">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_MAC</SubtypeId>
+						<SubtypeId>LargeRailgunAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="50">
@@ -468,32 +482,39 @@
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.5</Frequency>
+				<Item AmountMin="5" AmountMax="30">
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Flak</SubtypeId>
+						<SubtypeId>AutocannonClip</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Cannon</SubtypeId>
+						<SubtypeId>MediumCalibreAmmo</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="20">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>LargeCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="3" AmountMax="15">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_Railgun</SubtypeId>
+						<SubtypeId>SmallRailgunAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="5">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
-						<SubtypeId>Ballistics_MAC</SubtypeId>
+						<SubtypeId>LargeRailgunAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="50">
