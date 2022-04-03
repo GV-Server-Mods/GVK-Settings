@@ -91,7 +91,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > beacon.Radius)
+                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > (beacon.Radius - 250))
                     {
 						safezoneblock.Enabled = false;
                     }

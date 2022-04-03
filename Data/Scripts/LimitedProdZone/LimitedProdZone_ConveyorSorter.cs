@@ -60,7 +60,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.DistanceSquared(weapon.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
+                        if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         {
                             string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
                             bool isConveyorSorter = false;
@@ -92,7 +92,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.DistanceSquared(weapon.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
+                    if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     {
                         string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
                         Boolean isConveyorSorter = false;

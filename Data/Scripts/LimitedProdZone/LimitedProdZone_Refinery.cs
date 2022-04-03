@@ -60,7 +60,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.DistanceSquared(refinery.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
+                        if (Vector3D.Distance(refinery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         {
                             string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                             bool isBasicRefinery = false;
@@ -92,7 +92,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.DistanceSquared(refinery.GetPosition(), beacon.GetPosition()) < (beacon.Radius*beacon.Radius))
+                    if (Vector3D.Distance(refinery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     {
                         string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                         Boolean isBasicRefinery = false;
