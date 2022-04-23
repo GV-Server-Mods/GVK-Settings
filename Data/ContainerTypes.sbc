@@ -113,21 +113,28 @@
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
 				</Item> -->
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="3" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="3" AmountMax="10">
+					<Frequency>0.25</Frequency> <!-- normally 0.5 -->
+					<Id>
+						<TypeId>Component</TypeId>
+						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="3" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="3" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
@@ -149,14 +156,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+					<Frequency>0.2</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.3</Frequency> <!-- normally 0.1 -->
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
@@ -241,28 +248,28 @@
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
 				</Item> -->
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.25</Frequency> <!-- normally 0.5 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="3" AmountMax="5">
+				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
@@ -284,14 +291,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.1</Frequency>
+					<Frequency>0.2</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.3</Frequency> <!-- normally 0.1 -->
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
@@ -302,6 +309,13 @@
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Data_Core</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="10" AmountMax="50"> 
+					<Frequency>0.2</Frequency>
+					<Id>
+						<TypeId>Component</TypeId>
+						<SubtypeId>ZoneChip</SubtypeId>
 					</Id>
 				</Item>
 				<!-- AmmoMagazines -->
@@ -397,28 +411,28 @@
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
 				</Item> -->
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.5</Frequency> <!-- normally 0.5 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Ion_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
@@ -447,7 +461,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="5">
-					<Frequency>0.3</Frequency> <!-- normally 0.1 -->
+					<Frequency>0.2</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
