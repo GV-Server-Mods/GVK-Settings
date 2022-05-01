@@ -37,6 +37,7 @@ namespace MikeDude.ArmorBalance
         public const float rotorDamageMod = 0.5f; //1.0 Vanilla
         public const float hingeDamageMod = 0.5f; //1.0 Vanilla
 		public const float gyroDamageMod = 2; //1.0 Vanilla
+		public const float thrusterDamageMod = 0.5f; //1.0 Vanilla
 
 		public const int drillPCU = 2000;
 		public const int pistonBasePCU = 2000;
@@ -165,20 +166,25 @@ namespace MikeDude.ArmorBalance
 					}
                 }
 				//Thrusters
-                if (thrustDef != null && thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
+                if (thrustDef != null)
                 {
-					thrustDef.MinPlanetaryInfluence = 0.5f;
-					thrustDef.MaxPlanetaryInfluence = 1f;
-					thrustDef.EffectivenessAtMaxInfluence = 1f;
-					thrustDef.EffectivenessAtMinInfluence = 0.75f;
-					//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
-					//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
-					thrustDef.ConsumptionFactorPerG = -9.1f;
-					thrustDef.SlowdownFactor = 1f;
-					thrustDef.FuelConverter.Efficiency = 0.019f;
+                    thrustDef.GeneralDamageMultiplier = thrusterDamageMod;
+
+					if (thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
+					{
+						thrustDef.MinPlanetaryInfluence = 0.5f;
+						thrustDef.MaxPlanetaryInfluence = 1f;
+						thrustDef.EffectivenessAtMaxInfluence = 1f;
+						thrustDef.EffectivenessAtMinInfluence = 0.75f;
+						//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
+						//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
+						thrustDef.ConsumptionFactorPerG = -9.1f;
+						thrustDef.SlowdownFactor = 1f;
+						thrustDef.FuelConverter.Efficiency = 0.019f;
+					}
                 }
                 //gyros
-				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //&& (gyroDef.Id.SubtypeName.Equals("LargeBlockGyro") || gyroDef.Id.SubtypeName.Equals("SmallBlockGyro"))
+				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //using blockdef because gyro upgrades are not gyro type
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
