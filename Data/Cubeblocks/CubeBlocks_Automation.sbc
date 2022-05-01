@@ -16,14 +16,15 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Small\ProgrammingBlock.mwm</Model>
 			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="Construction" Count="2"/>
 				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Motor" Count="1"/>
 				<Component Subtype="Display" Count="1"/>
-				<Component Subtype="Computer" Count="2"/>
-				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="SteelPlate" Count="2"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
@@ -66,14 +67,15 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\ProgrammingBlock.mwm</Model>
 			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1"/>
 				<Component Subtype="SteelPlate" Count="11"/>
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Motor" Count="1"/>
 				<Component Subtype="Display" Count="1"/>
-				<Component Subtype="Computer" Count="2"/>
-				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
