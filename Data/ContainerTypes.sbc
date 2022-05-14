@@ -447,14 +447,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Data_Core</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="50" AmountMax="100"> 
-					<Frequency>1</Frequency>
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>ZoneChip</SubtypeId>
