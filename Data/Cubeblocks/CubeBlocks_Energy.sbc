@@ -280,6 +280,7 @@
 			<PCU>55</PCU>
 			<IsAirTight>false</IsAirTight>
 		</Definition>
+		<!-- increased output and efficiency of large reactors -->
 		<Definition xsi:type="MyObjectBuilder_ReactorDefinition">
 			<Id>
 				<TypeId>Reactor</TypeId>
@@ -413,7 +414,7 @@
 			<BuildTimeSeconds>30</BuildTimeSeconds>
 			<EdgeType>Light</EdgeType>
 			<ResourceSourceGroup>Reactors</ResourceSourceGroup>
-			<MaxPowerOutput>14.75</MaxPowerOutput>
+			<MaxPowerOutput>20</MaxPowerOutput>
 			<InventorySize>
 				<X>1</X>
 				<Y>1</Y>
@@ -438,6 +439,7 @@
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
+					<Ratio>0.75</Ratio>
 				</FuelInfo>
 			</FuelInfos>
 			<PrimarySound>ShipSmNuclearLrg</PrimarySound>

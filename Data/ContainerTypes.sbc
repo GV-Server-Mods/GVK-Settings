@@ -117,28 +117,7 @@
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="3" AmountMax="10">
-					<Frequency>0.5</Frequency> <!-- normally 0.5 -->
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="3" AmountMax="10">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Ion_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="3" AmountMax="10">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
@@ -231,28 +210,7 @@
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="5" AmountMax="15">
-					<Frequency>0.5</Frequency> <!-- normally 0.5 -->
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="5" AmountMax="15">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Ion_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="5" AmountMax="15">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
@@ -394,28 +352,7 @@
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="10" AmountMax="20">
-					<Frequency>1</Frequency> <!-- normally 0.5 -->
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="10" AmountMax="20">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Ion_Tech</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="10" AmountMax="20">
-					<Frequency>1</Frequency>
-					<Id>
-						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">

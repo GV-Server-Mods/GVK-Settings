@@ -2,7 +2,7 @@
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Ion Thrusters -->
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallThrust</SubtypeId>
@@ -98,7 +98,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeThrust</SubtypeId>
@@ -194,7 +194,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallThrust</SubtypeId>
@@ -290,7 +290,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeThrust</SubtypeId>
@@ -405,7 +405,7 @@
 			<ThrusterType>Hydrogen</ThrusterType>
 			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
 			<Components>
-				<Component Subtype="GVK_Hydro_Tech" Count="25"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="25"/>
 				<Component Subtype="SteelPlate" Count="100"/>
 				<Component Subtype="Construction" Count="150"/>
 				<Component Subtype="MetalGrid" Count="250"/>
@@ -452,19 +452,13 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>0.5</Efficiency>
+				<Efficiency>1</Efficiency>
 			</FuelConverter>
 			<MaxPowerConsumption>7.5</MaxPowerConsumption>
 			<MinPowerConsumption>0.000000001</MinPowerConsumption>
 			<ResourceSinkGroup>Thrust</ResourceSinkGroup>
 			<ForceMagnitude>7200000</ForceMagnitude>
 			<SlowdownFactor>1</SlowdownFactor>
-			<MinPlanetaryInfluence>-1.4</MinPlanetaryInfluence>
-			<MaxPlanetaryInfluence>1</MaxPlanetaryInfluence>
-			<EffectivenessAtMinInfluence>0</EffectivenessAtMinInfluence>
-			<EffectivenessAtMaxInfluence>1</EffectivenessAtMaxInfluence>
-			<EffectivenessAtMaxInfluence>1</EffectivenessAtMaxInfluence>
-			<ConsumptionFactorPerG>1</ConsumptionFactorPerG>
 			<FlameDamageLengthScale>0.6</FlameDamageLengthScale>
 			<FlameLengthScale>1.15</FlameLengthScale>
 			<FlameIdleColor>
@@ -514,7 +508,7 @@
 			<ThrusterType>Hydrogen</ThrusterType>
 			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
 			<Components>
-				<Component Subtype="GVK_Hydro_Tech" Count="5"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
 				<Component Subtype="SteelPlate" Count="15"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="MetalGrid" Count="40"/>
@@ -556,18 +550,12 @@
 			<ResourceSinkGroup>Thrust</ResourceSinkGroup>
 			<ForceMagnitude>1080000</ForceMagnitude>
 			<SlowdownFactor>1</SlowdownFactor>
-			<MinPlanetaryInfluence>-1.4</MinPlanetaryInfluence>
-			<MaxPlanetaryInfluence>1</MaxPlanetaryInfluence>
-			<EffectivenessAtMinInfluence>0</EffectivenessAtMinInfluence>
-			<EffectivenessAtMaxInfluence>1</EffectivenessAtMaxInfluence>
-			<ConsumptionFactorPerG>1</ConsumptionFactorPerG>
-			<NeedsAtmosphereForInfluence>true</NeedsAtmosphereForInfluence>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>0.5</Efficiency>
+				<Efficiency>1</Efficiency>
 			</FuelConverter>
 			<MaxPowerConsumption>1.25</MaxPowerConsumption>
 			<MinPowerConsumption>0.000000001</MinPowerConsumption>
@@ -620,7 +608,7 @@
 			<ThrusterType>Hydrogen</ThrusterType>
 			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
 			<Components>
-				<Component Subtype="GVK_Hydro_Tech" Count="5"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
 				<Component Subtype="SteelPlate" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="MetalGrid" Count="22"/>
@@ -667,18 +655,13 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>0.5</Efficiency>
+				<Efficiency>1</Efficiency>
 			</FuelConverter>
 			<MaxPowerConsumption>0.6</MaxPowerConsumption>
 			<MinPowerConsumption>0.000000001</MinPowerConsumption>
 			<ResourceSinkGroup>Thrust</ResourceSinkGroup>
 			<ForceMagnitude>480000</ForceMagnitude>
 			<SlowdownFactor>1</SlowdownFactor>
-			<MinPlanetaryInfluence>-1.4</MinPlanetaryInfluence>
-			<MaxPlanetaryInfluence>1</MaxPlanetaryInfluence>
-			<EffectivenessAtMinInfluence>0</EffectivenessAtMinInfluence>
-			<EffectivenessAtMaxInfluence>1</EffectivenessAtMaxInfluence>
-			<NeedsAtmosphereForInfluence>true</NeedsAtmosphereForInfluence>
 			<FlameDamageLengthScale>0.6</FlameDamageLengthScale>
 			<FlameLengthScale>1.15</FlameLengthScale>
 			<FlameIdleColor>
@@ -727,7 +710,7 @@
 			<ThrusterType>Hydrogen</ThrusterType>
 			<SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
 			<Components>
-				<Component Subtype="GVK_Hydro_Tech" Count="1"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
 				<Component Subtype="SteelPlate" Count="2"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="MetalGrid" Count="4"/>
@@ -773,16 +756,11 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>0.5</Efficiency>
+				<Efficiency>1</Efficiency>
 			</FuelConverter>
 			<MaxPowerConsumption>0.125</MaxPowerConsumption>
 			<MinPowerConsumption>0.000000001</MinPowerConsumption>
 			<SlowdownFactor>1</SlowdownFactor>
-			<MinPlanetaryInfluence>-1.4</MinPlanetaryInfluence>
-			<MaxPlanetaryInfluence>1</MaxPlanetaryInfluence>
-			<EffectivenessAtMinInfluence>0</EffectivenessAtMinInfluence>
-			<EffectivenessAtMaxInfluence>1</EffectivenessAtMaxInfluence>
-			<NeedsAtmosphereForInfluence>true</NeedsAtmosphereForInfluence>
 			<FlameDamageLengthScale>0.34</FlameDamageLengthScale>
 			<FlameLengthScale>1.5</FlameLengthScale>
 			<FlameIdleColor>
@@ -817,7 +795,7 @@
 			</TieredUpdateTimes>
 		</Definition>
 		<!-- Atmo Thrusters -->
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeAtmosphericThrust</SubtypeId>
@@ -921,7 +899,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallAtmosphericThrust</SubtypeId>
@@ -1027,7 +1005,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeAtmosphericThrust</SubtypeId>
@@ -1132,7 +1110,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallAtmosphericThrust</SubtypeId>

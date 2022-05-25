@@ -4,6 +4,21 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+			</Id>
+			<DisplayName>Thruster Tech</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Thrust_Tech"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 			</Id>
 			<DisplayName>Atmo Thruster Tech</DisplayName>

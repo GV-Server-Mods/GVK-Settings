@@ -2,6 +2,7 @@
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- added for custom blueprint classes -->
+		<!-- reduced speed -->
 		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
 			<Id>
 				<TypeId>Assembler</TypeId>
@@ -130,7 +131,7 @@
 				<Class>PlayerConsumables</Class>
 				<Class>BasicShipConsumables</Class>
 			</BlueprintClasses>
-			<AssemblySpeed>0.5</AssemblySpeed>
+			<AssemblySpeed>0.25</AssemblySpeed>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
 			<DamagedSound>ParticleHeavyMech</DamagedSound>
 			<PrimarySound>BlockAssembler</PrimarySound>
@@ -197,7 +198,7 @@
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
-			<AssemblySpeed>0.6</AssemblySpeed>
+			<AssemblySpeed>0.4</AssemblySpeed>
 			<StandbyPowerConsumption>0.015</StandbyPowerConsumption>
 			<OperationalPowerConsumption>0.2</OperationalPowerConsumption>
 			<InventoryMaxVolume>2</InventoryMaxVolume>
@@ -273,7 +274,7 @@
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
-			<AssemblySpeed>0.6</AssemblySpeed>
+			<AssemblySpeed>0.4</AssemblySpeed>
 			<ScreenAreas>
 				<ScreenArea Name="CockpitScreen_01" DisplayName="Top panel"/>
 				<ScreenArea Name="CockpitScreen_02" DisplayName="Bottom panel"/>
@@ -308,6 +309,7 @@
       <AssemblerPriority>0</AssemblerPriority> -->
 			<PCU>140</PCU>
 		</Definition>
+		<!-- reduced speed -->
 		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
 			<Id>
 				<TypeId>Refinery</TypeId>
@@ -361,8 +363,8 @@
 			<BlueprintClasses>
 				<Class>CommonMetals</Class>
 			</BlueprintClasses>
-			<RefineSpeed>0.55</RefineSpeed>
-			<MaterialEfficiency>0.6</MaterialEfficiency>
+			<RefineSpeed>0.25</RefineSpeed>
+			<MaterialEfficiency>0.5</MaterialEfficiency>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
 			<DamagedSound>ParticleHeavyMech</DamagedSound>
 			<PrimarySound>BlockRafinery</PrimarySound>

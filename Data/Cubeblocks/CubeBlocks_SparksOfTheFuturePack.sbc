@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallThrustSciFi</SubtypeId>
@@ -92,7 +92,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeThrustSciFi</SubtypeId>
@@ -183,7 +183,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallThrustSciFi</SubtypeId>
@@ -274,7 +274,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeThrustSciFi</SubtypeId>
@@ -367,7 +367,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeAtmosphericThrustSciFi</SubtypeId>
@@ -466,7 +466,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallAtmosphericThrustSciFi</SubtypeId>
@@ -567,7 +567,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeAtmosphericThrustSciFi</SubtypeId>
@@ -666,7 +666,7 @@
 			<PCU>15</PCU>
 			<DLC>SparksOfTheFuture</DLC>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallAtmosphericThrustSciFi</SubtypeId>

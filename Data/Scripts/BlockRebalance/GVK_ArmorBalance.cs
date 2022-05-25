@@ -153,7 +153,7 @@ namespace MikeDude.ArmorBalance
                 {
                     sorterDef.PCU = 0;
                 }
-                //Drillblocker
+                //Beacons and Drillblocker
 				if (beaconDef != null)
                 {
 					if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
@@ -172,10 +172,10 @@ namespace MikeDude.ArmorBalance
 
 					if (thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
 					{
-						thrustDef.MinPlanetaryInfluence = 0.5f;
+						thrustDef.MinPlanetaryInfluence = 0.0f; //was 0.5
 						thrustDef.MaxPlanetaryInfluence = 1f;
 						thrustDef.EffectivenessAtMaxInfluence = 1f;
-						thrustDef.EffectivenessAtMinInfluence = 0.75f;
+						thrustDef.EffectivenessAtMinInfluence = 1f;
 						//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
 						//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
 						thrustDef.ConsumptionFactorPerG = -9.1f;
