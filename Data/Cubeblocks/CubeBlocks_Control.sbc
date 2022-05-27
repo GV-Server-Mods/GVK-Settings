@@ -22,15 +22,15 @@
 			<GlassModel>Models\Cubes\Large\CockpitGlass.mwm</GlassModel>
 			<CharacterAnimation>cockpit1_large</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-			<Components>
-				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="Motor" Count="1"/>
-				<Component Subtype="Display" Count="8"/>
-				<Component Subtype="Computer" Count="100"/>
-				<Component Subtype="SteelPlate" Count="80"/>
-				<Component Subtype="BulletproofGlass" Count="60"/>
-			</Components>
+            <Components>
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="Construction" Count="20" />
+                <Component Subtype="Motor" Count="1" />
+                <Component Subtype="Display" Count="8" />
+                <Component Subtype="Computer" Count="100" />
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="BulletproofGlass" Count="60" />
+            </Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
@@ -86,6 +86,7 @@
 			</RaycastOffset>
 			<PCU>150</PCU>
 		</Definition>
+		<!-- Nerf large industrial cockpit health so its not P2W -->
 		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
 			<Id>
 				<TypeId>Cockpit</TypeId>
@@ -102,15 +103,15 @@
 			<InteriorModel>Models\Cubes\large\CockpitIndustrialInterior.mwm</InteriorModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<ModelOffset x="0" y="0" z="0"/>
-			<Components>
-				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="Motor" Count="1"/>
-				<Component Subtype="Display" Count="8"/>
-				<Component Subtype="Computer" Count="100"/>
-				<Component Subtype="SteelPlate" Count="80"/>
-				<Component Subtype="BulletproofGlass" Count="60"/>
-			</Components>
+            <Components>
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="Construction" Count="20" />
+                <Component Subtype="Motor" Count="1" />
+                <Component Subtype="Display" Count="8" />
+                <Component Subtype="Computer" Count="100" />
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="BulletproofGlass" Count="60" />
+            </Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0.4" EndX="1" EndY="1" Default="true"/>
@@ -183,15 +184,15 @@
 			<GlassModel>Models\Cubes\Small\cockpitglass.mwm</GlassModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-			<Components>
-				<Component Subtype="SteelPlate" Count="10"/>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="Motor" Count="2"/>
-				<Component Subtype="Display" Count="5"/>
-				<Component Subtype="Computer" Count="15"/>
-				<Component Subtype="SteelPlate" Count="50"/>
-				<Component Subtype="BulletproofGlass" Count="30"/>
-			</Components>
+            <Components>
+                <Component Subtype="SteelPlate" Count="5" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Motor" Count="1" />
+                <Component Subtype="Display" Count="5" />
+                <Component Subtype="Computer" Count="15" />
+                <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="BulletproofGlass" Count="30" />
+            </Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="3" Default="true"/>
@@ -263,15 +264,15 @@
 			<InteriorModel>Models\Cubes\small\CockpitIndustrialInterior.mwm</InteriorModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<ModelOffset x="0" y="0" z="0"/>
-			<Components>
-				<Component Subtype="SteelPlate" Count="10"/>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="Motor" Count="2"/>
-				<Component Subtype="Display" Count="5"/>
-				<Component Subtype="Computer" Count="15"/>
-				<Component Subtype="SteelPlate" Count="50"/>
-				<Component Subtype="BulletproofGlass" Count="30"/>
-			</Components>
+            <Components>
+                <Component Subtype="SteelPlate" Count="5" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Motor" Count="1" />
+                <Component Subtype="Display" Count="5" />
+                <Component Subtype="Computer" Count="15" />
+                <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="BulletproofGlass" Count="30" />
+            </Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="1.5" EndX="3" EndY="3" Default="true"/>
@@ -332,17 +333,17 @@
 			<InteriorModel>Models\Cubes\small\CockpitFighterInterior.mwm</InteriorModel>
 			<CharacterAnimation>FighterCockpitPosture</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-			<Components>
-				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="Motor" Count="1"/>
-				<Component Subtype="SteelPlate" Count="10"/>
-				<Component Subtype="MetalGrid" Count="10"/>
-				<Component Subtype="InteriorPlate" Count="15"/>
-				<Component Subtype="Display" Count="4"/>
-				<Component Subtype="Computer" Count="20"/>
-				<Component Subtype="BulletproofGlass" Count="40"/>
-				<Component Subtype="SteelPlate" Count="60"/>
-			</Components>
+            <Components>
+                <Component Subtype="Construction" Count="20" />
+                <Component Subtype="Motor" Count="1" />
+                <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="MetalGrid" Count="10" />
+                <Component Subtype="InteriorPlate" Count="15" />
+                <Component Subtype="Display" Count="4" />
+                <Component Subtype="Computer" Count="20" />
+                <Component Subtype="BulletproofGlass" Count="40" />
+                <Component Subtype="SteelPlate" Count="20" />
+            </Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="6" Default="true"/>
