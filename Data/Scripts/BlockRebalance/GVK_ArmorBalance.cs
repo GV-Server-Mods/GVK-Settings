@@ -38,6 +38,7 @@ namespace MikeDude.ArmorBalance
         public const float hingeDamageMod = 0.5f; //1.0 Vanilla
 		public const float gyroDamageMod = 2; //1.0 Vanilla
 		public const float thrusterDamageMod = 0.5f; //1.0 Vanilla
+		public const float cockpitDamageMod = 0.5f; //1.0 Vanilla
 
 		public const int drillPCU = 2000;
 		public const int pistonBasePCU = 2000;
@@ -62,8 +63,11 @@ namespace MikeDude.ArmorBalance
 				MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
 				MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
 				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
-				MyThrustDefinition thrustDef = def as MyThrustDefinition;//thruster
-				MyGyroDefinition gyroDef = def as MyGyroDefinition;//thruster
+				MyThrustDefinition thrustDef = def as MyThrustDefinition;
+				MyGyroDefinition gyroDef = def as MyGyroDefinition;
+				MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
+				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
+				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
 
 
                 if (blockDef != null)
@@ -184,19 +188,28 @@ namespace MikeDude.ArmorBalance
 					}
                 }
                 //gyros
-				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Gyro"))) //using blockdef because gyro upgrades are not gyro type
+				if (blockDef != null && blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
+                }
+                //cockpits (but not desks, or chairs)
+				if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit")) 
+                {
+                    cockpitDef.GeneralDamageMultiplier = cockpitDamageMod;
+                }
+                //remote controls
+				if (remoteControlDef != null) 
+                {
+                    remoteControlDef.GeneralDamageMultiplier = cockpitDamageMod;
+                }
+                //timer blocks 
+				if (timerBlockDef != null) 
+                {
+                    timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
             }
         }
         
-        /*public override bool UpdatedBeforeInit()
-        {
-            DoWork();
-            return true;
-        }*/
-
         public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
         {
             DoWork();
