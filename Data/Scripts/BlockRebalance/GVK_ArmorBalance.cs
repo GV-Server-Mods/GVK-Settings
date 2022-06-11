@@ -69,11 +69,7 @@ namespace MikeDude.ArmorBalance
 				MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
 				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
 				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
-<<<<<<< Updated upstream
-
-=======
 				MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
->>>>>>> Stashed changes
 
                 if (blockDef != null)
                 {
@@ -212,8 +208,6 @@ namespace MikeDude.ArmorBalance
                 {
                     timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
-<<<<<<< Updated upstream
-=======
                 //H2 tanks
 				if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
                 {
@@ -221,7 +215,6 @@ namespace MikeDude.ArmorBalance
 				hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
 				
                 }
->>>>>>> Stashed changes
             }
         }
         
