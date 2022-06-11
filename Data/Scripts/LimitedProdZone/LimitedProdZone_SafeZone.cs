@@ -69,7 +69,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > (beacon.Radius - 250))
+                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > 19750) //20000km Z0 - 250m buffer
                         {
 							safezoneblock.Enabled = false;
 							return;
@@ -91,7 +91,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > (beacon.Radius - 250))
+                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > 19750) //20000km Z0 - 250m buffer
                     {
 						safezoneblock.Enabled = false;
                     }

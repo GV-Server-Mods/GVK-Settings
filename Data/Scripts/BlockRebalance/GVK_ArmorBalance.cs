@@ -40,9 +40,10 @@ namespace MikeDude.ArmorBalance
 		public const float thrusterDamageMod = 0.5f; //1.0 Vanilla
 		public const float cockpitDamageMod = 0.5f; //1.0 Vanilla
 
-		public const int drillPCU = 2000;
-		public const int pistonBasePCU = 2000;
+		public const int drillPCU = 20000;
+		public const int pistonBasePCU = 20000;
 		public const float beaconMaxRadius = 150000;
+		public const float hydroTankH2Density = 35555f;
 		
         private bool isInit = false;
 
@@ -68,7 +69,11 @@ namespace MikeDude.ArmorBalance
 				MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
 				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
 				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
+<<<<<<< Updated upstream
 
+=======
+				MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
+>>>>>>> Stashed changes
 
                 if (blockDef != null)
                 {
@@ -157,7 +162,7 @@ namespace MikeDude.ArmorBalance
                 {
                     sorterDef.PCU = 0;
                 }
-                //Beacons and Drillblocker
+                //Drillblocker
 				if (beaconDef != null)
                 {
 					if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
@@ -176,10 +181,10 @@ namespace MikeDude.ArmorBalance
 
 					if (thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
 					{
-						thrustDef.MinPlanetaryInfluence = 0.0f; //was 0.5
+						thrustDef.MinPlanetaryInfluence = 0.5f;
 						thrustDef.MaxPlanetaryInfluence = 1f;
 						thrustDef.EffectivenessAtMaxInfluence = 1f;
-						thrustDef.EffectivenessAtMinInfluence = 1f;
+						thrustDef.EffectivenessAtMinInfluence = 0.75f;
 						//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
 						//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
 						thrustDef.ConsumptionFactorPerG = -9.1f;
@@ -207,6 +212,16 @@ namespace MikeDude.ArmorBalance
                 {
                     timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
+<<<<<<< Updated upstream
+=======
+                //H2 tanks
+				if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
+                {
+                    
+				hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
+				
+                }
+>>>>>>> Stashed changes
             }
         }
         

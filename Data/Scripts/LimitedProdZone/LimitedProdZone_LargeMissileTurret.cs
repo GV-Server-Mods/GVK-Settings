@@ -60,7 +60,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                        if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < 20000)
                         {
                             string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
                             bool isBasicLargeMissileTurret = false;
@@ -92,7 +92,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                    if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < 20000)
                     {
                         string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
                         Boolean isBasicLargeMissileTurret = false;

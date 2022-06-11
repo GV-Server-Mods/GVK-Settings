@@ -136,14 +136,14 @@
 				</Item>
 				<!-- AmmoMagazines -->
 				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.5</Frequency>
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_25x184mm</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="50">
-					<Frequency>1</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
@@ -157,14 +157,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.25</Frequency>
+					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>MediumCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="20">
-					<Frequency>0.25</Frequency>
+					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>LargeCalibreAmmo</SubtypeId>
@@ -178,7 +178,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="50">
-					<Frequency>0.25</Frequency>
+					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Missile</SubtypeId>
@@ -264,14 +264,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="50">
-					<Frequency>1</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>NATO_5p56x45mm</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="30">
-					<Frequency>0.5</Frequency>
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>AutocannonClip</SubtypeId>

@@ -60,7 +60,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(assembler.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                        if (Vector3D.Distance(assembler.GetPosition(), beacon.GetPosition()) < 35000)
                         {
                             string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
                             bool isBasicAssembler = false;
@@ -92,7 +92,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(assembler.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                    if (Vector3D.Distance(assembler.GetPosition(), beacon.GetPosition()) < 35000)
                     {
                         string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
                         Boolean isBasicAssembler = false;
