@@ -243,7 +243,19 @@ namespace MikeDude.ArmorBalance
 				}
             }
         }
+        public override void BeforeStart()
+        {
+            MyLog.Default.WriteLineAndConsole($"Starting voxel adjustments");
 
+            foreach (MyVoxelMaterialDefinition voxelMaterialDefinition in MyDefinitionManager.Static.GetVoxelMaterialDefinitions())
+            {
+                if (voxelMaterialDefinition.MinedOre != "Ice")
+                {
+                    continue;
+                }
+                voxelMaterialDefinition.MinedOreRatio *= 1; //adjust if needed
+            }
+        }
         public override void LoadData()
         {
 	        DoWork();
