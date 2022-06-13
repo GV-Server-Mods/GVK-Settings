@@ -16,7 +16,7 @@ using VRageMath;
 // Code is based on Gauge's Balanced Deformation code, but heavily modified for more control. 
 namespace MikeDude.ArmorBalance
 {
-	[MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
+	[MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
         public const float lightArmorLargeDamageMod = 1f; //1.0 Vanilla
@@ -44,17 +44,26 @@ namespace MikeDude.ArmorBalance
 		public const int pistonBasePCU = 20000;
 		public const float beaconMaxRadius = 150000;
 		public const float hydroTankH2Density = 35555f;
-		
-        private bool isInit = false;
 
-        private void DoWork()
+		private readonly MyPhysicalItemDefinition genericScrap =
+			MyDefinitionManager.Static.GetPhysicalItemDefinition(
+				new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
+
+		private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(
+			new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
+
+		private void DoWork()
         {
-
-            foreach (MyDefinitionBase def in MyDefinitionManager.Static.GetAllDefinitions())
+	        MyCubeBlockDefinition.Component unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
+	        {
+		        Count = 1,
+		        Definition = unobtainiumComponent,
+		        DeconstructItem = genericScrap
+	        };
+	        
+	        foreach (MyDefinitionBase def in MyDefinitionManager.Static.GetAllDefinitions())
             {
-
-
-                MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
+	            MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
 				MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
 				MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
 				MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
@@ -175,18 +184,36 @@ namespace MikeDude.ArmorBalance
                 {
                     thrustDef.GeneralDamageMultiplier = thrusterDamageMod;
 
-					if (thrustDef.Id.SubtypeName.Contains("Hydrogen") && !thrustDef.Id.SubtypeName.Contains("NPC"))
-					{
-						thrustDef.MinPlanetaryInfluence = 0.5f;
-						thrustDef.MaxPlanetaryInfluence = 1f;
-						thrustDef.EffectivenessAtMaxInfluence = 1f;
-						thrustDef.EffectivenessAtMinInfluence = 0.75f;
-						//thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
-						//thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
-						thrustDef.ConsumptionFactorPerG = -9.1f;
-						thrustDef.SlowdownFactor = 1f;
-						thrustDef.FuelConverter.Efficiency = 0.019f;
-					}
+                    if (!thrustDef.Id.SubtypeName.Contains("NPC"))
+                    {
+	                    if (thrustDef.FuelConverter != null &&
+	                        !thrustDef.FuelConverter.FuelId.IsNull() &&
+	                        thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
+	                    {
+		                    thrustDef.MinPlanetaryInfluence = 0.5f;
+		                    thrustDef.MaxPlanetaryInfluence = 1f;
+		                    thrustDef.EffectivenessAtMaxInfluence = 1f;
+		                    thrustDef.EffectivenessAtMinInfluence = 0.75f;
+		                    //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
+		                    //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
+		                    thrustDef.ConsumptionFactorPerG = -9.1f;
+		                    thrustDef.SlowdownFactor = 1f;
+		                    thrustDef.FuelConverter.Efficiency = 0.019f;
+	                    }
+	                    else
+	                    {
+		                    blockDef.Enabled = false;
+		                    blockDef.Public = false;
+		                    blockDef.GuiVisible = false;
+		                    if (unobtainiumBlockComponent.Definition != null)
+		                    {
+			                    var thrusterComponents = new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
+			                    thrusterComponents[0] = unobtainiumBlockComponent;
+			                    blockDef.Components.CopyTo(thrusterComponents, 1);
+			                    blockDef.Components = thrusterComponents;
+		                    }
+	                    }
+                    }
                 }
                 //gyros
 				if (blockDef != null && blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
@@ -206,30 +233,20 @@ namespace MikeDude.ArmorBalance
                 //timer blocks 
 				if (timerBlockDef != null) 
                 {
-                    timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
+	                timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
-                //H2 tanks
+
+				//H2 tanks
 				if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
-                {
-                    
-				hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
-				
-                }
+				{
+					hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
+				}
             }
-        }
-        
-        public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
-        {
-            DoWork();
         }
 
-        public override void UpdateBeforeSimulation()
+        public override void LoadData()
         {
-            if (!isInit && MyAPIGateway.Session == null)
-            {
-                DoWork();
-                isInit = true;
-            }
+	        DoWork();
         }
     }
 }

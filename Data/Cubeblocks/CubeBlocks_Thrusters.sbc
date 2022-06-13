@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- All ions and atmo thrusters are hidden via block rebalance script --> 
 		<!-- Ion Thrusters -->
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallThrust</SubtypeId>
@@ -98,7 +99,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeThrust</SubtypeId>
@@ -194,7 +195,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallThrust</SubtypeId>
@@ -290,7 +291,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeThrust</SubtypeId>
@@ -795,7 +796,7 @@
 			</TieredUpdateTimes>
 		</Definition>
 		<!-- Atmo Thrusters -->
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockLargeAtmosphericThrust</SubtypeId>
@@ -899,7 +900,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>LargeBlockSmallAtmosphericThrust</SubtypeId>
@@ -1005,7 +1006,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockLargeAtmosphericThrust</SubtypeId>
@@ -1110,7 +1111,7 @@
 				<unsignedInt>0</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition" Enabled="true">
 			<Id>
 				<TypeId>Thrust</TypeId>
 				<SubtypeId>SmallBlockSmallAtmosphericThrust</SubtypeId>
