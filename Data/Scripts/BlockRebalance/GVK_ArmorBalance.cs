@@ -31,9 +31,9 @@ namespace MikeDude.ArmorBalance
 	
 		public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
 
-        public const float realWheelDamageMod = 0.5f; //1.0 Vanilla
-        public const float realWheel5x5DamageMod = 0.5f; //1.0 Vanilla
-        public const float suspensionDamageMod = 0.5f; //1.0 Vanilla
+        public const float realWheelDamageMod = 0.75f; //1.0 Vanilla
+        public const float realWheel5x5DamageMod = 0.75f; //1.0 Vanilla
+        public const float suspensionDamageMod = 0.75f; //1.0 Vanilla
         public const float rotorDamageMod = 0.5f; //1.0 Vanilla
         public const float hingeDamageMod = 0.5f; //1.0 Vanilla
 		public const float gyroDamageMod = 2; //1.0 Vanilla
