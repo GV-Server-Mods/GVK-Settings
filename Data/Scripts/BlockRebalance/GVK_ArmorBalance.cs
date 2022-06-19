@@ -41,6 +41,7 @@ namespace MikeDude.ArmorBalance
 		public const float cockpitDamageMod = 0.5f; //1.0 Vanilla
 
 		public const int drillPCU = 20000;
+		public const int welderPCU = 10000;
 		public const int pistonBasePCU = 20000;
 		public const float beaconMaxRadius = 150000;
 		public const float hydroTankH2Density = 35555f;
@@ -79,6 +80,7 @@ namespace MikeDude.ArmorBalance
 				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
 				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
 				MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
+				MyShipWelderDefinition welderDef = def as MyShipWelderDefinition;
 
                 if (blockDef != null)
                 {
@@ -156,6 +158,11 @@ namespace MikeDude.ArmorBalance
 				if (drillDef != null)
                 {
 					drillDef.PCU = drillPCU;			
+                }
+                //welders
+				if (welderDef != null)
+                {
+					welderDef.PCU = welderPCU;			
                 }
                 //pistons
 				if (pistonBaseDef != null)
