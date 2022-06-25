@@ -191,7 +191,7 @@ namespace MikeDude.ArmorBalance
                 {
                     thrustDef.GeneralDamageMultiplier = thrusterDamageMod;
 
-                    if (!thrustDef.Id.SubtypeName.Contains("NPC"))
+                    if (!thrustDef.Id.SubtypeName.Contains("NPC") && !thrustDef.Id.SubtypeName.Contains("Hover"))
                     {
 	                    if (thrustDef.FuelConverter != null &&
 	                        !thrustDef.FuelConverter.FuelId.IsNull() &&
@@ -205,7 +205,7 @@ namespace MikeDude.ArmorBalance
 		                    //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
 		                    thrustDef.ConsumptionFactorPerG = -9.1f;
 		                    thrustDef.SlowdownFactor = 1f;
-		                    thrustDef.FuelConverter.Efficiency = 0.019f;
+		                    thrustDef.FuelConverter.Efficiency = 0.2f;
 	                    }
 	                    else
 	                    {
