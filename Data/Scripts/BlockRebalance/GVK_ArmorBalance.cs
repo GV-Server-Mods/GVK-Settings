@@ -197,15 +197,15 @@ namespace MikeDude.ArmorBalance
 	                        !thrustDef.FuelConverter.FuelId.IsNull() &&
 	                        thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
 	                    {
-		                    thrustDef.MinPlanetaryInfluence = 0.5f;
-		                    thrustDef.MaxPlanetaryInfluence = 1f;
+		                    thrustDef.MinPlanetaryInfluence = 0f;
+		                    thrustDef.MaxPlanetaryInfluence = 0.25f;
 		                    thrustDef.EffectivenessAtMaxInfluence = 1f;
-		                    thrustDef.EffectivenessAtMinInfluence = 0.75f;
+		                    thrustDef.EffectivenessAtMinInfluence = 0f;
 		                    //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
 		                    //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
-		                    thrustDef.ConsumptionFactorPerG = -9.1f;
+		                    thrustDef.ConsumptionFactorPerG = 1f;
 		                    thrustDef.SlowdownFactor = 1f;
-		                    thrustDef.FuelConverter.Efficiency = 0.2f;
+		                    thrustDef.FuelConverter.Efficiency = 1f;
 	                    }
 	                    else
 	                    {
