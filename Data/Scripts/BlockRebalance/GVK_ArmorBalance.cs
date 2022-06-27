@@ -68,9 +68,9 @@ namespace MikeDude.ArmorBalance
 				MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
 				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
 				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
+				MyOxygenGeneratorDefinition oxygenGeneratorDef = def as MyOxygenGeneratorDefinition;
 
-
-                if (blockDef != null)
+				if (blockDef != null)
                 {
 					blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;	
 				}					
@@ -207,6 +207,16 @@ namespace MikeDude.ArmorBalance
                 {
                     timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
+
+				// Fix the upgradeable O2/H2 gen
+				if (oxygenGeneratorDef != null && oxygenGeneratorDef.Id.SubtypeId.String == "MA_O2")
+				{
+					oxygenGeneratorDef.IceConsumptionPerSecond = 150;
+					// Uncomment below to make the generator exactly as efficient as normal gens
+					// It's currently double efficiency base (1.5 MW for 3kL of h2),but the
+					// modules do lots of stuff to it so this might not need to be changed.
+					// oxygenGeneratorDef.OperationalPowerConsumption = 3;
+				}
             }
         }
         
