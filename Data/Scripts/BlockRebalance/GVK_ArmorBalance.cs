@@ -16,7 +16,7 @@ using VRageMath;
 // Code is based on Gauge's Balanced Deformation code, but heavily modified for more control. 
 namespace MikeDude.ArmorBalance
 {
-	[MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
+    [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
         public const float lightArmorLargeDamageMod = 1f; //1.0 Vanilla
@@ -28,72 +28,75 @@ namespace MikeDude.ArmorBalance
         public const float heavyArmorLargeDeformationMod = 0.2f; //varies for every block
         public const float heavyArmorSmallDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
         public const float heavyArmorSmallDeformationMod = 0.2f; //varies for every block
-	
-		public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
+
+        public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
 
         public const float realWheelDamageMod = 0.75f; //1.0 Vanilla
         public const float realWheel5x5DamageMod = 0.75f; //1.0 Vanilla
         public const float suspensionDamageMod = 0.75f; //1.0 Vanilla
         public const float rotorDamageMod = 0.5f; //1.0 Vanilla
         public const float hingeDamageMod = 0.5f; //1.0 Vanilla
-		public const float gyroDamageMod = 2; //1.0 Vanilla
-		public const float thrusterDamageMod = 0.5f; //1.0 Vanilla
-		public const float cockpitDamageMod = 0.5f; //1.0 Vanilla
+        public const float gyroDamageMod = 2; //1.0 Vanilla
+        public const float thrusterDamageMod = 0.5f; //1.0 Vanilla
+        public const float cockpitDamageMod = 0.5f; //1.0 Vanilla
 
-		public const int drillPCU = 20000;
-		public const int welderPCU = 10000;
-		public const int pistonBasePCU = 20000;
-		public const float beaconMaxRadius = 150000;
-		public const float hydroTankH2Density = 35555f;
+        public const int drillPCU = 20000;
+        public const int welderPCU = 10000;
+        public const int pistonBasePCU = 20000;
+        public const float beaconMaxRadius = 150000;
+        public const float hydroTankH2Density = 35555f;
 
-		private readonly MyPhysicalItemDefinition genericScrap =
-			MyDefinitionManager.Static.GetPhysicalItemDefinition(
-				new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
+        private readonly MyPhysicalItemDefinition genericScrap =
+            MyDefinitionManager.Static.GetPhysicalItemDefinition(
+                new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
 
-		private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(
-			new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
+        private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(
+            new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
 
-		private void DoWork()
+        private void DoWork()
         {
-	        MyCubeBlockDefinition.Component unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
-	        {
-		        Count = 1,
-		        Definition = unobtainiumComponent,
-		        DeconstructItem = genericScrap
-	        };
-	        
-	        foreach (MyDefinitionBase def in MyDefinitionManager.Static.GetAllDefinitions())
+            MyCubeBlockDefinition.Component unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
             {
-	            MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
-				MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
-				MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
-				MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
-				MyShipDrillDefinition drillDef = def as MyShipDrillDefinition;
-				MyPistonBaseDefinition pistonBaseDef = def as MyPistonBaseDefinition;
-				MyBeaconDefinition beaconDef = def as MyBeaconDefinition;
-				MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
-				MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
-				MyMotorAdvancedStatorDefinition	advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
-				MyThrustDefinition thrustDef = def as MyThrustDefinition;
-				MyGyroDefinition gyroDef = def as MyGyroDefinition;
-				MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
-				MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
-				MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
-				MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
-				MyShipWelderDefinition welderDef = def as MyShipWelderDefinition;
+                Count = 1,
+                Definition = unobtainiumComponent,
+                DeconstructItem = genericScrap
+            };
+
+            foreach (MyDefinitionBase def in MyDefinitionManager.Static.GetAllDefinitions())
+            {
+                MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
+                MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
+                MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
+                MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
+                MyShipDrillDefinition drillDef = def as MyShipDrillDefinition;
+                MyPistonBaseDefinition pistonBaseDef = def as MyPistonBaseDefinition;
+                MyBeaconDefinition beaconDef = def as MyBeaconDefinition;
+                MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
+                MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
+                MyMotorAdvancedStatorDefinition
+                    advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
+                MyThrustDefinition thrustDef = def as MyThrustDefinition;
+                MyGyroDefinition gyroDef = def as MyGyroDefinition;
+                MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
+                MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
+                MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
+                MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
+                MyShipWelderDefinition welderDef = def as MyShipWelderDefinition;
+                MyOxygenGeneratorDefinition oxygenGeneratorDef = def as MyOxygenGeneratorDefinition;
 
                 if (blockDef != null)
                 {
-					blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;	
-				}					
+                    blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
+                }
 
                 if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
                 {
-					blockDef.PCU = (int) 0;	
-				}					
+                    blockDef.PCU = (int)0;
+                }
 
-				//light armor
-                if (blockDef != null && (blockDef.EdgeType == "Light" && (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
+                //light armor
+                if (blockDef != null && (blockDef.EdgeType == "Light" &&
+                                         (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
                 {
                     if (blockDef.CubeSize == MyCubeSize.Large)
                     {
@@ -106,10 +109,12 @@ namespace MikeDude.ArmorBalance
                         blockDef.GeneralDamageMultiplier = lightArmorSmallDamageMod;
                         blockDef.DeformationRatio = lightArmorSmallDeformationMod;
                     }
-					//blockDef.PCU = lightArmorPCU;
+                    //blockDef.PCU = lightArmorPCU;
                 }
-				//heavy armor
-                if (blockDef != null && (blockDef.EdgeType == "Heavy" && (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
+
+                //heavy armor
+                if (blockDef != null && (blockDef.EdgeType == "Heavy" &&
+                                         (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
                 {
                     if (blockDef.CubeSize == MyCubeSize.Large)
                     {
@@ -122,150 +127,185 @@ namespace MikeDude.ArmorBalance
                         blockDef.GeneralDamageMultiplier = heavyArmorSmallDamageMod;
                         blockDef.DeformationRatio = heavyArmorSmallDeformationMod;
                     }
-					//blockDef.PCU = blastDoorPCU;
+                    //blockDef.PCU = blastDoorPCU;
                 }
+
                 //suspension
-				if (suspensionDef != null)
+                if (suspensionDef != null)
                 {
                     suspensionDef.GeneralDamageMultiplier = suspensionDamageMod;
                 }
+
                 //rotors (includes hinges)
-				if (statorDef != null)
+                if (statorDef != null)
                 {
                     statorDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
+
                 //adv rotors
-				if (advStatorDef != null)
+                if (advStatorDef != null)
                 {
                     advStatorDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
+
                 //suspension wheels
-				if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
+                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
                 {
                     blockDef.GeneralDamageMultiplier = realWheelDamageMod;
-					
-					if (blockDef.Id.SubtypeName.Contains("5x5"))
-					{
-						blockDef.GeneralDamageMultiplier = realWheel5x5DamageMod;
-					}
+
+                    if (blockDef.Id.SubtypeName.Contains("5x5"))
+                    {
+                        blockDef.GeneralDamageMultiplier = realWheel5x5DamageMod;
+                    }
                 }
+
                 //rotor and hinge top parts
-				if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))) 
+                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") ||
+                                         blockDef.Id.SubtypeName.Contains("HingeHead")))
                 {
                     blockDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
+
                 //drills
-				if (drillDef != null)
+                if (drillDef != null)
                 {
-					drillDef.PCU = drillPCU;			
+                    drillDef.PCU = drillPCU;
                 }
+
                 //welders
-				if (welderDef != null)
+                if (welderDef != null)
                 {
-					welderDef.PCU = welderPCU;			
+                    welderDef.PCU = welderPCU;
                 }
+
                 //pistons
-				if (pistonBaseDef != null)
+                if (pistonBaseDef != null)
                 {
-					pistonBaseDef.PCU = pistonBasePCU;			
+                    pistonBaseDef.PCU = pistonBasePCU;
                 }
+
                 //actual conveyor sorters (non weapons)
-				if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
+                if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
                 {
                     sorterDef.PCU = 0;
                 }
+
                 //Drillblocker
-				if (beaconDef != null)
+                if (beaconDef != null)
                 {
-					if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
-					{
-						beaconDef.MaxBroadcastRadius = beaconMaxRadius;
-					}
-					if (beaconDef.Id.SubtypeName.Contains("BlockBeacon"))
-					{
-						beaconDef.PCU = 1; //this is so TopGrid doesn't pick random numbers when parent grid has 0 PCU.
-					}
+                    if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
+                    {
+                        beaconDef.MaxBroadcastRadius = beaconMaxRadius;
+                    }
+
+                    if (beaconDef.Id.SubtypeName.Contains("BlockBeacon"))
+                    {
+                        beaconDef.PCU = 1; //this is so TopGrid doesn't pick random numbers when parent grid has 0 PCU.
+                    }
                 }
-				//Thrusters
+
+                //Thrusters
                 if (thrustDef != null)
                 {
                     thrustDef.GeneralDamageMultiplier = thrusterDamageMod;
 
                     if (!thrustDef.Id.SubtypeName.Contains("NPC") && !thrustDef.Id.SubtypeName.Contains("Hover"))
                     {
-	                    if (thrustDef.FuelConverter != null &&
-	                        !thrustDef.FuelConverter.FuelId.IsNull() &&
-	                        thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
-	                    {
-		                    thrustDef.MinPlanetaryInfluence = 0f;
-		                    thrustDef.MaxPlanetaryInfluence = 0.25f;
-		                    thrustDef.EffectivenessAtMaxInfluence = 1f;
-		                    thrustDef.EffectivenessAtMinInfluence = 0f;
-		                    //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
-		                    //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
-		                    thrustDef.ConsumptionFactorPerG = 0f;
-		                    thrustDef.SlowdownFactor = 1f;
-		                    thrustDef.FuelConverter.Efficiency = 1f;
-	                    }
-	                    else
-	                    {
-		                    blockDef.Enabled = false;
-		                    blockDef.Public = false;
-		                    blockDef.GuiVisible = false;
-		                    if (unobtainiumBlockComponent.Definition != null)
-		                    {
-			                    var thrusterComponents = new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
-			                    thrusterComponents[0] = unobtainiumBlockComponent;
-			                    blockDef.Components.CopyTo(thrusterComponents, 1);
-			                    blockDef.Components = thrusterComponents;
-		                    }
-	                    }
+                        if (thrustDef.FuelConverter != null &&
+                            !thrustDef.FuelConverter.FuelId.IsNull() &&
+                            thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
+                        {
+                            thrustDef.MinPlanetaryInfluence = 0f;
+                            thrustDef.MaxPlanetaryInfluence = 0.25f;
+                            thrustDef.EffectivenessAtMaxInfluence = 1f;
+                            thrustDef.EffectivenessAtMinInfluence = 0f;
+                            //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
+                            //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
+                            thrustDef.ConsumptionFactorPerG = 0f;
+                            thrustDef.SlowdownFactor = 1f;
+                            thrustDef.FuelConverter.Efficiency = 1f;
+                        }
+                        else
+                        {
+                            blockDef.Enabled = false;
+                            blockDef.Public = false;
+                            blockDef.GuiVisible = false;
+                            if (unobtainiumBlockComponent.Definition != null)
+                            {
+                                var thrusterComponents =
+                                    new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
+                                thrusterComponents[0] = unobtainiumBlockComponent;
+                                blockDef.Components.CopyTo(thrusterComponents, 1);
+                                blockDef.Components = thrusterComponents;
+                            }
+                        }
                     }
                 }
+
                 //gyros
-				if (blockDef != null && blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
+                if (blockDef != null &&
+                    blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
+
                 //cockpits (but not desks, or chairs)
-				if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit")) 
+                if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit"))
                 {
                     cockpitDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
+
                 //remote controls
-				if (remoteControlDef != null) 
+                if (remoteControlDef != null)
                 {
                     remoteControlDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
+
                 //timer blocks 
-				if (timerBlockDef != null) 
+                if (timerBlockDef != null)
                 {
-	                timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
+                    timerBlockDef.GeneralDamageMultiplier = cockpitDamageMod;
                 }
 
-				//H2 tanks
-				if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
-				{
-					hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
-				}
+                //H2 tanks
+                if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
+                {
+                    hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() *
+                                                    Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) *
+                                                    hydroTankH2Density);
+                }
+
+                // Fix the upgradeable O2/H2 gen
+                if (oxygenGeneratorDef != null && oxygenGeneratorDef.Id.SubtypeId.String == "MA_O2")
+                {
+                    oxygenGeneratorDef.IceConsumptionPerSecond = 150;
+                    // Uncomment below to make the generator exactly as efficient as normal gens
+                    // It's currently double efficiency base (1.5 MW for 3kL of h2),but the
+                    // modules do lots of stuff to it so this might not need to be changed.
+                    // oxygenGeneratorDef.OperationalPowerConsumption = 3;
+                }
             }
         }
+
         public override void BeforeStart()
         {
             MyLog.Default.WriteLineAndConsole($"Starting voxel adjustments");
 
-            foreach (MyVoxelMaterialDefinition voxelMaterialDefinition in MyDefinitionManager.Static.GetVoxelMaterialDefinitions())
+            foreach (MyVoxelMaterialDefinition voxelMaterialDefinition in MyDefinitionManager.Static
+                         .GetVoxelMaterialDefinitions())
             {
                 if (voxelMaterialDefinition.MinedOre != "Ice")
                 {
                     continue;
                 }
+
                 voxelMaterialDefinition.MinedOreRatio *= 1; //adjust if needed
             }
         }
+
         public override void LoadData()
         {
-	        DoWork();
+            DoWork();
         }
     }
 }
