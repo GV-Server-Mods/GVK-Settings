@@ -2221,8 +2221,8 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
               <Offset>0</Offset>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
-          <IsStatic>true</IsStatic>
-          <IsUnsupportedStation>true</IsUnsupportedStation>
+          <IsStatic>false</IsStatic>
+          <IsUnsupportedStation>false</IsUnsupportedStation>
           <YMirroxPlane x="4" y="0" z="-2" />
           <YMirroxOdd>true</YMirroxOdd>
           <ConveyorLines>
