@@ -117,7 +117,7 @@
         </SessionComponents>
 
         <ExplosionAmmoVolumeMin>1</ExplosionAmmoVolumeMin>
-        <ExplosionAmmoVolumeMax>421875</ExplosionAmmoVolumeMax> <!-- 15000 or just under a small cargo -->
+        <ExplosionAmmoVolumeMax>421875</ExplosionAmmoVolumeMax> <!-- 15000 or just under a small cargo, new value makes it require more cargo before reaching max explosion -->
         <ExplosionRadiusMin>0.3</ExplosionRadiusMin>
         <ExplosionRadiusMax>20</ExplosionRadiusMax> <!-- 30 -->
         <ExplosionDamagePerLiter>0.1</ExplosionDamagePerLiter> <!-- 1 -->

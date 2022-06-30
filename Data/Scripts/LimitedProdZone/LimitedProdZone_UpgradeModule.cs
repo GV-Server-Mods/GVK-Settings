@@ -12,10 +12,10 @@ using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_LargeGatlingTurret), false)]
-    public class LimitedProdZone_LargeGatlingTurret : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_UpgradeModule), false)]
+    public class LimitedProdZone_UpgradeModule : MyGameLogicComponent
     {
-        private IMyLargeGatlingTurret weapon;
+        private IMyUpgradeModule upgradeModule;
         private IMyPlayer client;
         private bool isServer;
         private bool inZone;
@@ -25,8 +25,8 @@ namespace LimitedProdZone
         {
             base.Init(objectBuilder);
 
-            weapon = (Entity as IMyLargeGatlingTurret);
-            if (weapon != null)
+            upgradeModule = (Entity as IMyUpgradeModule);
+            if (upgradeModule != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
@@ -42,7 +42,7 @@ namespace LimitedProdZone
 
             if (isServer)
             {
-                weapon.IsWorkingChanged += WorkingStateChange;
+                upgradeModule.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -54,22 +54,22 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!weapon.Enabled) return;
-
+                    if (!upgradeModule.Enabled) return;
+					
                     foreach (var beacon in beaconList)
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < 20000)
+                        if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         {
-                            string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicLargeGatlingTurret = false;
-                            isBasicLargeGatlingTurret = strSubBlockType.Contains("Basic");
+                            string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
+                            bool isUpgradeModule = false;
+                            isUpgradeModule = strSubBlockType.Contains("UpgradeModule");
 
-                            if (isBasicLargeGatlingTurret == false)
+                            if (isUpgradeModule == false)
                             {
 								inZone = true;
-								weapon.Enabled = false;
+								upgradeModule.Enabled = false;
 								return;
                             }
                         }
@@ -86,21 +86,21 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!weapon.Enabled)
+            if (!upgradeModule.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(weapon.GetPosition(), beacon.GetPosition()) < 20000)
+                    if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     {
-                        string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicLargeGatlingTurret = false;
-                        isBasicLargeGatlingTurret = strSubBlockType.Contains("Basic");
+                        string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
+                        Boolean isUpgradeModule = false;
+                        isUpgradeModule = strSubBlockType.Contains("UpgradeModule");
 
-                        if (isBasicLargeGatlingTurret == false)
+                        if (isUpgradeModule == false)
                         {
-							weapon.Enabled = false;
+							upgradeModule.Enabled = false;
                         }
                     }
                 }               
@@ -123,7 +123,7 @@ namespace LimitedProdZone
                 return;
             }
 
-            var Block = Entity as IMyLargeGatlingTurret;
+            var Block = Entity as IMyUpgradeModule;
 
             if (Block == null) return;
 
@@ -131,7 +131,7 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    weapon.IsWorkingChanged -= WorkingStateChange;
+                    upgradeModule.IsWorkingChanged -= WorkingStateChange;
                 }
 
             }

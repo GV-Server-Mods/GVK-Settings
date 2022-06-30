@@ -40,8 +40,6 @@
 	</BlueprintClasses>
 	<BlueprintClassEntries>
 		<!-- <Entry Class="Components" BlueprintSubtypeId="GVK_SmallCaliber_Tech" /> -->
-		<Entry Class="BasicShipConsumables" BlueprintSubtypeId="NATO_25x184mmMagazine"/>
-		<Entry Class="BasicShipConsumables" BlueprintSubtypeId="NATO_5p56x45mmMagazine"/>
 		<Entry Class="BasicShipConsumables" BlueprintSubtypeId="Canvas"/>
 		<Entry Class="ShipConsumables" BlueprintSubtypeId="Canvas"/>
 		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Medkit"/>

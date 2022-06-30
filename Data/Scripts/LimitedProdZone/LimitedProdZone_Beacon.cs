@@ -48,6 +48,7 @@ namespace LimitedProdZone
             LimitedProdZone_SmallMissileLauncherReload.beaconList.Add(beacon);
             LimitedProdZone_InteriorTurret.beaconList.Add(beacon);
             LimitedProdZone_ConveyorSorter.beaconList.Add(beacon);
+			LimitedProdZone_UpgradeModule.beaconList.Add(beacon);
             if (beacon != null)
             {
                 logicEnabled = true;
@@ -180,6 +181,10 @@ namespace LimitedProdZone
             if (LimitedProdZone_ConveyorSorter.beaconList.Contains(beacon))
             {
                 LimitedProdZone_ConveyorSorter.beaconList.Remove(beacon);
+            }
+            if (LimitedProdZone_UpgradeModule.beaconList.Contains(beacon))
+            {
+                LimitedProdZone_UpgradeModule.beaconList.Remove(beacon);
             }
         }
 

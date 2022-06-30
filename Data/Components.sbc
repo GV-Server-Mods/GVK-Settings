@@ -4,6 +4,28 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+			</Id>
+			<DisplayName>[Tech] Thrusters</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
+            <Size>
+                <X>0.1</X>
+                <Y>0.1</Y>
+                <Z>0.2</Z>
+            </Size>
+            <Mass>0.250</Mass>
+            <Volume>0.2</Volume>
+            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>20</MaxIntegrity>
+			<Health>14</Health>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Atmo Thrusters</DisplayName>
@@ -257,13 +279,7 @@
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>200</MaxIntegrity>
 			<Health>40</Health>
-			<MinimumOfferAmount>10</MinimumOfferAmount>
-			<MaximumOfferAmount>20</MaximumOfferAmount>
-			<MinimumOrderAmount>50</MinimumOrderAmount>
-			<MaximumOrderAmount>100</MaximumOrderAmount>
 			<CanPlayerOrder>true</CanPlayerOrder>
-			<MinimumAcquisitionAmount>10</MinimumAcquisitionAmount>
-			<MaximumAcquisitionAmount>120</MaximumAcquisitionAmount>
 		</Component>
 		<Component>
 			<Id>
