@@ -223,7 +223,7 @@ namespace MikeDude.ArmorBalance
                             //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
-                            thrustDef.FuelConverter.Efficiency = 1f;
+                            //thrustDef.FuelConverter.Efficiency = 1f; //not using this because it now varies for large and small
                         }
                         else
                         {
