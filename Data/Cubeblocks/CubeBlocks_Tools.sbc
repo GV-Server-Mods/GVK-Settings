@@ -303,7 +303,7 @@
 				<Component Subtype="Motor" Count="2"/>
 				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Construction" Count="5"/>
-				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildProgressModels>

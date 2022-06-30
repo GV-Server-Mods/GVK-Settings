@@ -24,7 +24,7 @@
 				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Motor" Count="1"/>
 				<Component Subtype="Display" Count="1"/>
-				<Component Subtype="SteelPlate" Count="2"/>
+				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
@@ -75,7 +75,7 @@
 				<Component Subtype="Computer" Count="2"/>
 				<Component Subtype="Motor" Count="1"/>
 				<Component Subtype="Display" Count="1"/>
-				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="SteelPlate" Count="30"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
