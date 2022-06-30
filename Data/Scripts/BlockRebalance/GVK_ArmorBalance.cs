@@ -1,4 +1,4 @@
-﻿using Sandbox.Definitions;
+using Sandbox.Definitions;
 using Sandbox.ModAPI;
 using VRage.Game.Components;
 using System;
@@ -85,6 +85,7 @@ namespace MikeDude.ArmorBalance
                 MyOxygenGeneratorDefinition oxygenGeneratorDef = def as MyOxygenGeneratorDefinition;
 
                 if (blockDef != null)
+
                 {
                     blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
                 }
