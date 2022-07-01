@@ -43,7 +43,7 @@ namespace MikeDude.ArmorBalance
         public const int drillPCU = 20000;
         public const int welderPCU = 10000;
         public const int pistonBasePCU = 20000;
-        public const float beaconMaxRadius = 150000;
+        public const float beaconMaxRadius = 100000;
         public const float hydroTankH2Density = 35555f;
 
         private readonly MyPhysicalItemDefinition genericScrap =
