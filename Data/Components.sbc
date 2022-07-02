@@ -8,8 +8,8 @@
 			</Id>
 			<DisplayName>[Tech] Thrusters</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Items\Thrust_Icon_Overlay.dds</Icon>
             <Size>
                 <X>0.1</X>
                 <Y>0.1</Y>
