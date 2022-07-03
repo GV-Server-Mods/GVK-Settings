@@ -63,10 +63,10 @@ namespace LimitedProdZone
                         if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         {
                             string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
-                            bool isUpgradeModule = false;
-                            isUpgradeModule = strSubBlockType.Contains("UpgradeModule");
+                            bool isGyroModule = false;
+                            isGyroModule = strSubBlockType.Contains("Gyro");
 
-                            if (isUpgradeModule == false)
+                            if (isGyroModule == false)
                             {
 								inZone = true;
 								upgradeModule.Enabled = false;
@@ -95,10 +95,10 @@ namespace LimitedProdZone
                     if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     {
                         string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
-                        Boolean isUpgradeModule = false;
-                        isUpgradeModule = strSubBlockType.Contains("UpgradeModule");
+                        Boolean isGyroModule = false;
+                            isGyroModule = strSubBlockType.Contains("Gyro");
 
-                        if (isUpgradeModule == false)
+                        if (isGyroModule == false)
                         {
 							upgradeModule.Enabled = false;
                         }
