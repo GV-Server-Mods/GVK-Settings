@@ -83,6 +83,7 @@ namespace MikeDude.ArmorBalance
                 MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
                 MyShipWelderDefinition welderDef = def as MyShipWelderDefinition;
                 MyOxygenGeneratorDefinition oxygenGeneratorDef = def as MyOxygenGeneratorDefinition;
+                MyBatteryBlockDefinition batteryDef = def as MyBatteryBlockDefinition;
 
                 if (blockDef != null)
 
@@ -282,6 +283,15 @@ namespace MikeDude.ArmorBalance
                     oxygenGeneratorDef.IceConsumptionPerSecond = 150;
                     // Make the generator exactly as efficient as normal gens, otherwise it's even more OP
                     oxygenGeneratorDef.OperationalPowerConsumption = 3;
+                }
+
+                if (batteryDef != null)
+                {
+                    batteryDef.InitialStoredPowerRatio = 0.05f;
+                    foreach (var component in batteryDef.Components)
+                    {
+                        component.DeconstructItem = component.Definition;
+                    }
                 }
             }
         }
