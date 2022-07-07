@@ -30,11 +30,11 @@
 				<MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
 				<MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
 			</MountPoints>
-			<BuildProgressModels>
+			<!-- <BuildProgressModels>
 				<Model BuildPercentUpperBound="0.15" File="Models\Cubes\Large\BeaconConstruction_1.mwm"/>
 				<Model BuildPercentUpperBound="0.25" File="Models\Cubes\Large\BeaconConstruction_2.mwm"/>
 				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Large\BeaconConstruction_3.mwm"/>
-			</BuildProgressModels>
+			</BuildProgressModels> -->
 			<BlockPairName>Beacon</BlockPairName>
 			<EdgeType>Light</EdgeType>
 			<MirroringY>Z</MirroringY>
