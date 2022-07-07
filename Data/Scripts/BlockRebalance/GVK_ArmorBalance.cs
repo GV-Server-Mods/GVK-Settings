@@ -115,8 +115,7 @@ namespace MikeDude.ArmorBalance
                 }
 
                 //heavy armor
-                if (blockDef != null && (blockDef.EdgeType == "Heavy" &&
-                                         (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
+                if (blockDef != null && blockDef.EdgeType == "Heavy")
                 {
                     if (blockDef.CubeSize == MyCubeSize.Large)
                     {
