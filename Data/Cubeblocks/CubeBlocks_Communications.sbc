@@ -17,8 +17,7 @@
 			<Model>Models\Cubes\Large\beacon.mwm</Model>
 			<Components>
 				<Component Subtype="Computer" Count="1"/>
-				<Component Subtype="Construction" Count="100"/>
-				<Component Subtype="SteelPlate" Count="200"/>
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
