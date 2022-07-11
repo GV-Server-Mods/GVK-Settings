@@ -326,6 +326,13 @@
 						<SubtypeId>Missiles_Torpedo</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="5" AmountMax="10">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Missiles_Siege</SubtypeId>
+					</Id>
+				</Item>
 			</Items>
 		</ContainerType>
 		<ContainerType CountMin="3" CountMax="5">
@@ -466,6 +473,13 @@
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Torpedo</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="10" AmountMax="20">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Missiles_Siege</SubtypeId>
 					</Id>
 				</Item>
 			</Items>
