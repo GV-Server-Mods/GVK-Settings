@@ -56,7 +56,7 @@ namespace MikeDude.ArmorBalance
                 return;
             }
 
-            if (!cubeGrid.CustomName.StartsWith("Container MK"))
+            if (!cubeGrid.BigOwners.Contains(144115188075855895) || !cubeGrid.CustomName.Contains("Container MK"))
             {
                 return;
             }
