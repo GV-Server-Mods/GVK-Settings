@@ -44,61 +44,56 @@ namespace MikeDude.ArmorBalance
         public const int welderPCU = 10000;
         public const int pistonBasePCU = 20000;
         public const float beaconMaxRadius = 100000;
-        public const float hydroTankH2Density = 35555f;
+        public const double hydroTankH2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
 
-        private readonly MyPhysicalItemDefinition genericScrap =
-            MyDefinitionManager.Static.GetPhysicalItemDefinition(
-                new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
+        private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
 
-        private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(
-            new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
+        private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
 
         private void DoWork()
         {
-            MyCubeBlockDefinition.Component unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
+            var unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
             {
                 Count = 1,
                 Definition = unobtainiumComponent,
                 DeconstructItem = genericScrap
             };
 
-            foreach (MyDefinitionBase def in MyDefinitionManager.Static.GetAllDefinitions())
+            foreach (var blockDef in MyDefinitionManager.Static.GetDefinitionsOfType<MyCubeBlockDefinition>())
             {
-                MyCubeBlockDefinition blockDef = def as MyCubeBlockDefinition;
-                MyLargeTurretBaseDefinition turretDef = def as MyLargeTurretBaseDefinition;
-                MyWeaponBlockDefinition weaponDef = def as MyWeaponBlockDefinition;
-                MyConveyorSorterDefinition sorterDef = def as MyConveyorSorterDefinition;
-                MyShipDrillDefinition drillDef = def as MyShipDrillDefinition;
-                MyPistonBaseDefinition pistonBaseDef = def as MyPistonBaseDefinition;
-                MyBeaconDefinition beaconDef = def as MyBeaconDefinition;
-                MyMotorSuspensionDefinition suspensionDef = def as MyMotorSuspensionDefinition;
-                MyMotorStatorDefinition statorDef = def as MyMotorStatorDefinition; //Motor stator is the base
-                MyMotorAdvancedStatorDefinition
-                    advStatorDef = def as MyMotorAdvancedStatorDefinition; //Motor stator is the base
-                MyThrustDefinition thrustDef = def as MyThrustDefinition;
-                MyGyroDefinition gyroDef = def as MyGyroDefinition;
-                MyCockpitDefinition cockpitDef = def as MyCockpitDefinition;
-                MyRemoteControlDefinition remoteControlDef = def as MyRemoteControlDefinition;
-                MyTimerBlockDefinition timerBlockDef = def as MyTimerBlockDefinition;
-                MyGasTankDefinition hydroTankDef = def as MyGasTankDefinition;
-                MyShipWelderDefinition welderDef = def as MyShipWelderDefinition;
-                MyOxygenGeneratorDefinition oxygenGeneratorDef = def as MyOxygenGeneratorDefinition;
-                MyBatteryBlockDefinition batteryDef = def as MyBatteryBlockDefinition;
+                var turretDef = blockDef as MyLargeTurretBaseDefinition;
+                var weaponDef = blockDef as MyWeaponBlockDefinition;
+                var sorterDef = blockDef as MyConveyorSorterDefinition;
+                var drillDef = blockDef as MyShipDrillDefinition;
+                var pistonBaseDef = blockDef as MyPistonBaseDefinition;
+                var beaconDef = blockDef as MyBeaconDefinition;
+                var suspensionDef = blockDef as MyMotorSuspensionDefinition;
+                var statorDef = blockDef as MyMotorStatorDefinition; //Motor stator is the base
+                var advStatorDef = blockDef as MyMotorAdvancedStatorDefinition; //Motor stator is the base
+                var thrustDef = blockDef as MyThrustDefinition;
+                var gyroDef = blockDef as MyGyroDefinition;
+                var cockpitDef = blockDef as MyCockpitDefinition;
+                var remoteControlDef = blockDef as MyRemoteControlDefinition;
+                var timerBlockDef = blockDef as MyTimerBlockDefinition;
+                var hydroTankDef = blockDef as MyGasTankDefinition;
+                var welderDef = blockDef as MyShipWelderDefinition;
+                var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
+                var batteryDef = blockDef as MyBatteryBlockDefinition;
+                var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
 
-                if (blockDef != null)
+                blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 
+                if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
                 {
-                    blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
+                    blockDef.GeneralDamageMultiplier = 0.5f;
                 }
-
-                if (blockDef != null && turretDef == null && weaponDef == null && sorterDef == null)
+                else
                 {
-                    blockDef.PCU = (int)0;
+                    blockDef.PCU = 0;
                 }
 
                 //light armor
-                if (blockDef != null && (blockDef.EdgeType == "Light" &&
-                                         (blockDef.BlockTopology != MyBlockTopology.TriangleMesh)))
+                if (blockDef.EdgeType == "Light" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
                 {
                     if (blockDef.CubeSize == MyCubeSize.Large)
                     {
@@ -115,7 +110,7 @@ namespace MikeDude.ArmorBalance
                 }
 
                 //heavy armor
-                if (blockDef != null && blockDef.EdgeType == "Heavy")
+                if (blockDef.EdgeType == "Heavy")
                 {
                     if (blockDef.CubeSize == MyCubeSize.Large)
                     {
@@ -129,6 +124,20 @@ namespace MikeDude.ArmorBalance
                         blockDef.DeformationRatio = heavyArmorSmallDeformationMod;
                     }
                     //blockDef.PCU = blastDoorPCU;
+                }
+
+                // Beam blocks and heat vents
+                if (blockDef.EdgeType == "Light" && (blockDef.Id.SubtypeName.Contains("BeamBlock") || blockDef.Id.SubtypeName.Contains("HeatVentBlock")))
+                {
+                    if (blockDef.CubeSize == MyCubeSize.Large)
+                    {
+                        blockDef.GeneralDamageMultiplier = lightArmorLargeDamageMod;
+                    }
+
+                    if (blockDef.CubeSize == MyCubeSize.Small)
+                    {
+                        blockDef.GeneralDamageMultiplier = lightArmorSmallDamageMod;
+                    }
                 }
 
                 //suspension
@@ -150,7 +159,7 @@ namespace MikeDude.ArmorBalance
                 }
 
                 //suspension wheels
-                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Real"))
+                if (blockDef.Id.SubtypeName.Contains("Real"))
                 {
                     blockDef.GeneralDamageMultiplier = realWheelDamageMod;
 
@@ -161,8 +170,7 @@ namespace MikeDude.ArmorBalance
                 }
 
                 //rotor and hinge top parts
-                if (blockDef != null && (blockDef.Id.SubtypeName.Contains("Rotor") ||
-                                         blockDef.Id.SubtypeName.Contains("HingeHead")))
+                if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
                 {
                     blockDef.GeneralDamageMultiplier = rotorDamageMod;
                 }
@@ -183,12 +191,6 @@ namespace MikeDude.ArmorBalance
                 if (pistonBaseDef != null)
                 {
                     pistonBaseDef.PCU = pistonBasePCU;
-                }
-
-                //actual conveyor sorters (non weapons)
-                if (sorterDef != null && sorterDef.Id.SubtypeName.Contains("ConveyorSorter"))
-                {
-                    sorterDef.PCU = 0;
                 }
 
                 //Drillblocker
@@ -233,8 +235,7 @@ namespace MikeDude.ArmorBalance
                             blockDef.GuiVisible = false;
                             if (unobtainiumBlockComponent.Definition != null)
                             {
-                                var thrusterComponents =
-                                    new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
+                                var thrusterComponents = new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
                                 thrusterComponents[0] = unobtainiumBlockComponent;
                                 blockDef.Components.CopyTo(thrusterComponents, 1);
                                 blockDef.Components = thrusterComponents;
@@ -244,8 +245,7 @@ namespace MikeDude.ArmorBalance
                 }
 
                 //gyros
-                if (blockDef != null &&
-                    blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
+                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
@@ -271,9 +271,7 @@ namespace MikeDude.ArmorBalance
                 //H2 tanks
                 if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
                 {
-                    hydroTankDef.Capacity = (float)(hydroTankDef.Size.Volume() *
-                                                    Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) *
-                                                    hydroTankH2Density);
+                    hydroTankDef.Capacity = (float)Math.Ceiling(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
                 }
 
                 // Fix the upgradeable O2/H2 gen
@@ -291,6 +289,11 @@ namespace MikeDude.ArmorBalance
                     {
                         component.DeconstructItem = component.Definition;
                     }
+                }
+
+                if (laserAntennaDef != null)
+                {
+                    laserAntennaDef.RequireLineOfSight = false;
                 }
             }
         }
