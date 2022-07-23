@@ -44,21 +44,17 @@ namespace MikeDude.ArmorBalance
         public const int welderPCU = 10000;
         public const int pistonBasePCU = 20000;
         public const float beaconMaxRadius = 100000;
+
         public const double hydroTankH2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
 
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
 
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
 
+        private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
+
         private void DoWork()
         {
-            var unobtainiumBlockComponent = new MyCubeBlockDefinition.Component()
-            {
-                Count = 1,
-                Definition = unobtainiumComponent,
-                DeconstructItem = genericScrap
-            };
-
             foreach (var blockDef in MyDefinitionManager.Static.GetDefinitionsOfType<MyCubeBlockDefinition>())
             {
                 var turretDef = blockDef as MyLargeTurretBaseDefinition;
@@ -72,6 +68,7 @@ namespace MikeDude.ArmorBalance
                 var advStatorDef = blockDef as MyMotorAdvancedStatorDefinition; //Motor stator is the base
                 var thrustDef = blockDef as MyThrustDefinition;
                 var gyroDef = blockDef as MyGyroDefinition;
+                var upgradeModuleDef = blockDef as MyUpgradeModuleDefinition;
                 var cockpitDef = blockDef as MyCockpitDefinition;
                 var remoteControlDef = blockDef as MyRemoteControlDefinition;
                 var timerBlockDef = blockDef as MyTimerBlockDefinition;
@@ -80,6 +77,7 @@ namespace MikeDude.ArmorBalance
                 var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
                 var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
+                var cargoDef = blockDef as MyCargoContainerDefinition;
 
                 blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 
@@ -233,19 +231,16 @@ namespace MikeDude.ArmorBalance
                             blockDef.Enabled = false;
                             blockDef.Public = false;
                             blockDef.GuiVisible = false;
-                            if (unobtainiumBlockComponent.Definition != null)
+                            if (unobtainiumComponent != null)
                             {
-                                var thrusterComponents = new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
-                                thrusterComponents[0] = unobtainiumBlockComponent;
-                                blockDef.Components.CopyTo(thrusterComponents, 1);
-                                blockDef.Components = thrusterComponents;
+                                InsertComponent(blockDef, 0, unobtainiumComponent, 1, genericScrap);
                             }
                         }
                     }
                 }
 
                 //gyros
-                if (blockDef != null && blockDef.Id.SubtypeName.Contains("Gyro")) //using blockdef because gyro upgrades are not gyro type
+                if (gyroDef != null || (upgradeModuleDef != null && blockDef.Id.SubtypeName.Contains("Gyro")))
                 {
                     blockDef.GeneralDamageMultiplier = gyroDamageMod;
                 }
@@ -295,12 +290,144 @@ namespace MikeDude.ArmorBalance
                 {
                     laserAntennaDef.RequireLineOfSight = false;
                 }
+
+                if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
+                {
+                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
+                }
+
+                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName == "LargeBlockConveyor")
+                {
+                    InsertComponent(blockDef, blockDef.Components.Length, steelPlateComponent, 40);
+                }
             }
         }
 
         public override void LoadData()
         {
             DoWork();
+        }
+
+        private static void ReplaceComponent(MyCubeBlockDefinition blockDef, int index, MyComponentDefinition newComp, int newCount, MyPhysicalItemDefinition deconstructItem = null)
+        {
+            var comp = blockDef.Components[index];
+            var oldCount = comp.Count;
+            float intDiff;
+            float massDiff;
+            if (newCount > 0)
+            {
+                intDiff = newComp.MaxIntegrity * newCount - comp.Definition.MaxIntegrity * oldCount;
+                massDiff = newComp.Mass * newCount - comp.Definition.Mass * oldCount;
+
+                blockDef.Components[index].Count = newCount;
+            }
+            else
+            {
+                intDiff = (newComp.MaxIntegrity - comp.Definition.MaxIntegrity) * oldCount;
+                massDiff = (newComp.Mass - comp.Definition.Mass) * oldCount;
+            }
+
+            comp.Definition = newComp;
+            comp.DeconstructItem = deconstructItem ?? newComp;
+
+            blockDef.MaxIntegrity += intDiff;
+            blockDef.Mass += massDiff;
+
+            SetRatios(blockDef, blockDef.CriticalGroup);
+        }
+
+        private static void InsertComponent(MyCubeBlockDefinition blockDef, int componentIndex, MyComponentDefinition comp, int count, MyPhysicalItemDefinition deconstructItem = null)
+        {
+            var intDiff = comp.MaxIntegrity * count;
+            var massDiff = comp.Mass * count;
+
+            if (componentIndex <= blockDef.CriticalGroup)
+            {
+                blockDef.CriticalGroup += 1;
+            }
+
+            blockDef.MaxIntegrity += intDiff;
+            blockDef.Mass += massDiff;
+
+            var newComps = new MyCubeBlockDefinition.Component[blockDef.Components.Length + 1];
+
+            if (componentIndex == 0)
+            {
+                newComps[0] = new MyCubeBlockDefinition.Component
+                {
+                    Definition = comp,
+                    DeconstructItem = deconstructItem ?? comp,
+                    Count = count
+                };
+                blockDef.Components.CopyTo(newComps, 1);
+            }
+            else if (componentIndex == blockDef.Components.Length)
+            {
+                newComps[blockDef.Components.Length] = new MyCubeBlockDefinition.Component
+                {
+                    Definition = comp,
+                    DeconstructItem = comp,
+                    Count = count
+                };
+                blockDef.Components.CopyTo(newComps, 0);
+            }
+            else
+            {
+                for (var index = 0; index < newComps.Length; index++)
+                {
+                    if (index < componentIndex)
+                    {
+                        newComps[index] = blockDef.Components[index];
+                    }
+                    else if (index == componentIndex)
+                    {
+                        newComps[index] = new MyCubeBlockDefinition.Component
+                        {
+                            Definition = comp,
+                            DeconstructItem = comp,
+                            Count = count
+                        };
+                    }
+                    else
+                    {
+                        newComps[index] = blockDef.Components[index - 1];
+                    }
+                }
+            }
+
+            blockDef.Components = newComps;
+
+            SetRatios(blockDef, blockDef.CriticalGroup);
+        }
+
+        private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
+        {
+            var criticalIntegrity = 0f;
+            var ownershipIntegrity = 0f;
+            for (var index = 0; index <= criticalIndex; index++)
+            {
+                var component = blockDef.Components[index];
+                if (ownershipIntegrity == 0f && component.Definition.Id.SubtypeName == "Computer")
+                {
+                    ownershipIntegrity = criticalIntegrity + component.Definition.MaxIntegrity;
+                }
+
+                criticalIntegrity += component.Count * component.Definition.MaxIntegrity;
+                if (index == criticalIndex)
+                {
+                    criticalIntegrity -= component.Definition.MaxIntegrity;
+                }
+            }
+
+            blockDef.CriticalIntegrityRatio = criticalIntegrity / blockDef.MaxIntegrity;
+            blockDef.OwnershipIntegrityRatio = ownershipIntegrity / blockDef.MaxIntegrity;
+
+            var count = blockDef.BuildProgressModels.Length;
+            for (var index = 0; index < count; index++)
+            {
+                var buildPercent = (index + 1f) / count;
+                blockDef.BuildProgressModels[index].BuildRatioUpperBound = buildPercent * blockDef.CriticalIntegrityRatio;
+            }
         }
     }
 }
