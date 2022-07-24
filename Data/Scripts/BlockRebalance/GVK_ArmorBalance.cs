@@ -270,11 +270,20 @@ namespace MikeDude.ArmorBalance
                 }
 
                 // Fix the upgradeable O2/H2 gen
-                if (oxygenGeneratorDef != null && oxygenGeneratorDef.Id.SubtypeId.String == "MA_O2")
+                if (oxygenGeneratorDef != null)
                 {
-                    oxygenGeneratorDef.IceConsumptionPerSecond = 150;
-                    // Make the generator exactly as efficient as normal gens, otherwise it's even more OP
-                    oxygenGeneratorDef.OperationalPowerConsumption = 3;
+                    switch (oxygenGeneratorDef.Id.SubtypeId.String)
+                    {
+                        case "MA_O2":
+                            oxygenGeneratorDef.IceConsumptionPerSecond = 150;
+                            // Make the generator exactly as efficient as normal gens, otherwise it's even more OP
+                            oxygenGeneratorDef.OperationalPowerConsumption = 3;
+                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
+                            break;
+                        case "":
+                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
+                            break;
+                    }
                 }
 
                 if (batteryDef != null)
@@ -396,6 +405,21 @@ namespace MikeDude.ArmorBalance
             }
 
             blockDef.Components = newComps;
+
+            SetRatios(blockDef, blockDef.CriticalGroup);
+        }
+
+        private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
+        {
+            var comp = blockDef.Components[index];
+            var oldCount = comp.Count;
+            var intDiff = comp.Definition.MaxIntegrity * (newCount - oldCount);
+            var massDiff = comp.Definition.Mass * (newCount - oldCount);
+
+            comp.Count = newCount;
+
+            blockDef.MaxIntegrity += intDiff;
+            blockDef.Mass += massDiff;
 
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
