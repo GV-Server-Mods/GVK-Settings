@@ -12,10 +12,10 @@ using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_UpgradeModule), false)]
-    public class LimitedProdZone_UpgradeModule : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Drill), false)]
+    public class LimitedProdZone_StaticDrill : MyGameLogicComponent
     {
-        private IMyUpgradeModule upgradeModule;
+        private IMyShipDrill staticDrill;
         private IMyPlayer client;
         private bool isServer;
         private bool inZone;
@@ -25,8 +25,8 @@ namespace LimitedProdZone
         {
             base.Init(objectBuilder);
 
-            upgradeModule = (Entity as IMyUpgradeModule);
-            if (upgradeModule != null)
+            staticDrill = (Entity as IMyShipDrill);
+            if (staticDrill != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
@@ -42,7 +42,7 @@ namespace LimitedProdZone
 
             if (isServer)
             {
-                upgradeModule.IsWorkingChanged += WorkingStateChange;
+                staticDrill.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -54,22 +54,22 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!upgradeModule.Enabled) return;
-					
+                    if (!staticDrill.Enabled) return;
+
                     foreach (var beacon in beaconList)
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < 35000)
+                        if (Vector3D.Distance(staticDrill.GetPosition(), beacon.GetPosition()) < 20000)
                         {
-                            string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
-                            bool isGyroModule = false;
-                            isGyroModule = strSubBlockType.Contains("Gyro");
+                            string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                            bool isBasicStaticDrill = false;
+                            isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
 
-                            if (isGyroModule == false)
+                            if (isBasicStaticDrill == false)
                             {
 								inZone = true;
-								upgradeModule.Enabled = false;
+								staticDrill.Enabled = false;
 								return;
                             }
                         }
@@ -86,21 +86,21 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!upgradeModule.Enabled)
+            if (!staticDrill.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(upgradeModule.GetPosition(), beacon.GetPosition()) < 35000)
+                    if (Vector3D.Distance(staticDrill.GetPosition(), beacon.GetPosition()) < 20000)
                     {
-                        string strSubBlockType = upgradeModule.BlockDefinition.SubtypeId.ToString();
-                        Boolean isGyroModule = false;
-                        isGyroModule = strSubBlockType.Contains("Gyro");
+                        string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                        Boolean isBasicStaticDrill = false;
+                        isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
 
-                        if (isGyroModule == false)
+                        if (isBasicStaticDrill == false)
                         {
-							upgradeModule.Enabled = false;
+							staticDrill.Enabled = false;
                         }
                     }
                 }               
@@ -123,7 +123,7 @@ namespace LimitedProdZone
                 return;
             }
 
-            var Block = Entity as IMyUpgradeModule;
+            var Block = Entity as IMyShipDrill;
 
             if (Block == null) return;
 
@@ -131,7 +131,7 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    upgradeModule.IsWorkingChanged -= WorkingStateChange;
+                    staticDrill.IsWorkingChanged -= WorkingStateChange;
                 }
 
             }
