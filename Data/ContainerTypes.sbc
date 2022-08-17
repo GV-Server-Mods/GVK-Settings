@@ -184,6 +184,20 @@
 						<SubtypeId>Missiles_Missile</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="10" AmountMax="20">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Missiles_HeavyMissile</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Ballistics_HeavyCannon</SubtypeId>
+					</Id>
+				</Item>
 			</Items>
 		</ContainerType>
 		<ContainerType CountMin="3" CountMax="5">
@@ -333,6 +347,27 @@
 						<SubtypeId>Missiles_Siege</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Lasers_Plasma</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="10" AmountMax="20">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Missiles_HeavyMissile</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Ballistics_HeavyCannon</SubtypeId>
+					</Id>
+				</Item>
 			</Items>
 		</ContainerType>
 		<ContainerType CountMin="3" CountMax="5">
@@ -480,6 +515,27 @@
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_Siege</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Lasers_Plasma</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="10" AmountMax="20">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Missiles_HeavyMissile</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Ballistics_HeavyCannon</SubtypeId>
 					</Id>
 				</Item>
 			</Items>
