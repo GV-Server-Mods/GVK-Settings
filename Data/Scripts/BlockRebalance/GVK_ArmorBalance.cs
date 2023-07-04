@@ -19,9 +19,9 @@ namespace MikeDude.ArmorBalance
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
-        public const float lightArmorLargeDamageMod = 0.75f; //1.0 Vanilla
+        public const float lightArmorLargeDamageMod = 1f; //1.0 Vanilla
         public const float lightArmorLargeDeformationMod = 0.4f; //varies for every block
-        public const float lightArmorSmallDamageMod = 0.75f; //1.0 Vanilla
+        public const float lightArmorSmallDamageMod = 1f; //1.0 Vanilla
         public const float lightArmorSmallDeformationMod = 0.4f; //varies for every block
 
         public const float heavyArmorLargeDamageMod = 1f; //0.5 Vanilla ONLY for full cube, 1.0 all else
