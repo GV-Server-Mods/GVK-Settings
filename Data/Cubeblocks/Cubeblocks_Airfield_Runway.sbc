@@ -8,6 +8,7 @@
 			</Id>
 			<DisplayName>Runway Middle Wide</DisplayName>
 			<Icon>Textures\Icons\RunwayStraight.dds</Icon>
+            <Description>Large Runway made by Ntech Co.</Description>
 			<Public>true</Public>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
@@ -38,6 +39,7 @@
 			<PCU>1</PCU>
 			<UsesDeformation>false</UsesDeformation>
 			<DeformationRatio>0.0</DeformationRatio>
+            <IsAirTight>true</IsAirTight>
 		</Definition>
 	</CubeBlocks>
 </Definitions>
