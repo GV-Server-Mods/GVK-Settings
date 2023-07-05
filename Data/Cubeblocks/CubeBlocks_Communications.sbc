@@ -51,9 +51,9 @@
             </Id>
             <DisplayName>Medium Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>Description_Beacon</Description>
+            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
             <CubeSize>Small</CubeSize>
-            <GuiVisible>true</GuiVisible>
+            <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="1" z="2" />
             <ModelOffset x="0" y="0" z="0" />
@@ -93,7 +93,7 @@
             </Id>
             <DisplayName>Light Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>Description_Beacon</Description>
+            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>true</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -144,9 +144,9 @@
             </Id>
             <DisplayName>Medium Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>Description_Beacon</Description>
+            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
             <CubeSize>Large</CubeSize>
-            <GuiVisible>true</GuiVisible>
+            <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="2" z="1" />
             <ModelOffset x="0" y="0" z="0" />
@@ -197,7 +197,7 @@
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
             <Description>Description_Beacon</Description>
             <CubeSize>Large</CubeSize>
-            <GuiVisible>true</GuiVisible>
+            <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="2" z="1" />
             <ModelOffset x="0" y="0" z="0" />

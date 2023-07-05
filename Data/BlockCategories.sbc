@@ -6,11 +6,11 @@
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
 				<SubtypeId/>
 			</Id>
-			<DisplayName>Ship Cores</DisplayName>
-			<Name>Ship Cores</Name>
+			<DisplayName>Ship Core Beacons</DisplayName>
+			<Name>Ship Cores Beacons</Name>
 			<StrictSearch>true</StrictSearch>
-			<IsBlockCategory>false</IsBlockCategory>
-			<SearchCategory>true</SearchCategory>
+			<IsBlockCategory>true</IsBlockCategory>
+			<SearchCategory>false</SearchCategory>
 			<ItemIds>
 				<string>SmallBlockBeacon</string>
 				<string>SmallBlockBeacon_MediumCore</string>
