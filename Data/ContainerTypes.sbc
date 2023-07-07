@@ -355,17 +355,24 @@
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20">
-					<Frequency>1</Frequency>
+					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_HeavyMissile</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="15">
-					<Frequency>1</Frequency>
+					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_HeavyCannon</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="3" AmountMax="5">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Others_Drone_Falcon</SubtypeId>
 					</Id>
 				</Item>
 			</Items>
@@ -461,21 +468,21 @@
 						<SubtypeId>AutocannonClip</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
+				<Item AmountMin="6" AmountMax="30">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>MediumCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="20">
+				<Item AmountMin="5" AmountMax="25">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>LargeCalibreAmmo</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="5" AmountMax="20">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
@@ -524,18 +531,25 @@
 						<SubtypeId>Lasers_Plasma</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="20">
+				<Item AmountMin="15" AmountMax="30">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Missiles_HeavyMissile</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5" AmountMax="15">
+				<Item AmountMin="6" AmountMax="20">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>AmmoMagazine</TypeId>
 						<SubtypeId>Ballistics_HeavyCannon</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="6" AmountMax="12">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>AmmoMagazine</TypeId>
+						<SubtypeId>Others_Drone_Falcon</SubtypeId>
 					</Id>
 				</Item>
 			</Items>
