@@ -22,7 +22,7 @@
 				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
             <BuildProgressModels>
                 <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm" />
@@ -64,7 +64,7 @@
 				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
             <BuildProgressModels>
                 <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm" />
@@ -105,7 +105,7 @@
 				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
             <MountPoints>
                 <MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true" />
                 <MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" />
@@ -156,7 +156,7 @@
 				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
             <MountPoints>
                 <MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true" />
                 <MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" />
@@ -207,7 +207,7 @@
 				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.33</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
             <MountPoints>
                 <MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true" />
                 <MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" />
