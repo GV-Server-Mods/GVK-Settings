@@ -1,5 +1,0 @@
-03-07-2023 20:31:32 1833 [Info] - AILogisticsAutomationSession: CheckDefinitions Called
-03-07-2023 20:31:38 2369 [Info] - AILogisticsAutomationEntityManager: Init
-03-07-2023 20:31:38 2369 [Info] - AILogisticsAutomationSession: Init
-03-07-2023 20:31:38 3657 [Info] - AILogisticsAutomationTimeManager: Init
-03-07-2023 20:31:38 3667 [Info] - AILogisticsAutomationTimeManager: StartBackground [DoUpdateCicle START]
