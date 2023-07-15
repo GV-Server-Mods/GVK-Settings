@@ -195,7 +195,7 @@
             </Id>
             <DisplayName>Heavy Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>Description_Beacon</Description>
+            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
