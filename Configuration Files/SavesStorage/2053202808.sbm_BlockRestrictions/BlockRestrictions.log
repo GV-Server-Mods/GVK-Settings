@@ -1,0 +1,1520 @@
+[15:42:30.424] [T1] [DS=False] DEBUG | Log Started
+[15:42:30.802] [T1] [DS=False] DEBUG | BeforeStart() - Checking Group Settings:
+-> GroupName = Suspension
+->-> Setting has 88 definitions:
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_1x1_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_5x5_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_3x3_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_1x1_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_5x5_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_3x3_Offroad_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_1x1_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_5x5_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_3x3_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_1x1_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_5x5_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_3x3_Offroad_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_1x1_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_5x5_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_3x3_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_1x1_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_5x5_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_3x3_Lifted_Suspension_Left
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_1x1_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_5x5_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SG_3x3_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_1x1_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_5x5_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/LG_3x3_Lifted_Suspension_Right
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension7x7mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension7x7mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension7x7
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension7x7
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension1x1mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension5x5mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension3x3mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension1x1mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension5x5mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension3x3mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension1x1
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension5x5
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension3x3
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension1x1
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension5x5
+->->-> Definition = MyObjectBuilder_MotorSuspension/OffroadSuspension3x3
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension1x1mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension5x5mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension3x3mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension1x1mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension5x5mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension3x3mirrored
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension1x1
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension5x5
+->->-> Definition = MyObjectBuilder_MotorSuspension/SmallSuspension3x3
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension1x1
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension5x5
+->->-> Definition = MyObjectBuilder_MotorSuspension/Suspension3x3
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad5x5RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad3x3RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad1x1RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad5x5LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad3x3LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad1x1LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad5x5RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad3x3RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad1x1RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad5x5LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad3x3LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/Offroad1x1LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1RightSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1LeftSmallEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1RightEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1LeftEliteSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5RightSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3RightSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1RightSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5LeftSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3LeftSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1LeftSmallAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5RightAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3RightAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1RightAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/5x5LeftAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/3x3LeftAdvancedSuspension
+->->-> Definition = MyObjectBuilder_MotorSuspension/1x1LeftAdvancedSuspension
+->-> Setting added successfully
+-> GroupName = NonH2Thrusters
+->-> Setting has 20 definitions:
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockLargeModularThruster
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockSmallModularThruster
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockLargeModularThruster
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockSmallModularThruster
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockLargeThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockSmallThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockLargeThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockSmallThrustSciFi
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockLargeThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/LargeBlockSmallThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockLargeThrust
+->->-> Definition added to restricted list
+->->-> Definition = MyObjectBuilder_Thrust/SmallBlockSmallThrust
+->->-> Definition added to restricted list
+->-> Setting added successfully
+-> GroupName = WindTurbines
+->-> Setting has 2 definitions:
+->->-> Definition = MyObjectBuilder_WindTurbine/MA_Windmill
+->->-> Definition = MyObjectBuilder_WindTurbine/LargeBlockWindTurbine
+->-> Setting added successfully
+-> GroupName = ProductionStuff
+->-> Setting has 5 definitions:
+->->-> Definition = MyObjectBuilder_Assembler/LargeAssembler
+->->-> Definition = MyObjectBuilder_Assembler/LargeAssemblerIndustrial
+->->-> Definition = MyObjectBuilder_Refinery/Blast Furnace
+->->-> Definition = MyObjectBuilder_Refinery/LargeRefinery
+->->-> Definition = MyObjectBuilder_Refinery/LargeRefineryIndustrial
+->-> Setting added successfully
+
+BeforeStart() - Checking Config for saved settings
+-> Setting = MyObjectBuilder_Beacon/DisposableNpcBeaconLarge
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/DisposableNpcBeaconSmall
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ProprietaryLargeBlockConveyorSorter
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Gyro/ProprietaryLargeBlockGyro
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Nanobots-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-JumpDrive-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Jetpack-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Drill-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/ProprietarySmallBlockSmallGenerator
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/ProprietarySmallBlockLargeGenerator
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/ProprietaryLargeBlockSmallGenerator
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/ProprietaryLargeBlockLargeGenerator
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_GravityGenerator/ProprietaryGravGen
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_GravityGeneratorSphere/ProprietaryGravGenSphere
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VirtualMass/ProprietaryVirtualMassLarge
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VirtualMass/ProprietaryVirtualMassSmall
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SpaceBall/ProprietarySpaceBallLarge
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SpaceBall/ProprietarySpaceBallSmall
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/ProprietarySmallBlockSmallThrust
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/ProprietarySmallBlockLargeThrust
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/ProprietaryLargeBlockSmallThrust
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/ProprietaryLargeBlockLargeThrust
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LaserAntenna/ProprietaryLargeBlockLaserAntenna
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LaserAntenna/ProprietarySmallBlockLaserAntenna
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_JumpDrive/ProprietaryLargeJumpDrive
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MyProgrammableBlock/SmallProgrammableBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/LargeProjector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/SmallProjector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SensorBlock/SmallBlockSensor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SensorBlock/LargeBlockSensor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TargetDummyBlock/TargetDummy
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SoundBlock/SmallBlockSoundBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SoundBlock/LargeBlockSoundBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/ButtonPanelLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/ButtonPanelSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TimerBlock/TimerBlockLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TimerBlock/TimerBlockSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MyProgrammableBlock/LargeProgrammableBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/LargeBlockRadioAntenna
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LargeBlockBeacon
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/SmallBlockBeacon
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/SmallBlockRadioAntenna
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RemoteControl/LargeBlockRemoteControl
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RemoteControl/SmallBlockRemoteControl
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LaserAntenna/LargeBlockLaserAntenna
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LaserAntenna/SmallBlockLaserAntenna
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/ControlPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/SmallControlPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockCockpitSeat
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/SmallBlockCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/DBSmallBlockFighterCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/CockpitOpen
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/RoverCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Gyro/LargeBlockGyro
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Gyro/SmallBlockGyro
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/OpenCockpitSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/OpenCockpitLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockDesk
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockDeskCorner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CryoChamber/LargeBlockBed
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockLockerRoom
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockLockerRoomCorner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockCouch
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockCouchCorner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockLockers
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockBathroomOpen
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockBathroom
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockToilet
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/LargeBlockConsole
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/SmallBlockCockpitIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockCockpitIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VendingMachine/FoodDispenser
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Jukebox/Jukebox
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/TransparentLCDLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/TransparentLCDSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ReflectorLight/RotatingLightLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ReflectorLight/RotatingLightSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/SmallDoor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightSlideDoor/LargeBlockSlideDoor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_StoreBlock/StoreBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ContractBlock/ContractBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VendingMachine/VendingMachine
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_StoreBlock/AtmBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/LargeBlockBatteryBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/SmallBlockBatteryBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/SmallBlockSmallBatteryBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/SmallBlockSmallGenerator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/SmallBlockLargeGenerator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/LargeBlockSmallGenerator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/LargeBlockLargeGenerator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_HydrogenEngine/LargeHydrogenEngine
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_HydrogenEngine/SmallHydrogenEngine
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_WindTurbine/LargeBlockWindTurbine
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SolarPanel/LargeBlockSolarPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SolarPanel/SmallBlockSolarPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/LargeBlockRadioAntennaDish
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/LargeBlockGate
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/LargeBlockOffsetDoor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_GravityGenerator/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_GravityGeneratorSphere/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VirtualMass/VirtualMassLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_VirtualMass/VirtualMassSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SpaceBall/SpaceBallLarge
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SpaceBall/SpaceBallSmall
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/LargeBlockMagneticPlate
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/SmallBlockMagneticPlate
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockLargeIndustrialContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/VerticalButtonPanelLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/LargeHydrogenTankIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Assembler/LargeAssemblerIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Refinery/LargeRefineryIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/LargeBlockConveyorSorterIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeHydrogenThrustIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallHydrogenThrustIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeHydrogenThrustIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallHydrogenThrustIndustrial
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/PassengerSeatLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/PassengerSeatSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallTextPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallLCDPanelWide
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallLCDPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeBlockCorner_LCD_1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeBlockCorner_LCD_2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeBlockCorner_LCD_Flat_1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeBlockCorner_LCD_Flat_2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallBlockCorner_LCD_1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallBlockCorner_LCD_2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallBlockCorner_LCD_Flat_1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/SmallBlockCorner_LCD_Flat_2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeTextPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeLCDPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeLCDPanelWide
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ReflectorLight/LargeBlockFrontLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ReflectorLight/SmallBlockFrontLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallBlockSmallLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/LargeBlockLight_1corner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/LargeBlockLight_2corner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallBlockLight_1corner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallBlockLight_2corner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/OxygenTankSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/LargeHydrogenTank
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/LargeHydrogenTankSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/SmallHydrogenTank
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/SmallHydrogenTankSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/SmallAirVent
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/SmallBlockSmallContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/SmallBlockMediumContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/SmallBlockLargeContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockSmallContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockLargeContainer
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Collector/Collector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Collector/CollectorSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipConnector/Connector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipConnector/ConnectorSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipConnector/ConnectorMedium
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/LargeBlockConveyorSorter
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/MediumBlockConveyorSorter
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/SmallBlockConveyorSorter
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_PistonBase/LargePistonBase
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ExtendedPistonBase/LargePistonBase
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_PistonBase/SmallPistonBase
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ExtendedPistonBase/SmallPistonBase
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorStator/LargeStator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorStator/SmallStator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/LargeAdvancedStator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/SmallAdvancedStator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/LargeHinge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/MediumHinge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/SmallHinge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MedicalRoom/LargeMedicalRoom
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CryoChamber/LargeBlockCryoChamber
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CryoChamber/SmallBlockCryoChamber
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Refinery/LargeRefinery
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Refinery/Blast Furnace
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenGenerator/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenGenerator/OxygenGeneratorSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Assembler/LargeAssembler
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Assembler/BasicAssembler
+->-> Definition cannot be restricted
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SurvivalKit/SurvivalKitLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SurvivalKit/SurvivalKit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenFarm/LargeBlockOxygenFarm
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/LargeProductivityModule
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/LargeEffectivenessModule
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/LargeEnergyModule
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ExhaustBlock/SmallExhaustPipe
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ExhaustBlock/LargeExhaustPipe
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/BuggyCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension3x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension5x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension1x1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension3x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension5x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension1x1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension3x3mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension5x5mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension1x1mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension3x3mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension5x5mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension1x1mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/OffsetLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ReflectorLight/OffsetSpotlight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeLCDPanel5x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeLCDPanel5x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TextPanel/LargeLCDPanel3x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/LargeBlockSciFiTerminal
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/LargeSciFiButtonTerminal
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/SmallSideDoor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/LargeSciFiButtonPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrustSciFi
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeHydrogenThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallHydrogenThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeHydrogenThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallHydrogenThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrust
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Drill/SmallBlockDrill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Drill/LargeBlockDrill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipGrinder/LargeShipGrinder
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipGrinder/SmallShipGrinder
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipWelder/LargeShipWelder
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ShipWelder/SmallShipWelder
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/LargeOreDetector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/SmallBlockOreDetector
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/LargeBlockLandingGear
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/SmallBlockLandingGear
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/LargeBlockSmallMagneticPlate
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LandingGear/SmallBlockSmallMagneticPlate
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_JumpDrive/LargeJumpDrive
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CameraBlock/SmallCameraBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CameraBlock/LargeCameraBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MergeBlock/LargeShipMergeBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MergeBlock/SmallShipMergeBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MergeBlock/SmallShipSmallMergeBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Parachute/LgParachute
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Parachute/SmParachute
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/LargeBlockWeaponRack
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/SmallBlockWeaponRack
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/PassageSciFiLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Warhead/LargeWarhead
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_Warhead/SmallWarhead
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_Decoy/LargeDecoy
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Decoy/SmallDecoy
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeGatlingTurret/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeGatlingTurret/SmallGatlingTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/SmallMissileTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorTurret/LargeInteriorTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncher/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncher/LargeMissileLauncher
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncherReload/SmallRocketLauncherReload
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallGatlingGun/(null)
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension3x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension5x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension1x1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension3x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension5x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension1x1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension3x3mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension5x5mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension1x1mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension3x3mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension5x5mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension1x1mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/DrillBlocker
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1RightAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1LeftAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3RightAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3LeftAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5RightAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5LeftAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1RightSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/1x1LeftSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3RightSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/3x3LeftSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5RightSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/5x5LeftSmallAdvancedSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad1x1RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad1x1LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad3x3RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad3x3LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad5x5RightEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad5x5LeftEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad1x1RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad1x1LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad3x3RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad3x3LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad5x5RightSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Offroad5x5LeftSmallEliteSuspension
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_WindTurbine/MA_Windmill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/MA_Lantern
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MedicalRoom/Spawn_Point_IR
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MedicalRoom/Small_Spawn_Point_IR
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/MXA_CoilgunL
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_LargeMissileTurret/Ballistics_Cannon_Turret_Dumb
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_LargeMissileTurret/OKI122mmVT
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncher/OKI122mmSGfixed
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXFlakTurret
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXFlakTurret_small
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_LargeGatlingTurret/SmallGatlingGun_Gimbal
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ARYXLightCoilgun
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXRailgunTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ARYXRailgun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/MA_PDT
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/MA_PDT_sm
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/MA_T2PDX
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/MA_Fixed_T2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ReceptorTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ReceptorCoilGun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/MXA_ArcherPods
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/MXA_ArcherPods_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncherReload/SmallRocketLauncherReload_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/Missile_Torpedo_Large
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/Missile_Torpedo_Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/Missile_Torpedo_Large_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/Missile_Torpedo_Small_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/OKIObserverSM
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/OKIDesignator
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenGenerator/MA_O2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/MA_at_upgrade_productivity
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/MA_at_upgrade_effectiveness
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/MA_at_upgrade_energy
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/Pipeline_Cargo
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/MES-NPC-Battery-SmallGrid-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RemoteControl/RivalAIRemoteControlLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RemoteControl/RivalAIRemoteControlSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Nanobots-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-JumpDrive-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Jetpack-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Drill-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorTurret/NpcLargeInteriorTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/MnMLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/MnMSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/UOH_Hangar_x3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/UOH_Hangar_x4
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/UOH_Hangar_x5
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/ZoneBlock
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/Prizebox
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_SmallBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_LargeBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_SmallBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_LargeBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_SmallBlock_Armored_Full
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_LargeBlock_Armored_Full
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_SmallBlock_Armored_Full
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_LargeBlock_Armored_Full
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_SmallBlockV2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_LargeBlockV2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_SmallBlockV2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_LargeBlockV2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_SmallBlockV2_Armored_Half
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallAtmosphericHoverEngine_LargeBlockV2_Armored_Half
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_SmallBlockV2_Armored_Half
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeAtmosphericHoverEngine_LargeBlockV2_Armored_Half
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Drill/BasicStaticDrill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Drill/StaticDrill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Drill/AdvancedStaticDrill
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/ClaimBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/AQD_LG_GyroBooster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/AQD_SG_GyroBooster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_UpgradeModule/AQD_LG_GyroUpgrade
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Gyro/AQD_LG_LargeGyro
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CargoContainer/AQD_LG_ConveyorAccess
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/AQD_LG_ConveyorVent
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/LargeTurretControlBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/SmallTurretControlBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SafeZoneBlock/SafeZoneBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/VerticalButtonPanelSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/PassengerSeatSmallNew
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/PassengerSeatSmallOffset
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/PassengerBench
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/LargeLightPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallLightPanel
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/LargeBlockSmallGeneratorWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/LargeBlockLargeGeneratorWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/SmallBlockSmallGeneratorWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Reactor/SmallBlockLargeGeneratorWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/AirtightHangarDoorWarfare2A
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/AirtightHangarDoorWarfare2B
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirtightHangarDoor/AirtightHangarDoorWarfare2C
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncher/SmallMissileLauncherWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallGatlingGun/SmallGatlingGunWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/LargeBlockBatteryBlockWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BatteryBlock/SmallBlockBatteryBlockWarfare2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/SlidingHatchDoor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Door/SlidingHatchDoorHalf
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Searchlight/SmallSearchlight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Searchlight/LargeSearchlight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_HeatVentBlock/LargeHeatVentBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_HeatVentBlock/SmallHeatVentBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/SmallBlockStandingCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockStandingCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockSmallModularThruster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/SmallBlockLargeModularThruster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockSmallModularThruster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/LargeBlockLargeModularThruster
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallGatlingGun/SmallBlockAutocannon
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncherReload/SmallBlockMediumCalibreGun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SmallMissileLauncher/LargeBlockLargeCalibreGun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/LargeRailgun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/SmallRailgun
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/LargeCalibreTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/LargeBlockMediumCalibreTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/SmallBlockMediumCalibreTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/AutoCannonTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_5x5_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_5x5_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_3x3_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_3x3_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_1x1_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_1x1_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_5x5_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_5x5_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_3x3_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_3x3_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_1x1_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_1x1_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_5x5_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_5x5_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_3x3_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_3x3_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_1x1_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/LG_1x1_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_5x5_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_5x5_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_3x3_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_3x3_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_1x1_Offroad_Lifted_Suspension_Left
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SG_1x1_Offroad_Lifted_Suspension_Right
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LimitedProdZone
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeGatlingTurret/LargeAutoCannonTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Player-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Player-Large
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/MES-NpcLargeTurretControlBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/MES-NpcSmallTurretControlBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/BuyASpawnButton
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LargeCargoScanner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/SmallCargoScanner
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/LargeTurretControlBlockMART
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TurretControlBlock/SmallTurretControlBlockMART
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/LargeWarhead
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/SmallWarhead
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Jukebox/Jukebox_small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IndustryHydro-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IndustryHydro-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IndustryHydro-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IndustryHydro-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-WarfareIon-SmallGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-WarfareIon-SmallGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-WarfareIon-LargeGrid-Small
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-WarfareIon-LargeGrid-Large
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/LargeBlockDeskCornerInv
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorAdvancedStator/SmallAdvancedStatorSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Energy-Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Energy-Large
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension7x7
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension7x7
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension7x7mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension7x7mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/KhopeshTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/SentinelTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ARYXMissileBattery
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OxygenTank/RB_HydrogenTankMedium_Small
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CameraBlock/MA_Buster_Camera
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/MA_Buster_Passage_Crossing
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/HangarStoreBlock
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_Refinery/CoolingSystem
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_Refinery/SmallCoolingSystem
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_AirVent/DummyAirVent
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_AirVent/SmallDummyAirVent
+->-> Unable to retrieve MyCubeBlockDefinition
+-> Setting = MyObjectBuilder_ConveyorSorter/ARYXMissileBattery
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXHeavyFlakTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXVulcanTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXHurricaneCannon
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/ARYXSpartanTurret
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_LargeMissileTurret/lokiCannon1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/missileBattery01
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_EventControllerBlock/EventControllerLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_EventControllerBlock/EventControllerSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_PathRecorderBlock/LargePathRecorderBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_PathRecorderBlock/SmallPathRecorderBlock
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BasicMissionBlock/LargeBasicMission
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_BasicMissionBlock/SmallBasicMission
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_FlightMovementBlock/LargeFlightMovement
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_FlightMovementBlock/SmallFlightMovement
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_DefensiveCombatBlock/LargeDefensiveCombat
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_DefensiveCombatBlock/SmallDefensiveCombat
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OffensiveCombatBlock/LargeOffensiveCombat
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OffensiveCombatBlock/SmallOffensiveCombat
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/LargeBlockInsetLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/SmallBlockInsetLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/LargeBlockAccessPanel1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/LargeBlockAccessPanel2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/LargeBlockAccessPanel3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/LargeBlockAccessPanel4
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/SmallBlockAccessPanel1
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/SmallBlockAccessPanel2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/SmallBlockAccessPanel3
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TerminalBlock/SmallBlockAccessPanel4
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/AirVentFan
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/AirVentFanFull
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/SmallAirVentFan
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/SmallAirVentFanFull
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CameraBlock/LargeCameraTopMounted
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_CameraBlock/SmallCameraTopMounted
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SensorBlock/SmallBlockSensorReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_SensorBlock/LargeBlockSensorReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MyProgrammableBlock/LargeProgrammableBlockReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MyProgrammableBlock/SmallProgrammableBlockReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TimerBlock/TimerBlockReskinLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_TimerBlock/TimerBlockReskinSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/SpeederCockpit
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Cockpit/SpeederCockpitCompact
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_EmotionControllerBlock/EmotionControllerLarge
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_EmotionControllerBlock/EmotionControllerSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_InteriorLight/AirDuctLight
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/AirVentFull
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_AirVent/SmallAirVentFull
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension2x2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension2x2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSuspension2x2Mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/OffroadSmallSuspension2x2Mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension2x2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension2x2
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/Suspension2x2Mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_MotorSuspension/SmallSuspension2x2Mirrored
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Projector/MES-Blocks-ShipyardTerminal
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/MES-Blocks-SuitUpgradeStation
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ButtonPanel/MES-Blocks-ResearchTerminal
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_ConveyorSorter/ARYX_Small_Sidekick_Hangar
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/SmallBlockBeacon_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LargeBlockBeacon_NPC
+->-> Definition added to restricted list
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIAssemblerController
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIAssemblerControllerReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIDisplayMonitor
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIDisplayMonitorReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIIgnoreMap
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIIgnoreMapSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIIgnoreMapReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIIgnoreMapReskinSmall
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIInventoryManager
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIInventoryManagerReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIRefineryController
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_OreDetector/AIRefineryControllerReskin
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/SmallBlockBeacon_MediumCore
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LargeBlockBeacon_MediumCore
+->-> Setting added successfully
+-> Setting = MyObjectBuilder_Beacon/LargeBlockBeacon_HeavyCore
+->-> Setting added successfully
+
+BeforeStart() - Checking Entity Components
+-> Found EC: Subtype = BlockRestrictions_MES_Blocks
+->-> EC contains 48 settings
+->->-> Setting = MyObjectBuilder_Beacon/DisposableNpcBeaconLarge (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Beacon/DisposableNpcBeaconSmall (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_ConveyorSorter/ProprietaryLargeBlockConveyorSorter (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_ConveyorSorter/ProprietaryLargeBlockConveyor (ForceSetting = False)
+->->->-> Unable to retrieve MyCubeBlockDefinition
+->->-> Setting = MyObjectBuilder_ConveyorSorter/ProprietaryConveyorTube (ForceSetting = False)
+->->->-> Unable to retrieve MyCubeBlockDefinition
+->->-> Setting = MyObjectBuilder_ConveyorSorter/ProprietaryConveyorTubeCurved (ForceSetting = False)
+->->->-> Unable to retrieve MyCubeBlockDefinition
+->->-> Setting = MyObjectBuilder_Gyro/ProprietaryLargeBlockGyro (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-LargeGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-LargeGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-SmallGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Atmo-SmallGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-LargeGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-LargeGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-SmallGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Hydro-SmallGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-SmallGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-SmallGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-LargeGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-Ion-LargeGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-SmallGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-SmallGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-LargeGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-IonSciFi-LargeGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-LargeGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-LargeGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-SmallGrid-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/MES-NPC-Thrust-AtmoSciFi-SmallGrid-Small (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Nanobots-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-JumpDrive-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Jetpack-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_RadioAntenna/MES-Suppressor-Drill-Large (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Reactor/ProprietarySmallBlockSmallGenerator (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Reactor/ProprietarySmallBlockLargeGenerator (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Reactor/ProprietaryLargeBlockSmallGenerator (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Reactor/ProprietaryLargeBlockLargeGenerator (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_GravityGenerator/ProprietaryGravGen (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_GravityGeneratorSphere/ProprietaryGravGenSphere (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_VirtualMass/ProprietaryVirtualMassLarge (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_VirtualMass/ProprietaryVirtualMassSmall (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_SpaceBall/ProprietarySpaceBallLarge (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_SpaceBall/ProprietarySpaceBallSmall (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/ProprietarySmallBlockSmallThrust (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/ProprietarySmallBlockLargeThrust (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/ProprietaryLargeBlockSmallThrust (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_Thrust/ProprietaryLargeBlockLargeThrust (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_LaserAntenna/ProprietaryLargeBlockLaserAntenna (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_LaserAntenna/ProprietarySmallBlockLaserAntenna (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+->->-> Setting = MyObjectBuilder_JumpDrive/ProprietaryLargeJumpDrive (ForceSetting = False)
+->->->-> A setting already exists (skipping this default setting)
+
+
+
+Finished with settings
+
+
+[15:42:30.812] [T1] [DS=False] DEBUG | UpdateAllPlayerData: Id = 76561197972933601, IsAdmin = True, CopyPaste = True, Creative = True
