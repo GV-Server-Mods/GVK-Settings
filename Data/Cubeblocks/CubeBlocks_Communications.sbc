@@ -23,10 +23,11 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
-            <BuildProgressModels>
+            <!-- Build stages must be removed so beacon is always functional -->
+			<!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm" />
-            </BuildProgressModels>
+            </BuildProgressModels>-->
             <BlockPairName>Beacon</BlockPairName>
             <MirroringY>Z</MirroringY>
             <EdgeType>Light</EdgeType>
@@ -65,10 +66,11 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
-            <BuildProgressModels>
+            <!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm" />
-            </BuildProgressModels>
+            </BuildProgressModels>-->
             <BlockPairName>Beacon_MediumCore</BlockPairName>
             <MirroringY>Z</MirroringY>
             <EdgeType>Light</EdgeType>
@@ -114,11 +116,12 @@
                 <MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
                 <MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
             </MountPoints>
-            <BuildProgressModels>
+            <!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
-            </BuildProgressModels>
+            </BuildProgressModels>-->
             <BlockPairName>Beacon</BlockPairName>
             <EdgeType>Light</EdgeType>
             <MirroringY>Z</MirroringY>
@@ -165,11 +168,12 @@
                 <MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
                 <MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
             </MountPoints>
-            <BuildProgressModels>
+            <!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
-            </BuildProgressModels>
+            </BuildProgressModels>-->
             <BlockPairName>Beacon_MediumCore</BlockPairName>
             <EdgeType>Light</EdgeType>
             <MirroringY>Z</MirroringY>
@@ -216,11 +220,12 @@
                 <MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
                 <MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
             </MountPoints>
-            <BuildProgressModels>
+            <!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
-            </BuildProgressModels>
+            </BuildProgressModels>-->
             <BlockPairName>Beacon_HeavyCore</BlockPairName>
             <EdgeType>Light</EdgeType>
             <MirroringY>Z</MirroringY>
