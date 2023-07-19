@@ -44,12 +44,5 @@
 		<Entry Class="ShipConsumables" BlueprintSubtypeId="Canvas"/>
 		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Medkit"/>
 		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Powerkit"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="SemiAutoPistolMagazine"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="FullAutoPistolMagazine"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="ElitePistolMagazine"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="AutomaticRifleGun_Mag_20rd"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="RapidFireAutomaticRifleGun_Mag_50rd"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="PreciseAutomaticRifleGun_Mag_5rd"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="UltimateAutomaticRifleGun_Mag_30rd"/>
 	</BlueprintClassEntries>
 </Definitions>
