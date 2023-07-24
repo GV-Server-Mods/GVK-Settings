@@ -2,7 +2,7 @@
 <ConfigCustomBlocks xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ModVersion>2.1.38</ModVersion>
   <ProprietaryReactorFuelAmount>10</ProprietaryReactorFuelAmount>
-  <UseDisposableBeaconPlayerDistance>true</UseDisposableBeaconPlayerDistance>
+  <UseDisposableBeaconPlayerDistance>false</UseDisposableBeaconPlayerDistance>
   <UseDisposableBeaconInactivity>true</UseDisposableBeaconInactivity>
   <DisposableBeaconPlayerDistanceTrigger>1</DisposableBeaconPlayerDistanceTrigger>
   <DisposableBeaconRemovalTimerMinutes>120</DisposableBeaconRemovalTimerMinutes>

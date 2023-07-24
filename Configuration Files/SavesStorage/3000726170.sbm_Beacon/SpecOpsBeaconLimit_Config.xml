@@ -6,20 +6,6 @@
   <ALERT_RATE_SECONDS>300</ALERT_RATE_SECONDS>
   <BEACON_SUBTYPE>
     <BeaconSubtype>SmallBlockBeacon</BeaconSubtype>
-    <Limit>4</Limit>
-    <Limit>5</Limit>
-    <Limit>5</Limit>
-    <Limit>6</Limit>
-    <Limit>6</Limit>
-    <Limit>6</Limit>
-    <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>8</Limit>
-  </BEACON_SUBTYPE>
-  <BEACON_SUBTYPE>
-    <BeaconSubtype>SmallBlockBeacon_MediumCore</BeaconSubtype>
     <Limit>2</Limit>
     <Limit>3</Limit>
     <Limit>3</Limit>
@@ -31,6 +17,20 @@
     <Limit>5</Limit>
     <Limit>5</Limit>
     <Limit>6</Limit>
+  </BEACON_SUBTYPE>
+  <BEACON_SUBTYPE>
+    <BeaconSubtype>SmallBlockBeacon_MediumCore</BeaconSubtype>
+    <Limit>1</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>3</Limit>
+    <Limit>3</Limit>
+    <Limit>3</Limit>
+    <Limit>4</Limit>
+    <Limit>4</Limit>
+    <Limit>4</Limit>
+    <Limit>4</Limit>
+    <Limit>5</Limit>
   </BEACON_SUBTYPE>
   <BEACON_SUBTYPE>
     <BeaconSubtype>LargeBlockBeacon</BeaconSubtype>

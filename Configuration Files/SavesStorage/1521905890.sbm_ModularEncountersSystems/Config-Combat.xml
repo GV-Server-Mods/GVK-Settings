@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ConfigCombat xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <EnableCombatPhaseSystem>true</EnableCombatPhaseSystem>
+  <EnableCombatPhaseSystem>false</EnableCombatPhaseSystem>
   <MinCombatPhaseSeconds>900</MinCombatPhaseSeconds>
   <MaxCombatPhaseSeconds>1800</MaxCombatPhaseSeconds>
   <MinPeacePhaseSeconds>1800</MinPeacePhaseSeconds>

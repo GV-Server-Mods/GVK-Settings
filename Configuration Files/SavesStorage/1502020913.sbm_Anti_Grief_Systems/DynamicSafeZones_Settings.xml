@@ -19,9 +19,9 @@
   <disableSpotLights>false</disableSpotLights>
   <disableProduction>false</disableProduction>
   <disableProductionOnRestart>true</disableProductionOnRestart>
-  <enableFactionAlerts>true</enableFactionAlerts>
-  <factionFurtherThan>3000</factionFurtherThan>
-  <enemyCloserThan>3000</enemyCloserThan>
+  <enableFactionAlerts>false</enableFactionAlerts>
+  <factionFurtherThan>2000</factionFurtherThan>
+  <enemyCloserThan>200</enemyCloserThan>
   <enableChatCutPaste>true</enableChatCutPaste>
   <cooldownCutPaste>60</cooldownCutPaste>
   <enableChatConvert>true</enableChatConvert>

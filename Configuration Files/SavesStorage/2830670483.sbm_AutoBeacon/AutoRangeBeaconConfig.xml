@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <BeaconConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <MinBeaconRadius>100</MinBeaconRadius>
+  <MinBeaconRadius>500</MinBeaconRadius>
   <MaxBeaconRadius>10000</MaxBeaconRadius>
   <WeaponPCUWeight>3</WeaponPCUWeight>
   <BlockMassWeight>1</BlockMassWeight>
