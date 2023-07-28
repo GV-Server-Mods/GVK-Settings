@@ -9,7 +9,7 @@
             </Id>
             <DisplayName>Light Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
+            <Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 MPs, 80 UPs.</Description>
             <CubeSize>Small</CubeSize>
             <GuiVisible>true</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -52,7 +52,7 @@
             </Id>
             <DisplayName>Medium Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
+            <Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 MPs, 140 UPs.</Description>
             <CubeSize>Small</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -95,7 +95,7 @@
             </Id>
             <DisplayName>Light Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
+            <Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 MPs, 80 UPs.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>true</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -147,7 +147,7 @@
             </Id>
             <DisplayName>Medium Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
+            <Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 MPs, 140 UPs.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -199,7 +199,7 @@
             </Id>
             <DisplayName>Heavy Ship Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>The Ship Core block is required for all permanent grids. Select your ship's specializations in the terminal</Description>
+            <Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 MPs, 200 UPs.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
