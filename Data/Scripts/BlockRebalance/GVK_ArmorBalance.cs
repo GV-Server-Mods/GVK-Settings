@@ -285,7 +285,8 @@ namespace MikeDude.ArmorBalance
                             break;
                     }
                 }
-
+				
+				//reduce default battery pre-charge
                 if (batteryDef != null)
                 {
                     batteryDef.InitialStoredPowerRatio = 0.05f;
@@ -295,20 +296,33 @@ namespace MikeDude.ArmorBalance
                     }
                 }
 
+				//remove LOS check for laser antenna
                 if (laserAntennaDef != null)
                 {
                     laserAntennaDef.RequireLineOfSight = false;
                 }
-
+				
+				//I dont remember what does
                 if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
                 {
                     ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
                 }
 
+				//I dont remember what this does either
                 if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName == "LargeBlockConveyor")
                 {
                     InsertComponent(blockDef, blockDef.Components.Length, steelPlateComponent, 40);
                 }
+				
+				//Make all 5x5 XL blocks have light edge type, and no deformation
+                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("XL_") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
+                {
+					blockDef.GeneralDamageMultiplier = lightArmorLargeDamageMod;
+					blockDef.UsesDeformation = false;
+					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
+					blockDef.EdgeType = "Light";
+                }
+				
             }
         }
 
