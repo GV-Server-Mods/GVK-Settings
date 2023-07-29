@@ -120,7 +120,7 @@
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
@@ -227,29 +227,29 @@
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
+				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1" AmountMax="2">
-					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
+				<Item AmountMin="2" AmountMax="4">
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
@@ -404,28 +404,28 @@
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
+				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
+				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
+				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Missile_Tech</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="2" AmountMax="5">
+				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
