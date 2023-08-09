@@ -8,6 +8,7 @@ using System.Text;
 using Sandbox.Game.AI.Pathfinding.Obsolete;
 using Sandbox.Game.Entities;
 using VRage.Game;
+using VRage.ObjectBuilders;
 using VRage.Game.ObjectBuilders.ComponentSystem;
 using VRage.Utils;
 using VRageMath;
@@ -78,6 +79,8 @@ namespace MikeDude.ArmorBalance
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
                 var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
                 var cargoDef = blockDef as MyCargoContainerDefinition;
+				var reactorDef = blockDef as MyReactorDefinition;
+				var solarDef = blockDef as MySolarPanelDefinition;
 
                 blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 
@@ -286,14 +289,22 @@ namespace MikeDude.ArmorBalance
                     }
                 }
 				
-				//reduce default battery pre-charge
+				//reduce default battery pre-charge, and nerf max output to reduce battery spam
                 if (batteryDef != null)
                 {
                     batteryDef.InitialStoredPowerRatio = 0.05f;
+					batteryDef.MaxPowerOutput *=0.8f;
+					batteryDef.GeneralDamageMultiplier = 1.25f;
                     foreach (var component in batteryDef.Components)
                     {
                         component.DeconstructItem = component.Definition;
                     }
+                }
+
+				//buffing output of solar to compensate for banned solar tracking
+                if (solarDef != null)
+                {
+                    solarDef.MaxPowerOutput *= 2f;
                 }
 
 				//remove LOS check for laser antenna
@@ -302,7 +313,20 @@ namespace MikeDude.ArmorBalance
                     laserAntennaDef.RequireLineOfSight = false;
                 }
 				
-				//I dont remember what does
+				//buffing output of NPC Proprietary reactors
+                if (reactorDef != null && reactorDef.Id.SubtypeName.Contains("Proprietary"))
+                {
+                    reactorDef.MaxPowerOutput *= 5f;
+					//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
+                }
+
+				//buffing output of small grid reactors
+                if (reactorDef != null && blockDef.CubeSize == MyCubeSize.Small)
+                {
+                    reactorDef.MaxPowerOutput *= 1.5f;
+                }
+				
+				//Adjust container components to be proportional to block volume
                 if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
                 {
                     ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
@@ -423,6 +447,7 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
+		// Fix the upgradeable O2/H2 gen
         private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
         {
             var comp = blockDef.Components[index];
@@ -438,6 +463,7 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
+		// Fix the upgradeable O2/H2 gen
         private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
         {
             var criticalIntegrity = 0f;
