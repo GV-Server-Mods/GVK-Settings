@@ -25,7 +25,7 @@
 			<DisplayName>DO NOT USE.</DisplayName>
 			<Icon>Textures\GUI\Icons\RespawnShips\Trueno.png</Icon>
 			<CooldownSeconds>200</CooldownSeconds>
-			<Prefab>Toyota Trueno</Prefab>
+			<Prefab>Do better next time</Prefab>
 			<MinimalAirDensity>0.5</MinimalAirDensity>
 			<PlanetDeployAltitude>10</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
