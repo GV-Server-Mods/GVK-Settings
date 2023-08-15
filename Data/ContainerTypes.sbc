@@ -263,7 +263,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20"> 
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>ZoneChip</SubtypeId>
@@ -440,7 +440,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="50" AmountMax="100"> 
-					<Frequency>0.25</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>ZoneChip</SubtypeId>
