@@ -346,6 +346,15 @@ namespace MikeDude.ArmorBalance
 					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
 					blockDef.EdgeType = "Light";
                 }
+
+				//Make all Buster blocks have heavy edge type, and no deformation
+                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("MA_Buster") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
+                {
+					blockDef.GeneralDamageMultiplier = lightArmorLargeDamageMod;
+					blockDef.UsesDeformation = false;
+					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
+					blockDef.EdgeType = "Heavy";
+                }
 				
             }
         }
