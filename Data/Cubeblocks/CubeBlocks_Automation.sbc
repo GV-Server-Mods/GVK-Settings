@@ -327,6 +327,7 @@
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
 			<RequiredPowerInput>0.01</RequiredPowerInput>
 			<EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<IsAirTight>true</IsAirTight>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_OffensiveCombatBlockDefinition">
 			<Id>
@@ -430,6 +431,7 @@
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<PCU>25</PCU>
 			<EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<IsAirTight>true</IsAirTight>
 		</Definition>
 	</CubeBlocks>
 </Definitions>
