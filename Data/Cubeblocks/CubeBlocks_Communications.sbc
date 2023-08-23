@@ -250,7 +250,7 @@
             </Id>
             <DisplayName>Pipeline Core Beacon</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-            <Description>Ship Core only for Pipelines. Do not combine with other Ship Cores. 50 block limit, 2 Drills.</Description>
+            <Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>

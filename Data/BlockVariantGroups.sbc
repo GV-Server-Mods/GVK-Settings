@@ -12,6 +12,7 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_MediumCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_HeavyCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Pipeline"/>
 			</Blocks>
 		</BlockVariantGroup>
 	</BlockVariantGroups>
