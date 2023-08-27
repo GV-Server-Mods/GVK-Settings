@@ -6,18 +6,18 @@
       <CubeGrids>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>137730593623496361</EntityId>
+          <EntityId>113060811356733311</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>137730593623496361</Name>
+          <Name>113060811356733311</Name>
           <PositionAndOrientation>
             <Position x="0" y="0" z="0" />
-            <Forward x="-0.0158025324" y="0.681383" z="0.7317559" />
-            <Up x="-0.954278469" y="0.208206534" z="-0.214481652" />
+            <Forward x="0.910982549" y="-0.0447619557" z="0.41000843" />
+            <Up x="0.412349045" y="0.120256364" z="-0.903054" />
             <Orientation>
-              <X>-0.5534097</X>
-              <Y>0.74807477</Y>
-              <Z>-0.299390227</Z>
-              <W>-0.210920349</W>
+              <X>0.5658773</X>
+              <Y>0.6203121</Y>
+              <Z>-0.345911443</Z>
+              <W>-0.4187375</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -51,25 +51,18 @@
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockArmorBlock</SubtypeName>
               <Min x="-46" y="0" z="-13" />
-              <ColorMaskHSV x="0.075" y="-0.44" z="0.35" />
-              <SkinSubtypeId>Battered_Armor</SkinSubtypeId>
-            </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-46" y="0" z="-12" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
-              <Min x="-45" y="0" z="-13" />
-              <BlockOrientation Forward="Left" Up="Down" />
-              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
+              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
+              <Min x="-46" y="0" z="-11" />
+              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>136966313900328273</EntityId>
+              <EntityId>141645858360622783</EntityId>
               <Min x="-46" y="-1" z="-13" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -89,7 +82,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3</SubtypeName>
-              <EntityId>126760593439198233</EntityId>
+              <EntityId>73580145383904990</EntityId>
               <Min x="-48" y="0" z="-16" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -101,7 +94,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>96892626002552915</TopBlockId>
+              <TopBlockId>92979349546693770</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -113,14 +106,14 @@
               <Propulsion>true</Propulsion>
               <Friction>2.8</Friction>
               <Power>0</Power>
-              <Height>-1.5</Height>
+              <Height>-2</Height>
               <MaxSteerAngle>0.17289868</MaxSteerAngle>
               <InvertSteer>false</InvertSteer>
               <InvertPropulsion>false</InvertPropulsion>
               <SpeedLimit>360</SpeedLimit>
               <PowerNew>0.508131862</PowerNew>
               <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
+              <FrictionNew>0.382457346</FrictionNew>
               <AirShockEnabled>false</AirShockEnabled>
               <BrakingEnabled>true</BrakingEnabled>
               <SteeringOverride>0</SteeringOverride>
@@ -129,7 +122,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>96861652331037359</EntityId>
+              <EntityId>85636821527079572</EntityId>
               <Min x="-46" y="-1" z="-12" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -137,7 +130,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>124846273148395857</EntityId>
+              <EntityId>97500165158474336</EntityId>
               <Min x="-46" y="1" z="-13" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -167,19 +160,44 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>21</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-47" y="0" z="-12" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
+              <SubtypeName>Suspension3x3</SubtypeName>
+              <EntityId>102394894774002617</EntityId>
+              <Min x="-48" y="0" z="-12" />
+              <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <ConstructionStockpile>
-                <Items xsi:type="MyObjectBuilder_StockpileItem">
-                  <Amount>232</Amount>
-                  <PhysicalContent xsi:type="MyObjectBuilder_Ore">
-                    <SubtypeName>Scrap</SubtypeName>
-                  </PhysicalContent>
-                </Items>
-              </ConstructionStockpile>
+              <CustomName>Wheel Suspension 3x3 Right Front</CustomName>
+              <ShowOnHUD>false</ShowOnHUD>
+              <ShowInTerminal>false</ShowInTerminal>
+              <ShowInToolbarConfig>false</ShowInToolbarConfig>
+              <ShowInInventory>true</ShowInInventory>
+              <NumberInGrid>5</NumberInGrid>
+              <Enabled>true</Enabled>
+              <TopBlockId>118152964428845945</TopBlockId>
+              <ShareInertiaTensor>false</ShareInertiaTensor>
+              <SafetyDetach>5</SafetyDetach>
+              <RotorEntityId xsi:nil="true" />
+              <WeldedEntityId xsi:nil="true" />
+              <SteerAngle>-0</SteerAngle>
+              <Damping>0.9</Damping>
+              <Strength>3.40282347E+38</Strength>
+              <Propulsion>true</Propulsion>
+              <Friction>2.8</Friction>
+              <Power>0</Power>
+              <Height>-2</Height>
+              <MaxSteerAngle>0.349066</MaxSteerAngle>
+              <InvertSteer>false</InvertSteer>
+              <InvertPropulsion>false</InvertPropulsion>
+              <SpeedLimit>180</SpeedLimit>
+              <PowerNew>0.6</PowerNew>
+              <StrengthNew>0.06</StrengthNew>
+              <FrictionNew>0.382457346</FrictionNew>
+              <AirShockEnabled>false</AirShockEnabled>
+              <BrakingEnabled>true</BrakingEnabled>
+              <SteeringOverride>0</SteeringOverride>
+              <PropulsionOverride>0</PropulsionOverride>
+              <IsParkingEnabled>true</IsParkingEnabled>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
@@ -190,7 +208,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Reactor">
               <SubtypeName>LargeBlockSmallGenerator</SubtypeName>
-              <EntityId>76757222189611588</EntityId>
+              <EntityId>84354989476788275</EntityId>
               <Min x="-46" y="2" z="-12" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -237,7 +255,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>72179732530028051</EntityId>
+              <EntityId>88331021887163621</EntityId>
               <Min x="-47" y="-1" z="-13" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -245,7 +263,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>123579672240279021</EntityId>
+              <EntityId>83045575654958105</EntityId>
               <Min x="-46" y="-1" z="-14" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -264,24 +282,9 @@
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
-              <Min x="-48" y="0" z="-13" />
-              <BlockOrientation Forward="Right" Up="Down" />
-              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
-              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <ConstructionStockpile>
-                <Items xsi:type="MyObjectBuilder_StockpileItem">
-                  <Amount>192</Amount>
-                  <PhysicalContent xsi:type="MyObjectBuilder_Ore">
-                    <SubtypeName>Scrap</SubtypeName>
-                  </PhysicalContent>
-                </Items>
-              </ConstructionStockpile>
-            </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>89122896919559604</EntityId>
+              <EntityId>96386824591423807</EntityId>
               <Min x="-47" y="0" z="-10" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -315,7 +318,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>117910169244240620</EntityId>
+              <EntityId>134787580670600559</EntityId>
               <Min x="-46" y="1" z="-10" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -347,48 +350,9 @@
               <Enabled>false</Enabled>
               <CheckEnvironmentSector>true</CheckEnvironmentSector>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
-              <SubtypeName>Suspension3x3</SubtypeName>
-              <EntityId>136166474028366705</EntityId>
-              <Min x="-48" y="0" z="-11" />
-              <BlockOrientation Forward="Up" Up="Left" />
-              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
-              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <CustomName>Wheel Suspension 3x3 Right Front</CustomName>
-              <ShowOnHUD>false</ShowOnHUD>
-              <ShowInTerminal>false</ShowInTerminal>
-              <ShowInToolbarConfig>false</ShowInToolbarConfig>
-              <ShowInInventory>true</ShowInInventory>
-              <NumberInGrid>1</NumberInGrid>
-              <Enabled>true</Enabled>
-              <TopBlockId>117685354012898465</TopBlockId>
-              <ShareInertiaTensor>false</ShareInertiaTensor>
-              <SafetyDetach>5</SafetyDetach>
-              <RotorEntityId xsi:nil="true" />
-              <WeldedEntityId xsi:nil="true" />
-              <SteerAngle>-0</SteerAngle>
-              <Damping>0.9</Damping>
-              <Strength>3.40282347E+38</Strength>
-              <Propulsion>true</Propulsion>
-              <Friction>2.8</Friction>
-              <Power>0</Power>
-              <Height>-1.5</Height>
-              <MaxSteerAngle>0.430161953</MaxSteerAngle>
-              <InvertSteer>false</InvertSteer>
-              <InvertPropulsion>false</InvertPropulsion>
-              <SpeedLimit>360</SpeedLimit>
-              <PowerNew>0.508131862</PowerNew>
-              <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
-              <AirShockEnabled>false</AirShockEnabled>
-              <BrakingEnabled>true</BrakingEnabled>
-              <SteeringOverride>0</SteeringOverride>
-              <PropulsionOverride>0</PropulsionOverride>
-              <IsParkingEnabled>true</IsParkingEnabled>
-            </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>109101741940577283</EntityId>
+              <EntityId>108012222631588152</EntityId>
               <Min x="-47" y="-1" z="-12" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -396,7 +360,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Reactor">
               <SubtypeName>LargeBlockSmallGenerator</SubtypeName>
-              <EntityId>101724863934801698</EntityId>
+              <EntityId>137304467738970522</EntityId>
               <Min x="-47" y="2" z="-12" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -451,7 +415,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeLightPanel</SubtypeName>
-              <EntityId>93146518364641962</EntityId>
+              <EntityId>95352829610229392</EntityId>
               <Min x="-46" y="1" z="-14" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -475,7 +439,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>113578912706157722</EntityId>
+              <EntityId>112324794476633845</EntityId>
               <Min x="-46" y="1" z="-12" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -505,15 +469,71 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>19</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-48" y="2" z="-13" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Refinery">
+              <SubtypeName>Blast Furnace</SubtypeName>
+              <EntityId>90589507411053318</EntityId>
+              <Min x="-45" y="2" z="-14" />
+              <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+              <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyInventoryBase</TypeId>
+                    <Component xsi:type="MyObjectBuilder_InventoryAggregate">
+                      <InventoryId>Inventory</InventoryId>
+                      <Inventories>
+                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
+                          <Items />
+                          <nextItemId>0</nextItemId>
+                          <Volume>4</Volume>
+                          <Mass>9223372036854.775807</Mass>
+                          <MaxItemCount>2147483647</MaxItemCount>
+                          <Size xsi:nil="true" />
+                          <InventoryFlags>CanReceive</InventoryFlags>
+                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
+                        </MyObjectBuilder_InventoryBase>
+                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
+                          <Items />
+                          <nextItemId>0</nextItemId>
+                          <Volume>4</Volume>
+                          <Mass>9223372036854.775807</Mass>
+                          <MaxItemCount>2147483647</MaxItemCount>
+                          <Size xsi:nil="true" />
+                          <InventoryFlags>CanSend</InventoryFlags>
+                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
+                        </MyObjectBuilder_InventoryBase>
+                      </Inventories>
+                    </Component>
+                  </ComponentData>
+                  <ComponentData>
+                    <TypeId>MyTimerComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_TimerComponent">
+                      <Repeat>true</Repeat>
+                      <TimeToEvent>0</TimeToEvent>
+                      <SetTimeMinutes>0</SetTimeMinutes>
+                      <TimerEnabled>true</TimerEnabled>
+                      <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
+                      <TimerType>Frame10</TimerType>
+                      <FramesFromLastTrigger>0</FramesFromLastTrigger>
+                      <TimerTickInFrames>60</TimerTickInFrames>
+                      <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
+              <CustomName>Basic Refinery</CustomName>
+              <ShowOnHUD>false</ShowOnHUD>
+              <ShowInTerminal>true</ShowInTerminal>
+              <ShowInToolbarConfig>true</ShowInToolbarConfig>
+              <ShowInInventory>true</ShowInInventory>
+              <NumberInGrid>2</NumberInGrid>
+              <Enabled>true</Enabled>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>110572559058468071</EntityId>
+              <EntityId>138974728630903609</EntityId>
               <Min x="-47" y="2" z="-13" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -544,14 +564,15 @@
               <NumberInGrid>20</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-45" y="2" z="-13" />
+              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
+              <Min x="-45" y="3" z="-14" />
+              <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>119441155156300983</EntityId>
+              <EntityId>82239748581283709</EntityId>
               <Min x="-47" y="-1" z="-14" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -559,7 +580,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>141247570902920458</EntityId>
+              <EntityId>133503242680919518</EntityId>
               <Min x="-46" y="-1" z="-15" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -577,48 +598,9 @@
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
-              <SubtypeName>Suspension3x3mirrored</SubtypeName>
-              <EntityId>74074957745933385</EntityId>
-              <Min x="-46" y="0" z="-11" />
-              <BlockOrientation Forward="Up" Up="Right" />
-              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
-              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <CustomName>Wheel Suspension 3x3 Left Front</CustomName>
-              <ShowOnHUD>false</ShowOnHUD>
-              <ShowInTerminal>false</ShowInTerminal>
-              <ShowInToolbarConfig>false</ShowInToolbarConfig>
-              <ShowInInventory>true</ShowInInventory>
-              <NumberInGrid>1</NumberInGrid>
-              <Enabled>true</Enabled>
-              <TopBlockId>134633898463450644</TopBlockId>
-              <ShareInertiaTensor>false</ShareInertiaTensor>
-              <SafetyDetach>5</SafetyDetach>
-              <RotorEntityId xsi:nil="true" />
-              <WeldedEntityId xsi:nil="true" />
-              <SteerAngle>-0</SteerAngle>
-              <Damping>0.9</Damping>
-              <Strength>3.40282347E+38</Strength>
-              <Propulsion>true</Propulsion>
-              <Friction>2.8</Friction>
-              <Power>0</Power>
-              <Height>-1.5</Height>
-              <MaxSteerAngle>0.430161953</MaxSteerAngle>
-              <InvertSteer>false</InvertSteer>
-              <InvertPropulsion>false</InvertPropulsion>
-              <SpeedLimit>360</SpeedLimit>
-              <PowerNew>0.508131862</PowerNew>
-              <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
-              <AirShockEnabled>false</AirShockEnabled>
-              <BrakingEnabled>true</BrakingEnabled>
-              <SteeringOverride>0</SteeringOverride>
-              <PropulsionOverride>0</PropulsionOverride>
-              <IsParkingEnabled>true</IsParkingEnabled>
-            </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>132647577867475666</EntityId>
+              <EntityId>107124523007175225</EntityId>
               <Min x="-46" y="0" z="-10" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -652,7 +634,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>137563701825673651</EntityId>
+              <EntityId>121260695382113213</EntityId>
               <Min x="-47" y="1" z="-10" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -701,7 +683,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>75840615657471494</EntityId>
+              <EntityId>117083097567436209</EntityId>
               <Min x="-47" y="-1" z="-11" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -715,7 +697,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>101730888570832972</EntityId>
+              <EntityId>73277484060322022</EntityId>
               <Min x="-49" y="3" z="-13" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -739,14 +721,15 @@
               <Offset>0.7109854</Offset>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
-              <Min x="-46" y="3" z="-12" />
+              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
+              <Min x="-47" y="3" z="-13" />
+              <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>131173607904065870</EntityId>
+              <EntityId>104226183390642760</EntityId>
               <Min x="-47" y="1" z="-12" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -778,15 +761,16 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName />
-              <EntityId>84102585784791028</EntityId>
+              <EntityId>108196023886405722</EntityId>
               <Min x="-49" y="0" z="-14" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-45" y="2" z="-14" />
+              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
+              <Min x="-46" y="3" z="-14" />
+              <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
@@ -805,18 +789,41 @@
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
-              <Min x="-46" y="3" z="-14" />
-              <BlockOrientation Forward="Down" Up="Forward" />
+              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
+              <Min x="-46" y="3" z="-15" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
-              <Min x="-47" y="3" z="-13" />
-              <BlockOrientation Forward="Down" Up="Forward" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
+              <SubtypeName>LargeBlockSmallContainer</SubtypeName>
+              <EntityId>78781755648778807</EntityId>
+              <Min x="-47" y="1" z="-13" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+              <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyInventoryBase</TypeId>
+                    <Component xsi:type="MyObjectBuilder_Inventory">
+                      <Items />
+                      <nextItemId>0</nextItemId>
+                      <Volume>15.625</Volume>
+                      <Mass>9223372036854.775807</Mass>
+                      <MaxItemCount>2147483647</MaxItemCount>
+                      <Size xsi:nil="true" />
+                      <InventoryFlags>CanReceive CanSend</InventoryFlags>
+                      <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
+              <CustomName>Small Cargo Container 12</CustomName>
+              <ShowOnHUD>false</ShowOnHUD>
+              <ShowInTerminal>false</ShowInTerminal>
+              <ShowInToolbarConfig>false</ShowInToolbarConfig>
+              <ShowInInventory>true</ShowInInventory>
+              <NumberInGrid>19</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeHalfArmorBlock</SubtypeName>
@@ -827,7 +834,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_SurvivalKit">
               <SubtypeName>SurvivalKitLarge</SubtypeName>
-              <EntityId>85994455055109101</EntityId>
+              <EntityId>89708200340601291</EntityId>
               <Min x="-47" y="2" z="-14" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -880,7 +887,7 @@
                       <TimerEnabled>true</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>10</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>50</FramesFromLastTrigger>
                       <TimerTickInFrames>60</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -1009,7 +1016,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>111908629499842124</EntityId>
+              <EntityId>76369340470430391</EntityId>
               <Min x="-46" y="2" z="-15" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -1040,7 +1047,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>100302614241907759</EntityId>
+              <EntityId>82398619337805098</EntityId>
               <Min x="-47" y="-1" z="-15" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1048,7 +1055,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>122122811046545836</EntityId>
+              <EntityId>96304137608651432</EntityId>
               <Min x="-46" y="-1" z="-16" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1070,7 +1077,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Door">
               <SubtypeName>LargeBlockOffsetDoor</SubtypeName>
-              <EntityId>88127184804682206</EntityId>
+              <EntityId>127626411083106346</EntityId>
               <Min x="-48" y="1" z="-14" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -1100,13 +1107,14 @@
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
               <AnyoneCanUse>false</AnyoneCanUse>
-              <Opening>0</Opening>
+              <State>true</State>
+              <Opening>1.2</Opening>
               <OpenSound>ArcBlockDoorSmallOpen</OpenSound>
               <CloseSound>ArcBlockDoorSmallClose</CloseSound>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3</SubtypeName>
-              <EntityId>123732863052129544</EntityId>
+              <EntityId>112534921321018018</EntityId>
               <Min x="-48" y="0" z="-20" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1118,7 +1126,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>119608015698467682</TopBlockId>
+              <TopBlockId>82897983191241235</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -1129,14 +1137,14 @@
               <Propulsion>true</Propulsion>
               <Friction>2.8</Friction>
               <Power>0</Power>
-              <Height>-1.5</Height>
+              <Height>-2</Height>
               <MaxSteerAngle>0.17289868</MaxSteerAngle>
               <InvertSteer>false</InvertSteer>
               <InvertPropulsion>false</InvertPropulsion>
               <SpeedLimit>360</SpeedLimit>
               <PowerNew>0.508131862</PowerNew>
               <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
+              <FrictionNew>0.382457346</FrictionNew>
               <AirShockEnabled>false</AirShockEnabled>
               <BrakingEnabled>true</BrakingEnabled>
               <SteeringOverride>0</SteeringOverride>
@@ -1145,7 +1153,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Cockpit">
               <SubtypeName>LargeBlockCockpitIndustrial</SubtypeName>
-              <EntityId>96120529351947558</EntityId>
+              <EntityId>94265687741905300</EntityId>
               <Min x="-47" y="1" z="-15" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1232,7 +1240,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Grinders</GroupName>
                     </Data>
                   </Slot>
@@ -1242,7 +1250,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Recharge</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Batteries</GroupName>
                     </Data>
                   </Slot>
@@ -1252,7 +1260,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>SwitchLock</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Connectors</GroupName>
                     </Data>
                   </Slot>
@@ -1262,7 +1270,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Reactors</GroupName>
                     </Data>
                   </Slot>
@@ -1272,7 +1280,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Override</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Gyros</GroupName>
                     </Data>
                   </Slot>
@@ -1281,7 +1289,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>77234364112249308</BlockEntityId>
+                      <BlockEntityId>134157733640737587</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1290,7 +1298,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Add Top Part</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -1300,7 +1308,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>IncreaseHeight</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -1310,7 +1318,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>DecreaseHeight</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                       <GroupName>Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -1319,7 +1327,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>116599995694785115</BlockEntityId>
+                      <BlockEntityId>115397678064596488</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1327,7 +1335,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>118899950213989905</BlockEntityId>
+                      <BlockEntityId>80658447632477139</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1335,7 +1343,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>121458037293761009</BlockEntityId>
+                      <BlockEntityId>108372321288029409</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1343,7 +1351,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>81629084354401872</BlockEntityId>
+                      <BlockEntityId>82495557896476452</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1351,7 +1359,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>107976142348871177</BlockEntityId>
+                      <BlockEntityId>106536708064933877</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1359,7 +1367,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>111855701980450454</BlockEntityId>
+                      <BlockEntityId>82197983804621472</BlockEntityId>
                     </Data>
                   </Slot>
                 </Slots>
@@ -1369,7 +1377,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Draygo.Mechanic.Actions.ControlMechanics</Action>
-                      <BlockEntityId>96120529351947558</BlockEntityId>
+                      <BlockEntityId>94265687741905300</BlockEntityId>
                     </Data>
                   </Slot>
                 </SlotsGamepad>
@@ -1389,18 +1397,18 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               </OnLockedToolbar>
               <IsTargetLockingEnabled>false</IsTargetLockingEnabled>
               <PilotRelativeWorld>
-                <Position x="-0.88343727588653564" y="-1.2465506792068481" z="-3.1725423336029053" />
-                <Forward x="0.265187442" y="-0.102011405" z="0.9587852" />
-                <Up x="-0.00121398608" y="0.9943514" z="0.10613133" />
+                <Position x="1.655611515045166" y="-0.93235063552856445" z="-2.9655098915100098" />
+                <Forward x="-0.703039765" y="-0.152178615" z="0.6946774" />
+                <Up x="-0.116721921" y="0.988281" z="0.09836949" />
                 <Orientation>
-                  <X>-0.007710756</X>
-                  <Y>0.989612639</Y>
-                  <Z>0.0525818653</Z>
-                  <W>-0.1335758</W>
+                  <X>-0.0349646546</X>
+                  <Y>0.91984576</Y>
+                  <Z>0.06809515</Z>
+                  <W>0.3847393</W>
                 </Orientation>
               </PilotRelativeWorld>
               <PilotGunDefinition xsi:nil="true" />
-              <IsInFirstPersonView>true</IsInFirstPersonView>
+              <IsInFirstPersonView>false</IsInFirstPersonView>
               <OxygenLevel>1</OxygenLevel>
               <PilotJetpackEnabled xsi:nil="true" />
               <TextPanels>
@@ -1735,7 +1743,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>118802654381239419</EntityId>
+              <EntityId>122031236038779124</EntityId>
               <Min x="-46" y="1" z="-16" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1757,7 +1765,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>134366880381773939</EntityId>
+              <EntityId>114492158609995125</EntityId>
               <Min x="-47" y="1" z="-11" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -1785,7 +1793,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ReflectorLight">
               <SubtypeName>LargeBlockFrontLight</SubtypeName>
-              <EntityId>87236901712909539</EntityId>
+              <EntityId>78195954709286789</EntityId>
               <Min x="-48" y="2" z="-11" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -1831,21 +1839,20 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeHalfArmorBlock</SubtypeName>
-              <Min x="-45" y="3" z="-14" />
-              <BlockOrientation Forward="Down" Up="Forward" />
-              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
-              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-            </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
               <Min x="-47" y="3" z="-14" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
-              <Min x="-46" y="3" z="-15" />
+              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
+              <Min x="-46" y="3" z="-12" />
+              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
+              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+            </MyObjectBuilder_CubeBlock>
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
+              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
+              <Min x="-47" y="3" z="-12" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
@@ -1864,7 +1871,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>98965791284206401</EntityId>
+              <EntityId>79384840653324297</EntityId>
               <Min x="-47" y="2" z="-15" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -1895,7 +1902,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>115587524793325128</EntityId>
+              <EntityId>121855014223368818</EntityId>
               <Min x="-47" y="-1" z="-16" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1903,7 +1910,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>139402544106771007</EntityId>
+              <EntityId>114982499479370566</EntityId>
               <Min x="-46" y="-1" z="-17" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1922,15 +1929,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
-              <Min x="-48" y="3" z="-14" />
-              <BlockOrientation Forward="Down" Up="Forward" />
+              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
+              <Min x="-48" y="2" z="-14" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>140336707075806640</EntityId>
+              <EntityId>132765706175655916</EntityId>
               <Min x="-47" y="1" z="-16" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1958,7 +1964,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>143486990174351159</EntityId>
+              <EntityId>138527304680879307</EntityId>
               <Min x="-46" y="1" z="-17" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1993,8 +1999,9 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
-              <Min x="-47" y="3" z="-12" />
+              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
+              <Min x="-48" y="3" z="-14" />
+              <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
@@ -2013,7 +2020,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>131187783744474952</EntityId>
+              <EntityId>89845354379896347</EntityId>
               <Min x="-45" y="2" z="-16" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2033,14 +2040,15 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <ChargeMode>0</ChargeMode>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
-              <Min x="-47" y="3" z="-15" />
+              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
+              <Min x="-46" y="3" z="-13" />
+              <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>104747893327065273</EntityId>
+              <EntityId>101815825009337886</EntityId>
               <Min x="-47" y="-1" z="-17" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2048,7 +2056,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>103169810026868779</EntityId>
+              <EntityId>101691721215103912</EntityId>
               <Min x="-46" y="-1" z="-18" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2084,7 +2092,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>94104360402040547</EntityId>
+              <EntityId>112921735193017722</EntityId>
               <Min x="-48" y="2" z="-16" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2105,7 +2113,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>117321511622765077</EntityId>
+              <EntityId>143808383852572110</EntityId>
               <Min x="-47" y="1" z="-17" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2127,7 +2135,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Beacon">
               <SubtypeName>LargeCargoScanner</SubtypeName>
-              <EntityId>136945107614954946</EntityId>
+              <EntityId>86065908219599343</EntityId>
               <Min x="-47" y="0" z="-18" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2155,79 +2163,12 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
-              <SubtypeName>LargeTextPanel</SubtypeName>
-              <EntityId>105190902214703866</EntityId>
-              <Min x="-47" y="1" z="-14" />
-              <BlockOrientation Forward="Backward" Up="Up" />
-              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
+              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
+              <Min x="-48" y="1" z="-13" />
+              <BlockOrientation Forward="Up" Up="Left" />
+              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <ShareMode>Faction</ShareMode>
-              <ShowOnHUD>false</ShowOnHUD>
-              <ShowInTerminal>true</ShowInTerminal>
-              <ShowInToolbarConfig>true</ShowInToolbarConfig>
-              <ShowInInventory>true</ShowInInventory>
-              <NumberInGrid>1</NumberInGrid>
-              <Enabled>true</Enabled>
-              <Description />
-              <Title>Title</Title>
-              <AccessFlag>READ_AND_WRITE_FACTION</AccessFlag>
-              <ChangeInterval>0</ChangeInterval>
-              <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-              <FontSize>1</FontSize>
-              <PublicDescription />
-              <PublicTitle>Public title</PublicTitle>
-              <ShowText>NONE</ShowText>
-              <FontColor>
-                <PackedValue>4294967295</PackedValue>
-                <X>255</X>
-                <Y>255</Y>
-                <Z>255</Z>
-                <R>255</R>
-                <G>255</G>
-                <B>255</B>
-                <A>255</A>
-              </FontColor>
-              <BackgroundColor>
-                <PackedValue>4278190080</PackedValue>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-                <R>0</R>
-                <G>0</G>
-                <B>0</B>
-                <A>255</A>
-              </BackgroundColor>
-              <CurrentShownTexture>0</CurrentShownTexture>
-              <ContentType>SCRIPT</ContentType>
-              <SelectedScript>PlanetMapTSSZones</SelectedScript>
-              <TextPadding>2</TextPadding>
-              <Version>1</Version>
-              <CustomizeScripts>true</CustomizeScripts>
-              <ScriptBackgroundColor>
-                <PackedValue>4278190080</PackedValue>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-                <R>0</R>
-                <G>0</G>
-                <B>0</B>
-                <A>255</A>
-              </ScriptBackgroundColor>
-              <ScriptForegroundColor>
-                <PackedValue>4278190081</PackedValue>
-                <X>1</X>
-                <Y>0</Y>
-                <Z>0</Z>
-                <R>1</R>
-                <G>0</G>
-                <B>0</B>
-                <A>255</A>
-              </ScriptForegroundColor>
-              <Sprites>
-                <Length>0</Length>
-              </Sprites>
-              <SelectedRotationIndex>0</SelectedRotationIndex>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeHalfArmorBlock</SubtypeName>
@@ -2238,7 +2179,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>131172275712704609</EntityId>
+              <EntityId>97113840635586506</EntityId>
               <Min x="-45" y="2" z="-17" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2270,7 +2211,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>122833428584808098</EntityId>
+              <EntityId>135942067748979709</EntityId>
               <Min x="-47" y="-1" z="-18" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2278,7 +2219,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>133948465486205839</EntityId>
+              <EntityId>113670224456388692</EntityId>
               <Min x="-46" y="-1" z="-19" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2300,7 +2241,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>137875696630595919</EntityId>
+              <EntityId>92494855455433941</EntityId>
               <Min x="-48" y="2" z="-17" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2339,7 +2280,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>81415065234704885</EntityId>
+              <EntityId>115559024543369099</EntityId>
               <Min x="-47" y="0" z="-19" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2354,14 +2295,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>124316482362128163</EntityId>
+              <EntityId>82150776638959124</EntityId>
               <Min x="-47" y="1" z="-19" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>ArmorSide</SubtypeName>
-              <EntityId>95988687936470917</EntityId>
+              <EntityId>115593308498674294</EntityId>
               <Min x="-46" y="0" z="-21" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2383,7 +2324,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>85183778532810340</EntityId>
+              <EntityId>89682819691846420</EntityId>
               <Min x="-47" y="2" z="-18" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2414,7 +2355,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>128821764381276501</EntityId>
+              <EntityId>116762049179516794</EntityId>
               <Min x="-46" y="-1" z="-20" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2436,7 +2377,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>85359441474274674</EntityId>
+              <EntityId>75821497376209270</EntityId>
               <Min x="-46" y="2" z="-18" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2467,7 +2408,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3mirrored</SubtypeName>
-              <EntityId>84419323672280520</EntityId>
+              <EntityId>87217805623361473</EntityId>
               <Min x="-46" y="0" z="-16" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2479,7 +2420,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>111503860893560244</TopBlockId>
+              <TopBlockId>125528335789558764</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -2491,14 +2432,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <Propulsion>true</Propulsion>
               <Friction>2.8</Friction>
               <Power>0</Power>
-              <Height>-1.5</Height>
+              <Height>-2</Height>
               <MaxSteerAngle>0.17289868</MaxSteerAngle>
               <InvertSteer>false</InvertSteer>
               <InvertPropulsion>false</InvertPropulsion>
               <SpeedLimit>360</SpeedLimit>
               <PowerNew>0.508131862</PowerNew>
               <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
+              <FrictionNew>0.382457346</FrictionNew>
               <AirShockEnabled>false</AirShockEnabled>
               <BrakingEnabled>true</BrakingEnabled>
               <SteeringOverride>0</SteeringOverride>
@@ -2521,7 +2462,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorCornerArmored</SubtypeName>
-              <EntityId>135221656024325769</EntityId>
+              <EntityId>108387950168454192</EntityId>
               <Min x="-46" y="1" z="-20" />
               <IntegrityPercent>0.946123064</IntegrityPercent>
               <BlockOrientation Forward="Left" Up="Backward" />
@@ -2530,7 +2471,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3mirrored</SubtypeName>
-              <EntityId>111078954307983094</EntityId>
+              <EntityId>122601284706873379</EntityId>
               <Min x="-46" y="0" z="-20" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2542,7 +2483,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>134746214937947311</TopBlockId>
+              <TopBlockId>90190022776534797</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -2553,14 +2494,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <Propulsion>true</Propulsion>
               <Friction>2.8</Friction>
               <Power>0</Power>
-              <Height>-1.5</Height>
+              <Height>-2</Height>
               <MaxSteerAngle>0.17289868</MaxSteerAngle>
               <InvertSteer>false</InvertSteer>
               <InvertPropulsion>false</InvertPropulsion>
               <SpeedLimit>360</SpeedLimit>
               <PowerNew>0.508131862</PowerNew>
               <StrengthNew>0.03500407</StrengthNew>
-              <FrictionNew>0.386153728</FrictionNew>
+              <FrictionNew>0.382457346</FrictionNew>
               <AirShockEnabled>false</AirShockEnabled>
               <BrakingEnabled>true</BrakingEnabled>
               <SteeringOverride>0</SteeringOverride>
@@ -2569,7 +2510,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>82776752368998350</EntityId>
+              <EntityId>102569964776699466</EntityId>
               <Min x="-44" y="2" z="-18" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -2584,7 +2525,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>91755331279571769</EntityId>
+              <EntityId>122963496544107451</EntityId>
               <Min x="-45" y="2" z="-19" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2605,7 +2546,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>87746930632937053</EntityId>
+              <EntityId>119114387216572541</EntityId>
               <Min x="-47" y="-1" z="-20" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2620,7 +2561,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>110786726099976866</EntityId>
+              <EntityId>80132502528280535</EntityId>
               <Min x="-49" y="2" z="-18" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -2628,7 +2569,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlock</SubtypeName>
-              <EntityId>132671239283464767</EntityId>
+              <EntityId>129924820390976500</EntityId>
               <Min x="-48" y="2" z="-19" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2649,7 +2590,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorCornerArmored</SubtypeName>
-              <EntityId>83232441496780656</EntityId>
+              <EntityId>76183752950969923</EntityId>
               <Min x="-47" y="1" z="-20" />
               <IntegrityPercent>0.878266</IntegrityPercent>
               <BlockOrientation Forward="Left" Up="Backward" />
@@ -2658,7 +2599,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>75585055670915878</EntityId>
+              <EntityId>123513349761610370</EntityId>
               <Min x="-46" y="0" z="-22" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
@@ -2682,7 +2623,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipConnector">
               <SubtypeName>Connector</SubtypeName>
-              <EntityId>98065512996899360</EntityId>
+              <EntityId>101410420846544655</EntityId>
               <Min x="-46" y="1" z="-21" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2713,7 +2654,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                       <TimerEnabled>true</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>40</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>50</FramesFromLastTrigger>
                       <TimerTickInFrames>80</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -2752,7 +2693,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockLockerRoom</SubtypeName>
-              <EntityId>114063968189241410</EntityId>
+              <EntityId>125580658458694879</EntityId>
               <Min x="-45" y="1" z="-14" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -2812,14 +2753,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                 </Components>
               </ComponentContainer>
               <ShowOnHUD>false</ShowOnHUD>
-              <ShowInTerminal>true</ShowInTerminal>
-              <ShowInToolbarConfig>true</ShowInToolbarConfig>
+              <ShowInTerminal>false</ShowInTerminal>
+              <ShowInToolbarConfig>false</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>115768168234262775</EntityId>
+              <EntityId>118055531724075474</EntityId>
               <Min x="-47" y="2" z="-19" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -2848,24 +2789,25 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Beacon">
               <SubtypeName>LargeBlockBeacon</SubtypeName>
-              <EntityId>116074339234304090</EntityId>
+              <EntityId>74418391055726136</EntityId>
               <Min x="-47" y="1" z="-18" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0" y="0.15" z="0.25" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <ShareMode>Faction</ShareMode>
+              <CustomName>Light Ship Core Beacon</CustomName>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>true</ShowInTerminal>
               <ShowInToolbarConfig>true</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>2</NumberInGrid>
               <Enabled>true</Enabled>
-              <BroadcastRadius>10000</BroadcastRadius>
+              <BroadcastRadius>500.000153</BroadcastRadius>
               <HudText />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipConnector">
               <SubtypeName>Connector</SubtypeName>
-              <EntityId>130698338380568270</EntityId>
+              <EntityId>107873640531283045</EntityId>
               <Min x="-47" y="1" z="-21" />
               <IntegrityPercent>0.956659555</IntegrityPercent>
               <BlockOrientation Forward="Forward" Up="Right" />
@@ -2897,7 +2839,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                       <TimerEnabled>true</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>70</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>20</FramesFromLastTrigger>
                       <TimerTickInFrames>80</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -2981,9 +2923,8 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeHalfArmorBlock</SubtypeName>
-              <Min x="-46" y="3" z="-13" />
-              <BlockOrientation Forward="Down" Up="Forward" />
+              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
+              <Min x="-47" y="3" z="-15" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
@@ -3071,7 +3012,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorHalfPanelLight</SubtypeName>
-              <EntityId>81352986112725730</EntityId>
+              <EntityId>90779599756935438</EntityId>
               <Min x="-44" y="2" z="-12" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3079,7 +3020,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>110316898925777469</EntityId>
+              <EntityId>88459699588343924</EntityId>
               <Min x="-45" y="2" z="-18" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3110,7 +3051,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>117726693189744367</EntityId>
+              <EntityId>137787113291047972</EntityId>
               <Min x="-48" y="2" z="-18" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3140,136 +3081,90 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>9</NumberInGrid>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Refinery">
-              <SubtypeName>Blast Furnace</SubtypeName>
-              <EntityId>81629084354401872</EntityId>
-              <Min x="-48" y="1" z="-13" />
-              <BlockOrientation Forward="Backward" Up="Left" />
-              <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
+              <SubtypeName>LargeTextPanel</SubtypeName>
+              <EntityId>100652211295875339</EntityId>
+              <Min x="-47" y="1" z="-14" />
+              <BlockOrientation Forward="Backward" Up="Up" />
+              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <ShareMode>Faction</ShareMode>
-              <ComponentContainer>
-                <Components>
-                  <ComponentData>
-                    <TypeId>MyInventoryBase</TypeId>
-                    <Component xsi:type="MyObjectBuilder_InventoryAggregate">
-                      <InventoryId>Inventory</InventoryId>
-                      <Inventories>
-                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
-                          <Items />
-                          <nextItemId>0</nextItemId>
-                          <Volume>4</Volume>
-                          <Mass>9223372036854.775807</Mass>
-                          <MaxItemCount>2147483647</MaxItemCount>
-                          <Size xsi:nil="true" />
-                          <InventoryFlags>CanReceive</InventoryFlags>
-                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
-                        </MyObjectBuilder_InventoryBase>
-                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
-                          <Items />
-                          <nextItemId>0</nextItemId>
-                          <Volume>4</Volume>
-                          <Mass>9223372036854.775807</Mass>
-                          <MaxItemCount>2147483647</MaxItemCount>
-                          <Size xsi:nil="true" />
-                          <InventoryFlags>CanSend</InventoryFlags>
-                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
-                        </MyObjectBuilder_InventoryBase>
-                      </Inventories>
-                    </Component>
-                  </ComponentData>
-                  <ComponentData>
-                    <TypeId>MyTimerComponent</TypeId>
-                    <Component xsi:type="MyObjectBuilder_TimerComponent">
-                      <Repeat>true</Repeat>
-                      <TimeToEvent>0</TimeToEvent>
-                      <SetTimeMinutes>0</SetTimeMinutes>
-                      <TimerEnabled>true</TimerEnabled>
-                      <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
-                      <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>50</FramesFromLastTrigger>
-                      <TimerTickInFrames>60</TimerTickInFrames>
-                      <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
-                    </Component>
-                  </ComponentData>
-                </Components>
-              </ComponentContainer>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>true</ShowInTerminal>
               <ShowInToolbarConfig>true</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
+              <Description />
+              <Title>Title</Title>
+              <AccessFlag>READ_AND_WRITE_FACTION</AccessFlag>
+              <ChangeInterval>0</ChangeInterval>
+              <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+              <FontSize>1</FontSize>
+              <PublicDescription />
+              <PublicTitle>Public title</PublicTitle>
+              <ShowText>NONE</ShowText>
+              <FontColor>
+                <PackedValue>4294967295</PackedValue>
+                <X>255</X>
+                <Y>255</Y>
+                <Z>255</Z>
+                <R>255</R>
+                <G>255</G>
+                <B>255</B>
+                <A>255</A>
+              </FontColor>
+              <BackgroundColor>
+                <PackedValue>4278190080</PackedValue>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>0</Z>
+                <R>0</R>
+                <G>0</G>
+                <B>0</B>
+                <A>255</A>
+              </BackgroundColor>
+              <CurrentShownTexture>0</CurrentShownTexture>
+              <ContentType>SCRIPT</ContentType>
+              <SelectedScript>PlanetMapTSSZones</SelectedScript>
+              <TextPadding>2</TextPadding>
+              <Version>1</Version>
+              <CustomizeScripts>true</CustomizeScripts>
+              <ScriptBackgroundColor>
+                <PackedValue>4278190080</PackedValue>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>0</Z>
+                <R>0</R>
+                <G>0</G>
+                <B>0</B>
+                <A>255</A>
+              </ScriptBackgroundColor>
+              <ScriptForegroundColor>
+                <PackedValue>4278190081</PackedValue>
+                <X>1</X>
+                <Y>0</Y>
+                <Z>0</Z>
+                <R>1</R>
+                <G>0</G>
+                <B>0</B>
+                <A>255</A>
+              </ScriptForegroundColor>
+              <Sprites>
+                <Length>0</Length>
+              </Sprites>
+              <SelectedRotationIndex>0</SelectedRotationIndex>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Assembler">
-              <SubtypeName>BasicAssembler</SubtypeName>
-              <EntityId>107976142348871177</EntityId>
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
+              <SubtypeName>LargeBlockArmorSlope2Base</SubtypeName>
               <Min x="-45" y="1" z="-13" />
-              <BlockOrientation Forward="Left" Up="Forward" />
-              <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
+              <BlockOrientation Forward="Up" Up="Right" />
+              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <ShareMode>Faction</ShareMode>
-              <ComponentContainer>
-                <Components>
-                  <ComponentData>
-                    <TypeId>MyInventoryBase</TypeId>
-                    <Component xsi:type="MyObjectBuilder_InventoryAggregate">
-                      <InventoryId>Inventory</InventoryId>
-                      <Inventories>
-                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
-                          <Items />
-                          <nextItemId>0</nextItemId>
-                          <Volume>2</Volume>
-                          <Mass>9223372036854.775807</Mass>
-                          <MaxItemCount>2147483647</MaxItemCount>
-                          <Size xsi:nil="true" />
-                          <InventoryFlags>CanReceive</InventoryFlags>
-                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
-                        </MyObjectBuilder_InventoryBase>
-                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
-                          <Items />
-                          <nextItemId>0</nextItemId>
-                          <Volume>2</Volume>
-                          <Mass>9223372036854.775807</Mass>
-                          <MaxItemCount>2147483647</MaxItemCount>
-                          <Size xsi:nil="true" />
-                          <InventoryFlags>CanSend</InventoryFlags>
-                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
-                        </MyObjectBuilder_InventoryBase>
-                      </Inventories>
-                    </Component>
-                  </ComponentData>
-                  <ComponentData>
-                    <TypeId>MyTimerComponent</TypeId>
-                    <Component xsi:type="MyObjectBuilder_TimerComponent">
-                      <Repeat>true</Repeat>
-                      <TimeToEvent>0</TimeToEvent>
-                      <SetTimeMinutes>0</SetTimeMinutes>
-                      <TimerEnabled>true</TimerEnabled>
-                      <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
-                      <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>40</FramesFromLastTrigger>
-                      <TimerTickInFrames>60</TimerTickInFrames>
-                      <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
-                    </Component>
-                  </ComponentData>
-                </Components>
-              </ComponentContainer>
-              <ShowOnHUD>false</ShowOnHUD>
-              <ShowInTerminal>true</ShowInTerminal>
-              <ShowInToolbarConfig>true</ShowInToolbarConfig>
-              <ShowInInventory>true</ShowInInventory>
-              <NumberInGrid>1</NumberInGrid>
-              <Enabled>true</Enabled>
-              <CurrentProgress>0</CurrentProgress>
-              <DisassembleEnabled>false</DisassembleEnabled>
-              <RepeatAssembleEnabled>false</RepeatAssembleEnabled>
-              <RepeatDisassembleEnabled>false</RepeatDisassembleEnabled>
-              <SlaveEnabled>false</SlaveEnabled>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>113247856148864955</EntityId>
+              <EntityId>116811074331882353</EntityId>
               <Min x="-46" y="1" z="-11" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3277,7 +3172,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmor2x1SlopedSideTipPanelLightInv</SubtypeName>
-              <EntityId>131304365636770768</EntityId>
+              <EntityId>109562474569614772</EntityId>
               <Min x="-49" y="2" z="-11" />
               <BlockOrientation Forward="Left" Up="Backward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3285,7 +3180,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>77975365030489646</EntityId>
+              <EntityId>95765163294317202</EntityId>
               <Min x="-46" y="-1" z="-11" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -3300,7 +3195,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>88962780674134991</EntityId>
+              <EntityId>122755377792606552</EntityId>
               <Min x="-48" y="1" z="-10" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3339,7 +3234,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>ArmorSide</SubtypeName>
-              <EntityId>114529195218159855</EntityId>
+              <EntityId>114730617103995202</EntityId>
               <Min x="-47" y="0" z="-21" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -3347,29 +3242,60 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmor2x1SlopedSideTipPanelLight</SubtypeName>
-              <EntityId>87133752920477695</EntityId>
+              <EntityId>143674371432685638</EntityId>
               <Min x="-44" y="2" z="-11" />
               <BlockOrientation Forward="Right" Up="Backward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
-              <Min x="-49" y="1" z="-13" />
-              <BlockOrientation Forward="Up" Up="Left" />
-              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
+              <SubtypeName>Suspension3x3</SubtypeName>
+              <EntityId>120692922383467883</EntityId>
+              <Min x="-46" y="0" z="-12" />
+              <BlockOrientation Forward="Up" Up="Right" />
+              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+              <CustomName>Wheel Suspension 3x3 Right Front</CustomName>
+              <ShowOnHUD>false</ShowOnHUD>
+              <ShowInTerminal>false</ShowInTerminal>
+              <ShowInToolbarConfig>false</ShowInToolbarConfig>
+              <ShowInInventory>true</ShowInInventory>
+              <NumberInGrid>6</NumberInGrid>
+              <Enabled>true</Enabled>
+              <TopBlockId>96826731289630942</TopBlockId>
+              <ShareInertiaTensor>false</ShareInertiaTensor>
+              <SafetyDetach>5</SafetyDetach>
+              <RotorEntityId xsi:nil="true" />
+              <WeldedEntityId xsi:nil="true" />
+              <SteerAngle>-0</SteerAngle>
+              <Damping>0.9</Damping>
+              <Strength>3.40282347E+38</Strength>
+              <Propulsion>true</Propulsion>
+              <Friction>2.8</Friction>
+              <Power>0</Power>
+              <Height>-2</Height>
+              <MaxSteerAngle>0.349066</MaxSteerAngle>
+              <InvertSteer>false</InvertSteer>
+              <InvertPropulsion>false</InvertPropulsion>
+              <SpeedLimit>180</SpeedLimit>
+              <PowerNew>0.6</PowerNew>
+              <StrengthNew>0.06</StrengthNew>
+              <FrictionNew>0.382457346</FrictionNew>
+              <AirShockEnabled>false</AirShockEnabled>
+              <BrakingEnabled>true</BrakingEnabled>
+              <SteeringOverride>0</SteeringOverride>
+              <PropulsionOverride>0</PropulsionOverride>
+              <IsParkingEnabled>true</IsParkingEnabled>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorSlope2Tip</SubtypeName>
-              <Min x="-44" y="1" z="-13" />
-              <BlockOrientation Forward="Up" Up="Right" />
-              <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
+              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
+              <Min x="-47" y="0" z="-11" />
+              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_EmissiveBlock">
               <SubtypeName>LargeNeonTubesStraight1</SubtypeName>
-              <EntityId>122500297520173859</EntityId>
+              <EntityId>88973465192206737</EntityId>
               <Min x="-44" y="4" z="-14" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3377,7 +3303,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>104732903147991754</EntityId>
+              <EntityId>105258066095038019</EntityId>
               <Min x="-44" y="3" z="-13" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3402,7 +3328,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorHalfPanelLight</SubtypeName>
-              <EntityId>117539003502664094</EntityId>
+              <EntityId>93422802957486819</EntityId>
               <Min x="-49" y="2" z="-12" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3410,7 +3336,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_EmissiveBlock">
               <SubtypeName>LargeNeonTubesStraight1</SubtypeName>
-              <EntityId>85935911634597656</EntityId>
+              <EntityId>125375468551413925</EntityId>
               <Min x="-44" y="3" z="-14" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3425,7 +3351,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenGenerator">
               <SubtypeName />
-              <EntityId>111855701980450454</EntityId>
+              <EntityId>82197983804621472</EntityId>
               <Min x="-46" y="2" z="-14" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3455,7 +3381,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                       <TimerEnabled>false</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>30</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>290</FramesFromLastTrigger>
                       <TimerTickInFrames>300</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -3471,7 +3397,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingStraight</SubtypeName>
-              <EntityId>90949941196283613</EntityId>
+              <EntityId>137590928806247240</EntityId>
               <Min x="-49" y="3" z="-12" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3486,7 +3412,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>135484525373533716</EntityId>
+              <EntityId>112981909462162120</EntityId>
               <Min x="-44" y="3" z="-22" />
               <BlockOrientation Forward="Right" Up="Backward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3538,7 +3464,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>96931330568684571</EntityId>
+              <EntityId>75153593770401378</EntityId>
               <Min x="-45" y="1" z="-10" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3570,7 +3496,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>104451162547570225</EntityId>
+              <EntityId>118273958012698181</EntityId>
               <Min x="-47" y="0" z="-22" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -3595,7 +3521,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>90946916701122112</EntityId>
+              <EntityId>121862325450706720</EntityId>
               <Min x="-49" y="3" z="-22" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -3620,7 +3546,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>132118564541975893</EntityId>
+              <EntityId>73913973150310370</EntityId>
               <Min x="-46" y="2" z="-10" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -3645,7 +3571,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>SmallLight</SubtypeName>
-              <EntityId>123596270597276438</EntityId>
+              <EntityId>106715458797347727</EntityId>
               <Min x="-47" y="2" z="-10" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -3670,7 +3596,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenTank">
               <SubtypeName />
-              <EntityId>116599995694785115</EntityId>
+              <EntityId>115397678064596488</EntityId>
               <Min x="-47" y="2" z="-17" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3705,7 +3631,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenTank">
               <SubtypeName>LargeHydrogenTankSmall</SubtypeName>
-              <EntityId>118899950213989905</EntityId>
+              <EntityId>80658447632477139</EntityId>
               <Min x="-46" y="2" z="-17" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3740,14 +3666,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>140415431141214853</EntityId>
+              <EntityId>128671771908777712</EntityId>
               <Min x="-47" y="3" z="-19" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>84366572084262714</EntityId>
+              <EntityId>128323338011587573</EntityId>
               <Min x="-46" y="2" z="-19" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3778,7 +3704,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>102718142500874177</EntityId>
+              <EntityId>93196190073042349</EntityId>
               <Min x="-47" y="2" z="-20" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3809,7 +3735,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>95481114160874609</EntityId>
+              <EntityId>122071671723410872</EntityId>
               <Min x="-46" y="2" z="-20" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3840,7 +3766,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>101345233519961207</EntityId>
+              <EntityId>127568306838877588</EntityId>
               <Min x="-45" y="2" z="-20" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3872,7 +3798,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>130197991506166618</EntityId>
+              <EntityId>133879858676365334</EntityId>
               <Min x="-48" y="2" z="-20" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3904,21 +3830,21 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>135807666919015255</EntityId>
+              <EntityId>133295344837932763</EntityId>
               <Min x="-48" y="3" z="-17" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>102930273486067550</EntityId>
+              <EntityId>75967371600302554</EntityId>
               <Min x="-45" y="3" z="-17" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>75496969737394595</EntityId>
+              <EntityId>125760124299940609</EntityId>
               <Min x="-48" y="3" z="-20" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3926,7 +3852,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>AQD_LG_ConveyorStraightArmored</SubtypeName>
-              <EntityId>102810645847622974</EntityId>
+              <EntityId>119241063085242991</EntityId>
               <Min x="-45" y="3" z="-20" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -3974,7 +3900,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Gyro">
               <SubtypeName>LargeBlockGyro</SubtypeName>
-              <EntityId>129429818967913845</EntityId>
+              <EntityId>114774064551922793</EntityId>
               <Min x="-49" y="1" z="-18" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="0.35" />
@@ -3990,7 +3916,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Gyro">
               <SubtypeName>LargeBlockGyro</SubtypeName>
-              <EntityId>139775723250714881</EntityId>
+              <EntityId>131377848935179228</EntityId>
               <Min x="-44" y="1" z="-18" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="0.35" />
@@ -4090,7 +4016,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>91409812742876758</EntityId>
+              <EntityId>107854207048594923</EntityId>
               <Min x="-46" y="1" z="-19" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0.09166667" y="-0.8" z="-0.45" />
@@ -4128,19 +4054,36 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Projector">
               <SubtypeName>MnMLarge</SubtypeName>
-              <EntityId>77234364112249308</EntityId>
+              <EntityId>134157733640737587</EntityId>
               <Min x="-46" y="1" z="-15" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyModStorageComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_ModStorageComponent">
+                      <Storage>
+                        <dictionary>
+                          <item>
+                            <Key>801f61c8-140e-4f2e-9a0a-b14889776868</Key>
+                            <Value>CAAQ7Zylh7WDs8ABGAAoAA==</Value>
+                          </item>
+                        </dictionary>
+                      </Storage>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
               <CustomName>MnM Projector</CustomName>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>true</ShowInTerminal>
               <ShowInToolbarConfig>true</ShowInToolbarConfig>
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
-              <Enabled>true</Enabled>
+              <Enabled>false</Enabled>
               <ProjectionOffset>
                 <X>0</X>
                 <Y>0</Y>
@@ -4162,7 +4105,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_LargeMissileTurret">
               <SubtypeName>OKIDesignator</SubtypeName>
-              <EntityId>121458037293761009</EntityId>
+              <EntityId>108372321288029409</EntityId>
               <Min x="-48" y="4" z="-17" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4204,7 +4147,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                         <dictionary>
                           <item>
                             <Key>75bbb4f5-4fb9-4230-beef-bb79c9811501</Key>
-                            <Value>+nzVAQoJCAAQAB0AAAAAEscBCAASPi0AQJxFMjcIARAAGAAgACgAMABIAFAAWABwAHgAgAEAkAEAoAEAsAEAwAEA0AEA2AEA6AEA8AEA+AEBkAIAGkQSCQ0AAAAAEAAgCxgAIIuAgICAgICAAjAAOABAAEgAUiMaGwkAAAAAAAAAACEAAAAAAAAAADkAAAAAAAAAACAAKAAwACIrCAAQACAAKgYgw////wcyGwkAAAAAAAAAACEAAAAAAAAAADkAAAAAAAAAACoQCAAgASgAMAA4AEAASABQAAgi</Value>
+                            <Value>+nzVAQoJCAAQAB0AAAAAEscBCAASPi0AQJxFMjcIARAAGAAgACgAMABIAFAAWABwAHgAgAEAkAEAoAEAsAEAwAEA0AEA2AEA6AEA8AEA+AEBkAIAGkQSCQ0AAAAAEAAgBxgAIIuAgICAgICAAjAAOABAAEgAUiMaGwkAAAAAAAAAACEAAAAAAAAAADkAAAAAAAAAACAAKAAwACIrCAAQACAAKgYg1////wcyGwkAAAAAAAAAACEAAAAAAAAAADkAAAAAAAAAACoQCAAgASgAMAA4AEAASABQAAgi</Value>
                           </item>
                         </dictionary>
                       </Storage>
@@ -4212,6 +4155,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                   </ComponentData>
                 </Components>
               </ComponentContainer>
+              <CustomName>[Sensor] Large Radar</CustomName>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>true</ShowInTerminal>
               <ShowInToolbarConfig>true</ShowInToolbarConfig>
@@ -4246,21 +4190,82 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockSlope2x1Tip</SubtypeName>
-              <EntityId>133993750090336119</EntityId>
+              <EntityId>124519388756824440</EntityId>
               <Min x="-49" y="1" z="-14" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
-              <SubtypeName>LargeBlockArmorBlock</SubtypeName>
-              <Min x="-48" y="2" z="-14" />
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Assembler">
+              <SubtypeName>BasicAssembler</SubtypeName>
+              <EntityId>134750473069374698</EntityId>
+              <Min x="-48" y="2" z="-13" />
+              <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+              <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyInventoryBase</TypeId>
+                    <Component xsi:type="MyObjectBuilder_InventoryAggregate">
+                      <InventoryId>Inventory</InventoryId>
+                      <Inventories>
+                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
+                          <Items />
+                          <nextItemId>0</nextItemId>
+                          <Volume>2</Volume>
+                          <Mass>9223372036854.775807</Mass>
+                          <MaxItemCount>2147483647</MaxItemCount>
+                          <Size xsi:nil="true" />
+                          <InventoryFlags>CanReceive</InventoryFlags>
+                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
+                        </MyObjectBuilder_InventoryBase>
+                        <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
+                          <Items />
+                          <nextItemId>0</nextItemId>
+                          <Volume>2</Volume>
+                          <Mass>9223372036854.775807</Mass>
+                          <MaxItemCount>2147483647</MaxItemCount>
+                          <Size xsi:nil="true" />
+                          <InventoryFlags>CanSend</InventoryFlags>
+                          <RemoveEntityOnEmpty>false</RemoveEntityOnEmpty>
+                        </MyObjectBuilder_InventoryBase>
+                      </Inventories>
+                    </Component>
+                  </ComponentData>
+                  <ComponentData>
+                    <TypeId>MyTimerComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_TimerComponent">
+                      <Repeat>true</Repeat>
+                      <TimeToEvent>0</TimeToEvent>
+                      <SetTimeMinutes>0</SetTimeMinutes>
+                      <TimerEnabled>true</TimerEnabled>
+                      <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
+                      <TimerType>Frame10</TimerType>
+                      <FramesFromLastTrigger>50</FramesFromLastTrigger>
+                      <TimerTickInFrames>60</TimerTickInFrames>
+                      <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
+              <CustomName>Basic Assembler</CustomName>
+              <ShowOnHUD>false</ShowOnHUD>
+              <ShowInTerminal>true</ShowInTerminal>
+              <ShowInToolbarConfig>true</ShowInToolbarConfig>
+              <ShowInInventory>true</ShowInInventory>
+              <NumberInGrid>2</NumberInGrid>
+              <Enabled>true</Enabled>
+              <CurrentProgress>0</CurrentProgress>
+              <DisassembleEnabled>false</DisassembleEnabled>
+              <RepeatAssembleEnabled>false</RepeatAssembleEnabled>
+              <RepeatDisassembleEnabled>false</RepeatDisassembleEnabled>
+              <SlaveEnabled>false</SlaveEnabled>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>91865032196743914</EntityId>
+              <EntityId>72512410804799740</EntityId>
               <Min x="-49" y="4" z="-17" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4268,7 +4273,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>102579637628753165</EntityId>
+              <EntityId>89848759081280039</EntityId>
               <Min x="-44" y="4" z="-17" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4276,7 +4281,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>82722562848666708</EntityId>
+              <EntityId>93495062538418700</EntityId>
               <Min x="-49" y="4" z="-18" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -4284,7 +4289,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>98716979855543473</EntityId>
+              <EntityId>97797310632093992</EntityId>
               <Min x="-44" y="4" z="-18" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -4292,7 +4297,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>137742656593819693</EntityId>
+              <EntityId>101392942433200854</EntityId>
               <Min x="-49" y="4" z="-19" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4300,7 +4305,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>106739162500871912</EntityId>
+              <EntityId>90443443167809232</EntityId>
               <Min x="-44" y="4" z="-19" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4308,7 +4313,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>99165539548502106</EntityId>
+              <EntityId>142787939520438124</EntityId>
               <Min x="-49" y="4" z="-20" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -4316,7 +4321,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>89598966154569917</EntityId>
+              <EntityId>112089054658320508</EntityId>
               <Min x="-44" y="4" z="-20" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -4324,7 +4329,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>103872779750741366</EntityId>
+              <EntityId>136290782239939399</EntityId>
               <Min x="-47" y="4" z="-22" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4332,14 +4337,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>72405482188671563</EntityId>
+              <EntityId>118560211933200529</EntityId>
               <Min x="-46" y="4" z="-22" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>103292485875961681</EntityId>
+              <EntityId>94995742021353640</EntityId>
               <Min x="-48" y="4" z="-22" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4347,14 +4352,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>85554625665018647</EntityId>
+              <EntityId>104895719974871919</EntityId>
               <Min x="-45" y="4" z="-22" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Railing2x1Left</SubtypeName>
-              <EntityId>92693595981686135</EntityId>
+              <EntityId>141779548265943615</EntityId>
               <Min x="-49" y="4" z="-21" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4362,7 +4367,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Railing2x1Right</SubtypeName>
-              <EntityId>116912900988913447</EntityId>
+              <EntityId>139759480803655291</EntityId>
               <Min x="-44" y="4" z="-21" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4370,7 +4375,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Railing2x1Right</SubtypeName>
-              <EntityId>98875465273730982</EntityId>
+              <EntityId>114222614676129715</EntityId>
               <Min x="-49" y="4" z="-16" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4378,7 +4383,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Railing2x1Left</SubtypeName>
-              <EntityId>107489768863039911</EntityId>
+              <EntityId>124663333170054153</EntityId>
               <Min x="-44" y="4" z="-16" />
               <BlockOrientation Forward="Left" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4386,7 +4391,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockConveyorCap</SubtypeName>
-              <EntityId>82582992333966939</EntityId>
+              <EntityId>78579241212784268</EntityId>
               <Min x="-45" y="4" z="-17" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4394,7 +4399,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockConveyorCap</SubtypeName>
-              <EntityId>87099858800953157</EntityId>
+              <EntityId>75560855521337993</EntityId>
               <Min x="-45" y="4" z="-20" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4402,7 +4407,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockConveyorCap</SubtypeName>
-              <EntityId>135378808317945355</EntityId>
+              <EntityId>124850180222372018</EntityId>
               <Min x="-48" y="4" z="-20" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4410,7 +4415,7 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockConveyorCap</SubtypeName>
-              <EntityId>140234179743249093</EntityId>
+              <EntityId>113959521460684285</EntityId>
               <Min x="-43" y="2" z="-18" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
@@ -4418,14 +4423,15 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeBlockConveyorCap</SubtypeName>
-              <EntityId>123107702483370570</EntityId>
+              <EntityId>135003884506735555</EntityId>
               <Min x="-50" y="2" z="-18" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
-          <XMirroxPlane x="-46" y="1" z="-9" />
+          <LinearVelocity x="0.000122707279" y="-0.0001528066" z="9.881434E-06" />
+          <AngularVelocity x="0.000268745353" y="-7.44672652E-05" z="-0.00061206246" />
           <XMirroxOdd>true</XMirroxOdd>
           <ConveyorLines>
             <MyObjectBuilder_ConveyorLine>
@@ -4583,14 +4589,6 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <StartDirection>Up</StartDirection>
               <EndPosition x="-46" y="1" z="-10" />
               <EndDirection>Down</EndDirection>
-              <Sections />
-              <ConveyorLineType>LARGE_LINE</ConveyorLineType>
-            </MyObjectBuilder_ConveyorLine>
-            <MyObjectBuilder_ConveyorLine>
-              <StartPosition x="-45" y="1" z="-13" />
-              <StartDirection>Left</StartDirection>
-              <EndPosition x="-46" y="1" z="-13" />
-              <EndDirection>Right</EndDirection>
               <Sections />
               <ConveyorLineType>LARGE_LINE</ConveyorLineType>
             </MyObjectBuilder_ConveyorLine>
@@ -4762,6 +4760,38 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               <Sections />
               <ConveyorLineType>LARGE_LINE</ConveyorLineType>
             </MyObjectBuilder_ConveyorLine>
+            <MyObjectBuilder_ConveyorLine>
+              <StartPosition x="-46" y="1" z="-13" />
+              <StartDirection>Left</StartDirection>
+              <EndPosition x="-47" y="1" z="-13" />
+              <EndDirection>Right</EndDirection>
+              <Sections />
+              <ConveyorLineType>LARGE_LINE</ConveyorLineType>
+            </MyObjectBuilder_ConveyorLine>
+            <MyObjectBuilder_ConveyorLine>
+              <StartPosition x="-47" y="2" z="-13" />
+              <StartDirection>Left</StartDirection>
+              <EndPosition x="-48" y="2" z="-13" />
+              <EndDirection>Right</EndDirection>
+              <Sections />
+              <ConveyorLineType>LARGE_LINE</ConveyorLineType>
+            </MyObjectBuilder_ConveyorLine>
+            <MyObjectBuilder_ConveyorLine>
+              <StartPosition x="-47" y="2" z="-13" />
+              <StartDirection>Down</StartDirection>
+              <EndPosition x="-47" y="1" z="-13" />
+              <EndDirection>Up</EndDirection>
+              <Sections />
+              <ConveyorLineType>LARGE_LINE</ConveyorLineType>
+            </MyObjectBuilder_ConveyorLine>
+            <MyObjectBuilder_ConveyorLine>
+              <StartPosition x="-46" y="2" z="-13" />
+              <StartDirection>Right</StartDirection>
+              <EndPosition x="-45" y="2" z="-13" />
+              <EndDirection>Left</EndDirection>
+              <Sections />
+              <ConveyorLineType>LARGE_LINE</ConveyorLineType>
+            </MyObjectBuilder_ConveyorLine>
           </ConveyorLines>
           <BlockGroups>
             <MyObjectBuilder_BlockGroup>
@@ -4865,41 +4895,6 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
               </Blocks>
             </MyObjectBuilder_BlockGroup>
             <MyObjectBuilder_BlockGroup>
-              <Name>Suspension</Name>
-              <Blocks>
-                <Vector3I>
-                  <X>-46</X>
-                  <Y>0</Y>
-                  <Z>-11</Z>
-                </Vector3I>
-                <Vector3I>
-                  <X>-46</X>
-                  <Y>0</Y>
-                  <Z>-16</Z>
-                </Vector3I>
-                <Vector3I>
-                  <X>-46</X>
-                  <Y>0</Y>
-                  <Z>-20</Z>
-                </Vector3I>
-                <Vector3I>
-                  <X>-47</X>
-                  <Y>0</Y>
-                  <Z>-11</Z>
-                </Vector3I>
-                <Vector3I>
-                  <X>-47</X>
-                  <Y>0</Y>
-                  <Z>-16</Z>
-                </Vector3I>
-                <Vector3I>
-                  <X>-47</X>
-                  <Y>0</Y>
-                  <Z>-20</Z>
-                </Vector3I>
-              </Blocks>
-            </MyObjectBuilder_BlockGroup>
-            <MyObjectBuilder_BlockGroup>
               <Name>Reactors</Name>
               <Blocks>
                 <Vector3I>
@@ -4974,6 +4969,41 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
                 </Vector3I>
               </Blocks>
             </MyObjectBuilder_BlockGroup>
+            <MyObjectBuilder_BlockGroup>
+              <Name>Suspension</Name>
+              <Blocks>
+                <Vector3I>
+                  <X>-46</X>
+                  <Y>0</Y>
+                  <Z>-16</Z>
+                </Vector3I>
+                <Vector3I>
+                  <X>-46</X>
+                  <Y>0</Y>
+                  <Z>-20</Z>
+                </Vector3I>
+                <Vector3I>
+                  <X>-47</X>
+                  <Y>0</Y>
+                  <Z>-16</Z>
+                </Vector3I>
+                <Vector3I>
+                  <X>-47</X>
+                  <Y>0</Y>
+                  <Z>-20</Z>
+                </Vector3I>
+                <Vector3I>
+                  <X>-47</X>
+                  <Y>0</Y>
+                  <Z>-12</Z>
+                </Vector3I>
+                <Vector3I>
+                  <X>-46</X>
+                  <Y>0</Y>
+                  <Z>-12</Z>
+                </Vector3I>
+              </Blocks>
+            </MyObjectBuilder_BlockGroup>
           </BlockGroups>
           <Handbrake>true</Handbrake>
           <DisplayName>Starter Baserunner</DisplayName>
@@ -4981,23 +5011,23 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CreatePhysics>false</CreatePhysics>
           <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
           <IsRespawnGrid>false</IsRespawnGrid>
-          <LocalCoordSys>325</LocalCoordSys>
+          <LocalCoordSys>0</LocalCoordSys>
           <TargetingTargets />
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>117709821212599105</EntityId>
+          <EntityId>114547695722176815</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>117709821212599105</Name>
+          <Name>114547695722176815</Name>
           <PositionAndOrientation>
-            <Position x="34.61328125" y="111.30419921875" z="-51.64794921875" />
-            <Forward x="0.01580815" y="-0.6813832" z="-0.7317561" />
-            <Up x="0.298502326" y="0.701689363" z="-0.646937668" />
+            <Position x="35.450868606567383" y="-122.45687866210938" z="-0.67449140548706055" />
+            <Forward x="-0.9109816" y="0.0447621942" z="-0.410010576" />
+            <Up x="0.008883651" y="-0.991732955" z="-0.128008932" />
             <Orientation>
-              <X>-0.360843629</X>
-              <Y>-0.06256056</Y>
-              <Z>-0.137648776</Z>
-              <W>0.920288444</W>
+              <X>0.5406874</X>
+              <Y>-0.0514958054</Y>
+              <Z>0.838763237</Z>
+              <W>-0.0384911634</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -5005,12 +5035,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheel</SubtypeName>
-              <EntityId>96892626002552915</EntityId>
+              <EntityId>92979349546693770</EntityId>
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="-0.00482703932" y="0.00105132931" z="-0.00175361289" />
+          <AngularVelocity x="0.000268367323" y="-7.456544E-05" z="-0.0006122275" />
           <DisplayName>Large Grid 5257</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -5021,18 +5053,18 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>74708483169474251</EntityId>
+          <EntityId>95675758171141880</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>74708483169474251</Name>
+          <Name>95675758171141880</Name>
           <PositionAndOrientation>
-            <Position x="34.91064453125" y="102.76513671875" z="-60.7724609375" />
-            <Forward x="0.0159829333" y="-0.6814506" z="-0.7316895" />
-            <Up x="0.298423231" y="0.70168066" z="-0.6469835" />
+            <Position x="26.340621948242188" y="-122.0093879699707" z="-4.7736490964889526" />
+            <Forward x="-0.9109818" y="0.0447621122" z="-0.4100099" />
+            <Up x="0.00888366252" y="-0.991732538" z="-0.128008991" />
             <Orientation>
-              <X>-0.360877246</X>
-              <Y>-0.06263264</Y>
-              <Z>-0.137576357</Z>
-              <W>0.920281231</W>
+              <X>0.54068774</X>
+              <Y>-0.0514958277</Y>
+              <Z>0.838763</Z>
+              <W>-0.03849123</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -5040,13 +5072,15 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheel</SubtypeName>
-              <EntityId>117685354012898465</EntityId>
+              <EntityId>118152964428845945</EntityId>
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
-          <DisplayName>Large Grid 1765</DisplayName>
+          <LinearVelocity x="-0.00403869525" y="0.00778595358" z="-0.00277297758" />
+          <AngularVelocity x="0.000268544565" y="-7.450787E-05" z="-0.000612115953" />
+          <DisplayName>Large Grid 2407</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
           <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
@@ -5056,53 +5090,18 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>126892909721836846</EntityId>
+          <EntityId>99181147368571507</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>126892909721836846</Name>
+          <Name>99181147368571507</Name>
           <PositionAndOrientation>
-            <Position x="31.34130859375" y="98.35107421875" z="-49.90673828125" />
-            <Forward x="-0.0157623738" y="0.6813817" z="0.7317582" />
-            <Up x="-0.29857415" y="-0.7016659" z="0.6469296" />
+            <Position x="44.560687065124512" y="-122.90450286865234" z="3.4256149530410767" />
+            <Forward x="-0.9109816" y="0.0447621942" z="-0.410010576" />
+            <Up x="0.008883651" y="-0.991732955" z="-0.128008932" />
             <Orientation>
-              <X>0.920282662</X>
-              <Y>-0.137691736</Y>
-              <Z>0.0625529</Z>
-              <W>0.36084342</W>
-            </Orientation>
-          </PositionAndOrientation>
-          <LocalPositionAndOrientation xsi:nil="true" />
-          <GridSizeEnum>Large</GridSizeEnum>
-          <CubeBlocks>
-            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
-              <SubtypeName>RealWheelmirrored</SubtypeName>
-              <EntityId>134633898463450644</EntityId>
-              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
-              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
-              <YieldLastComponent>false</YieldLastComponent>
-            </MyObjectBuilder_CubeBlock>
-          </CubeBlocks>
-          <DisplayName>Large Grid 8541</DisplayName>
-          <DestructibleBlocks>true</DestructibleBlocks>
-          <CreatePhysics>false</CreatePhysics>
-          <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
-          <IsRespawnGrid>false</IsRespawnGrid>
-          <LocalCoordSys>0</LocalCoordSys>
-          <TargetingTargets />
-        </CubeGrid>
-        <CubeGrid>
-          <SubtypeName />
-          <EntityId>139500319181933396</EntityId>
-          <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>139500319181933396</Name>
-          <PositionAndOrientation>
-            <Position x="34.32666015625" y="118.14599609375" z="-44.35888671875" />
-            <Forward x="0.0156789124" y="-0.681361139" z="-0.7317794" />
-            <Up x="0.298479348" y="0.701689" z="-0.646948755" />
-            <Orientation>
-              <X>-0.36083892</X>
-              <Y>-0.0624944754</Y>
-              <Z>-0.137661874</Z>
-              <W>0.920292854</W>
+              <X>0.5406874</X>
+              <Y>-0.0514958054</Y>
+              <Z>0.838763237</Z>
+              <W>-0.0384911634</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -5127,12 +5126,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheel</SubtypeName>
-              <EntityId>119608015698467682</EntityId>
+              <EntityId>82897983191241235</EntityId>
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="-0.0054012686" y="-0.00562845357" z="-0.00120702619" />
+          <AngularVelocity x="0.000268669159" y="-7.45925E-05" z="-0.0006120891" />
           <DisplayName>Large Grid 7673</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -5143,18 +5144,18 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>124816575752676977</EntityId>
+          <EntityId>114762762275303565</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>124816575752676977</Name>
+          <Name>114762762275303565</Name>
           <PositionAndOrientation>
-            <Position x="31.19091796875" y="106.8583984375" z="-40.74951171875" />
-            <Forward x="-0.0158220232" y="0.681390464" z="0.73174876" />
-            <Up x="-0.29848823" y="-0.701688468" z="0.64694494" />
+            <Position x="39.906370162963867" y="-111.58155059814453" z="2.8081642389297485" />
+            <Forward x="0.910981655" y="-0.04476218" z="0.41001004" />
+            <Up x="-0.00888367" y="0.991733253" z="0.128008977" />
             <Orientation>
-              <X>0.920287967</X>
-              <Y>-0.1376392</Y>
-              <Z>0.062565</Z>
-              <W>0.360847831</W>
+              <X>0.03849117</X>
+              <Y>-0.838763058</Y>
+              <Z>-0.05149582</Z>
+              <W>0.5406876</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -5179,12 +5180,14 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheelmirrored</SubtypeName>
-              <EntityId>111503860893560244</EntityId>
+              <EntityId>125528335789558764</EntityId>
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.003349823" y="0.0006486797" z="0.00189672876" />
+          <AngularVelocity x="0.000268783915" y="-7.433746E-05" z="-0.000612022" />
           <DisplayName>Large Grid 627</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -5195,18 +5198,18 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>93653307667103568</EntityId>
+          <EntityId>138768475406648169</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>93653307667103568</Name>
+          <Name>138768475406648169</Name>
           <PositionAndOrientation>
-            <Position x="31.0595703125" y="113.66650390625" z="-33.42578125" />
-            <Forward x="-0.0157567486" y="0.6813791" z="0.731761" />
-            <Up x="-0.29854697" y="-0.701673269" z="0.6469344" />
+            <Position x="49.016186237335205" y="-112.0291748046875" z="6.9082733392715454" />
+            <Forward x="0.910981655" y="-0.04476218" z="0.41001004" />
+            <Up x="-0.00888367" y="0.991733253" z="0.128008977" />
             <Orientation>
-              <X>0.920285165</X>
-              <Y>-0.137679741</Y>
-              <Z>0.06254489</Z>
-              <W>0.360842943</W>
+              <X>0.03849117</X>
+              <Y>-0.838763058</Y>
+              <Z>-0.05149582</Z>
+              <W>0.5406876</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -5214,13 +5217,52 @@ Thank you for purchasing the Kharak Baserunner from the Northern COALITION.
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheelmirrored</SubtypeName>
-              <EntityId>134746214937947311</EntityId>
+              <EntityId>90190022776534797</EntityId>
               <ColorMaskHSV x="0.09166667" y="-0.16" z="0.35" />
               <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.0027742926" y="-0.00602874346" z="0.00244248565" />
+          <AngularVelocity x="0.0002687984" y="-7.44159552E-05" z="-0.0006119889" />
           <DisplayName>Large Grid 9257</DisplayName>
+          <DestructibleBlocks>true</DestructibleBlocks>
+          <CreatePhysics>false</CreatePhysics>
+          <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
+          <IsRespawnGrid>false</IsRespawnGrid>
+          <LocalCoordSys>0</LocalCoordSys>
+          <TargetingTargets />
+        </CubeGrid>
+        <CubeGrid>
+          <SubtypeName />
+          <EntityId>143333935114606958</EntityId>
+          <PersistentFlags>CastShadows InScene</PersistentFlags>
+          <Name>143333935114606958</Name>
+          <PositionAndOrientation>
+            <Position x="30.796154022216797" y="-111.1340446472168" z="-1.2910650968551636" />
+            <Forward x="0.910981834" y="-0.04476212" z="0.410009682" />
+            <Up x="-0.008883666" y="0.991733253" z="0.128008962" />
+            <Orientation>
+              <X>0.0384911746</X>
+              <Y>-0.838762939</Y>
+              <Z>-0.0514958054</Z>
+              <W>0.5406878</W>
+            </Orientation>
+          </PositionAndOrientation>
+          <LocalPositionAndOrientation xsi:nil="true" />
+          <GridSizeEnum>Large</GridSizeEnum>
+          <CubeBlocks>
+            <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
+              <SubtypeName>RealWheel</SubtypeName>
+              <EntityId>96826731289630942</EntityId>
+              <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
+              <SkinSubtypeId>Dust_Armor</SkinSubtypeId>
+              <YieldLastComponent>false</YieldLastComponent>
+            </MyObjectBuilder_CubeBlock>
+          </CubeBlocks>
+          <LinearVelocity x="0.00407926738" y="0.00737209059" z="0.00100754132" />
+          <AngularVelocity x="0.000268792966" y="-7.447166E-05" z="-0.0006120197" />
+          <DisplayName>Large Grid 1259</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
           <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
