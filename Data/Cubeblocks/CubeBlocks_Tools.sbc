@@ -210,6 +210,7 @@
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<SensorRadius>2.8</SensorRadius>
+			<SensorOffset>1.0</SensorOffset>
 			<PCU>100</PCU>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ShipGrinderDefinition">
