@@ -90,7 +90,7 @@ namespace MikeDude.ArmorBalance
                 }
                 else
                 {
-                    blockDef.PCU = 0;
+                    blockDef.PCU = 1;
                 }
 
                 //light armor
