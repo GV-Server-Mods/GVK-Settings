@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<!-- reduced speed -->
+		<!-- reduced speed, adjusted categories -->
 		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
 			<Id>
 				<TypeId>Assembler</TypeId>
@@ -52,9 +52,11 @@
 			<OperationalPowerConsumption>0.28</OperationalPowerConsumption>
 			<BlueprintClasses>
 				<Class>SimpleComponents</Class>
+				<Class>SimpleEquipment</Class>
 				<Class>Tools</Class>
-				<Class>PlayerConsumables</Class>
-				<Class>BasicShipConsumables</Class>
+				<Class>GVKBasicWeapons</Class>
+				<Class>GVKBasicHandheldAmmo</Class>
+				<Class>GVKBasicShipAmmo</Class>
 			</BlueprintClasses>
 			<AssemblySpeed>0.25</AssemblySpeed>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
@@ -200,10 +202,12 @@
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
+				<Class>EliteEquipment</Class>
 				<Class>EliteTools</Class>
+				<Class>GVKEliteWeapons</Class>
+				<Class>GVKEliteHandheldAmmo</Class>
+				<Class>GVKEliteShipAmmo</Class>
 				<Class>BuildPlanner</Class>
-				<Class>PlayerConsumables</Class>
-				<Class>ShipConsumables</Class>
 			</BlueprintClasses>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
 			<DamagedSound>ParticleHeavyMech</DamagedSound>
@@ -266,6 +270,7 @@
 				<ScreenArea Name="CockpitScreen_02" DisplayName="Bottom panel"/>
 			</ScreenAreas>
 			<BlueprintClasses>
+				<Class>SurvivalKitIngots</Class>
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
@@ -342,6 +347,7 @@
 			<BuildTimeSeconds>20</BuildTimeSeconds>
 			<ResourceSinkGroup>Factory</ResourceSinkGroup>
 			<BlueprintClasses>
+				<Class>SurvivalKitIngots</Class>
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
 			</BlueprintClasses>
@@ -441,10 +447,12 @@
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
+				<Class>EliteEquipment</Class>
 				<Class>EliteTools</Class>
+				<Class>GVKEliteWeapons</Class>
+				<Class>GVKEliteHandheldAmmo</Class>
+				<Class>GVKEliteShipAmmo</Class>
 				<Class>BuildPlanner</Class>
-				<Class>PlayerConsumables</Class>
-				<Class>ShipConsumables</Class>
 			</BlueprintClasses>
             <DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
             <DamagedSound>ParticleHeavyMech</DamagedSound>

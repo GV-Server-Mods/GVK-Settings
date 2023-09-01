@@ -22,15 +22,15 @@
 			<GlassModel>Models\Cubes\Large\CockpitGlass.mwm</GlassModel>
 			<CharacterAnimation>cockpit1_large</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-            <Components>
-                <Component Subtype="SteelPlate" Count="20" />
-                <Component Subtype="Construction" Count="20" />
-                <Component Subtype="Motor" Count="1" />
-                <Component Subtype="Display" Count="8" />
-                <Component Subtype="Computer" Count="100" />
-                <Component Subtype="SteelPlate" Count="20" />
-                <Component Subtype="BulletproofGlass" Count="60" />
-            </Components>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="8"/>
+				<Component Subtype="Computer" Count="100"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="BulletproofGlass" Count="60"/>
+			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true"/>
@@ -86,7 +86,7 @@
 			</RaycastOffset>
 			<PCU>150</PCU>
 		</Definition>
-		<!-- Nerf large industrial cockpit health so its not P2W -->
+		<!-- Adjust large industrial cockpit health so its not P2W -->
 		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
 			<Id>
 				<TypeId>Cockpit</TypeId>
@@ -103,15 +103,15 @@
 			<InteriorModel>Models\Cubes\large\CockpitIndustrialInterior.mwm</InteriorModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<ModelOffset x="0" y="0" z="0"/>
-            <Components>
-                <Component Subtype="SteelPlate" Count="20" />
-                <Component Subtype="Construction" Count="20" />
-                <Component Subtype="Motor" Count="1" />
-                <Component Subtype="Display" Count="8" />
-                <Component Subtype="Computer" Count="100" />
-                <Component Subtype="SteelPlate" Count="20" />
-                <Component Subtype="BulletproofGlass" Count="60" />
-            </Components>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="8"/>
+				<Component Subtype="Computer" Count="100"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="BulletproofGlass" Count="60"/>
+			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0.4" EndX="1" EndY="1" Default="true"/>
@@ -184,15 +184,15 @@
 			<GlassModel>Models\Cubes\Small\cockpitglass.mwm</GlassModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-            <Components>
-                <Component Subtype="SteelPlate" Count="5" />
-                <Component Subtype="Construction" Count="10" />
-                <Component Subtype="Motor" Count="1" />
-                <Component Subtype="Display" Count="5" />
-                <Component Subtype="Computer" Count="15" />
-                <Component Subtype="SteelPlate" Count="10" />
-                <Component Subtype="BulletproofGlass" Count="30" />
-            </Components>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="3" Default="true"/>
@@ -264,15 +264,15 @@
 			<InteriorModel>Models\Cubes\small\CockpitIndustrialInterior.mwm</InteriorModel>
 			<CharacterAnimation>cockpit1_small</CharacterAnimation>
 			<ModelOffset x="0" y="0" z="0"/>
-            <Components>
-                <Component Subtype="SteelPlate" Count="5" />
-                <Component Subtype="Construction" Count="10" />
-                <Component Subtype="Motor" Count="1" />
-                <Component Subtype="Display" Count="5" />
-                <Component Subtype="Computer" Count="15" />
-                <Component Subtype="SteelPlate" Count="10" />
-                <Component Subtype="BulletproofGlass" Count="30" />
-            </Components>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="1.5" EndX="3" EndY="3" Default="true"/>
@@ -333,17 +333,17 @@
 			<InteriorModel>Models\Cubes\small\CockpitFighterInterior.mwm</InteriorModel>
 			<CharacterAnimation>FighterCockpitPosture</CharacterAnimation>
 			<UsesDeformation>false</UsesDeformation>
-            <Components>
-                <Component Subtype="Construction" Count="20" />
-                <Component Subtype="Motor" Count="1" />
-                <Component Subtype="SteelPlate" Count="10" />
-                <Component Subtype="MetalGrid" Count="10" />
-                <Component Subtype="InteriorPlate" Count="15" />
-                <Component Subtype="Display" Count="4" />
-                <Component Subtype="Computer" Count="20" />
-                <Component Subtype="BulletproofGlass" Count="40" />
-                <Component Subtype="SteelPlate" Count="20" />
-            </Components>
+			<Components>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="MetalGrid" Count="10"/>
+				<Component Subtype="InteriorPlate" Count="15"/>
+				<Component Subtype="Display" Count="4"/>
+				<Component Subtype="Computer" Count="20"/>
+				<Component Subtype="BulletproofGlass" Count="40"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
 				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="6" Default="true"/>
@@ -408,6 +408,72 @@
 			</RaycastOffset>
 			<PCU>150</PCU>
 		</Definition>
-		<!-- nerf industrial cockpit comps so they are not P2W -->
+		<!-- Adjust small cab cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockCapCockpit</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_CapCockpit</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\CapCockpit.dds</Icon>
+			<Description>Description_CockpitIndustrial</Description>
+			<CubeSize>Small</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="3" z="3"/>
+			<Model>Models\Cubes\small\CapCockpit.mwm</Model>
+			<InteriorModel>Models\Cubes\small\CapCockpitInterior.mwm</InteriorModel>
+			<CharacterAnimation>CapCockpitPose</CharacterAnimation>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="3" Default="true"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="3" EndY="2"/>
+				<MountPoint Side="Left" StartX="0.5" StartY="2" EndX="3" EndY="3"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="3" EndY="2"/>
+				<MountPoint Side="Right" StartX="0" StartY="2" EndX="2.5" EndY="3"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="3" EndY="2.5"/>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="3" EndY="2"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="3" EndY="3"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\CapCockpit_Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\CapCockpit_Construction_2.mwm"/>
+			</BuildProgressModels>
+			<ScreenAreas>
+				<ScreenArea Name="CockpitScreen_01" DisplayName="DisplayName_Screen_TopLeft" TextureResolution="128" ScreenWidth="3" ScreenHeight="1" Script="TSS_Velocity"/>
+				<ScreenArea Name="CockpitScreen_02" DisplayName="DisplayName_Screen_Left" TextureResolution="256" ScreenWidth="6" ScreenHeight="5" Script="TSS_EnergyHydrogen"/>
+				<ScreenArea Name="CockpitScreen_03" DisplayName="DisplayName_Screen_Center" TextureResolution="256" ScreenWidth="2" ScreenHeight="1" Script="TSS_ArtificialHorizon"/>
+				<ScreenArea Name="CockpitScreen_04" DisplayName="DisplayName_Screen_Right" TextureResolution="256" ScreenWidth="6" ScreenHeight="5" Script="TSS_Gravity"/>
+			</ScreenAreas>
+			<BlockPairName>CapCockpit</BlockPairName>
+			<MirroringZ>Y</MirroringZ>
+			<MirroringY>Z</MirroringY>
+			<EdgeType>Light</EdgeType>
+			<DeformationRatio>0.2</DeformationRatio>
+			<EnableFirstPerson>true</EnableFirstPerson>
+			<EnableShipControl>true</EnableShipControl>
+			<EnableBuilderCockpit>true</EnableBuilderCockpit>
+			<TargetLockingEnabled>true</TargetLockingEnabled>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<PrimarySound>BlockCockpitSm</PrimarySound>
+			<OxygenCapacity>60</OxygenCapacity>
+			<IsPressurized>true</IsPressurized>
+			<GetInSound>ShipSmCockpitIn</GetInSound>
+			<GetOutSound>ShipSmCockpitOut</GetOutSound>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<PCU>150</PCU>
+			<DLC>DecorativeBlocks3</DLC>
+		</Definition>
 	</CubeBlocks>
 </Definitions>

@@ -1,48 +1,7 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<BlueprintClasses>
-		<Class>
-			<Id>
-				<TypeId>BlueprintClassDefinition</TypeId>
-				<SubtypeId>PlayerConsumables</SubtypeId>
-			</Id>
-			<DisplayName>Player Consumables</DisplayName>
-			<Description>Player Consumables</Description>
-			<Icon>Textures\GUI\Icons\buttons\Ammos.dds</Icon>
-			<HighlightIcon>Textures\GUI\Icons\buttons\Ammos.dds</HighlightIcon>
-			<FocusIcon>Textures\GUI\Icons\buttons\Ammos_focus.dds</FocusIcon>
-			<InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
-		</Class>
-		<Class>
-			<Id>
-				<TypeId>BlueprintClassDefinition</TypeId>
-				<SubtypeId>ShipConsumables</SubtypeId>
-			</Id>
-			<DisplayName>Ship Consumables</DisplayName>
-			<Description>Ship Consumables</Description>
-            <Icon>Textures\GUI\Icons\buttons\Consumables.dds</Icon>
-            <HighlightIcon>Textures\GUI\Icons\buttons\Consumables.dds</HighlightIcon>
-            <FocusIcon>Textures\GUI\Icons\buttons\ConsumablesFocus.dds</FocusIcon>
-            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
-		</Class>
-		<Class>
-			<Id>
-				<TypeId>BlueprintClassDefinition</TypeId>
-				<SubtypeId>BasicShipConsumables</SubtypeId>
-			</Id>
-			<DisplayName>Basic Ship Consumables</DisplayName>
-			<Description>Basic Ship Consumables</Description>
-            <Icon>Textures\GUI\Icons\buttons\Consumables.dds</Icon>
-            <HighlightIcon>Textures\GUI\Icons\buttons\Consumables.dds</HighlightIcon>
-            <FocusIcon>Textures\GUI\Icons\buttons\ConsumablesFocus.dds</FocusIcon>
-            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
-		</Class>
-	</BlueprintClasses>
 	<BlueprintClassEntries>
-		<!-- <Entry Class="Components" BlueprintSubtypeId="GVK_SmallCaliber_Tech" /> -->
-		<Entry Class="BasicShipConsumables" BlueprintSubtypeId="Canvas"/>
-		<Entry Class="ShipConsumables" BlueprintSubtypeId="Canvas"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Medkit"/>
-		<Entry Class="PlayerConsumables" BlueprintSubtypeId="Powerkit"/>
+		<Entry Class="EliteEquipment" BlueprintSubtypeId="Medkit"/>
+		<Entry Class="EliteEquipment" BlueprintSubtypeId="Powerkit"/>
 	</BlueprintClassEntries>
 </Definitions>

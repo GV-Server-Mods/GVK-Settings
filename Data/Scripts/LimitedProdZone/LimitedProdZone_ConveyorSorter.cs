@@ -66,7 +66,7 @@ namespace LimitedProdZone
                             bool isConveyorSorter = false;
                             isConveyorSorter = strSubBlockType.Contains("ConveyorSorter");
 
-                            if (isConveyorSorter == false)
+                            if (isConveyorSorter == false) // this allows regular sorters to work
                             {
 								inZone = true;
 								weapon.Enabled = false;
