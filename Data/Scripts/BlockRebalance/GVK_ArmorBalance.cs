@@ -206,6 +206,11 @@ namespace MikeDude.ArmorBalance
                     {
                         beaconDef.PCU = 1; //this is so TopGrid doesn't pick random numbers when parent grid has 0 PCU.
                     }
+
+                    if (beaconDef.Id.SubtypeName.Contains("DisposableNpc"))
+                    {
+                        beaconDef.GeneralDamageMultiplier = 0.1f;
+                    }
                 }
 
                 //Thrusters
