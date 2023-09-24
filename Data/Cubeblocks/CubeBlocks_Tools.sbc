@@ -212,6 +212,7 @@
 			<SensorRadius>2.8</SensorRadius>
 			<SensorOffset>1.0</SensorOffset>
 			<PCU>100</PCU>
+			<DeformationRatio>0.2</DeformationRatio>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ShipGrinderDefinition">
 			<Id>
@@ -279,6 +280,7 @@
 			<SensorRadius>2.6</SensorRadius>
 			<PCU>100</PCU>
 			<IsAirTight>false</IsAirTight>
+			<DeformationRatio>0.2</DeformationRatio>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition">
 			<Id>
@@ -345,6 +347,7 @@
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<SensorRadius>4</SensorRadius>
 			<PCU>150</PCU>
+			<DeformationRatio>0.2</DeformationRatio>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="false">
 			<Id>
@@ -401,6 +404,7 @@
 			<SensorRadius>0</SensorRadius> <!-- vanilla 1.3 -->
 			<PCU>150</PCU>
 			<IsAirTight>false</IsAirTight>
+			<DeformationRatio>0.2</DeformationRatio>
 		</Definition>
 		<!-- added to prevent modded clients from changing this -->
 		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
