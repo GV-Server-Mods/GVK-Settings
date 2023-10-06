@@ -261,7 +261,7 @@
               </Keys>
             </Property>
             <Property AnimationType="Const" Name="Life" Type="Float">
-              <ValueFloat>10</ValueFloat>
+              <ValueFloat>8</ValueFloat>
             </Property>
             <Property AnimationType="Const" Name="Soft particle distance scale" Type="Float">
               <ValueFloat>50</ValueFloat>
@@ -279,7 +279,7 @@
               <Keys>
                 <Key>
                   <Time>0</Time>
-                  <ValueFloat>5</ValueFloat>
+                  <ValueFloat>4</ValueFloat>
                   <Value2D />
                 </Key>
               </Keys>
@@ -328,7 +328,7 @@
               <ValueFloat>0.1</ValueFloat>
             </Property>
             <Property AnimationType="Const" Name="Life var" Type="Float">
-              <ValueFloat>7</ValueFloat>
+              <ValueFloat>6</ValueFloat>
             </Property>
             <Property AnimationType="Const" Name="Streaks" Type="Bool">
               <ValueBool>false</ValueBool>
@@ -431,7 +431,7 @@
               <ValueFloat>1</ValueFloat>
             </Property>
             <Property AnimationType="Const" Name="Radius var" Type="Float">
-              <ValueFloat>5</ValueFloat>
+              <ValueFloat>4</ValueFloat>
             </Property>
             <Property AnimationType="Const" Name="Rotation velocity collision multiplier" Type="Float">
               <ValueFloat>1</ValueFloat>

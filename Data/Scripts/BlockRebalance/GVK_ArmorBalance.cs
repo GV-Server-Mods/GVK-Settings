@@ -236,7 +236,8 @@ namespace MikeDude.ArmorBalance
                         }
                         else
                         {
-                            blockDef.Enabled = false;
+                            // disable other thrusters and make impossible to build
+							blockDef.Enabled = false;
                             blockDef.Public = false;
                             blockDef.GuiVisible = false;
                             if (unobtainiumComponent != null)
@@ -245,6 +246,10 @@ namespace MikeDude.ArmorBalance
                             }
                         }
                     }
+					if (thrustDef.Id.SubtypeName.Contains("Hover"))
+					{
+						thrustDef.ThrusterType = MyStringHash.GetOrCompute("Ion");
+					}
                 }
 
                 //gyros
