@@ -106,7 +106,7 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="1000" AmountMax="100000">
+				<Item AmountMin="1000" AmountMax="10000">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
@@ -114,7 +114,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="3" AmountMax="10">
-					<Frequency>1</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
@@ -221,7 +221,7 @@
 					</Id>
 				</Item> -->
 				<Item AmountMin="5" AmountMax="15">
-					<Frequency>1</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
@@ -384,13 +384,13 @@
 			</Id>
 			<Items>
 				<Item AmountMin="20" AmountMax="30">
-					<Frequency>0.5</Frequency>
+					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5000" AmountMax="100000">
+				<Item AmountMin="5000" AmountMax="50000">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
@@ -398,7 +398,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20">
-					<Frequency>1</Frequency>
+					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
