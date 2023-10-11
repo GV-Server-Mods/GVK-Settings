@@ -323,10 +323,11 @@ namespace MikeDude.ArmorBalance
                     laserAntennaDef.RequireLineOfSight = false;
                 }
 				
-				//buffing output of NPC Proprietary reactors
+				//buffing output of NPC Proprietary reactors, and making them not require fuel
                 if (reactorDef != null && reactorDef.Id.SubtypeName.Contains("Proprietary"))
                 {
                     reactorDef.MaxPowerOutput *= 5f;
+					reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
 					//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
                 }
 
@@ -348,13 +349,14 @@ namespace MikeDude.ArmorBalance
                     InsertComponent(blockDef, blockDef.Components.Length, steelPlateComponent, 40);
                 }
 				
-				//Make all 5x5 XL blocks have light edge type, and no deformation
+				//Make all 5x5 XL blocks have light edge type, and no deformation, and increase weld time
                 if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("XL_") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
                 {
 					blockDef.GeneralDamageMultiplier = lightArmorLargeDamageMod;
 					blockDef.UsesDeformation = false;
 					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
 					blockDef.EdgeType = "Light";
+					blockDef.IntegrityPointsPerSec = 2500;
                 }
 
 				//Make all Buster blocks have heavy edge type, and no deformation
