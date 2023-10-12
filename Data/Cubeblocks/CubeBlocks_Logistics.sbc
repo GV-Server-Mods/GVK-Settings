@@ -55,6 +55,66 @@
 		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
 			<Id>
 				<TypeId>ConveyorSorter</TypeId>
+				<SubtypeId>LargeBlockConveyorSorterIndustrial</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_ConveyorSorterIndustrial</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\ConveyorSorterReskin.dds</Icon>
+			<Description>Description_ConveyorSorter</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="1" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\ConveyorSorterReskin.mwm</Model>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="40"/>
+				<Component Subtype="Construction" Count="100"/>
+				<Component Subtype="SmallTube" Count="50"/>
+				<Component Subtype="Computer" Count="20"/>
+				<Component Subtype="Motor" Count="2"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="InteriorPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9"/>
+				<MountPoint Side="Back" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0.1" EndX="1" EndY="0.2" Default="true"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0.8" EndX="1" EndY="0.9"/>
+				<MountPoint Side="Top" StartX="0.25" StartY="0.1" EndX="0.75" EndY="0.9"/>
+				<MountPoint Side="Left" StartX="0.35" StartY="0.3" EndX="0.65" EndY="0.7"/>
+				<MountPoint Side="Right" StartX="0.35" StartY="0.3" EndX="0.65" EndY="0.7"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\ConveyorSorterReskinConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\ConveyorSorterReskinConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\ConveyorSorterReskinConstruction_3.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>ConveyorSorterIndustrial</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>20</BuildTimeSeconds>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<ResourceSinkGroup>Conveyors</ResourceSinkGroup>
+			<PowerInput>0.00025</PowerInput>
+			<InventorySize>
+				<X>2</X>
+				<Y>2</Y>
+				<Z>2</Z>
+			</InventorySize>
+			<EmissiveColorPreset>Default</EmissiveColorPreset>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>25</PCU>
+			<DLC>HeavyIndustry</DLC>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+			<Id>
+				<TypeId>ConveyorSorter</TypeId>
 				<SubtypeId>MediumBlockConveyorSorter</SubtypeId>
 			</Id>
 			<DisplayName>DisplayName_Block_ConveyorSorter</DisplayName>
