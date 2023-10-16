@@ -224,18 +224,37 @@ namespace MikeDude.ArmorBalance
                             !thrustDef.FuelConverter.FuelId.IsNull() &&
                             thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
                         {
-                            thrustDef.MinPlanetaryInfluence = 0f;
-                            thrustDef.MaxPlanetaryInfluence = 0.25f;
+                            thrustDef.MaxPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
+                            thrustDef.MinPlanetaryInfluence = 0f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
                             thrustDef.EffectivenessAtMaxInfluence = 1f;
                             thrustDef.EffectivenessAtMinInfluence = 0f;
                             //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
                             //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
-                            //thrustDef.FuelConverter.Efficiency = 1f; //not using this because it now varies for large and small
                         }
+                        else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
+						{
+                            thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
+                            thrustDef.MinPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
+                            thrustDef.EffectivenessAtMaxInfluence = 1f;
+                            thrustDef.EffectivenessAtMinInfluence = 0f;
+                            thrustDef.ConsumptionFactorPerG = 0f;
+                            thrustDef.SlowdownFactor = 1f;
+						}
+						else if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
+						{
+                            thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
+                            thrustDef.MinPlanetaryInfluence = 0.5f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
+                            thrustDef.EffectivenessAtMaxInfluence = 1f;
+                            thrustDef.EffectivenessAtMinInfluence = 0f;
+                            thrustDef.ConsumptionFactorPerG = 0f;
+                            thrustDef.SlowdownFactor = 1f;
+							thrustDef.ForceMagnitude *= 2f;
+							thrustDef.MinPowerConsumption *= 10f;
+						}
                         else
-                        {
+						{
                             // disable other thrusters and make impossible to build
 							blockDef.Enabled = false;
                             blockDef.Public = false;
@@ -249,6 +268,8 @@ namespace MikeDude.ArmorBalance
 					if (thrustDef.Id.SubtypeName.Contains("Hover"))
 					{
 						thrustDef.ThrusterType = MyStringHash.GetOrCompute("Ion");
+						thrustDef.MaxPowerConsumption *= 3f;
+						thrustDef.MinPowerConsumption *= 10f;
 					}
                 }
 
