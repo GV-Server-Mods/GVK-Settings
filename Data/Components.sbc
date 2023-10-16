@@ -23,7 +23,7 @@
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
-		<Component>
+		<!--<Component>
 			<Id>
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
@@ -44,8 +44,8 @@
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
+		</Component>-->
+		<!--<Component>
 			<Id>
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Hydro_Tech</SubtypeId>
@@ -66,8 +66,8 @@
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
+		</Component>-->
+		<!--<Component>
 			<Id>
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Ion_Tech</SubtypeId>
@@ -88,7 +88,7 @@
 			<MaxIntegrity>20</MaxIntegrity>
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
+		</Component>-->
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
