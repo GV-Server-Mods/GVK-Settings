@@ -232,6 +232,7 @@ namespace MikeDude.ArmorBalance
                             //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
+							thrustDef.MinPowerConsumption *= 2f;
                         }
                         else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
 						{
