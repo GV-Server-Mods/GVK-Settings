@@ -321,16 +321,57 @@ namespace MikeDude.ArmorBalance
                     }
                 }
 				
-				//reduce default battery pre-charge, and nerf max output to reduce battery spam
+				//reduce default battery pre-charge, and nerf resistance some
                 if (batteryDef != null)
                 {
                     batteryDef.InitialStoredPowerRatio = 0.05f;
-					batteryDef.MaxPowerOutput *=0.8f;
 					batteryDef.GeneralDamageMultiplier = 1.25f;
                     foreach (var component in batteryDef.Components)
                     {
                         component.DeconstructItem = component.Definition;
                     }
+					if (batteryDef.CubeSize == MyCubeSize.Large)
+					{
+						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
+					}
+					else
+					{
+						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.25f; // accounts for 2 sizes of small grid batteries
+					}
+                }
+				
+				//adjusting output of all reactors
+                if (reactorDef != null)
+				{
+					if (reactorDef.CubeSize == MyCubeSize.Large)
+					{
+						if (reactorDef.Size.Volume() <= 1f)
+						{
+							reactorDef.MaxPowerOutput = 20f; // 2:1 power output density to batteries
+						}
+						else
+						{
+							reactorDef.MaxPowerOutput = 600f; // Bonus for large variant
+						}
+					}
+					else
+					{
+						if (reactorDef.Size.Volume() <= 1f)
+						{
+							reactorDef.MaxPowerOutput = 0.5f; // 2:1 power output density to batteries
+						}
+						else
+						{
+							reactorDef.MaxPowerOutput = 15f; // Bonus for large variant
+						}
+					}
+					//buffing output of NPC Proprietary reactors, and making them not require fuel
+					if (reactorDef.Id.SubtypeName.Contains("Proprietary"))
+					{
+						reactorDef.MaxPowerOutput *= 5f;
+						reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
+						//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
+					}
                 }
 
 				//buffing output of solar to compensate for banned solar tracking
@@ -344,21 +385,7 @@ namespace MikeDude.ArmorBalance
                 {
                     laserAntennaDef.RequireLineOfSight = false;
                 }
-				
-				//buffing output of NPC Proprietary reactors, and making them not require fuel
-                if (reactorDef != null && reactorDef.Id.SubtypeName.Contains("Proprietary"))
-                {
-                    reactorDef.MaxPowerOutput *= 5f;
-					reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
-					//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
-                }
-
-				//buffing output of small grid reactors
-                if (reactorDef != null && blockDef.CubeSize == MyCubeSize.Small)
-                {
-                    reactorDef.MaxPowerOutput *= 1.5f;
-                }
-				
+								
 				//Adjust container components to be proportional to block volume
                 if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
                 {
