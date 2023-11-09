@@ -124,6 +124,20 @@ namespace MikeDude.ArmorBalance
                         blockDef.GeneralDamageMultiplier = heavyArmorSmallDamageMod;
                         blockDef.DeformationRatio = heavyArmorSmallDeformationMod;
                     }
+
+                    var lastCompIdx = blockDef.Components.Length - 1;
+                    if (blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count && blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
+                    {
+                        var temp = blockDef.Components[0];
+                        blockDef.Components[0] = blockDef.Components[lastCompIdx];
+                        blockDef.Components[lastCompIdx] = temp;
+                    }
+
+                    // If no AwwScrap uncomment SetRatios
+                    SetRatios(blockDef, blockDef.CriticalGroup);
+                    // If we're using awwscrap, comment out the SetRatios above and uncomment SortAndSplitArmor below
+                    //SortAndSplitArmor(blockDef);
+
                     //blockDef.PCU = blastDoorPCU;
                 }
 
@@ -404,11 +418,16 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-        private static void InsertComponent(MyCubeBlockDefinition blockDef, int componentIndex, MyComponentDefinition comp, int count, MyPhysicalItemDefinition deconstructItem = null)
+        private static void InsertComponent(MyCubeBlockDefinition blockDef, int componentIndex, MyComponentDefinition comp, int count, MyPhysicalItemDefinition deconstructItem = null, bool makeCritical = false)
         {
             var intDiff = comp.MaxIntegrity * count;
             var massDiff = comp.Mass * count;
 
+            if (makeCritical)
+            {
+                blockDef.CriticalGroup = (ushort)componentIndex;
+            }
+            else
             if (componentIndex <= blockDef.CriticalGroup)
             {
                 blockDef.CriticalGroup += 1;
@@ -468,7 +487,6 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-		// Fix the upgradeable O2/H2 gen
         private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
         {
             var comp = blockDef.Components[index];
@@ -484,7 +502,21 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-		// Fix the upgradeable O2/H2 gen
+        private void SortAndSplitArmor(MyCubeBlockDefinition blockDef)
+        {
+            if (blockDef.Components.Length <= 1 || blockDef.CriticalGroup == blockDef.Components.Length - 1)
+            {
+                return;
+            }
+
+            var nextCompIndex = MathHelper.Clamp(blockDef.CriticalGroup + 1, 0, blockDef.Components.Length - 1);
+            var nextCompLow = (int)Math.Floor(blockDef.Components[nextCompIndex].Count / 2f);
+            var nextCompHigh = (int)Math.Ceiling(blockDef.Components[nextCompIndex].Count / 2f);
+
+            blockDef.Components[nextCompIndex].Count = nextCompLow;
+            InsertComponent(blockDef, nextCompIndex, blockDef.Components[nextCompIndex].Definition, nextCompHigh, makeCritical: true);
+        }
+
         private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
         {
             var criticalIntegrity = 0f;
