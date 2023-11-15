@@ -304,8 +304,8 @@ namespace MikeDude.ArmorBalance
                     hydroTankDef.Capacity = (float)Math.Ceiling(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
                 }
 
-                // Fix the upgradeable O2/H2 gen
-                if (oxygenGeneratorDef != null)
+                // Fix the upgradeable O2/H2 gen (currently removed mod)
+                /*if (oxygenGeneratorDef != null)
                 {
                     switch (oxygenGeneratorDef.Id.SubtypeId.String)
                     {
@@ -319,7 +319,7 @@ namespace MikeDude.ArmorBalance
                             ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
                             break;
                     }
-                }
+                }*/
 				
 				//reduce default battery pre-charge, and nerf resistance some
                 if (batteryDef != null)
@@ -374,7 +374,7 @@ namespace MikeDude.ArmorBalance
 					}
                 }
 
-				//buffing output of solar to compensate for banned solar tracking
+				//buffing output of solar to compensate for banned solar tracking scripts
                 if (solarDef != null)
                 {
                     solarDef.MaxPowerOutput *= 2f;
@@ -392,7 +392,7 @@ namespace MikeDude.ArmorBalance
                     ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
                 }
 
-				//I dont remember what this does either
+				//Add extra steel plates to conveyors to buff integrity
                 if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName == "LargeBlockConveyor")
                 {
                     InsertComponent(blockDef, blockDef.Components.Length, steelPlateComponent, 40);
@@ -425,7 +425,8 @@ namespace MikeDude.ArmorBalance
             DoWork();
         }
 
-        private static void ReplaceComponent(MyCubeBlockDefinition blockDef, int index, MyComponentDefinition newComp, int newCount, MyPhysicalItemDefinition deconstructItem = null)
+        // Method to replace components in a block construction list
+		private static void ReplaceComponent(MyCubeBlockDefinition blockDef, int index, MyComponentDefinition newComp, int newCount, MyPhysicalItemDefinition deconstructItem = null)
         {
             var comp = blockDef.Components[index];
             var oldCount = comp.Count;
@@ -453,7 +454,8 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-        private static void InsertComponent(MyCubeBlockDefinition blockDef, int componentIndex, MyComponentDefinition comp, int count, MyPhysicalItemDefinition deconstructItem = null)
+        // Method to insert components into block construction list
+		private static void InsertComponent(MyCubeBlockDefinition blockDef, int componentIndex, MyComponentDefinition comp, int count, MyPhysicalItemDefinition deconstructItem = null)
         {
             var intDiff = comp.MaxIntegrity * count;
             var massDiff = comp.Mass * count;
@@ -517,8 +519,8 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-		// Fix the upgradeable O2/H2 gen
-        private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
+		// Fix the upgradeable O2/H2 gen (currently removed mod)
+        /*private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
         {
             var comp = blockDef.Components[index];
             var oldCount = comp.Count;
@@ -531,9 +533,9 @@ namespace MikeDude.ArmorBalance
             blockDef.Mass += massDiff;
 
             SetRatios(blockDef, blockDef.CriticalGroup);
-        }
+        }*/
 
-		// Fix the upgradeable O2/H2 gen
+		// Method to set ratio of critical component and ownership of a block
         private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
         {
             var criticalIntegrity = 0f;
