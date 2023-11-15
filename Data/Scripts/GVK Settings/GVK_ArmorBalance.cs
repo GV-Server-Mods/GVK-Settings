@@ -12,6 +12,7 @@ using VRage.ObjectBuilders;
 using VRage.Game.ObjectBuilders.ComponentSystem;
 using VRage.Utils;
 using VRageMath;
+using System.Security;
 
 
 // Code is based on Gauge's Balanced Deformation code, but heavily modified for more control. 
@@ -266,11 +267,26 @@ namespace MikeDude.ArmorBalance
                             }
                         }
                     }
+					// Make hovers count as ions and increase power consumption
 					if (thrustDef.Id.SubtypeName.Contains("Hover"))
 					{
 						thrustDef.ThrusterType = MyStringHash.GetOrCompute("Ion");
 						thrustDef.MaxPowerConsumption *= 3f;
 						thrustDef.MinPowerConsumption *= 10f;
+						if (thrustDef.Size.Volume() <= 1f)
+						{
+							thrustDef.DestroyEffect = "BlockDestroyedExplosion_Small";
+						}
+						else
+						{
+							thrustDef.DestroyEffect = "BlockDestroyedExplosion_Large";
+						}
+					}
+					// Add custom blue explosion particles to hovers and ions
+					if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
+					{
+						thrustDef.DestroyEffect = thrustDef.DestroyEffect + "_Blue";
+						thrustDef.DamageEffectName = "Damage_WeapExpl_Damaged_Blue";
 					}
                 }
 
