@@ -3,7 +3,7 @@
 	<Definition xsi:type="MyObjectBuilder_SafeZoneTexturesDefinition">
 		<Id Type="MyObjectBuilder_SafeZoneTexturesDefinition" Subtype="Clear"/>
 		<DisplayTextId>Clear (Transparent)</DisplayTextId>
-		<Alphamask>Textures\Models\Environment\SafeZone\SafeZoneShield_Clear_alphamask.DDS</Alphamask>
-		<NormalGloss>Textures\Models\Environment\SafeZone\SafeZoneShield_Clear_ng.DDS</NormalGloss>
+		<Alphamask>Textures\Models\Environment\SafeZone\SafeZoneShield_Clear_alphamask.dds</Alphamask>
+		<NormalGloss>Textures\Models\Environment\SafeZone\SafeZoneShield_Clear_ng.dds</NormalGloss>
 	</Definition>
 </Definitions>
