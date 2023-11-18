@@ -1,5 +1,6 @@
 ﻿<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<!--Vanilla-->
+	<!-- H2 Thrusters -->
+	<!-- Vanilla-->
 	<!-- LG -->
 	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 		<!-- LargeBlockLargeHydrogenThrust -->
@@ -18,15 +19,9 @@
 				<Text Name="ID" Value="LargeBlockLargeHydrogenThrust"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -70,13 +65,9 @@
 				<Text Name="ID" Value="LargeBlockSmallHydrogenThrust"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -121,17 +112,9 @@
 				<Text Name="ID" Value="SmallBlockLargeHydrogenThrust"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -175,17 +158,9 @@
 				<Text Name="ID" Value="SmallBlockSmallHydrogenThrust"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -230,15 +205,9 @@
 				<Text Name="ID" Value="LargeBlockLargeHydrogenThrustIndustrial"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -282,13 +251,9 @@
 				<Text Name="ID" Value="LargeBlockSmallHydrogenThrustIndustrial"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -333,17 +298,9 @@
 				<Text Name="ID" Value="SmallBlockLargeHydrogenThrustIndustrial"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -387,17 +344,9 @@
 				<Text Name="ID" Value="SmallBlockSmallHydrogenThrustIndustrial"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -443,15 +392,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-Hydro-LargeGrid-Large"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -495,13 +438,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-Hydro-LargeGrid-Small"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -546,17 +485,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-Hydro-SmallGrid-Large"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -600,17 +531,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-Hydro-SmallGrid-Small"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -656,15 +579,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-IndustryHydro-LargeGrid-Large"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -708,13 +625,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-IndustryHydro-LargeGrid-Small"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -759,17 +672,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-IndustryHydro-SmallGrid-Large"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- custom material for emissive that react to thrust -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -813,17 +718,9 @@
 				<Text Name="ID" Value="MES-NPC-Thrust-IndustryHydro-SmallGrid-Small"/>
 				<!--REQUIRED! No specific value required Debugging  -->
 				<Boolean Name="hideVanillaFlame" Value="true"/>
-				<!-- Hide Vanilla Flame-->
 				<Decimal Name="ThrustRateGain" Value="0.1"/>
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
-				<Boolean Name="UseEmissive" Value="true"/>
-				<!-- Enable heatup/emissive material effect, off = more performant -->
-				<Text Name="EmissiveMaterial" Value="heatup"/>
-				<!-- not implemented|custom material for heatup effect -->
-				<Decimal Name="EmissiveRateGain" Value="0.005"/>
-				<Decimal Name="EmissiveRateLoss" Value="0.01"/>
-				<Decimal Name="CullDist" Value="1500"/>
-				<!-- not implemented|Script Culling Distance. At this distance the effects will be culled/disabled -->
+				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
                     Particle : MDB_ThrusterFlame_TFX;
                     Type: PARTICLE;
@@ -837,6 +734,568 @@
                     Dummies : thruster_flame;
                     =
                     Particle : MDB_ThrusterSmoke_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+
+	<!-- Ion Thrusters -->
+	<!-- Vanilla-->
+	<!-- LG -->
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockLargeThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockLargeThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockLargeThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.1"/>
+				<Decimal Name="ThrustRateLoss" Value="0.4"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Ion_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:1;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : ;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 1;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockSmallThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockSmallThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockSmallThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.1"/>
+				<Decimal Name="ThrustRateLoss" Value="0.4"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Ion_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.55;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : ;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.35;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<!-- SG -->
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockLargeThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockLargeThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockLargeThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.1"/>
+				<Decimal Name="ThrustRateLoss" Value="0.4"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Ion_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.2;
+                    Offset: 2;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : ;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 0.2;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockSmallThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockSmallThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockSmallThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.1"/>
+				<Decimal Name="ThrustRateLoss" Value="0.4"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Ion_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.1;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : ;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+
+	<!-- Flatmo Thrusters -->
+	<!-- Vanilla-->
+	<!-- LG -->
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockLargeFlatAtmosphericThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockLargeFlatAtmosphericThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockLargeFlatAtmosphericThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:1;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 1;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockLargeFlatAtmosphericThrustDShape -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockLargeFlatAtmosphericThrustDShape</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockLargeFlatAtmosphericThrustDShape"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:1;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 1;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockSmallFlatAtmosphericThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockSmallFlatAtmosphericThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockSmallFlatAtmosphericThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockSmallFlatAtmosphericThrustDShape -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockSmallFlatAtmosphericThrustDShape</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockSmallFlatAtmosphericThrustDShape"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<!-- SG -->
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockLargeFlatAtmosphericThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockLargeFlatAtmosphericThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockLargeFlatAtmosphericThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.2;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 0.2;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockLargeFlatAtmosphericThrustDShape -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockLargeFlatAtmosphericThrustDShape</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockLargeFlatAtmosphericThrustDShape"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.2;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 0.2;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockSmallFlatAtmosphericThrust -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockSmallFlatAtmosphericThrust</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockSmallFlatAtmosphericThrust"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockSmallFlatAtmosphericThrustDShape -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockSmallFlatAtmosphericThrustDShape</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockSmallFlatAtmosphericThrustDShape"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
