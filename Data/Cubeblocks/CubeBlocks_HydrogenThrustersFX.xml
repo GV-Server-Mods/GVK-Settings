@@ -23,7 +23,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -34,7 +34,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -69,7 +69,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -80,7 +80,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -116,7 +116,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -127,7 +127,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -162,7 +162,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -173,7 +173,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -209,7 +209,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -220,7 +220,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -255,7 +255,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -266,7 +266,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -302,7 +302,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -313,7 +313,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -348,7 +348,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -359,7 +359,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -396,7 +396,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -407,7 +407,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -442,7 +442,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -453,7 +453,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -489,7 +489,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -500,7 +500,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -535,7 +535,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -546,7 +546,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -583,7 +583,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -594,7 +594,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -629,7 +629,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -640,7 +640,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -676,7 +676,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -687,7 +687,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -722,7 +722,7 @@
 				<Decimal Name="ThrustRateLoss" Value="0.4"/>
 				<Boolean Name="UseEmissive" Value="false"/>
 				<Text Name="EmitterSetup" Value="                    
-                    Particle : MDB_ThrusterFlame_TFX;
+                    Particle : MDB_ThrusterFlame_Hydro_TFX;
                     Type: PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
@@ -733,7 +733,7 @@
                     VelocityScalingTo: 1;
                     Dummies : thruster_flame;
                     =
-                    Particle : MDB_ThrusterSmoke_TFX;
+                    Particle : MDB_ThrusterSmoke_Hydro_TFX;
                     Type : PARTICLE;
                     AtmoOnly: FALSE ;
                     ThrustMin : 0.05;
