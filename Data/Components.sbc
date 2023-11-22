@@ -23,72 +23,6 @@
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
-		<!--<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Atmo Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>-->
-		<!--<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Hydrogen Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Hydro_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>-->
-		<!--<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Ion_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Ion Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Ion_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>-->
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
@@ -199,47 +133,6 @@
 			<Health>14</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
-		<!-- <Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Defense_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Defensive Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Oxygen Systems</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechOxygen.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component> -->
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
@@ -321,5 +214,25 @@
 			<Health>14</Health>
 			<CanPlayerOrder>false</CanPlayerOrder>
 		</Component>
+        <Component>
+            <Id>
+                <TypeId>Component</TypeId>
+                <SubtypeId>Explosives</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Item_Explosives</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ExplosivesComponent.dds</Icon>
+            <Size>
+                <X>0.2</X>
+                <Y>0.2</Y>
+                <Z>0.1</Z>
+            </Size>
+            <Mass>2</Mass>
+            <Volume>2</Volume>
+            <Model>Models\Components\ExplosivesComponent.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <MaxIntegrity>5</MaxIntegrity>
+            <Health>99999999</Health>
+            <CanPlayerOrder>true</CanPlayerOrder>
+        </Component>
 	</Components>
 </Definitions>
