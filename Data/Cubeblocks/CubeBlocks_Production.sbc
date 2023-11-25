@@ -52,9 +52,9 @@
 			<OperationalPowerConsumption>0.28</OperationalPowerConsumption>
 			<BlueprintClasses>
 				<Class>SimpleComponents</Class>
-				<Class>SimpleEquipment</Class>
+				<Class>GVKBasicEquipment</Class>
 				<Class>Tools</Class>
-				<Class>GVKBasicWeapons</Class>
+				<Class>GVKBasicHandheldWeapons</Class>
 				<Class>GVKBasicHandheldAmmo</Class>
 				<Class>GVKBasicShipAmmo</Class>
 			</BlueprintClasses>
@@ -202,9 +202,9 @@
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
-				<Class>EliteEquipment</Class>
+				<Class>GVKEliteEquipment</Class>
 				<Class>EliteTools</Class>
-				<Class>GVKEliteWeapons</Class>
+				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteHandheldAmmo</Class>
 				<Class>GVKEliteShipAmmo</Class>
 				<Class>BuildPlanner</Class>
@@ -447,9 +447,9 @@
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
-				<Class>EliteEquipment</Class>
+				<Class>GVKEliteEquipment</Class>
 				<Class>EliteTools</Class>
-				<Class>GVKEliteWeapons</Class>
+				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteHandheldAmmo</Class>
 				<Class>GVKEliteShipAmmo</Class>
 				<Class>BuildPlanner</Class>
