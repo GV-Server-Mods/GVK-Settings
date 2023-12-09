@@ -6,87 +6,22 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Thrust_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Reusable Igniter</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\HeatingElement.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechThruster.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\Thrust_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
+                <X>0.2</X>
+                <Y>0.2</Y>
                 <Z>0.2</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>6.8</Mass>
+            <Volume>4</Volume>
+            <Model>Models\Components\Heater.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Atmo Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Hydrogen Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Hydro_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Ion_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Ion Thrusters</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Ion_Icon_Overlay.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -94,21 +29,22 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Hover_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Hover Engines</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechHover.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Hover_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Gravity Reflector</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\CompositePlate.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechHover.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\Hover_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
+                <X>0.5</X>
+                <Y>0.5</Y>
+                <Z>0.1</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>24</Mass>
+            <Volume>5</Volume>
+            <Model>Models\Components\CompositePlate.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -116,21 +52,22 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Small Caliber Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\SmallCaliber_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Bolt Carrier</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\Cryocooler.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\SmallCaliber_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
+                <X>0.4</X>
+                <Y>0.4</Y>
+                <Z>0.3</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>36.2</Mass>
+            <Volume>5</Volume>
+            <Model>Models\Components\Cryocooler.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -138,21 +75,22 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Large Caliber Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechLargeCalWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\LargeCaliber_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Chamber Reinforcement</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\TokamakBlanket.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechLargeCalWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\LargeCaliber_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
+                <X>0.5</X>
+                <Y>0.5</Y>
                 <Z>0.2</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>22.3</Mass>
+            <Volume>25</Volume>
+            <Model>Models\Components\TokamakBlanket.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -160,21 +98,22 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Missile_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Missile Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechMissile.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Missile_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Launch Assembly</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\SuperMagnet.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechMissile.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\Missile_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
+                <X>0.4</X>
+                <Y>0.4</Y>
+                <Z>0.3</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>43.6</Mass>
+            <Volume>15</Volume>
+            <Model>Models\Components\SuperMagnet.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -182,83 +121,44 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Laser_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Laser Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Laser_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Particle Emitter</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\LaserEmitter.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechWeapon.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\Laser_Icon_Overlay.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
+                <X>1</X>
+                <Y>0.2</Y>
                 <Z>0.2</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>18.3</Mass>
+            <Volume>12</Volume>
+            <Model>Models\Components\LaserEmitter.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>20</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
-		<!-- <Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Defense_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Defensive Weapons</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
-			</Id>
-			<DisplayName>[Tech] Oxygen Systems</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechOxygen.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component> -->
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Data_Core</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Data Core</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechDataCore.dds</Icon>
+            <Icon>Textures\GUI\Icons\Components\Thermocouple.dds</Icon>
+            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechDataCore.dds</Icon>-->
+			<IconSymbol>Tech</IconSymbol>
             <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
+                <X>0.5</X>
+                <Y>0.5</Y>
+                <Z>0.03</Z>
             </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+            <Mass>4.1</Mass>
+            <Volume>3</Volume>
+            <Model>Models\Components\Thermocouple.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>50</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
 		<Component>
@@ -267,7 +167,7 @@
 				<SubtypeId>GVK_TurboEncabulator</SubtypeId>
 			</Id>
 			<DisplayName>Turbo Encabulator</DisplayName>
-			<Icon>Textures\GUI\Icons\component\GVTurboEncabulator.dds</Icon>
+			<Icon>Textures\GUI\Icons\Components\AlkalineCell.dds</Icon>
 			<Size>
 				<X>0.5</X>
 				<Y>0.3</Y>
@@ -275,7 +175,7 @@
 			</Size>
 			<Mass>50</Mass>
 			<Volume>40</Volume>
-			<Model>Models\Components\gravity_generator_components_component.mwm</Model>
+			<Model>Models\Components\AlkalineCell.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>200</MaxIntegrity>
 			<Health>40</Health>
@@ -321,5 +221,25 @@
 			<Health>14</Health>
 			<CanPlayerOrder>false</CanPlayerOrder>
 		</Component>
+        <Component>
+            <Id>
+                <TypeId>Component</TypeId>
+                <SubtypeId>Explosives</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Item_Explosives</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ExplosivesComponent.dds</Icon>
+            <Size>
+                <X>0.2</X>
+                <Y>0.2</Y>
+                <Z>0.1</Z>
+            </Size>
+            <Mass>2</Mass>
+            <Volume>2</Volume>
+            <Model>Models\Components\ExplosivesComponent.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <MaxIntegrity>5</MaxIntegrity>
+            <Health>99999999</Health>
+            <CanPlayerOrder>true</CanPlayerOrder>
+        </Component>
 	</Components>
 </Definitions>

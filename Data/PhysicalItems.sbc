@@ -1,6 +1,25 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <PhysicalItems>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>GVK_Relic_Tech</SubtypeId>
+			</Id>
+			<DisplayName>[Tech] Relic Ammo Ingot</DisplayName>
+			<Icon>Textures\GUI\Icons\ingot\potassium_ingot.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
+			<Size>
+				<X>0.1</X>
+				<Y>0.1</Y>
+				<Z>0.2</Z>
+			</Size>
+			<Mass>0.250</Mass>
+			<Volume>0.2</Volume>
+			<Model>Models\Items\CopperIngot.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</PhysicalItem>
         <!-- changed name to note it can't hack -->
 		<PhysicalItem>
             <Id>
@@ -10,6 +29,7 @@
             <DisplayName>Basic Grinder (Cannot hack)</DisplayName>
             <Icon>Textures\GUI\Icons\WeaponGrinder.dds</Icon>
             <Description>Description_AngleGrinder</Description>
+			<IconSymbol>Basic</IconSymbol>
             <Size>
                 <X>0.5</X>
                 <Y>0.3</Y>

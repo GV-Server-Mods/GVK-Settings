@@ -19,51 +19,6 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>GVK_Atmo_Tech</SubtypeId>
-			</Id>
-			<DisplayName>Atmo Thruster Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
-			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
-			</Prerequisites>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Atmo_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint>
-		<Blueprint>
-			<Id>
-				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>GVK_Hydro_Tech</SubtypeId>
-			</Id>
-			<DisplayName>Hydrogen Thruster Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Hydro_Icon_Overlay.dds</Icon>
-			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
-			</Prerequisites>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hydro_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint>
-		<Blueprint>
-			<Id>
-				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>GVK_Ion_Tech</SubtypeId>
-			</Id>
-			<DisplayName>Ion Thruster Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechHover.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Ion_Icon_Overlay.dds</Icon>
-			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
-			</Prerequisites>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Ion_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint>
-		<Blueprint>
-			<Id>
-				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Hover_Tech</SubtypeId>
 			</Id>
 			<DisplayName>Hover Engine Tech</DisplayName>
@@ -138,33 +93,6 @@
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Laser_Tech"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
 		</Blueprint>
-		<!-- <Blueprint>
-			<Id>
-				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>GVK_Defense_Tech</SubtypeId>
-			</Id>
-			<DisplayName>Defensive Weapons Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
-			</Prerequisites>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Defense_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint>
-		<Blueprint>
-			<Id>
-				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>GVK_Oxygen_Tech</SubtypeId>
-			</Id>
-			<DisplayName>Oxygen Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechOxygen.dds</Icon>
-			<Prerequisites>
-				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
-			</Prerequisites>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Oxygen_Tech"/>
-			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-		</Blueprint> -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>

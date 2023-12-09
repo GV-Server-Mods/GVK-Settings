@@ -2,22 +2,22 @@
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Prefabs>
     <Prefab xsi:type="MyObjectBuilder_PrefabDefinition">
-      <Id Type="MyObjectBuilder_PrefabDefinition" Subtype="KLASSPOD 2" />
+      <Id Type="MyObjectBuilder_PrefabDefinition" Subtype="KLASSPOD_2" />
       <CubeGrids>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>88495565031338992</EntityId>
+          <EntityId>82478617622771130</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>88495565031338992</Name>
+          <Name>82478617622771130</Name>
           <PositionAndOrientation>
             <Position x="0" y="0" z="0" />
-            <Forward x="0.258772343" y="0.206756234" z="-0.9435511" />
-            <Up x="-0.395154774" y="0.91400516" z="0.09190931" />
+            <Forward x="0.0294916332" y="-0.911482453" z="-0.410280526" />
+            <Up x="0.954534948" y="0.147491544" z="-0.2590548" />
             <Orientation>
-              <X>0.07722878</X>
-              <Y>-0.149198368</Y>
-              <Z>0.192439988</Z>
-              <W>0.9668208</W>
+              <X>-0.4297862</X>
+              <Y>-0.331878841</Y>
+              <Z>-0.4914652</Z>
+              <W>0.6808834</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -25,7 +25,7 @@
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3</SubtypeName>
-              <EntityId>88686575036374733</EntityId>
+              <EntityId>87177549212740289</EntityId>
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <CustomName>Rear Wheel Suspension 3x3 Right</CustomName>
@@ -35,7 +35,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>75665538172031486</TopBlockId>
+              <TopBlockId>99093222151252400</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -62,7 +62,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3mirrored</SubtypeName>
-              <EntityId>72893981499086683</EntityId>
+              <EntityId>94018025929483396</EntityId>
               <Min x="0" y="-2" z="0" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -74,7 +74,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>114079745233251240</TopBlockId>
+              <TopBlockId>97720228422646829</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -101,7 +101,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>121338925790431503</EntityId>
+              <EntityId>139282612505602174</EntityId>
               <Min x="8" y="-1" z="-1" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -109,7 +109,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Beacon">
               <SubtypeName>LargeCargoScanner</SubtypeName>
-              <EntityId>79679827701968170</EntityId>
+              <EntityId>109849727584479569</EntityId>
               <Min x="1" y="-1" z="0" />
               <BlockOrientation Forward="Left" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -138,7 +138,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>83485788628743911</EntityId>
+              <EntityId>73084547429622037</EntityId>
               <Min x="3" y="0" z="0" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -146,7 +146,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockSlope2x1Base</SubtypeName>
-              <EntityId>140095790389488796</EntityId>
+              <EntityId>106546211635913628</EntityId>
               <Min x="3" y="-1" z="0" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -160,7 +160,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>95097481685382395</EntityId>
+              <EntityId>92902426884095245</EntityId>
               <Min x="3" y="0" z="-1" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -175,7 +175,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockRound</SubtypeName>
-              <EntityId>114120540993007527</EntityId>
+              <EntityId>114145439869906358</EntityId>
               <Min x="5" y="0" z="0" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -183,7 +183,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockRound</SubtypeName>
-              <EntityId>100395618448151248</EntityId>
+              <EntityId>87858745007723253</EntityId>
               <Min x="5" y="-1" z="0" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -191,7 +191,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3</SubtypeName>
-              <EntityId>104606869197509728</EntityId>
+              <EntityId>116783647917673445</EntityId>
               <Min x="6" y="0" z="0" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
@@ -202,7 +202,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>105901868358974908</TopBlockId>
+              <TopBlockId>102083126300890414</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -229,7 +229,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_MotorSuspension">
               <SubtypeName>Suspension3x3mirrored</SubtypeName>
-              <EntityId>130082272337509412</EntityId>
+              <EntityId>77061990434106518</EntityId>
               <Min x="6" y="-2" z="0" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -241,7 +241,7 @@
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TopBlockId>102309684995431895</TopBlockId>
+              <TopBlockId>104239124240911949</TopBlockId>
               <ShareInertiaTensor>false</ShareInertiaTensor>
               <SafetyDetach>5</SafetyDetach>
               <RotorEntityId xsi:nil="true" />
@@ -268,7 +268,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>135567882418220752</EntityId>
+              <EntityId>113821826914999173</EntityId>
               <Min x="3" y="-1" z="-1" />
               <BlockOrientation Forward="Up" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -300,7 +300,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Ladder2">
               <SubtypeName>LadderShaft</SubtypeName>
-              <EntityId>100038905621251131</EntityId>
+              <EntityId>133302370981209230</EntityId>
               <Min x="3" y="0" z="-2" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -308,7 +308,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>95475458896924186</EntityId>
+              <EntityId>98625787750486375</EntityId>
               <Min x="2" y="0" z="-1" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -339,7 +339,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>95882251263764870</EntityId>
+              <EntityId>133482714368811001</EntityId>
               <Min x="2" y="-1" z="-1" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -370,7 +370,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenTank">
               <SubtypeName />
-              <EntityId>128112624228124881</EntityId>
+              <EntityId>120527058932322146</EntityId>
               <Min x="0" y="0" z="-1" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.544444442" y="-0.58" z="-0.03" />
@@ -405,7 +405,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenTank">
               <SubtypeName>LargeHydrogenTankSmall</SubtypeName>
-              <EntityId>94862419200195802</EntityId>
+              <EntityId>92388358944633559</EntityId>
               <Min x="0" y="-1" z="-1" />
               <BlockOrientation Forward="Down" Up="Left" />
               <ColorMaskHSV x="0.544444442" y="-0.58" z="-0.03" />
@@ -440,7 +440,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>135634829100558778</EntityId>
+              <EntityId>92551139425045236</EntityId>
               <Min x="2" y="0" z="-2" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -471,7 +471,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkWall</SubtypeName>
-              <EntityId>116419361459946011</EntityId>
+              <EntityId>143349677704533756</EntityId>
               <Min x="2" y="-1" z="-2" />
               <BlockOrientation Forward="Left" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -479,7 +479,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeLightPanel</SubtypeName>
-              <EntityId>131344414507795631</EntityId>
+              <EntityId>112629684712518537</EntityId>
               <Min x="3" y="-1" z="-2" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -503,7 +503,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OxygenGenerator">
               <SubtypeName />
-              <EntityId>98010725014949830</EntityId>
+              <EntityId>100286579851680229</EntityId>
               <Min x="4" y="-1" z="-1" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -533,7 +533,7 @@
                       <TimerEnabled>false</TimerEnabled>
                       <RemoveEntityOnTimer>false</RemoveEntityOnTimer>
                       <TimerType>Frame10</TimerType>
-                      <FramesFromLastTrigger>280</FramesFromLastTrigger>
+                      <FramesFromLastTrigger>200</FramesFromLastTrigger>
                       <TimerTickInFrames>300</TimerTickInFrames>
                       <IsSessionUpdateEnabled>false</IsSessionUpdateEnabled>
                     </Component>
@@ -549,7 +549,7 @@
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_SurvivalKit">
               <SubtypeName>SurvivalKitLarge</SubtypeName>
-              <EntityId>79312101923645719</EntityId>
+              <EntityId>77824790363693910</EntityId>
               <Min x="1" y="0" z="-2" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0.111111112" y="-0.73" z="-0.1" />
@@ -624,6 +624,118 @@ Items=false
                       </Storage>
                     </Component>
                   </ComponentData>
+                  <ComponentData>
+                    <TypeId>MyMultiTextPanelComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_MultiTextPanelComponent">
+                      <TextPanelsContents>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript />
+                          <TextPadding>2</TextPadding>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <SelectedScript />
+                          <TextPadding>2</TextPadding>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                      </TextPanelsContents>
+                    </Component>
+                  </ComponentData>
                 </Components>
               </ComponentContainer>
               <ShowOnHUD>false</ShowOnHUD>
@@ -632,113 +744,6 @@ Items=false
               <ShowInInventory>true</ShowInInventory>
               <NumberInGrid>1</NumberInGrid>
               <Enabled>true</Enabled>
-              <TextPanelsNew>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript />
-                  <TextPadding>2</TextPadding>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <SelectedScript />
-                  <TextPadding>2</TextPadding>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-              </TextPanelsNew>
               <CurrentProgress>0</CurrentProgress>
               <DisassembleEnabled>false</DisassembleEnabled>
               <RepeatAssembleEnabled>false</RepeatAssembleEnabled>
@@ -748,7 +753,7 @@ Items=false
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CryoChamber">
               <SubtypeName>LargeBlockBed</SubtypeName>
-              <EntityId>124106659833757543</EntityId>
+              <EntityId>103849920707451271</EntityId>
               <Min x="0" y="0" z="-2" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0.111111112" y="-0.73" z="-0.1" />
@@ -817,12 +822,13 @@ Items=false
                 <IsTargetLocked>false</IsTargetLocked>
                 <LockingProgress>0</LockingProgress>
               </TargetData>
+              <SitAnimation>0</SitAnimation>
               <SteamId xsi:nil="true" />
               <SerialId xsi:nil="true" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>LargeBlockConveyor</SubtypeName>
-              <EntityId>99853303175602079</EntityId>
+              <EntityId>116615055902765493</EntityId>
               <Min x="7" y="0" z="0" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -830,7 +836,7 @@ Items=false
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockSmallContainer</SubtypeName>
-              <EntityId>99554375605207511</EntityId>
+              <EntityId>73281356577621818</EntityId>
               <Min x="6" y="-1" z="-1" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -861,7 +867,7 @@ Items=false
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Cockpit">
               <SubtypeName>LargeBlockCockpitSeat</SubtypeName>
-              <EntityId>119591742499801830</EntityId>
+              <EntityId>79083404123144050</EntityId>
               <Min x="6" y="-1" z="-2" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -902,6 +908,336 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                       </Storage>
                     </Component>
                   </ComponentData>
+                  <ComponentData>
+                    <TypeId>MyMultiTextPanelComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_MultiTextPanelComponent">
+                      <TextPanelsContents>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript>TSS_ArtificialHorizon</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript>PowerAndLSTss</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript>InventoryCounter</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <SelectedScript>PlanetMapTSSZones</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript>TSS_ClockAnalog</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                        <MySerializedTextPanelData>
+                          <ChangeInterval>0</ChangeInterval>
+                          <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                          <FontSize>1</FontSize>
+                          <ShowText>NONE</ShowText>
+                          <FontColor>
+                            <PackedValue>4294967295</PackedValue>
+                            <X>255</X>
+                            <Y>255</Y>
+                            <Z>255</Z>
+                            <R>255</R>
+                            <G>255</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </FontColor>
+                          <BackgroundColor>
+                            <PackedValue>4278190080</PackedValue>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                            <R>0</R>
+                            <G>0</G>
+                            <B>0</B>
+                            <A>255</A>
+                          </BackgroundColor>
+                          <CurrentShownTexture>0</CurrentShownTexture>
+                          <ContentType>SCRIPT</ContentType>
+                          <SelectedScript>TSS_TargetingInfo</SelectedScript>
+                          <TextPadding>2</TextPadding>
+                          <CustomizeScripts>true</CustomizeScripts>
+                          <ScriptBackgroundColor>
+                            <PackedValue>4288108544</PackedValue>
+                            <X>0</X>
+                            <Y>88</Y>
+                            <Z>151</Z>
+                            <R>0</R>
+                            <G>88</G>
+                            <B>151</B>
+                            <A>255</A>
+                          </ScriptBackgroundColor>
+                          <ScriptForegroundColor>
+                            <PackedValue>4294962611</PackedValue>
+                            <X>179</X>
+                            <Y>237</Y>
+                            <Z>255</Z>
+                            <R>179</R>
+                            <G>237</G>
+                            <B>255</B>
+                            <A>255</A>
+                          </ScriptForegroundColor>
+                          <Sprites>
+                            <Length>0</Length>
+                          </Sprites>
+                        </MySerializedTextPanelData>
+                      </TextPanelsContents>
+                    </Component>
+                  </ComponentData>
                 </Components>
               </ComponentContainer>
               <CustomName>Cockpit</CustomName>
@@ -921,7 +1257,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>IncreaseHeight</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Wheel Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -931,7 +1267,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>DecreaseHeight</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Wheel Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -940,7 +1276,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>115499273976153579</BlockEntityId>
+                      <BlockEntityId>90826720314515230</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -948,7 +1284,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>98010725014949830</BlockEntityId>
+                      <BlockEntityId>100286579851680229</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -957,7 +1293,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>OnOff</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Grinders</GroupName>
                     </Data>
                   </Slot>
@@ -966,7 +1302,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Override</Action>
-                      <BlockEntityId>105133952633696791</BlockEntityId>
+                      <BlockEntityId>142389771589270505</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -974,7 +1310,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>CargoScannerExecuteButton</Action>
-                      <BlockEntityId>79679827701968170</BlockEntityId>
+                      <BlockEntityId>109849727584479569</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -982,7 +1318,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>94862419200195802</BlockEntityId>
+                      <BlockEntityId>92388358944633559</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -990,7 +1326,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>128112624228124881</BlockEntityId>
+                      <BlockEntityId>120527058932322146</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -999,7 +1335,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>Recharge</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Batteries</GroupName>
                     </Data>
                   </Slot>
@@ -1011,7 +1347,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>IncreasePower</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Wheel Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -1021,7 +1357,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalGroup">
                       <Action>DecreasePower</Action>
                       <GridEntityId>0</GridEntityId>
-                      <BlockEntityId>119591742499801830</BlockEntityId>
+                      <BlockEntityId>79083404123144050</BlockEntityId>
                       <GroupName>Wheel Suspension</GroupName>
                     </Data>
                   </Slot>
@@ -1030,7 +1366,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>127720353784230663</BlockEntityId>
+                      <BlockEntityId>113338781554018116</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1038,7 +1374,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>98010725014949830</BlockEntityId>
+                      <BlockEntityId>100286579851680229</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1046,7 +1382,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff</Action>
-                      <BlockEntityId>85944585055354973</BlockEntityId>
+                      <BlockEntityId>117531812073244244</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1054,7 +1390,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>94862419200195802</BlockEntityId>
+                      <BlockEntityId>92388358944633559</BlockEntityId>
                     </Data>
                   </Slot>
                   <Slot>
@@ -1062,7 +1398,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>Stockpile</Action>
-                      <BlockEntityId>128112624228124881</BlockEntityId>
+                      <BlockEntityId>120527058932322146</BlockEntityId>
                     </Data>
                   </Slot>
                 </SlotsGamepad>
@@ -1083,7 +1419,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                     <Item />
                     <Data xsi:type="MyObjectBuilder_ToolbarItemTerminalBlock">
                       <Action>OnOff_On</Action>
-                      <BlockEntityId>85944585055354973</BlockEntityId>
+                      <BlockEntityId>117531812073244244</BlockEntityId>
                     </Data>
                   </Slot>
                 </Slots>
@@ -1091,354 +1427,30 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
               </OnLockedToolbar>
               <IsTargetLockingEnabled>false</IsTargetLockingEnabled>
               <PilotRelativeWorld>
-                <Position x="3.2162704467773438" y="2.7994430065155029" z="-1.4794888496398926" />
-                <Forward x="-0.541915536" y="-0.828283846" z="0.142382741" />
-                <Up x="-0.650047064" y="0.5204768" z="0.5536624" />
+                <Position x="0.48098933696746826" y="2.4226729869842529" z="-2.6059179306030273" />
+                <Forward x="-0.175711572" y="-0.927879155" z="0.328885585" />
+                <Up x="-0.09295825" y="0.348228872" z="0.9327889" />
                 <Orientation>
-                  <X>-0.1493393</X>
-                  <Y>0.740870535</Y>
-                  <Z>0.4663253</Z>
-                  <W>0.459727466</W>
+                  <X>0.0123831406</X>
+                  <Y>0.8150395</Y>
+                  <Z>0.570729434</Z>
+                  <W>0.0991220251</W>
                 </Orientation>
               </PilotRelativeWorld>
               <PilotGunDefinition xsi:nil="true" />
-              <IsInFirstPersonView>true</IsInFirstPersonView>
+              <IsInFirstPersonView>false</IsInFirstPersonView>
               <OxygenLevel>1</OxygenLevel>
               <PilotJetpackEnabled xsi:nil="true" />
-              <TextPanels>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript>TSS_ArtificialHorizon</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript>PowerAndLSTss</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript>InventoryCounter</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <SelectedScript>PlanetMapTSSZones</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript>TSS_ClockAnalog</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-                <MySerializedTextPanelData>
-                  <ChangeInterval>0</ChangeInterval>
-                  <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-                  <FontSize>1</FontSize>
-                  <ShowText>NONE</ShowText>
-                  <FontColor>
-                    <PackedValue>4294967295</PackedValue>
-                    <X>255</X>
-                    <Y>255</Y>
-                    <Z>255</Z>
-                    <R>255</R>
-                    <G>255</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </FontColor>
-                  <BackgroundColor>
-                    <PackedValue>4278190080</PackedValue>
-                    <X>0</X>
-                    <Y>0</Y>
-                    <Z>0</Z>
-                    <R>0</R>
-                    <G>0</G>
-                    <B>0</B>
-                    <A>255</A>
-                  </BackgroundColor>
-                  <CurrentShownTexture>0</CurrentShownTexture>
-                  <ContentType>SCRIPT</ContentType>
-                  <SelectedScript>TSS_TargetingInfo</SelectedScript>
-                  <TextPadding>2</TextPadding>
-                  <CustomizeScripts>true</CustomizeScripts>
-                  <ScriptBackgroundColor>
-                    <PackedValue>4288108544</PackedValue>
-                    <X>0</X>
-                    <Y>88</Y>
-                    <Z>151</Z>
-                    <R>0</R>
-                    <G>88</G>
-                    <B>151</B>
-                    <A>255</A>
-                  </ScriptBackgroundColor>
-                  <ScriptForegroundColor>
-                    <PackedValue>4294962611</PackedValue>
-                    <X>179</X>
-                    <Y>237</Y>
-                    <Z>255</Z>
-                    <R>179</R>
-                    <G>237</G>
-                    <B>255</B>
-                    <A>255</A>
-                  </ScriptForegroundColor>
-                  <Sprites>
-                    <Length>0</Length>
-                  </Sprites>
-                </MySerializedTextPanelData>
-              </TextPanels>
               <TargetData>
                 <TargetId>0</TargetId>
                 <IsTargetLocked>false</IsTargetLocked>
                 <LockingProgress>0</LockingProgress>
               </TargetData>
+              <SitAnimation>236887</SitAnimation>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Conveyor">
               <SubtypeName>LargeBlockConveyor</SubtypeName>
-              <EntityId>80524473655002039</EntityId>
+              <EntityId>100450106278903768</EntityId>
               <Min x="7" y="-1" z="0" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1446,7 +1458,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeDuctCurved</SubtypeName>
-              <EntityId>81210065096404262</EntityId>
+              <EntityId>140694743859430789</EntityId>
               <Min x="7" y="-1" z="-1" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1454,7 +1466,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ConveyorConnector">
               <SubtypeName>ConveyorTubeDuctCurved</SubtypeName>
-              <EntityId>139183855245094357</EntityId>
+              <EntityId>73644358558898309</EntityId>
               <Min x="7" y="0" z="-1" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -1462,14 +1474,14 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>123439688931308351</EntityId>
+              <EntityId>99868909140396108</EntityId>
               <Min x="7" y="1" z="-2" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ReflectorLight">
               <SubtypeName>LargeBlockFrontLight</SubtypeName>
-              <EntityId>126503847587074369</EntityId>
+              <EntityId>86714596199660186</EntityId>
               <Min x="6" y="1" z="-2" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1494,33 +1506,33 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>114290377078825813</EntityId>
+              <EntityId>76222713750896931</EntityId>
               <Min x="8" y="0" z="-2" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Inv</SubtypeName>
-              <EntityId>127393801134748575</EntityId>
+              <EntityId>114906593886133267</EntityId>
               <Min x="7" y="0" z="-2" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Inv</SubtypeName>
-              <EntityId>127477533326688917</EntityId>
+              <EntityId>94012034711679609</EntityId>
               <Min x="7" y="-1" z="-2" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>130567410825134390</EntityId>
+              <EntityId>80136284263884322</EntityId>
               <Min x="7" y="-2" z="-2" />
               <BlockOrientation Forward="Forward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>HalfWindow</SubtypeName>
-              <EntityId>120716973272557484</EntityId>
+              <EntityId>93878170658551588</EntityId>
               <Min x="6" y="-2" z="-2" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1528,14 +1540,14 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>127506319939344092</EntityId>
+              <EntityId>101942179996561466</EntityId>
               <Min x="8" y="-1" z="-2" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlockWarfare2</SubtypeName>
-              <EntityId>130216982366513165</EntityId>
+              <EntityId>140639054227381473</EntityId>
               <Min x="6" y="0" z="-1" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1557,7 +1569,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_OreDetector">
               <SubtypeName>LargeOreDetector</SubtypeName>
-              <EntityId>115499273976153579</EntityId>
+              <EntityId>90826720314515230</EntityId>
               <Min x="5" y="0" z="-3" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
@@ -1574,12 +1586,77 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>LargeBlockCorner_LCD_1</SubtypeName>
-              <EntityId>106477333062905247</EntityId>
+              <EntityId>140852529077238259</EntityId>
               <Min x="3" y="1" z="0" />
               <BlockOrientation Forward="Backward" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyLcdSurfaceComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_LcdSurfaceComponent">
+                      <SelectedRotationIndex>0</SelectedRotationIndex>
+                      <TextPanelContent>
+                        <ChangeInterval>0</ChangeInterval>
+                        <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                        <FontSize>10</FontSize>
+                        <Text>Entrance Ladder</Text>
+                        <ShowText>NONE</ShowText>
+                        <FontColor>
+                          <PackedValue>4278218239</PackedValue>
+                          <X>255</X>
+                          <Y>109</Y>
+                          <Z>0</Z>
+                          <R>255</R>
+                          <G>109</G>
+                          <B>0</B>
+                          <A>255</A>
+                        </FontColor>
+                        <BackgroundColor>
+                          <PackedValue>4278190080</PackedValue>
+                          <X>0</X>
+                          <Y>0</Y>
+                          <Z>0</Z>
+                          <R>0</R>
+                          <G>0</G>
+                          <B>0</B>
+                          <A>255</A>
+                        </BackgroundColor>
+                        <CurrentShownTexture>0</CurrentShownTexture>
+                        <Alignment>2</Alignment>
+                        <ContentType>TEXT_AND_IMAGE</ContentType>
+                        <SelectedScript />
+                        <TextPadding>2</TextPadding>
+                        <ScriptBackgroundColor>
+                          <PackedValue>4288108544</PackedValue>
+                          <X>0</X>
+                          <Y>88</Y>
+                          <Z>151</Z>
+                          <R>0</R>
+                          <G>88</G>
+                          <B>151</B>
+                          <A>255</A>
+                        </ScriptBackgroundColor>
+                        <ScriptForegroundColor>
+                          <PackedValue>4294962611</PackedValue>
+                          <X>179</X>
+                          <Y>237</Y>
+                          <Z>255</Z>
+                          <R>179</R>
+                          <G>237</G>
+                          <B>255</B>
+                          <A>255</A>
+                        </ScriptForegroundColor>
+                        <Sprites>
+                          <Length>0</Length>
+                        </Sprites>
+                      </TextPanelContent>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>false</ShowInTerminal>
               <ShowInToolbarConfig>false</ShowInToolbarConfig>
@@ -1591,18 +1668,18 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
               <AccessFlag>READ_AND_WRITE_FACTION</AccessFlag>
               <ChangeInterval>0</ChangeInterval>
               <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
-              <FontSize>10</FontSize>
-              <PublicDescription>Entrance Ladder</PublicDescription>
+              <FontSize>1</FontSize>
+              <PublicDescription />
               <PublicTitle>Public title</PublicTitle>
               <ShowText>NONE</ShowText>
               <FontColor>
-                <PackedValue>4278218239</PackedValue>
+                <PackedValue>4294967295</PackedValue>
                 <X>255</X>
-                <Y>109</Y>
-                <Z>0</Z>
+                <Y>255</Y>
+                <Z>255</Z>
                 <R>255</R>
-                <G>109</G>
-                <B>0</B>
+                <G>255</G>
+                <B>255</B>
                 <A>255</A>
               </FontColor>
               <BackgroundColor>
@@ -1616,11 +1693,8 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                 <A>255</A>
               </BackgroundColor>
               <CurrentShownTexture>0</CurrentShownTexture>
-              <Alignment>Align_Center</Alignment>
-              <ContentType>TEXT_AND_IMAGE</ContentType>
-              <SelectedScript />
               <TextPadding>2</TextPadding>
-              <Version>1</Version>
+              <Version>0</Version>
               <ScriptBackgroundColor>
                 <PackedValue>4288108544</PackedValue>
                 <X>0</X>
@@ -1644,18 +1718,18 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
               <Sprites>
                 <Length>0</Length>
               </Sprites>
-              <SelectedRotationIndex>0</SelectedRotationIndex>
+              <SelectedRotationIndex xsi:nil="true" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>HalfWindow</SubtypeName>
-              <EntityId>128965372044628580</EntityId>
+              <EntityId>108845009940413375</EntityId>
               <Min x="6" y="0" z="-3" />
               <BlockOrientation Forward="Down" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_BatteryBlock">
               <SubtypeName>LargeBlockBatteryBlockWarfare2</SubtypeName>
-              <EntityId>92105307614187798</EntityId>
+              <EntityId>132833840184105381</EntityId>
               <Min x="5" y="0" z="-1" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1677,12 +1751,76 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_TextPanel">
               <SubtypeName>LargeTextPanel</SubtypeName>
-              <EntityId>126379178445557693</EntityId>
+              <EntityId>142311909176363964</EntityId>
               <Min x="5" y="-1" z="-2" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <ShareMode>Faction</ShareMode>
+              <ComponentContainer>
+                <Components>
+                  <ComponentData>
+                    <TypeId>MyLcdSurfaceComponent</TypeId>
+                    <Component xsi:type="MyObjectBuilder_LcdSurfaceComponent">
+                      <SelectedRotationIndex>0</SelectedRotationIndex>
+                      <TextPanelContent>
+                        <ChangeInterval>0</ChangeInterval>
+                        <Font Type="MyObjectBuilder_FontDefinition" Subtype="Debug" />
+                        <FontSize>1</FontSize>
+                        <ShowText>NONE</ShowText>
+                        <FontColor>
+                          <PackedValue>4294967295</PackedValue>
+                          <X>255</X>
+                          <Y>255</Y>
+                          <Z>255</Z>
+                          <R>255</R>
+                          <G>255</G>
+                          <B>255</B>
+                          <A>255</A>
+                        </FontColor>
+                        <BackgroundColor>
+                          <PackedValue>4278190080</PackedValue>
+                          <X>0</X>
+                          <Y>0</Y>
+                          <Z>0</Z>
+                          <R>0</R>
+                          <G>0</G>
+                          <B>0</B>
+                          <A>255</A>
+                        </BackgroundColor>
+                        <CurrentShownTexture>0</CurrentShownTexture>
+                        <ContentType>SCRIPT</ContentType>
+                        <SelectedScript>PlanetMapTSSZones</SelectedScript>
+                        <TextPadding>2</TextPadding>
+                        <CustomizeScripts>true</CustomizeScripts>
+                        <ScriptBackgroundColor>
+                          <PackedValue>4278190080</PackedValue>
+                          <X>0</X>
+                          <Y>0</Y>
+                          <Z>0</Z>
+                          <R>0</R>
+                          <G>0</G>
+                          <B>0</B>
+                          <A>255</A>
+                        </ScriptBackgroundColor>
+                        <ScriptForegroundColor>
+                          <PackedValue>4294962611</PackedValue>
+                          <X>179</X>
+                          <Y>237</Y>
+                          <Z>255</Z>
+                          <R>179</R>
+                          <G>237</G>
+                          <B>255</B>
+                          <A>255</A>
+                        </ScriptForegroundColor>
+                        <Sprites>
+                          <Length>0</Length>
+                        </Sprites>
+                      </TextPanelContent>
+                    </Component>
+                  </ComponentData>
+                </Components>
+              </ComponentContainer>
               <ShowOnHUD>false</ShowOnHUD>
               <ShowInTerminal>true</ShowInTerminal>
               <ShowInToolbarConfig>true</ShowInToolbarConfig>
@@ -1719,19 +1857,16 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                 <A>255</A>
               </BackgroundColor>
               <CurrentShownTexture>0</CurrentShownTexture>
-              <ContentType>SCRIPT</ContentType>
-              <SelectedScript>PlanetMapTSSZones</SelectedScript>
               <TextPadding>2</TextPadding>
-              <Version>1</Version>
-              <CustomizeScripts>true</CustomizeScripts>
+              <Version>0</Version>
               <ScriptBackgroundColor>
-                <PackedValue>4278190080</PackedValue>
+                <PackedValue>4288108544</PackedValue>
                 <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
+                <Y>88</Y>
+                <Z>151</Z>
                 <R>0</R>
-                <G>0</G>
-                <B>0</B>
+                <G>88</G>
+                <B>151</B>
                 <A>255</A>
               </ScriptBackgroundColor>
               <ScriptForegroundColor>
@@ -1747,18 +1882,18 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
               <Sprites>
                 <Length>0</Length>
               </Sprites>
-              <SelectedRotationIndex>0</SelectedRotationIndex>
+              <SelectedRotationIndex xsi:nil="true" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>ArmorCorner</SubtypeName>
-              <EntityId>118130459924747417</EntityId>
+              <EntityId>134627671789477956</EntityId>
               <Min x="-1" y="0" z="-1" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>ArmorCorner</SubtypeName>
-              <EntityId>96597540373715356</EntityId>
+              <EntityId>102088659878278140</EntityId>
               <Min x="-1" y="-1" z="-1" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1766,7 +1901,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeBlockLight_1corner</SubtypeName>
-              <EntityId>82682561808824093</EntityId>
+              <EntityId>105396239899546010</EntityId>
               <Min x="2" y="1" z="0" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1790,7 +1925,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeBlockLight_1corner</SubtypeName>
-              <EntityId>112311851844411429</EntityId>
+              <EntityId>104016711258564193</EntityId>
               <Min x="2" y="-2" z="0" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1849,7 +1984,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeWindowSquare</SubtypeName>
-              <EntityId>120969602841443858</EntityId>
+              <EntityId>129488105004897666</EntityId>
               <Min x="3" y="1" z="-1" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -1857,7 +1992,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeWindowSquare</SubtypeName>
-              <EntityId>91698253752545774</EntityId>
+              <EntityId>134390320078357050</EntityId>
               <Min x="3" y="-2" z="-1" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -1865,7 +2000,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeWindowSquare</SubtypeName>
-              <EntityId>122347337004114295</EntityId>
+              <EntityId>84048559096173665</EntityId>
               <Min x="3" y="-2" z="-2" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -1873,7 +2008,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeWindowSquare</SubtypeName>
-              <EntityId>111431579617694126</EntityId>
+              <EntityId>84452417610509225</EntityId>
               <Min x="3" y="1" z="-2" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -1895,7 +2030,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Beacon">
               <SubtypeName>LargeBlockBeacon</SubtypeName>
-              <EntityId>119866781781049161</EntityId>
+              <EntityId>103745779061062529</EntityId>
               <Min x="4" y="0" z="-2" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1953,7 +2088,7 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CargoContainer">
               <SubtypeName>LargeBlockLockers</SubtypeName>
-              <EntityId>95336787754832969</EntityId>
+              <EntityId>126028135096681988</EntityId>
               <Min x="1" y="-1" z="-2" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -1989,21 +2124,11 @@ MyObjectBuilder_AmmoMagazine/SmallRailgunAmmo=0
                           <ItemId>2</ItemId>
                         </MyObjectBuilder_InventoryItem>
                         <MyObjectBuilder_InventoryItem>
-                          <Amount>5</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
-                            <SubtypeName>AutomaticRifleGun_Mag_20rd</SubtypeName>
-                            <ProjectilesCount>0</ProjectilesCount>
-                          </PhysicalContent>
-                          <ItemId>3</ItemId>
-                        </MyObjectBuilder_InventoryItem>
-                        <MyObjectBuilder_InventoryItem>
                           <Amount>1</Amount>
                           <PhysicalContent xsi:type="MyObjectBuilder_Datapad">
                             <SubtypeName>Datapad</SubtypeName>
                             <Name>Thank You For Purchasing KLASSPOD</Name>
-                            <Data>!!! CONGRATULATIONS !!!
-
-Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLASSPOD) from the Northern COALITION.
+                            <Data>Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLASSPOD) from the Northern COALITION.
 
 1. Your KLASSPOD has been outfitted with the latest utilities, including wheels!
 2. Visit Kharak's tropical Oasis and sunny deserts, and drive circles around the locals
@@ -2014,12 +2139,29 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
 7. You are (mostly) safe in Zone 0, but your production and weapons will be very limited
 8. Visit the high desert and meet friendly neighborhood GAALSIEN pirates
 9. Raid wrecks to find technologies, Zone 1 had the smallest, and Zone 3 has the largest
-10. Be sure to build up your SC bank account as insurance against being wiped out</Data>
+10. Be sure to build up your SC bank account as insurance against being wiped out
+
+GPS:Rusty's Trade Station:61687.25:27096.55:38164.15:#FF32FF00:</Data>
                           </PhysicalContent>
-                          <ItemId>4</ItemId>
+                          <ItemId>5</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
+                            <SubtypeName>RapidFireAutomaticRifleItem</SubtypeName>
+                          </PhysicalContent>
+                          <ItemId>6</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>5</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
+                            <SubtypeName>NATO_5p56x45mm</SubtypeName>
+                            <ProjectilesCount>0</ProjectilesCount>
+                          </PhysicalContent>
+                          <ItemId>7</ItemId>
                         </MyObjectBuilder_InventoryItem>
                       </Items>
-                      <nextItemId>5</nextItemId>
+                      <nextItemId>8</nextItemId>
                       <Volume>1</Volume>
                       <Mass>9223372036854.775807</Mass>
                       <MaxItemCount>2147483647</MaxItemCount>
@@ -2038,14 +2180,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockSlope2x1Tip</SubtypeName>
-              <EntityId>82285984133853786</EntityId>
+              <EntityId>103394474569448073</EntityId>
               <Min x="0" y="1" z="-2" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockSlope2x1Tip</SubtypeName>
-              <EntityId>141659869706854987</EntityId>
+              <EntityId>95434245579514219</EntityId>
               <Min x="0" y="-2" z="-2" />
               <BlockOrientation Forward="Backward" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2078,7 +2220,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Door">
               <SubtypeName>LargeBlockOffsetDoor</SubtypeName>
-              <EntityId>97478686519384357</EntityId>
+              <EntityId>130141025778275158</EntityId>
               <Min x="0" y="-1" z="-2" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2114,7 +2256,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>111194177532788920</EntityId>
+              <EntityId>137177773056146979</EntityId>
               <Min x="3" y="1" z="-3" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2122,14 +2264,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>139018503864484158</EntityId>
+              <EntityId>123597844949445164</EntityId>
               <Min x="3" y="-2" z="-3" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>103868711993673371</EntityId>
+              <EntityId>117266658604153100</EntityId>
               <Min x="0" y="1" z="-3" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2137,7 +2279,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>73464468365056861</EntityId>
+              <EntityId>97938473578328882</EntityId>
               <Min x="0" y="-2" z="-3" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2145,7 +2287,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>136013327845207127</EntityId>
+              <EntityId>104211976152786539</EntityId>
               <Min x="6" y="1" z="-3" />
               <BlockOrientation Forward="Right" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2153,7 +2295,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalfCenterRailing</SubtypeName>
-              <EntityId>104773813331743638</EntityId>
+              <EntityId>115835563346968761</EntityId>
               <Min x="6" y="-2" z="-3" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2161,7 +2303,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>112952444378887660</EntityId>
+              <EntityId>100544027337689948</EntityId>
               <Min x="1" y="1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2169,7 +2311,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>103045707523419279</EntityId>
+              <EntityId>101068073078824606</EntityId>
               <Min x="2" y="1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2177,7 +2319,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>111820293544345981</EntityId>
+              <EntityId>139395181947390159</EntityId>
               <Min x="4" y="1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2185,7 +2327,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>128647938031904546</EntityId>
+              <EntityId>82431443965314950</EntityId>
               <Min x="5" y="1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2193,7 +2335,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>100117437173220006</EntityId>
+              <EntityId>138698111072288599</EntityId>
               <Min x="1" y="-2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2201,7 +2343,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>124546799415999003</EntityId>
+              <EntityId>85833637733164865</EntityId>
               <Min x="2" y="-2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2209,7 +2351,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>93037195973633637</EntityId>
+              <EntityId>75624580684082649</EntityId>
               <Min x="4" y="-2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2217,7 +2359,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingCenter</SubtypeName>
-              <EntityId>78068410418746535</EntityId>
+              <EntityId>112375943373451547</EntityId>
               <Min x="5" y="-2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2225,7 +2367,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingHalfRight</SubtypeName>
-              <EntityId>141608916881599779</EntityId>
+              <EntityId>74289145784718330</EntityId>
               <Min x="7" y="1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2233,7 +2375,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingHalfLeft</SubtypeName>
-              <EntityId>124714480353433246</EntityId>
+              <EntityId>113100566844745756</EntityId>
               <Min x="7" y="-2" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2241,7 +2383,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingHalfLeft</SubtypeName>
-              <EntityId>93608174276508589</EntityId>
+              <EntityId>109310029526349526</EntityId>
               <Min x="-1" y="1" z="-3" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2249,7 +2391,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>RailingHalfRight</SubtypeName>
-              <EntityId>89830653833437176</EntityId>
+              <EntityId>136429254985275954</EntityId>
               <Min x="-1" y="-2" z="-3" />
               <BlockOrientation Forward="Up" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2257,7 +2399,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_SolarPanel">
               <SubtypeName>LargeBlockSolarPanel</SubtypeName>
-              <EntityId>139742126368200484</EntityId>
+              <EntityId>77845182344862424</EntityId>
               <Min x="-1" y="-1" z="-3" />
               <BlockOrientation Forward="Backward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2271,21 +2413,21 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>108243314122758959</EntityId>
+              <EntityId>127023275505018982</EntityId>
               <Min x="7" y="0" z="-3" />
               <BlockOrientation Forward="Up" Up="Right" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Window1x1Side</SubtypeName>
-              <EntityId>98972023032744088</EntityId>
+              <EntityId>134552658615958879</EntityId>
               <Min x="7" y="-1" z="-3" />
               <BlockOrientation Forward="Right" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeGridBeamBlockSlope</SubtypeName>
-              <EntityId>93453444715356961</EntityId>
+              <EntityId>98734556033482703</EntityId>
               <Min x="6" y="0" z="-2" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2293,14 +2435,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>CatwalkHalf</SubtypeName>
-              <EntityId>139191289669619479</EntityId>
+              <EntityId>129944318267730500</EntityId>
               <Min x="6" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeSteelCatwalkPlate</SubtypeName>
-              <EntityId>100711923758630155</EntityId>
+              <EntityId>120619358964834850</EntityId>
               <Min x="5" y="-1" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2308,7 +2450,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>Catwalk</SubtypeName>
-              <EntityId>88219946669775455</EntityId>
+              <EntityId>77906227935384470</EntityId>
               <Min x="4" y="-1" z="-3" />
               <BlockOrientation Forward="Left" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2316,7 +2458,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorSlopedSidePanelLight</SubtypeName>
-              <EntityId>136022967532962616</EntityId>
+              <EntityId>98473499527119675</EntityId>
               <Min x="3" y="-1" z="-3" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2331,7 +2473,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Gyro">
               <SubtypeName>LargeBlockGyro</SubtypeName>
-              <EntityId>105133952633696791</EntityId>
+              <EntityId>142389771589270505</EntityId>
               <Min x="4" y="0" z="-3" />
               <BlockOrientation Forward="Down" Up="Forward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2347,7 +2489,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_EmissiveBlock">
               <SubtypeName>LargeNeonTubesStraightEnd2</SubtypeName>
-              <EntityId>132557086032077007</EntityId>
+              <EntityId>116953236496860297</EntityId>
               <Min x="-2" y="-1" z="-1" />
               <BlockOrientation Forward="Forward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2355,7 +2497,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_EmissiveBlock">
               <SubtypeName>LargeNeonTubesStraightEnd2</SubtypeName>
-              <EntityId>115782242336725914</EntityId>
+              <EntityId>141831380219272367</EntityId>
               <Min x="-2" y="0" z="-1" />
               <BlockOrientation Forward="Backward" Up="Left" />
               <ColorMaskHSV x="0" y="-0.25" z="-0.02" />
@@ -2363,7 +2505,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeBlockLight_1corner</SubtypeName>
-              <EntityId>137171395503251518</EntityId>
+              <EntityId>80270832007676883</EntityId>
               <Min x="4" y="1" z="0" />
               <BlockOrientation Forward="Up" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2387,7 +2529,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_InteriorLight">
               <SubtypeName>LargeBlockLight_1corner</SubtypeName>
-              <EntityId>75111388704936149</EntityId>
+              <EntityId>82900480149625493</EntityId>
               <Min x="4" y="-2" z="0" />
               <BlockOrientation Forward="Down" Up="Backward" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2411,7 +2553,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_CubeBlock">
               <SubtypeName>LargeArmorPanelLight</SubtypeName>
-              <EntityId>104351787443035297</EntityId>
+              <EntityId>113249471729730309</EntityId>
               <Min x="8" y="0" z="-1" />
               <BlockOrientation Forward="Forward" Up="Down" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.3" />
@@ -2419,7 +2561,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>85348092074607684</EntityId>
+              <EntityId>139480528335218804</EntityId>
               <Min x="8" y="0" z="0" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2454,7 +2596,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_CubeBlock>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_ShipGrinder">
               <SubtypeName>LargeShipGrinder</SubtypeName>
-              <EntityId>108814195995624487</EntityId>
+              <EntityId>124378080825627020</EntityId>
               <Min x="8" y="-1" z="0" />
               <BlockOrientation Forward="Right" Up="Up" />
               <ColorMaskHSV x="0" y="-0.8" z="-0.13" />
@@ -2534,6 +2676,8 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
               <BoneOffset x="127" y="130" z="127" />
             </BoneInfo>
           </Skeleton>
+          <LinearVelocity x="0.002712341" y="-0.0272295251" z="-0.0479575843" />
+          <AngularVelocity x="0.002097551" y="0.000177883121" z="-0.000175530877" />
           <YMirroxOdd>true</YMirroxOdd>
           <ConveyorLines>
             <MyObjectBuilder_ConveyorLine>
@@ -2743,7 +2887,7 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
             </MyObjectBuilder_BlockGroup>
           </BlockGroups>
           <Handbrake>true</Handbrake>
-          <DisplayName>KLASSPOD 2</DisplayName>
+          <DisplayName>KLASSPOD_2</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
           <EnableSmallToLargeConnections>false</EnableSmallToLargeConnections>
@@ -2753,18 +2897,18 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>121275681166572344</EntityId>
+          <EntityId>84292380663954982</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>121275681166572344</Name>
+          <Name>84292380663954982</Name>
           <PositionAndOrientation>
-            <Position x="0.62053298950195313" y="4.9520473480224609" z="0.705531120300293" />
-            <Forward x="0.881408453" y="0.3490612" z="0.3182379" />
-            <Up x="-0.395154744" y="0.91400516" z="0.0919093043" />
+            <Position x="4.917236328125" y="-1.162109375" z="0.6806640625" />
+            <Forward x="0.296646148" y="-0.383999825" z="0.8743826" />
+            <Up x="0.9545316" y="0.147508979" z="-0.259056747" />
             <Orientation>
-              <X>0.190685391</X>
-              <Y>-0.789150238</Y>
-              <Z>0.08146482</Z>
-              <W>0.5781388</W>
+              <X>0.6514162</X>
+              <Y>0.7161343</Y>
+              <Z>0.04361721</Z>
+              <W>-0.246791765</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -2772,12 +2916,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheel</SubtypeName>
-              <EntityId>75665538172031486</EntityId>
+              <EntityId>99093222151252400</EntityId>
               <ColorMaskHSV x="0.111111112" y="-0.67" z="-0.01" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.00208777562" y="0.008621944" z="-0.0187371336" />
+          <AngularVelocity x="0.00355856121" y="0.000117007963" z="-4.509103E-05" />
           <DisplayName>Large Grid 6026</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -2788,18 +2934,18 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>139545747562495057</EntityId>
+          <EntityId>107401869378629878</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>139545747562495057</Name>
+          <Name>107401869378629878</Name>
           <PositionAndOrientation>
-            <Position x="0.6356353759765625" y="-7.0227279663085938" z="-1.9132041931152344" />
-            <Forward x="-0.881408453" y="-0.3490612" z="-0.318237931" />
-            <Up x="0.395154744" y="-0.9140051" z="-0.0919093043" />
+            <Position x="-7.250732421875" y="-0.8359375" z="-0.765625" />
+            <Forward x="-0.296652824" y="0.3839759" z="-0.874391" />
+            <Up x="-0.9545289" y="-0.147524953" z="0.259057671" />
             <Orientation>
-              <X>0.5781388</X>
-              <Y>0.0814648047</Y>
-              <Z>0.789150238</Z>
-              <W>-0.190685377</W>
+              <X>0.246784985</X>
+              <Y>-0.04360804</Y>
+              <Z>0.7161421</Z>
+              <W>0.6514107</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -2807,12 +2953,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheelmirrored</SubtypeName>
-              <EntityId>114079745233251240</EntityId>
+              <EntityId>97720228422646829</EntityId>
               <ColorMaskHSV x="0.111111112" y="-0.67" z="-0.01" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.00196567178" y="0.007726915" z="-0.0173358619" />
+          <AngularVelocity x="0.003915714" y="0.000127250736" z="6.590894E-05" />
           <DisplayName>Large Grid 4756</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -2823,18 +2971,18 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>74222495456747886</EntityId>
+          <EntityId>121294462323756785</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>74222495456747886</Name>
+          <Name>121294462323756785</Name>
           <PositionAndOrientation>
-            <Position x="13.841934204101563" y="10.18818473815918" z="5.4780998229980469" />
-            <Forward x="0.881408453" y="0.3490612" z="0.3182379" />
-            <Up x="-0.395154744" y="0.91400516" z="0.0919093043" />
+            <Position x="9.370361328125" y="-7.029296875" z="13.7470703125" />
+            <Forward x="0.296664774" y="-0.3840564" z="0.8743514" />
+            <Up x="0.954526961" y="0.147497654" z="-0.259080231" />
             <Orientation>
-              <X>0.190685391</X>
-              <Y>-0.789150238</Y>
-              <Z>0.08146482</Z>
-              <W>0.5781388</W>
+              <X>0.651419759</X>
+              <Y>0.7161202</Y>
+              <Z>0.0436296351</Z>
+              <W>-0.246821165</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -2842,12 +2990,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheel</SubtypeName>
-              <EntityId>105901868358974908</EntityId>
+              <EntityId>102083126300890414</EntityId>
               <ColorMaskHSV x="0.111111112" y="-0.67" z="-0.01" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.00137586612" y="0.00773958862" z="-0.01725237" />
+          <AngularVelocity x="0.004305987" y="9.549549E-07" z="0.000370673719" />
           <DisplayName>Large Grid 6026</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>
@@ -2858,18 +3008,18 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
         </CubeGrid>
         <CubeGrid>
           <SubtypeName />
-          <EntityId>133910632013723616</EntityId>
+          <EntityId>77836703298727211</EntityId>
           <PersistentFlags>CastShadows InScene</PersistentFlags>
-          <Name>133910632013723616</Name>
+          <Name>77836703298727211</Name>
           <PositionAndOrientation>
-            <Position x="13.856941223144531" y="-1.7866668701171875" z="2.8597145080566406" />
-            <Forward x="-0.881408453" y="-0.349061161" z="-0.318237931" />
-            <Up x="0.395154744" y="-0.9140051" z="-0.09190932" />
+            <Position x="-2.7978515625" y="-6.697265625" z="12.3046875" />
+            <Forward x="-0.296650678" y="0.383981884" z="-0.874389052" />
+            <Up x="-0.954530656" y="-0.1474886" z="0.2590714" />
             <Orientation>
-              <X>0.5781388</X>
-              <Y>0.08146479</Y>
-              <Z>0.789150238</Z>
-              <W>-0.190685377</W>
+              <X>0.246787265</X>
+              <Y>-0.043606136</Y>
+              <Z>0.716128647</Z>
+              <W>0.651424766</W>
             </Orientation>
           </PositionAndOrientation>
           <LocalPositionAndOrientation xsi:nil="true" />
@@ -2877,12 +3027,14 @@ Thank you for purchasing the Kharak Large Affordable Survivable Shelter Pod (KLA
           <CubeBlocks>
             <MyObjectBuilder_CubeBlock xsi:type="MyObjectBuilder_Wheel">
               <SubtypeName>RealWheelmirrored</SubtypeName>
-              <EntityId>102309684995431895</EntityId>
+              <EntityId>104239124240911949</EntityId>
               <ColorMaskHSV x="0.111111112" y="-0.67" z="-0.01" />
               <SkinSubtypeId>Corrugated</SkinSubtypeId>
               <YieldLastComponent>false</YieldLastComponent>
             </MyObjectBuilder_CubeBlock>
           </CubeBlocks>
+          <LinearVelocity x="0.00164448656" y="0.007354781" z="-0.0163442064" />
+          <AngularVelocity x="0.004534341" y="7.97371E-05" z="0.000185470679" />
           <DisplayName>Large Grid 4756</DisplayName>
           <DestructibleBlocks>true</DestructibleBlocks>
           <CreatePhysics>false</CreatePhysics>

@@ -1,7 +1,46 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<BlueprintClasses>
+        <Class>
+            <Id>
+                <TypeId>BlueprintClassDefinition</TypeId>
+                <SubtypeId>GVKBasicEquipment</SubtypeId>
+            </Id>
+            <DisplayName>Basic Equipment</DisplayName>
+            <Description>Basic Equipment</Description>
+            <Icon>Textures\GUI\Icons\buttons\equipment.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\equipment.dds</HighlightIcon>
+            <FocusIcon>Textures\GUI\Icons\buttons\equipmentfocus.dds</FocusIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
+        </Class>
+        <Class>
+            <Id>
+                <TypeId>BlueprintClassDefinition</TypeId>
+                <SubtypeId>GVKEliteEquipment</SubtypeId>
+            </Id>
+            <DisplayName>Equipment</DisplayName>
+            <Description>Equipment</Description>
+            <Icon>Textures\GUI\Icons\buttons\equipment.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\equipment.dds</HighlightIcon>
+            <FocusIcon>Textures\GUI\Icons\buttons\equipmentfocus.dds</FocusIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
+        </Class>
+	</BlueprintClasses>
 	<BlueprintClassEntries>
-		<Entry Class="EliteEquipment" BlueprintSubtypeId="Medkit"/>
-		<Entry Class="EliteEquipment" BlueprintSubtypeId="Powerkit"/>
+		<!-- Basic Assemblers -->	
+		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+        <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
+        <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
+		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Canvas" />
+		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+		<!-- Large Assemblers -->	
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+        <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
+        <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0030_Canvas" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+        <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position00075_FireworksBoxRainbow" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Medkit"/>
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Powerkit"/>
 	</BlueprintClassEntries>
 </Definitions>
