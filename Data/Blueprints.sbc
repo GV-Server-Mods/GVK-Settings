@@ -6,10 +6,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Thruster Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechAtmoThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Atmo_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Reusable Igniter</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\HeatingElement.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -21,10 +20,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Hover_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Hover Engine Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Hover_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Gravity Reflector</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\CompositePlate.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -36,10 +34,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Ballistic Weapons Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\SmallCaliber_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Bolt Carrier</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\Cryocooler.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="70" TypeId="Ingot" SubtypeId="Nickel"/>
 				<Item Amount="600" TypeId="Ingot" SubtypeId="Silver" />
@@ -53,10 +50,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Ballistic Weapons Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechLargeCalWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\LargeCaliber_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Chamber Reinforcement</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\TokamakBlanket.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -68,10 +64,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Missile_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Missile Weapons Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechMissile.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Missile_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Launch Assembly</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\SuperMagnet.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -83,10 +78,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Laser_Tech</SubtypeId>
 			</Id>
-			<DisplayName>Laser Weapons Tech</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\Laser_Icon_Overlay.dds</Icon>
+			<DisplayName>[Tech] Particle Emitter</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\LaserEmitter.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>
@@ -98,9 +92,9 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>GVK_Data_Core</SubtypeId>
 			</Id>
-			<DisplayName>Data Core</DisplayName>
-			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Icon>Textures\GUI\Icons\Items\GVK_TechDataCore.dds</Icon>
+			<DisplayName>[Tech] Data Core</DisplayName>
+            <Icon>Textures\GUI\Icons\Components\Thermocouple.dds</Icon>
+			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			</Prerequisites>

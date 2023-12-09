@@ -8,8 +8,6 @@
 			</Id>
 			<DisplayName>[Tech] Reusable Igniter</DisplayName>
             <Icon>Textures\GUI\Icons\Components\HeatingElement.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechThruster.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\Thrust_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.2</X>
@@ -31,8 +29,6 @@
 			</Id>
 			<DisplayName>[Tech] Gravity Reflector</DisplayName>
             <Icon>Textures\GUI\Icons\Components\CompositePlate.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechHover.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\Hover_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.5</X>
@@ -54,8 +50,6 @@
 			</Id>
 			<DisplayName>[Tech] Bolt Carrier</DisplayName>
             <Icon>Textures\GUI\Icons\Components\Cryocooler.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\SmallCaliber_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.4</X>
@@ -77,8 +71,6 @@
 			</Id>
 			<DisplayName>[Tech] Chamber Reinforcement</DisplayName>
             <Icon>Textures\GUI\Icons\Components\TokamakBlanket.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechLargeCalWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\LargeCaliber_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.5</X>
@@ -100,8 +92,6 @@
 			</Id>
 			<DisplayName>[Tech] Launch Assembly</DisplayName>
             <Icon>Textures\GUI\Icons\Components\SuperMagnet.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechMissile.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\Missile_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.4</X>
@@ -123,8 +113,6 @@
 			</Id>
 			<DisplayName>[Tech] Particle Emitter</DisplayName>
             <Icon>Textures\GUI\Icons\Components\LaserEmitter.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechWeapon.dds</Icon>
-            <Icon>Textures\GUI\Icons\Components\Laser_Icon_Overlay.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>1</X>
@@ -146,7 +134,6 @@
 			</Id>
 			<DisplayName>[Tech] Data Core</DisplayName>
             <Icon>Textures\GUI\Icons\Components\Thermocouple.dds</Icon>
-            <!--<Icon>Textures\GUI\Icons\Components\GVK_TechDataCore.dds</Icon>-->
 			<IconSymbol>Tech</IconSymbol>
             <Size>
                 <X>0.5</X>
