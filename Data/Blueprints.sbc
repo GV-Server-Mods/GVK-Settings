@@ -6,17 +6,17 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>003_GVK_Hover_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Gravity Reflector</DisplayName>
+			<DisplayName>[Tech] Grav. Reflector</DisplayName>
 			<Icon>Textures\Icons\CompositePlate.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="78.5" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="2" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="39.3" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.6" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="39.3" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="19.6" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.3" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>54</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>27</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hover_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -24,17 +24,17 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>002_GVK_Thrust_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Reusable Igniter</DisplayName>
+			<DisplayName>[Tech] Igniter</DisplayName>
 			<Icon>Textures\Icons\HeatingElement.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="107.1" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="107.1" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="2.7" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="10.7" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="229.5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="229.5" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="23" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>14</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>27</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Thrust_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -78,7 +78,7 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>005_GVK_Missile_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Launch Assembly</DisplayName>
+			<DisplayName>[Tech] Launch Assem.</DisplayName>
 			<Icon>Textures\Icons\SuperMagnet.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
@@ -96,17 +96,17 @@
 				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>006_GVK_Laser_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Particle Emitter</DisplayName>
+			<DisplayName>[Tech] Particle Emit.</DisplayName>
 			<Icon>Textures\Icons\LaserEmitter.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="453.3" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="11.3" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="45.3" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="3.4" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="906.6" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="22.7" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="90.7" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="6.8" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>54</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>108</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Laser_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -165,5 +165,20 @@
 			<Priority>1000</Priority>
 			<BaseProductionTimeInSeconds>1</BaseProductionTimeInSeconds>
 		</Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>GVK_CUScraptoIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>C.U.</IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="GVK_CUScrap" />
+            </Prerequisites>
+            <Result Amount="0.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.1</BaseProductionTimeInSeconds>
+        </Blueprint>
 	</Blueprints>
 </Definitions>

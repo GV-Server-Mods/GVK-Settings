@@ -14,6 +14,20 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="1" AmountMax="5">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_CUs</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="50" AmountMax="250">
+					<Frequency>1</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_RUs</SubtypeId>
+					</Id>
+				</Item>
 				<Item AmountMin="100" AmountMax="1000">
 					<Frequency>1</Frequency>
 					<Id>
@@ -93,7 +107,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="3" CountMax="5">
+		<ContainerType CountMin="2" CountMax="4">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Small</SubtypeId>
@@ -106,6 +120,20 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="1" AmountMax="5">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_CUs</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="50" AmountMax="250">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_RUs</SubtypeId>
+					</Id>
+				</Item>
 				<Item AmountMin="1000" AmountMax="10000">
 					<Frequency>0.25</Frequency>
 					<Id>
@@ -114,7 +142,14 @@
 					</Id>
 				</Item>
 				<Item AmountMin="3" AmountMax="10">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Component</TypeId>
+						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="3" AmountMax="10">
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
@@ -200,7 +235,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="3" CountMax="5">
+		<ContainerType CountMin="2" CountMax="4">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Medium</SubtypeId>
@@ -213,6 +248,20 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="2" AmountMax="10">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_CUs</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="100" AmountMax="500">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_RUs</SubtypeId>
+					</Id>
+				</Item>
 				<!-- <Item AmountMin="1000" AmountMax="10000">
 					<Frequency>1</Frequency>
 					<Id>
@@ -221,7 +270,14 @@
 					</Id>
 				</Item> -->
 				<Item AmountMin="5" AmountMax="15">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Component</TypeId>
+						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="15">
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
@@ -249,7 +305,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>
@@ -377,7 +433,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="3" CountMax="5">
+		<ContainerType CountMin="2" CountMax="4">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Large</SubtypeId>
@@ -390,15 +446,36 @@
 						<SubtypeId>Uranium</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="5000" AmountMax="50000">
+				<Item AmountMin="20" AmountMax="40">
 					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_CUs</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="200" AmountMax="1000">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>GVK_RUs</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5000" AmountMax="50000">
+					<Frequency>0.3</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>Ice</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Component</TypeId>
+						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="10" AmountMax="20">
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
@@ -426,7 +503,7 @@
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
-					<Frequency>0.5</Frequency>
+					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
 						<SubtypeId>GVK_Laser_Tech</SubtypeId>

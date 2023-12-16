@@ -25,6 +25,19 @@
             <FocusIcon>Textures\GUI\Icons\buttons\equipmentfocus.dds</FocusIcon>
             <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
         </Class>
+        <Class>
+            <Id>
+                <TypeId>BlueprintClassDefinition</TypeId>
+                <SubtypeId>GVKCUIngots</SubtypeId>
+            </Id>
+            <DisplayName>CU Ingot</DisplayName>
+            <Description>CU Ingot</Description>
+            <Icon>Textures\GUI\Icons\ingot\ingot_class.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\ingot\ingot_class.dds</HighlightIcon>
+            <FocusIcon>Textures\GUI\Icons\ingot\ingot_class_focus.dds</FocusIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
+            <OutputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</OutputConstraintIcon>
+        </Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>
 		<!-- Basic Assemblers -->	
@@ -51,5 +64,7 @@
 		<Entry Class="Components" BlueprintSubtypeId="005_GVK_Missile_Tech" />
 		<Entry Class="Components" BlueprintSubtypeId="006_GVK_Laser_Tech" />
 		<Entry Class="Components" BlueprintSubtypeId="007_GVK_Data_Core" />
+		<!-- NPC CU Refinery -->
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="GVK_CUScraptoIngot" />
 	</BlueprintClassEntries>
 </Definitions>

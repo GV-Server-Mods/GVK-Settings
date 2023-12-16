@@ -41,5 +41,24 @@
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</PhysicalItem>
+        <PhysicalItem>
+            <Id>
+                <TypeId>Ore</TypeId>
+                <SubtypeId>GVK_CUScrap</SubtypeId>
+            </Id>
+            <DisplayName>C.U. Scrap</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>C.U.</IconSymbol>
+            <Size>
+                <X>0.2</X>
+                <Y>0.2</Y>
+                <Z>0.1</Z>
+            </Size>
+            <Mass>1</Mass>
+            <Volume>0.254</Volume>
+            <Model>Models\Components\ScrapMetalComponent.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+        </PhysicalItem>
     </PhysicalItems>
 </Definitions>

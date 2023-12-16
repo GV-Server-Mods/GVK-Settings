@@ -12,7 +12,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -33,7 +33,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -54,7 +54,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -75,7 +75,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -96,7 +96,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -117,7 +117,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -138,7 +138,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -159,7 +159,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -180,7 +180,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -201,7 +201,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -222,7 +222,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -243,7 +243,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -265,7 +265,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="150"/>
@@ -294,7 +294,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -324,7 +324,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="20"/>
@@ -353,7 +353,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -382,7 +382,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="150"/>
@@ -411,7 +411,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -440,7 +440,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="20"/>
@@ -469,7 +469,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -499,7 +499,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="15"/>
@@ -521,7 +521,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="15"/>
@@ -543,7 +543,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -565,7 +565,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -587,7 +587,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -609,7 +609,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -632,7 +632,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -654,7 +654,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>

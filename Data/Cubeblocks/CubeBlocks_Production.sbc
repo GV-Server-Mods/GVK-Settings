@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
+			<Id>
+				<TypeId>Refinery</TypeId>
+				<SubtypeId>LargeRefinery_NPC_CU</SubtypeId>
+			</Id>
+			<DisplayName>CU Refinery</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\refinery.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<Description>Refine CU Scrap into CU Ingots</Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="2" y="4" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Refinery.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1100"/>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="Motor" Count="16"/>
+				<Component Subtype="GVK_Unobtainium" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Computer" Count="20"/>
+				<Component Subtype="SteelPlate" Count="100"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<Center x="1" y="0" z="1"/>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="2" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="1" EndX="2" EndY="2" Default="true"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="2" EndY="1"/>
+				<MountPoint Side="Left" StartX="1" StartY="0" EndX="2" EndY="4"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="1" EndY="4"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.16" File="Models\Cubes\Large\RefineryConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\RefineryConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="0.50" File="Models\Cubes\Large\RefineryConstruction_3.mwm"/>
+				<Model BuildPercentUpperBound="0.83" File="Models\Cubes\Large\RefineryConstruction_4.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\RefineryConstruction_5.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>CURefinery</BlockPairName>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>90</BuildTimeSeconds>
+			<ResourceSinkGroup>Factory</ResourceSinkGroup>
+			<InventoryMaxVolume>7.5</InventoryMaxVolume>
+			<InventorySize>
+				<X>2.5</X>
+				<Y>2.5</Y>
+				<Z>2.5</Z>
+			</InventorySize>
+			<InventoryFillFactorMin>0.3</InventoryFillFactorMin>
+			<InventoryFillFactorMax>0.6</InventoryFillFactorMax>
+			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
+			<OperationalPowerConsumption>0.56</OperationalPowerConsumption>
+			<BlueprintClasses>
+				<Class>GVKCUIngots</Class>
+			</BlueprintClasses>
+			<RefineSpeed>1</RefineSpeed>
+			<MaterialEfficiency>1.0</MaterialEfficiency>
+			<OreAmountPerPullRequest>2000</OreAmountPerPullRequest>
+			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+			<Center x="1" y="0" z="0"/>
+			<DamagedSound>ParticleHeavyMech</DamagedSound>
+			<PrimarySound>BlockRafinery</PrimarySound>
+			<ActionSound>BlockRafineryProcess</ActionSound>
+			<EmissiveColorPreset>Default</EmissiveColorPreset>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>90</PCU>
+			<TieredUpdateTimes>
+				<unsignedInt>60</unsignedInt>
+				<unsignedInt>120</unsignedInt>
+				<unsignedInt>240</unsignedInt>
+			</TieredUpdateTimes>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

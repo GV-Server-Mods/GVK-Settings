@@ -6,7 +6,7 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Reusable Igniter</DisplayName>
+			<DisplayName>[Tech] Igniter</DisplayName>
             <Icon>Textures\Icons\HeatingElement.dds</Icon>
 			<IconSymbol>Thrust</IconSymbol>
             <Size>
@@ -27,7 +27,7 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Hover_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Gravity Reflector</DisplayName>
+			<DisplayName>[Tech] Grav. Reflector</DisplayName>
             <Icon>Textures\Icons\CompositePlate.dds</Icon>
 			<IconSymbol>Hover</IconSymbol>
             <Size>
@@ -90,7 +90,7 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Missile_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Launch Assembly</DisplayName>
+			<DisplayName>[Tech] Launch Assem.</DisplayName>
             <Icon>Textures\Icons\SuperMagnet.dds</Icon>
 			<IconSymbol>Missile</IconSymbol>
             <Size>
@@ -111,7 +111,7 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Laser_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Particle Emitter</DisplayName>
+			<DisplayName>[Tech] Particle Emit.</DisplayName>
             <Icon>Textures\Icons\LaserEmitter.dds</Icon>
 			<IconSymbol>Laser</IconSymbol>
             <Size>
