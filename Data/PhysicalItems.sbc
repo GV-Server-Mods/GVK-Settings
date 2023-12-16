@@ -4,11 +4,12 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ingot</TypeId>
-				<SubtypeId>GVK_Relic_Tech</SubtypeId>
+				<SubtypeId>GVK_CUs</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Relic Ammo Ingot</DisplayName>
+			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\ingot\potassium_ingot.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>C.U.</IconSymbol>
 			<Size>
 				<X>0.1</X>
 				<Y>0.1</Y>
@@ -16,34 +17,29 @@
 			</Size>
 			<Mass>0.250</Mass>
 			<Volume>0.2</Volume>
-			<Model>Models\Items\CopperIngot.mwm</Model>
+			<Model>Models\CopperIngot.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</PhysicalItem>
-        <!-- changed name to note it can't hack -->
 		<PhysicalItem>
-            <Id>
-                <TypeId>PhysicalGunObject</TypeId>
-                <SubtypeId>AngleGrinderItem</SubtypeId>
-            </Id>
-            <DisplayName>Basic Grinder (Cannot hack)</DisplayName>
-            <Icon>Textures\GUI\Icons\WeaponGrinder.dds</Icon>
-            <Description>Description_AngleGrinder</Description>
-			<IconSymbol>Basic</IconSymbol>
-            <Size>
-                <X>0.5</X>
-                <Y>0.3</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>3</Mass>
-            <Volume>20</Volume>
-            <Model>Models\Weapons\AngleGrinder.mwm</Model>
-            <PhysicalMaterial>Metal</PhysicalMaterial>
-            <MinimumOfferAmount>10</MinimumOfferAmount>
-            <MaximumOfferAmount>20</MaximumOfferAmount>
-            <MinimumOrderAmount>10</MinimumOrderAmount>
-            <MaximumOrderAmount>100</MaximumOrderAmount>
-            <CanPlayerOrder>true</CanPlayerOrder>
-        </PhysicalItem>
+			<Id>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>GVK_RUs</SubtypeId>
+			</Id>
+			<DisplayName>Resource Units</DisplayName>
+			<Icon>Textures\Icons\WhiteBarrel.dds</Icon>
+			<Icon>Textures\Icons\RU icon.png</Icon>
+			<IconSymbol>R.U.</IconSymbol>
+			<Size>
+				<X>0.1</X>
+				<Y>0.1</Y>
+				<Z>0.2</Z>
+			</Size>
+			<Mass>0.250</Mass>
+			<Volume>0.2</Volume>
+			<Model>Models\LithiumBarrel.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</PhysicalItem>
     </PhysicalItems>
 </Definitions>

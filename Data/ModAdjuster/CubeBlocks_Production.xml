@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- reduced speed, adjusted categories -->
+		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
+			<Id>
+				<TypeId>Assembler</TypeId>
+				<SubtypeId>BasicAssembler</SubtypeId>
+			</Id>
+			<BlueprintClasses>
+				<Class>SimpleComponents</Class>
+				<Class>GVKBasicEquipment</Class>
+				<Class>Tools</Class>
+				<Class>GVKBasicAmmo</Class>
+			</BlueprintClasses>
+			<AssemblySpeed>0.25</AssemblySpeed>
+		</Definition>
+		<!-- reduced speed -->
+		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
+			<Id>
+				<TypeId>Refinery</TypeId>
+				<SubtypeId>Blast Furnace</SubtypeId>
+			</Id>
+			<RefineSpeed>0.25</RefineSpeed>
+		</Definition>
+		<!-- added for custom blueprint classes -->
+		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
+			<Id>
+				<TypeId>Assembler</TypeId>
+				<SubtypeId>LargeAssembler</SubtypeId>
+			</Id>
+			<BlueprintClasses>
+				<Class>LargeBlocks</Class>
+				<Class>SmallBlocks</Class>
+				<Class>Components</Class>
+				<Class>GVKEliteEquipment</Class>
+				<Class>EliteTools</Class>
+				<Class>GVKEliteHandheldWeapons</Class>
+				<Class>GVKEliteAmmo</Class>
+				<Class>BuildPlanner</Class>
+			</BlueprintClasses>
+		</Definition>
+		<!-- added for custom blueprint classes -->
+		<Definition xsi:type="MyObjectBuilder_SurvivalKitDefinition">
+			<Id>
+				<TypeId>SurvivalKit</TypeId>
+				<SubtypeId>SurvivalKitLarge</SubtypeId>
+			</Id>
+			<BlueprintClasses>
+				<Class>SurvivalKitIngots</Class>
+				<Class>BasicTools</Class>
+				<Class>BasicComponents</Class>
+			</BlueprintClasses>
+			<AssemblySpeed>0.4</AssemblySpeed>
+		</Definition>
+		<!-- added for custom blueprint classes -->
+		<Definition xsi:type="MyObjectBuilder_SurvivalKitDefinition">
+			<Id>
+				<TypeId>SurvivalKit</TypeId>
+				<SubtypeId>SurvivalKit</SubtypeId>
+			</Id>
+			<BlueprintClasses>
+				<Class>SurvivalKitIngots</Class>
+				<Class>BasicTools</Class>
+				<Class>BasicComponents</Class>
+			</BlueprintClasses>
+			<AssemblySpeed>0.4</AssemblySpeed>
+		</Definition>
+		<!-- added for custom blueprint classes -->
+        <Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
+            <Id>
+                <TypeId>Assembler</TypeId>
+                <SubtypeId>LargeAssemblerIndustrial</SubtypeId>
+            </Id>
+			<BlueprintClasses>
+				<Class>LargeBlocks</Class>
+				<Class>SmallBlocks</Class>
+				<Class>Components</Class>
+				<Class>GVKEliteEquipment</Class>
+				<Class>EliteTools</Class>
+				<Class>GVKEliteHandheldWeapons</Class>
+				<Class>GVKEliteAmmo</Class>
+				<Class>BuildPlanner</Class>
+			</BlueprintClasses>
+        </Definition>
+	</CubeBlocks>
+</Definitions>

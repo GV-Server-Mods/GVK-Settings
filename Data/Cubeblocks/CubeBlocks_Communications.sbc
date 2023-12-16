@@ -9,6 +9,7 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<IconSymbol>Light</IconSymbol>
 			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 MPs, 80 UPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<GuiVisible>true</GuiVisible>
@@ -52,6 +53,7 @@
 			</Id>
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<IconSymbol>Medium</IconSymbol>
 			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 MPs, 140 UPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<GuiVisible>false</GuiVisible>
@@ -95,6 +97,7 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<IconSymbol>Light</IconSymbol>
 			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 MPs, 80 UPs.</Description>
 			<CubeSize>Large</CubeSize>
 			<GuiVisible>true</GuiVisible>
@@ -145,6 +148,7 @@
 				<SubtypeId>LargeBlockBeacon_MediumCore</SubtypeId>
 			</Id>
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
+			<IconSymbol>Medium</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 MPs, 140 UPs.</Description>
 			<CubeSize>Large</CubeSize>
@@ -196,6 +200,7 @@
 				<SubtypeId>LargeBlockBeacon_HeavyCore</SubtypeId>
 			</Id>
 			<DisplayName>Heavy Ship Core Beacon</DisplayName>
+			<IconSymbol>Heavy</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 MPs, 200 UPs.</Description>
 			<CubeSize>Large</CubeSize>
@@ -248,6 +253,7 @@
 			</Id>
 			<DisplayName>Fortress Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<IconSymbol>Fortress</IconSymbol>
 			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 200 UPs, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<GuiVisible>false</GuiVisible>
@@ -298,6 +304,7 @@
 				<SubtypeId>LargeBlockBeacon_Pipeline</SubtypeId>
 			</Id>
 			<DisplayName>Pipeline Core Beacon</DisplayName>
+			<IconSymbol>Pipeline</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills.</Description>
 			<CubeSize>Large</CubeSize>

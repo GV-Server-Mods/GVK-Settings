@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+			<Id>
+				<TypeId>Beacon</TypeId>
+				<SubtypeId>DisposableNpcBeaconLarge</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Computer" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0" File="Models\Cubes\Large\BeaconConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0" File="Models\Cubes\Large\BeaconConstruction_2.mwm"/>
+				<Model BuildPercentUpperBound="0" File="Models\Cubes\Large\BeaconConstruction_3.mwm"/>
+			</BuildProgressModels>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+			<Id>
+				<TypeId>Beacon</TypeId>
+				<SubtypeId>DisposableNpcBeaconSmall</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="300"/>
+				<Component Subtype="Computer" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0" File="Models\Cubes\Small\BeaconConstruction_1.mwm"/>
+				<Model BuildPercentUpperBound="0" File="Models\Cubes\Small\BeaconConstruction_2.mwm"/>
+			</BuildProgressModels>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

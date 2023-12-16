@@ -7,16 +7,16 @@
 				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Reusable Igniter</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\HeatingElement.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\HeatingElement.dds</Icon>
+			<IconSymbol>Thrust</IconSymbol>
             <Size>
-                <X>0.2</X>
-                <Y>0.2</Y>
+                <X>0.5</X>
+                <Y>0.5</Y>
                 <Z>0.2</Z>
             </Size>
             <Mass>6.8</Mass>
             <Volume>4</Volume>
-            <Model>Models\Components\Heater.mwm</Model>
+            <Model>Models\Heater.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -28,8 +28,8 @@
 				<SubtypeId>GVK_Hover_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Gravity Reflector</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\CompositePlate.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\CompositePlate.dds</Icon>
+			<IconSymbol>Hover</IconSymbol>
             <Size>
                 <X>0.5</X>
                 <Y>0.5</Y>
@@ -37,7 +37,7 @@
             </Size>
             <Mass>24</Mass>
             <Volume>5</Volume>
-            <Model>Models\Components\CompositePlate.mwm</Model>
+            <Model>Models\CompositePlate.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -49,8 +49,8 @@
 				<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Bolt Carrier</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\Cryocooler.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\Cryocooler.dds</Icon>
+			<IconSymbol>S.Cal</IconSymbol>
             <Size>
                 <X>0.4</X>
                 <Y>0.4</Y>
@@ -58,7 +58,7 @@
             </Size>
             <Mass>36.2</Mass>
             <Volume>5</Volume>
-            <Model>Models\Components\Cryocooler.mwm</Model>
+            <Model>Models\Cryocooler.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -69,9 +69,9 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
 			</Id>
-			<DisplayName>[Tech] Chamber Reinforcement</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\TokamakBlanket.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+			<DisplayName>[Tech] Gun Cradle</DisplayName>
+            <Icon>Textures\Icons\TokamakBlanket.dds</Icon>
+			<IconSymbol>L.Cal</IconSymbol>
             <Size>
                 <X>0.5</X>
                 <Y>0.5</Y>
@@ -79,7 +79,7 @@
             </Size>
             <Mass>22.3</Mass>
             <Volume>25</Volume>
-            <Model>Models\Components\TokamakBlanket.mwm</Model>
+            <Model>Models\TokamakBlanket.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -91,8 +91,8 @@
 				<SubtypeId>GVK_Missile_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Launch Assembly</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\SuperMagnet.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\SuperMagnet.dds</Icon>
+			<IconSymbol>Missile</IconSymbol>
             <Size>
                 <X>0.4</X>
                 <Y>0.4</Y>
@@ -100,7 +100,7 @@
             </Size>
             <Mass>43.6</Mass>
             <Volume>15</Volume>
-            <Model>Models\Components\SuperMagnet.mwm</Model>
+            <Model>Models\SuperMagnet.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -112,8 +112,8 @@
 				<SubtypeId>GVK_Laser_Tech</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Particle Emitter</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\LaserEmitter.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\LaserEmitter.dds</Icon>
+			<IconSymbol>Laser</IconSymbol>
             <Size>
                 <X>1</X>
                 <Y>0.2</Y>
@@ -121,7 +121,7 @@
             </Size>
             <Mass>18.3</Mass>
             <Volume>12</Volume>
-            <Model>Models\Components\LaserEmitter.mwm</Model>
+            <Model>Models\LaserEmitter.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -133,8 +133,8 @@
 				<SubtypeId>GVK_Data_Core</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Data Core</DisplayName>
-            <Icon>Textures\GUI\Icons\Components\Thermocouple.dds</Icon>
-			<IconSymbol>Tech</IconSymbol>
+            <Icon>Textures\Icons\Thermocouple.dds</Icon>
+			<IconSymbol>Data</IconSymbol>
             <Size>
                 <X>0.5</X>
                 <Y>0.5</Y>
@@ -142,91 +142,11 @@
             </Size>
             <Mass>4.1</Mass>
             <Volume>3</Volume>
-            <Model>Models\Components\Thermocouple.mwm</Model>
+            <Model>Models\Thermocouple.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>50</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_TurboEncabulator</SubtypeId>
-			</Id>
-			<DisplayName>Turbo Encabulator</DisplayName>
-			<Icon>Textures\GUI\Icons\Components\AlkalineCell.dds</Icon>
-			<Size>
-				<X>0.5</X>
-				<Y>0.3</Y>
-				<Z>0.3</Z>
-			</Size>
-			<Mass>50</Mass>
-			<Volume>40</Volume>
-			<Model>Models\Components\AlkalineCell.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>200</MaxIntegrity>
-			<Health>40</Health>
-			<CanPlayerOrder>true</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_SpecialPackage1</SubtypeId>
-			</Id>
-			<DisplayName>Special Package</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ContractPackage.dds</Icon>
-            <Size>
-                <X>0.5</X>
-                <Y>0.5</Y>
-                <Z>0.5</Z>
-            </Size>
-            <Mass>100</Mass>
-            <Volume>125</Volume>
-            <Model>Models\Components\ContractPackage.mwm</Model>
-            <PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>200</MaxIntegrity>
-			<Health>40</Health>
-			<CanPlayerOrder>false</CanPlayerOrder>
-		</Component>
-		<Component>
-			<Id>
-				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Unobtanium</SubtypeId>
-			</Id>
-			<DisplayName>Unobtanium</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Size>
-                <X>0.1</X>
-                <Y>0.1</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>0.250</Mass>
-            <Volume>0.2</Volume>
-            <Model>Models\Items\ZoneChip_Item.mwm</Model>
-			<PhysicalMaterial>Metal</PhysicalMaterial>
-			<MaxIntegrity>20</MaxIntegrity>
-			<Health>14</Health>
-			<CanPlayerOrder>false</CanPlayerOrder>
-		</Component>
-        <Component>
-            <Id>
-                <TypeId>Component</TypeId>
-                <SubtypeId>Explosives</SubtypeId>
-            </Id>
-            <DisplayName>DisplayName_Item_Explosives</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ExplosivesComponent.dds</Icon>
-            <Size>
-                <X>0.2</X>
-                <Y>0.2</Y>
-                <Z>0.1</Z>
-            </Size>
-            <Mass>2</Mass>
-            <Volume>2</Volume>
-            <Model>Models\Components\ExplosivesComponent.mwm</Model>
-            <PhysicalMaterial>Metal</PhysicalMaterial>
-            <MaxIntegrity>5</MaxIntegrity>
-            <Health>99999999</Health>
-            <CanPlayerOrder>true</CanPlayerOrder>
-        </Component>
 	</Components>
 </Definitions>

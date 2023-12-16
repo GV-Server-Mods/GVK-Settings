@@ -7,7 +7,7 @@
 				<SubtypeId>RespawnPlanetPod</SubtypeId>
 			</Id>
 			<DisplayName>New Start-KLASSPOD</DisplayName>
-			<Icon>Textures\GUI\Icons\RespawnShips\KLASSPOD2.png</Icon>
+			<Icon>Textures\Icons\KLASSPOD2.png</Icon>
 			<CooldownSeconds>150</CooldownSeconds>
 			<Prefab>KLASSPOD_2</Prefab>
 			<MinimalAirDensity>0.5</MinimalAirDensity>

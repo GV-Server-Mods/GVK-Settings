@@ -33,6 +33,8 @@
         <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Canvas" />
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+		<Entry Class="SimpleComponents" BlueprintSubtypeId="001_GVK_SmallCaliber_Tech" />
+		<Entry Class="SimpleComponents" BlueprintSubtypeId="002_GVK_Thrust_Tech" />
 		<!-- Large Assemblers -->	
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
@@ -42,5 +44,12 @@
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position00075_FireworksBoxRainbow" />
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Medkit"/>
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Powerkit"/>
+		<Entry Class="Components" BlueprintSubtypeId="001_GVK_SmallCaliber_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="002_GVK_Thrust_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="003_GVK_Hover_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="004_GVK_LargeCaliber_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="005_GVK_Missile_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="006_GVK_Laser_Tech" />
+		<Entry Class="Components" BlueprintSubtypeId="007_GVK_Data_Core" />
 	</BlueprintClassEntries>
 </Definitions>

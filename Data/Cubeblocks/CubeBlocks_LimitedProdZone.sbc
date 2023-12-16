@@ -7,7 +7,7 @@
 				<SubtypeId>LimitedProdZone</SubtypeId>
 			</Id>
 			<DisplayName>Limited Prod Zone</DisplayName>
-			<Icon>Textures\GUI\Icons\DrillBlocker.dds</Icon>
+			<Icon>Textures\Icons\DrillBlocker.dds</Icon>
 			<Description>Shuts off full production in its range.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>

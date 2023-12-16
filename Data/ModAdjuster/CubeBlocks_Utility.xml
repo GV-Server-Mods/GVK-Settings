@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_JumpDriveDefinition" Enabled="true">
+			<Id>
+				<TypeId>JumpDrive</TypeId>
+				<SubtypeId>LargeJumpDrive</SubtypeId>
+			</Id>
+			<DisplayName>Jump Drive (Siege Block)</DisplayName>
+			<MaxJumpDistance>1</MaxJumpDistance>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

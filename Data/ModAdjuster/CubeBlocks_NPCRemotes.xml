@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
+			<Id>
+				<TypeId>RemoteControl</TypeId>
+				<SubtypeId>RivalAIRemoteControlLarge</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="25"/>
+			</Components>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
+			<Id>
+				<TypeId>RemoteControl</TypeId>
+				<SubtypeId>RivalAIRemoteControlSmall</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+			</Components>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

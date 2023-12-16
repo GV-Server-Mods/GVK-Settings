@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Double radius -->
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition">
+			<Id>
+				<TypeId>ShipWelder</TypeId>
+				<SubtypeId>LargeShipWelder</SubtypeId>
+			</Id>
+			<SensorRadius>4</SensorRadius>
+		</Definition>
+		<!-- disable small grid welder -->
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="false">
+			<Id>
+				<TypeId>ShipWelder</TypeId>
+				<SubtypeId>SmallShipWelder</SubtypeId>
+			</Id>
+			<SensorRadius>0</SensorRadius> <!-- vanilla 1.3 -->
+		</Definition>
+	</CubeBlocks>
+</Definitions>

@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Ion (Lateral Hover) Thrusters-->
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="GVK_Hover_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallThrustSciFi</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeThrustSciFi</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallThrustSciFi</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeThrustSciFi</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="GVK_Hover_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallModularThruster</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeModularThruster</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallModularThruster</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="GVK_Hover_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeModularThruster</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="GVK_Hover_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<!-- Hydrogen Thrusters -->
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeHydrogenThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="150"/>
+				<Component Subtype="MetalGrid" Count="250"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<ForceMagnitude>15000000</ForceMagnitude>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallHydrogenThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="MetalGrid" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<ForceMagnitude>1500000</ForceMagnitude>
+			<SlowdownFactor>1</SlowdownFactor>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeHydrogenThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="MetalGrid" Count="22"/>
+				<Component Subtype="LargeTube" Count="10"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<ForceMagnitude>1000000</ForceMagnitude>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallHydrogenThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="2"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="MetalGrid" Count="4"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="Construction" Count="5"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+			</Components>
+			<ForceMagnitude>98400</ForceMagnitude>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeHydrogenThrustIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="150"/>
+				<Component Subtype="MetalGrid" Count="250"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<ForceMagnitude>15000000</ForceMagnitude>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallHydrogenThrustIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="MetalGrid" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<ForceMagnitude>1500000</ForceMagnitude>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeHydrogenThrustIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="MetalGrid" Count="22"/>
+				<Component Subtype="LargeTube" Count="10"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<ForceMagnitude>1000000</ForceMagnitude>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallHydrogenThrustIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="2"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="MetalGrid" Count="4"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="Construction" Count="5"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+			</Components>
+			<ForceMagnitude>98400</ForceMagnitude>
+			<FuelConverter>
+				<FuelId>
+					<TypeId>GasProperties</TypeId>
+					<SubtypeId>Hydrogen</SubtypeId>
+				</FuelId>
+				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+			</FuelConverter>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<!-- Flat Atmo Thrusters -->
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeFlatAtmosphericThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="40"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="15"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="MetalGrid" Count="15"/>
+				<Component Subtype="Motor" Count="400"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeFlatAtmosphericThrustDShape</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="40"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="15"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="MetalGrid" Count="15"/>
+				<Component Subtype="Motor" Count="400"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallFlatAtmosphericThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="3"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallFlatAtmosphericThrustDShape</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="3"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeFlatAtmosphericThrust</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="4"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeFlatAtmosphericThrustDShape</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="4"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallFlatAtmosphericThrust</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_SmallAtmoThrustFlat</DisplayName>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="MetalGrid" Count="1"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallFlatAtmosphericThrustDShape</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="GVK_Thrust_Tech" Count="1">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="MetalGrid" Count="1"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+		</Definition>
+	</CubeBlocks>
+</Definitions>
