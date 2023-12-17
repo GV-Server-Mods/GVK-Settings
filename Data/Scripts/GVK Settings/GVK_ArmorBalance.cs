@@ -85,17 +85,19 @@ namespace MikeDude.ArmorBalance
                 if (suspensionDef != null)
                 {
                     suspensionDef.GeneralDamageMultiplier = 0.75f;
+                    suspensionDef.IntegrityPointsPerSec = 500;
                 }
 
                 //suspension wheels resistance buff
                 if (blockDef.Id.SubtypeName.Contains("Real"))
                 {
                     blockDef.GeneralDamageMultiplier = 0.75f;
+                    blockDef.IntegrityPointsPerSec = 500;
 
-                    if (blockDef.Id.SubtypeName.Contains("5x5"))
+                    /*if (blockDef.Id.SubtypeName.Contains("5x5"))
                     {
                         blockDef.GeneralDamageMultiplier = 0.75f;
-                    }
+                    }*/
                 }
 
                 //Drillblocker
