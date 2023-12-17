@@ -21,7 +21,7 @@
 						<SubtypeId>GVK_CUs</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="50" AmountMax="250">
+				<Item AmountMin="30" AmountMax="100">
 					<Frequency>1</Frequency>
 					<Id>
 						<TypeId>Ingot</TypeId>
@@ -107,7 +107,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="4">
+		<ContainerType CountMin="2" CountMax="3">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Small</SubtypeId>
@@ -125,13 +125,6 @@
 					<Id>
 						<TypeId>Ingot</TypeId>
 						<SubtypeId>GVK_CUs</SubtypeId>
-					</Id>
-				</Item>
-				<Item AmountMin="50" AmountMax="250">
-					<Frequency>0.5</Frequency>
-					<Id>
-						<TypeId>Ingot</TypeId>
-						<SubtypeId>GVK_RUs</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1000" AmountMax="10000">
@@ -235,7 +228,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="4">
+		<ContainerType CountMin="2" CountMax="3">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Medium</SubtypeId>
@@ -433,7 +426,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="4">
+		<ContainerType CountMin="2" CountMax="3">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Large</SubtypeId>
