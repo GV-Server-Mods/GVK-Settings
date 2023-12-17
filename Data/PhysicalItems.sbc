@@ -46,7 +46,7 @@
                 <TypeId>Ore</TypeId>
                 <SubtypeId>GVK_CUScrap</SubtypeId>
             </Id>
-            <DisplayName>C.U. Scrap</DisplayName>
+            <DisplayName>CU Scrap</DisplayName>
             <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol>C.U.</IconSymbol>
