@@ -10,6 +10,8 @@
 			<Icon>Textures\GUI\Icons\Cubes\refinery.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<Description>Refine CU Scrap into CU Ingots</Description>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="2" y="4" z="2"/>
@@ -20,7 +22,7 @@
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="Motor" Count="16"/>
-				<Component Subtype="GVK_Unobtainium" Count="1">
+				<Component Subtype="GVK_Unobtanium" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>Scrap</SubtypeId>
