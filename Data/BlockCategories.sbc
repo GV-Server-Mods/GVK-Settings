@@ -6,8 +6,8 @@
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
 				<SubtypeId/>
 			</Id>
-			<DisplayName>Ship Core Beacons</DisplayName>
-			<Name>Ship Cores Beacons</Name>
+			<DisplayName>GVK Ship Core Beacons</DisplayName>
+			<Name>GVK Ship Cores Beacons</Name>
 			<StrictSearch>true</StrictSearch>
 			<IsBlockCategory>true</IsBlockCategory>
 			<SearchCategory>false</SearchCategory>
@@ -17,6 +17,8 @@
 				<string>LargeBlockBeacon</string>
 				<string>LargeBlockBeacon_MediumCore</string>
 				<string>LargeBlockBeacon_HeavyCore</string>
+				<string>LargeBlockBeacon_Fortress</string>
+				<string>LargeBlockBeacon_Pipeline</string>
 			</ItemIds>
 		</Category>
 	</CategoryClasses>
