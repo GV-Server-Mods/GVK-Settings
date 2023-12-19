@@ -64,7 +64,7 @@ namespace LimitedProdZone
                         {
                             string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                             bool isBasicRefinery = false;
-                            isBasicRefinery = strSubBlockType.Contains("Blast Furnace");
+                            isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
 
                             if (isBasicRefinery == false)
                             {
