@@ -9,10 +9,9 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-			<IconSymbol>Light</IconSymbol>
+			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 MPs, 80 UPs.</Description>
 			<CubeSize>Small</CubeSize>
-			<GuiVisible>true</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -44,6 +43,8 @@
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>7500</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Small Medium -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -53,10 +54,9 @@
 			</Id>
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-			<IconSymbol>Medium</IconSymbol>
+			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 MPs, 140 UPs.</Description>
 			<CubeSize>Small</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -86,8 +86,10 @@
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>20000</PCU>
+			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Large Light (default beacon) -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -97,10 +99,9 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-			<IconSymbol>Light</IconSymbol>
+			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 MPs, 80 UPs.</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>true</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -138,8 +139,10 @@
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>7500</PCU>
+			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>true</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Large Medium -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -148,11 +151,10 @@
 				<SubtypeId>LargeBlockBeacon_MediumCore</SubtypeId>
 			</Id>
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
-			<IconSymbol>Medium</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 MPs, 140 UPs.</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -190,8 +192,10 @@
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>20000</PCU>
+			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Large Heavy -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -200,11 +204,10 @@
 				<SubtypeId>LargeBlockBeacon_HeavyCore</SubtypeId>
 			</Id>
 			<DisplayName>Heavy Ship Core Beacon</DisplayName>
-			<IconSymbol>Heavy</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Icon>Textures\Icons\Heavy_Icon_Overlay.dds</Icon>
 			<Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 MPs, 200 UPs.</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -242,8 +245,10 @@
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>40000</PCU>
+			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Large Fortress -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -253,10 +258,9 @@
 			</Id>
 			<DisplayName>Fortress Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-			<IconSymbol>Fortress</IconSymbol>
-			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 200 UPs, Static Only.</Description>
+			<Icon>Textures\Icons\Fortress_Icon_Overlay.dds</Icon>
+			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 120 UPs, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -281,7 +285,7 @@
                 <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
             </BuildProgressModels>-->
-			<BlockPairName>Beacon_HeavyCore</BlockPairName>
+			<BlockPairName>Beacon_Fortress</BlockPairName>
 			<EdgeType>Light</EdgeType>
 			<MirroringY>Z</MirroringY>
 			<BuildTimeSeconds>40</BuildTimeSeconds>
@@ -294,8 +298,10 @@
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>40000</PCU>
+			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Large Pipeline -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
@@ -304,11 +310,10 @@
 				<SubtypeId>LargeBlockBeacon_Pipeline</SubtypeId>
 			</Id>
 			<DisplayName>Pipeline Core Beacon</DisplayName>
-			<IconSymbol>Pipeline</IconSymbol>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Icon>Textures\Icons\Pipeline_Icon_Overlay.dds</Icon>
 			<Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills.</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -348,6 +353,8 @@
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<!-- Disable Beacon Reskin due to incompatibility with Beacon Limits Mod -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition" Enabled="false">
@@ -359,7 +366,6 @@
 			<Icon>Textures\GUI\Icons\Cubes\BeaconReskin.dds</Icon>
 			<Description>Description_Beacon</Description>
 			<CubeSize>Large</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -405,6 +411,8 @@
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition" Enabled="false">
 			<Id>
@@ -415,7 +423,6 @@
 			<Icon>Textures\GUI\Icons\Cubes\BeaconReskin.dds</Icon>
 			<Description>Description_Beacon</Description>
 			<CubeSize>Small</CubeSize>
-			<GuiVisible>false</GuiVisible>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
@@ -460,6 +467,8 @@
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

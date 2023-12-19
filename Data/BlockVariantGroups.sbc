@@ -3,8 +3,9 @@
 	<BlockVariantGroups>
 		<!-- Ship Cores -->
 		<BlockVariantGroup>
-			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="Ship_Cores"/>
-			<DisplayName>Ship Core Beacons</DisplayName>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_Ship_Cores"/>
+			<DisplayName>GVK Ship Core Beacons</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description/>
 			<Blocks>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon"/>
@@ -12,6 +13,7 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_MediumCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_HeavyCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Fortress"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Pipeline"/>
 			</Blocks>
 		</BlockVariantGroup>
