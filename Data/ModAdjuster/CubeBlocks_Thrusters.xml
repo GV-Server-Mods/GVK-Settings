@@ -21,6 +21,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -42,6 +43,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -63,6 +65,7 @@
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -84,6 +87,7 @@
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -105,6 +109,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -126,6 +131,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -147,6 +153,7 @@
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -168,6 +175,7 @@
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -189,6 +197,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -210,6 +219,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -231,6 +241,7 @@
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -252,6 +263,7 @@
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
 		</Definition>
 		<!-- Hydrogen Thrusters -->
@@ -274,12 +286,14 @@
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<ForceMagnitude>15000000</ForceMagnitude>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -303,6 +317,7 @@
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<ForceMagnitude>1500000</ForceMagnitude>
 			<SlowdownFactor>1</SlowdownFactor>
 			<FuelConverter>
@@ -310,7 +325,8 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
@@ -333,12 +349,14 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<ForceMagnitude>1000000</ForceMagnitude>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -362,13 +380,15 @@
 				<Component Subtype="Construction" Count="5"/>
 				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<ForceMagnitude>98400</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
@@ -391,12 +411,14 @@
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<ForceMagnitude>15000000</ForceMagnitude>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -420,13 +442,15 @@
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<ForceMagnitude>1500000</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
@@ -449,12 +473,14 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<ForceMagnitude>1000000</ForceMagnitude>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -478,13 +504,15 @@
 				<Component Subtype="Construction" Count="5"/>
 				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
 			<ForceMagnitude>98400</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency> <!-- Lower is more efficient -->
+				<Efficiency>1.5</Efficiency>
+				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
@@ -509,6 +537,7 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -531,6 +560,7 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -553,6 +583,7 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -575,6 +606,7 @@
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -597,6 +629,7 @@
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -619,6 +652,7 @@
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -642,6 +676,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -664,6 +699,7 @@
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
 		</Definition>
 	</CubeBlocks>

@@ -10,10 +10,10 @@
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="Construction" Count="2"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -22,6 +22,7 @@
 				<Component Subtype="Display" Count="1"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ProgrammableBlockDefinition">
 			<Id>
@@ -32,10 +33,10 @@
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="SteelPlate" Count="11"/>
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -44,6 +45,7 @@
 				<Component Subtype="Display" Count="1"/>
 				<Component Subtype="SteelPlate" Count="30"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ProgrammableBlockDefinition">
 			<Id>
@@ -54,10 +56,10 @@
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="SteelPlate" Count="11"/>
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -66,6 +68,7 @@
 				<Component Subtype="Display" Count="1"/>
 				<Component Subtype="SteelPlate" Count="30"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ProgrammableBlockDefinition">
 			<Id>
@@ -76,10 +79,10 @@
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="Construction" Count="2"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -88,6 +91,7 @@
 				<Component Subtype="Display" Count="1"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_DefensiveCombatBlockDefinition">
 			<Id>
@@ -98,16 +102,17 @@
 				<Component Subtype="InteriorPlate" Count="20"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="Detector" Count="20"/>
 				<Component Subtype="Motor" Count="4"/>
 				<Component Subtype="Computer" Count="20"/>
 				<Component Subtype="SteelPlate" Count="30"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_DefensiveCombatBlockDefinition">
 			<Id>
@@ -118,16 +123,17 @@
 				<Component Subtype="InteriorPlate" Count="2"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="5"/>
 				<Component Subtype="Detector" Count="4"/>
 				<Component Subtype="Motor" Count="2"/>
 				<Component Subtype="Computer" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_OffensiveCombatBlockDefinition">
 			<Id>
@@ -138,16 +144,17 @@
 				<Component Subtype="InteriorPlate" Count="20"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="Detector" Count="20"/>
 				<Component Subtype="Motor" Count="4"/>
 				<Component Subtype="Computer" Count="20"/>
 				<Component Subtype="SteelPlate" Count="30"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_OffensiveCombatBlockDefinition">
 			<Id>
@@ -158,16 +165,17 @@
 				<Component Subtype="InteriorPlate" Count="2"/>
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>GVK_CUScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_CUScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="5"/>
 				<Component Subtype="Detector" Count="4"/>
 				<Component Subtype="Motor" Count="2"/>
 				<Component Subtype="Computer" Count="10"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
 	</CubeBlocks>
 </Definitions>
