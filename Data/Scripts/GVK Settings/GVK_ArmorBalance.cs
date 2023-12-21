@@ -139,7 +139,7 @@ namespace MikeDude.ArmorBalance
                             //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
-							thrustDef.MinPowerConsumption *= 2f;
+							//thrustDef.MinPowerConsumption *= 2f;
                         }
                         else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
 						{
@@ -158,8 +158,8 @@ namespace MikeDude.ArmorBalance
                             thrustDef.EffectivenessAtMinInfluence = 0f;
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
-							thrustDef.ForceMagnitude *= 2f;
-							thrustDef.MinPowerConsumption *= 10f;
+							//thrustDef.ForceMagnitude *= 2f;
+							//thrustDef.MinPowerConsumption *= 10f;
 						}
                         else
 						{

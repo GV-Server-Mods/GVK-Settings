@@ -23,6 +23,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+            <ForceMagnitude>30000</ForceMagnitude>
+            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -45,6 +48,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -67,6 +73,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>1000000</ForceMagnitude>
+            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -89,6 +98,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+            <ForceMagnitude>10000000</ForceMagnitude>
+            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -111,6 +123,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+            <ForceMagnitude>30000</ForceMagnitude>
+            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -133,6 +148,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -155,6 +173,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>1000000</ForceMagnitude>
+            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -177,6 +198,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+            <ForceMagnitude>10000000</ForceMagnitude>
+            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -199,6 +223,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+            <ForceMagnitude>30000</ForceMagnitude>
+            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -221,6 +248,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -243,6 +273,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>1000000</ForceMagnitude>
+            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -265,6 +298,9 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+            <ForceMagnitude>10000000</ForceMagnitude>
+            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<!-- Hydrogen Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -295,8 +331,10 @@
 				<Efficiency>1.5</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
-			<ForceMagnitude>15000000</ForceMagnitude>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+			<ForceMagnitude>15000000</ForceMagnitude>
+            <MaxPowerConsumption>7.5</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -318,8 +356,6 @@
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
 			<CriticalComponent Subtype="LargeTube" Index="0"/>
-			<ForceMagnitude>1500000</ForceMagnitude>
-			<SlowdownFactor>1</SlowdownFactor>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
@@ -329,6 +365,9 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>0.75</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -358,8 +397,10 @@
 				<Efficiency>1.5</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
-			<ForceMagnitude>1000000</ForceMagnitude>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>0.375</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -381,7 +422,6 @@
 				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
 			<CriticalComponent Subtype="LargeTube" Index="0"/>
-			<ForceMagnitude>98400</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
@@ -391,6 +431,9 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+			<ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.0375</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -420,8 +463,10 @@
 				<Efficiency>1.5</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
-			<ForceMagnitude>15000000</ForceMagnitude>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+			<ForceMagnitude>15000000</ForceMagnitude>
+            <MaxPowerConsumption>7.5</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -443,7 +488,6 @@
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
 			<CriticalComponent Subtype="LargeTube" Index="0"/>
-			<ForceMagnitude>1500000</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
@@ -453,6 +497,9 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>0.75</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -482,8 +529,10 @@
 				<Efficiency>1.5</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
-			<ForceMagnitude>1000000</ForceMagnitude>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>0.375</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -505,7 +554,6 @@
 				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
 			<CriticalComponent Subtype="LargeTube" Index="0"/>
-			<ForceMagnitude>98400</ForceMagnitude>
 			<FuelConverter>
 				<FuelId>
 					<TypeId>GasProperties</TypeId>
@@ -515,6 +563,9 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+			<ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.0375</MaxPowerConsumption>
+            <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<!-- Flat Atmo Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -539,6 +590,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+            <ForceMagnitude>3000000</ForceMagnitude>
+            <MaxPowerConsumption>10</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -562,6 +616,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
+            <ForceMagnitude>3000000</ForceMagnitude>
+            <MaxPowerConsumption>10</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -585,6 +642,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -608,6 +668,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -631,6 +694,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>90000</ForceMagnitude>
+            <MaxPowerConsumption>0.3</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -654,6 +720,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
+            <ForceMagnitude>90000</ForceMagnitude>
+            <MaxPowerConsumption>0.3</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -678,6 +747,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+            <ForceMagnitude>9000</ForceMagnitude>
+            <MaxPowerConsumption>0.03</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -701,6 +773,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
+            <ForceMagnitude>9000</ForceMagnitude>
+            <MaxPowerConsumption>0.03</MaxPowerConsumption>
+            <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 	</CubeBlocks>
 </Definitions>
