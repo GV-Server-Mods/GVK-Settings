@@ -17,7 +17,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
-				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Thrust" Count="5"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
@@ -39,7 +39,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
-				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Thrust" Count="25"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
@@ -61,7 +61,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
-				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Thrust" Count="50"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
@@ -83,7 +83,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
-				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Thrust" Count="300"/>
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
@@ -105,7 +105,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
-				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Thrust" Count="5"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
@@ -127,7 +127,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
-				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Thrust" Count="25"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
@@ -149,7 +149,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
-				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Thrust" Count="50"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
@@ -171,7 +171,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
-				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Thrust" Count="300"/>
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
@@ -193,7 +193,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
-				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Thrust" Count="5"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 			</Components>
@@ -215,7 +215,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
-				<Component Subtype="Thrust" Count="12"/>
+				<Component Subtype="Thrust" Count="25"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="SteelPlate" Count="4"/>
 			</Components>
@@ -237,7 +237,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
-				<Component Subtype="Thrust" Count="80"/>
+				<Component Subtype="Thrust" Count="50"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="SteelPlate" Count="10"/>
 			</Components>
@@ -259,7 +259,7 @@
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
-				<Component Subtype="Thrust" Count="960"/>
+				<Component Subtype="Thrust" Count="300"/>
 				<Component Subtype="Construction" Count="30"/>
 				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
