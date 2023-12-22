@@ -12,7 +12,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -23,8 +23,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>30000</ForceMagnitude>
-            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.25</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -37,7 +37,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -48,8 +48,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>2.50</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -62,7 +62,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -73,8 +73,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>1000000</ForceMagnitude>
-            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>5</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -87,7 +87,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -98,8 +98,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-            <ForceMagnitude>10000000</ForceMagnitude>
-            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <ForceMagnitude>15000000</ForceMagnitude>
+            <MaxPowerConsumption>50</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -112,7 +112,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -123,8 +123,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>30000</ForceMagnitude>
-            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.250</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -137,7 +137,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -148,8 +148,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>2.50</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -162,7 +162,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -173,8 +173,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>1000000</ForceMagnitude>
-            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>5</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -187,7 +187,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -198,8 +198,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-            <ForceMagnitude>10000000</ForceMagnitude>
-            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <ForceMagnitude>15000000</ForceMagnitude>
+            <MaxPowerConsumption>50.00</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -212,7 +212,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -223,8 +223,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>30000</ForceMagnitude>
-            <MaxPowerConsumption>0.200</MaxPowerConsumption>
+            <ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.250</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -237,7 +237,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="1"/>
@@ -248,8 +248,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>2.00</MaxPowerConsumption>
+            <ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>2.50</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -262,7 +262,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -273,8 +273,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>1000000</ForceMagnitude>
-            <MaxPowerConsumption>6.70</MaxPowerConsumption>
+            <ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>5</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -287,7 +287,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="70"/>
@@ -298,8 +298,8 @@
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-            <ForceMagnitude>10000000</ForceMagnitude>
-            <MaxPowerConsumption>67.00</MaxPowerConsumption>
+            <ForceMagnitude>15000000</ForceMagnitude>
+            <MaxPowerConsumption>50.00</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<!-- Hydrogen Thrusters -->
@@ -313,7 +313,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="150"/>
@@ -332,8 +332,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-			<ForceMagnitude>15000000</ForceMagnitude>
-            <MaxPowerConsumption>7.5</MaxPowerConsumption>
+			<ForceMagnitude>20000000</ForceMagnitude>
+            <MaxPowerConsumption>10</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -346,7 +346,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -365,8 +365,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>1500000</ForceMagnitude>
-            <MaxPowerConsumption>0.75</MaxPowerConsumption>
+			<ForceMagnitude>2000000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -379,7 +379,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="20"/>
@@ -398,8 +398,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>750000</ForceMagnitude>
-            <MaxPowerConsumption>0.375</MaxPowerConsumption>
+			<ForceMagnitude>1000000</ForceMagnitude>
+            <MaxPowerConsumption>0.5</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -412,7 +412,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -431,8 +431,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-			<ForceMagnitude>75000</ForceMagnitude>
-            <MaxPowerConsumption>0.0375</MaxPowerConsumption>
+			<ForceMagnitude>100000</ForceMagnitude>
+            <MaxPowerConsumption>0.05</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -445,7 +445,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="150"/>
@@ -464,8 +464,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-			<ForceMagnitude>15000000</ForceMagnitude>
-            <MaxPowerConsumption>7.5</MaxPowerConsumption>
+			<ForceMagnitude>20000000</ForceMagnitude>
+            <MaxPowerConsumption>10</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -478,7 +478,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="40"/>
@@ -497,8 +497,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>1500000</ForceMagnitude>
-            <MaxPowerConsumption>0.75</MaxPowerConsumption>
+			<ForceMagnitude>2000000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -511,7 +511,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="20"/>
@@ -530,8 +530,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>750000</ForceMagnitude>
-            <MaxPowerConsumption>0.375</MaxPowerConsumption>
+			<ForceMagnitude>1000000</ForceMagnitude>
+            <MaxPowerConsumption>0.5</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -544,7 +544,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -563,8 +563,8 @@
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-			<ForceMagnitude>75000</ForceMagnitude>
-            <MaxPowerConsumption>0.0375</MaxPowerConsumption>
+			<ForceMagnitude>100000</ForceMagnitude>
+            <MaxPowerConsumption>0.05</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<!-- Flat Atmo Thrusters -->
@@ -578,7 +578,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="15"/>
@@ -590,8 +590,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-            <ForceMagnitude>3000000</ForceMagnitude>
-            <MaxPowerConsumption>10</MaxPowerConsumption>
+            <ForceMagnitude>6000000</ForceMagnitude>
+            <MaxPowerConsumption>30</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -604,7 +604,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="15"/>
@@ -616,8 +616,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
-            <ForceMagnitude>3000000</ForceMagnitude>
-            <MaxPowerConsumption>10</MaxPowerConsumption>
+            <ForceMagnitude>6000000</ForceMagnitude>
+            <MaxPowerConsumption>30</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -630,7 +630,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -642,8 +642,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>1</MaxPowerConsumption>
+            <ForceMagnitude>600000</ForceMagnitude>
+            <MaxPowerConsumption>3</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -656,7 +656,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -668,8 +668,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>1</MaxPowerConsumption>
+            <ForceMagnitude>600000</ForceMagnitude>
+            <MaxPowerConsumption>3</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -682,7 +682,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -694,8 +694,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>90000</ForceMagnitude>
-            <MaxPowerConsumption>0.3</MaxPowerConsumption>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>1.5</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -708,7 +708,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -720,8 +720,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>90000</ForceMagnitude>
-            <MaxPowerConsumption>0.3</MaxPowerConsumption>
+            <ForceMagnitude>300000</ForceMagnitude>
+            <MaxPowerConsumption>1.5</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -735,7 +735,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -747,8 +747,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>9000</ForceMagnitude>
-            <MaxPowerConsumption>0.03</MaxPowerConsumption>
+            <ForceMagnitude>37500</ForceMagnitude>
+            <MaxPowerConsumption>0.1875</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -761,7 +761,7 @@
 				<Component Subtype="GVK_Thrust_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>ThrustScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="10"/>
@@ -773,8 +773,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>9000</ForceMagnitude>
-            <MaxPowerConsumption>0.03</MaxPowerConsumption>
+            <ForceMagnitude>37500</ForceMagnitude>
+            <MaxPowerConsumption>0.1875</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 	</CubeBlocks>
