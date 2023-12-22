@@ -64,6 +64,12 @@
 		<Entry Class="Components" BlueprintSubtypeId="006_GVK_Laser_Tech" />
 		<Entry Class="Components" BlueprintSubtypeId="007_GVK_Data_Core" />
 		<!-- NPC CU Refinery -->
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="GVK_CUScraptoIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="HoverScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="ThrustScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="SCalScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="LCalScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="MissileScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="LaserScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="DataScraptoCUIngot" />
 	</BlueprintClassEntries>
 </Definitions>

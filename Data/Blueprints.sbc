@@ -168,17 +168,107 @@
 		<Blueprint>
             <Id>
                 <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>GVK_CUScraptoIngot</SubtypeId>
+                <SubtypeId>HoverScraptoCUIngot</SubtypeId>
             </Id>
             <DisplayName>Construction Units</DisplayName>
             <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol>C.U.</IconSymbol>
+			<IconSymbol></IconSymbol>
             <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="GVK_CUScrap" />
+                <Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap" />
             </Prerequisites>
-            <Result Amount="0.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.1</BaseProductionTimeInSeconds>
+            <Result Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.135</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>ThrustScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap" />
+            </Prerequisites>
+            <Result Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.135</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>SCalScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap" />
+            </Prerequisites>
+            <Result Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.68</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>LCalScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap" />
+            </Prerequisites>
+            <Result Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.27</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>MissileScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap" />
+            </Prerequisites>
+            <Result Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.27</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>LaserScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap" />
+            </Prerequisites>
+            <Result Amount="54" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>0.54</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>DataScraptoCUIngot</SubtypeId>
+            </Id>
+            <DisplayName>Construction Units</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol></IconSymbol>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="DataScrap" />
+            </Prerequisites>
+            <Result Amount="270" TypeId="Ingot" SubtypeId="GVK_CUs" />
+            <BaseProductionTimeInSeconds>2.7</BaseProductionTimeInSeconds>
         </Blueprint>
 	</Blueprints>
 </Definitions>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <PhysicalItems>
+	<PhysicalItems>
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ingot</TypeId>
@@ -41,24 +41,138 @@
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</PhysicalItem>
-        <PhysicalItem>
-            <Id>
-                <TypeId>Ore</TypeId>
-                <SubtypeId>GVK_CUScrap</SubtypeId>
-            </Id>
-            <DisplayName>CU Scrap</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>HoverScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Grav. Reflector</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol>C.U.</IconSymbol>
-            <Size>
-                <X>0.2</X>
-                <Y>0.2</Y>
-                <Z>0.1</Z>
-            </Size>
-            <Mass>1</Mass>
-            <Volume>0.254</Volume>
-            <Model>Models\Components\ScrapMetalComponent.mwm</Model>
-            <PhysicalMaterial>Metal</PhysicalMaterial>
-        </PhysicalItem>
-    </PhysicalItems>
+			<IconSymbol>Hover</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>ThrustScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Ignitor</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>Thrust</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>SCalScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Bolt Carrier</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>S.Cal</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>LCalScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Gun Cradle</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>L.Cal</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>MissileScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Launch Assem.</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>Missile</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>LaserScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Particle Emitter</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>Laser</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+		<PhysicalItem>
+			<Id>
+				<TypeId>Ore</TypeId>
+				<SubtypeId>DataScrap</SubtypeId>
+			</Id>
+			<DisplayName>[Scrap] Data Core</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Icon>Textures\Icons\CU icon.png</Icon>
+			<IconSymbol>Data</IconSymbol>
+			<Size>
+				<X>0.2</X>
+				<Y>0.2</Y>
+				<Z>0.1</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.254</Volume>
+			<Model>Models\Components\ScrapMetalComponent.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+		</PhysicalItem>
+	</PhysicalItems>
 </Definitions>

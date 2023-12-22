@@ -11,7 +11,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="SteelPlate" Count="1"/>
@@ -34,7 +34,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="SteelPlate" Count="11"/>
@@ -57,7 +57,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="SteelPlate" Count="11"/>
@@ -80,7 +80,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="SteelPlate" Count="1"/>
@@ -103,7 +103,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="30"/>
@@ -124,7 +124,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="5"/>
@@ -145,7 +145,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="30"/>
@@ -166,7 +166,7 @@
 				<Component Subtype="GVK_Data_Core" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>DataScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="Construction" Count="5"/>

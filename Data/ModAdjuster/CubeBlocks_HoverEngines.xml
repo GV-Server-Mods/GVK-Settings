@@ -13,7 +13,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="1"/>
@@ -39,7 +39,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="5"/>
@@ -65,7 +65,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="4"/>
@@ -91,7 +91,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="20"/>
@@ -118,7 +118,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="1"/>
@@ -144,7 +144,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="5"/>
@@ -170,7 +170,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="4"/>
@@ -196,7 +196,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="20"/>
@@ -222,7 +222,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="1"/>
@@ -247,7 +247,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="5"/>
@@ -272,7 +272,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="4"/>
@@ -297,7 +297,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="20"/>
@@ -323,7 +323,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="1">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="1"/>
@@ -348,7 +348,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="5"/>
@@ -373,7 +373,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="5">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="4"/>
@@ -398,7 +398,7 @@
 				<Component Subtype="GVK_Hover_Tech" Count="50">
 					<DeconstructId>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>GVK_CUScrap</SubtypeId>
+						<SubtypeId>HoverScrap</SubtypeId>
 					</DeconstructId>
 				</Component>
 				<Component Subtype="LargeTube" Count="20"/>
