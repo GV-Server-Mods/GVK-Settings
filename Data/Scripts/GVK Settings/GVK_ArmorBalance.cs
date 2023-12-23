@@ -54,6 +54,12 @@ namespace MikeDude.ArmorBalance
                 var cargoDef = blockDef as MyCargoContainerDefinition;
 				var reactorDef = blockDef as MyReactorDefinition;
 				var solarDef = blockDef as MySolarPanelDefinition;
+				var defensiveCombatDef = blockDef as MyDefensiveCombatBlockDefinition;
+				var offensiveCombatDef = blockDef as MyOffensiveCombatBlockDefinition;
+				var pathRecorderDef = blockDef as MyPathRecorderBlockDefinition;
+				var basicMissionDef = blockDef as MyBasicMissionBlockDefinition;
+				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
+				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
                 blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 
@@ -100,7 +106,7 @@ namespace MikeDude.ArmorBalance
                     }*/
                 }
 
-                //Drillblocker
+                //Do stuff to Beacons
                 if (beaconDef != null)
                 {
                     if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
@@ -119,7 +125,7 @@ namespace MikeDude.ArmorBalance
                     }
                 }
 
-                //Thrusters
+                //Re-Tune Thrusters
                 if (thrustDef != null)
                 {
                     thrustDef.GeneralDamageMultiplier = 0.5f;
@@ -199,28 +205,57 @@ namespace MikeDude.ArmorBalance
 					}
                 }
 
-                //gyros
+                //Nerf gyros because they are better than armor
                 if (gyroDef != null || (upgradeModuleDef != null && blockDef.Id.SubtypeName.Contains("Gyro")))
                 {
                     blockDef.GeneralDamageMultiplier = 2;
                 }
 
+				//Buff resistance on critical ship control related blocks
                 //cockpits (but not desks, or chairs)
                 if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit"))
                 {
                     cockpitDef.GeneralDamageMultiplier = 0.5f;
                 }
-
+				//AI blocks
+                if (defensiveCombatDef != null)
+                {
+                    defensiveCombatDef.GeneralDamageMultiplier = 0.5f;
+                }
+				//AI blocks
+                if (offensiveCombatDef != null)
+                {
+                    offensiveCombatDef.GeneralDamageMultiplier = 0.5f;
+                }
+				//AI blocks
+                if (pathRecorderDef != null)
+                {
+                    pathRecorderDef.GeneralDamageMultiplier = 0.5f;
+                }
+				//AI blocks
+                if (basicMissionDef != null)
+                {
+                    basicMissionDef.GeneralDamageMultiplier = 0.5f;
+                }
+				//Programmable Blocks
+                if (programmableBlockDef != null)
+                {
+                    programmableBlockDef.GeneralDamageMultiplier = 0.5f;
+                }
                 //remote controls
                 if (remoteControlDef != null)
                 {
                     remoteControlDef.GeneralDamageMultiplier = 0.5f;
                 }
-
                 //timer blocks 
                 if (timerBlockDef != null)
                 {
                     timerBlockDef.GeneralDamageMultiplier = 0.5f;
+                }
+                //CTC blocks 
+                if (turretControllerDef != null)
+                {
+                    turretControllerDef.GeneralDamageMultiplier = 0.5f;
                 }
 
                 // Fix the upgradeable O2/H2 gen (currently removed mod)
