@@ -270,5 +270,32 @@
             <Result Amount="270" TypeId="Ingot" SubtypeId="GVK_CUs" />
             <BaseProductionTimeInSeconds>2.7</BaseProductionTimeInSeconds>
         </Blueprint>
+		<!-- Added because other modders are too lazy to fix their errors -->
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>BIGCHUNGUS</SubtypeId>
+            </Id>
+            <DisplayName>BIGCHUNGUS</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS" />
+            </Prerequisites>
+            <Result Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS" />
+            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+        </Blueprint>
+		<Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>ADMINKIT</SubtypeId>
+            </Id>
+            <DisplayName>ADMINKIT</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Component" SubtypeId="ADMINKIT" />
+            </Prerequisites>
+            <Result Amount="1" TypeId="Component" SubtypeId="ADMINKIT" />
+            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+        </Blueprint>
 	</Blueprints>
 </Definitions>
