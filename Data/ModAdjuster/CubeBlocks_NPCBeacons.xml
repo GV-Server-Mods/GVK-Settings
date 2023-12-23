@@ -7,9 +7,10 @@
 				<SubtypeId>DisposableNpcBeaconLarge</SubtypeId>
 			</Id>
 			<Components>
-				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="Computer" Count="1"/>
+                <Component Subtype="RadioCommunication" Count="40" />
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
@@ -24,8 +25,9 @@
 				<SubtypeId>DisposableNpcBeaconSmall</SubtypeId>
 			</Id>
 			<Components>
-				<Component Subtype="SteelPlate" Count="300"/>
 				<Component Subtype="Computer" Count="1"/>
+                <Component Subtype="RadioCommunication" Count="4" />
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<BuildProgressModels>
