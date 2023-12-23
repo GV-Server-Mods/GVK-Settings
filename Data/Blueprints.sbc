@@ -270,7 +270,7 @@
             <Result Amount="270" TypeId="Ingot" SubtypeId="GVK_CUs" />
             <BaseProductionTimeInSeconds>2.7</BaseProductionTimeInSeconds>
         </Blueprint>
-		<!-- Added because other modders are too lazy to fix their errors -->
+		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
             <Id>
                 <TypeId>BlueprintDefinition</TypeId>
