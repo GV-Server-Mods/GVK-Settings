@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-Ion-SmallGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-Ion-SmallGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="10"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-Ion-LargeGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-Ion-LargeGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="200"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-IonSciFi-SmallGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-IonSciFi-SmallGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="10"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-IonSciFi-LargeGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-IonSciFi-LargeGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="200"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-WarfareIon-SmallGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="Thrust" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-WarfareIon-SmallGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="LargeTube" Count="5"/>
+				<Component Subtype="Thrust" Count="10"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-WarfareIon-LargeGrid-Small</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="Construction" Count="40"/>
+				<Component Subtype="LargeTube" Count="8"/>
+				<Component Subtype="Thrust" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>MES-NPC-Thrust-WarfareIon-LargeGrid-Large</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="100"/>
+				<Component Subtype="Construction" Count="70"/>
+				<Component Subtype="LargeTube" Count="40"/>
+				<Component Subtype="Thrust" Count="200"/>
+				<Component Subtype="Construction" Count="30"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Thrust" Index="0"/>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

@@ -10,13 +10,13 @@
 			<Icon>Textures\Icons\CompositePlate.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="39.3" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="19.6" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.3" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="7.06" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="3.53" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.18" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="0.53" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>27</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hover_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -28,13 +28,13 @@
 			<Icon>Textures\Icons\HeatingElement.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="229.5" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="229.5" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="23" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.14" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="1.39" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>27</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Thrust_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -46,13 +46,13 @@
 			<Icon>Textures\Icons\Cryocooler.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="928.8" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="232.2" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="139.3" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="23.2" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="179.68" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="44.92" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="26.95" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="8.98" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>14</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_SmallCaliber_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -64,13 +64,13 @@
 			<Icon>Textures\Icons\TokamakBlanket.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="2" TypeId="Ingot" SubtypeId="Magnesium"/>
-				<Item Amount="2" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="11.8" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="2" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="0.93" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="5.61" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Silver"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>54</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_LargeCaliber_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -82,13 +82,13 @@
 			<Icon>Textures\Icons\SuperMagnet.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="464.5" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="11.6" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="46.4" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="3.5" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="113.84" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2.85" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="11.38" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.69" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>54</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Missile_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -100,13 +100,13 @@
 			<Icon>Textures\Icons\LaserEmitter.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="54" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="906.6" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="22.7" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="90.7" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="6.8" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="120.4" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="6.02" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="12.04" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3.01" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>108</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Laser_Tech"/>
 		</Blueprint>
 		<Blueprint>
@@ -118,14 +118,14 @@
 			<Icon>Textures\Icons\Thermocouple.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
-				<Item Amount="270" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="99.2" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="396.8" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="4959.8" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="99.2" TypeId="Ingot" SubtypeId="Gold"/>
-				<Item Amount="99.2" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="107.92" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="269.79" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
-			<BaseProductionTimeInSeconds>540</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>300</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Data_Core"/>
 		</Blueprint>
 		<Blueprint>
@@ -165,137 +165,181 @@
 			<Priority>1000</Priority>
 			<BaseProductionTimeInSeconds>1</BaseProductionTimeInSeconds>
 		</Blueprint>
+		<!-- Scrap to CU -->
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>HoverScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>HoverScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap" />
-            </Prerequisites>
-            <Result Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.135</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="7.06" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="3.53" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.18" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="0.53" TypeId="Ingot" SubtypeId="Gold"/>
+			</Results>
+			<BaseProductionTimeInSeconds>0.3</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>ThrustScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>ThrustScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap" />
-            </Prerequisites>
-            <Result Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.135</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.14" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="1.39" TypeId="Ingot" SubtypeId="Silicon"/>
+			</Results>
+			<BaseProductionTimeInSeconds>0.6</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>SCalScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>SCalScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap" />
-            </Prerequisites>
-            <Result Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.68</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="179.68" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="44.92" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="26.95" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="8.98" TypeId="Ingot" SubtypeId="Magnesium"/>
+			</Results>
+			<BaseProductionTimeInSeconds>1.1</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>LCalScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>LCalScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap" />
-            </Prerequisites>
-            <Result Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.27</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="0.93" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="5.61" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Silver"/>
+			</Results>
+			<BaseProductionTimeInSeconds>3.8</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>MissileScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>MissileScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap" />
-            </Prerequisites>
-            <Result Amount="27" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.27</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="113.84" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2.85" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="11.38" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.69" TypeId="Ingot" SubtypeId="Gold"/>
+			</Results>
+			<BaseProductionTimeInSeconds>3.8</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>LaserScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>LaserScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap" />
-            </Prerequisites>
-            <Result Amount="54" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>0.54</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="120.4" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="6.02" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="12.04" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3.01" TypeId="Ingot" SubtypeId="Gold"/>
+			</Results>
+			<BaseProductionTimeInSeconds>7.5</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>DataScraptoCUIngot</SubtypeId>
-            </Id>
-            <DisplayName>Construction Units</DisplayName>
-            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>DataScraptoCUIngot</SubtypeId>
+			</Id>
+			<DisplayName>Construction Units</DisplayName>
+			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
-			<IconSymbol></IconSymbol>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Ore" SubtypeId="DataScrap" />
-            </Prerequisites>
-            <Result Amount="270" TypeId="Ingot" SubtypeId="GVK_CUs" />
-            <BaseProductionTimeInSeconds>2.7</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<IconSymbol/>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Ore" SubtypeId="DataScrap"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="107.92" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="269.79" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Magnesium"/>
+			</Results>
+			<BaseProductionTimeInSeconds>37.5</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>BIGCHUNGUS</SubtypeId>
-            </Id>
-            <DisplayName>BIGCHUNGUS</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS" />
-            </Prerequisites>
-            <Result Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS" />
-            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>BIGCHUNGUS</SubtypeId>
+			</Id>
+			<DisplayName>BIGCHUNGUS</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="BIGCHUNGUS"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>ADMINKIT</SubtypeId>
-            </Id>
-            <DisplayName>ADMINKIT</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Component" SubtypeId="ADMINKIT" />
-            </Prerequisites>
-            <Result Amount="1" TypeId="Component" SubtypeId="ADMINKIT" />
-            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>ADMINKIT</SubtypeId>
+			</Id>
+			<DisplayName>ADMINKIT</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ADMINKIT"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="ADMINKIT"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
 	</Blueprints>
 </Definitions>
