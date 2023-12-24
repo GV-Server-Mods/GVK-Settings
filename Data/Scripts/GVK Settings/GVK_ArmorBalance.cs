@@ -139,10 +139,10 @@ namespace MikeDude.ArmorBalance
                         {
                             thrustDef.MaxPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
                             thrustDef.MinPlanetaryInfluence = 0f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
+                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
                             thrustDef.EffectivenessAtMaxInfluence = 1f;
                             thrustDef.EffectivenessAtMinInfluence = 0f;
                             //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
-                            //thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f; 
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
 							//thrustDef.MinPowerConsumption *= 2f;
@@ -151,6 +151,7 @@ namespace MikeDude.ArmorBalance
 						{
                             thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
                             thrustDef.MinPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
+                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
                             thrustDef.EffectivenessAtMaxInfluence = 1f;
                             thrustDef.EffectivenessAtMinInfluence = 0f;
                             thrustDef.ConsumptionFactorPerG = 0f;
@@ -160,6 +161,7 @@ namespace MikeDude.ArmorBalance
 						{
                             thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
                             thrustDef.MinPlanetaryInfluence = 0.5f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
+                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
                             thrustDef.EffectivenessAtMaxInfluence = 1f;
                             thrustDef.EffectivenessAtMinInfluence = 0f;
                             thrustDef.ConsumptionFactorPerG = 0f;
