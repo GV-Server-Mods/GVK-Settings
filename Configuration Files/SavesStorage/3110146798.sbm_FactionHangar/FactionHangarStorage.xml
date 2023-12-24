@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-16"?>
+<HangarData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FactionData>
+    <Faction>test</Faction>
+    <FactionId>270806082026195510</FactionId>
+    <FactionHangarData>
+      <HangarType>Faction</HangarType>
+      <StoredGrid>
+        <GridId>78221878140269325</GridId>
+        <GridName>[tes] Bronco</GridName>
+        <StoredPath>C:\SeServers\SE_GVK_S6\Instance\FactionHangarSaves\MikeDude\tesBronco_78221878140269325\bp.sbc</StoredPath>
+        <Owner>144115188075855895</Owner>
+        <OwnerName>MikeDude</OwnerName>
+        <AutoHangared>true</AutoHangared>
+      </StoredGrid>
+    </FactionHangarData>
+  </FactionData>
+  <PrivateData>
+    <Private>
+      <HangarType>Private</HangarType>
+    </Private>
+    <PlayerId>144115188075855895</PlayerId>
+    <Player>MikeDude</Player>
+  </PrivateData>
+  <PrivateData>
+    <Private>
+      <HangarType>Private</HangarType>
+      <StoredGrid>
+        <GridId>113807317909884283</GridId>
+        <GridName>[TIN] Vault1</GridName>
+        <StoredPath>C:\SeServers\SE_GVK_S6\Instance\FactionHangarSaves\Tinsoldier\TINVault1_113807317909884283\bp.sbc</StoredPath>
+        <Owner>144115188075855901</Owner>
+        <OwnerName>Tinsoldier</OwnerName>
+        <AutoHangared>false</AutoHangared>
+      </StoredGrid>
+    </Private>
+    <PlayerId>144115188075855901</PlayerId>
+    <Player>Tinsoldier</Player>
+  </PrivateData>
+  <PrivateData>
+    <Private>
+      <HangarType>Private</HangarType>
+    </Private>
+    <PlayerId>144115188075855910</PlayerId>
+    <Player>Merii</Player>
+  </PrivateData>
+</HangarData>

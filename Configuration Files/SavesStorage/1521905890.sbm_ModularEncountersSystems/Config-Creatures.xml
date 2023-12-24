@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ConfigCreatures xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ModVersion>2.1.38</ModVersion>
+  <ModVersion>2.70.4</ModVersion>
   <EnableSpawns>false</EnableSpawns>
   <OverrideVanillaCreatureSpawns>false</OverrideVanillaCreatureSpawns>
   <MinCreatureSpawnTime>900</MinCreatureSpawnTime>

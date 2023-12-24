@@ -5,5 +5,6 @@
   <Boost_Multiplier>3</Boost_Multiplier>
   <Base_Time_Multiplier>0.30</Base_Time_Multiplier>
   <Built_Percentage>0</Built_Percentage>
-  <ContainerTag>[mnm]</ContainerTag>
+  <ContainerTag></ContainerTag>
+  <Zero_Construction_Time_Blocks_Per_Pass>25</Zero_Construction_Time_Blocks_Per_Pass>
 </Config>

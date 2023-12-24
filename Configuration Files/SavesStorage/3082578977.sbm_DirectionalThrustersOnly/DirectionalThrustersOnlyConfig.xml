@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DirectionalThrustersOnlyConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ConfigurationItems>
+    <DirectionalThrustersOnlyConfigurationItem>
+      <Types>
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockSmallThrustSciFi" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockLargeThrustSciFi" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockSmallThrustSciFi" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockLargeThrustSciFi" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockSmallThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockLargeThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockSmallThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockLargeThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockSmallModularThruster" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="SmallBlockLargeModularThruster" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockSmallModularThruster" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="LargeBlockLargeModularThruster" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-Ion-SmallGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-Ion-SmallGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-Ion-LargeGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-Ion-LargeGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-IonSciFi-SmallGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-IonSciFi-SmallGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-IonSciFi-LargeGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-IonSciFi-LargeGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-WarfareIon-SmallGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-WarfareIon-SmallGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-WarfareIon-LargeGrid-Small" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="MES-NPC-Thrust-WarfareIon-LargeGrid-Large" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="ProprietarySmallBlockSmallThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="ProprietarySmallBlockLargeThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="ProprietaryLargeBlockSmallThrust" />
+        <SerializableDefinitionId Type="MyObjectBuilder_Thrust" Subtype="ProprietaryLargeBlockLargeThrust" />
+      </Types>
+      <FalloffStartDegrees>60</FalloffStartDegrees>
+      <MinThrustDegrees>10</MinThrustDegrees>
+      <MinThrustMultiplier>0.01</MinThrustMultiplier>
+    </DirectionalThrustersOnlyConfigurationItem>
+  </ConfigurationItems>
+</DirectionalThrustersOnlyConfiguration>

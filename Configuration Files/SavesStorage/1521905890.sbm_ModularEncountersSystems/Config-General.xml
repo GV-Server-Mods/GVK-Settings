@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ConfigGeneral xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ModVersion>2.1.38</ModVersion>
+  <ModVersion>2.70.4</ModVersion>
   <SpawnerDebug>false</SpawnerDebug>
   <BehaviorDebug>false</BehaviorDebug>
   <EnableLegacySpaceCargoShipDetection>true</EnableLegacySpaceCargoShipDetection>
@@ -106,7 +106,7 @@
     <string>Reaver-Group-Single-Thrasher</string>
     <string>Reaver-Group-Single-Tormentor</string>
   </NpcSpawnGroupBlacklist>
-  <UseEconomyBuyingReputationIncrease>true</UseEconomyBuyingReputationIncrease>
+  <UseEconomyBuyingReputationIncrease>false</UseEconomyBuyingReputationIncrease>
   <EconomyBuyingReputationCostAmount>500000</EconomyBuyingReputationCostAmount>
   <Difficulty>1</Difficulty>
 </ConfigGeneral>

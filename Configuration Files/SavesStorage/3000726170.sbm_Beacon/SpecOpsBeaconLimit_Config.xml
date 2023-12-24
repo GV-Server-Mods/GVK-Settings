@@ -3,7 +3,7 @@
   <USE_MAX_BEACONS>false</USE_MAX_BEACONS>
   <MAX_BEACONS>33</MAX_BEACONS>
   <TICK_UPDATE_RATE>300</TICK_UPDATE_RATE>
-  <ALERT_RATE_SECONDS>300</ALERT_RATE_SECONDS>
+  <ALERT_RATE_SECONDS>900</ALERT_RATE_SECONDS>
   <BEACON_SUBTYPE>
     <BeaconSubtype>SmallBlockBeacon</BeaconSubtype>
     <Limit>2</Limit>
@@ -34,17 +34,17 @@
   </BEACON_SUBTYPE>
   <BEACON_SUBTYPE>
     <BeaconSubtype>LargeBlockBeacon</BeaconSubtype>
+    <Limit>3</Limit>
+    <Limit>4</Limit>
     <Limit>4</Limit>
     <Limit>5</Limit>
     <Limit>5</Limit>
+    <Limit>5</Limit>
     <Limit>6</Limit>
     <Limit>6</Limit>
     <Limit>6</Limit>
+    <Limit>6</Limit>
     <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>7</Limit>
-    <Limit>8</Limit>
   </BEACON_SUBTYPE>
   <BEACON_SUBTYPE>
     <BeaconSubtype>LargeBlockBeacon_MediumCore</BeaconSubtype>
@@ -73,5 +73,33 @@
     <Limit>4</Limit>
     <Limit>4</Limit>
     <Limit>5</Limit>
+  </BEACON_SUBTYPE>
+  <BEACON_SUBTYPE>
+    <BeaconSubtype>LargeBlockBeacon_Pipeline</BeaconSubtype>
+    <Limit>4</Limit>
+    <Limit>5</Limit>
+    <Limit>5</Limit>
+    <Limit>6</Limit>
+    <Limit>6</Limit>
+    <Limit>6</Limit>
+    <Limit>7</Limit>
+    <Limit>7</Limit>
+    <Limit>7</Limit>
+    <Limit>7</Limit>
+    <Limit>8</Limit>
+  </BEACON_SUBTYPE>
+  <BEACON_SUBTYPE>
+    <BeaconSubtype>LargeBlockBeacon_Fortress</BeaconSubtype>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
+    <Limit>1</Limit>
   </BEACON_SUBTYPE>
 </Config>

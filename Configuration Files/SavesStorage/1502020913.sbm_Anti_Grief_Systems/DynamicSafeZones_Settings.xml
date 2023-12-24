@@ -7,7 +7,7 @@
   <tellFactionsZonesEligibility>true</tellFactionsZonesEligibility>
   <zoneEligibilityCooldown>60</zoneEligibilityCooldown>
   <checkGridsWithPower>true</checkGridsWithPower>
-  <delaySafeZoneAdd>10</delaySafeZoneAdd>
+  <delaySafeZoneAdd>30</delaySafeZoneAdd>
   <delaySafeZoneRemove>120</delaySafeZoneRemove>
   <omitGridsLessThan>30</omitGridsLessThan>
   <convertLargeShipstoStations>true</convertLargeShipstoStations>
@@ -30,6 +30,6 @@
   <currencyAmountRemoved>1</currencyAmountRemoved>
   <currencyDefinition>MyObjectBuilder_Ingot/Platinum</currencyDefinition>
   <enableGridRename>true</enableGridRename>
-  <allowSubgridConvert>true</allowSubgridConvert>
-  <convertSmallGridstoStations>true</convertSmallGridstoStations>
+  <allowSubgridConvert>false</allowSubgridConvert>
+  <convertSmallGridstoStations>false</convertSmallGridstoStations>
 </Settings>

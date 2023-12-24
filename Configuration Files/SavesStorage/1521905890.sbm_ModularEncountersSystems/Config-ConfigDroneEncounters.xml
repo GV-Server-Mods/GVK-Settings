@@ -11,6 +11,14 @@
   <PlanetSpawnFilters>
     <PlanetSpawnFilter>
       <PlanetName>PertamKharak</PlanetName>
+      <PlanetId>-1196000046392173980</PlanetId>
+      <PlanetSpawnGroupBlacklist>
+        <SpawnGroup>AddSpawnGroupIdHere</SpawnGroup>
+        <SpawnGroup>AddAnotherSpawnGroupIdHere</SpawnGroup>
+      </PlanetSpawnGroupBlacklist>
+    </PlanetSpawnFilter>
+    <PlanetSpawnFilter>
+      <PlanetName>PertamKharak</PlanetName>
       <PlanetId>7060852518520253387</PlanetId>
       <PlanetSpawnGroupBlacklist>
         <SpawnGroup>AddSpawnGroupIdHere</SpawnGroup>
@@ -47,7 +55,7 @@
     <string>DefinitionIdHere</string>
     <string>AnotherDefinitionIdHere</string>
   </DisableBlocksByDefinitionId>
-  <ModVersion>2.1.43</ModVersion>
+  <ModVersion>2.70.4</ModVersion>
   <EnableSpawns>true</EnableSpawns>
   <PlayerSpawnCooldown>4200</PlayerSpawnCooldown>
   <SpawnTimerTrigger>1200</SpawnTimerTrigger>
