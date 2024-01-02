@@ -19,7 +19,7 @@
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
@@ -44,7 +44,7 @@
 				<Component Subtype="LargeTube" Count="10"/>
 				<Component Subtype="Thrust" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="SteelPlate" Count="40"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -69,7 +69,7 @@
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -94,7 +94,7 @@
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
 				<Component Subtype="Construction" Count="30"/>
-				<Component Subtype="SteelPlate" Count="50"/>
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -119,7 +119,7 @@
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
@@ -144,7 +144,7 @@
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="SteelPlate" Count="40"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -169,7 +169,7 @@
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -194,7 +194,7 @@
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
 				<Component Subtype="Construction" Count="30"/>
-				<Component Subtype="SteelPlate" Count="50"/>
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -219,7 +219,7 @@
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="SteelPlate" Count="5"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
@@ -244,7 +244,7 @@
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="SteelPlate" Count="40"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -269,7 +269,7 @@
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
-				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -294,7 +294,7 @@
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
 				<Component Subtype="Construction" Count="30"/>
-				<Component Subtype="SteelPlate" Count="50"/>
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Thrust" Index="0"/>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
