@@ -11,10 +11,9 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="7.06" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="3.53" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.18" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="0.53" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="36.7" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="18.4" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="2.8" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hover_Tech"/>
@@ -29,10 +28,10 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="0.14" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="1.39" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.2" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Thrust_Tech"/>
@@ -47,10 +46,10 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="179.68" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="44.92" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="26.95" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="8.98" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="179.7" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="27" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="9" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_SmallCaliber_Tech"/>
@@ -65,10 +64,10 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Magnesium"/>
-				<Item Amount="0.93" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="5.61" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Silver"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_LargeCaliber_Tech"/>
@@ -83,10 +82,10 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="113.84" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="2.85" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="11.38" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="5.69" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="113.9" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2.9" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="11.4" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Missile_Tech"/>
@@ -102,9 +101,9 @@
 			<Prerequisites>
 				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
 				<Item Amount="120.4" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="6.02" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="12.04" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="3.01" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="6.1" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="12.1" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Laser_Tech"/>
@@ -119,11 +118,11 @@
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="107.92" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="269.79" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Gold"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="108" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="269.8" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>300</BaseProductionTimeInSeconds>
 			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Data_Core"/>
@@ -180,12 +179,11 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="7.06" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="3.53" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.18" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="0.53" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="36.7" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="18.4" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="2.8" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
-			<BaseProductionTimeInSeconds>0.3</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>0.2</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -201,12 +199,12 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="5.55" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="0.14" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="1.39" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.2" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Results>
-			<BaseProductionTimeInSeconds>0.6</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>0.5</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -222,12 +220,12 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="179.68" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="44.92" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="26.95" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="8.98" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="179.7" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="27" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="9" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
-			<BaseProductionTimeInSeconds>1.1</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>0.9</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -243,12 +241,12 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Magnesium"/>
-				<Item Amount="0.93" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="5.61" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Silver"/>
 			</Results>
-			<BaseProductionTimeInSeconds>3.8</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -264,12 +262,12 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="113.84" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="2.85" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="11.38" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="5.69" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="113.9" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2.9" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="11.4" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
-			<BaseProductionTimeInSeconds>3.8</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -286,11 +284,11 @@
 			<Results>
 				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
 				<Item Amount="120.4" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="6.02" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="12.04" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="3.01" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="6.1" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="12.1" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
-			<BaseProductionTimeInSeconds>7.5</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>6</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -306,13 +304,13 @@
 			</Prerequisites>
 			<Results>
 				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="107.92" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="269.79" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Gold"/>
-				<Item Amount="53.96" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="108" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="269.8" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="54" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
-			<BaseProductionTimeInSeconds>37.5</BaseProductionTimeInSeconds>
+			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
