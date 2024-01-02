@@ -10,7 +10,7 @@
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 MPs, 80 UPs.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 UPs, 80 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
@@ -55,7 +55,7 @@
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 MPs, 140 UPs.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 UPs, 140 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
@@ -100,7 +100,7 @@
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 MPs, 80 UPs.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 UPs, 80 MPs, 2 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -153,7 +153,7 @@
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 MPs, 140 UPs.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 UPs, 140 MPs, 4 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -206,7 +206,7 @@
 			<DisplayName>Heavy Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Heavy_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 MPs, 200 UPs.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 UPs, 200 MPs, 6 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -259,7 +259,7 @@
 			<DisplayName>Fortress Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Fortress_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 120 UPs, Static Only.</Description>
+			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 120 UPs, 8 Int. Turrets, 1 Shield Gen, 1 SRBM, 1 Drill Blocker, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -312,7 +312,7 @@
 			<DisplayName>Pipeline Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Pipeline_Icon_Overlay.dds</Icon>
-			<Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills.</Description>
+			<Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills, 10 UPs, No weapons, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
