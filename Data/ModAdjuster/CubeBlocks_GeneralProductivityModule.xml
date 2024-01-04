@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_UpgradeModuleDefinition">>
+			<Id>
+				<TypeId>UpgradeModule</TypeId>
+				<SubtypeId>GeneralProductivityModule</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1000" />
+				<Component Subtype="GVK_Data_Core" Count="1">
+					<DeconstructId>
+                        <TypeId>Ore</TypeId>
+                        <SubtypeId>DataScrap</SubtypeId>
+                    </DeconstructId>
+                </Component>
+				<Component Subtype="GVK_Laser_Tech" Count="10">
+					<DeconstructId>
+                        <TypeId>Ore</TypeId>
+                        <SubtypeId>LaserScrap</SubtypeId>
+                    </DeconstructId>
+                </Component>
+				<Component Subtype="Motor" Count="800" />
+				<Component Subtype="Superconductor" Count="1000" />
+				<Component Subtype="Computer" Count="2500" />
+                <Component Subtype="Display" Count="10" />
+				<Component Subtype="LargeTube" Count="600" />
+				<Component Subtype="SteelPlate" Count="500" />
+			</Components>
+			<CriticalComponent Subtype="LargeTube" Index="0"/>
+			<BuildTimeSeconds>400</BuildTimeSeconds>
+			<Upgrades>
+                <MyUpgradeModuleInfo>
+                    <UpgradeType>Productivity</UpgradeType>
+                    <Modifier>0.75</Modifier>
+                    <ModifierType>Additive</ModifierType>
+                </MyUpgradeModuleInfo>
+				<MyUpgradeModuleInfo>
+                    <UpgradeType>PowerEfficiency</UpgradeType>
+                    <Modifier>0.50</Modifier>
+                    <ModifierType>Multiplicative</ModifierType>
+                </MyUpgradeModuleInfo>
+				<MyUpgradeModuleInfo>
+                    <UpgradeType>Effectiveness</UpgradeType>
+                    <Modifier>1.14720269</Modifier>
+                    <ModifierType>Multiplicative</ModifierType>
+                </MyUpgradeModuleInfo>
+            </Upgrades>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

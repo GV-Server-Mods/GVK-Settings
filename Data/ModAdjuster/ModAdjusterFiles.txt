@@ -1,4 +1,5 @@
 CubeBlocks_Automation.xml
+CubeBlocks_GeneralProductivityModule.xml
 CubeBlocks_HoverEngines.xml
 CubeBlocks_NPCBeacons.xml
 CubeBlocks_NPCRemotes.xml
