@@ -40,7 +40,6 @@ namespace LimitedProdZone
             beacon = (Entity as IMyBeacon);
             LimitedProdZone_Assembler.beaconList.Add(beacon);
             LimitedProdZone_Refinery.beaconList.Add(beacon);
-            LimitedProdZone_SafeZoneBlock.beaconList.Add(beacon);
             LimitedProdZone_SmallGatlingGun.beaconList.Add(beacon);
             LimitedProdZone_LargeGatlingTurret.beaconList.Add(beacon);
             LimitedProdZone_LargeMissileTurret.beaconList.Add(beacon);
@@ -48,7 +47,6 @@ namespace LimitedProdZone
             LimitedProdZone_SmallMissileLauncherReload.beaconList.Add(beacon);
             LimitedProdZone_InteriorTurret.beaconList.Add(beacon);
             LimitedProdZone_ConveyorSorter.beaconList.Add(beacon);
-			LimitedProdZone_UpgradeModule.beaconList.Add(beacon);
 			LimitedProdZone_StaticDrill.beaconList.Add(beacon);
             if (beacon != null)
             {
@@ -155,10 +153,6 @@ namespace LimitedProdZone
             {
                 LimitedProdZone_Refinery.beaconList.Remove(beacon);
             }
-            if (LimitedProdZone_SafeZoneBlock.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SafeZoneBlock.beaconList.Remove(beacon);
-            }
             if (LimitedProdZone_SmallGatlingGun.beaconList.Contains(beacon))
             {
                 LimitedProdZone_SmallGatlingGun.beaconList.Remove(beacon);
@@ -182,10 +176,6 @@ namespace LimitedProdZone
             if (LimitedProdZone_ConveyorSorter.beaconList.Contains(beacon))
             {
                 LimitedProdZone_ConveyorSorter.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_UpgradeModule.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_UpgradeModule.beaconList.Remove(beacon);
             }
             if (LimitedProdZone_StaticDrill.beaconList.Contains(beacon))
             {
