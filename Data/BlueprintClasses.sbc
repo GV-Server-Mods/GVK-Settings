@@ -46,7 +46,6 @@
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Canvas" />
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
 		<Entry Class="SimpleComponents" BlueprintSubtypeId="001_GVK_SmallCaliber_Tech" />
-		<Entry Class="SimpleComponents" BlueprintSubtypeId="002_GVK_Thrust_Tech" />
 		<!-- Large Assemblers -->	
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
