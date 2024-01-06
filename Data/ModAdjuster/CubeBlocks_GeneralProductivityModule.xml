@@ -37,8 +37,8 @@
                 </MyUpgradeModuleInfo>
 				<MyUpgradeModuleInfo>
                     <UpgradeType>PowerEfficiency</UpgradeType>
-                    <Modifier>0.50</Modifier>
-                    <ModifierType>Multiplicative</ModifierType>
+                    <Modifier>-0.11</Modifier>
+                    <ModifierType>Additive</ModifierType>
                 </MyUpgradeModuleInfo>
 				<MyUpgradeModuleInfo>
                     <UpgradeType>Effectiveness</UpgradeType>
