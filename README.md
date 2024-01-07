@@ -6,6 +6,7 @@ Credit to Clockwork 168 for letting me use some of his component assets from the
 
 Credit to TwitchingPsycho for the animated safezone generator: https://steamcommunity.com/sharedfiles/filedetails/?id=2202391036
 
-Incorporates changes from:
+Incorporates changes (With Klime's permission) from:
 https://steamcommunity.com/sharedfiles/filedetails/?id=1871733117
 https://steamcommunity.com/sharedfiles/filedetails/?id=2533952116
+https://steamcommunity.com/sharedfiles/filedetails/?id=1844150178
