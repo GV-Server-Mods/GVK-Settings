@@ -19,7 +19,6 @@
 				<string>LargeBlockBeacon_HeavyCore</string>
 				<string>LargeBlockBeacon_Fortress</string>
 				<string>LargeBlockBeacon_Pipeline</string>
-				<string>LargeBlockBeacon_ShieldCore</string>
 			</ItemIds>
 		</Category>
 	</CategoryClasses>
