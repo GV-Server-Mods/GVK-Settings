@@ -15,6 +15,7 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_HeavyCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Fortress"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Pipeline"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_ShieldCore"/>
 			</Blocks>
 		</BlockVariantGroup>
 	</BlockVariantGroups>
