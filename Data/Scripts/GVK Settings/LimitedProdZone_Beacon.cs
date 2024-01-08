@@ -29,8 +29,8 @@ namespace LimitedProdZone
         private IMyCharacter character;
         private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
 
-        //private TextWriter logger = null;
-        //private String timeofload = "" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
+        private TextWriter logger = null;
+        private String timeofload = "" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
         private bool logicEnabled = false;
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -40,6 +40,7 @@ namespace LimitedProdZone
             beacon = (Entity as IMyBeacon);
             LimitedProdZone_Assembler.beaconList.Add(beacon);
             LimitedProdZone_Refinery.beaconList.Add(beacon);
+            LimitedProdZone_SafeZoneBlock.beaconList.Add(beacon);
             LimitedProdZone_SmallGatlingGun.beaconList.Add(beacon);
             LimitedProdZone_LargeGatlingTurret.beaconList.Add(beacon);
             LimitedProdZone_LargeMissileTurret.beaconList.Add(beacon);
@@ -47,6 +48,7 @@ namespace LimitedProdZone
             LimitedProdZone_SmallMissileLauncherReload.beaconList.Add(beacon);
             LimitedProdZone_InteriorTurret.beaconList.Add(beacon);
             LimitedProdZone_ConveyorSorter.beaconList.Add(beacon);
+			LimitedProdZone_UpgradeModule.beaconList.Add(beacon);
 			LimitedProdZone_StaticDrill.beaconList.Add(beacon);
             if (beacon != null)
             {
@@ -116,7 +118,7 @@ namespace LimitedProdZone
             });
         }
 
-        /*private void Log(string text)
+        private void Log(string text)
         {
             if (logger == null)
             {
@@ -134,7 +136,8 @@ namespace LimitedProdZone
             String datum = DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
             logger.WriteLine(datum + ": " + text);
             logger.Flush();
-        }*/
+
+        }
 
         public override void Close()
         {
@@ -151,6 +154,10 @@ namespace LimitedProdZone
             if (LimitedProdZone_Refinery.beaconList.Contains(beacon))
             {
                 LimitedProdZone_Refinery.beaconList.Remove(beacon);
+            }
+            if (LimitedProdZone_SafeZoneBlock.beaconList.Contains(beacon))
+            {
+                LimitedProdZone_SafeZoneBlock.beaconList.Remove(beacon);
             }
             if (LimitedProdZone_SmallGatlingGun.beaconList.Contains(beacon))
             {
@@ -175,6 +182,10 @@ namespace LimitedProdZone
             if (LimitedProdZone_ConveyorSorter.beaconList.Contains(beacon))
             {
                 LimitedProdZone_ConveyorSorter.beaconList.Remove(beacon);
+            }
+            if (LimitedProdZone_UpgradeModule.beaconList.Contains(beacon))
+            {
+                LimitedProdZone_UpgradeModule.beaconList.Remove(beacon);
             }
             if (LimitedProdZone_StaticDrill.beaconList.Contains(beacon))
             {
