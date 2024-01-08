@@ -8,7 +8,7 @@
 				<TypeId>SafeZoneBlock</TypeId>
 				<SubtypeId>SafeZoneBlock</SubtypeId>
 			</Id>
-			<DisplayName>Shield Generator</DisplayName>
+			<DisplayName>DisplayName_Block_SafeZone</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneBlock.dds</Icon>
 			<Description>Must NOT be on a grid with a Spec Core Beacon. Standalone Station Only.
 			
@@ -56,13 +56,11 @@
 			<MinSafeZoneRadius>10</MinSafeZoneRadius>
 			<DefaultSafeZoneRadius>100</DefaultSafeZoneRadius>
 			<SafeZoneActivationTimeS>120</SafeZoneActivationTimeS>
-			<MaxSafeZonePowerDrainkW>0</MaxSafeZonePowerDrainkW>
-			<MinSafeZonePowerDrainkW>0</MinSafeZonePowerDrainkW>
+			<MaxSafeZonePowerDrainkW>1000</MaxSafeZonePowerDrainkW>
+			<MinSafeZonePowerDrainkW>50</MinSafeZonePowerDrainkW>
 			<SafeZoneUpkeep>0</SafeZoneUpkeep>
 			<SafeZoneUpkeepTimeM>60</SafeZoneUpkeepTimeM>
 			<!-- End Safezone Props-->
-			<StandbyPowerConsumption>0</StandbyPowerConsumption>
-			<OperationalPowerConsumption>0</OperationalPowerConsumption>
 			<ActionSound>BlockSafeZone</ActionSound>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>

@@ -6,8 +6,7 @@
 				<TypeId>JumpDrive</TypeId>
 				<SubtypeId>LargeJumpDrive</SubtypeId>
 			</Id>
-			<DisplayName>Siege Drive</DisplayName>
-			<Description>Siege Drives are used for sieging enemy Shield Generators. Only for Shields in Z1-Z3.</Description>
+			<DisplayName>Jump Drive (Siege Block)</DisplayName>
 			<MaxJumpDistance>1</MaxJumpDistance>
 		</Definition>
 	</CubeBlocks>

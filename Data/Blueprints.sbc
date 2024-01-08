@@ -312,19 +312,6 @@
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
-        <Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>ZoneChip</SubtypeId>
-            </Id>
-            <DisplayName>Siege Chip</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Component" SubtypeId="ZoneChip" />
-            </Prerequisites>
-            <Result Amount="1" TypeId="Component" SubtypeId="ZoneChip" />
-            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-        </Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
 			<Id>
