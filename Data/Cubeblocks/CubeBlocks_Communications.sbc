@@ -10,7 +10,9 @@
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 30 UPs, 80 MPs.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			750 block limit, 30 UPs, 80 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
@@ -55,7 +57,9 @@
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 40 UPs, 140 MPs.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			2000 block limit, 40 UPs, 140 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
@@ -100,7 +104,9 @@
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 750 block limit, 40 UPs, 80 MPs, 2 Int. Turrets.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			750 block limit, 40 UPs, 80 MPs, 2 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -137,7 +143,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -153,7 +159,9 @@
 			<DisplayName>Medium Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Medium_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 2000 block limit, 60 UPs, 140 MPs, 4 Int. Turrets.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			2000 block limit, 60 UPs, 140 MPs, 4 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -190,7 +198,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -206,7 +214,9 @@
 			<DisplayName>Heavy Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Heavy_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 4000 block limit, 80 UPs, 200 MPs, 6 Int. Turrets.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			4000 block limit, 80 UPs, 200 MPs, 6 Int. Turrets.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -243,7 +253,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -259,7 +269,9 @@
 			<DisplayName>Fortress Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Fortress_Icon_Overlay.dds</Icon>
-			<Description>The Ship Core block is required for all permanent grids. 6000 block limit, 0 MPs, 120 UPs, 8 Int. Turrets, 1 Shield Gen, 1 SRBM, 1 Drill Blocker, Static Only.</Description>
+			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
+			
+			6000 block limit, 0 MPs, 120 UPs, 8 Int. Turrets, 1 Shield Gen, 1 SRBM, 1 Drill Blocker, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -296,7 +308,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -312,7 +324,9 @@
 			<DisplayName>Pipeline Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Icon>Textures\Icons\Pipeline_Icon_Overlay.dds</Icon>
-			<Description>Ship Core only for Pipeline hubs. Do not combine with other Ship Cores. 50 block limit, 2 Drills, 10 UPs, No weapons, Static Only.</Description>
+			<Description>Station Core only for Pipeline hubs. Do not combine with other Cores. 
+			
+			50 block limit, 2 Drills, 10 UPs, 1 Interior Turret, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -349,14 +363,69 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 		</Definition>
-		<!-- Disable Beacon Reskin due to incompatibility with Beacon Limits Mod -->
+		<!-- Large Pipeline -->
+		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+			<Id>
+				<TypeId>Beacon</TypeId>
+				<SubtypeId>LargeBlockBeacon_ShieldCore</SubtypeId>
+			</Id>
+			<DisplayName>Shield Core Beacon</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Icon>Textures\Icons\Shield_Icon_Overlay.dds</Icon>
+			<Description>Station Core only for Shield Generators. Do not combine with other Cores. 
+			
+			50 block limit, 10 UPs, No weapons, Static Only.</Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\beacon.mwm</Model>
+			<Components>
+				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="300"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true"/>
+				<MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9"/>
+				<MountPoint Side="Left" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Right" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+			</MountPoints>
+			<!-- Build stages must be removed so beacon is always functional -->
+			<!--<BuildProgressModels>
+                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BeaconConstruction_1.mwm" />
+                <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
+            </BuildProgressModels>-->
+			<BlockPairName>Beacon_ShieldCore</BlockPairName>
+			<EdgeType>Light</EdgeType>
+			<MirroringY>Z</MirroringY>
+			<BuildTimeSeconds>40</BuildTimeSeconds>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
+			<Flare>BeaconLarge</Flare>
+			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
+			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>50</PCU>
+			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+		</Definition>
+		<!-- Disable Beacon Reskin due to incompatibility with Beacon Limits Mod, avoids cleanup confusion -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition" Enabled="false">
 			<Id>
 				<TypeId>Beacon</TypeId>
@@ -406,7 +475,7 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -462,7 +531,7 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
