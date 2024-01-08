@@ -10,14 +10,12 @@
 			</Id>
 			<DisplayName>DisplayName_Block_SafeZone</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneBlock.dds</Icon>
-			<Description>Must NOT be on a grid with a Spec Core Beacon. Standalone Station Only.
-			
-			Low power, 0 Zone Chips. NOT siegable in Z0. Can be sieged in Z1-Z3.</Description>
+			<DisplayName>Safezone Generator (Zone 0 Only)</DisplayName>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="2" y="2" z="3"/>
 			<ModelOffset x="0" y="0" z="0"/>
-            <Model>Models\PSYCHO\Large\SafeZoneBlock.mwm</Model>
+			<Model>Models\Cubes\Large\SafeZoneBlock.mwm</Model>
 			<Components>
 				<Component Subtype="SteelPlate" Count="750"/>
 				<Component Subtype="Construction" Count="180"/>
