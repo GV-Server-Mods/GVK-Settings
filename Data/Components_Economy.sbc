@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Components>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>ZoneChip</SubtypeId>
+			</Id>
+			<DisplayName>Siege Chip</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<IconSymbol>Siege</IconSymbol>
+			<Size>
+				<X>0.1</X>
+				<Y>0.1</Y>
+				<Z>0.2</Z>
+			</Size>
+			<Mass>0.250</Mass>
+			<Volume>0.2</Volume>
+			<Model>Models\Items\ZoneChip_Item.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<Health>50</Health>
+			<MaxIntegrity>1</MaxIntegrity>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</Component>
+	</Components>
+</Definitions>
