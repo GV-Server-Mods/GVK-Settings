@@ -1,3 +1,4 @@
+Components_Economy.xml
 CubeBlocks_Automation.xml
 CubeBlocks_GeneralProductivityModule.xml
 CubeBlocks_HoverEngines.xml
