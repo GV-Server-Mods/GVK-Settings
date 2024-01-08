@@ -17,10 +17,10 @@ using Sandbox.Game.Entities;
 using Sandbox.Game;
 using VRage.Utils;
 
-namespace LimitedProdZone
+namespace KOTHNoSafezone
 {
-    [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "LimitedProdZone" })]
-    public class LimitedProdZone_Beacon : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "ZoneBlock" })]
+    public class KOTHNoSafezone_Beacon : MyGameLogicComponent
     {
         private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
@@ -38,16 +38,7 @@ namespace LimitedProdZone
             base.Init(objectBuilder);
 
             beacon = (Entity as IMyBeacon);
-            LimitedProdZone_Assembler.beaconList.Add(beacon);
-            LimitedProdZone_Refinery.beaconList.Add(beacon);
-            LimitedProdZone_SmallGatlingGun.beaconList.Add(beacon);
-            LimitedProdZone_LargeGatlingTurret.beaconList.Add(beacon);
-            LimitedProdZone_LargeMissileTurret.beaconList.Add(beacon);
-            LimitedProdZone_SmallMissileLauncher.beaconList.Add(beacon);
-            LimitedProdZone_SmallMissileLauncherReload.beaconList.Add(beacon);
-            LimitedProdZone_InteriorTurret.beaconList.Add(beacon);
-            LimitedProdZone_ConveyorSorter.beaconList.Add(beacon);
-			LimitedProdZone_StaticDrill.beaconList.Add(beacon);
+            KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
             if (beacon != null)
             {
                 logicEnabled = true;
@@ -80,7 +71,7 @@ namespace LimitedProdZone
                 }
                 catch (Exception e)
                 {
-                    MyAPIGateway.Utilities.ShowMessage("LimitedProdZone", "An error happened in the mod" + e);
+                    MyAPIGateway.Utilities.ShowMessage("KOTHNoSafezone", "An error happened in the mod" + e);
                 }
             });
         }*/
@@ -111,7 +102,7 @@ namespace LimitedProdZone
                 }
                 catch (Exception e)
                 {
-                    MyAPIGateway.Utilities.ShowMessage("LimitedProdZone", "An error happened in the mod" + e);
+                    MyAPIGateway.Utilities.ShowMessage("KOTHNoSafezone", "An error happened in the mod" + e);
                 }
             });
         }
@@ -144,41 +135,9 @@ namespace LimitedProdZone
             }
                 
 
-            if (LimitedProdZone_Assembler.beaconList.Contains(beacon))
+            if (KOTHNoSafezone_SafeZoneBlock.beaconList.Contains(beacon))
             {
-                LimitedProdZone_Assembler.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_Refinery.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_Refinery.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallGatlingGun.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallGatlingGun.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_LargeGatlingTurret.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_LargeGatlingTurret.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallMissileLauncher.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallMissileLauncher.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallMissileLauncherReload.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallMissileLauncherReload.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_InteriorTurret.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_InteriorTurret.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_ConveyorSorter.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_ConveyorSorter.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_StaticDrill.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_StaticDrill.beaconList.Remove(beacon);
+                KOTHNoSafezone_SafeZoneBlock.beaconList.Remove(beacon);
             }
         }
 
