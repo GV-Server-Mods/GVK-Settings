@@ -20,10 +20,10 @@ using VRage.Network;
 using VRage.Serialization;
 using VRage.Utils;
 
-namespace LimitedProdZone
+namespace KOTHNoSafezone
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SafeZoneBlock), false)]
-    public class LimitedProdZone_SafeZoneBlock : MyGameLogicComponent
+    public class KOTHNoSafezone_SafeZoneBlock : MyGameLogicComponent
     {
         private IMySafeZoneBlock safezoneblock;
         private IMyPlayer client;
@@ -70,7 +70,7 @@ namespace LimitedProdZone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > 19750) //20000km Z0 - 250m buffer
+                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1110) //1km + SZ radius buffer
                         {
 							safezoneblock.Enabled = false;
 							return;
@@ -92,7 +92,7 @@ namespace LimitedProdZone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) > 19750) //20000km Z0 - 250m buffer
+                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1110) //1km + SZ radius buffer
                     {
 						safezoneblock.Enabled = false;
                     }
