@@ -39,7 +39,8 @@ namespace KOTHNoSafezone
 
             beacon = (Entity as IMyBeacon);
             KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
-            if (beacon != null)
+            KOTHNoSafezone_ProjectorBlock.beaconList.Add(beacon);
+			if (beacon != null)
             {
                 logicEnabled = true;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_FRAME;
@@ -138,6 +139,10 @@ namespace KOTHNoSafezone
             if (KOTHNoSafezone_SafeZoneBlock.beaconList.Contains(beacon))
             {
                 KOTHNoSafezone_SafeZoneBlock.beaconList.Remove(beacon);
+            }
+            if (KOTHNoSafezone_ProjectorBlock.beaconList.Contains(beacon))
+            {
+                KOTHNoSafezone_ProjectorBlock.beaconList.Remove(beacon);
             }
         }
 
