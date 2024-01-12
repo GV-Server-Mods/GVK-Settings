@@ -311,7 +311,7 @@
 						<SubtypeId>GVK_Data_Core</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="10" AmountMax="20"> 
+				<Item AmountMin="1" AmountMax="5"> 
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
@@ -509,7 +509,7 @@
 						<SubtypeId>GVK_Data_Core</SubtypeId>
 					</Id>
 				</Item>
-				<Item AmountMin="50" AmountMax="100"> 
+				<Item AmountMin="10" AmountMax="20"> 
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
