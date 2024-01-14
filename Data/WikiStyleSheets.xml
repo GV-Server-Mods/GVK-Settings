@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-16"?>
+<StylePresets xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Presets FontSize="2.5" Font="3" Underline="0" TextColorString="255,255,255,255">h1</Presets>
+  <Presets FontSize="2" Font="3" Underline="0" TextColorString="255,255,255,255">h2</Presets>
+  <Presets FontSize="1.5" Font="3" Underline="0" TextColorString="255,255,255,255">h3</Presets>
+  <Presets FontSize="1" Font="3" Underline="0" TextColorString="255,255,255,255">normal</Presets>
+  <Presets FontSize="1" Font="3" Underline="0" TextColorString="150,200,255,255">url</Presets>
+  <Presets FontSize="1.2" Font="0" Underline="0" TextColorString="255,255,150,255">command</Presets>
+</StylePresets>

@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="utf-16"?>
+<WikiXML xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Trees>
+    <Tree Name="Kharak Maps" UniqueId="MapTree">
+      <MeshPage UniqueId="Map1" OpenOnBlockSelection="false" BindedBlock="" Name="Kharak Maps" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Kharak Maps[/h1]
+[normal]
+You can use the new map scripts in on an LCD or Text Screen to view your current position on the planet.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+          <LinkCell WidthMult="1" Alignment="Left" Color="255,105,180,255" TextSize="1" IsSmart="true" Url="https://steamcommunity.com/linkfilter/?u=https%3A%2F%2Fwww.maptoglobe.com%2FBycrXigu6">[url]Click here to view an interactive 3D map of Kharak.[/url]</LinkCell>
+		</MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="320">KharakMap</ImageCell>
+		</MeshRow>
+      </MeshPage>
+    </Tree>
+    <Tree Name="Rules" UniqueId="RulesTree">
+      <PlainPage UniqueId="Rules1" OpenOnBlockSelection="false" BindedBlock="" Name="Player Rules" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Player Rules[/h1]
+[normal]
+- Treat everyone with respect. Absolutely no harassment, witch hunting, sexism, racism, or hate speech will be tolerated.
+- No spam, self-promotion, or advertising other SE servers and discords.
+- No client side mods or hacks.
+- If you or your faction discover an exploit or severe imbalance, you have the responsibility to report it to admins asap. Failure to do so will be considered for ban.
+- No griefing
+- No abusing spawn pods.
+- No PVP in Zone 0 (including grinding), and no shoving enemy grids out from Zone 0.
+- No loitering in NPC safe zones. If you are not there for trade or using the facilities then leave.
+- No use of any exploits, i.e. using physicsless blocks on weapons, clang weapons etc, piston guns, rotor guns, supergridding, item duping, spectator, etc.
+- No flying grids under voxel (inside the planet).
+- No going to space.
+- No obstructing roads with grids or Shields, or offline Safezones. Pull a ways off the road before you log off.
+- No damaging or drilling on roads.
+- No intentionally attacking players grids residing in Z0 near the edge within firing range of Z1.
+- No "Sorter Sucker" attaching a sorter block to an enemy grid to siphon out their resources. You must hack the cargo if you want its contents.
+- No using Shields or Safezones at KOTHs.
+[/normal]</Text>
+     </PlainPage>
+      <PlainPage UniqueId="Rules2" OpenOnBlockSelection="false" BindedBlock="" Name="Grid Rules" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Grid Rules[/h1]
+[normal]
+- ALL SHIPS AND STATIONS MUST HAVE A BEACON! (see cleanup rules above).
+- No dumping ice. Use Stone or Ice Duster options in the drills instead.
+- No bypassing of zone restrictions (timers, PBs, sensor with rotating arm, etc). Violating grids will be deleted, repeat offenders will be banned.
+- Reduce conveyor loops to the maximum extent possible
+- No ‘Space Elevator’ type grids connecting ground to 0g. Also see Grid Rules on length.
+- No building lower than 50m below the surface, blocks below this will be converted to SPRT.
+- No underground wind or solar farms.
+- No setting grids to neutral to exploit turret defaults and avoid return fire.
+- No use of wheels or suspension for ramming or kinetic based offensive weapons. Use of wheels in defensive and cosmetic applications is ok.
+- No strip mining long shallow trenches over large distances.
+- No building on roads.
+- No grids longer than 1km. Long grids can cause performance bugs and issues.
+- Bases and stations Must be anchored to voxel (no floating in the air).
+- Ships and rovers are ok to park/convert a few meters in the air to reduce physics interaction on voxels.
+- No subgridding to get around 1 MnM per grid limit.
+- “Grid” includes subgrids (aka construct).
+[/normal]
+</Text>
+     </PlainPage>
+      <PlainPage UniqueId="Rules3" OpenOnBlockSelection="false" BindedBlock="" Name="Script Rules" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Script Rules[/h1]
+[normal]
+- Performance limit of 0.3 MS per player for scripts combined. PBs over this limit will take damage.
+- No ship status scripts like AutoLCD. We have a mod for that. On LCDs, select “ES Info LCD” script, then adjust Custom Data flags. Does not include subgrids.
+- No Inventory manager scripts like ISY and TIM, we have an inventory sorting mod for that.
+- No projection to assembler scripts, MnM does that.
+- No Solar tracking scripts, we have doubled solar output to offset the reduction in power.
+- No Auto-door scripts, airlock scripts, or door sensors, we have auto-close door mod for that.
+- No Radar or mapping scripts, we have a block and mod for that.
+- Only run scripts once when needed; dont loop outside of pvp.
+[/normal]</Text>
+     </PlainPage>
+    </Tree>
+    <Tree Name="Limits" UniqueId="LimitsTree">
+      <MeshPage UniqueId="Limits1" OpenOnBlockSelection="false" BindedBlock="" Name="Faction Limits" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Faction Limits[/h1]
+[normal]
+Factions have a limited number of permanent grids. This is done through a limit on the number of beacons. Larger factions are able to have more grids, but with diminishing returns. See the table below for the amount of grids by class per number of faction members. This is automatically managed via mod.[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="360">FactionLimits</ImageCell>
+		</MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h3]Other Blocks[/h3]
+[normal]
+- Shield Generators - 2 per faction
+- SRBM Longsword Turrets - 1 per faction[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Limits2" OpenOnBlockSelection="false" BindedBlock="" Name="Grid Limits" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Grid Limits[/h1]
+[normal]
+Specific blocks are limited by Utility Points (UPs) and Mobility Points (MPs). Each grid class gets different amounts of points. Remember, the Spec Core Beacon dictates the grid class.[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="360">GridLimits</ImageCell>
+		</MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]* Pipeline and Shield Cores does not allow weapons or most other limited blocks.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Limits3" OpenOnBlockSelection="false" BindedBlock="" Name="Block Limits" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Block Limits[/h1]
+[normal]
+Specific blocks are limited by Utility Points (UPs) and Mobility Points (MPs). Each grid class gets different amounts of points. Remember, the Spec Core Beacon dictates the grid class.[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="640">BlockCosts</ImageCell>
+		</MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]* Tech varies by block
+** Disables purchase of the Damage Reduction Upgrade
+*** Fortress has 2 Upgrade Slots
+**** Static Grid Only
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Limits4" OpenOnBlockSelection="false" BindedBlock="" Name="Zone Limits" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Zone Limits[/h1]
+[normal]
+The below blocks are only permitted to operate within their listed zone
+
+[/normal]
+[h3]Zone 0:[/h3]
+[normal]
+- Basic Production
+- Basic Static Drill (No Ship Drills)
+
+[/normal]
+[h3]Zone 1:[/h3]
+[normal]
+- Basic Production
+- All Static Drills
+- All Ship Drills
+- Weapons
+
+[/normal]
+[h3]Zone 2 and 3:[/h3]
+[normal]
+- Basic Production
+- Large Production
+- All Static Drills
+- All Ship Drills
+- Production Upgrade Modules
+- Weapons
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Limits5" OpenOnBlockSelection="true" BindedBlock="" Name="Scritps/AI Limits" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Scritps/AI Limits[/h1]
+[h3]
+Drones:[/h3]
+[normal]
+- Drones are ships with a beacon, but controlled through scripts or automation AI.
+- Players are limited to controlling no more than 6 drones each.
+
+[/normal]
+[h3]Player Made Missiles:[/h3]
+[normal]
+- Missiles do not have beacons (or guns), but may have warheads.
+- Missiles are limited to 6 launchers or Silos per parent grid.
+
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+    </Tree>
+    <Tree Name="Log-off/Cleanup" UniqueId="CleanupTree">
+      <PlainPage UniqueId="Cleanup1" OpenOnBlockSelection="false" BindedBlock="" Name="Offline Safezones" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Offline Faction Safezone (FSZ)[/h1]
+[normal]
+Factions receive an automatic Offline Faction Safezone for all faction large grids over 30 blocks after the last faction member has logged off.
+- Must be in a faction to receive FSZ features. If you are solo, you need to create a faction.
+- FSZs only enable 60 seconds after the last faction member has logged off, and disable for all grids when the first member logs back on.
+- FSZs will not activate on grids with neutral or enemy grids within 1000m radius!
+- FSZs will not activate near Territory blocks.
+- Use /checkzones command to make sure all of your grids are eligible for a FSZ safezone.
+- Use [/normal][nozone][normal] in the grid name to prevent your grid getting an offline safezone.
+[/normal]</Text>
+     </PlainPage>
+      <PlainPage UniqueId="Cleanup2" OpenOnBlockSelection="false" BindedBlock="" Name="Logoff Info" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Logoff Information[/h1]
+[normal]
+- All large grids convert to station on last faction member logout (including restarts).
+- All Program Blocks (PBs), and spotlights turn off on last faction member logout.
+- Grids that are too close to voxel (2.5m) may not convert to ship again. Use drills to add clearance from voxels.
+- Players must maintain their Active status by logging in at least every 14 days.
+- Inactive player grids will be auto-stored in the Quantum Hangar Plugin after 14 days (see commands to retrieve stored grids).
+- Refineries, Assemblers, PBs, Projectors, and Timers turn off at restart.
+- AFK timer is 30 mins. Anyone using bots or macros to hoard slots will be banned.
+[/normal]
+</Text>
+     </PlainPage>
+      <PlainPage UniqueId="Cleanup3" OpenOnBlockSelection="false" BindedBlock="" Name="Cleanup Info" Header=" " HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Cleanup Information[/h1]
+[normal]
+- YOU NEED A BEACON on all permanent grids, this is YOUR responsibility.
+- Cleanup runs every 1 hour. Any grid without a beacon will be deleted.
+- Debris sweep runs every 30 mins.
+- Cleanup has never been wrong.
+- Beacons are functional when placed, but should be welded up for durability.
+- Respawn ships auto-delete when you spawn a new one.
+- Grids are backed up via Grid Backup plugin for extreme emergencies. Each is handled case-by-case.
+- Grid splits of 1 or 2 blocks are instantly deleted and will not be refunded, no matter the value. Be careful grinding off valuable tech blocks.
+- Scrap metal from destroyed blocks is instantly deleted to reduce server load from floating objects
+- Ore is automatically collected when hand drilling through a torch plugin.
+- NPC wrecks auto-delete their beacons. If you want to claim it, you need to install your own beacon.
+- Stuff ejected from ejectors or connectors is instantly deleted. Don’t use to transfer cargo.
+- Abandoned KLASSPODS will be deleted periodically, and will not save in auto-hangar.
+[/normal]</Text>
+     </PlainPage>
+    </Tree>
+    <Tree Name="Spec Cores" UniqueId="SpecCoresTree">
+      <MeshPage UniqueId="SpecCores1" OpenOnBlockSelection="false" BindedBlock="*Beacon*/*" Name="Spec Cores Intro" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Spec Cores Intro[/h1]
+[normal]
+Grid and block limits are now handled by the Spec Cores mod. It functions similarly to PCU, but is more reliable, and more forgiving. It also allows different limits based on grid classes, and dynamic upgrades that change your grid's behavior. You can view your grid's points and limits right in the Spec Core Beacon's terminal.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h3]WARNING[/h3]
+[normal]
+DO NOT USE MORE THAN 1 CORE PER GRID! This uses "Mechanical Connections" which means rotors/hinges and pistons. Connectored grids are ok.[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="360">SpecCoresIntro</ImageCell>
+		</MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="SpecCores2" OpenOnBlockSelection="false" BindedBlock="*Decoy*/*Upgrade*" Name="Spec Cores Guide" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]A Player’s Guide to GVK Spec Cores[/h1]
+[h3]
+1. Pick a Grid Class: Light, Medium, Heavy, Fortress, Pipeline, or Shield[/h3]
+		  </TextCell>
+		</MeshRow>
+		<MeshRow>
+          <LinkToPageCell WidthMult="1" Alignment="Left" Color="255,255,255,255" TextSize="1" IsSmart="true" TreeId="LimitsTree" PageId="Limits1">
+[url]
+- Click here to go to the Faction Limits page to how many of each class your faction may possess.[/url]</LinkToPageCell>
+		</MeshRow>
+		<MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]
+- Each step up in class provides increased Max Blocks, Utility Points (UPs), and Mobility Points (MPs).
+- Vanilla beacons are considered “Light” Core Beacons by default.
+[/normal]
+[h3]
+2. Put your chosen Grid Class Beacon block on your grid[/h3]
+[normal]
+- Most Limited Blocks won't work without a Spec Core Beacon.
+- A Spec Core Grid includes all subgrids attached via “mechanical” connection, meaning rotors, hinges, and pistons. Grids attached via landing gear or connectors will need their own Spec Core.
+- You can only use one Spec Core per grid. More can be placed, but only one “Main” will be active (the first one with upgrades applied).
+[/normal]
+[h3]
+3. Build your grid[/h3]
+[normal]
+- MPs are used for Hovers, Thrusters, and Suspension
+- UPs are used for blocks and upgrades. Don’t use all of your UPs on blocks if you want to buy upgrades.
+- UPs consumed by Limited Blocks are returned when you remove those blocks
+[/normal][h3]
+4. Build your Upgrade blocks (optional)[/h3]
+[normal]
+- Upgrades are now block-based and no longer in the terminal. Just place or remove your Upgrades just like any other Limited Block up to your UP Limit.
+- Light, Medium, and Heavy Ship Cores can only have 1 Upgrade Block, and Fortress Cores may have 2 (effects do not stack).
+[/normal][h3]
+Current Upgrade Blocks[/h3]
+[normal]
+- Mobility Boost (Double thruster force, half thruster power/fuel consumption)
+- Mining Boost (Double drill yield, double O2/H2 Gen speed)
+- Resistance Boost (50% damage reduction, disables welders)
+- Power Boost (double reactor output, halves consumption of some other blocks)
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="SpecCores3" OpenOnBlockSelection="false" BindedBlock="" Name="Spec Cores Tips" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h3]Tip[/h3]
+[normal]
+If the terminal keeps refreshing too fast, you can click Auto-Refresh at the bottom right to stop it from updating.[/normal]
+		  </TextCell>
+        </MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Spec Cores Tips[/h1]
+[normal]
+When building a ship or rover from your home base, it is recommended to put the projector on a connected grid. This prevents mixing multiple Cores on one grid, and avoids problems of violating limits due to the newly constructed grid.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="360">SubgridBuilding</ImageCell>
+		</MeshRow>
+      </MeshPage>
+    </Tree>
+    <Tree Name="CUs/RUs/Tech/Scrap" UniqueId="TechTree">
+      <MeshPage UniqueId="Tech1" OpenOnBlockSelection="false" BindedBlock="" Name="CUs and RUs" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]CUs and RUs[/h1]
+[h3]
+Construction Units[/h3]
+		  </TextCell>
+        </MeshRow>
+        <MeshRow>
+		  <ImageCell WidthMult=".25" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="64" ImageHeight="64">CUs</ImageCell>
+          <TextCell WidthMult=".75" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]Construction Units (CUs) are the basic ingots for making advanced technologies (Tech). It is made of advanced materials not native to the planet of Kharak, and its origins are unknown.
+
+CUs can be found through scrapping small/medium/large wrecks and trading.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h3]
+Resource Units[/h3]
+		  </TextCell>
+        </MeshRow>
+        <MeshRow>
+		  <ImageCell WidthMult=".25" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="64" ImageHeight="64">RUs</ImageCell>
+          <TextCell WidthMult=".75" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]Resource Units (RUs) are an advanced fuel source used in the construction of high end weaponry. It is also not native to Kharak, and is believed to have been originally harvested from the asteroid belts in the Kharak system.
+
+RUs are also found through scrapping medium and large (not small) wrecks and trading.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Tech2" OpenOnBlockSelection="false" BindedBlock="" Name="Tech Components" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Tech Components[/h1]
+[normal]
+Advanced blocks and weapons require new "Tech" components that can be found through scrapping small/medium/large wrecks and trading.[/normal]
+		  </TextCell>
+		</MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="128">Techs</ImageCell>
+		</MeshRow>
+		<MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[normal]
+- Hover Engines and Ion Thrusters - Tech Grav. Reflector
+- Hydro and Atmo Thrusters - Tech Igniter
+- Small Caliber Weapons - Tech Bolt Carrier
+- Large Caliber Weapons - Tech Gun Cradle
+- Missile weapons - Tech Launch Assem.
+- Laser Weapons - Tech Particle Emit.
+- PBs, AI Blocks, and some weapons - Tech Data Core
+
+[/normal]
+[h3]WARNING[/h3]
+[normal]
+TECH GRINDS TO SCRAP TECH! You can assemble and disassemble Tech in assemblers, however once you use it in a block, it grinds into Scrap Tech.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+          <LinkToPageCell WidthMult="1" Alignment="Left" Color="255,255,255,255" TextSize="1" IsSmart="true" TreeId="TechTree" PageId="Tech3">
+[url]
+Click here for information on how to exchange your Scrap Tech[/url]</LinkToPageCell>
+		</MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Tech3" OpenOnBlockSelection="false" BindedBlock="" Name="Scrap Tech" Header=" " HeaderColor="255,255,255,255">
+		<MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Scrap Tech[/h1]
+[normal]
+Only the COALITION has the ability to refine Tech Scrap back into a usable CU ingot. The good news is they are doing this free of charge, and you get 100% returned. 
+
+[/normal]
+[h3]To convert your Scrap Tech, visit:[/h3]
+[normal]
+- COALITION BASE in Crossroads in Zone 0
+- Scrap Refinery at Sevastopol in Zone 3
+- Travelling Coalition Traders
+[/normal]
+		  </TextCell>
+        </MeshRow>
+		<MeshRow>
+			<ImageCell WidthMult="1" Alignment="Center, Top" Color="255,255,255,255" ImageWidth="640" ImageHeight="360">CoalitionRefinery</ImageCell>
+		</MeshRow>
+      </MeshPage>
+    </Tree>
+    <Tree Name="Shields and Sieges" UniqueId="ShieldsTree">
+      <MeshPage UniqueId="Shields1" OpenOnBlockSelection="false" BindedBlock="*Safezone*/*" Name="Siege Basics" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Siege Basics[/h1]
+[normal]
+A new mod developed by Kamikaze brings a simplified siege mechanic to player buildable Safezone Generators now called Shield Generators. This enables enemy factions to siege and disable your Shield Generator in higher Zones (Z1-Z3). Shield Generators built in Z0 are NOT siegable and will always be safe from attacks (Like a normal Safezone). Factions may have 2 Shield Generators's: one for a starter/backup base in Z0, and one for a forward operating base in Zones 1-3. Offline Faction Safezones are still provided and unaffected by this feature.
+
+[/normal]
+[h3]This ain't your granny's DarkStar Defense Shields mod![/h3]
+[normal]
+Attackers must build a Siege Drive and bring it within 3km of the SZG they wish to siege. Defenders must be online before attakers can siege. The Siege Drive terminal will show the list of eligible nearby SZGs to siege. Select the desired one, make sure the Siege Drive is charged, and click the Siege button.
+
+Sieging will drain the shield strength from 100% (or its current charge %) down to 0%, and when it reaches 0% the Shield Generator will become disabled. Defenders will need to fight off attackers by killing the attacking Sieging Drive, indicated by red laser. Once the generator is no longer under siege, it will resume charging back to 100%. If attackers are quick they can continue sieging without losing too much progress, but they will have to pay additional Siege Chips to reinitiate a siege.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Shields2" OpenOnBlockSelection="false" BindedBlock="" Name="Shields Details" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Shields Details[/h1]
+[h3]
+Shield Generators[/h3]
+[normal]
+Previously known as Safezone Generators, Shield Generators must be placed on a station with a Shield Gen Beacon, or they will grind to non-functional. They do not consume Zone Chips, and require extremely low power. At the moment they are not self-powered so you need to add a small power source to keep it running. You cannot use Shield Generators in KOTH areas. They must be separate grids to avoid issues with accidental Shield deactivation or Hangaring.
+
+Shield Generators also provide players with unlimited Jetpack H2 while inside.
+
+[/normal]
+[h3]Siege Drives[/h3]
+[normal]
+Siege Drives contain the interface for sieging enemy Shield Generators. They must be fully charged to initiate a siege.
+
+[/normal]
+[h3]Siege Chips[/h3]
+[normal]
+Siege Chips (previously Zone Chip, aka Tokens) can be assembled or purchased from Trade Stations. You need to have the required Siege Chip (also named Tokens in the terminal) in any cargo on the grid with the Siege Drive. It will automatically subtract the needed Siege Chips upon siege initiation.
+
+[/normal]
+[h3]Discord Alerts
+[/h3]
+[normal]
+You can sign up for the Kharak Siege Notifications role for Discord alerts on all Siege activity. Unfortunately it is not currently possible to sign up for alerts for ONLY your faction.
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+      <MeshPage UniqueId="Shields3" OpenOnBlockSelection="false" BindedBlock="" Name="Siege Configs" Header=" " HeaderColor="255,255,255,255">
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,225,225,255" TextSize="1" IsSmart="true">
+[h1]Siege Configs[/h1]
+[normal]
+- Max Siege Distance: 3000m
+- Siege Cost at 100% strength: 100 Siege Chips
+- Siege duration from 100% strength: 1 hour
+- Charge time from 0% to 100% strength: 1 hour
+- Enemy checks (includes Neutral/Allied): 1000m
+- Shield Generator Radius: 250m Spherical
+- Max Power at Max Radius: 1W
+- Shield Generator Startup Time: 30 seconds
+- Startup initial charge: 25%
+[/normal]
+		  </TextCell>
+        </MeshRow>
+      </MeshPage>
+    </Tree>
+    <Tree Name="In-Game Commands" UniqueId="CommandsTree">
+      <PlainPage UniqueId="Commands1" OpenOnBlockSelection="false" BindedBlock="" Name="In-Game Commands" Header=" " HeaderColor="255,255,150,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]In-Game Commands[/h1]
+[h3]
+Grid Commands[/h3]
+[normal]
+- [/normal][command]/convert[/command][normal] - (while in cockpit) converts the grid into either ship or station. This now works for small grids and subgrids.
+- [/normal][command]/convertpaste[/command][normal] - Cuts and pastes the grid you are looking at into a ship.
+- [/normal][command]/convertpaste.force[/command][normal] - Similar to above but without safeties. Only use when a ship is near a voxel but refuses to convert.
+- [/normal][command]/rename "newgridname"[/command][normal] - Renames a grid that your faction owns
+- [/normal][command]!entities refresh[/command][normal] - Fixes desynced and bugged grids, usually. If it does not, try:
+- [/normal][command]/unfuckit[/command][normal] - If relogging and other measures do not fix a bugged grid, this usually will.
+- [/normal][command]/keen![/command][normal] - non profanity version of /unfuckit
+- [/normal][command]/rewardhelp[/command][normal] - returns a list of chat commands for the Rewards Mod
+- [/normal][command]!grids list[/command][normal] - to view a list of grids of which you are a majority owner, and get their coordinates if you cannot locate them.
+
+[/normal]
+[h3]Beacon Limit Commands[/h3]
+[normal]
+- [/normal][command]/convert[/command][normal] - (while in cockpit) converts the grid into either ship or station, even at low speed. This now works for small grids and subgrids including wheels
+- [/normal][command]/beaconlimit[/command][normal] - checks your faction beacon counts. You can also obtain a GPS location of your beacons if you are unable to locate them.
+- [/normal][command]/beaconlimit index#[/command][normal] - shows you a GPS for the beacon of the selected index #.
+
+[/normal]
+[h3]Safe Zone Commands[/h3]
+[normal]
+- [/normal][command]/ownership[/command][normal] - Tells you the owner of the grid in front of you. Useful for seeing who owns a safezone.
+- [/normal][command]/checkzones[/command][normal] - to make sure all of your grids in your instance are eligible for FSZ safezone before logging.
+- [/normal][command]/forceremovezone[/command][normal] - removes faction safezones if they get bugged and stuck on.
+
+[/normal]
+[h3]PVP/PVE Bounty Rewards and Leaderboards[/h3]
+[normal]
+THIS IS SEPARATE FROM DAILY VOTING REWARDS. Gain SC bounty by destroying enemy blocks. SC is instantly paid into your faction account.
+- [/normal][command]/rewardhelp[/command][normal] - returns a list of chat commands for the user.
+- [/normal][command]/leaderboard[/command][normal] - brings up the top 5 PvP faction points.
+- [/normal][command]/leaderboardpve[/command][normal] - brings up the top 5 PvE faction points.
+- [/normal][command]/hideleaderboard[/command][normal] - hides the top 5 faction points leaderboard.
+- [/normal][command]/rewardlog[/command][normal] - shows a battle log for your faction.
+- [/normal][command]/rewardrank[/command][normal] - will return a chat command showing your current ranking with your current points.
+- [/normal][command]/resetLog[/command][normal] - only faction leaders/owners can use, will clear your faction's battle log.
+- Add [/normal][command]RewardLeaderboard[/command][normal] or [/normal][command]RewardLeaderboardPvE[/command][normal] (in brackets) into an LCD's name to display PVP and PVE rewards on your grid for others to see.
+
+[/normal]
+[h3]Other Commands[/h3]
+[normal]
+- [/normal][command]!sevote[/command][normal] - To vote (daily) for the server
+- [/normal][command]!reward[/command][normal] - to receive daily rewards after you've voted
+- [/normal][command]!motd[/command][normal] - To re-open the MOTD. Or use the med bay screen.
+- [/normal][command]!rules[/command][normal] - To open the link to this guide
+- [/normal][command]!vote Restart[/command][normal] - to vote for a server restart (case-sensitive)
+- [/normal][command]!zones[/command][normal] - to view the zone distances in-game
+- [/normal][command]Shift + R[/command][normal] - (non-chat) Place faction visible GPS waypoint (does not work well on planet surface).
+- [/normal][command]/pipeline toggle[/command][normal] - toggles the pipeline mod detection cone visibility.
+
+[/normal]
+[h3]Faction Hangar Commands[/h3]
+[normal]
+*** Faction leaders can execute commands on any faction grid while members can only execute commands on their own grids in the faction
+- [/normal][command]/fh help[/command][normal] - get a list of commands in-game
+- [/normal][command]/ph list[/command][normal] - Displays a list of grids and their index currently in your private hangar.
+- [/normal][command]/ph store[/command][normal] - Displays a list of possible grids you can store to private hangar in range.
+- [/normal][command]/ph store GRIDNAME[/command][normal] - Attempts to store the desired grid to your private hangar.
+- [/normal][command]/ph load index#[/command][normal] - Attempts to load the desired grid at index from private hangar.
+- [/normal][command]/ph load index#.true[/command][normal] - Attempts to load the desired grid at index to its original location.
+- [/normal][command]/ph load index#.true.force[/command][normal] - Attempts to load the desired grid at index but forces spawning at original location (no collision checks).
+- [/normal][command]/ph transfer index#[/command][normal] - Transfers the indexed grid from personal to your faction hangar.
+- [/normal][command]/ph remove index#[/command][normal] - Attempts to delete the desired grid at index from private hangar.
+- [/normal][command]/fh list[/command][normal] - Displays a list of grids and their index currently in your faction hangar.
+- [/normal][command]/fh store[/command][normal] - Displays a list of possible grids you can store to your faction hangar in range.
+- [/normal][command]/fh store GRIDNAME[/command][normal] - Attempts to store the desired grid to your faction hangar.
+- [/normal][command]/fh load index#[/command][normal] - Attempts to load the desired grid at index from faction hangar.
+- [/normal][command]/fh load index#.true[/command][normal] - Attempts to load the desired grid at index to its original location.
+- [/normal][command]/fh load index#.true.force[/command][normal] - Attempts to load the desired grid at index but forces spawning at original location (no collision checks).
+- [/normal][command]/fh transfer index#[/command][normal] - Transfers the indexed grid from faction to your personal hangar.
+- [/normal][command]/fh remove index#[/command][normal] - Attempts to delete the desired grid at index from faction hangar.
+- [/normal][command]/fh togglesphere[/command][normal] - Toggles the visble debugging sphere that shows the 'spawnable' areas.
+- [/normal][command]/fh togglegps[/command][normal] - Toggles the GPS markers for the 'spawnable' areas.
+
+[/normal]
+[h3]Faction Allies - Buddy Up[/h3]
+[normal]
+- Step 1: Faction A runs the command [/normal][command]/buddyup "Faction B tag"[/command][normal]
+- Step 2: Faction B runs the command [/normal][command]/buddyup "Faction A tag"[/command][normal] within a 5 minute window to accept. Invites can also only be sent once every 5 minutes.
+
+[/normal]
+[h3]King of the Hill Commands[/h3]
+[normal]
+- [/normal][command]/koth help[/command][normal] - For a list of all command
+- [/normal][command]/koth score[/command][normal] - To see the current score
+
+[/normal]
+[h3]WeaponCore Commands[/h3]
+[normal]
+- [/normal][command]/wc changehud[/command][normal] - To move the top hud then use action key (numpad 0 by default) plus arrow keys to move. To resize use action key and numpad+/-
+
+[/normal]
+[h3]Sorting Mod Commands[/h3]
+[normal]
+The sorting mod operates similar to Isy's Inventory Script, but in mod form and runs on the client. 
+- [/normal][command]/sort[/command][normal] - Runs the sorting mod once
+- You can also add the cockpit sort action to your Hotkeys
+- See the the guide at the link above for details on how to use it.
+
+[/normal]
+	    </Text>
+      </PlainPage>
+    </Tree>
+    <!--<Tree Name="Example" UniqueId="ExampleTree">
+      <PlainPage UniqueId="ExampleRules1" OpenOnBlockSelection="false" BindedBlock="" Name="Main Rules" Header="" HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="true">
+        <Text>[h1]Player Rules[/h1]
+[normal]
+- Treat everyone with respect. Absolutely no harassment, witch hunting, sexism, racism, or hate speech will be tolerated.
+- No spam, self-promotion, or advertising other SE servers and discords.
+- No client side mods or hacks.
+- If you or your faction discover an exploit or severe imbalance, you have the responsibility to report it to admins asap. Failure to do so will be considered for ban.
+- No griefing
+- No abusing spawn pods.
+- No PVP in Zone 0 (including grinding), and no shoving enemy grids out from Zone 0.
+- No loitering in NPC safe zones. If you are not there for trade or using the facilities then leave.
+- No use of any exploits, i.e. using physicsless blocks on weapons, clang weapons etc, piston guns, rotor guns, supergridding, item duping, spectator, etc.
+- No flying grids under voxel (inside the planet).
+- No going to space.
+- No obstructing roads with grids or Shields, or offline Safezones. Pull a ways off the road before you log off.
+- No damaging or drilling on roads.
+- No intentionally attacking players grids residing in Z0 near the edge within firing range of Z1.
+- No "Sorter Sucker" attaching a sorter block to an enemy grid to siphon out their resources. You must hack the cargo if you want its contents.
+- No using Shields or Safezones at KOTHs.
+
+[/normal]
+[h1]Grid Rules[/h1]
+[normal]
+- ALL SHIPS AND STATIONS MUST HAVE A BEACON! (see cleanup rules above).
+- No dumping ice. Use Stone or Ice Duster options in the drills instead.
+- No bypassing of zone restrictions (timers, PBs, sensor with rotating arm, etc). Violating grids will be deleted, repeat offenders will be banned.
+- Reduce conveyor loops to the maximum extent possible
+- No ‘Space Elevator’ type grids connecting ground to 0g. Also see Grid Rules on length.
+- No building lower than 50m below the surface, blocks below this will be converted to SPRT.
+- No underground wind or solar farms.
+- No setting grids to neutral to exploit turret defaults and avoid return fire.
+- No use of wheels or suspension for ramming or kinetic based offensive weapons. Use of wheels in defensive and cosmetic applications is ok.
+- No strip mining long shallow trenches over large distances.
+- No building on roads.
+- No grids longer than 1km. Long grids can cause performance bugs and issues.
+- Bases and stations Must be anchored to voxel (no floating in the air).
+- Ships and rovers are ok to park/convert a few meters in the air to reduce physics interaction on voxels.
+- No subgridding to get around 1 MnM per grid limit.
+- “Grid” includes subgrids (aka construct).
+
+[/normal]
+[h1]Script Rules[/h1]
+[normal]
+- Performance limit of 0.3 MS per player for scripts combined. PBs over this limit will take damage.
+- No ship status scripts like AutoLCD. We have a mod for that. On LCDs, select “ES Info LCD” script, then adjust Custom Data flags. Does not include subgrids.
+- No Inventory manager scripts like ISY and TIM, we have an inventory sorting mod for that.
+- No projection to assembler scripts, MnM does that.
+- No Solar tracking scripts, we have doubled solar output to offset the reduction in power.
+- No Auto-door scripts, airlock scripts, or door sensors, we have auto-close door mod for that.
+- No Radar or mapping scripts, we have a block and mod for that.
+- Only run scripts once when needed; dont loop outside of pvp.
+[/normal]</Text>
+     </PlainPage>
+      <MeshPage UniqueId="ExampleMeshPage1" OpenOnBlockSelection="false" BindedBlock="" Name="PageName" Header="" HeaderColor="255,255,255,255">
+        <MeshRow>
+          <ImageCell WidthMult="0.333333343" Alignment="Left, Top" Color="255,255,255,255" TextSize="1" IsSmart="false" ImageWidth="200" ImageHeight="100">example</ImageCell>
+          <TextCell WidthMult="0.6666667" Color="255,215,0,255" TextSize="3" IsSmart="false">Text</TextCell>
+        </MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="1" Color="255,255,255,255" TextSize="1" IsSmart="false">Text</TextCell>
+        </MeshRow>
+        <MeshRow>
+          <LinkCell WidthMult="0.5" Alignment="Right" Color="255,105,180,255" TextSize="1" IsSmart="false" Url="https://youtube.com/">https://youtube.com/</LinkCell>
+          <ButtonCell WidthMult="0.5" Alignment="Right" Color="255,105,180,255" TextSize="1" IsSmart="false" Url="https://youtube.com/" ButtonWidth="300" ButtonHeight="15">https://youtube.com/</ButtonCell>
+        </MeshRow>
+        <MeshRow>
+          <GpsLinkCell WidthMult="0.5" Alignment="Right" Color="255,105,180,255" TextSize="1" IsSmart="false" GPS="GPS:Test #1:1025440.65:316290.62:784445.16:#FF75C9F1:">GPS Test</GpsLinkCell>
+          <GpsButtonCell WidthMult="0.5" Alignment="Right" Color="255,105,180,255" TextSize="1" IsSmart="false" GPS="GPS:Test #1:1025440.65:316290.62:784445.16:#FF75C9F1:" ButtonWidth="300" ButtonHeight="15">GPS Test</GpsButtonCell>
+        </MeshRow>
+        <MeshRow>
+          <ButtonToPageCell WidthMult="1" Alignment="Center" Color="192,192,192,255" TextSize="1" IsSmart="false" TreeId="OtherTree" PageId="PageId2" ButtonWidth="300" ButtonHeight="15">OtherPage</ButtonToPageCell>
+        </MeshRow>
+        <MeshRow>
+          <TextCell WidthMult="0.333333343" Color="255,255,255,255" TextSize="0.5" IsSmart="false">Text</TextCell>
+          <LinkToPageCell WidthMult="0.333333343" Alignment="Center" Color="192,192,192,255" TextSize="1" IsSmart="false" TreeId="OtherTree" PageId="PageId2">OtherPage</LinkToPageCell>
+          <TextCell WidthMult="0.333333343" Alignment="Right" Color="255,255,255,255" TextSize="1" IsSmart="false">Text</TextCell>
+        </MeshRow>
+      </MeshPage>
+      <PlainPage UniqueId="PageId2" OpenOnBlockSelection="false" BindedBlock="" Name="New Page" Header="" HeaderColor="255,255,255,255" TextColor="255,255,255,255" TextSize="1" IsSmart="false">
+        <Text>text</Text>
+      </PlainPage>
+    </Tree>-->
+  </Trees>
+</WikiXML>
