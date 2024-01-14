@@ -62,6 +62,7 @@ namespace MikeDude.ArmorBalance
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
                 blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
+				blockDef.UseModelIntersection = true; // attempt to make things able to place better in tight spaces
 
 				// Ensure all weapons have the 100% resistance buff
                 if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
