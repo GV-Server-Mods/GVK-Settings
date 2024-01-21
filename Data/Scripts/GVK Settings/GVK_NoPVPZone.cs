@@ -27,7 +27,7 @@ namespace StarterGrinder
         float multiplier = 1.2f;
 
         // New variables for no damage/grinding in desinated area
-        private Vector3D NO_DAMAGE_AREA = new Vector3D(0, 0, 0);
+        private Vector3D NO_DAMAGE_AREA = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
         private float NO_DAMAGE_RADIUS = 20000f;
 
         public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
