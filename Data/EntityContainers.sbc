@@ -10,5 +10,14 @@
 				<Component BuilderType="MyObjectBuilder_Inventory"/>
 			</DefaultComponents>
 		</Container>
+		<Container>
+			<Id>
+				<TypeId>CargoContainer</TypeId>
+				<SubtypeId>SmallBlockMediumContainer_Shared</SubtypeId>
+			</Id>
+			<DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_Inventory"/>
+			</DefaultComponents>
+		</Container>
 	</EntityContainers>
 </Definitions>

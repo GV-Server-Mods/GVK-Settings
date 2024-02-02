@@ -53,5 +53,52 @@
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
         </Definition>
+        <Definition xsi:type="MyObjectBuilder_CargoContainerDefinition">
+            <Id>
+                <TypeId>CargoContainer</TypeId>
+                <SubtypeId>SmallBlockMediumContainer_Shared</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Block_MediumCargoContainer</DisplayName>
+            <Icon>Textures\GUI\Icons\Cubes\container_medium.dds</Icon>
+            <Icon>Textures\Icons\Shared_Icon_Overlay.dds</Icon>
+            <Description>Cargo Container without ownership controls. Accessible to everyone.</Description>
+            <CubeSize>Small</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="3" y="3" z="3" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Model>Models\Cubes\Small\CargoContainerMedium.mwm</Model>
+            <Components>
+                <Component Subtype="InteriorPlate" Count="20" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Motor" Count="4" />
+                <Component Subtype="Display" Count="1" />
+                <Component Subtype="InteriorPlate" Count="10" />
+            </Components>
+            <CriticalComponent Subtype="Display" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0" StartY="0" EndX="3" EndY="3" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="3" EndY="3" />
+                <MountPoint Side="Top" StartX="0" StartY="0" EndX="3" EndY="3" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="3" EndY="3" Default="true" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="3" EndY="3" />
+                <MountPoint Side="Back" StartX="0" StartY="0" EndX="3" EndY="3" />
+            </MountPoints>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\CargoContainerMediumConstruction_1.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\CargoContainerMediumConstruction_2.mwm" />
+            </BuildProgressModels>
+            <BlockPairName>SmallCargoContainer_Shared</BlockPairName>
+            <MirroringY>Z</MirroringY>
+            <MirroringZ>Y</MirroringZ>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>14</BuildTimeSeconds>
+            <DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+            <DamagedSound>ParticleHeavyMech</DamagedSound>
+            <DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+            <DestroySound>WepSmallWarheadExpl</DestroySound>
+            <PCU>10</PCU>
+            <IsAirTight>true</IsAirTight>
+        </Definition>
     </CubeBlocks>
 </Definitions>
