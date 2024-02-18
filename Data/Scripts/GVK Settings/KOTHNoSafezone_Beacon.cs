@@ -39,7 +39,7 @@ namespace KOTHNoSafezone
 
             beacon = (Entity as IMyBeacon);
             KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
-            KOTHNoSafezone_ProjectorBlock.beaconList.Add(beacon);
+            // KOTHNoSafezone_ProjectorBlock.beaconList.Add(beacon);
 			if (beacon != null)
             {
                 logicEnabled = true;
@@ -140,10 +140,10 @@ namespace KOTHNoSafezone
             {
                 KOTHNoSafezone_SafeZoneBlock.beaconList.Remove(beacon);
             }
-            if (KOTHNoSafezone_ProjectorBlock.beaconList.Contains(beacon))
-            {
-                KOTHNoSafezone_ProjectorBlock.beaconList.Remove(beacon);
-            }
+            //if (KOTHNoSafezone_ProjectorBlock.beaconList.Contains(beacon))
+            //{
+            //    KOTHNoSafezone_ProjectorBlock.beaconList.Remove(beacon);
+            //}
         }
 
         public override void OnRemovedFromScene()
