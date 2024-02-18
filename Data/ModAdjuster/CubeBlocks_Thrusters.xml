@@ -9,12 +9,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -34,12 +29,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="10"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -59,12 +49,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -84,12 +69,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -109,12 +89,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -134,12 +109,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -159,12 +129,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -184,12 +149,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -209,12 +169,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -234,12 +189,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -259,12 +209,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -284,12 +229,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Hover_Tech" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -310,12 +250,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="200">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="200"/>
 				<Component Subtype="Construction" Count="150"/>
 				<Component Subtype="MetalGrid" Count="250"/>
 				<Component Subtype="LargeTube" Count="40"/>
@@ -343,12 +278,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="MetalGrid" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
@@ -376,12 +306,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="10">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="10"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="MetalGrid" Count="22"/>
 				<Component Subtype="LargeTube" Count="10"/>
@@ -409,12 +334,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="MetalGrid" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -442,12 +362,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="200">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="200"/>
 				<Component Subtype="Construction" Count="150"/>
 				<Component Subtype="MetalGrid" Count="250"/>
 				<Component Subtype="LargeTube" Count="40"/>
@@ -475,12 +390,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="20">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="MetalGrid" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
@@ -508,12 +418,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="10">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="10"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="MetalGrid" Count="22"/>
 				<Component Subtype="LargeTube" Count="10"/>
@@ -541,12 +446,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="MetalGrid" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -575,12 +475,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="50">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="50"/>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -601,12 +496,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="50">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="50"/>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -627,12 +517,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="5">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -653,12 +538,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="5">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -679,12 +559,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="4"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="3">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="3"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="2"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -705,12 +580,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="4"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="3">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="3"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="2"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -732,12 +602,7 @@
 			<DisplayName>DisplayName_Block_SmallAtmoThrustFlat</DisplayName>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="MetalGrid" Count="1"/>
@@ -758,12 +623,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
-					</DeconstructId>
-				</Component>
+				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="MetalGrid" Count="1"/>

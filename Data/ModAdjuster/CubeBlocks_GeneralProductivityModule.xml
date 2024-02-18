@@ -8,18 +8,8 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1000" />
-				<Component Subtype="GVK_Data_Core" Count="1">
-					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>DataScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
-				<Component Subtype="GVK_Laser_Tech" Count="10">
-					<DeconstructId>
-                        <TypeId>Ore</TypeId>
-                        <SubtypeId>LaserScrap</SubtypeId>
-                    </DeconstructId>
-                </Component>
+				<Component Subtype="GVK_Data_Core" Count="1"/>
+				<Component Subtype="GVK_Laser_Tech" Count="10"/>
 				<Component Subtype="Motor" Count="800" />
 				<Component Subtype="Superconductor" Count="1000" />
 				<Component Subtype="Computer" Count="2500" />
