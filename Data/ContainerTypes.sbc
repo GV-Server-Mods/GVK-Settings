@@ -137,21 +137,21 @@
 				<Item AmountMin="5" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>HoverScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="10">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>ThrustScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>SCalScrap</SubtypeId>
 					</Id>
 				</Item>
@@ -265,49 +265,49 @@
 				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>HoverScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>ThrustScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>SCalScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>LCalScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>MissileScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>LaserScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.1</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>DataScrap</SubtypeId>
 					</Id>
 				</Item>
@@ -463,49 +463,49 @@
 				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>HoverScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>ThrustScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>SCalScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>LCalScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>MissileScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>LaserScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.25</Frequency>
 					<Id>
-						<TypeId>Component</TypeId>
+						<TypeId>Ore</TypeId>
 						<SubtypeId>DataScrap</SubtypeId>
 					</Id>
 				</Item>
