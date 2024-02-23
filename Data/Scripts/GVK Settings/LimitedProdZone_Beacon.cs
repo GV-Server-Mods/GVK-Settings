@@ -25,9 +25,9 @@ namespace LimitedProdZone
         private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
         private IMyPlayer client;
-        private bool playerInZone;
-        private IMyCharacter character;
-        private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
+        //private bool playerInZone;
+        //private IMyCharacter character;
+        //private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
 
         //private TextWriter logger = null;
         //private String timeofload = "" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
@@ -98,7 +98,7 @@ namespace LimitedProdZone
                         return;
                     }                       
 
-                    if (Vector3D.Distance(client.GetPosition(), beacon.GetPosition()) < beacon.Radius)
+                    /*if (Vector3D.Distance(client.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     {
                         playerInZone = true;
                         character = client.Character;
@@ -107,7 +107,7 @@ namespace LimitedProdZone
                     else
                     {
                         playerInZone = false;
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {

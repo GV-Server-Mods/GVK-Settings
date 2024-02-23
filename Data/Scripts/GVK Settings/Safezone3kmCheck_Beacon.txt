@@ -17,17 +17,14 @@ using Sandbox.Game.Entities;
 using Sandbox.Game;
 using VRage.Utils;
 
-namespace KOTHNoSafezone
+namespace Safezone3kmCheck
 {
-    [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "ZoneBlock" })]
-    public class KOTHNoSafezone_Beacon : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_SafeZone), false, new string[] { "SafeZoneBlock" })]
+    public class Safezone3kmCheck_ActiveSafeZone : MyGameLogicComponent
     {
         private MyObjectBuilder_EntityBase _objectBuilder;
-        private IMyBeacon beacon;
+        private IMySafeZoneBlock activeSafeZone;
         private IMyPlayer client;
-        private bool playerInZone;
-        private IMyCharacter character;
-        private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
 
         private bool logicEnabled = false;
 
@@ -35,9 +32,9 @@ namespace KOTHNoSafezone
         {
             base.Init(objectBuilder);
 
-            beacon = (Entity as IMyBeacon);
-            KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
-			if (beacon != null)
+            activeSafeZone = (Entity as IMySafeZoneBlock);
+            Safezone3kmCheck_TargetSafeZoneBlock.activeSafeZoneList.Add(activeSafeZone);
+			if (activeSafeZone != null)
             {
                 logicEnabled = true;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_FRAME;
@@ -55,25 +52,15 @@ namespace KOTHNoSafezone
 
                 try
                 {
-                    if (!logicEnabled || beacon == null || !beacon.IsWorking || client == null)
+                    if (!logicEnabled || activeSafeZone == null || !activeSafeZone.IsWorking || !activeSafeZone.IsSafeZoneEnabled() || client == null)
                     {
                         return;
                     }                       
 
-                    if (Vector3D.Distance(client.GetPosition(), beacon.GetPosition()) < beacon.Radius)
-                    {
-                        playerInZone = true;
-                        character = client.Character;
-                        controller = character as VRage.Game.ModAPI.Interfaces.IMyControllableEntity;
-                    }
-                    else
-                    {
-                        playerInZone = false;
-                    }
                 }
                 catch (Exception e)
                 {
-                    MyAPIGateway.Utilities.ShowMessage("KOTHNoSafezone", "An error happened in the mod" + e);
+                    MyAPIGateway.Utilities.ShowMessage("Safezone3kmCheck", "An error happened in the mod" + e);
                 }
             });
         }
@@ -86,9 +73,9 @@ namespace KOTHNoSafezone
             }
                 
 
-            if (KOTHNoSafezone_SafeZoneBlock.beaconList.Contains(beacon))
+            if (Safezone3kmCheck_TargetSafeZoneBlock.activeSafeZoneList.Contains(activeSafeZone))
             {
-                KOTHNoSafezone_SafeZoneBlock.beaconList.Remove(beacon);
+                Safezone3kmCheck_TargetSafeZoneBlock.activeSafeZoneList.Remove(activeSafeZone);
             }
         }
 
@@ -97,12 +84,14 @@ namespace KOTHNoSafezone
 
             base.OnRemovedFromScene();
 
-            var Block = Entity as IMyBeacon;
+            var Block = Entity as IMySafeZoneBlock;
 
             if (Block == null)
             {
                 return;
             }
+
+            //Unregister any handlers here
 
         }
     }
