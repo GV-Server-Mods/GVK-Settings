@@ -311,6 +311,55 @@
 						<SubtypeId>DataScrap</SubtypeId>
 					</Id>
 				</Item>
+				<Item AmountMin="1" AmountMax="4">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="4">
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Missile_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="2">
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Laser_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="1">
+					<Frequency>0.1</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Data_Core</SubtypeId>
+					</Id>
+				</Item>
 				<Item AmountMin="1" AmountMax="5"> 
 					<Frequency>0.25</Frequency>
 					<Id>
@@ -503,10 +552,59 @@
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
-					<Frequency>0.25</Frequency>
+					<Frequency>0.125</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
 						<SubtypeId>DataScrap</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="10">
+					<Frequency>0.75</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="5" AmountMax="10">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="2" AmountMax="5">
+					<Frequency>0.75</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="2" AmountMax="5">
+					<Frequency>0.75</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="2" AmountMax="5">
+					<Frequency>0.75</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Missile_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="2" AmountMax="5">
+					<Frequency>0.5</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Laser_Tech</SubtypeId>
+					</Id>
+				</Item>
+				<Item AmountMin="1" AmountMax="1">
+					<Frequency>0.25</Frequency>
+					<Id>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>GVK_Data_Core</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20"> 
