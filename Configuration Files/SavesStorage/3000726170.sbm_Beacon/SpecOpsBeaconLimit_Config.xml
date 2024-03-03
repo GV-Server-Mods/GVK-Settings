@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-16"?>
 <Config xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <USE_MAX_BEACONS>false</USE_MAX_BEACONS>
-  <MAX_BEACONS>33</MAX_BEACONS>
+  <MAX_BEACONS>39</MAX_BEACONS>
   <TICK_UPDATE_RATE>300</TICK_UPDATE_RATE>
   <ALERT_RATE_SECONDS>900</ALERT_RATE_SECONDS>
   <BEACON_SUBTYPE>
@@ -90,16 +90,30 @@
   </BEACON_SUBTYPE>
   <BEACON_SUBTYPE>
     <BeaconSubtype>LargeBlockBeacon_Fortress</BeaconSubtype>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
-    <Limit>1</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+  </BEACON_SUBTYPE>
+  <BEACON_SUBTYPE>
+    <BeaconSubtype>LargeBlockBeacon_ShieldCore</BeaconSubtype>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
+    <Limit>2</Limit>
   </BEACON_SUBTYPE>
 </Config>

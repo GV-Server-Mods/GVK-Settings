@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-16"?>
-<ShipUpgradeConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+‡<?xml version="1.0" encoding="utf-16"?>
+<GVShipUpgradeConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ThrustOutputMultiplier>2</ThrustOutputMultiplier>
   <GyroStrengthMultiplier>2</GyroStrengthMultiplier>
   <CargoMassReductionPercent>0.5</CargoMassReductionPercent>
@@ -8,4 +8,4 @@
   <PowerOutputMultiplier>4</PowerOutputMultiplier>
   <PowerConsumptionMultiplier>0.25</PowerConsumptionMultiplier>
   <ResistanceMultiplier>0.5</ResistanceMultiplier>
-</ShipUpgradeConfig>
+</GVShipUpgradeConfig>

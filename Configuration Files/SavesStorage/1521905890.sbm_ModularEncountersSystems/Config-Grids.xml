@@ -35,13 +35,10 @@
   <UseGlobalBlockReplacer>true</UseGlobalBlockReplacer>
   <GlobalBlockReplacerReference />
   <GlobalBlockReplacerProfiles>
-    <string>GVK-Replacer-LargeCockpitToRivalAI</string>
     <string>GVK-Replacer-ProprietaryReactors</string>
-    <string>MES-DisposableNpcBeacons</string>
     <string>MES-NpcThrusters-Ion</string>
     <string>MES-NpcThrusters-Atmo</string>
     <string>MES-NpcThrusters-Hydro</string>
-    <string>GVK-Replacer-NPCBeacons</string>
   </GlobalBlockReplacerProfiles>
   <UseNonPhysicalAmmoForNPCs>false</UseNonPhysicalAmmoForNPCs>
   <RemoveContainerInventoryFromNPCs>false</RemoveContainerInventoryFromNPCs>
