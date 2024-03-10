@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- Added here because mod adjuster might be causing problems with this for some players -->
 		<Definition xsi:type="MyObjectBuilder_JumpDriveDefinition">
 			<Id>
 				<TypeId>JumpDrive</TypeId>
