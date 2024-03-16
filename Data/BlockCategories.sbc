@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CategoryClasses>
+		<!-- Ship Cores -->
 		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
 			<Id>
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
@@ -20,6 +21,24 @@
 				<string>LargeBlockBeacon_Fortress</string>
 				<string>LargeBlockBeacon_Pipeline</string>
 				<string>LargeBlockBeacon_ShieldCore</string>
+			</ItemIds>
+		</Category>
+		<!-- Shared Cargos -->
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>GVK Shared Cargo Containers</DisplayName>
+			<Name>GVK Shared Cargo Containers</Name>
+			<StrictSearch>true</StrictSearch>
+			<IsBlockCategory>true</IsBlockCategory>
+			<SearchCategory>false</SearchCategory>
+			<ItemIds>
+				<string>LargeBlockSmallContainer_Shared</string>
+				<string>SmallBlockMediumContainer_Shared</string>
+				<string>LargeBlockLargeContainer_Shared</string>
+				<string>LargeBlockLargeIndustrialContainer_Shared</string>
 			</ItemIds>
 		</Category>
 	</CategoryClasses>
