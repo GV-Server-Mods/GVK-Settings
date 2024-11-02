@@ -27,6 +27,7 @@ namespace StarterGrinder
         string grinder_sub = "AngleGrinder";
         float multiplier = 1.2f;
         readonly MyStringHash grindHash = MyStringHash.GetOrCompute("Grind");
+        readonly MyStringHash deformationHash = MyStringHash.GetOrCompute("Deformation");
 
         // New variables for no damage/grinding in desinated area
         private Vector3D NO_DAMAGE_AREA = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
@@ -51,6 +52,21 @@ namespace StarterGrinder
 
         private void grinder_handler(object target, ref MyDamageInformation info)
         {
+            IMyEntity ent = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
+
+            if (t == null && ent != null)
+            {
+                if (ent.GetType().ToString() == "Sandbox.Game.Entities.MyVoxelPhysics")
+                {
+                    t = ent.GetType();
+                }
+            }
+
+            if (!(ent != null && (ent.GetType() == t || ent is IMyVoxelBase || ent is IMyCubeGrid)) && (info.IsDeformation || info.Type.Equals(deformationHash))) {
+                info.Amount = 0;
+                return;
+            }
+
             try
             {
                 if (info.Type.Equals(grindHash))
