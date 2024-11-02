@@ -21,8 +21,7 @@ namespace MikeDude.ArmorBalance
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
-        public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
-        public const double hydroTankH2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
+        //public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
         private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
@@ -61,7 +60,7 @@ namespace MikeDude.ArmorBalance
 				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
-                blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
+                //blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 				blockDef.UseModelIntersection = true; // attempt to make things able to place better in tight spaces
 
 				// Ensure all weapons have the 100% resistance buff
