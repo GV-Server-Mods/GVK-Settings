@@ -30,6 +30,6 @@
   <currencyAmountRemoved>1</currencyAmountRemoved>
   <currencyDefinition>MyObjectBuilder_Ingot/Platinum</currencyDefinition>
   <enableGridRename>true</enableGridRename>
-  <allowSubgridConvert>false</allowSubgridConvert>
-  <convertSmallGridstoStations>false</convertSmallGridstoStations>
+  <allowSubgridConvert>true</allowSubgridConvert>
+  <convertSmallGridstoStations>true</convertSmallGridstoStations>
 </Settings>

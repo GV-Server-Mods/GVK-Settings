@@ -178,10 +178,10 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="36.7" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="18.4" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="2.8" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="0.9" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="9.2" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="4.6" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.7" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.2</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -198,11 +198,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="5.6" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="0.2" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1.7" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.1" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="0.4" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.5</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -219,11 +219,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="179.7" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="45" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="27" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="9" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="45" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="11.3" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="6.8" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="2.3" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.9</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -240,11 +240,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Magnesium"/>
-				<Item Amount="1" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="0.5" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="0.3" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.5" TypeId="Ingot" SubtypeId="Silver"/>
 			</Results>
 			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -261,11 +261,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="113.9" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="2.9" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="11.4" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="28.5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="0.8" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="2.9" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -282,11 +282,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="120.4" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="6.1" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="12.1" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="22.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="30.1" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.6" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="0.8" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>6</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -303,28 +303,28 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="DataScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="54" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="108" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="269.8" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="54" TypeId="Ingot" SubtypeId="Gold"/>
-				<Item Amount="54" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="225" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="27" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="67.5" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="13.5" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
-        <Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>ZoneChip</SubtypeId>
-            </Id>
-            <DisplayName>Siege Chip</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
-            <Prerequisites>
-                <Item Amount="1" TypeId="Component" SubtypeId="ZoneChip" />
-            </Prerequisites>
-            <Result Amount="1" TypeId="Component" SubtypeId="ZoneChip" />
-            <BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
-        </Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>ZoneChip</SubtypeId>
+			</Id>
+			<DisplayName>Siege Chip</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
 			<Id>

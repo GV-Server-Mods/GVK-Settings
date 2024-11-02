@@ -15,5 +15,19 @@
 			</Id>
             <Size x="1.5" y="1.5" z="1.5" />
 		</EntityComponent>
+		<EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+			<Id>
+				<TypeId>Inventory</TypeId>
+				<SubtypeId>LargeBlockLargeContainer_Shared</SubtypeId>
+			</Id>
+			<Size x="7.5" y="7.5" z="7.5"/>
+		</EntityComponent>
+		<EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+			<Id>
+				<TypeId>Inventory</TypeId>
+				<SubtypeId>LargeBlockLargeIndustrialContainer_Shared</SubtypeId>
+			</Id>
+			<Size x="7.5" y="7.5" z="7.5"/>
+		</EntityComponent>
 	</EntityComponents>
 </Definitions>

@@ -7,13 +7,14 @@
 				<SubtypeId>RivalAIRemoteControlLarge</SubtypeId>
 			</Id>
 			<Components>
-				<Component Subtype="InteriorPlate" Count="5"/>
-				<Component Subtype="Construction" Count="10"/>
-				<Component Subtype="Motor" Count="1"/>
-				<Component Subtype="Computer" Count="15"/>
-				<Component Subtype="SteelPlate" Count="25"/>
+				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="100"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_1.mwm" />
+                <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_2.mwm" />
+            </BuildProgressModels>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
 			<Id>
@@ -21,13 +22,14 @@
 				<SubtypeId>RivalAIRemoteControlSmall</SubtypeId>
 			</Id>
 			<Components>
-				<Component Subtype="InteriorPlate" Count="1"/>
-				<Component Subtype="Construction" Count="1"/>
-				<Component Subtype="Motor" Count="1"/>
 				<Component Subtype="Computer" Count="1"/>
-				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_1.mwm" />
+                <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_2.mwm" />
+            </BuildProgressModels>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

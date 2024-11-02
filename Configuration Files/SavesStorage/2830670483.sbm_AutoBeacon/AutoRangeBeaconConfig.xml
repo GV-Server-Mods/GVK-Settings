@@ -158,7 +158,7 @@
       </item>
       <item>
         <Key Type="MyObjectBuilder_InteriorTurret" Subtype="LargeInteriorTurret" />
-        <Value>2</Value>
+        <Value>0</Value>
       </item>
       <item>
         <Key Type="MyObjectBuilder_SmallMissileLauncher" Subtype="" />
