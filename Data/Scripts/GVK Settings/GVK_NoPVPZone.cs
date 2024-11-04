@@ -52,17 +52,17 @@ namespace StarterGrinder
 
         private void grinder_handler(object target, ref MyDamageInformation info)
         {
-            IMyEntity ent = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
+            IMyEntity target = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
 
-            if (t == null && ent != null)
+            if (t == null && target != null)
             {
-                if (ent.GetType().ToString() == "Sandbox.Game.Entities.MyVoxelPhysics")
+                if (target.GetType().ToString() == "Sandbox.Game.Entities.MyVoxelPhysics")
                 {
-                    t = ent.GetType();
+                    t = target.GetType();
                 }
             }
 
-            if (!(ent != null && (ent.GetType() == t || ent is IMyVoxelBase || ent is IMyCubeGrid)) && (info.IsDeformation || info.Type.Equals(deformationHash))) {
+            if (!(target != null && (target.GetType() == t || target is IMyVoxelBase || target is IMyCubeGrid)) && (info.IsDeformation || info.Type.Equals(deformationHash))) {
                 info.Amount = 0;
                 return;
             }
