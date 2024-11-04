@@ -12,14 +12,16 @@ using VRage.Game.ModAPI;
 using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
-
+using Sandbox.Definitions;
+using VRageRender;
 
 namespace StarterGrinder
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
     {
-        IMySlimBlock reuse_slim;
+        Type t;
+		IMySlimBlock reuse_slim;
         IMyAngleGrinder reuse_grinder;
         IMyShipGrinder ship_grinder;
         IMyFaction reuse_faction;
