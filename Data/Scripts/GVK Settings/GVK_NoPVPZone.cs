@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sandbox.Game;
@@ -12,16 +12,14 @@ using VRage.Game.ModAPI;
 using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
-using Sandbox.Definitions;
-using VRageRender;
+
 
 namespace StarterGrinder
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
     {
-        Type t;
-		IMySlimBlock reuse_slim;
+        IMySlimBlock reuse_slim;
         IMyAngleGrinder reuse_grinder;
         IMyShipGrinder ship_grinder;
         IMyFaction reuse_faction;
@@ -29,7 +27,6 @@ namespace StarterGrinder
         string grinder_sub = "AngleGrinder";
         float multiplier = 1.2f;
         readonly MyStringHash grindHash = MyStringHash.GetOrCompute("Grind");
-        readonly MyStringHash deformationHash = MyStringHash.GetOrCompute("Deformation");
 
         // New variables for no damage/grinding in desinated area
         private Vector3D NO_DAMAGE_AREA = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
@@ -54,21 +51,6 @@ namespace StarterGrinder
 
         private void grinder_handler(object target, ref MyDamageInformation info)
         {
-            IMyEntity target = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
-
-            if (t == null && target != null)
-            {
-                if (target.GetType().ToString() == "Sandbox.Game.Entities.MyVoxelPhysics")
-                {
-                    t = target.GetType();
-                }
-            }
-
-            if (!(target != null && (target.GetType() == t || target is IMyVoxelBase || target is IMyCubeGrid)) && (info.IsDeformation || info.Type.Equals(deformationHash))) {
-                info.Amount = 0;
-                return;
-            }
-
             try
             {
                 if (info.Type.Equals(grindHash))
