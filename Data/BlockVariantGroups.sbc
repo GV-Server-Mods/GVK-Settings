@@ -32,5 +32,28 @@
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockLargeIndustrialContainer_Shared"/>
 			</Blocks>
 		</BlockVariantGroup>
+		<!-- Add HUGE blocks -->
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GasGeneratorGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\OxygenGenerator.dds</Icon>
+            <DisplayName>DisplayName_Block_OxygenGenerator</DisplayName>
+            <Description>Description_OxygenGenerator</Description>
+            <Blocks>
+                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="" />
+                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGeneratorSmall" />
+                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGenerator3" />
+            </Blocks>
+        </BlockVariantGroup>
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="HydrogenEngineGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
+            <DisplayName>DisplayName_Block_Hydrogen_Engine</DisplayName>
+            <Description>Description_PowerGenerator</Description>
+            <Blocks>
+		        <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngine" />
+                <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngine" />
+		        <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="HugeHydrogenEngine3" />
+            </Blocks>
+        </BlockVariantGroup>
 	</BlockVariantGroups>
 </Definitions>

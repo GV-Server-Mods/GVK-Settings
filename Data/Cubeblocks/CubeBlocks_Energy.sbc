@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Huge Hydrogen Engines -->
+		<Definition xsi:type="MyObjectBuilder_HydrogenEngineDefinition">
+			<Id>
+				<TypeId>HydrogenEngine</TypeId>
+				<SubtypeId>HugeHydrogenEngine3</SubtypeId>
+			</Id>
+			<DisplayName>Mega Hydrogen Engine</DisplayName>
+			<Description>The Mega H2 Engine has 200% H2 efficiency, but can only placed on a Fortress grid.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="3" z="6"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\HugeHydrogenEngine3.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="2160"/><!-- 80 -->
+				<Component Subtype="Construction" Count="1620"/><!-- 60 -->
+				<Component Subtype="LargeTube" Count="324"/><!-- 12 -->
+				<Component Subtype="SmallTube" Count="540"/><!-- 20 -->
+				<Component Subtype="Motor" Count="324"/><!-- 12 -->
+				<Component Subtype="Computer" Count="108"/><!-- 4 -->
+				<Component Subtype="PowerCell" Count="27"/><!-- 1 -->
+				<Component Subtype="Construction" Count="270"/><!-- 10 -->
+				<Component Subtype="SteelPlate" Count="540"/><!-- 20 -->
+			</Components>
+			<CriticalComponent Subtype="PowerCell" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.15" StartY="0.15" EndX="2.85" EndY="5.85" Default="true"/>
+				<MountPoint Side="Front" StartX="0.15" StartY="0.15" EndX="2.85" EndY="2.85"/>
+				<MountPoint Side="Back" StartX="1.15" StartY="1.65" EndX="1.85" EndY="2.35"/>
+				<MountPoint Side="Top" StartX="1.15" StartY="0.15" EndX="1.85" EndY="3.65"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\HugeHydrogenEngine3_Construction1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\HugeHydrogenEngine3_Construction2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\HugeHydrogenEngine3_Construction3.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>HugeHydrogenEngine3</BlockPairName>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>240</BuildTimeSeconds><!-- 60 -->
+			<ResourceSinkGroup>Generators</ResourceSinkGroup>
+			<ResourceSourceGroup>Reactors</ResourceSourceGroup>
+			<MaxPowerOutput>200</MaxPowerOutput><!-- 5 -->
+			<FuelCapacity>2700000</FuelCapacity>
+			<EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<IsAirTight>false</IsAirTight>
+			<InventorySize>
+				<X>1</X>
+				<Y>1</Y>
+				<Z>1</Z>
+			</InventorySize>
+			<FuelInfos>
+				<FuelInfo>
+					<Id>
+						<TypeId>GasProperties</TypeId>
+						<SubtypeId>Hydrogen</SubtypeId>
+					</Id>
+					<Ratio>0.25</Ratio><!-- 1.0 is 1x, 0.5 is double efficient -->
+				</FuelInfo>
+			</FuelInfos>
+			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<PrimarySound>ArcBlockHydrogenEngine</PrimarySound>
+			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
+			<DamagedSound>ParticleWeapExpl</DamagedSound>
+			<DestroyEffect>Explosion_Warhead_02</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>25</PCU>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

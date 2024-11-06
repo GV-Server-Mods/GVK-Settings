@@ -477,6 +477,7 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
+		<!-- NPC only CU Refinery -->
 		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
 			<Id>
 				<TypeId>Refinery</TypeId>
@@ -556,6 +557,110 @@
 				<unsignedInt>60</unsignedInt>
 				<unsignedInt>120</unsignedInt>
 				<unsignedInt>240</unsignedInt>
+			</TieredUpdateTimes>
+		</Definition>
+		<!-- HUGE O2/H2 Generator -->
+		<Definition xsi:type="MyObjectBuilder_OxygenGeneratorDefinition">
+			<Id>
+				<TypeId>OxygenGenerator</TypeId>
+				<SubtypeId>OxygenGenerator3</SubtypeId>
+			</Id>
+			<DisplayName>Mega O2/H2 Generator</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\OxygenGenerator5.dds</Icon>
+			<Description>The Mega O2/H2 Generator has 200% ice efficiency, but can only placed on a Fortress grid.</Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="6" z="3"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\OxygenGenerator3.mwm</Model>
+			<Components><!-- x 27 -->
+				<Component Subtype="SteelPlate" Count="2970"/><!-- 110 -->
+				<Component Subtype="Construction" Count="135"/><!-- 5 -->
+				<Component Subtype="LargeTube" Count="54"/><!-- 2 -->
+				<Component Subtype="Motor" Count="108"/><!-- 4 -->
+				<Component Subtype="Computer" Count="135"/><!-- 5 -->
+				<Component Subtype="SteelPlate" Count="270"/><!-- 10 -->
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="2.9" EndY="2.9" Default="true"/>
+				<MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="2.9" EndY="2.9"/>
+				<MountPoint Side="Back" StartX="0.1" StartY="0.1" EndX="2.9" EndY="3"/>
+				<MountPoint Side="Back" StartX="0.1" StartY="3" EndX="0.6" EndY="5.4"/>
+				<MountPoint Side="Back" StartX="2.4" StartY="3" EndX="2.9" EndY="5.4"/>
+				<MountPoint Side="Back" StartX="0.1" StartY="5.4" EndX="2.9" EndY="5.9"/>
+				<MountPoint Side="Front" StartX="0.1" StartY="0.1" EndX="2.9" EndY="3"/>
+				<MountPoint Side="Front" StartX="0.1" StartY="3" EndX="0.6" EndY="5.4"/>
+				<MountPoint Side="Front" StartX="2.4" StartY="3" EndX="2.9" EndY="5.4"/>
+				<MountPoint Side="Front" StartX="0.1" StartY="5.4" EndX="2.9" EndY="5.9"/>
+				<MountPoint Side="Left" StartX="0.1" StartY="0.1" EndX="2.9" EndY="3"/>
+				<MountPoint Side="Left" StartX="0.1" StartY="3" EndX="0.6" EndY="5.4"/>
+				<MountPoint Side="Left" StartX="2.4" StartY="3" EndX="2.9" EndY="5.4"/>
+				<MountPoint Side="Left" StartX="0.1" StartY="5.4" EndX="2.9" EndY="5.9"/>
+				<MountPoint Side="Right" StartX="0.1" StartY="0.1" EndX="2.9" EndY="3"/>
+				<MountPoint Side="Right" StartX="0.1" StartY="3" EndX="0.6" EndY="5.4"/>
+				<MountPoint Side="Right" StartX="2.4" StartY="3" EndX="2.9" EndY="5.4"/>
+				<MountPoint Side="Right" StartX="0.1" StartY="5.4" EndX="2.9" EndY="5.9"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\OxygenGenerator3Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\OxygenGenerator3Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\OxygenGenerator3Construction_3.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>OxygenGenerator3</BlockPairName>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>180</BuildTimeSeconds><!-- 22 -->
+			<ResourceSourceGroup>Reactors</ResourceSourceGroup>
+			<ResourceSinkGroup>Factory</ResourceSinkGroup>
+			<IceConsumptionPerSecond>4000</IceConsumptionPerSecond><!-- 25 -->
+			<InventoryMaxVolume>108</InventoryMaxVolume><!-- 4 -->
+			<InventorySize><!-- 2 -->
+				<X>2</X>
+				<Y>2</Y>
+				<Z>2</Z>
+			</InventorySize>
+			<InventoryFillFactorMin>0.3</InventoryFillFactorMin>
+			<InventoryFillFactorMax>0.6</InventoryFillFactorMax>
+			<FuelPullAmountFromConveyorInMinutes>2.2</FuelPullAmountFromConveyorInMinutes>
+			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
+			<OperationalPowerConsumption>80</OperationalPowerConsumption><!-- 0.5 -->
+			<ProducedGases>
+				<GasInfo>
+					<Id>
+						<TypeId>GasProperties</TypeId>
+						<SubtypeId>Oxygen</SubtypeId>
+					</Id>
+					<IceToGasRatio>15</IceToGasRatio><!-- 10 -->
+				</GasInfo>
+				<GasInfo>
+					<Id>
+						<TypeId>GasProperties</TypeId>
+						<SubtypeId>Hydrogen</SubtypeId>
+					</Id>
+					<IceToGasRatio>30</IceToGasRatio><!-- 20 -->
+				</GasInfo>
+			</ProducedGases>
+			<BlueprintClasses>
+				<Class>Ice</Class>
+				<Class>OxygenBottles</Class>
+				<Class>HydrogenBottles</Class>
+			</BlueprintClasses>
+			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
+			<DamagedSound>ParticleWeapExpl</DamagedSound>
+			<GenerateSound>BlockOxyGenProcess</GenerateSound>
+			<IdleSound>BlockOxyGenIdle</IdleSound>
+			<EmissiveColorPreset>Extended</EmissiveColorPreset>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<MirroringX>Y</MirroringX>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<PCU>50</PCU>
+			<TieredUpdateTimes>
+				<unsignedInt>300</unsignedInt>
+				<unsignedInt>600</unsignedInt>
+				<unsignedInt>1200</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
 	</CubeBlocks>

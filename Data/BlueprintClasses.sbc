@@ -70,5 +70,8 @@
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="MissileScraptoCUIngot" />
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="LaserScraptoCUIngot" />
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="DataScraptoCUIngot" />
+		<!-- HUGE blocks -->
+		<Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/OxygenGenerator3" />
+		<Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/HugeHydrogenEngine3" />
 	</BlueprintClassEntries>
 </Definitions>
