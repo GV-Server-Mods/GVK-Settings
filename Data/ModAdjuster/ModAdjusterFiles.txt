@@ -1,9 +1,12 @@
 Components_Economy.xml
 CubeBlocks_Automation.xml
+CubeBlocks_Control.xml
+CubeBlocks_Energy.xml
 CubeBlocks_GeneralProductivityModule.xml
 CubeBlocks_NPCBeacons.xml
 CubeBlocks_NPCRemotes.xml
 CubeBlocks_NPCThrusters-Ion.xml
+CubeBlocks_Production.xml
 CubeBlocks_Thrusters.xml
 CubeBlocks_Tools.xml
 SessionComponents_Economy.xml

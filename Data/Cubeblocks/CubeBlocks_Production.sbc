@@ -233,6 +233,86 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
+		<!-- added for custom blueprint classes -->
+		<Definition xsi:type="MyObjectBuilder_AssemblerDefinition">
+			<Id>
+				<TypeId>Assembler</TypeId>
+				<SubtypeId>LargePrototechAssembler</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_PrototechAssembler</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Prototech_Assembler.dds</Icon>
+			<Description>Description_PrototechAssembler</Description>
+			<CubeSize>Large</CubeSize>
+			<GuiVisible>false</GuiVisible>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="3" y="2" z="2"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Prototech_Assembler.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="120"/>
+				<Component Subtype="GVK_Laser_Tech" Count="3"/>
+				<Component Subtype="Construction" Count="80"/>
+				<Component Subtype="Motor" Count="20"/>
+				<Component Subtype="Display" Count="10"/>
+				<Component Subtype="MetalGrid" Count="10"/>
+				<Component Subtype="Computer" Count="160"/>
+				<Component Subtype="SteelPlate" Count="20"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="3" EndY="0.2"/>
+				<MountPoint Side="Back" StartX="1.3" StartY="0.3" EndX="2.9" EndY="0.9"/>
+				<MountPoint Side="Back" StartX="0" StartY="1.9" EndX="3" EndY="2"/>
+				<MountPoint Side="Back" StartX="0" StartY="1.2" EndX="0.1" EndY="1.9"/>
+				<MountPoint Side="Back" StartX="2.9" StartY="1.2" EndX="3" EndY="1.9"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0.2" EndX="3" EndY="2" Default="true"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="3" EndY="1"/>
+				<MountPoint Side="Top" StartX="0.1" StartY="1" EndX="0.9" EndY="1.9"/>
+				<MountPoint Side="Left" StartX="0.2" StartY="0" EndX="2" EndY="0.2"/>
+				<MountPoint Side="Left" StartX="0.7" StartY="0.2" EndX="1" EndY="1.8"/>
+				<MountPoint Side="Left" StartX="1" StartY="0.9" EndX="2" EndY="2"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="1.8" EndY="0.2"/>
+				<MountPoint Side="Right" StartX="0.1" StartY="0.2" EndX="1.2" EndY="1"/>
+				<MountPoint Side="Right" StartX="0" StartY="1" EndX="1" EndY="2"/>
+				<MountPoint Side="Right" StartX="1" StartY="1" EndX="1.3" EndY="1.8"/>
+			</MountPoints>
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\Prototech_Assembler_Construction_1.mwm"/>
+				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\Prototech_Assembler_Construction_2.mwm"/>
+				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\Prototech_Assembler_Construction_3.mwm"/>
+			</BuildProgressModels>
+			<BlockPairName>PrototechAssembler</BlockPairName>
+			<EdgeType>Light</EdgeType>
+			<BuildTimeSeconds>120</BuildTimeSeconds>
+			<DisassembleRatio>5</DisassembleRatio>
+			<ResourceSinkGroup>Factory</ResourceSinkGroup>
+			<InventoryMaxVolume>6</InventoryMaxVolume>
+			<InventorySize>
+				<X>1</X>
+				<Y>1</Y>
+				<Z>1</Z>
+			</InventorySize>
+			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
+			<OperationalPowerConsumption>4</OperationalPowerConsumption>
+			<BlueprintClasses>
+				<Class>PrototechComponents</Class>
+			</BlueprintClasses>
+			<MirroringY>Z</MirroringY>
+			<MirroringZ>Y</MirroringZ>
+			<DamageEffectName>Damage_Electrical_Prototech_Assembler</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<PrimarySound>BlockAssembler</PrimarySound>
+			<ActionSound>BlockAssemblerProcess</ActionSound>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<DestroyEffect>Explosion_Missile</DestroyEffect>
+			<DestroySound>WepSmallMissileExpl</DestroySound>
+			<PCU>40</PCU>
+			<TieredUpdateTimes>
+				<unsignedInt>60</unsignedInt>
+				<unsignedInt>120</unsignedInt>
+				<unsignedInt>240</unsignedInt>
+			</TieredUpdateTimes>
+		</Definition>
 		<!-- reduced speed -->
 		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
 			<Id>
@@ -477,7 +557,7 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<!-- NPC only CU Refinery -->
+		<!-- New NPC only CU Refinery -->
 		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
 			<Id>
 				<TypeId>Refinery</TypeId>
@@ -559,7 +639,7 @@
 				<unsignedInt>240</unsignedInt>
 			</TieredUpdateTimes>
 		</Definition>
-		<!-- HUGE O2/H2 Generator -->
+		<!-- New HUGE O2/H2 Generator -->
 		<Definition xsi:type="MyObjectBuilder_OxygenGeneratorDefinition">
 			<Id>
 				<TypeId>OxygenGenerator</TypeId>
@@ -573,13 +653,21 @@
 			<Size x="3" y="6" z="3"/>
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\OxygenGenerator3.mwm</Model>
-			<Components><!-- x 27 -->
-				<Component Subtype="SteelPlate" Count="2970"/><!-- 110 -->
-				<Component Subtype="Construction" Count="135"/><!-- 5 -->
-				<Component Subtype="LargeTube" Count="54"/><!-- 2 -->
-				<Component Subtype="Motor" Count="108"/><!-- 4 -->
-				<Component Subtype="Computer" Count="135"/><!-- 5 -->
-				<Component Subtype="SteelPlate" Count="270"/><!-- 10 -->
+			<Components>
+				<!-- x 27 -->
+				<Component Subtype="SteelPlate" Count="2970"/>
+				<!-- 110 -->
+				<Component Subtype="GVK_Laser_Tech" Count="3"/>
+				<Component Subtype="Construction" Count="135"/>
+				<!-- 5 -->
+				<Component Subtype="LargeTube" Count="54"/>
+				<!-- 2 -->
+				<Component Subtype="Motor" Count="108"/>
+				<!-- 4 -->
+				<Component Subtype="Computer" Count="135"/>
+				<!-- 5 -->
+				<Component Subtype="SteelPlate" Count="270"/>
+				<!-- 10 -->
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<MountPoints>
@@ -610,12 +698,16 @@
 			</BuildProgressModels>
 			<BlockPairName>OxygenGenerator3</BlockPairName>
 			<EdgeType>Light</EdgeType>
-			<BuildTimeSeconds>180</BuildTimeSeconds><!-- 22 -->
+			<BuildTimeSeconds>180</BuildTimeSeconds>
+			<!-- 22 -->
 			<ResourceSourceGroup>Reactors</ResourceSourceGroup>
 			<ResourceSinkGroup>Factory</ResourceSinkGroup>
-			<IceConsumptionPerSecond>4000</IceConsumptionPerSecond><!-- 25 -->
-			<InventoryMaxVolume>108</InventoryMaxVolume><!-- 4 -->
-			<InventorySize><!-- 2 -->
+			<IceConsumptionPerSecond>4000</IceConsumptionPerSecond>
+			<!-- 25 -->
+			<InventoryMaxVolume>108</InventoryMaxVolume>
+			<!-- 4 -->
+			<InventorySize>
+				<!-- 2 -->
 				<X>2</X>
 				<Y>2</Y>
 				<Z>2</Z>
@@ -624,21 +716,24 @@
 			<InventoryFillFactorMax>0.6</InventoryFillFactorMax>
 			<FuelPullAmountFromConveyorInMinutes>2.2</FuelPullAmountFromConveyorInMinutes>
 			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
-			<OperationalPowerConsumption>80</OperationalPowerConsumption><!-- 0.5 -->
+			<OperationalPowerConsumption>80</OperationalPowerConsumption>
+			<!-- 0.5 -->
 			<ProducedGases>
 				<GasInfo>
 					<Id>
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Oxygen</SubtypeId>
 					</Id>
-					<IceToGasRatio>15</IceToGasRatio><!-- 10 -->
+					<IceToGasRatio>15</IceToGasRatio>
+					<!-- 10 -->
 				</GasInfo>
 				<GasInfo>
 					<Id>
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<IceToGasRatio>30</IceToGasRatio><!-- 20 -->
+					<IceToGasRatio>30</IceToGasRatio>
+					<!-- 20 -->
 				</GasInfo>
 			</ProducedGases>
 			<BlueprintClasses>

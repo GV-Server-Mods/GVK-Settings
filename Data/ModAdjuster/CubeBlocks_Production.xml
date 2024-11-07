@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Assemblers also dont work with mod adjuster, blueprints from other mods dont get applied correctly -->
+		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
+			<Id>
+				<TypeId>Refinery</TypeId>
+				<SubtypeId>LargePrototechRefinery</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_PrototechRefinery</DisplayName>
+			<Components>
+                <Component Subtype="SteelPlate" Count="1100" />
+				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
+                <Component Subtype="Construction" Count="40" />
+                <Component Subtype="LargeTube" Count="20" />
+                <Component Subtype="Motor" Count="16" />
+                <Component Subtype="MetalGrid" Count="20" />
+                <Component Subtype="Computer" Count="20" />
+                <Component Subtype="SteelPlate" Count="100" />
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
+			<Id>
+				<TypeId>Refinery</TypeId>
+				<SubtypeId>SmallPrototechRefinery</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Block_PrototechRefinery</DisplayName>
+			<Components>
+                <Component Subtype="SteelPlate" Count="220" />
+				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
+                <Component Subtype="Construction" Count="8" />
+                <Component Subtype="LargeTube" Count="4" />
+                <Component Subtype="Motor" Count="3" />
+                <Component Subtype="MetalGrid" Count="4" />
+                <Component Subtype="Computer" Count="4" />
+                <Component Subtype="SteelPlate" Count="20" />
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+	</CubeBlocks>
+</Definitions>
