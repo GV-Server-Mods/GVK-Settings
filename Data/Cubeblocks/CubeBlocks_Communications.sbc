@@ -370,7 +370,7 @@
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 		</Definition>
-		<!-- Large Pipeline -->
+		<!-- Large Shield -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
 			<Id>
 				<TypeId>Beacon</TypeId>
@@ -425,7 +425,7 @@
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 		</Definition>
-		<!-- Disable Beacon Reskin due to incompatibility with Beacon Limits Mod, avoids cleanup confusion -->
+		<!-- Disable Beacon Reskin due to incompatibility with Beacon Limits Mod, avoids cleanup confusion
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition" Enabled="false">
 			<Id>
 				<TypeId>Beacon</TypeId>
@@ -467,8 +467,6 @@
 			<BuildTimeSeconds>40</BuildTimeSeconds>
 			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
-			<!-- Beacon properties -->
-			<!-- Antenna info-->
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
 			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
 			<EnableLight>true</EnableLight>
@@ -523,8 +521,6 @@
 			<BuildTimeSeconds>15</BuildTimeSeconds>
 			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
-			<!-- Beacon properties -->
-			<!-- Antenna info-->
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
 			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
 			<EnableLight>true</EnableLight>
@@ -538,6 +534,6 @@
 			<DLC>DecorativeBlocks3</DLC>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
-		</Definition>
+		</Definition> -->
 	</CubeBlocks>
 </Definitions>

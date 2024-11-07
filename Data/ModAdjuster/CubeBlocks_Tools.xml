@@ -12,7 +12,7 @@
 			<UsesDeformation>false</UsesDeformation>
 		</Definition>
 		<!-- disable small grid welder -->
-		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="true">
 			<Id>
 				<TypeId>ShipWelder</TypeId>
 				<SubtypeId>SmallShipWelder</SubtypeId>
