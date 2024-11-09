@@ -18,7 +18,7 @@
 			<Model>Models\HugeHydrogenEngine3.mwm</Model>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2160"/><!-- 80 -->
-				<Component Subtype="GVK_Thrust_Tech" Count="10"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="10"/>
 				<Component Subtype="Construction" Count="1620"/><!-- 60 -->
 				<Component Subtype="LargeTube" Count="324"/><!-- 12 -->
 				<Component Subtype="SmallTube" Count="540"/><!-- 20 -->

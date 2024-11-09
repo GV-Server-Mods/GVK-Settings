@@ -6,11 +6,11 @@
 				<TypeId>BatteryBlock</TypeId>
 				<SubtypeId>LargeBlockPrototechBattery</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_PrototechBattery</DisplayName>
+			<DisplayName>Advanced Battery</DisplayName>
 			<Description>Description_Prototech_Battery</Description>
 			<Components>
                 <Component Subtype="SteelPlate" Count="40" />
-				<Component Subtype="GVK_Laser_Tech" Count="4"/>
+				<Component Subtype="PrototechCapacitor" Count="4"/>
                 <Component Subtype="Construction" Count="20" />
                 <Component Subtype="PowerCell" Count="160"/>
                 <Component Subtype="Computer" Count="50" />
@@ -24,11 +24,11 @@
 				<TypeId>BatteryBlock</TypeId>
 				<SubtypeId>SmallBlockPrototechBattery</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_PrototechBattery</DisplayName>
+			<DisplayName>Advanced Battery</DisplayName>
 			<Description>Description_Prototech_Battery</Description>
 			<Components>
                 <Component Subtype="SteelPlate" Count="12" />
-				<Component Subtype="GVK_Laser_Tech" Count="1"/>
+				<Component Subtype="PrototechCapacitor" Count="1"/>
                 <Component Subtype="Construction" Count="6" />
                 <Component Subtype="PowerCell" Count="12"/>
                 <Component Subtype="Computer" Count="12" />

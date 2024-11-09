@@ -28,6 +28,18 @@
         <Class>
             <Id>
                 <TypeId>BlueprintClassDefinition</TypeId>
+                <SubtypeId>GVKEliteComponents</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_BlueprintClass_Components</DisplayName>
+            <Description>Description_BlueprintClass_Components</Description>
+            <Icon>Textures\GUI\Icons\buttons\component.dds</Icon>
+            <FocusIcon>Textures\GUI\Icons\buttons\component.dds</FocusIcon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\component_focus.dds</HighlightIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</InputConstraintIcon>
+        </Class>
+        <Class>
+            <Id>
+                <TypeId>BlueprintClassDefinition</TypeId>
                 <SubtypeId>GVKCUIngots</SubtypeId>
             </Id>
             <DisplayName>CU Ingot</DisplayName>
@@ -45,7 +57,7 @@
         <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Canvas" />
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
-		<Entry Class="SimpleComponents" BlueprintSubtypeId="001_GVK_SmallCaliber_Tech" />
+		<Entry Class="SimpleComponents" BlueprintSubtypeId="001_PrototechMachinery" />
 		<!-- Large Assemblers -->	
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
@@ -55,13 +67,34 @@
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position00075_FireworksBoxRainbow" />
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Medkit"/>
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Powerkit"/>
-		<Entry Class="Components" BlueprintSubtypeId="001_GVK_SmallCaliber_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="002_GVK_Thrust_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="003_GVK_Hover_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="004_GVK_LargeCaliber_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="005_GVK_Missile_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="006_GVK_Laser_Tech" />
-		<Entry Class="Components" BlueprintSubtypeId="007_GVK_Data_Core" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="001_PrototechMachinery" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="002_PrototechPropulsionUnit" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="003_PrototechCoolingUnit" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="004_PrototechFrame" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="005_PrototechPanel" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="006_PrototechCapacitor" />
+		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="007_PrototechCircuitry" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="ConstructionComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="GirderComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="MetalGrid" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="InteriorPlate" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="SteelPlate" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="SmallTube" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="LargeTube" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="MotorComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="Display" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="BulletproofGlass" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="ComputerComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="ReactorComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="ThrustComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="GravityGeneratorComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="MedicalComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="RadioCommunicationComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="DetectorComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="ExplosivesComponent" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="SolarCell" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="PowerCell" />
+        <Entry Class="GVKEliteComponents" BlueprintSubtypeId="Superconductor" />
 		<!-- NPC CU Refinery -->
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="HoverScraptoCUIngot" />
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="ThrustScraptoCUIngot" />
@@ -73,5 +106,18 @@
 		<!-- HUGE blocks -->
 		<Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/OxygenGenerator3" />
 		<Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/HugeHydrogenEngine3" />
+        <!-- Prototech Blocks -->
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="JumpDrive/LargePrototechJumpDrive" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Thrust/LargeBlockPrototechThruster" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Refinery/LargePrototechRefinery" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Assembler/LargePrototechAssembler" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Gyro/LargeBlockPrototechGyro" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="BatteryBlock/LargeBlockPrototechBattery" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Drill/LargeBlockPrototechDrill" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="JumpDrive/SmallPrototechJumpDrive" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="Thrust/SmallBlockPrototechThruster" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="Refinery/SmallPrototechRefinery" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="Gyro/SmallBlockPrototechGyro" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="BatteryBlock/SmallBlockPrototechBattery" />
 	</BlueprintClassEntries>
 </Definitions>

@@ -4,19 +4,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+				<SubtypeId>PrototechPropulsionUnit</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Igniter</DisplayName>
-            <Icon>Textures\Icons\HeatingElement.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechThrusterComponent.dds</Icon>
 			<IconSymbol>Thrust</IconSymbol>
-            <Size>
-                <X>0.5</X>
-                <Y>0.5</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>6.8</Mass>
-            <Volume>4</Volume>
-            <Model>Models\Heater.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>240</Mass>
+			<Volume>160</Volume>
+			<Model>Models\Components\PrototechThrusterComponent.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -25,19 +25,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Hover_Tech</SubtypeId>
+				<SubtypeId>PrototechCoolingUnit</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Grav. Reflector</DisplayName>
-            <Icon>Textures\Icons\CompositePlate.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechCoolingUnit.dds</Icon>
 			<IconSymbol>Hover</IconSymbol>
-            <Size>
-                <X>0.5</X>
-                <Y>0.5</Y>
-                <Z>0.1</Z>
-            </Size>
-            <Mass>24</Mass>
-            <Volume>5</Volume>
-            <Model>Models\CompositePlate.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>250</Mass>
+			<Volume>80</Volume>
+			<Model>Models\Components\PrototechCoolingUnit.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -46,19 +46,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
+				<SubtypeId>PrototechMachinery</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Bolt Carrier</DisplayName>
-            <Icon>Textures\Icons\Cryocooler.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechMachinery_Icon.dds</Icon>
 			<IconSymbol>S.Cal</IconSymbol>
-            <Size>
-                <X>0.4</X>
-                <Y>0.4</Y>
-                <Z>0.3</Z>
-            </Size>
-            <Mass>36.2</Mass>
-            <Volume>5</Volume>
-            <Model>Models\Cryocooler.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>80</Mass>
+			<Volume>35</Volume>
+			<Model>Models\Components\PrototechMachinery_Component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -67,19 +67,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
+				<SubtypeId>PrototechFrame</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Gun Cradle</DisplayName>
-            <Icon>Textures\Icons\TokamakBlanket.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechFrame.dds</Icon>
 			<IconSymbol>L.Cal</IconSymbol>
-            <Size>
-                <X>0.5</X>
-                <Y>0.5</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>22.3</Mass>
-            <Volume>25</Volume>
-            <Model>Models\TokamakBlanket.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>100</Mass>
+			<Volume>50</Volume>
+			<Model>Models\Components\PrototechFrame.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -88,19 +88,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Missile_Tech</SubtypeId>
+				<SubtypeId>PrototechPanel</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Launch Assem.</DisplayName>
-            <Icon>Textures\Icons\SuperMagnet.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechPanel_Component.dds</Icon>
 			<IconSymbol>Missile</IconSymbol>
-            <Size>
-                <X>0.4</X>
-                <Y>0.4</Y>
-                <Z>0.3</Z>
-            </Size>
-            <Mass>43.6</Mass>
-            <Volume>15</Volume>
-            <Model>Models\SuperMagnet.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>30</Mass>
+			<Volume>6</Volume>
+			<Model>Models\Components\PrototechPanel_Component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -109,19 +109,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Laser_Tech</SubtypeId>
+				<SubtypeId>PrototechCapacitor</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Particle Emit.</DisplayName>
-            <Icon>Textures\Icons\LaserEmitter.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechCapacitor_Component.dds</Icon>
 			<IconSymbol>Laser</IconSymbol>
-            <Size>
-                <X>1</X>
-                <Y>0.2</Y>
-                <Z>0.2</Z>
-            </Size>
-            <Mass>18.3</Mass>
-            <Volume>12</Volume>
-            <Model>Models\LaserEmitter.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>20</Mass>
+			<Volume>50</Volume>
+			<Model>Models\Components\PrototechCapacitor_Component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>20</Health>
@@ -130,19 +130,19 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Data_Core</SubtypeId>
+				<SubtypeId>PrototechCircuitry</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Data Core</DisplayName>
-            <Icon>Textures\Icons\Thermocouple.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\prototech_circuitry_component.dds</Icon>
 			<IconSymbol>Data</IconSymbol>
-            <Size>
-                <X>0.5</X>
-                <Y>0.5</Y>
-                <Z>0.03</Z>
-            </Size>
-            <Mass>4.1</Mass>
-            <Volume>3</Volume>
-            <Model>Models\Thermocouple.mwm</Model>
+			<Size>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>0.03</Z>
+			</Size>
+			<Mass>60</Mass>
+			<Volume>20</Volume>
+			<Model>Models\Components\prototech_circuitry_component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
 			<Health>50</Health>

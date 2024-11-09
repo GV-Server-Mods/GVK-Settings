@@ -1,15 +1,16 @@
 <?xml version="1.0" ?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<Definition xsi:type="MyObjectBuilder_UpgradeModuleDefinition">>
+		<!-- Do not use multiplicative values under 1.0 -->
+		<Definition xsi:type="MyObjectBuilder_UpgradeModuleDefinition">
 			<Id>
 				<TypeId>UpgradeModule</TypeId>
 				<SubtypeId>GeneralProductivityModule</SubtypeId>
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1000" />
-				<Component Subtype="GVK_Data_Core" Count="1"/>
-				<Component Subtype="GVK_Laser_Tech" Count="10"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
+				<Component Subtype="PrototechCapacitor" Count="10"/>
 				<Component Subtype="Motor" Count="800" />
 				<Component Subtype="Superconductor" Count="1000" />
 				<Component Subtype="Computer" Count="2500" />

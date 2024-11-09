@@ -239,7 +239,7 @@
 				<TypeId>Assembler</TypeId>
 				<SubtypeId>LargePrototechAssembler</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_PrototechAssembler</DisplayName>
+			<DisplayName>Advanced Assembler</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\Prototech_Assembler.dds</Icon>
 			<Description>Description_PrototechAssembler</Description>
 			<CubeSize>Large</CubeSize>
@@ -250,7 +250,7 @@
 			<Model>Models\Cubes\Large\Prototech_Assembler.mwm</Model>
 			<Components>
 				<Component Subtype="SteelPlate" Count="120"/>
-				<Component Subtype="GVK_Laser_Tech" Count="3"/>
+				<Component Subtype="PrototechCapacitor" Count="3"/>
 				<Component Subtype="Construction" Count="80"/>
 				<Component Subtype="Motor" Count="20"/>
 				<Component Subtype="Display" Count="10"/>
@@ -294,8 +294,16 @@
 			</InventorySize>
 			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
 			<OperationalPowerConsumption>4</OperationalPowerConsumption>
+			<AssemblySpeed>2</AssemblySpeed>
 			<BlueprintClasses>
-				<Class>PrototechComponents</Class>
+				<Class>LargeBlocks</Class>
+				<Class>SmallBlocks</Class>
+				<Class>GVKEliteComponents</Class>
+				<Class>GVKEliteEquipment</Class>
+				<Class>EliteTools</Class>
+				<Class>GVKEliteHandheldWeapons</Class>
+				<Class>GVKEliteAmmo</Class>
+				<Class>BuildPlanner</Class>
 			</BlueprintClasses>
 			<MirroringY>Z</MirroringY>
 			<MirroringZ>Y</MirroringZ>
@@ -579,12 +587,6 @@
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="Motor" Count="16"/>
-				<Component Subtype="GVK_Unobtanium" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
-					</DeconstructId>
-				</Component>
 				<Component Subtype="Computer" Count="20"/>
 				<Component Subtype="SteelPlate" Count="100"/>
 			</Components>
@@ -657,7 +659,7 @@
 				<!-- x 27 -->
 				<Component Subtype="SteelPlate" Count="2970"/>
 				<!-- 110 -->
-				<Component Subtype="GVK_Laser_Tech" Count="3"/>
+				<Component Subtype="PrototechCapacitor" Count="3"/>
 				<Component Subtype="Construction" Count="135"/>
 				<!-- 5 -->
 				<Component Subtype="LargeTube" Count="54"/>

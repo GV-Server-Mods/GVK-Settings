@@ -8,7 +8,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Data_Core" Count="1"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="Construction" Count="2"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -26,7 +26,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Data_Core" Count="1"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="SteelPlate" Count="11"/>
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -44,7 +44,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Data_Core" Count="1"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="SteelPlate" Count="11"/>
 				<Component Subtype="Construction" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -62,7 +62,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Data_Core" Count="1"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="SteelPlate" Count="1"/>
 				<Component Subtype="Construction" Count="2"/>
 				<Component Subtype="LargeTube" Count="2"/>

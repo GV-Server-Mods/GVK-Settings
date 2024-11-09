@@ -7,10 +7,10 @@
 				<TypeId>Refinery</TypeId>
 				<SubtypeId>LargePrototechRefinery</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_PrototechRefinery</DisplayName>
+			<DisplayName>Advanced Refinery</DisplayName>
 			<Components>
                 <Component Subtype="SteelPlate" Count="1100" />
-				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="20" />
                 <Component Subtype="Motor" Count="16" />
@@ -25,10 +25,10 @@
 				<TypeId>Refinery</TypeId>
 				<SubtypeId>SmallPrototechRefinery</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Block_PrototechRefinery</DisplayName>
+			<DisplayName>Advanced Refinery</DisplayName>
 			<Components>
                 <Component Subtype="SteelPlate" Count="220" />
-				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
                 <Component Subtype="Construction" Count="8" />
                 <Component Subtype="LargeTube" Count="4" />
                 <Component Subtype="Motor" Count="3" />

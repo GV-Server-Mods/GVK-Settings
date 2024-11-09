@@ -27,9 +27,10 @@
                 <TypeId>Drill</TypeId>
                 <SubtypeId>LargeBlockPrototechDrill</SubtypeId>
             </Id>
+			<DisplayName>Advanced Ship Drill</DisplayName>
             <Components>
                 <Component Subtype="SteelPlate" Count="180" />
-				<Component Subtype="GVK_SmallCaliber_Tech" Count="5"/>
+				<Component Subtype="PrototechMachinery" Count="5"/>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="12" />
                 <Component Subtype="Motor" Count="5" />
