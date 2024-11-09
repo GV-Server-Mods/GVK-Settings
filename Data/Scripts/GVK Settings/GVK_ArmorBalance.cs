@@ -157,6 +157,8 @@ namespace MikeDude.ArmorBalance
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
 						}
+						// Don't currently need this because they are banned through BlockRestrictions mod
+						/*
 						else if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
 						{
                             thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
@@ -180,6 +182,7 @@ namespace MikeDude.ArmorBalance
                                 InsertComponent(blockDef, 0, unobtainiumComponent, 1, genericScrap);
                             }
                         }
+						*/
                     }
 					// Make hovers count as ions, increase power consumption and weld slower
 					if (thrustDef.Id.SubtypeName.Contains("Hover"))
