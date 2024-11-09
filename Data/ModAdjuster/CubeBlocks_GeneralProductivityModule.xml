@@ -23,7 +23,7 @@
 			<Upgrades>
                 <MyUpgradeModuleInfo>
                     <UpgradeType>Productivity</UpgradeType>
-                    <Modifier>0.75</Modifier>
+                    <Modifier>1</Modifier>
                     <ModifierType>Additive</ModifierType>
                 </MyUpgradeModuleInfo>
 				<MyUpgradeModuleInfo>
