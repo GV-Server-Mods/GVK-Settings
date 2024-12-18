@@ -18,6 +18,22 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_ShieldCore"/>
 			</Blocks>
 		</BlockVariantGroup>
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_Ship_Cores_Reskin"/>
+			<DisplayName>GVK Ship Core Beacons (Round)</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\BeaconReskin.dds</Icon>
+			<Description/>
+			<Blocks>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeaconReskin"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeaconReskin_MediumCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_MediumCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_HeavyCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_Fortress"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_Pipeline"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_ShieldCore"/>
+			</Blocks>
+		</BlockVariantGroup>
 		<!-- Shared Cargos -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_Shared_Cargos"/>
