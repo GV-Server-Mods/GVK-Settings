@@ -10,6 +10,7 @@
 			<DisplayName>Advanced Refinery</DisplayName>
 			<Components>
                 <Component Subtype="SteelPlate" Count="1100" />
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="20" />
@@ -19,6 +20,9 @@
                 <Component Subtype="SteelPlate" Count="100" />
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
+            <OperationalPowerConsumption>2</OperationalPowerConsumption>
+            <RefineSpeed>8</RefineSpeed>
+            <MaterialEfficiency>2.0</MaterialEfficiency>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_RefineryDefinition">
 			<Id>

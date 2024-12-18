@@ -7,8 +7,8 @@
 				<TypeId>HydrogenEngine</TypeId>
 				<SubtypeId>HugeHydrogenEngine3</SubtypeId>
 			</Id>
-			<DisplayName>Mega Hydrogen Engine</DisplayName>
-			<Description>The Mega H2 Engine has 200% H2 efficiency, but can only placed on a Fortress grid.</Description>
+			<DisplayName>Advanced Hydrogen Engine</DisplayName>
+			<Description>The Advanced H2 Engine has 200% H2 efficiency, but can only placed on a Fortress grid.</Description>
 			<Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
 			<CubeSize>Large</CubeSize>
 			<GuiVisible>false</GuiVisible>
@@ -18,6 +18,7 @@
 			<Model>Models\HugeHydrogenEngine3.mwm</Model>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2160"/><!-- 80 -->
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="PrototechPropulsionUnit" Count="10"/>
 				<Component Subtype="Construction" Count="1620"/><!-- 60 -->
 				<Component Subtype="LargeTube" Count="324"/><!-- 12 -->

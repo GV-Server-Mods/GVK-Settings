@@ -250,6 +250,7 @@
 			<Model>Models\Cubes\Large\Prototech_Assembler.mwm</Model>
 			<Components>
 				<Component Subtype="SteelPlate" Count="120"/>
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="PrototechCapacitor" Count="3"/>
 				<Component Subtype="Construction" Count="80"/>
 				<Component Subtype="Motor" Count="20"/>
@@ -647,9 +648,9 @@
 				<TypeId>OxygenGenerator</TypeId>
 				<SubtypeId>OxygenGenerator3</SubtypeId>
 			</Id>
-			<DisplayName>Mega O2/H2 Generator</DisplayName>
+			<DisplayName>Advanced O2/H2 Generator</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\OxygenGenerator5.dds</Icon>
-			<Description>The Mega O2/H2 Generator has 200% ice efficiency, but can only placed on a Fortress grid.</Description>
+			<Description>The Advanced O2/H2 Generator has 200% ice efficiency, but can only placed on a Fortress grid.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="3" y="6" z="3"/>
@@ -659,6 +660,7 @@
 				<!-- x 27 -->
 				<Component Subtype="SteelPlate" Count="2970"/>
 				<!-- 110 -->
+				<Component Subtype="PrototechCircuitry" Count="1"/>
 				<Component Subtype="PrototechCapacitor" Count="3"/>
 				<Component Subtype="Construction" Count="135"/>
 				<!-- 5 -->
