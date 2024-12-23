@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<BlockVariantGroups>
+		<!-- Added Extra Reinforced Conveyors -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="ConveyorReinforcedGroup"/>
+			<Blocks>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuct"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctCurved"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctT"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmall"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmallCurved"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctSmallT"/>
+                <Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctT" />
+                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayDuct" />				
+                <Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorElbowDuct" />
+                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayAltDuct" />
+                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor5WayDuct" />				
+			</Blocks>
+		</BlockVariantGroup>
+	</BlockVariantGroups>
+</Definitions>
