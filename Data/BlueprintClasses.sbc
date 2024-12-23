@@ -119,5 +119,15 @@
         <Entry Class="SmallBlocks" BlueprintSubtypeId="Refinery/SmallPrototechRefinery" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="Gyro/SmallBlockPrototechGyro" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="BatteryBlock/SmallBlockPrototechBattery" />
+		<!-- Shared cargo containers -->
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="CargoContainer/LargeBlockSmallContainer_Shared" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="CargoContainer/LargeBlockLargeContainer_Shared" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="CargoContainer/LargeBlockLargeIndustrialContainer_Shared" />
+        <Entry Class="SmallBlocks" BlueprintSubtypeId="CargoContainer/SmallBlockMediumContainer_Shared" />
+		<!-- Extra Reinforced Conveyors -->
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor4WayDuct" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/ConveyorElbowDuct" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor4WayAltDuct" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor5WayDuct" />		
 	</BlueprintClassEntries>
 </Definitions>
