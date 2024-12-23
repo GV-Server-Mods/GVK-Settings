@@ -291,11 +291,34 @@ namespace MikeDude.ArmorBalance
                     }
 					if (batteryDef.CubeSize == MyCubeSize.Large)
 					{
-						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
+						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 6f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 20f;
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 18f; // output rate is double input
+						}
+						else
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 3f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 9f; // output rate is double input
+						}
 					}
 					else
 					{
-						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.25f; // accounts for 2 sizes of small grid batteries
+						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 9f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 1f; // accounts for 2 sizes of small grid batteries
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.75f; // output rate is double input
+						}
+						else
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 18f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.5f; // accounts for 2 sizes of small grid batteries
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.375f; // output rate is double input
+						}
+							
 					}
                 }
 												
