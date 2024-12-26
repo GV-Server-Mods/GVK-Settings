@@ -1,3 +1,4 @@
+# Credits
 https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559
 
 Credit to Zantulo for letting me use his Lifted Wheels Suspension mod https://steamcommunity.com/sharedfiles/filedetails/?id=2727185097
@@ -14,3 +15,31 @@ Incorporates changes (With Klime's permission) from:
 https://steamcommunity.com/sharedfiles/filedetails/?id=1871733117
 https://steamcommunity.com/sharedfiles/filedetails/?id=2533952116
 https://steamcommunity.com/sharedfiles/filedetails/?id=1844150178
+
+# Main Functions
+## Block Rebalancing
+Scripts: GVK_ArmorBalance.cs
+
+Description: TBD.
+## No PVP in Zone 0
+Scripts: GVK_NoPVPZone.cs
+
+Description: This prevents pvp damage in Z0, based on an inputted GPS xyz coordinate and radius. 
+
+NOTE: The downside to this mechanic is that players are unable to remove other faction grids that could prevent player safezone generators from activating. The workaround is to set the enemy check of the siegable safezone generators mod very low (1km)
+## Limited Production (and weapons) Zones
+Scripts: LimitedProdZone_Assembler.cs, LimitedProdZone_Beacon.cs, LimitedProdZone_ConveyorSorter.cs, etc.
+
+Description: This provides the mechanic that shuts off large production and weapons in Z0, and allows them in higher zones.
+## KOTH anti-abuse
+Scripts: KOTHNoSafezone_Beacon.cs, KOTHNoSafezone_SafeZone.cs, KOTHNoSafezone_Projector.cs
+
+Description: This shuts off player-built safezone generators (aka siegable shields) and projectors that are within a set distance of a KOTH block.
+## Player-built safezone min radius
+Scripts: Safezone3kmCheck_Beacon.cs, Safezone3kmCheck_SafeZone.cs
+
+Description: Prevents players from activating a safezone generator within an increased distance from other blocks of the same kind, beyond its internal enemy radius check.
+## Free Safezone H2
+Scripts: SafezoneH2.cs
+
+Description: Provides free unlimited H2 to players inside their built safezone.
