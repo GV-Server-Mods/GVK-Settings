@@ -45,10 +45,15 @@ Scripts: SafezoneH2.cs
 Description: Provides free unlimited H2 to players inside their built safezone.
 # Audio Notes
 - Use Yakitori Audio Converter for easy conversion to XWM
+  - Sampling frequency: 44.1kHz
+  - Channel: 1 Mono
+  - Volume: Default
+  - Codec: Unsigned 8bit
 - D2 Sounds are stereo files that are non-directional. D3 sounds are mono files that are 3D directional in-game.
   - sounds need to be around -12dB volume than the D3 version
   - D3 Sounds MUST be mono format
 - Sounds with attached DistantSounds must have a MaxDistance equal to the DistantSound MaxDistance
 - Loopable sounds must be .wav 32-bit float 44100Hz, everything else should be .xwm 48kbps
+  - Start, Loop, and End files should all be the same format .wav.
 - Add 1 second of silence to start of all distant sounds for extra effect, except for Loopable
 - PreventSynchronization is the min time in ticks before the sound can be triggered again
