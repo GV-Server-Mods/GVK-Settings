@@ -70,7 +70,7 @@ namespace KOTHNoSafezone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 1110) //1km + SZ radius buffer
+                        if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                         {
 							string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
 							bool isMnM = false;
@@ -98,7 +98,7 @@ namespace KOTHNoSafezone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 1110) //1km + SZ radius buffer
+                    if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                     {
 						string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
 						bool isMnM = false;

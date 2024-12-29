@@ -109,7 +109,7 @@
 			<Public>true</Public>
 		</Definition>
 		<!-- Small Medium -->
-		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+		<!-- <Definition xsi:type="MyObjectBuilder_BeaconDefinition">
 			<Id>
 				<TypeId>Beacon</TypeId>
 				<SubtypeId>SmallBlockBeacon_MediumCore</SubtypeId>
@@ -131,13 +131,13 @@
 				<Component Subtype="SteelPlate" Count="20"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
-			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier> -->
 			<!-- Build stages must be removed so beacon is always functional -->
 			<!--<BuildProgressModels>
                 <Model BuildPercentUpperBound="0.50" File="Models\Cubes\Small\BeaconConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconConstruction_2.mwm" />
             </BuildProgressModels>-->
-			<BlockPairName>Beacon_MediumCore</BlockPairName>
+			<!-- <BlockPairName>Beacon_MediumCore</BlockPairName>
 			<MirroringY>Z</MirroringY>
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>15</BuildTimeSeconds>
@@ -154,8 +154,8 @@
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
-		</Definition>
-		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+		</Definition> -->
+		<!-- <Definition xsi:type="MyObjectBuilder_BeaconDefinition">
 			<Id>
 				<TypeId>Beacon</TypeId>
 				<SubtypeId>SmallBlockBeaconReskin_MediumCore</SubtypeId>
@@ -187,14 +187,14 @@
 				<MountPoint Side="Left" StartX="0.3" StartY="0.4" EndX="0.7" EndY="0.7"/>
 				<MountPoint Side="Front" StartX="0.4" StartY="0.9" EndX="0.6" EndY="1.2"/>
 				<MountPoint Side="Back" StartX="0.4" StartY="0.9" EndX="0.6" EndY="1.2"/>
-			</MountPoints>
+			</MountPoints> -->
 			<!-- Build stages must be removed so beacon is always functional -->
 			<!--<BuildProgressModels>
 				<Model BuildPercentUpperBound="0.33" File="Models\Cubes\Small\BeaconReskinConstruction_1.mwm"/>
 				<Model BuildPercentUpperBound="0.66" File="Models\Cubes\Small\BeaconReskinConstruction_2.mwm"/>
 				<Model BuildPercentUpperBound="1.00" File="Models\Cubes\Small\BeaconReskinConstruction_3.mwm"/>
 			</BuildProgressModels>-->
-			<BlockPairName>BeaconReskin_MediumCore</BlockPairName>
+			<!-- <BlockPairName>BeaconReskin_MediumCore</BlockPairName>
 			<EdgeType>Light</EdgeType>
 			<MirroringY>X</MirroringY>
 			<MirroringX>Y</MirroringX>
@@ -214,7 +214,7 @@
 			<DLC>DecorativeBlocks3</DLC>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
-		</Definition>
+		</Definition> -->
 		<!-- Large Light (default beacon) -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
 			<Id>

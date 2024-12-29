@@ -70,7 +70,7 @@ namespace KOTHNoSafezone
                     {                        
                         if (beacon == null) continue;
                         if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1251) //1km + SZ radius buffer
+                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                         {
 							safezoneblock.Enabled = false;
 							return;
@@ -92,7 +92,7 @@ namespace KOTHNoSafezone
                 {
                     if (beacon == null) continue;
                     if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1251) //1km + SZ radius buffer
+                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                     {
 						safezoneblock.Enabled = false;
                     }
