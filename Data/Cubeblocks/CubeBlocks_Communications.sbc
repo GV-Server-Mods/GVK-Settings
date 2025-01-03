@@ -933,5 +933,57 @@
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 		</Definition>
+		<!-- No LargeGrid Zone Beacon -->
+		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+			<Id>
+				<TypeId>Beacon</TypeId>
+				<SubtypeId>GVK_NoLargeGridZone</SubtypeId>
+			</Id>
+			<DisplayName>NoLargeGridZone Beacon</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Description>Disables all LG Power Producers within script range, admin only</Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="2" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\beacon.mwm</Model>
+			<Components>
+				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="300"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true"/>
+				<MountPoint Side="Top" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9"/>
+				<MountPoint Side="Left" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Right" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+				<MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9"/>
+			</MountPoints>
+			<!-- Build stages must be removed so beacon is always functional -->
+			<!--<BuildProgressModels>
+                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\BeaconConstruction_1.mwm" />
+                <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\BeaconConstruction_2.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\BeaconConstruction_3.mwm" />
+            </BuildProgressModels>-->
+			<BlockPairName>GVK_NoLargeGridZone</BlockPairName>
+			<EdgeType>Light</EdgeType>
+			<MirroringY>Z</MirroringY>
+			<BuildTimeSeconds>40</BuildTimeSeconds>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
+			<Flare>BeaconLarge</Flare>
+			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
+			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<PCU>50</PCU>
+			<IsAirTight>false</IsAirTight>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+		</Definition>
 	</CubeBlocks>
 </Definitions>
