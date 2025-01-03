@@ -26,7 +26,7 @@ namespace KOTHNoSafezone
     public class KOTHNoSafezone_ProjectorBlock : MyGameLogicComponent
     {
         private IMyProjector projectorblock;
-        private IMyPlayer client;
+        //private IMyPlayer client;
         private bool isServer;
         private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
@@ -48,7 +48,7 @@ namespace KOTHNoSafezone
             base.UpdateOnceBeforeFrame();
 
             isServer = MyAPIGateway.Multiplayer.IsServer;
-            client = MyAPIGateway.Session.LocalHumanPlayer;
+            //client = MyAPIGateway.Session.LocalHumanPlayer;
 
             if (isServer)
             {

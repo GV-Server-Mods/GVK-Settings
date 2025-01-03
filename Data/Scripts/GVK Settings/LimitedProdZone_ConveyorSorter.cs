@@ -16,7 +16,7 @@ namespace LimitedProdZone
     public class LimitedProdZone_ConveyorSorter : MyGameLogicComponent
     {
         private IMyConveyorSorter weapon;
-        private IMyPlayer client;
+        //private IMyPlayer client;
         private bool isServer;
         private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
@@ -39,7 +39,7 @@ namespace LimitedProdZone
             base.UpdateOnceBeforeFrame();
 
             isServer = MyAPIGateway.Multiplayer.IsServer;
-            client = MyAPIGateway.Session.LocalHumanPlayer;
+            //client = MyAPIGateway.Session.LocalHumanPlayer;
 
             if (isServer)
             {

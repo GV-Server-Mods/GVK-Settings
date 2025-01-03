@@ -24,7 +24,7 @@ namespace KOTHNoSafezone
     {
         private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
-        private IMyPlayer client;
+        //private IMyPlayer client;
         private bool playerInZone;
         private IMyCharacter character;
         private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
@@ -44,10 +44,10 @@ namespace KOTHNoSafezone
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
             }
 
-            client = MyAPIGateway.Session.LocalHumanPlayer;
+            //client = MyAPIGateway.Session.LocalHumanPlayer;
         }
 
-        public override void UpdateBeforeSimulation10()
+        /*public override void UpdateBeforeSimulation10()
         {
             base.UpdateBeforeSimulation10();
 
@@ -76,7 +76,7 @@ namespace KOTHNoSafezone
                     MyAPIGateway.Utilities.ShowMessage("KOTHNoSafezone", "An error happened in the mod" + e);
                 }
             });
-        }
+        }*/
 
         public override void Close()
         {
