@@ -29,5 +29,35 @@
 			</Id>
 			<Size x="7.5" y="7.5" z="7.5"/>
 		</EntityComponent>
+        <!-- Increase small block inventories for a few blocks so they are not useless -->
+		<EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>SmallBlockSmallContainer</SubtypeId>
+            </Id>
+            <Size x="1.5" y="0.5" z="0.5" />
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>SmallBlockWeaponRack</SubtypeId>
+            </Id>
+            <Size x="0.5" y="1.5" z="0.5" />
+            <InputConstraint Whitelist="true" Description="DisplayName_InventoryConstraint_PersonalItems" Icon="Textures\GUI\Icons\FilterAmmo5.54mm.dds">
+                <Entry Type="PhysicalGunObject" />
+                <Entry Type="AmmoMagazine" />
+            </InputConstraint>
+        </EntityComponent>
+
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>SmallBlockFirstAidCabinet</SubtypeId>
+            </Id>
+            <Size x="0.5" y="0.5" z="0.5" />
+            <InputConstraint Whitelist="true" Description="DisplayName_InventoryConstraint_PersonalItems" >
+                <Entry Type="ConsumableItem" />
+            </InputConstraint>
+        </EntityComponent>
 	</EntityComponents>
 </Definitions>
