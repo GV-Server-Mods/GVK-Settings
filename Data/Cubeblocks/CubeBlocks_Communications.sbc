@@ -9,10 +9,9 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
-			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
-			750 block limit, 30 UPs, 80 MPs.</Description>
+			2000 block limit, 40 UPs, 140 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="1" z="2"/>
@@ -55,10 +54,9 @@
 			</Id>
 			<DisplayName>Light Ship Core Beacon (Round)</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\BeaconReskin.dds</Icon>
-			<Icon>Textures\Icons\Light_Icon_Overlay.dds</Icon>
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
-			750 block limit, 30 UPs, 80 MPs.</Description>
+			2000 block limit, 40 UPs, 140 MPs.</Description>
 			<CubeSize>Small</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
