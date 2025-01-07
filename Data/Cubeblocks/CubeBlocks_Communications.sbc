@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<!-- Small Light (default beacon) -->
+		<!-- Small (default beacon) -->
 		<Definition xsi:type="MyObjectBuilder_BeaconDefinition">
 			<Id>
 				<TypeId>Beacon</TypeId>
 				<SubtypeId>SmallBlockBeacon</SubtypeId>
 			</Id>
-			<DisplayName>Light Ship Core Beacon</DisplayName>
+			<DisplayName>Small Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
@@ -52,7 +52,7 @@
 				<TypeId>Beacon</TypeId>
 				<SubtypeId>SmallBlockBeaconReskin</SubtypeId>
 			</Id>
-			<DisplayName>Light Ship Core Beacon (Round)</DisplayName>
+			<DisplayName>Small Ship Core Beacon (Round)</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\BeaconReskin.dds</Icon>
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
