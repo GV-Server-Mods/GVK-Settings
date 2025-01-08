@@ -96,13 +96,13 @@
         <Entry Class="GVKEliteComponents" BlueprintSubtypeId="PowerCell" />
         <Entry Class="GVKEliteComponents" BlueprintSubtypeId="Superconductor" />
 		<!-- NPC CU Refinery -->
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="HoverScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="ThrustScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="SCalScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="LCalScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="MissileScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="LaserScraptoCUIngot" />
-		<Entry Class="GVKCUIngots" BlueprintSubtypeId="DataScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechCoolingUnitScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechPropulsionUnitScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechMachineryScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechFrameScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechPanelScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechCapacitorScraptoCUIngot" />
+		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechCircuitryScraptoCUIngot" />
 		<!-- HUGE blocks -->
 		<Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/OxygenGenerator3" />
 		<Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/HugeHydrogenEngine3" />

@@ -65,7 +65,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>HoverScrap</SubtypeId>
+				<SubtypeId>PrototechCoolingUnitScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Grav. Reflector</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -84,7 +84,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>ThrustScrap</SubtypeId>
+				<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Ignitor</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -103,7 +103,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>SCalScrap</SubtypeId>
+				<SubtypeId>PrototechMachineryScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Bolt Carrier</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -122,7 +122,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>LCalScrap</SubtypeId>
+				<SubtypeId>PrototechFrameScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Gun Cradle</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -141,7 +141,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>MissileScrap</SubtypeId>
+				<SubtypeId>PrototechPanelScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Launch Assem.</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -160,7 +160,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>LaserScrap</SubtypeId>
+				<SubtypeId>PrototechCapacitorScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Particle Emitter</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
@@ -179,7 +179,7 @@
 		<PhysicalItem>
 			<Id>
 				<TypeId>Ore</TypeId>
-				<SubtypeId>DataScrap</SubtypeId>
+				<SubtypeId>PrototechCircuitryScrap</SubtypeId>
 			</Id>
 			<DisplayName>[Scrap] Data Core</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>

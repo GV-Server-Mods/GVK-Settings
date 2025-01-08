@@ -168,14 +168,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>HoverScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCoolingUnitScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCoolingUnitScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="0.9" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -188,14 +188,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>ThrustScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechPropulsionUnitScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPropulsionUnitScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="1.7" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -209,14 +209,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>SCalScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechMachineryScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechMachineryScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -230,14 +230,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>LCalScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechFrameScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechFrameScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -251,14 +251,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>MissileScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechPanelScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPanelScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -272,14 +272,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>LaserScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCapacitorScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCapacitorScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="22.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -293,14 +293,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>DataScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCircuitryScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="DataScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCircuitryScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="225" TypeId="Ingot" SubtypeId="GVK_CUs"/>
