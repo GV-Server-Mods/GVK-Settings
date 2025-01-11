@@ -15,6 +15,10 @@
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_2.mwm" />
             </BuildProgressModels>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X_Blue</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
 			<Id>
@@ -30,6 +34,10 @@
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_2.mwm" />
             </BuildProgressModels>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

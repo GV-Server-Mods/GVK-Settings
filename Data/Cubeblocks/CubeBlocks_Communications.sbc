@@ -40,7 +40,7 @@
 			<Flare>BeaconSmall</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>7500</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -261,8 +261,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>true</GuiVisible>
@@ -316,8 +316,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -372,8 +372,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
@@ -427,8 +427,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -483,8 +483,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
@@ -538,8 +538,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -594,8 +594,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
@@ -649,8 +649,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -705,8 +705,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
@@ -760,8 +760,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -816,8 +816,8 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<GuiVisible>false</GuiVisible>
@@ -871,8 +871,8 @@
 			<Flare>FakeFlare</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
-			<DestroySound>WepSmallWarheadExpl</DestroySound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
 			<DLC>DecorativeBlocks3</DLC>
@@ -924,7 +924,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
@@ -976,7 +976,7 @@
 			<Flare>BeaconLarge</Flare>
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
-			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
 			<PCU>50</PCU>
 			<IsAirTight>false</IsAirTight>
