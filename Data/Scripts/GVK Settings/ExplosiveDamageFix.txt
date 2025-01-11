@@ -1,0 +1,55 @@
+﻿using Sandbox.Definitions;
+using Sandbox.ModAPI;
+using System;
+using VRage.Game.Components;
+using VRage.Game.ModAPI;
+using VRage.ModAPI;
+using VRage.Utils;
+using VRageRender;
+
+namespace Testing
+{
+    [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation | MyUpdateOrder.AfterSimulation)]
+    public class ExplTesting : MySessionComponentBase
+    {
+        Type t;
+        public override void LoadData()
+        {
+            var definitions = MyDefinitionManager.Static.GetAllDefinitions();
+
+            foreach (var definition in definitions)
+            {
+                MyCubeBlockDefinition def = definition as MyCubeBlockDefinition;
+
+                if (def != null)
+                {
+					if (def.DamageMultiplierExplosion == 7)
+                    {
+                        def.DamageMultiplierExplosion = (int)Math.Sqrt(2 * def.Size.X * def.Size.Y * def.Size.Z);
+                        
+                    } 
+                    def.UsesDeformation = false;
+                }
+            }
+        }
+        public override void BeforeStart()
+        {
+            MyAPIGateway.Session.DamageSystem.RegisterBeforeDamageHandler(0, OnTargetDamaged);
+        }
+        private void OnTargetDamaged(object target, ref MyDamageInformation info)
+        {
+            IMyEntity ent = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
+
+            if (t == null && ent != null)
+            {
+                if (ent.GetType().ToString() == "Sandbox.Game.Entities.MyVoxelPhysics")
+                {
+                    t = ent.GetType();
+                    
+                }
+            }
+
+            if (!(ent != null && (ent.GetType() == t || ent is IMyVoxelBase || ent is IMyCubeGrid)) && (info.IsDeformation || info.Type == MyStringHash.GetOrCompute("Deformation"))) info.Amount = 0;
+        }
+    }
+}
