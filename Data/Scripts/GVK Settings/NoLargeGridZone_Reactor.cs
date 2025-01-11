@@ -66,7 +66,7 @@ namespace NoLargeGridZone
                         if (!beacon.Enabled) continue;
                         if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
-						if (faction.IsEveryoneNpc() && faction != null) continue;
+						if (faction != null && faction.IsEveryoneNpc()) continue;
                         //Checks to see if powerblock is attached to NoPowerZoneBlock
                         if (reactor.IsSameConstructAs(beacon)) continue;
                         //if (Vector3D.Distance(reactor.GetPosition(), beacon.GetPosition()) < beacon.Radius)
@@ -98,7 +98,7 @@ namespace NoLargeGridZone
                     if (!beacon.Enabled) continue;
                     if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
-					if (faction.IsEveryoneNpc() && faction != null) continue;
+					if (faction != null && faction.IsEveryoneNpc()) continue;
                     if (reactor.IsSameConstructAs(beacon)) continue;
                     //if (Vector3D.Distance(reactor.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     if (Vector3D.Distance(reactor.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer

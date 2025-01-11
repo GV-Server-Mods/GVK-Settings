@@ -63,7 +63,7 @@ namespace NoLargeGridZone
                         if (!beacon.Enabled) continue;
                         if (solar.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(solar.OwnerId);
-						if (faction.IsEveryoneNpc() && faction != null) continue;
+						if (faction != null && faction.IsEveryoneNpc()) continue;
                         //if (Vector3D.Distance(solar.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         if (Vector3D.Distance(solar.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                         {
@@ -93,7 +93,7 @@ namespace NoLargeGridZone
                     if (!beacon.Enabled) continue;
 					if (solar.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(solar.OwnerId);
-					if (faction.IsEveryoneNpc() && faction != null) continue;
+					if (faction != null && faction.IsEveryoneNpc()) continue;
                     //if (Vector3D.Distance(solar.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                     if (Vector3D.Distance(solar.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
                     {
