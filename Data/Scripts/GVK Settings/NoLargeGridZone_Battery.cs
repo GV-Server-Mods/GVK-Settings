@@ -65,7 +65,7 @@ namespace NoLargeGridZone
 						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
 						if (faction != null && faction.IsEveryoneNpc()) continue;
                         //if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
-                        if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+                        if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                         {
                             inZone = true;
                             battery.Enabled = false;
@@ -95,7 +95,7 @@ namespace NoLargeGridZone
 					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
 					if (faction != null && faction.IsEveryoneNpc()) continue;
                     //if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
-                    if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+					if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                     {
                         battery.Enabled = false;
                         //ApplyDamage();
