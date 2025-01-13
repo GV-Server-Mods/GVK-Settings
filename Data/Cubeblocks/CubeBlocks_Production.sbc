@@ -59,6 +59,7 @@
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
 				<Class>GVKEliteEquipment</Class>
+				<Class>GVKEliteComponents</Class>
 				<Class>EliteTools</Class>
 				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteAmmo</Class>
@@ -140,6 +141,7 @@
 				<Class>SmallBlocks</Class>
 				<Class>Components</Class>
 				<Class>GVKEliteEquipment</Class>
+				<Class>GVKEliteComponents</Class>
 				<Class>EliteTools</Class>
 				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteAmmo</Class>
@@ -295,7 +297,7 @@
 			</InventorySize>
 			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
 			<OperationalPowerConsumption>4</OperationalPowerConsumption>
-			<AssemblySpeed>2</AssemblySpeed>
+			<AssemblySpeed>4</AssemblySpeed>
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
