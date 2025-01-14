@@ -287,9 +287,8 @@
 			<BlockPairName>PrototechAssembler</BlockPairName>
 			<EdgeType>Light</EdgeType>
 			<BuildTimeSeconds>120</BuildTimeSeconds>
-			<DisassembleRatio>5</DisassembleRatio>
 			<ResourceSinkGroup>Factory</ResourceSinkGroup>
-			<InventoryMaxVolume>6</InventoryMaxVolume>
+			<InventoryMaxVolume>8</InventoryMaxVolume>
 			<InventorySize>
 				<X>1</X>
 				<Y>1</Y>
@@ -297,7 +296,7 @@
 			</InventorySize>
 			<StandbyPowerConsumption>0.001</StandbyPowerConsumption>
 			<OperationalPowerConsumption>4</OperationalPowerConsumption>
-			<AssemblySpeed>4</AssemblySpeed>
+			<AssemblySpeed>8</AssemblySpeed>
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
