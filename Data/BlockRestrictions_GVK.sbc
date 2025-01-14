@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<EntityComponents>
+		<!-- server block restrictions config needs to be deleted to accept new changes -->
 		<EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
 			<Id>
 				<TypeId>Inventory</TypeId>
@@ -322,7 +323,7 @@
 					[AllowedForUnownedStaticOnly]false[/AllowedForUnownedStaticOnly]
 				[/DefaultSetting]
 				[DefaultSetting]
-					[Type]MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrustciFi[/Type]
+					[Type]MyObjectBuilder_Thrust/LargeBlockLargeAtmosphericThrustSciFi[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
@@ -334,7 +335,7 @@
 					[AllowedForUnownedStaticOnly]false[/AllowedForUnownedStaticOnly]
 				[/DefaultSetting]
 				[DefaultSetting]
-					[Type]MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrustciFi[/Type]
+					[Type]MyObjectBuilder_Thrust/LargeBlockSmallAtmosphericThrustSciFi[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
@@ -346,7 +347,7 @@
 					[AllowedForUnownedStaticOnly]false[/AllowedForUnownedStaticOnly]
 				[/DefaultSetting]
 				[DefaultSetting]
-					[Type]MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrustciFi[/Type]
+					[Type]MyObjectBuilder_Thrust/SmallBlockLargeAtmosphericThrustSciFi[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
@@ -358,7 +359,7 @@
 					[AllowedForUnownedStaticOnly]false[/AllowedForUnownedStaticOnly]
 				[/DefaultSetting]
 				[DefaultSetting]
-					[Type]MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrustciFi[/Type]
+					[Type]MyObjectBuilder_Thrust/SmallBlockSmallAtmosphericThrustSciFi[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
