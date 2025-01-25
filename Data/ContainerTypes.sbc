@@ -475,7 +475,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="3">
+		<ContainerType CountMin="3" CountMax="4">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Large</SubtypeId>
