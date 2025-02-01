@@ -15,7 +15,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>240</Mass>
-			<Volume>160</Volume>
+			<Volume>16</Volume>
 			<Model>Models\Components\PrototechThrusterComponent.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
@@ -36,7 +36,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>250</Mass>
-			<Volume>80</Volume>
+			<Volume>8.0</Volume>
 			<Model>Models\Components\PrototechCoolingUnit.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
@@ -57,7 +57,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>80</Mass>
-			<Volume>35</Volume>
+			<Volume>3.5</Volume>
 			<Model>Models\Components\PrototechMachinery_Component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
@@ -78,7 +78,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>100</Mass>
-			<Volume>50</Volume>
+			<Volume>5.0</Volume>
 			<Model>Models\Components\PrototechFrame.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
@@ -120,7 +120,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>20</Mass>
-			<Volume>50</Volume>
+			<Volume>5.0</Volume>
 			<Model>Models\Components\PrototechCapacitor_Component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
@@ -141,7 +141,7 @@
 				<Z>0.03</Z>
 			</Size>
 			<Mass>60</Mass>
-			<Volume>20</Volume>
+			<Volume>2.0</Volume>
 			<Model>Models\Components\prototech_circuitry_component.mwm</Model>
 			<PhysicalMaterial>Metal</PhysicalMaterial>
 			<MaxIntegrity>1</MaxIntegrity>
