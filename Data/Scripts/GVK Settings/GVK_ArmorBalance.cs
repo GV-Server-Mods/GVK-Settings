@@ -21,7 +21,6 @@ namespace MikeDude.ArmorBalance
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
-        //public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
         private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
@@ -60,7 +59,6 @@ namespace MikeDude.ArmorBalance
 				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
-                //blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 				blockDef.UseModelIntersection = true; // attempt to make things able to place better in tight spaces
 
 				// Ensure all weapons have the 100% resistance buff
@@ -331,6 +329,7 @@ namespace MikeDude.ArmorBalance
 				//Make all Buster blocks have heavy edge type, and no deformation, and longer weld time
                 if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("MA_Buster") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
                 {
+					blockDef.DamageMultiplierExplosion = 1f; //vanilla is 7
 					blockDef.GeneralDamageMultiplier = 1f;
 					blockDef.UsesDeformation = false;
 					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
