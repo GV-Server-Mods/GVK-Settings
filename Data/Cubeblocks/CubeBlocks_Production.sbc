@@ -300,6 +300,7 @@
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
+				<Class>Components</Class>
 				<Class>GVKEliteComponents</Class>
 				<Class>GVKEliteEquipment</Class>
 				<Class>EliteTools</Class>
@@ -313,7 +314,7 @@
 			<DamagedSound>ParticleElectrical</DamagedSound>
 			<PrimarySound>BlockAssembler</PrimarySound>
 			<ActionSound>BlockAssemblerProcess</ActionSound>
-			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IgnoreEfficiencyMultiplier>false</IgnoreEfficiencyMultiplier>
 			<DestroyEffect>Explosion_Missile</DestroyEffect>
 			<DestroySound>WepSmallMissileExpl</DestroySound>
 			<PCU>40</PCU>
