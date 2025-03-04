@@ -86,7 +86,7 @@
 				<TypeId>Ore</TypeId>
 				<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
 			</Id>
-			<DisplayName>[Scrap] Ignitor</DisplayName>
+			<DisplayName>[Scrap] Igniter</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol>Thrust</IconSymbol>
