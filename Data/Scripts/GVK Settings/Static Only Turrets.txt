@@ -1,0 +1,61 @@
+using System.Collections.Generic;
+using Sandbox.Definitions;
+using Sandbox.Game;
+using Sandbox.ModAPI.Interfaces.Terminal;	
+using System;
+using VRage.Game;
+using VRage.Game.ModAPI;
+using VRage.ModAPI;
+using VRage.Utils;
+using VRageMath;
+
+namespace Static_Only_Turrets
+{
+
+  [MyEntityComponentDescriptor(typeof(MyObjectBuilder_LargeMissileTurret), false)]
+    
+  public class Missile : MyGameLogicComponent
+  {
+
+    public IMyTerminalBlock tBlock;
+    public bool isStatic = true;
+
+    public override void Init(MyObjectBuilder_EntityBase ob)
+    {
+      try
+      {
+        tBlock = Entity as IMyTerminalBlock;
+        NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;        
+        base.Init(ob);
+      }
+      catch (Exception ex)
+      {
+        Echo("StaticOnlyTurrets exception", ex.ToString());
+      }
+    }
+    
+    public override void UpdateBeforeSimulation10()
+    {
+      try
+      {
+        if (!tBlock.CubeGrid.IsStatic)
+        {
+
+		  tBlock.SlimBlock.DoDamage(99999999999999f, MyStringHash.GetOrCompute("Destruction"), true, null, 0, 0, false, null);
+
+        }
+      }
+      catch (Exception ex)
+      {
+        Echo("StaticOnlyTurrets exception", ex.ToString());
+      }
+    }
+
+    public void Echo(string arg1, string arg2="")
+    {
+//      MyAPIGateway.Utilities.ShowMessage(arg1, arg2);
+      MyLog.Default.WriteLineAndConsole(arg1 + ": " + arg2);     
+    }
+  }  
+  
+}

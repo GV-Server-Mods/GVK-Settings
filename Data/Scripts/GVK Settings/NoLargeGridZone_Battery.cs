@@ -17,9 +17,7 @@ namespace NoLargeGridZone
     public class NoLargeGridZone_Battery : MyGameLogicComponent
     {
         private IMyBatteryBlock battery;
-        private IMyPlayer client;
         private bool isServer;
-        private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -30,7 +28,7 @@ namespace NoLargeGridZone
             if (battery != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
             }
         }
 
@@ -39,7 +37,6 @@ namespace NoLargeGridZone
             base.UpdateOnceBeforeFrame();
 
             isServer = MyAPIGateway.Multiplayer.IsServer;
-            client = MyAPIGateway.Session.LocalHumanPlayer;
 
             if (isServer)
             {
@@ -47,9 +44,9 @@ namespace NoLargeGridZone
             }
         }
 
-        public override void UpdateBeforeSimulation10()
+        public override void UpdateBeforeSimulation100()
         {
-            base.UpdateBeforeSimulation10();
+            base.UpdateBeforeSimulation100();
 
             try
             {
@@ -59,22 +56,16 @@ namespace NoLargeGridZone
 
                     foreach (var beacon in beaconList)
                     {
-                        if (beacon == null) continue;
-                        if (!beacon.Enabled) continue;
+						if (beacon == null || !beacon.Enabled) continue;
                         if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
 						if (faction != null && faction.IsEveryoneNpc()) continue;
-                        //if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
                         if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                         {
-                            inZone = true;
                             battery.Enabled = false;
-                            //ApplyDamage();
                             return;
                         }
                     }
-
-                    inZone = false;
                 }
             }
             catch (Exception exc)
@@ -89,40 +80,16 @@ namespace NoLargeGridZone
             {
                 foreach (var beacon in beaconList)
                 {
-                    if (beacon == null) continue;
-                    if (!beacon.Enabled) continue;
+					if (beacon == null || !beacon.Enabled) continue;
 					if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
 					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
 					if (faction != null && faction.IsEveryoneNpc()) continue;
-                    //if (Vector3D.Distance(battery.GetPosition(), beacon.GetPosition()) < beacon.Radius)
 					if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                     {
                         battery.Enabled = false;
-                        //ApplyDamage();
                     }
-
                 }
-
             }
-
-        }
-
-        private void ApplyDamage()
-        {
-            try
-            {
-                IMySlimBlock b = battery.SlimBlock;
-                IMyEntity entity = battery.Parent;
-                IMyCubeGrid grid = entity as IMyCubeGrid;
-                var damage = grid.GridSizeEnum.Equals(MyCubeSize.Large) ? 0.5f : 0.05f;
-                b.DecreaseMountLevel(damage, null, true);
-                b.ApplyAccumulatedDamage();
-            }
-            catch (Exception exc)
-            {
-                MyLog.Default.WriteLineAndConsole($"Failed to apply damage: {exc}");
-            }
-
         }
 
         public override void Close()

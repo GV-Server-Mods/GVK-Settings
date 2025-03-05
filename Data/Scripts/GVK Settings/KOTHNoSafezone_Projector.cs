@@ -26,9 +26,7 @@ namespace KOTHNoSafezone
     public class KOTHNoSafezone_ProjectorBlock : MyGameLogicComponent
     {
         private IMyProjector projectorblock;
-        //private IMyPlayer client;
         private bool isServer;
-        private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -39,7 +37,7 @@ namespace KOTHNoSafezone
             if (projectorblock != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
             }
         }
 
@@ -56,9 +54,9 @@ namespace KOTHNoSafezone
             }
         }
 
-        public override void UpdateBeforeSimulation10()
+        public override void UpdateBeforeSimulation100()
         {
-            base.UpdateBeforeSimulation10();
+            base.UpdateBeforeSimulation100();
 
             try
             {
@@ -68,14 +66,13 @@ namespace KOTHNoSafezone
 
                     foreach (var beacon in beaconList)
                     {                        
-                        if (beacon == null) continue;
-                        if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+						if (beacon == null || !beacon.Enabled) continue;
+ 						if (Vector3D.DistanceSquared(projectorblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
                         {
 							string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
 							bool isMnM = false;
 							isMnM = strSubBlockType.Contains("MnM");
-							if (isMnM == true && projectorblock.CubeGrid.IsStatic) // this allows regular sorters to work
+							if (isMnM == true && projectorblock.CubeGrid.IsStatic)
 							{
 								projectorblock.Enabled = false;
 								return;
@@ -96,14 +93,13 @@ namespace KOTHNoSafezone
             {
                 foreach (var beacon in beaconList)
                 {
-                    if (beacon == null) continue;
-                    if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(projectorblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+					if (beacon == null || !beacon.Enabled) continue;
+ 						if (Vector3D.DistanceSquared(projectorblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
                     {
 						string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
 						bool isMnM = false;
 						isMnM = strSubBlockType.Contains("MnM");
-						if (isMnM == true && projectorblock.CubeGrid.IsStatic) // this allows regular sorters to work
+						if (isMnM == true && projectorblock.CubeGrid.IsStatic)
 						{
 							projectorblock.Enabled = false;
 							return;

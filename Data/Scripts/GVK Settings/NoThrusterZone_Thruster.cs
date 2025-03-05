@@ -27,7 +27,6 @@ namespace KOTHNoThrusters
     {
         private IMyThrust thrusterblock;
         private bool isServer;
-        private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -38,7 +37,7 @@ namespace KOTHNoThrusters
             if (thrusterblock != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
             }
         }
 
@@ -54,9 +53,9 @@ namespace KOTHNoThrusters
             }
         }
 
-        public override void UpdateBeforeSimulation10()
+        public override void UpdateBeforeSimulation100()
         {
-            base.UpdateBeforeSimulation10();
+            base.UpdateBeforeSimulation100();
 
             try
             {
@@ -66,13 +65,11 @@ namespace KOTHNoThrusters
 
                     foreach (var beacon in beaconList)
                     {                        
-                        if (beacon == null) continue;
-                        if (!beacon.Enabled) continue;
-						if (thrusterblock.BlockDefinition.SubtypeId.Contains("NPC")) continue;
-                        if (Vector3D.Distance(thrusterblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+						if (beacon == null || !beacon.Enabled) continue;
+						if (thrusterblock.BlockDefinition.SubtypeId.Contains("NPC")) continue; //skip if NPC thruster subtype
+						if (Vector3D.DistanceSquared(thrusterblock.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                         {
 							thrusterblock.Enabled = false;
-							//ApplyDamageThrust();
 							return;
                         }
                     }
@@ -90,34 +87,14 @@ namespace KOTHNoThrusters
             {
                 foreach (var beacon in beaconList)
                 {
-                    if (beacon == null) continue;
-                    if (!beacon.Enabled) continue;
-					if (thrusterblock.BlockDefinition.SubtypeId.Contains("NPC")) continue;
-                    if (Vector3D.Distance(thrusterblock.GetPosition(), beacon.GetPosition()) < 3000) //1km + SZ radius buffer
+					if (beacon == null || !beacon.Enabled) continue;
+					if (thrusterblock.BlockDefinition.SubtypeId.Contains("NPC")) continue; //skip if NPC thruster subtype
+					if (Vector3D.DistanceSquared(thrusterblock.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
                     {
 						thrusterblock.Enabled = false;
-                        //ApplyDamageThrust();
                     }
                 }               
             }
-        }
-
-        private void ApplyDamageThrust()
-        {
-            try
-            {
-                IMySlimBlock b = thrusterblock.SlimBlock;
-                IMyEntity entity = thrusterblock.Parent;
-                IMyCubeGrid grid = entity as IMyCubeGrid;
-                var damage = grid.GridSizeEnum.Equals(MyCubeSize.Large) ? 0.5f : 0.05f;
-                b.DecreaseMountLevel(damage, null, true);
-                b.ApplyAccumulatedDamage();
-            }
-            catch (Exception exc)
-            {
-                MyLog.Default.WriteLineAndConsole($"Failed to apply damage: {exc}");
-            }
-
         }
 
         public override void Close()

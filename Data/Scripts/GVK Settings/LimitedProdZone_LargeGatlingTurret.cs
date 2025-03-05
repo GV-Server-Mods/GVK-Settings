@@ -17,9 +17,7 @@ namespace LimitedProdZone
     public class LimitedProdZone_LargeGatlingTurret : MyGameLogicComponent
     {
         private IMyLargeGatlingTurret weapon;
-        private IMyPlayer client;
         private bool isServer;
-        private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
         private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
@@ -31,7 +29,7 @@ namespace LimitedProdZone
             if (weapon != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
             }
         }
 
@@ -40,7 +38,6 @@ namespace LimitedProdZone
             base.UpdateOnceBeforeFrame();
 
             isServer = MyAPIGateway.Multiplayer.IsServer;
-            client = MyAPIGateway.Session.LocalHumanPlayer;
 
             if (isServer)
             {
@@ -48,9 +45,9 @@ namespace LimitedProdZone
             }
         }
 
-        public override void UpdateBeforeSimulation10()
+        public override void UpdateBeforeSimulation100()
         {
-            base.UpdateBeforeSimulation10();
+            base.UpdateBeforeSimulation100();
 
             try
             {
@@ -60,24 +57,13 @@ namespace LimitedProdZone
 
                     foreach (var beacon in beaconList)
                     {                        
-                        if (beacon == null) continue;
-                        if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(weapon.GetPosition(), limitedProdCenterCoord) < 20000)
+						if (beacon == null || !beacon.Enabled) continue;
+						if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
                         {
-                            string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicLargeGatlingTurret = false;
-                            isBasicLargeGatlingTurret = strSubBlockType.Contains("Basic");
-
-                            if (isBasicLargeGatlingTurret == false)
-                            {
-								inZone = true;
-								weapon.Enabled = false;
-								return;
-                            }
+							weapon.Enabled = false;
+							return;
                         }
                     }
-
-                    inZone = false;
                 }
             }
             catch (Exception exc)
@@ -92,18 +78,10 @@ namespace LimitedProdZone
             {
                 foreach (var beacon in beaconList)
                 {
-                    if (beacon == null) continue;
-                    if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(weapon.GetPosition(), limitedProdCenterCoord) < 20000)
+					if (beacon == null || !beacon.Enabled) continue;
+						if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
                     {
-                        string strSubBlockType = weapon.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicLargeGatlingTurret = false;
-                        isBasicLargeGatlingTurret = strSubBlockType.Contains("Basic");
-
-                        if (isBasicLargeGatlingTurret == false)
-                        {
-							weapon.Enabled = false;
-                        }
+						weapon.Enabled = false;
                     }
                 }               
             }

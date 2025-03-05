@@ -24,7 +24,6 @@ namespace NoLargeGridZone
     {
         private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
-        private IMyCharacter character;
         private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
 
         private TextWriter logger = null;
