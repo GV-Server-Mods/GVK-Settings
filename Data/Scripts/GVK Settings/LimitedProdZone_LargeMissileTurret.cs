@@ -56,6 +56,11 @@ namespace LimitedProdZone
                 if (isServer)
                 {
 					if (weapon == null) return;
+					if ((weapon.BlockDefinition == StaticWeaponDef) && (weapon.CubeGrid != null) && !weapon.CubeGrid.IsStatic)
+					{
+						weapon.SlimBlock.DoDamage(99999999999999f, DestructionHash, true, null, 0, 0, false, null);
+						return;
+					}
 					else
 					{
 						if (!weapon.Enabled) return;
