@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <CubeBlocks>
+        <Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+            <Id>
+                <TypeId>Beacon</TypeId>
+                <SubtypeId>LargeBlockBeacon_Scrap</SubtypeId>
+            </Id>
+            <DisplayName>Scrap Core Beacon</DisplayName>
+            <Icon>Textures\Icons\LargeScrapBeacon.dds</Icon>
+			<Icon>Textures\Icons\Scrap_Icon_Overlay.dds</Icon>
+            <Description>A temporary beacon to save a grid from ONE cleanup pass.</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="1" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+              <Model>Models\Cubes\large\LargeScrapBeacon.mwm</Model>
+			<Components>
+				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="300"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
+            <MountPoints>
+                <MountPoint Side="Bottom" StartX="0.1" StartY="0.1" EndX="0.9" EndY="0.9" Default="true" />
+                <MountPoint Side="Left" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
+                <MountPoint Side="Right" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
+                <MountPoint Side="Front" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
+                <MountPoint Side="Back" StartX="0.175" StartY="0.1" EndX="0.825" EndY="0.9" />
+            </MountPoints>
+			<!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
+                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\large\LargeScrapBeacon_BS1.mwm"/>
+                <Model BuildPercentUpperBound="0.67" File="Models\Cubes\large\LargeScrapBeacon_BS2.mwm"/>
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\large\LargeScrapBeacon_BS3.mwm"/>
+            </BuildProgressModels>-->
+            <BlockPairName>ScrapBeacon</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <MirroringY>Z</MirroringY>
+            <BuildTimeSeconds>40</BuildTimeSeconds>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <ResourceSinkGroup>Utility</ResourceSinkGroup>
+            <MaxBroadcastRadius>2000</MaxBroadcastRadius>
+            <Flare>ScrapBeaconLarge</Flare>
+            <MaxBroadcastPowerDrainkW>10</MaxBroadcastPowerDrainkW>
+            <EmissiveColorPreset>ScrapBeacon</EmissiveColorPreset>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
+            <PCU>50</PCU>
+			<IsAirTight>false</IsAirTight>
+			<GuiVisible>true</GuiVisible>
+			<Public>true</Public>
+        </Definition>
+        <Definition xsi:type="MyObjectBuilder_BeaconDefinition">
+            <Id>
+                <TypeId>Beacon</TypeId>
+                <SubtypeId>SmallBlockBeacon_Scrap</SubtypeId>
+            </Id>
+            <DisplayName>Scrap Core Beacon</DisplayName>
+            <Icon>Textures\Icons\SmallScrapBeacon.dds</Icon>
+			<Icon>Textures\Icons\Scrap_Icon_Overlay.dds</Icon>
+            <Description>A temporary beacon to save a grid from ONE cleanup pass.</Description>
+            <CubeSize>Small</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="1" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Model>Models\Cubes\small\SmallScrapBeacon.mwm</Model>
+            <Components>
+                <Component Subtype="SteelPlate" Count="1" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="SmallTube" Count="1" />
+                <Component Subtype="Computer" Count="1" />
+                <Component Subtype="SteelPlate" Count="10" />
+            </Components>
+            <CriticalComponent Subtype="Computer" Index="0" />
+			<GeneralDamageMultiplier>0.1</GeneralDamageMultiplier>
+            <MountPoints>
+                <MountPoint Side="Front" StartX="0.00" StartY="0.00" EndX="1.00" EndY="2.00"/>
+                <MountPoint Side="Back" StartX="0.00" StartY="0.00" EndX="1.00" EndY="2.00"/>
+                <MountPoint Side="Left" StartX="0.00" StartY="0.00" EndX="1.00" EndY="2.00"/>
+                <MountPoint Side="Right" StartX="0.00" StartY="0.00" EndX="1.00" EndY="2.00"/>
+                <MountPoint Side="Bottom" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
+            </MountPoints>
+			<!-- Build stages must be removed so beacon is always functional -->
+            <!--<BuildProgressModels>
+                <Model BuildPercentUpperBound="0.50" File="Models\Cubes\small\SmallScrapBeacon_BS1.mwm"/>
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\small\SmallScrapBeacon_BS2.mwm"/>
+            </BuildProgressModels>-->
+            <BlockPairName>ScrapBeacon</BlockPairName>
+            <MirroringY>Z</MirroringY>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>15</BuildTimeSeconds>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <ResourceSinkGroup>Utility</ResourceSinkGroup>
+            <MaxBroadcastRadius>2000</MaxBroadcastRadius>
+            <Flare>ScrapBeaconSmall</Flare>
+            <MaxBroadcastPowerDrainkW>10</MaxBroadcastPowerDrainkW>
+            <EmissiveColorPreset>ScrapBeacon</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+            <DestroySound>WepSmallWarheadExpl</DestroySound>
+            <PCU>50</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+    </CubeBlocks>
+</Definitions>

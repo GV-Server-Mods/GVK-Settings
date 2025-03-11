@@ -12,6 +12,7 @@
 			<ItemIds>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
@@ -26,6 +27,7 @@
 				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
 				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
 				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
 				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
@@ -52,6 +54,7 @@
 			<ItemIds>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
@@ -66,6 +69,7 @@
 				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
 				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
 				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 			</ItemIds>
 		</Category>
 		<!-- Shared Cargos -->
@@ -116,22 +120,19 @@
 			<ItemIds>
 				<string>OxygenGenerator/OxygenGenerator3</string>
 				<string>HydrogenEngine/HugeHydrogenEngine3</string>
-				<string>Beacon/SmallBlockBeacon</string>
-				<string>Beacon/SmallBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-				<string>Beacon/SmallBlockBeaconReskin</string>
-				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
 				<string>Beacon/LargeBlockBeaconReskin</string>
 				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
 				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
 				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
 				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
 				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
 				<string>Conveyor/Conveyor4WayAltDuct</string>
@@ -151,6 +152,7 @@
 				<string>HydrogenEngine/HugeHydrogenEngine3</string>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
@@ -165,6 +167,7 @@
 				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
 				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
 				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
 				<string>Conveyor/Conveyor4WayAltDuct</string>

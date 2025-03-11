@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Flares>
+        <Definition xsi:type="FlareDefinition">
+            <Id>
+                <TypeId>FlareDefinition</TypeId>
+                <SubtypeId>ScrapBeaconSmall</SubtypeId>
+            </Id>
+            <Intensity>5</Intensity>
+            <SubGlares>
+
+                <!--<SubGlare>
+          <Material>GlareSsLight</Material>
+          <Color>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>1</Z>
+            <W>1</W>
+          </Color>
+          <Size>
+            <X>0.3</X>
+            <Y>0.3</Y>
+          </Size>
+          <ScreenIntensityMultiplierCenter>2</ScreenIntensityMultiplierCenter>
+          <ScreenIntensityMultiplierEdge>1</ScreenIntensityMultiplierEdge>
+        </SubGlare>-->
+
+                <SubGlare>
+                    <!--Hexagon Rays-->
+                    <Type>Oriented</Type>
+                    <!--Non-Fixed rotation-->
+                    <Material>HexagonRays</Material>
+                    <Color>
+                        <X>0.8</X>
+                        <Y>0.33</Y>
+                        <Z>0</Z>
+                        <W>1.0</W>
+                    </Color>
+                    <Size>
+                        <X>0.1</X>
+                        <Y>0.1</Y>
+                    </Size>
+                    <ScreenIntensityMultiplierCenter>0.5</ScreenIntensityMultiplierCenter>
+                    <ScreenIntensityMultiplierEdge>0.5</ScreenIntensityMultiplierEdge>
+                    <ScreenCenterDistance>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </ScreenCenterDistance>
+                </SubGlare>
+
+                <SubGlare>
+                    <!--Rays-->
+                    <Type>Rotated</Type>
+                    <Material>LightGlare</Material>
+                    <Color>
+                        <X>0.8</X>
+                        <Y>0.33</Y>
+                        <Z>0</Z>
+                        <W>1.0</W>
+                    </Color>
+                    <Size>
+                        <X>0.12</X>
+                        <Y>0.12</Y>
+                    </Size>
+                    <ScreenIntensityMultiplierCenter>0.5</ScreenIntensityMultiplierCenter>
+                    <ScreenIntensityMultiplierEdge>0.5</ScreenIntensityMultiplierEdge>
+                    <ScreenCenterDistance>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </ScreenCenterDistance>
+                </SubGlare>
+
+            </SubGlares>
+        </Definition>
+
+        <Definition xsi:type="FlareDefinition">
+            <Id>
+                <TypeId>FlareDefinition</TypeId>
+                <SubtypeId>ScrapBeaconLarge</SubtypeId>
+            </Id>
+            <Intensity>5</Intensity>
+            <SubGlares>
+
+                <!--<SubGlare>
+          <Material>GlareLsLight</Material>
+          <Color>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>1</Z>
+            <W>1</W>
+          </Color>
+          <Size>
+            <X>1</X>
+            <Y>1</Y>
+          </Size>
+          <ScreenIntensityMultiplierCenter>2</ScreenIntensityMultiplierCenter>
+          <ScreenIntensityMultiplierEdge>1</ScreenIntensityMultiplierEdge>
+        </SubGlare>-->
+
+                <SubGlare>
+                    <!--Hexagon Rays-->
+                    <Type>Oriented</Type>
+                    <!--Non-Fixed rotation-->
+                    <Material>HexagonRays</Material>
+                    <Color>
+                        <X>0.8</X>
+                        <Y>0.33</Y>
+                        <Z>0</Z>
+                        <W>1.0</W>
+                    </Color>
+                    <Size>
+                        <X>0.4</X>
+                        <Y>0.4</Y>
+                    </Size>
+                    <ScreenIntensityMultiplierCenter>1</ScreenIntensityMultiplierCenter>
+                    <ScreenIntensityMultiplierEdge>1</ScreenIntensityMultiplierEdge>
+                    <ScreenCenterDistance>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </ScreenCenterDistance>
+                </SubGlare>
+
+                <SubGlare>
+                    <!--Rays-->
+                    <Type>Oriented</Type>
+                    <Material>LightGlare</Material>
+                    <Color>
+                        <X>0.8</X>
+                        <Y>0.33</Y>
+                        <Z>0</Z>
+                        <W>1.0</W>
+                    </Color>
+                    <Size>
+                        <X>0.5</X>
+                        <Y>0.5</Y>
+                    </Size>
+                    <ScreenIntensityMultiplierCenter>0.5</ScreenIntensityMultiplierCenter>
+                    <ScreenIntensityMultiplierEdge>0.5</ScreenIntensityMultiplierEdge>
+                    <ScreenCenterDistance>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </ScreenCenterDistance>
+                </SubGlare>
+
+                <SubGlare>
+                    <!--Rays-->
+                    <Type>Rotated</Type>
+                    <Material>LightGlare</Material>
+                    <Color>
+                        <X>0.8</X>
+                        <Y>0.33</Y>
+                        <Z>0</Z>
+                        <W>1.0</W>
+                    </Color>
+                    <Size>
+                        <X>0.6</X>
+                        <Y>0.6</Y>
+                    </Size>
+                    <ScreenIntensityMultiplierCenter>0.5</ScreenIntensityMultiplierCenter>
+                    <ScreenIntensityMultiplierEdge>0.5</ScreenIntensityMultiplierEdge>
+                    <ScreenCenterDistance>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </ScreenCenterDistance>
+                </SubGlare>
+
+            </SubGlares>
+        </Definition>
+    </Flares>
+</Definitions>
