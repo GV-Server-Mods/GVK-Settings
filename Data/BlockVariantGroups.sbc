@@ -8,13 +8,14 @@
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
 			<Description/>
 			<Blocks>
+                <Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon_Scrap" />
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeaconReskin"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon_MediumCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeaconReskin_MediumCore"/>
                 <Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Scrap" />
-				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_MediumCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_MediumCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_HeavyCore"/>
@@ -25,7 +26,6 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_Pipeline"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_ShieldCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeaconReskin_ShieldCore"/>
-                <Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon_Scrap" />
 			</Blocks>
 		</BlockVariantGroup>
 		<!-- Shared Cargos -->
