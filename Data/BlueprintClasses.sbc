@@ -49,8 +49,22 @@
             <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
             <OutputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</OutputConstraintIcon>
         </Class>
+        <Class>
+            <Id>
+                <TypeId>BlueprintClassDefinition</TypeId>
+                <SubtypeId>SKitScrapDestroyer</SubtypeId>
+            </Id>
+            <DisplayName>Metal Scrap Destroyer</DisplayName>
+            <Description>Metal Scrap Destroyer</Description>
+            <Icon>Textures\GUI\Icons\ingot\ingot_class.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\ingot\ingot_class.dds</HighlightIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
+            <OutputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</OutputConstraintIcon>
+        </Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>
+		<!-- SKits -->	
+		<Entry Class="SKitScrapDestroyer" BlueprintSubtypeId="MetalScrapDestroyer" />
 		<!-- Basic Assemblers -->	
 		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />

@@ -313,6 +313,19 @@
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
+        <Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>MetalScrapDestroyer</SubtypeId>
+            </Id>
+            <DisplayName>Metal Scrap Destroyer</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="Scrap" />
+            </Prerequisites>
+            <Result Amount="0.0" TypeId="Ingot" SubtypeId="Iron" />
+            <BaseProductionTimeInSeconds>0.001</BaseProductionTimeInSeconds>
+        </Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>

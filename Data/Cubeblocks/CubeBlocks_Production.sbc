@@ -442,6 +442,7 @@
 				<ScreenArea Name="CockpitScreen_02" DisplayName="Bottom panel"/>
 			</ScreenAreas>
 			<BlueprintClasses>
+				<Class>SKitScrapDestroyer</Class>
 				<Class>SurvivalKitIngots</Class>
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
@@ -524,6 +525,7 @@
 			<BuildTimeSeconds>20</BuildTimeSeconds>
 			<ResourceSinkGroup>Factory</ResourceSinkGroup>
 			<BlueprintClasses>
+				<Class>SKitScrapDestroyer</Class>
 				<Class>SurvivalKitIngots</Class>
 				<Class>BasicTools</Class>
 				<Class>BasicComponents</Class>
