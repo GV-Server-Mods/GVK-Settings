@@ -57,7 +57,6 @@
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
-				<Class>Components</Class>
 				<Class>GVKEliteEquipment</Class>
 				<Class>GVKEliteComponents</Class>
 				<Class>EliteTools</Class>
@@ -139,7 +138,6 @@
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
-				<Class>Components</Class>
 				<Class>GVKEliteEquipment</Class>
 				<Class>GVKEliteComponents</Class>
 				<Class>EliteTools</Class>
@@ -300,7 +298,6 @@
 			<BlueprintClasses>
 				<Class>LargeBlocks</Class>
 				<Class>SmallBlocks</Class>
-				<Class>Components</Class>
 				<Class>GVKEliteComponents</Class>
 				<Class>GVKEliteEquipment</Class>
 				<Class>EliteTools</Class>
