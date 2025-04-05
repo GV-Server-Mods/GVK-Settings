@@ -11,5 +11,4 @@ CubeBlocks_Production.xml
 CubeBlocks_Thrusters.xml
 CubeBlocks_Tools.xml
 Extra Reinforced Conveyors.xml
-SessionComponents_Economy.xml
 SessionComponents_GVDropContainers.xml
