@@ -72,7 +72,96 @@
 			<DamagedSound>ParticleWeapExpl</DamagedSound>
 			<DestroyEffect>Explosion_Warhead_02</DestroyEffect>
 			<DestroySound>WepSmallWarheadExpl</DestroySound>
-			<PCU>25</PCU>
+            <TargetingGroups>
+                <string>PowerSystems</string>
+            </TargetingGroups>
 		</Definition>
+		<!-- Make the new Fieldwork "Fusion Reactor" a replacement for the Adv Engine -->
+        <Definition xsi:type="MyObjectBuilder_HydrogenEngineDefinition">
+            <Id>
+                <TypeId>HydrogenEngine</TypeId>
+                <SubtypeId>LargePrototechReactor</SubtypeId>
+            </Id>
+            <DisplayName>DisplayName_Block_PrototechReactor</DisplayName>
+            <Description>Description_PrototechReactor</Description>
+            <Icon>Textures\GUI\Icons\Cubes\Prototech_Reactor.dds</Icon>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="3" y="2" z="2" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Model>Models\Cubes\Large\Prototech_Reactor.mwm</Model>
+			<Components>
+				<Component Subtype="SteelPlate" Count="2160"/><!-- 80 -->
+				<Component Subtype="PrototechCircuitry" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="10"/>
+				<Component Subtype="Construction" Count="1620"/><!-- 60 -->
+				<Component Subtype="LargeTube" Count="324"/><!-- 12 -->
+				<Component Subtype="SmallTube" Count="540"/><!-- 20 -->
+				<Component Subtype="Motor" Count="324"/><!-- 12 -->
+				<Component Subtype="Computer" Count="108"/><!-- 4 -->
+				<Component Subtype="PowerCell" Count="27"/><!-- 1 -->
+				<Component Subtype="Construction" Count="270"/><!-- 10 -->
+				<Component Subtype="SteelPlate" Count="540"/><!-- 20 -->
+			</Components>
+			<CriticalComponent Subtype="PowerCell" Index="0"/>
+            <MountPoints>
+                <MountPoint Side="Bottom" StartX="0" StartY="0.15" EndX="3" EndY="2" Default="true" />
+                <MountPoint Side="Front" StartX="0" StartY="0.15" EndX="0.1" EndY="1" />
+                <MountPoint Side="Front" StartX="2.9" StartY="0.15" EndX="3" EndY="1" />
+                <MountPoint Side="Back" StartX="0.1" StartY="0" EndX="2.9" EndY="0.9" />
+                <MountPoint Side="Back" StartX="0" StartY="0.9" EndX="0.9" EndY="1.5" />
+                <MountPoint Side="Back" StartX="2.1" StartY="0.9" EndX="3" EndY="1.5" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="1.9" EndY="1" />
+                <MountPoint Side="Left" StartX="0.5" StartY="1" EndX="2" EndY="1.5" />
+                <MountPoint Side="Right" StartX="0.1" StartY="0" EndX="2" EndY="1" />
+                <MountPoint Side="Right" StartX="0" StartY="1" EndX="1.5" EndY="1.5" />
+            </MountPoints>
+            <BuildProgressModels>
+                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\Prototech_Reactor_Construction_1.mwm" />
+                <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\Prototech_Reactor_Construction_2.mwm" />
+                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\Prototech_Reactor_Construction_3.mwm" />
+            </BuildProgressModels>
+            <BlockPairName>PrototechReactor</BlockPairName>
+            <MirroringY>Z</MirroringY>
+            <MirroringZ>Y</MirroringZ>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>120</BuildTimeSeconds>
+			<DisassembleRatio>5</DisassembleRatio>
+            <ResourceSinkGroup>Generators</ResourceSinkGroup>
+            <ResourceSourceGroup>Reactors</ResourceSourceGroup>
+            <MaxPowerOutput>400</MaxPowerOutput>
+            <FuelCapacity>150000</FuelCapacity>
+            <EmissiveColorPreset>Extended</EmissiveColorPreset>
+            <IsAirTight>false</IsAirTight>
+            <InventorySize>
+                <X>1</X>
+                <Y>1</Y>
+                <Z>1</Z>
+            </InventorySize>
+            <FuelInfos>
+                <FuelInfo>
+                    <Id>
+                        <TypeId>GasProperties</TypeId>
+                        <SubtypeId>Hydrogen</SubtypeId>
+                    </Id>
+					<Ratio>0.25</Ratio><!-- 1.0 is 1x, 0.5 is double efficient -->
+                </FuelInfo>
+            </FuelInfos>
+			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+            <PrimarySound>ArcShipLrgFusionLrg</PrimarySound>
+            <DamageEffectName>Damage_Electrical_Prototech_Reactor</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <DestroyEffect>Explosion_Warhead_02</DestroyEffect>
+            <DestroySound>WepSmallWarheadExpl</DestroySound>
+			<!-- Turbine Speed / Animation Controls -->
+            <AnimationSpeed>1.5</AnimationSpeed>
+            <AnimationSpinUpSpeed>0.3</AnimationSpinUpSpeed>
+            <AnimationSpinDownSpeed>0.3</AnimationSpinDownSpeed>
+            <PCU>25</PCU>
+            <TargetingGroups>
+                <string>PowerSystems</string>
+            </TargetingGroups>
+        </Definition>
 	</CubeBlocks>
 </Definitions>

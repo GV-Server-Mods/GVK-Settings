@@ -44,9 +44,9 @@ namespace MikeDude.ArmorBalance
                 var cockpitDef = blockDef as MyCockpitDefinition;
                 var remoteControlDef = blockDef as MyRemoteControlDefinition;
                 var timerBlockDef = blockDef as MyTimerBlockDefinition;
-                var hydroTankDef = blockDef as MyGasTankDefinition;
+                //var hydroTankDef = blockDef as MyGasTankDefinition;
                 var welderDef = blockDef as MyShipWelderDefinition;
-                var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
+                // var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
                 var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
                 var cargoDef = blockDef as MyCargoContainerDefinition;
