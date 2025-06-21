@@ -11,7 +11,6 @@
 			<Icon>Textures\Icons\Scrap_Icon_Overlay.dds</Icon>
             <Description>A temporary beacon to save a grid from ONE cleanup pass.</Description>
             <CubeSize>Large</CubeSize>
-            <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="2" z="1" />
             <ModelOffset x="0" y="0" z="0" />
@@ -63,7 +62,6 @@
 			<Icon>Textures\Icons\Scrap_Icon_Overlay.dds</Icon>
             <Description>A temporary beacon to save a grid from ONE cleanup pass.</Description>
             <CubeSize>Small</CubeSize>
-            <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="2" z="1" />
             <ModelOffset x="0" y="0" z="0" />
@@ -104,6 +102,8 @@
             <DestroySound>WepSmallWarheadExpl</DestroySound>
             <PCU>50</PCU>
             <IsAirTight>false</IsAirTight>
+			<GuiVisible>true</GuiVisible>
+			<Public>true</Public>
         </Definition>
     </CubeBlocks>
 </Definitions>
