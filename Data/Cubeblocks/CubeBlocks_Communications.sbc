@@ -9,6 +9,7 @@
 			</Id>
 			<DisplayName>Small Ship Core Beacon</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<!-- <Icon>Textures\GUI\Icons\Cubes\Core_Small.dds</Icon> -->
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
 			2000 block limit, 40 UPs, 140 MPs.</Description>
@@ -17,6 +18,7 @@
 			<Size x="1" y="1" z="2"/>
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Small\beacon.mwm</Model>
+			<!-- <Model>Models\Cubes\small\Core_Small.mwm</Model> -->
 			<Components>
 				<Component Subtype="Computer" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
@@ -38,6 +40,7 @@
 			<ResourceSinkGroup>Utility</ResourceSinkGroup>
 			<MaxBroadcastRadius>200000</MaxBroadcastRadius>
 			<Flare>BeaconSmall</Flare>
+			<!-- <Flare>FakeFlare</Flare> -->
 			<MaxBroadcastPowerDrainkW>20</MaxBroadcastPowerDrainkW>
 			<EmissiveColorPreset>Beacon</EmissiveColorPreset>
 			<DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
