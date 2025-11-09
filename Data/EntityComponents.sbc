@@ -59,5 +59,54 @@
                 <Entry Type="ConsumableItem" />
             </InputConstraint>
         </EntityComponent>
+        <!-- improve combat utility of vanilla AI blocks -->
+		<EntityComponent xsi:type="MyObjectBuilder_OffensiveCombatCircleOrbitDefinition">
+            <Id>
+                <TypeId>OffensiveCombatCircleOrbit</TypeId>
+                <SubtypeId>OffensiveCombatBlock</SubtypeId>
+            </Id>
+            <UniqueSelectionId>0</UniqueSelectionId>
+            <MinimalCircleOrbitDistance>100</MinimalCircleOrbitDistance>
+            <MaximalCircleOrbitDistance>7000</MaximalCircleOrbitDistance>
+            <AngleAllowedToShoot>4</AngleAllowedToShoot>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_OffensiveCombatHitAndRunDefinition">
+            <Id>
+                <TypeId>OffensiveCombatHitAndRun</TypeId>
+                <SubtypeId>OffensiveCombatBlock</SubtypeId>
+            </Id>
+			<DefaultBreakOffDistance>500</DefaultBreakOffDistance>
+			<DefaultRetreatDistance>1000</DefaultRetreatDistance>
+			<MaxRetreatDistance>7000</MaxRetreatDistance>
+			<MaxBreakOffDistance>6900</MaxBreakOffDistance>
+			<AngleAllowedToShoot>4</AngleAllowedToShoot>
+			<DefaultRetreatAngle>90</DefaultRetreatAngle>
+			<UniqueSelectionId>2</UniqueSelectionId>
+        </EntityComponent>
+		<EntityComponent xsi:type="MyObjectBuilder_OffensiveCombatStayAtRangeDefinition">
+			<Id>
+				<TypeId>OffensiveCombatStayAtRange</TypeId>
+				<SubtypeId>OffensiveCombatBlock</SubtypeId>
+			</Id>
+			<MaxMaximalDistance>6000</MaxMaximalDistance>
+			<MaxMinimalDistance>5999</MaxMinimalDistance>
+            <AngleAllowedToShoot>4</AngleAllowedToShoot>
+            <UniqueSelectionId>1</UniqueSelectionId>
+		</EntityComponent>
+		<EntityComponent xsi:type="MyObjectBuilder_SearchEnemyComponentDefinition">
+			<Id>
+				<TypeId>SearchEnemyComponent</TypeId>
+				<SubtypeId>DefaultEnemySearch</SubtypeId>
+			</Id>
+			<SearchRadius>6000</SearchRadius>
+		</EntityComponent>
+		<!-- fix mismatched volume size of new SG modular cargo in Contacts -->
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>SmallBlockModularContainer</SubtypeId>
+            </Id>
+            <Size x="3.5" y="1.5" z="2.5" />
+        </EntityComponent>
 	</EntityComponents>
 </Definitions>
