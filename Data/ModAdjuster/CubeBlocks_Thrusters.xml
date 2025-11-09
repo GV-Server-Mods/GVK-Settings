@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<!-- Ion (Lateral Hover) Thrusters-->
+		<!-- Don't double up changes to the same setting with Mod Adjuster and custom rebalancer scripts -->
+		<!-- Ion (Lateral Hover) Thrusters
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -9,7 +10,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1"/>
+				<Component Subtype="PrototechCoolingUnit" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -29,7 +30,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10"/>
+				<Component Subtype="PrototechCoolingUnit" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="10"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -49,7 +50,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20"/>
+				<Component Subtype="PrototechCoolingUnit" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -69,7 +70,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200"/>
+				<Component Subtype="PrototechCoolingUnit" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -89,7 +90,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1"/>
+				<Component Subtype="PrototechCoolingUnit" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -109,7 +110,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10"/>
+				<Component Subtype="PrototechCoolingUnit" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -129,7 +130,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20"/>
+				<Component Subtype="PrototechCoolingUnit" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -149,7 +150,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200"/>
+				<Component Subtype="PrototechCoolingUnit" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -169,7 +170,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="1"/>
+				<Component Subtype="PrototechCoolingUnit" Count="1"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="Thrust" Count="1"/>
@@ -189,7 +190,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Hover_Tech" Count="10"/>
+				<Component Subtype="PrototechCoolingUnit" Count="10"/>
 				<Component Subtype="Construction" Count="1"/>
 				<Component Subtype="LargeTube" Count="5"/>
 				<Component Subtype="Thrust" Count="10"/>
@@ -209,7 +210,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Hover_Tech" Count="20"/>
+				<Component Subtype="PrototechCoolingUnit" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
 				<Component Subtype="Thrust" Count="20"/>
@@ -229,7 +230,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Hover_Tech" Count="200"/>
+				<Component Subtype="PrototechCoolingUnit" Count="200"/>
 				<Component Subtype="Construction" Count="70"/>
 				<Component Subtype="LargeTube" Count="40"/>
 				<Component Subtype="Thrust" Count="200"/>
@@ -241,7 +242,7 @@
             <ForceMagnitude>15000000</ForceMagnitude>
             <MaxPowerConsumption>50.00</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
-		</Definition>
+		</Definition> -->
 		<!-- Hydrogen Thrusters -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
@@ -250,7 +251,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="200"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="200"/>
 				<Component Subtype="Construction" Count="150"/>
 				<Component Subtype="MetalGrid" Count="250"/>
 				<Component Subtype="LargeTube" Count="40"/>
@@ -263,7 +264,7 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -278,7 +279,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="MetalGrid" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
@@ -291,7 +292,7 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -306,7 +307,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="10"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="MetalGrid" Count="22"/>
 				<Component Subtype="LargeTube" Count="10"/>
@@ -319,12 +320,12 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>750000</ForceMagnitude>
-            <MaxPowerConsumption>0.5</MaxPowerConsumption>
+			<ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -334,7 +335,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="2"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="MetalGrid" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -347,12 +348,12 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-			<ForceMagnitude>75000</ForceMagnitude>
-            <MaxPowerConsumption>0.05</MaxPowerConsumption>
+			<ForceMagnitude>150000</ForceMagnitude>
+            <MaxPowerConsumption>0.1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -362,7 +363,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="100"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="200"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="200"/>
 				<Component Subtype="Construction" Count="150"/>
 				<Component Subtype="MetalGrid" Count="250"/>
 				<Component Subtype="LargeTube" Count="40"/>
@@ -375,7 +376,7 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>100</BuildTimeSeconds>
@@ -390,7 +391,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="15"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="20"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
 				<Component Subtype="Construction" Count="40"/>
 				<Component Subtype="MetalGrid" Count="40"/>
 				<Component Subtype="LargeTube" Count="8"/>
@@ -403,7 +404,7 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
@@ -418,7 +419,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="20"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="10"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="20"/>
 				<Component Subtype="Construction" Count="20"/>
 				<Component Subtype="MetalGrid" Count="22"/>
 				<Component Subtype="LargeTube" Count="10"/>
@@ -431,12 +432,12 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-			<ForceMagnitude>750000</ForceMagnitude>
-            <MaxPowerConsumption>0.5</MaxPowerConsumption>
+			<ForceMagnitude>1500000</ForceMagnitude>
+            <MaxPowerConsumption>1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -446,7 +447,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="2"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="2"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="MetalGrid" Count="4"/>
 				<Component Subtype="LargeTube" Count="2"/>
@@ -459,15 +460,17 @@
 					<TypeId>GasProperties</TypeId>
 					<SubtypeId>Hydrogen</SubtypeId>
 				</FuelId>
-				<Efficiency>1.5</Efficiency>
+				<Efficiency>1.0</Efficiency>
 				<!-- Lower is more efficient -->
 			</FuelConverter>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-			<ForceMagnitude>75000</ForceMagnitude>
-            <MaxPowerConsumption>0.05</MaxPowerConsumption>
+			<ForceMagnitude>150000</ForceMagnitude>
+            <MaxPowerConsumption>0.1</MaxPowerConsumption>
             <MinPowerConsumption>0.000000001</MinPowerConsumption>
 		</Definition>
 		<!-- Flat Atmo Thrusters -->
+		<!-- Frontier update hides all BlockPairNames in block restrictions mod, so this method no
+			 longer works while the large block variant is hidden -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -475,7 +478,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -496,7 +499,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -517,7 +520,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -538,7 +541,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -551,7 +554,7 @@
             <ForceMagnitude>600000</ForceMagnitude>
             <MaxPowerConsumption>3</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
-		</Definition>
+		</Definition> 
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
@@ -559,7 +562,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="4"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="3"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="3"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="2"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -569,8 +572,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>1.5</MaxPowerConsumption>
+            <ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>3.75</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -580,7 +583,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="4"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="3"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="3"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="2"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -590,8 +593,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>10</BuildTimeSeconds>
-            <ForceMagnitude>300000</ForceMagnitude>
-            <MaxPowerConsumption>1.5</MaxPowerConsumption>
+            <ForceMagnitude>750000</ForceMagnitude>
+            <MaxPowerConsumption>3.75</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -602,7 +605,7 @@
 			<DisplayName>DisplayName_Block_SmallAtmoThrustFlat</DisplayName>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="MetalGrid" Count="1"/>
@@ -612,8 +615,8 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>37500</ForceMagnitude>
-            <MaxPowerConsumption>0.1875</MaxPowerConsumption>
+            <ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.3750</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
@@ -623,7 +626,7 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="1"/>
-				<Component Subtype="GVK_Thrust_Tech" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="1"/>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="1"/>
 				<Component Subtype="MetalGrid" Count="1"/>
@@ -633,9 +636,9 @@
 			</Components>
 			<CriticalComponent Subtype="Motor" Index="0"/>
 			<BuildTimeSeconds>2</BuildTimeSeconds>
-            <ForceMagnitude>37500</ForceMagnitude>
-            <MaxPowerConsumption>0.1875</MaxPowerConsumption>
+            <ForceMagnitude>75000</ForceMagnitude>
+            <MaxPowerConsumption>0.3750</MaxPowerConsumption>
             <MinPowerConsumption>0.000002</MinPowerConsumption>
-		</Definition>
+		</Definition> -->
 	</CubeBlocks>
 </Definitions>

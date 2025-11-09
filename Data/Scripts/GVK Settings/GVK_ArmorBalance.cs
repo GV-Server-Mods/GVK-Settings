@@ -21,7 +21,6 @@ namespace MikeDude.ArmorBalance
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
-        //public const float blockExplosionResistanceMod = 1f; //DamageMultiplierExplosion
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
         private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
@@ -45,9 +44,9 @@ namespace MikeDude.ArmorBalance
                 var cockpitDef = blockDef as MyCockpitDefinition;
                 var remoteControlDef = blockDef as MyRemoteControlDefinition;
                 var timerBlockDef = blockDef as MyTimerBlockDefinition;
-                var hydroTankDef = blockDef as MyGasTankDefinition;
+                //var hydroTankDef = blockDef as MyGasTankDefinition;
                 var welderDef = blockDef as MyShipWelderDefinition;
-                var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
+                // var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
                 var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
                 var cargoDef = blockDef as MyCargoContainerDefinition;
@@ -60,7 +59,6 @@ namespace MikeDude.ArmorBalance
 				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
-                //blockDef.DamageMultiplierExplosion = blockExplosionResistanceMod;
 				blockDef.UseModelIntersection = true; // attempt to make things able to place better in tight spaces
 
 				// Ensure all weapons have the 100% resistance buff
@@ -157,6 +155,8 @@ namespace MikeDude.ArmorBalance
                             thrustDef.ConsumptionFactorPerG = 0f;
                             thrustDef.SlowdownFactor = 1f;
 						}
+						// Don't currently need this because they are banned through BlockRestrictions mod
+						/*
 						else if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
 						{
                             thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
@@ -180,6 +180,7 @@ namespace MikeDude.ArmorBalance
                                 InsertComponent(blockDef, 0, unobtainiumComponent, 1, genericScrap);
                             }
                         }
+						*/
                     }
 					// Make hovers count as ions, increase power consumption and weld slower
 					if (thrustDef.Id.SubtypeName.Contains("Hover"))
@@ -288,11 +289,34 @@ namespace MikeDude.ArmorBalance
                     }
 					if (batteryDef.CubeSize == MyCubeSize.Large)
 					{
-						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
+						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 6f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 20f;
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 18f; // output rate is double input
+						}
+						else
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 3f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 9f; // output rate is double input
+						}
 					}
 					else
 					{
-						batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.25f; // accounts for 2 sizes of small grid batteries
+						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 9f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 1f; // accounts for 2 sizes of small grid batteries
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.75f; // output rate is double input
+						}
+						else
+						{
+							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 18f;
+							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.5f; // accounts for 2 sizes of small grid batteries
+							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.375f; // output rate is double input
+						}
+							
 					}
                 }
 												
@@ -305,6 +329,7 @@ namespace MikeDude.ArmorBalance
 				//Make all Buster blocks have heavy edge type, and no deformation, and longer weld time
                 if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("MA_Buster") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
                 {
+					blockDef.DamageMultiplierExplosion = 1f; //vanilla is 7
 					blockDef.GeneralDamageMultiplier = 1f;
 					blockDef.UsesDeformation = false;
 					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.

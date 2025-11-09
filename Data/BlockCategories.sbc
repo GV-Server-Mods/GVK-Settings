@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CategoryClasses>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>GV Kharak Items</DisplayName>
+			<Name>GVK</Name>
+			<StrictSearch>true</StrictSearch>
+			<ItemIds>
+				<string>Beacon/SmallBlockBeacon</string>
+				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
+				<string>Beacon/LargeBlockBeacon</string>
+				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
+				<string>Beacon/LargeBlockBeacon_Fortress</string>
+				<string>Beacon/LargeBlockBeacon_Pipeline</string>
+				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/SmallBlockBeaconReskin</string>
+				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin</string>
+				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
+				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
+				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
+				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
+				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
+				<string>OxygenGenerator/OxygenGenerator3</string>
+				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+			</ItemIds>
+		</Category>
 		<!-- Ship Cores -->
 		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
 			<Id>
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
 				<SubtypeId/>
 			</Id>
-			<DisplayName>GVK Ship Core Beacons</DisplayName>
-			<Name>GVK Ship Cores Beacons</Name>
+			<DisplayName>   Ship Cores</DisplayName>
+			<Name>GVK_Beacons</Name>
 			<StrictSearch>true</StrictSearch>
+			<!--<IsBlockCategory>true</IsBlockCategory>-->
+			<!--<SearchCategory>false</SearchCategory>-->
+			<SearchBlocks>true</SearchBlocks>
+			<IsShipCategory>false</IsShipCategory>
 			<IsBlockCategory>true</IsBlockCategory>
-			<SearchCategory>false</SearchCategory>
+			<IsToolCategory>false</IsToolCategory>
 			<ItemIds>
-				<string>SmallBlockBeacon</string>
-				<string>SmallBlockBeacon_MediumCore</string>
-				<string>LargeBlockBeacon</string>
-				<string>LargeBlockBeacon_MediumCore</string>
-				<string>LargeBlockBeacon_HeavyCore</string>
-				<string>LargeBlockBeacon_Fortress</string>
-				<string>LargeBlockBeacon_Pipeline</string>
-				<string>LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/SmallBlockBeacon</string>
+				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
+				<string>Beacon/LargeBlockBeacon</string>
+				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
+				<string>Beacon/LargeBlockBeacon_Fortress</string>
+				<string>Beacon/LargeBlockBeacon_Pipeline</string>
+				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/SmallBlockBeaconReskin</string>
+				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin</string>
+				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
+				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
+				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 			</ItemIds>
 		</Category>
 		<!-- Shared Cargos -->
@@ -29,16 +78,119 @@
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
 				<SubtypeId/>
 			</Id>
-			<DisplayName>GVK Shared Cargo Containers</DisplayName>
-			<Name>GVK Shared Cargo Containers</Name>
+			<DisplayName>   Utility</DisplayName>
+			<Name>GVK_Utility</Name>
 			<StrictSearch>true</StrictSearch>
+			<!--<IsBlockCategory>true</IsBlockCategory>-->
+			<!--<SearchCategory>false</SearchCategory>-->
+			<SearchBlocks>true</SearchBlocks>
+			<IsShipCategory>false</IsShipCategory>
 			<IsBlockCategory>true</IsBlockCategory>
-			<SearchCategory>false</SearchCategory>
+			<IsToolCategory>false</IsToolCategory>
 			<ItemIds>
-				<string>LargeBlockSmallContainer_Shared</string>
-				<string>SmallBlockMediumContainer_Shared</string>
-				<string>LargeBlockLargeContainer_Shared</string>
-				<string>LargeBlockLargeIndustrialContainer_Shared</string>
+				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
+				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
+				<string>OxygenGenerator/OxygenGenerator3</string>
+				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+			</ItemIds>
+		</Category>
+		<!-- RB 3x3x3 tank -->
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>DisplayName_Category_SmallBlocks</DisplayName>
+			<Name>Section1_Position1_SmallBlocks</Name>
+			<ItemIds>
+				<string>OxygenTank/RB_HydrogenTankMedium_Small</string>
+			</ItemIds>
+		</Category>
+		<!-- Reinforced Conveyor Expansion -->
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>DisplayName_Category_LargeBlocks</DisplayName>
+			<Name>Section1_Position1_LargeBlocks</Name>
+			<StrictSearch>true</StrictSearch>
+			<ItemIds>
+				<string>OxygenGenerator/OxygenGenerator3</string>
+				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+				<string>Beacon/LargeBlockBeacon</string>
+				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
+				<string>Beacon/LargeBlockBeacon_Fortress</string>
+				<string>Beacon/LargeBlockBeacon_Pipeline</string>
+				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/LargeBlockBeaconReskin</string>
+				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
+				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
+				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
+				<string>Conveyor/Conveyor4WayDuct</string>
+				<string>Conveyor/ConveyorElbowDuct</string>
+				<string>Conveyor/Conveyor4WayAltDuct</string>
+				<string>Conveyor/Conveyor5WayDuct</string>
+			</ItemIds>
+		</Category>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId>Nonarmor</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Category_Nonarmor</DisplayName>
+			<Name>Section1_Position2_Nonarmor</Name>
+			<StrictSearch>true</StrictSearch>
+			<ItemIds>
+				<string>OxygenGenerator/OxygenGenerator3</string>
+				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+				<string>Beacon/SmallBlockBeacon</string>
+				<string>Beacon/SmallBlockBeacon_MediumCore</string>
+                <string>Beacon/SmallBlockBeacon_Scrap</string>
+				<string>Beacon/LargeBlockBeacon</string>
+				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
+				<string>Beacon/LargeBlockBeacon_Fortress</string>
+				<string>Beacon/LargeBlockBeacon_Pipeline</string>
+				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/SmallBlockBeaconReskin</string>
+				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin</string>
+				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
+				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
+				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
+				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
+				<string>Conveyor/Conveyor4WayDuct</string>
+				<string>Conveyor/ConveyorElbowDuct</string>
+				<string>Conveyor/Conveyor4WayAltDuct</string>
+				<string>Conveyor/Conveyor5WayDuct</string>
+			</ItemIds>
+		</Category>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId>Logistics</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Category_Logistics</DisplayName>
+			<Name>Section1_Position3_Logistics</Name>
+			<ItemIds>
+				<string>OxygenTank/RB_HydrogenTankMedium_Small</string>
+				<string>Conveyor/Conveyor4WayDuct</string>
+				<string>Conveyor/ConveyorElbowDuct</string>
+				<string>Conveyor/Conveyor4WayAltDuct</string>
+				<string>Conveyor/Conveyor5WayDuct</string>
+				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
+				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
+				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
 			</ItemIds>
 		</Category>
 	</CategoryClasses>

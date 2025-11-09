@@ -4,10 +4,10 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>003_GVK_Hover_Tech</SubtypeId>
+				<SubtypeId>003_PrototechCoolingUnit</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Grav. Reflector</DisplayName>
-			<Icon>Textures\Icons\CompositePlate.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\PrototechCoolingUnit.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -16,15 +16,15 @@
 				<Item Amount="2.8" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Hover_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechCoolingUnit"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>002_GVK_Thrust_Tech</SubtypeId>
+				<SubtypeId>002_PrototechPropulsionUnit</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Igniter</DisplayName>
-			<Icon>Textures\Icons\HeatingElement.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\PrototechThrusterComponent.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="6.8" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -34,15 +34,15 @@
 				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Thrust_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechPropulsionUnit"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>001_GVK_SmallCaliber_Tech</SubtypeId>
+				<SubtypeId>001_PrototechMachinery</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Bolt Carrier</DisplayName>
-			<Icon>Textures\Icons\Cryocooler.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\PrototechMachinery_Icon.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="13.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -52,15 +52,15 @@
 				<Item Amount="9" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_SmallCaliber_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechMachinery"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>004_GVK_LargeCaliber_Tech</SubtypeId>
+				<SubtypeId>004_PrototechFrame</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Gun Cradle</DisplayName>
-			<Icon>Textures\Icons\TokamakBlanket.dds</Icon>
+			<Icon>Textures\GUI\Icons\component\PrototechFrame.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -70,15 +70,15 @@
 				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Silver"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_LargeCaliber_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechFrame"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>005_GVK_Missile_Tech</SubtypeId>
+				<SubtypeId>005_PrototechPanel</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Launch Assem.</DisplayName>
-			<Icon>Textures\Icons\SuperMagnet.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\PrototechPanel_Component.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="45" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -88,15 +88,15 @@
 				<Item Amount="5.7" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Missile_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechPanel"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>006_GVK_Laser_Tech</SubtypeId>
+				<SubtypeId>006_PrototechCapacitor</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Particle Emit.</DisplayName>
-			<Icon>Textures\Icons\LaserEmitter.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\PrototechCapacitor_Component.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="90" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -106,15 +106,15 @@
 				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Gold"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Laser_Tech"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechCapacitor"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>007_GVK_Data_Core</SubtypeId>
+				<SubtypeId>007_PrototechCircuitry</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Data Core</DisplayName>
-			<Icon>Textures\Icons\Thermocouple.dds</Icon>
+            <Icon>Textures\GUI\Icons\component\prototech_circuitry_component.dds</Icon>
 			<IconSymbol>Tech</IconSymbol>
 			<Prerequisites>
 				<Item Amount="900" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -125,7 +125,7 @@
 				<Item Amount="54" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Prerequisites>
 			<BaseProductionTimeInSeconds>300</BaseProductionTimeInSeconds>
-			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Data_Core"/>
+			<Result Amount="1" TypeId="Component" SubtypeId="PrototechCircuitry"/>
 		</Blueprint>
 		<Blueprint>
 			<Id>
@@ -165,17 +165,18 @@
 			<BaseProductionTimeInSeconds>1</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<!-- Scrap to CU -->
+		<!-- Scrap should be 1/3 because of the 3x ore-to-ingot multiplier -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>HoverScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCoolingUnitScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="HoverScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCoolingUnitScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="0.9" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -188,14 +189,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>ThrustScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechPropulsionUnitScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="ThrustScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPropulsionUnitScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="1.7" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -209,14 +210,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>SCalScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechMachineryScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="SCalScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechMachineryScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -230,14 +231,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>LCalScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechFrameScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="LCalScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechFrameScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -251,14 +252,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>MissileScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechPanelScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="MissileScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPanelScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -272,14 +273,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>LaserScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCapacitorScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="LaserScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCapacitorScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="22.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -293,14 +294,14 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
-				<SubtypeId>DataScraptoCUIngot</SubtypeId>
+				<SubtypeId>PrototechCircuitryScraptoCUIngot</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
 			<Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol/>
 			<Prerequisites>
-				<Item Amount="1" TypeId="Ore" SubtypeId="DataScrap"/>
+				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCircuitryScrap"/>
 			</Prerequisites>
 			<Results>
 				<Item Amount="225" TypeId="Ingot" SubtypeId="GVK_CUs"/>
@@ -312,6 +313,19 @@
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
+        <Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>MetalScrapDestroyer</SubtypeId>
+            </Id>
+            <DisplayName>Metal Scrap Destroyer</DisplayName>
+            <Icon>Textures\GUI\Icons\component\ScrapMetalComponent.dds</Icon>
+            <Prerequisites>
+                <Item Amount="1" TypeId="Ore" SubtypeId="Scrap" />
+            </Prerequisites>
+            <Result Amount="0.0" TypeId="Ingot" SubtypeId="Iron" />
+            <BaseProductionTimeInSeconds>0.001</BaseProductionTimeInSeconds>
+        </Blueprint>
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>

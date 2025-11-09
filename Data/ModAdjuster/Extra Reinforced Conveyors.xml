@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>Conveyor4WayDuct</SubtypeId>
+			</Id>
+			<DisplayName>Reinforced Conveyor X Junction</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Rein4Way.dds</Icon>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+			<Components>
+				<Component Subtype="SteelPlate" Count="12"/>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="Construction" Count="24"/>
+				<Component Subtype="SmallTube" Count="14"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="InteriorPlate" Count="6"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>ConveyorElbowDuct</SubtypeId>
+			</Id>
+			<DisplayName>Reinforced Conveyor 3-Way Corner</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Rein3way.dds</Icon>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+			<Components>
+				<Component Subtype="SteelPlate" Count="12"/>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="Construction" Count="24"/>
+				<Component Subtype="SmallTube" Count="14"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="InteriorPlate" Count="6"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>Conveyor4WayAltDuct</SubtypeId>
+			</Id>
+			<DisplayName>Reinforced Conveyor 4-Way T Junction</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Rein4wayAlt.dds</Icon>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+			<Components>
+				<Component Subtype="SteelPlate" Count="12"/>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="Construction" Count="24"/>
+				<Component Subtype="SmallTube" Count="14"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="InteriorPlate" Count="6"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>Conveyor5WayDuct</SubtypeId>
+			</Id>
+			<DisplayName>Reinforced Conveyor 5-Way Junction</DisplayName>
+			<Icon>Textures\GUI\Icons\Cubes\Rein5way.dds</Icon>
+			<GuiVisible>false</GuiVisible>
+			<Public>true</Public>
+			<Components>
+				<Component Subtype="SteelPlate" Count="12"/>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="Construction" Count="24"/>
+				<Component Subtype="SmallTube" Count="14"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="InteriorPlate" Count="6"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+		</Definition>
+	</CubeBlocks>
+</Definitions>
+

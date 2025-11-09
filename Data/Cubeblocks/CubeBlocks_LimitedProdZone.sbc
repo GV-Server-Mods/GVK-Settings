@@ -15,13 +15,8 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\OreDetector.mwm</Model>
 			<Components>
-				<Component Subtype="GVK_Unobtanium" Count="1">
-					<DeconstructId>
-						<TypeId>Ore</TypeId>
-						<SubtypeId>Scrap</SubtypeId>
-					</DeconstructId>
-				</Component>
 				<Component Subtype="Computer" Count="1"/>
+				<Component Subtype="SteelPlate" Count="300"/>
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 			<Center x="0" y="0" z="1"/>

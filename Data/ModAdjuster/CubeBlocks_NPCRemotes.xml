@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- this should make NPC AI remotes functional when placed -->
 		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
 			<Id>
 				<TypeId>RemoteControl</TypeId>
@@ -15,6 +16,10 @@
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Large\RemoteControlConstruction_2.mwm" />
             </BuildProgressModels>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyedExplosion_Large3X_Blue</DestroyEffect>
+			<DestroySound>WepLargeWarheadExpl</DestroySound>
 		</Definition>
 		<Definition xsi:type="MyObjectBuilder_RemoteControlDefinition">
 			<Id>
@@ -30,6 +35,10 @@
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_1.mwm" />
                 <Model BuildPercentUpperBound="0" File="Models\Cubes\Small\RemoteControlConstruction_2.mwm" />
             </BuildProgressModels>
+			<DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+			<DamagedSound>ParticleElectrical</DamagedSound>
+			<DestroyEffect>BlockDestroyedExplosion_Large_Blue</DestroyEffect>
+			<DestroySound>WepSmallWarheadExpl</DestroySound>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

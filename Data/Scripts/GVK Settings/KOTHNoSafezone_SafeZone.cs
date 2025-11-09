@@ -26,9 +26,7 @@ namespace KOTHNoSafezone
     public class KOTHNoSafezone_SafeZoneBlock : MyGameLogicComponent
     {
         private IMySafeZoneBlock safezoneblock;
-        private IMyPlayer client;
         private bool isServer;
-        private bool inZone;
         public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -39,7 +37,7 @@ namespace KOTHNoSafezone
             if (safezoneblock != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
             }
         }
 
@@ -48,7 +46,6 @@ namespace KOTHNoSafezone
             base.UpdateOnceBeforeFrame();
 
             isServer = MyAPIGateway.Multiplayer.IsServer;
-            client = MyAPIGateway.Session.LocalHumanPlayer;
 
             if (isServer)
             {
@@ -56,9 +53,9 @@ namespace KOTHNoSafezone
             }
         }
 
-        public override void UpdateBeforeSimulation10()
+        public override void UpdateBeforeSimulation100()
         {
-            base.UpdateBeforeSimulation10();
+            base.UpdateBeforeSimulation100();
 
             try
             {
@@ -68,10 +65,9 @@ namespace KOTHNoSafezone
 
                     foreach (var beacon in beaconList)
                     {                        
-                        if (beacon == null) continue;
-                        if (!beacon.Enabled) continue;
-                        if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1251) //1km + SZ radius buffer
-                        {
+						if (beacon == null || !beacon.Enabled) continue;
+ 						if (Vector3D.DistanceSquared(safezoneblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
+                       {
 							safezoneblock.Enabled = false;
 							return;
                         }
@@ -90,9 +86,8 @@ namespace KOTHNoSafezone
             {
                 foreach (var beacon in beaconList)
                 {
-                    if (beacon == null) continue;
-                    if (!beacon.Enabled) continue;
-                    if (Vector3D.Distance(safezoneblock.GetPosition(), beacon.GetPosition()) < 1251) //1km + SZ radius buffer
+					if (beacon == null || !beacon.Enabled) continue;
+ 						if (Vector3D.DistanceSquared(safezoneblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
                     {
 						safezoneblock.Enabled = false;
                     }

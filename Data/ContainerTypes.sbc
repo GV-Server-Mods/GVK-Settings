@@ -138,21 +138,21 @@
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
+						<SubtypeId>PrototechCoolingUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="10">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>SCalScrap</SubtypeId>
+						<SubtypeId>PrototechMachineryScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
@@ -266,98 +266,98 @@
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
+						<SubtypeId>PrototechCoolingUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="15">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>SCalScrap</SubtypeId>
+						<SubtypeId>PrototechMachineryScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>LCalScrap</SubtypeId>
+						<SubtypeId>PrototechFrameScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>MissileScrap</SubtypeId>
+						<SubtypeId>PrototechPanelScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="4">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>LaserScrap</SubtypeId>
+						<SubtypeId>PrototechCapacitorScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>DataScrap</SubtypeId>
+						<SubtypeId>PrototechCircuitryScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="4">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+						<SubtypeId>PrototechCoolingUnit</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="4">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+						<SubtypeId>PrototechPropulsionUnit</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
+						<SubtypeId>PrototechMachinery</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.5</Frequency> <!-- normally 0.1 -->
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
+						<SubtypeId>PrototechFrame</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Missile_Tech</SubtypeId>
+						<SubtypeId>PrototechPanel</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="2">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Laser_Tech</SubtypeId>
+						<SubtypeId>PrototechCapacitor</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.1</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Data_Core</SubtypeId>
+						<SubtypeId>PrototechCircuitry</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="5"> 
@@ -475,7 +475,7 @@
 				</Item>
 			</Items>
 		</ContainerType>
-		<ContainerType CountMin="2" CountMax="3">
+		<ContainerType CountMin="3" CountMax="4">
 			<Id>
 				<TypeId>ContainerTypeDefinition</TypeId>
 				<SubtypeId>Kharak_Loot_Large</SubtypeId>
@@ -513,98 +513,98 @@
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>HoverScrap</SubtypeId>
+						<SubtypeId>PrototechCoolingUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>ThrustScrap</SubtypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>SCalScrap</SubtypeId>
+						<SubtypeId>PrototechMachineryScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>LCalScrap</SubtypeId>
+						<SubtypeId>PrototechFrameScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>MissileScrap</SubtypeId>
+						<SubtypeId>PrototechPanelScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="4" AmountMax="10">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>LaserScrap</SubtypeId>
+						<SubtypeId>PrototechCapacitorScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.125</Frequency>
 					<Id>
 						<TypeId>Ore</TypeId>
-						<SubtypeId>DataScrap</SubtypeId>
+						<SubtypeId>PrototechCircuitryScrap</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="10">
 					<Frequency>0.75</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Hover_Tech</SubtypeId>
+						<SubtypeId>PrototechCoolingUnit</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="5" AmountMax="10">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Thrust_Tech</SubtypeId>
+						<SubtypeId>PrototechPropulsionUnit</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">
 					<Frequency>0.75</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_SmallCaliber_Tech</SubtypeId>
+						<SubtypeId>PrototechMachinery</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">
 					<Frequency>0.75</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_LargeCaliber_Tech</SubtypeId>
+						<SubtypeId>PrototechFrame</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">
 					<Frequency>0.75</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Missile_Tech</SubtypeId>
+						<SubtypeId>PrototechPanel</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="2" AmountMax="5">
 					<Frequency>0.5</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Laser_Tech</SubtypeId>
+						<SubtypeId>PrototechCapacitor</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="1" AmountMax="1">
 					<Frequency>0.25</Frequency>
 					<Id>
 						<TypeId>Component</TypeId>
-						<SubtypeId>GVK_Data_Core</SubtypeId>
+						<SubtypeId>PrototechCircuitry</SubtypeId>
 					</Id>
 				</Item>
 				<Item AmountMin="10" AmountMax="20"> 

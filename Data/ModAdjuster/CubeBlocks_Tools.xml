@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
-		<!-- Double radius -->
+		<!-- Double radius, improve impact resistance -->
 		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition">
 			<Id>
 				<TypeId>ShipWelder</TypeId>
@@ -12,7 +12,7 @@
 			<UsesDeformation>false</UsesDeformation>
 		</Definition>
 		<!-- disable small grid welder -->
-		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="false">
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="true">
 			<Id>
 				<TypeId>ShipWelder</TypeId>
 				<SubtypeId>SmallShipWelder</SubtypeId>
@@ -21,5 +21,23 @@
 			<DeformationRatio>0.2</DeformationRatio>
 			<UsesDeformation>false</UsesDeformation>
 		</Definition>
-	</CubeBlocks>
+		<!-- adjust proto drill comps -->
+        <Definition xsi:type="MyObjectBuilder_ShipDrillDefinition">
+            <Id>
+                <TypeId>Drill</TypeId>
+                <SubtypeId>LargeBlockPrototechDrill</SubtypeId>
+            </Id>
+			<DisplayName>Advanced Ship Drill</DisplayName>
+            <Components>
+                <Component Subtype="SteelPlate" Count="180" />
+				<Component Subtype="PrototechMachinery" Count="5"/>
+                <Component Subtype="Construction" Count="40" />
+                <Component Subtype="LargeTube" Count="12" />
+                <Component Subtype="Motor" Count="5" />
+                <Component Subtype="Computer" Count="5" />
+                <Component Subtype="SteelPlate" Count="120" />
+            </Components>
+            <CriticalComponent Subtype="Computer" Index="0" />
+        </Definition>
+ 	</CubeBlocks>
 </Definitions>
