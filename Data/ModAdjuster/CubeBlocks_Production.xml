@@ -42,5 +42,22 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
+		<!-- increase speed of O2 Generators -->
+        <Definition xsi:type="MyObjectBuilder_OxygenGeneratorDefinition">
+            <Id>
+                <TypeId>OxygenGenerator</TypeId>
+                <SubtypeId></SubtypeId>
+            </Id>
+            <IceConsumptionPerSecond>400</IceConsumptionPerSecond> <!-- vanilla = 25 -->
+            <OperationalPowerConsumption>8</OperationalPowerConsumption> <!-- vanilla = 0.5 -->
+        </Definition>
+        <Definition xsi:type="MyObjectBuilder_OxygenGeneratorDefinition">
+            <Id>
+                <TypeId>OxygenGenerator</TypeId>
+                <SubtypeId>OxygenGeneratorSmall</SubtypeId>
+            </Id>
+            <IceConsumptionPerSecond>40</IceConsumptionPerSecond> <!-- vanilla = 5 -->
+            <OperationalPowerConsumption>0.8</OperationalPowerConsumption> <!-- vanilla = 0.1 -->
+        </Definition>
 	</CubeBlocks>
 </Definitions>

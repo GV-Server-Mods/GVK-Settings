@@ -1,14 +1,18 @@
 BlockVariantGroups-AQDConveyorExpansion.xml
+Components.xml
 Components_Economy.xml
 CubeBlocks_Automation.xml
 CubeBlocks_Control.xml
 CubeBlocks_Energy.xml
 CubeBlocks_GeneralProductivityModule.xml
-CubeBlocks_NPCBeacons.xml
+CubeBlocks_Logistics.xml
 CubeBlocks_NPCRemotes.xml
 CubeBlocks_NPCThrusters-Ion.xml
 CubeBlocks_Production.xml
+CubeBlocks_Shelves.xml
 CubeBlocks_Thrusters.xml
 CubeBlocks_Tools.xml
 Extra Reinforced Conveyors.xml
+PhysicalItems.xml
+PhysicalItems_Economy.xml
 SessionComponents_GVDropContainers.xml

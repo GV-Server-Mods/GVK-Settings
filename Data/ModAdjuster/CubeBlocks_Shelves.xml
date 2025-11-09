@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<CubeBlocks>
+		<!-- Made shelves not use the cosmetic components because that is stupid -->
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>StorageShelf1</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Girder" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>StorageShelf2</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Girder" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>StorageShelf3</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Girder" Count="15"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

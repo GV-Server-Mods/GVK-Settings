@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- increased conveyor sorter inventory to prevent clogging -->
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+			<Id>
+				<TypeId>ConveyorSorter</TypeId>
+				<SubtypeId>LargeBlockConveyorSorter</SubtypeId>
+			</Id>
+			<InventorySize>
+				<X>2</X>
+				<Y>2</Y>
+				<Z>2</Z>
+			</InventorySize>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+			<Id>
+				<TypeId>ConveyorSorter</TypeId>
+				<SubtypeId>LargeBlockConveyorSorterIndustrial</SubtypeId>
+			</Id>
+			<InventorySize>
+				<X>2</X>
+				<Y>2</Y>
+				<Z>2</Z>
+			</InventorySize>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+			<Id>
+				<TypeId>ConveyorSorter</TypeId>
+				<SubtypeId>MediumBlockConveyorSorter</SubtypeId>
+			</Id>
+			<InventorySize>
+				<X>1.5874</X>
+				<Y>1.5874</Y>
+				<Z>1.5874</Z>
+			</InventorySize>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+			<Id>
+				<TypeId>ConveyorSorter</TypeId>
+				<SubtypeId>SmallBlockConveyorSorter</SubtypeId>
+			</Id>
+			<InventorySize>
+				<X>0.4</X>
+				<Y>0.4</Y>
+				<Z>0.4</Z>
+			</InventorySize>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

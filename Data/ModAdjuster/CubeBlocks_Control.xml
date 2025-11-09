@@ -38,5 +38,56 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
+		<!-- Adjust large industrial cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>LargeBlockCockpitIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="8"/>
+				<Component Subtype="Computer" Count="100"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="60"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust small industrial cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockCockpitIndustrial</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust small cab cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockCapCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
 	</CubeBlocks>
 </Definitions>

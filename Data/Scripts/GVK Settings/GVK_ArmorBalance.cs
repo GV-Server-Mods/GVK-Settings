@@ -21,6 +21,8 @@ namespace MikeDude.ArmorBalance
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
+        public const double hydroTankH2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
+
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
         private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
@@ -44,7 +46,7 @@ namespace MikeDude.ArmorBalance
                 var cockpitDef = blockDef as MyCockpitDefinition;
                 var remoteControlDef = blockDef as MyRemoteControlDefinition;
                 var timerBlockDef = blockDef as MyTimerBlockDefinition;
-                //var hydroTankDef = blockDef as MyGasTankDefinition;
+                var hydroTankDef = blockDef as MyGasTankDefinition;
                 var welderDef = blockDef as MyShipWelderDefinition;
                 // var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
@@ -59,7 +61,8 @@ namespace MikeDude.ArmorBalance
 				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
-				blockDef.UseModelIntersection = true; // attempt to make things able to place better in tight spaces
+				// attempt to make things able to place better in tight spaces
+				blockDef.UseModelIntersection = true; 
 
 				// Ensure all weapons have the 100% resistance buff
                 if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
@@ -70,6 +73,148 @@ namespace MikeDude.ArmorBalance
                 {
                     blockDef.PCU = 1;
                 }
+
+                //light armor resistance and deformation
+                if (blockDef.EdgeType == "Light" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
+                {
+                    if (blockDef.CubeSize == MyCubeSize.Large)
+                    {
+                        blockDef.GeneralDamageMultiplier = 1.0f;
+                        blockDef.DeformationRatio = 0.4f; //this also affects impact resistance
+                    }
+
+                    if (blockDef.CubeSize == MyCubeSize.Small)
+                    {
+                        blockDef.GeneralDamageMultiplier = 1.0f;
+                        blockDef.DeformationRatio = 0.4f;
+                    }
+                    //blockDef.PCU = lightArmorPCU;
+                }
+
+                //heavy armor resistance and deformation, and functional component order flip
+                if (blockDef.EdgeType == "Heavy")
+                {
+                    if (blockDef.CubeSize == MyCubeSize.Large)
+                    {
+                        blockDef.GeneralDamageMultiplier = 1.0f; //vanilla is all over the place
+                        blockDef.DeformationRatio = 0.2f;
+                    }
+
+                    if (blockDef.CubeSize == MyCubeSize.Small)
+                    {
+                        blockDef.GeneralDamageMultiplier = 1.0f;
+                        blockDef.DeformationRatio = 0.2f;
+                    }
+
+                    var lastCompIdx = blockDef.Components.Length - 1;
+                    if (blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count && blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
+                    {
+                        var temp = blockDef.Components[0];
+                        blockDef.Components[0] = blockDef.Components[lastCompIdx];
+                        blockDef.Components[lastCompIdx] = temp;
+                    }
+
+                    // If no AwwScrap uncomment SetRatios
+                    SetRatios(blockDef, blockDef.CriticalGroup);
+                    // If we're using awwscrap, comment out the SetRatios above and uncomment SortAndSplitArmor below
+                    //SortAndSplitArmor(blockDef);
+
+                    //blockDef.PCU = blastDoorPCU;
+                }
+
+                //rotors (includes hinges)
+                if (statorDef != null)
+                {
+                    statorDef.GeneralDamageMultiplier = 0.5f;
+                }
+
+                //adv rotors
+                if (advStatorDef != null)
+                {
+                    advStatorDef.GeneralDamageMultiplier = 0.5f;
+                }
+
+                //rotor and hinge top parts
+                if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
+                {
+                    blockDef.GeneralDamageMultiplier = 0.5f;
+                }
+
+				//Standardize H2 tank capacity to scale linearly with block volume
+                if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
+                {
+                    hydroTankDef.LeakPercent = 0.025f;
+                    hydroTankDef.Capacity = (float)Math.Ceiling(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
+                    hydroTankDef.GasExplosionMaxRadius = hydroTankDef.Size.Length() * (hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5f : 0.5f);
+                    hydroTankDef.GasExplosionDamageMultiplier = 0.00015f;
+                    if (string.IsNullOrEmpty(hydroTankDef.GasExplosionSound))
+                    {
+                        hydroTankDef.GasExplosionSound = "HydrogenExplosion";
+                    }
+                    hydroTankDef.GasExplosionNeededVolumeToReachMaxRadius = hydroTankDef.Capacity;
+                }
+
+				//adjusting output of all reactors
+                if (reactorDef != null)
+				{
+					if (reactorDef.CubeSize == MyCubeSize.Large)
+					{
+						if (reactorDef.Size.Volume() <= 1f)
+						{
+							reactorDef.MaxPowerOutput = 20f; // 2:1 power output density to batteries
+						}
+						else
+						{
+							reactorDef.MaxPowerOutput = 600f; // Bonus for large variant
+						}
+					}
+					else
+					{
+						if (reactorDef.Size.Volume() <= 1f)
+						{
+							reactorDef.MaxPowerOutput = 1.0f; // 4:1 power output density to batteries
+						}
+						else
+						{
+							reactorDef.MaxPowerOutput = 30f; // Bonus for large variant
+						}
+					}
+					//buffing output of NPC Proprietary reactors, and making them not require fuel
+					if (reactorDef.Id.SubtypeName.Contains("Proprietary"))
+					{
+						reactorDef.MaxPowerOutput *= 5f;
+						reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
+						//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
+					}
+                }
+
+				//buffing output of solar to compensate for banned solar tracking scripts
+                if (solarDef != null)
+                {
+                    solarDef.MaxPowerOutput *= 2f;
+                }
+
+				//remove LOS check for laser antenna
+                if (laserAntennaDef != null)
+                {
+                    laserAntennaDef.RequireLineOfSight = false;
+                }
+
+				//Adjust container components to be proportional to block volume
+                if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
+                {
+                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
+                }
+								
+				//Make all 5x5 XL blocks have light edge type, and no deformation, and increase weld time
+                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("XL_") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
+                {
+					blockDef.GeneralDamageMultiplier = 1.0f;
+					blockDef.UsesDeformation = false;
+					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
+					blockDef.EdgeType = "Heavy";
+					blockDef.IntegrityPointsPerSec = 2500;
+                }				
 
                 // Beam blocks and heat vents
                 if (blockDef.EdgeType == "Light" && (blockDef.Id.SubtypeName.Contains("BeamBlock") || blockDef.Id.SubtypeName.Contains("HeatVentBlock")))
@@ -339,6 +484,7 @@ namespace MikeDude.ArmorBalance
             }
         }
 
+		// Main method to do the above changes
         public override void LoadData()
         {
             DoWork();
