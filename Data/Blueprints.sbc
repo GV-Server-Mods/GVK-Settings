@@ -4,6 +4,88 @@
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>GVK_TurboEncabulator</SubtypeId>
+			</Id>
+			<DisplayName>Turbo Encabulator</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="GVK_TurboEncabulator"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>GVK_Unobtanium</SubtypeId>
+			</Id>
+			<DisplayName>Unobtainium</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Prerequisites>
+				<Item Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="Component" SubtypeId="GVK_Unobtanium"/>
+			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
+		<!-- adjusted kit components -->
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0021_Medkit</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Blueprint_Medkit</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\MedKit.dds</Icon>
+			<Prerequisites>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="Medkit"/>
+			</Results>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0022_Powerkit</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Blueprint_Powerkit</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\PowerKit.dds</Icon>
+			<Prerequisites>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="Powerkit"/>
+			</Results>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0023_RadiationKit</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_RadiationKit</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\AntiRadiationMedkit.dds</Icon>
+			<Prerequisites>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="0.05" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="RadiationKit"/>
+			</Results>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<!-- renamed components for Kharak lore -->
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
 				<SubtypeId>003_PrototechCoolingUnit</SubtypeId>
 			</Id>
 			<DisplayName>[Tech] Grav. Reflector</DisplayName>
@@ -165,7 +247,7 @@
 			<BaseProductionTimeInSeconds>1</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<!-- Scrap to CU -->
-		<!-- Scrap should be 1/3 because of the 3x ore-to-ingot multiplier -->
+		<!-- Scrap should be 1/3 because of the 3x ore-to-ingot world multiplier -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
@@ -313,6 +395,7 @@
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
+		<!-- added scrap deleter recipe -->
         <Blueprint>
             <Id>
                 <TypeId>BlueprintDefinition</TypeId>
@@ -326,6 +409,7 @@
             <Result Amount="0.0" TypeId="Ingot" SubtypeId="Iron" />
             <BaseProductionTimeInSeconds>0.001</BaseProductionTimeInSeconds>
         </Blueprint>
+		<!-- renamed Zone Chips for Kharak mod lore -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>

@@ -10,6 +10,10 @@
 			<Name>GVK</Name>
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
+				<string>Projector/MnMLarge</string>
+				<string>Projector/MnMSmall</string>
+				<string>Beacon/LargeCargoScanner</string>
+				<string>Beacon/SmallCargoScanner</string>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
                 <string>Beacon/SmallBlockBeacon_Scrap</string>
