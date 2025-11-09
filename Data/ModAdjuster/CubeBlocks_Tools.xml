@@ -84,6 +84,33 @@
 			<DeformationRatio>0.2</DeformationRatio>
 			<UsesDeformation>false</UsesDeformation>
 		</Definition>
+		<!-- Slightly increase drill size and increase impact resistance -->
+		<Definition xsi:type="MyObjectBuilder_ShipDrillDefinition">
+			<Id>
+				<TypeId>Drill</TypeId>
+				<SubtypeId>SmallBlockDrillReskin</SubtypeId>
+			</Id>
+			<SensorRadius>1.5</SensorRadius>
+			<SensorOffset>0.8</SensorOffset>
+			<CutOutRadius>1.5</CutOutRadius>
+			<CutOutOffset>0.6</CutOutOffset>
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
+		<!-- Slightly increase drill size and increase impact resistance -->
+		<Definition xsi:type="MyObjectBuilder_ShipDrillDefinition">
+			<Id>
+				<TypeId>Drill</TypeId>
+				<SubtypeId>LargeBlockDrillReskin</SubtypeId>
+			</Id>
+			<SensorRadius>2.1</SensorRadius>
+			<SensorOffset>2.8</SensorOffset>
+			<CutOutRadius>2.1</CutOutRadius>
+			<CutOutOffset>2.8</CutOutOffset>
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
+		<!-- Increase proto drill impact resistance -->
         <Definition xsi:type="MyObjectBuilder_ShipDrillDefinition">
             <Id>
                 <TypeId>Drill</TypeId>
@@ -114,6 +141,28 @@
 			<DeformationRatio>0.2</DeformationRatio>
 			<UsesDeformation>false</UsesDeformation>
 		</Definition>
+		<!-- double grinder size, increase offset, increase impact resistance -->
+		<Definition xsi:type="MyObjectBuilder_ShipGrinderDefinition">
+			<Id>
+				<TypeId>ShipGrinder</TypeId>
+				<SubtypeId>LargeShipGrinderReskin</SubtypeId>
+			</Id>
+			<SensorRadius>2.8</SensorRadius>
+			<SensorOffset>1.0</SensorOffset>
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
+		<!-- double grinder size, increase offset, increase impact resistance -->
+		<Definition xsi:type="MyObjectBuilder_ShipGrinderDefinition">
+			<Id>
+				<TypeId>ShipGrinder</TypeId>
+				<SubtypeId>SmallShipGrinderReskin</SubtypeId>
+			</Id>
+			<SensorRadius>2.6</SensorRadius>
+			<SensorOffset>1</SensorOffset>
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
 		<!-- added to increase range and prevent modded clients from changing this -->
 		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
 			<Id>
@@ -127,6 +176,22 @@
 			<Id>
 				<TypeId>OreDetector</TypeId>
 				<SubtypeId>SmallBlockOreDetector</SubtypeId>
+			</Id>
+			<MaximumRange>100</MaximumRange>
+		</Definition>
+		<!-- added to increase range and prevent modded clients from changing this -->
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>LargeOreDetectorReskin</SubtypeId>
+			</Id>
+			<MaximumRange>200</MaximumRange>
+		</Definition>
+		<!-- added to increase range and prevent modded clients from changing this -->
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>SmallOreDetectorReskin</SubtypeId>
 			</Id>
 			<MaximumRange>100</MaximumRange>
 		</Definition>
