@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- Other tools are adjusted in the GV Tweaks mod -->
 		<!-- Double radius, improve impact resistance -->
 		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition">
 			<Id>
@@ -16,6 +17,25 @@
 			<Id>
 				<TypeId>ShipWelder</TypeId>
 				<SubtypeId>SmallShipWelder</SubtypeId>
+			</Id>
+			<SensorRadius>0.1</SensorRadius> <!-- vanilla 1.3 -->
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition">
+			<Id>
+				<TypeId>ShipWelder</TypeId>
+				<SubtypeId>LargeShipWelderReskin</SubtypeId>
+			</Id>
+			<SensorRadius>4</SensorRadius>
+			<DeformationRatio>0.2</DeformationRatio>
+			<UsesDeformation>false</UsesDeformation>
+		</Definition>
+		<!-- disable small grid welder -->
+		<Definition xsi:type="MyObjectBuilder_ShipWelderDefinition" enabled="true">
+			<Id>
+				<TypeId>ShipWelder</TypeId>
+				<SubtypeId>SmallShipWelderReskin</SubtypeId>
 			</Id>
 			<SensorRadius>0.1</SensorRadius> <!-- vanilla 1.3 -->
 			<DeformationRatio>0.2</DeformationRatio>
