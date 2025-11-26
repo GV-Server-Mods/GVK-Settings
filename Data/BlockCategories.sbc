@@ -23,14 +23,6 @@
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-				<string>Beacon/SmallBlockBeaconReskin</string>
-				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin</string>
-				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
-				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
-				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
                 <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
 				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
@@ -65,14 +57,6 @@
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-				<string>Beacon/SmallBlockBeaconReskin</string>
-				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin</string>
-				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
-				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
-				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
                 <string>Beacon/LargeBlockBeacon_Scrap</string>
 			</ItemIds>
 		</Category>
@@ -130,12 +114,6 @@
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-				<string>Beacon/LargeBlockBeaconReskin</string>
-				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
-				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
-				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
                 <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
@@ -163,14 +141,6 @@
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-				<string>Beacon/SmallBlockBeaconReskin</string>
-				<string>Beacon/SmallBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin</string>
-				<string>Beacon/LargeBlockBeaconReskin_MediumCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_HeavyCore</string>
-				<string>Beacon/LargeBlockBeaconReskin_Fortress</string>
-				<string>Beacon/LargeBlockBeaconReskin_Pipeline</string>
-				<string>Beacon/LargeBlockBeaconReskin_ShieldCore</string>
                 <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
