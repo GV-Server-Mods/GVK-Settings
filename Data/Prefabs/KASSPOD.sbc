@@ -1631,26 +1631,65 @@
                     <Component xsi:type="MyObjectBuilder_Inventory">
                       <Items>
                         <MyObjectBuilder_InventoryItem>
-                          <Amount>10</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
-                            <SubtypeName>AutomaticRifleGun_Mag_20rd</SubtypeName>
-                            <ProjectilesCount>0</ProjectilesCount>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_Component">
+                            <SubtypeName>EngineerPlushie</SubtypeName>
                           </PhysicalContent>
                           <ItemId>0</ItemId>
                         </MyObjectBuilder_InventoryItem>
                         <MyObjectBuilder_InventoryItem>
                           <Amount>1</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
-                            <SubtypeName>AutomaticRifleItem</SubtypeName>
+                          <PhysicalContent xsi:type="MyObjectBuilder_OxygenContainerObject">
+                            <SubtypeName>OxygenBottle</SubtypeName>
+                            <GasLevel>1</GasLevel>
+                            <OxygenLevel>0</OxygenLevel>
+                          </PhysicalContent>
+                          <ItemId>1</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_GasContainerObject">
+                            <SubtypeName>HydrogenBottle</SubtypeName>
+                            <GasLevel>1</GasLevel>
                           </PhysicalContent>
                           <ItemId>2</ItemId>
                         </MyObjectBuilder_InventoryItem>
                         <MyObjectBuilder_InventoryItem>
-                          <Amount>2</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_Component">
-                            <SubtypeName>Canvas</SubtypeName>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_Datapad">
+                            <SubtypeName>Datapad</SubtypeName>
+                            <Name>Thank You For Purchasing KASSPOD</Name>
+                            <Data>Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) from the Northern COALITION.
+
+1. Your KASSPOD has been outfitted with the latest utilities, including wheels!
+2. Visit Kharak's tropical Oasis and sunny deserts, and drive circles around the locals
+3. Be sure to find a ready supply of ice to extend your life and adventures
+4. Join a faction, or make a new one since you have no friends
+5. Build a station, but use small grid production because you're poor
+6. Visit the Rusty's Garage Trade Station to buy some Small Caliber Tech and make guns
+7. You are (mostly) safe in Zone 0, but your production and weapons will be very limited
+8. Visit the high desert and meet friendly neighborhood GAALSIEN pirates
+9. Raid wrecks to find technologies, Zone 1 had the smallest, and Zone 3 has the largest
+10. Be sure to build up your SC bank account as insurance against being wiped out
+
+GPS:Rusty's Trade Station:61687.25:27096.55:38164.15:#FF32FF00:</Data>
                           </PhysicalContent>
-                          <ItemId>3</ItemId>
+                          <ItemId>5</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>1</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
+                            <SubtypeName>RapidFireAutomaticRifleItem</SubtypeName>
+                          </PhysicalContent>
+                          <ItemId>6</ItemId>
+                        </MyObjectBuilder_InventoryItem>
+                        <MyObjectBuilder_InventoryItem>
+                          <Amount>5</Amount>
+                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
+                            <SubtypeName>NATO_5p56x45mm</SubtypeName>
+                            <ProjectilesCount>0</ProjectilesCount>
+                          </PhysicalContent>
+                          <ItemId>7</ItemId>
                         </MyObjectBuilder_InventoryItem>
                       </Items>
                       <nextItemId>4</nextItemId>
@@ -2407,23 +2446,6 @@
                     <TypeId>MyInventoryBase</TypeId>
                     <Component xsi:type="MyObjectBuilder_Inventory">
                       <Items>
-                        <MyObjectBuilder_InventoryItem>
-                          <Amount>1</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_OxygenContainerObject">
-                            <SubtypeName>OxygenBottle</SubtypeName>
-                            <GasLevel>0</GasLevel>
-                            <OxygenLevel>0</OxygenLevel>
-                          </PhysicalContent>
-                          <ItemId>0</ItemId>
-                        </MyObjectBuilder_InventoryItem>
-                        <MyObjectBuilder_InventoryItem>
-                          <Amount>1</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_GasContainerObject">
-                            <SubtypeName>HydrogenBottle</SubtypeName>
-                            <GasLevel>0</GasLevel>
-                          </PhysicalContent>
-                          <ItemId>1</ItemId>
-                        </MyObjectBuilder_InventoryItem>
                       </Items>
                       <nextItemId>2</nextItemId>
                       <Volume>1</Volume>
@@ -3951,56 +3973,6 @@
                         </MyObjectBuilder_InventoryBase>
                         <MyObjectBuilder_InventoryBase xsi:type="MyObjectBuilder_Inventory">
                           <Items>
-                            <MyObjectBuilder_InventoryItem>
-                              <Amount>1</Amount>
-                              <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
-                                <SubtypeName>AngleGrinderItem</SubtypeName>
-                                <GunEntity xsi:type="MyObjectBuilder_AngleGrinder">
-                                  <SubtypeName>AngleGrinder</SubtypeName>
-                                  <EntityId>133749346013957876</EntityId>
-                                  <PersistentFlags>None</PersistentFlags>
-                                </GunEntity>
-                              </PhysicalContent>
-                              <ItemId>0</ItemId>
-                            </MyObjectBuilder_InventoryItem>
-                            <MyObjectBuilder_InventoryItem>
-                              <Amount>1</Amount>
-                              <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
-                                <SubtypeName>HandDrillItem</SubtypeName>
-                              </PhysicalContent>
-                              <ItemId>1</ItemId>
-                            </MyObjectBuilder_InventoryItem>
-                            <MyObjectBuilder_InventoryItem>
-                              <Amount>1</Amount>
-                              <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
-                                <SubtypeName>WelderItem</SubtypeName>
-                              </PhysicalContent>
-                              <ItemId>2</ItemId>
-                            </MyObjectBuilder_InventoryItem>
-                            <MyObjectBuilder_InventoryItem>
-                              <Amount>1</Amount>
-                              <PhysicalContent xsi:type="MyObjectBuilder_Datapad">
-                                <SubtypeName>Datapad</SubtypeName>
-                                <Name>Thank You For Purchasing KASSPOD</Name>
-                                <Data>!!! CONGRATULATIONS !!!
-
-Thank you for purchasing the Kharak Affordable Survivable Shelter Pod (KASSPOD) from the Northern COALITION.
-
-1. Your KASSPOD has been outfitted with the latest utilities, including wheels!
-2. Visit Kharak's tropical Oasis and sunny deserts, and drive circles around the locals
-3. Be sure to find a ready supply of ice to extend your life and adventures
-4. Join a faction, or make a new one since you have no friends
-5. Build a station, but use small grid production because you're poor
-6. Visit the Rusty's Garage Trade Station to buy some Small Caliber Tech and make guns
-7. You are (mostly) safe in Zone 0, but your production and weapons will be very limited
-8. Visit the high desert and meet friendly neighborhood GAALSIEN pirates
-9. Raid wrecks to find technologies, Zone 1 had the smallest, and Zone 3 has the largest
-10. Be sure to build up your SC bank account as insurance against being wiped out
-
-GPS:Rusty's Garage Trade Station:64281.14:61633.47:31326.69:#FF61FF</Data>
-                              </PhysicalContent>
-                              <ItemId>5</ItemId>
-                            </MyObjectBuilder_InventoryItem>
                           </Items>
                           <nextItemId>6</nextItemId>
                           <Volume>1</Volume>
@@ -5031,21 +5003,6 @@ GPS:Rusty's Garage Trade Station:64281.14:61633.47:31326.69:#FF61FF</Data>
                     <TypeId>MyInventoryBase</TypeId>
                     <Component xsi:type="MyObjectBuilder_Inventory">
                       <Items>
-                        <MyObjectBuilder_InventoryItem>
-                          <Amount>1</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_PhysicalGunObject">
-                            <SubtypeName>AutomaticRifleItem</SubtypeName>
-                          </PhysicalContent>
-                          <ItemId>0</ItemId>
-                        </MyObjectBuilder_InventoryItem>
-                        <MyObjectBuilder_InventoryItem>
-                          <Amount>5</Amount>
-                          <PhysicalContent xsi:type="MyObjectBuilder_AmmoMagazine">
-                            <SubtypeName>AutomaticRifleGun_Mag_20rd</SubtypeName>
-                            <ProjectilesCount>0</ProjectilesCount>
-                          </PhysicalContent>
-                          <ItemId>3</ItemId>
-                        </MyObjectBuilder_InventoryItem>
                       </Items>
                       <nextItemId>4</nextItemId>
                       <Volume>1</Volume>
