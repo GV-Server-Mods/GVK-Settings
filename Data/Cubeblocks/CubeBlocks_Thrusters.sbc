@@ -2,8 +2,8 @@
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Don't double up changes to the same setting with Mod Adjuster and custom rebalancer scripts -->
-		<!-- Frontier update hides all BlockPairNames in block restrictions mod, so they are declared here
-			 to change the BlockPairName of the small variants so they remain visible -->
+		<!-- Frontier update hides all BlockPairNames in block restrictions mod, so small Flatmos are modified
+			 here to change the BlockPairName of the small variants so they remain visible -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
