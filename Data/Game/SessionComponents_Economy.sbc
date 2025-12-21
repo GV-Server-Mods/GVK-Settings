@@ -40,7 +40,7 @@
 
         <PirateId>
             <TypeId>MyObjectBuilder_FactionDefinition</TypeId>
-            <SubtypeId>SpacePirates</SubtypeId>
+            <SubtypeId>GVK_Gaalsien_Faction</SubtypeId>
         </PirateId>
         <DatapadDefinition>
             <TypeId>MyObjectBuilder_Datapad</TypeId>
