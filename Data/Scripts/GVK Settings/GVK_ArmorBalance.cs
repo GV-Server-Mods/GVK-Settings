@@ -179,7 +179,7 @@ namespace MikeDude.ArmorBalance
 							reactorDef.MaxPowerOutput = 30f; // Bonus for large variant
 						}
 					}
-					//buffing output of NPC Proprietary reactors, and making them not require fuel
+					//buffing output of NPC Proprietary reactors, and making them not require fuel so Proprietary U isn't needed
 					if (reactorDef.Id.SubtypeName.Contains("Proprietary"))
 					{
 						reactorDef.MaxPowerOutput *= 5f;
