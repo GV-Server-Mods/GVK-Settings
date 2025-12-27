@@ -161,11 +161,11 @@ namespace MikeDude.ArmorBalance
 					{
 						if (reactorDef.Size.Volume() <= 1f)
 						{
-							reactorDef.MaxPowerOutput = 20f; // 2:1 power output density to batteries
+							reactorDef.MaxPowerOutput = 40f; // 4:1 power output density to batteries
 						}
 						else
 						{
-							reactorDef.MaxPowerOutput = 600f; // Bonus for large variant
+							reactorDef.MaxPowerOutput = 1210f; // 25x more than small variant. Efficiency is increased via SBC.
 						}
 					}
 					else
@@ -176,7 +176,7 @@ namespace MikeDude.ArmorBalance
 						}
 						else
 						{
-							reactorDef.MaxPowerOutput = 30f; // Bonus for large variant
+							reactorDef.MaxPowerOutput = 30f; // 30x more than small variant
 						}
 					}
 					//buffing output of NPC Proprietary reactors, and making them not require fuel so Proprietary U isn't needed
