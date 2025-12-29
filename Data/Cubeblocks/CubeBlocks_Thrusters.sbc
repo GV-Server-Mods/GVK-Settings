@@ -341,6 +341,7 @@
 			<TargetingGroups>
 				<string>Propulsion</string>
 			</TargetingGroups>
+			<IsAirTight>false</IsAirTight>
 			<Public>false</Public>
 			<GuiVisible>false</GuiVisible>
 		</Definition>
@@ -454,6 +455,7 @@
 			<TargetingGroups>
 				<string>Propulsion</string>
 			</TargetingGroups>
+			<IsAirTight>false</IsAirTight>
 			<Public>false</Public>
 			<GuiVisible>false</GuiVisible>
 		</Definition>
