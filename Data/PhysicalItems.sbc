@@ -57,7 +57,6 @@
             <Volume>1.5</Volume>
             <Model>Models\Components\ScrapPrototechComponent.mwm</Model>
             <PhysicalMaterial>Metal</PhysicalMaterial>
-			<MinimalPricePerUnit>25000</MinimalPricePerUnit>
             <MinimumOrderAmount>10</MinimumOrderAmount>
             <MaximumOrderAmount>50</MaximumOrderAmount>
             <CanPlayerOrder>true</CanPlayerOrder>
