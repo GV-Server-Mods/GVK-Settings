@@ -144,5 +144,7 @@
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/ConveyorElbowDuct" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor4WayAltDuct" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor5WayDuct" />		
+		<!-- Tacos -->
+		<Entry Class="FoodProcessorRations" BlueprintSubtypeId="Position0171_MealPack_StreetTacos" />
 	</BlueprintClassEntries>
 </Definitions>

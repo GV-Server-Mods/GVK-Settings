@@ -423,6 +423,25 @@
 			<Result Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
 		</Blueprint>
+        <Blueprint>
+            <Id>
+                <TypeId>BlueprintDefinition</TypeId>
+                <SubtypeId>Position0171_MealPack_StreetTacos</SubtypeId>
+            </Id>
+            <DisplayName>Meal Pack (Street Tacos)
+Heal Value: {0}
+Fill Value: {1}</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\MealPack_Meat.dds</Icon>
+            <Prerequisites>
+                <Item Amount="2" TypeId="PhysicalObject" SubtypeId="Grain" />
+				<Item Amount="2" TypeId="ConsumableItem" SubtypeId="Vegetables" />
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="MammalMeatCooked" />
+            </Prerequisites>
+            <Results>
+                <Item Amount="1" TypeId="ConsumableItem" SubtypeId="MealPack_StreetTacos" />
+            </Results>
+            <BaseProductionTimeInSeconds>8</BaseProductionTimeInSeconds>
+        </Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
 			<Id>
