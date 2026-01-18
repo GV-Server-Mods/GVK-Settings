@@ -28,7 +28,7 @@
 			<DisplayName>New Start-KASSPOD</DisplayName>
 			<Icon>Textures\Icons\KharakRespawnRover.png</Icon>
 			<CooldownSeconds>150</CooldownSeconds>
-			<Prefab>KASSPOD</Prefab>
+			<Prefab>KASSPOD 2</Prefab>
 			<MinimalAirDensity>0.5</MinimalAirDensity>
 			<PlanetDeployAltitude>100</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
