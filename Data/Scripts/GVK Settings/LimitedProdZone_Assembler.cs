@@ -60,14 +60,9 @@ namespace LimitedProdZone
 						if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                         {
                             string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicAssembler = false;
-                            isBasicAssembler = strSubBlockType.Contains("Basic");
-
-                            if (isBasicAssembler == false)
-                            {
-								assembler.Enabled = false;
-								return;
-                            }
+							if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) continue;
+							assembler.Enabled = false;
+							return;
                         }
                     }
                 }
@@ -80,21 +75,17 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!assembler.Enabled)
+            if (assembler.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {
 					if (beacon == null || !beacon.Enabled) continue;
 					if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                     {
-                        string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicAssembler = false;
-                        isBasicAssembler = strSubBlockType.Contains("Basic");
-
-                        if (isBasicAssembler == false)
-                        {
-							assembler.Enabled = false;
-                        }
+						string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
+						if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) continue;
+						assembler.Enabled = false;
+						return;
                     }
                 }               
             }
