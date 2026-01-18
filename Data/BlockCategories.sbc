@@ -14,50 +14,20 @@
 				<string>Projector/MnMSmall</string>
 				<string>Beacon/LargeCargoScanner</string>
 				<string>Beacon/SmallCargoScanner</string>
-				<string>Beacon/SmallBlockBeacon</string>
-				<string>Beacon/SmallBlockBeacon_MediumCore</string>
                 <string>Beacon/SmallBlockBeacon_Scrap</string>
+				<string>Beacon/SmallBlockBeacon</string>
+                <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
 				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-                <string>Beacon/LargeBlockBeacon_Scrap</string>
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
 				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
 				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
-			</ItemIds>
-		</Category>
-		<!-- Ship Cores -->
-		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
-			<Id>
-				<TypeId>GuiBlockCategoryDefinition</TypeId>
-				<SubtypeId/>
-			</Id>
-			<DisplayName>   Ship Cores</DisplayName>
-			<Name>GVK_Beacons</Name>
-			<StrictSearch>true</StrictSearch>
-			<!--<IsBlockCategory>true</IsBlockCategory>-->
-			<!--<SearchCategory>false</SearchCategory>-->
-			<SearchBlocks>true</SearchBlocks>
-			<IsShipCategory>false</IsShipCategory>
-			<IsBlockCategory>true</IsBlockCategory>
-			<IsToolCategory>false</IsToolCategory>
-			<ItemIds>
-				<string>Beacon/SmallBlockBeacon</string>
-				<string>Beacon/SmallBlockBeacon_MediumCore</string>
-                <string>Beacon/SmallBlockBeacon_Scrap</string>
-				<string>Beacon/LargeBlockBeacon</string>
-				<string>Beacon/LargeBlockBeacon_MediumCore</string>
-				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
-				<string>Beacon/LargeBlockBeacon_Fortress</string>
-				<string>Beacon/LargeBlockBeacon_Pipeline</string>
-				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
-                <string>Beacon/LargeBlockBeacon_Scrap</string>
 			</ItemIds>
 		</Category>
 		<!-- Shared Cargos -->
@@ -107,7 +77,6 @@
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
 				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
@@ -131,7 +100,6 @@
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
 				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
                 <string>Beacon/SmallBlockBeacon_Scrap</string>
