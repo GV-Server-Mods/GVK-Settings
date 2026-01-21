@@ -25,19 +25,19 @@
 				<TypeId>RespawnShipDefinition</TypeId>
 				<SubtypeId>RespawnRover</SubtypeId>
 			</Id>
-			<DisplayName>New Start-KASSPOD</DisplayName>
-			<Icon>Textures\Icons\KharakRespawnRover.png</Icon>
+			<DisplayName>New Start-Baserunner</DisplayName>
+			<Icon>Textures\Icons\BaserunnerStart.png</Icon>
 			<CooldownSeconds>150</CooldownSeconds>
-			<Prefab>KASSPOD 2</Prefab>
+			<Prefab>Baserunner</Prefab>
 			<MinimalAirDensity>0.5</MinimalAirDensity>
-			<PlanetDeployAltitude>100</PlanetDeployAltitude>
+			<PlanetDeployAltitude>20</PlanetDeployAltitude>
 			<UseForPlanetsWithAtmosphere>true</UseForPlanetsWithAtmosphere>
 			<InitialLinearVelocity x="0" y="0" z="0"/>
 			<InitialAngularVelocity x="0" y="0" z="0"/>
 			<HelpTextLocalizationId>RespawnScreeenHelpTextSpawn</HelpTextLocalizationId>
-			<SpawnPosition x="62495.55" y="28019.04" z="37195.71"/>
+			<SpawnPosition x="61792.53" y="28502.57" z="38837.18"/>
 			<SpawnPositionDispersionMin>0</SpawnPositionDispersionMin>
-			<SpawnPositionDispersionMax>18000</SpawnPositionDispersionMax>
+			<SpawnPositionDispersionMax>2000</SpawnPositionDispersionMax>
 		</Ship>
 		<Ship Enabled="true">
 			<Id>
