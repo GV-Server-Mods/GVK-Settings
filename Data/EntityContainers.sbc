@@ -37,5 +37,42 @@
 				<Component BuilderType="MyObjectBuilder_Inventory"/>
 			</DefaultComponents>
 		</Container>
+		<!-- Add radiation source to MES Proprietary Reactors -->
+		<Container>
+			<Id>
+				<TypeId>Reactor</TypeId>
+				<SubtypeId>ProprietarySmallBlockSmallGenerator</SubtypeId>
+			</Id>
+			<DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_RadiationSourceEntityComponent" SubtypeId="SmallRadiationSource" ForceCreate="true"/>
+			</DefaultComponents>
+		</Container>
+		<Container>
+			<Id>
+				<TypeId>Reactor</TypeId>
+				<SubtypeId>ProprietarySmallBlockLargeGenerator</SubtypeId>
+			</Id>
+			<DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_RadiationSourceEntityComponent" SubtypeId="MediumRadiationSource" ForceCreate="true"/>
+			</DefaultComponents>
+		</Container>
+		<Container>
+			<Id>
+				<TypeId>Reactor</TypeId>
+				<SubtypeId>ProprietaryLargeBlockSmallGenerator</SubtypeId>
+			</Id>
+			<DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_RadiationSourceEntityComponent" SubtypeId="MediumRadiationSource" ForceCreate="true"/>
+			</DefaultComponents>
+		</Container>
+		<Container>
+			<Id>
+				<TypeId>Reactor</TypeId>
+				<SubtypeId>ProprietaryLargeBlockLargeGenerator</SubtypeId>
+			</Id>
+			<DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_RadiationSourceEntityComponent" SubtypeId="LargeRadiationSource" ForceCreate="true"/>
+			</DefaultComponents>
+		</Container>
 	</EntityContainers>
 </Definitions>

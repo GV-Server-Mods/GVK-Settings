@@ -56,10 +56,10 @@
             </Id>
             <DisplayName>Metal Scrap Destroyer</DisplayName>
             <Description>Metal Scrap Destroyer</Description>
-            <Icon>Textures\GUI\Icons\ingot\ingot_class.dds</Icon>
-            <HighlightIcon>Textures\GUI\Icons\ingot\ingot_class.dds</HighlightIcon>
-            <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
-            <OutputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</OutputConstraintIcon>
+            <Icon>Textures\GUI\Icons\buttons\disassembly.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\disassembly.dds</HighlightIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\ScrapMetalComponent.dds</InputConstraintIcon>
+            <OutputConstraintIcon>Textures\GUI\Icons\ScrapMetalComponent.dds</OutputConstraintIcon>
         </Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>

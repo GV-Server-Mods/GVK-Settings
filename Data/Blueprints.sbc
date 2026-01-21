@@ -423,25 +423,25 @@
 			<Result Amount="1" TypeId="Component" SubtypeId="ZoneChip"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
 		</Blueprint>
-        <Blueprint>
-            <Id>
-                <TypeId>BlueprintDefinition</TypeId>
-                <SubtypeId>Position0171_MealPack_StreetTacos</SubtypeId>
-            </Id>
-            <DisplayName>Meal Pack (Street Tacos)
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0171_MealPack_StreetTacos</SubtypeId>
+			</Id>
+			<DisplayName>Meal Pack (Street Tacos)
 Heal Value: {0}
 Fill Value: {1}</DisplayName>
-            <Icon>Textures\GUI\Icons\Items\MealPack_Meat.dds</Icon>
-            <Prerequisites>
-                <Item Amount="2" TypeId="PhysicalObject" SubtypeId="Grain" />
-				<Item Amount="2" TypeId="ConsumableItem" SubtypeId="Vegetables" />
-				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="MammalMeatCooked" />
-            </Prerequisites>
-            <Results>
-                <Item Amount="1" TypeId="ConsumableItem" SubtypeId="MealPack_StreetTacos" />
-            </Results>
-            <BaseProductionTimeInSeconds>8</BaseProductionTimeInSeconds>
-        </Blueprint>
+			<Icon>Textures\GUI\Icons\Items\MealPack_Meat.dds</Icon>
+			<Prerequisites>
+				<Item Amount="2" TypeId="PhysicalObject" SubtypeId="Grain"/>
+				<Item Amount="2" TypeId="ConsumableItem" SubtypeId="Vegetables"/>
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="MammalMeatCooked"/>
+			</Prerequisites>
+			<Results>
+				<Item Amount="1" TypeId="ConsumableItem" SubtypeId="MealPack_StreetTacos"/>
+			</Results>
+			<BaseProductionTimeInSeconds>8</BaseProductionTimeInSeconds>
+		</Blueprint>
 		<!-- Added because other modders are too lazy to fix their own mod errors -->
 		<Blueprint>
 			<Id>
@@ -468,6 +468,223 @@ Fill Value: {1}</DisplayName>
 			</Prerequisites>
 			<Result Amount="1" TypeId="Component" SubtypeId="ADMINKIT"/>
 			<BaseProductionTimeInSeconds>99999</BaseProductionTimeInSeconds>
+		</Blueprint>
+		<!-- added to undo Keen making tools require tools to make tools -->
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0010_AngleGrinder</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_AngleGrinder</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponGrinder.dds</Icon>
+			<Prerequisites>
+				<Item Amount="6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="AngleGrinderItem"/>
+			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0020_AngleGrinder2</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_AngleGrinder2</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponGrinder_1.dds</Icon>
+			<Prerequisites>
+				<Item Amount="6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Cobalt"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="AngleGrinder2Item"/>
+			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0030_AngleGrinder3</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_AngleGrinder3</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponGrinder_2.dds</Icon>
+			<Prerequisites>
+				<Item Amount="6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="AngleGrinder3Item"/>
+			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0040_AngleGrinder4</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_AngleGrinder4</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponGrinder_3.dds</Icon>
+			<Prerequisites>
+				<Item Amount="6" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="2" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Platinum"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="AngleGrinder4Item"/>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0050_HandDrill</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_HandDrill</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponDrill.dds</Icon>
+			<Prerequisites>
+				<Item Amount="8" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="HandDrillItem"/>
+			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0060_HandDrill2</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_HandDrill2</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponDrill_1.dds</Icon>
+			<Prerequisites>
+				<Item Amount="8" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="HandDrill2Item"/>
+			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0070_HandDrill3</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_HandDrill3</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponDrill_2.dds</Icon>
+			<Prerequisites>
+				<Item Amount="8" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="HandDrill3Item"/>
+			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0080_HandDrill4</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_HandDrill4</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponDrill_3.dds</Icon>
+			<Prerequisites>
+				<Item Amount="8" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Platinum"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="HandDrill4Item"/>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0090_Welder</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_Welder</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponWelder.dds</Icon>
+			<Prerequisites>
+				<Item Amount="5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="WelderItem"/>
+			<BaseProductionTimeInSeconds>2</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0100_Welder2</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_Welder2</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponWelder_1.dds</Icon>
+			<Prerequisites>
+				<Item Amount="5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="Welder2Item"/>
+			<BaseProductionTimeInSeconds>5</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+			<IsPrimary>true</IsPrimary>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0110_Welder3</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_Welder3</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponWelder_2.dds</Icon>
+			<Prerequisites>
+				<Item Amount="5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="Welder3Item"/>
+			<BaseProductionTimeInSeconds>9</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
+		</Blueprint>
+		<Blueprint>
+			<Id>
+				<TypeId>BlueprintDefinition</TypeId>
+				<SubtypeId>Position0120_Welder4</SubtypeId>
+			</Id>
+			<DisplayName>DisplayName_Item_Welder4</DisplayName>
+			<Icon>Textures\GUI\Icons\WeaponWelder_3.dds</Icon>
+			<Prerequisites>
+				<Item Amount="5" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Platinum"/>
+			</Prerequisites>
+			<Result Amount="1" TypeId="PhysicalGunObject" SubtypeId="Welder4Item"/>
+			<BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+			<IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
 		</Blueprint>
 	</Blueprints>
 </Definitions>

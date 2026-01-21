@@ -59,7 +59,7 @@
                 <Entry Type="ConsumableItem" />
             </InputConstraint>
         </EntityComponent>
-        <!-- improve combat utility of vanilla AI blocks -->
+        <!-- Improve combat utility of vanilla AI blocks -->
 		<EntityComponent xsi:type="MyObjectBuilder_OffensiveCombatCircleOrbitDefinition">
             <Id>
                 <TypeId>OffensiveCombatCircleOrbit</TypeId>

@@ -62,6 +62,7 @@
 				<Class>EliteTools</Class>
 				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteAmmo</Class>
+				<Class>SKitScrapDestroyer</Class>
 				<Class>BuildPlanner</Class>
 			</BlueprintClasses>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
@@ -143,6 +144,7 @@
 				<Class>EliteTools</Class>
 				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteAmmo</Class>
+				<Class>SKitScrapDestroyer</Class>
 				<Class>BuildPlanner</Class>
 			</BlueprintClasses>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
@@ -215,6 +217,7 @@
 				<Class>GVKBasicEquipment</Class>
 				<Class>Tools</Class>
 				<Class>GVKBasicAmmo</Class>
+				<Class>SKitScrapDestroyer</Class>
 			</BlueprintClasses>
 			<AssemblySpeed>0.25</AssemblySpeed>
 			<DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
@@ -303,6 +306,7 @@
 				<Class>EliteTools</Class>
 				<Class>GVKEliteHandheldWeapons</Class>
 				<Class>GVKEliteAmmo</Class>
+				<Class>SKitScrapDestroyer</Class>
 				<Class>BuildPlanner</Class>
 			</BlueprintClasses>
 			<MirroringY>Z</MirroringY>
