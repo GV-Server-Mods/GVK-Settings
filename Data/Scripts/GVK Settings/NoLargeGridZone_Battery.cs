@@ -76,7 +76,7 @@ namespace NoLargeGridZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!battery.Enabled)
+            if (battery.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

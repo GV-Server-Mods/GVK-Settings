@@ -89,7 +89,7 @@ namespace KOTHNoSafezone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!projectorblock.Enabled)
+            if (projectorblock.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {
