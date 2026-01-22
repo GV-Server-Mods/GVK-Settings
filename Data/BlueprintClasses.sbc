@@ -58,8 +58,7 @@
             <Description>Metal Scrap Destroyer</Description>
             <Icon>Textures\GUI\Icons\buttons\disassembly.dds</Icon>
             <HighlightIcon>Textures\GUI\Icons\buttons\disassembly.dds</HighlightIcon>
-            <InputConstraintIcon>Textures\GUI\Icons\ScrapMetalComponent.dds</InputConstraintIcon>
-            <OutputConstraintIcon>Textures\GUI\Icons\ScrapMetalComponent.dds</OutputConstraintIcon>
+            <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
         </Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>
