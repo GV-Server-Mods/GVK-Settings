@@ -878,7 +878,7 @@
 			</Id>
 			<DisplayName>Advanced O2/H2 Generator</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\OxygenGenerator5.dds</Icon>
-			<Description>The Advanced O2/H2 Generator has 200% ice efficiency, but can only placed on a Fortress grid.</Description>
+			<Description>The Advanced O2/H2 Generator has 200% efficiency and irrigates farms, but can only placed on a Fortress grid.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="3" y="6" z="3"/>
@@ -967,11 +967,19 @@
 					<IceToGasRatio>30</IceToGasRatio>
 					<!-- 20 -->
 				</GasInfo>
+                <GasInfo>
+                    <Id>
+                        <TypeId>GasProperties</TypeId>
+                        <SubtypeId>Water</SubtypeId>
+                    </Id>
+                    <IceToGasRatio>2</IceToGasRatio>
+                </GasInfo>
 			</ProducedGases>
 			<BlueprintClasses>
 				<Class>Ice</Class>
 				<Class>OxygenBottles</Class>
 				<Class>HydrogenBottles</Class>
+                <Class>Water</Class>
 			</BlueprintClasses>
 			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
 			<DamagedSound>ParticleWeapExpl</DamagedSound>

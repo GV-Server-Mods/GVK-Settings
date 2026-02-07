@@ -16,3 +16,4 @@ Extra Reinforced Conveyors.xml
 PhysicalItems.xml
 PhysicalItems_Economy.xml
 SessionComponents_GVDropContainers.xml
+VoxelMaterials_Ice_03.xml
