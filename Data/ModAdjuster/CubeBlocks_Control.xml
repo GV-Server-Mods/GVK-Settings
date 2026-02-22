@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
+		<!-- Adjust top level armor and add tech to proto gyros -->
 		<Definition xsi:type="MyObjectBuilder_GyroDefinition">
 			<Id>
 				<TypeId>Gyro</TypeId>
 				<SubtypeId>LargeBlockPrototechGyro</SubtypeId>
 			</Id>
 			<DisplayName>Advanced Gyroscope</DisplayName>
-			<Description>Description_Prototech_Gyroscope</Description>
 			<Components>
-                <Component Subtype="SteelPlate" Count="500" />
+                <Component Subtype="SteelPlate" Count="100" />
 				<Component Subtype="PrototechCoolingUnit" Count="4"/>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="16" />
                 <Component Subtype="MetalGrid" Count="75" />
                 <Component Subtype="Motor" Count="20" />
                 <Component Subtype="Computer" Count="10" />
-                <Component Subtype="SteelPlate" Count="150" />
+                <Component Subtype="SteelPlate" Count="450" />
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
@@ -26,18 +26,48 @@
 				<SubtypeId>SmallBlockPrototechGyro</SubtypeId>
 			</Id>
 			<DisplayName>Advanced Gyroscope</DisplayName>
-			<Description>Description_Prototech_Gyroscope</Description>
 			<Components>
-                <Component Subtype="SteelPlate" Count="120" />
+                <Component Subtype="SteelPlate" Count="20" />
 				<Component Subtype="PrototechCoolingUnit" Count="1"/>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="6" />
                 <Component Subtype="Motor" Count="10" />
                 <Component Subtype="Computer" Count="5" />
-                <Component Subtype="SteelPlate" Count="40" />
+                <Component Subtype="SteelPlate" Count="140" />
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
+        <Definition xsi:type="MyObjectBuilder_GyroDefinition">
+            <Id>
+                <TypeId>Gyro</TypeId>
+                <SubtypeId>LargeBlockGyro</SubtypeId>
+            </Id>
+            <Components>
+                <Component Subtype="SteelPlate" Count="100" />
+                <Component Subtype="Construction" Count="40" />
+                <Component Subtype="LargeTube" Count="4" />
+                <Component Subtype="MetalGrid" Count="50" />
+                <Component Subtype="Motor" Count="4" />
+                <Component Subtype="Computer" Count="5" />
+                <Component Subtype="SteelPlate" Count="500" />
+            </Components>
+            <CriticalComponent Subtype="Computer" Index="0" />
+        </Definition>
+        <Definition xsi:type="MyObjectBuilder_GyroDefinition">
+            <Id>
+                <TypeId>Gyro</TypeId>
+                <SubtypeId>SmallBlockGyro</SubtypeId>
+            </Id>
+            <Components>
+                <Component Subtype="SteelPlate" Count="5" />
+                <Component Subtype="Construction" Count="5" />
+                <Component Subtype="LargeTube" Count="1" />
+                <Component Subtype="Motor" Count="2" />
+                <Component Subtype="Computer" Count="3" />
+                <Component Subtype="SteelPlate" Count="20" />
+            </Components>
+            <CriticalComponent Subtype="Computer" Index="0" />
+        </Definition>
 		<!-- Adjust large industrial cockpit health so its not P2W -->
 		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
 			<Id>
