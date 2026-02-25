@@ -57,3 +57,6 @@ Description: Provides free unlimited H2 to players inside their built safezone.
   - Start, Loop, and End files should all be the same format .wav.
 - Add 1 second of silence to start of all distant sounds for extra effect, except for Loopable
 - PreventSynchronization is the min time in ticks before the sound can be triggered again
+
+# Super helpful SE modding guide
+https://spaceengineers.wiki.gg/wiki/Modding
