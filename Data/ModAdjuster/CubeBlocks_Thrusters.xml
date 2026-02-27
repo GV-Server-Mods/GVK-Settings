@@ -582,7 +582,8 @@
 		</Definition>
 		<!-- Flat Atmo Thrusters -->
 		<!-- Frontier update hides all BlockPairNames in block restrictions mod, so this method no
-			 longer works while the large block variant is hidden -->
+			 longer works while the large block variant is hidden. BlockPairNames for small varients
+			 need to be edited if they need to remain visible while large variants are hidden. -->
 		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
 			<Id>
 				<TypeId>Thrust</TypeId>
