@@ -125,19 +125,19 @@ namespace MikeDude.ArmorBalance
                 //rotors (includes hinges)
                 if (statorDef != null)
                 {
-                    statorDef.GeneralDamageMultiplier = 0.5f;
+                    statorDef.GeneralDamageMultiplier = 0.25f;
                 }
 
                 //adv rotors
                 if (advStatorDef != null)
                 {
-                    advStatorDef.GeneralDamageMultiplier = 0.5f;
+                    advStatorDef.GeneralDamageMultiplier = 0.25f;
                 }
 
                 //rotor and hinge top parts
                 if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
                 {
-                    blockDef.GeneralDamageMultiplier = 0.5f;
+                    blockDef.GeneralDamageMultiplier = 0.25f;
                 }
 
 				//Standardize H2 tank capacity to scale linearly with block volume
@@ -233,7 +233,7 @@ namespace MikeDude.ArmorBalance
                 //suspension resistance buff
                 if (suspensionDef != null)
                 {
-                    suspensionDef.GeneralDamageMultiplier = 0.75f;
+                    suspensionDef.GeneralDamageMultiplier = 0.5f;
                     suspensionDef.IntegrityPointsPerSec = 500;
                 }
 
