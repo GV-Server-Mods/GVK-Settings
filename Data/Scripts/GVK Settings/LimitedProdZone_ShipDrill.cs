@@ -79,7 +79,7 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!staticDrill.Enabled)
+            if (staticDrill.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

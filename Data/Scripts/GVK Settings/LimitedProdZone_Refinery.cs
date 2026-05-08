@@ -79,7 +79,7 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!refinery.Enabled)
+            if (refinery.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

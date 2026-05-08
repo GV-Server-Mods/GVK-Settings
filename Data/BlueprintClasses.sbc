@@ -56,10 +56,9 @@
             </Id>
             <DisplayName>Metal Scrap Destroyer</DisplayName>
             <Description>Metal Scrap Destroyer</Description>
-            <Icon>Textures\GUI\Icons\ingot\ingot_class.dds</Icon>
-            <HighlightIcon>Textures\GUI\Icons\ingot\ingot_class.dds</HighlightIcon>
+            <Icon>Textures\GUI\Icons\buttons\disassembly.dds</Icon>
+            <HighlightIcon>Textures\GUI\Icons\buttons\disassembly.dds</HighlightIcon>
             <InputConstraintIcon>Textures\GUI\Icons\filter_ore.dds</InputConstraintIcon>
-            <OutputConstraintIcon>Textures\GUI\Icons\filter_ingot.dds</OutputConstraintIcon>
         </Class>
 	</BlueprintClasses>
 	<BlueprintClassEntries>
@@ -76,11 +75,12 @@
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0021_Medkit"/>
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0022_Powerkit"/>
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0023_RadiationKit"/>
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0030_Canvas" />
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position00075_FireworksBoxRainbow" />
-		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Medkit"/>
-		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Powerkit"/>
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="001_PrototechMachinery" />
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="002_PrototechPropulsionUnit" />
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="003_PrototechCoolingUnit" />
@@ -143,5 +143,7 @@
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/ConveyorElbowDuct" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor4WayAltDuct" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Conveyor/Conveyor5WayDuct" />		
+		<!-- Tacos -->
+		<Entry Class="FoodProcessorRations" BlueprintSubtypeId="Position0171_MealPack_StreetTacos" />
 	</BlueprintClassEntries>
 </Definitions>

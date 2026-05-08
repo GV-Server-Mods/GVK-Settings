@@ -91,7 +91,7 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!weapon.Enabled)
+            if (weapon.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

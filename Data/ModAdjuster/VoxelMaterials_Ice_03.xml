@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<VoxelMaterials>
+		<VoxelMaterial xsi:type="MyObjectBuilder_Dx11VoxelMaterialDefinition"> <!-- Ice_03 -->
+			<Id>
+				<TypeId>VoxelMaterialDefinition</TypeId>
+				<SubtypeId>Ice_03</SubtypeId>
+			</Id>
+			<MinedOreRatio>7.5</MinedOreRatio> <!-- vanilla 5.0 -->
+		</VoxelMaterial>
+	</VoxelMaterials>
+</Definitions>

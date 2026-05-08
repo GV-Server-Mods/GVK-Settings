@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<PhysicalItems>
+		<!-- buff kits -->
+		<PhysicalItem xsi:type="MyObjectBuilder_ConsumableItemDefinition">
+			<Id>
+				<TypeId>ConsumableItem</TypeId>
+				<SubtypeId>Medkit</SubtypeId>
+			</Id>
+			<Stats>
+				<Stat Name="Health" Value="0.20" Time="10"/>
+			</Stats>
+			<MinimalPricePerUnit>1</MinimalPricePerUnit>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</PhysicalItem>
+		<PhysicalItem xsi:type="MyObjectBuilder_ConsumableItemDefinition">
+			<Id>
+				<TypeId>ConsumableItem</TypeId>
+				<SubtypeId>Powerkit</SubtypeId>
+			</Id>
+			<Stats>
+				<Stat Name="BatteryCharge" Value="0.20" Time="10"/>
+			</Stats>
+			<MinimalPricePerUnit>1</MinimalPricePerUnit>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</PhysicalItem>
+	</PhysicalItems>
+</Definitions>

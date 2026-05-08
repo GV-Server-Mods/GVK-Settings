@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <PhysicalItems>
+        <!-- changed name to note it can't hack -->
+		<PhysicalItem>
+            <Id>
+                <TypeId>PhysicalGunObject</TypeId>
+                <SubtypeId>AngleGrinderItem</SubtypeId>
+            </Id>
+			<IconSymbol>Basic</IconSymbol>
+        </PhysicalItem>
+    </PhysicalItems>
+</Definitions>

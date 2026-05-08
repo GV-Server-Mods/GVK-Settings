@@ -77,7 +77,7 @@ namespace NoLargeGridZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!solar.Enabled)
+            if (solar.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

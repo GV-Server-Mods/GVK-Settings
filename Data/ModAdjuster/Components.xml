@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Components>
+		<!-- set this essentially invulnerable because they are easily abused -->
+        <Component>
+            <Id>
+                <TypeId>Component</TypeId>
+                <SubtypeId>Explosives</SubtypeId>
+            </Id>
+            <Health>99999999</Health>
+        </Component>
+	</Components>
+</Definitions>

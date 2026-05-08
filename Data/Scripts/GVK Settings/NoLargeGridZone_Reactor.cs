@@ -79,7 +79,7 @@ namespace NoLargeGridZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!reactor.Enabled)
+            if (reactor.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

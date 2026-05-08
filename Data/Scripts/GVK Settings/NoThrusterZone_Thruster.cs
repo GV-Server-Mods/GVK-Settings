@@ -83,7 +83,7 @@ namespace KOTHNoThrusters
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!thrusterblock.Enabled)
+            if (thrusterblock.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

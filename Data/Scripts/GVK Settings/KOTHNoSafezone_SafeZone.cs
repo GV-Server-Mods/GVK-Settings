@@ -82,7 +82,7 @@ namespace KOTHNoSafezone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (!safezoneblock.Enabled)
+            if (safezoneblock.Enabled)
             {
                 foreach (var beacon in beaconList)
                 {

@@ -148,5 +148,66 @@
 			<Health>50</Health>
 			<CanPlayerOrder>true</CanPlayerOrder>
 		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_TurboEncabulator</SubtypeId>
+			</Id>
+			<DisplayName>Turbo Encabulator</DisplayName>
+			<Icon>Textures\GUI\Icons\Components\AlkalineCell.dds</Icon>
+			<Size>
+				<X>0.5</X>
+				<Y>0.3</Y>
+				<Z>0.3</Z>
+			</Size>
+			<Mass>50</Mass>
+			<Volume>40</Volume>
+			<Model>Models\Components\AlkalineCell.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>true</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_SpecialPackage1</SubtypeId>
+			</Id>
+			<DisplayName>Special Package</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ContractPackage.dds</Icon>
+			<Description>Exchange at any Trade Station for SC.</Description>
+            <Size>
+                <X>0.5</X>
+                <Y>0.5</Y>
+                <Z>0.5</Z>
+            </Size>
+            <Mass>100</Mass>
+            <Volume>125</Volume>
+            <Model>Models\Components\ContractPackage.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Unobtanium</SubtypeId>
+			</Id>
+			<DisplayName>Unobtanium</DisplayName>
+            <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+            <Size>
+                <X>0.1</X>
+                <Y>0.1</Y>
+                <Z>0.2</Z>
+            </Size>
+            <Mass>0.250</Mass>
+            <Volume>0.2</Volume>
+            <Model>Models\Items\ZoneChip_Item.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>20</MaxIntegrity>
+			<Health>14</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
 	</Components>
 </Definitions>
