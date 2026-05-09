@@ -519,7 +519,7 @@
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
-					[AllowedForNPC]false[/AllowedForNPC]
+					[AllowedForNPC]true[/AllowedForNPC]
 					[AllowedForPlayer]false[/AllowedForPlayer]
 					[AllowedForUnowned]false[/AllowedForUnowned]
 					[AllowedForNPCStaticOnly]false[/AllowedForNPCStaticOnly]
