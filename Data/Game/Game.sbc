@@ -48,6 +48,7 @@
             <Component Type="MyObjectbuilder_SessionComponentEconomyDefinition" Subtype="Default">MySessionComponentEconomy</Component>
             <Component Type="MyObjectbuilder_SessionComponentAntiCheatDefinition" Subtype="Default">MySessionComponentAntiCheat</Component>
             <Component Type="MyObjectBuilder_SessionComponentContractSystemDefinition" Subtype="Default">MySessionComponentContractSystem</Component>
+            <Component Type="MyObjectBuilder_ContractRiskDefinition" Subtype="Default">MyContractRiskSessionComponent</Component>
             <Component>MySessionComponentReplay</Component>
             <Component>MySessionComponentIngameHelp</Component>
             <Component Type="MyObjectbuilder_AutopilotPathfindingComponentDefinition" Subtype="Default">MyAutopilotPathfindingComponent</Component>
@@ -75,6 +76,7 @@
         <SessionComponents Combine="Union">
             <Component>MyTerminalControls</Component>
             <Component>MySpaceFaunaComponent</Component>
+            <Component>MyStationBotComponent</Component>
             <Component>MySpaceBuildComponent</Component>
             <Component>MySpacePlanetTrackComponent</Component>
             <Component>MySpaceRespawnComponent</Component>
@@ -124,8 +126,11 @@
             <Component>MySessionComponentPanels</Component>
             <Component>MySessionComponentMatch</Component>
             <Component Type="MyObjectbuilder_GlobalEncountersGeneratorDefinition" Subtype="Default">MyGlobalEncountersGenerator</Component>
+            <Component>MySessionComponentGridTriggeredContracts</Component>
+            <Component Type="MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition" Subtype="Default">MySessionComponentItemTriggeredContracts</Component>
             <Component>MyPlanetaryEncountersGenerator</Component>
             <Component Type="MyObjectbuilder_HazardExposureComponentDefinition" Subtype="Default">MyHazardExposureComponent</Component>
+            <Component>MyGridsStorageSessionComponent</Component>
             <Component>MyEntityComponentUpdater</Component>
         </SessionComponents>
 		<ExplosionAmmoVolumeMin>1</ExplosionAmmoVolumeMin>
