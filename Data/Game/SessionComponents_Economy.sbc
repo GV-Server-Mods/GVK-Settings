@@ -7,18 +7,22 @@
             <SubtypeId>Default</SubtypeId>
         </Id>
 
-		<!-- Added fees here because they are not in the Mod API whitelist -->
+		<!-- Added fees here because they are not in the Mod API whitelist
+			
+			TODO: This may be different now with Econ2, need to verify.
+			
+		-->
 		<ListingFee>0</ListingFee>
 		<TransactionFee>0</TransactionFee>
 
-        <PerFactionInitialCurrency>100000000</PerFactionInitialCurrency>
+        <PerFactionInitialCurrency>1000000000</PerFactionInitialCurrency>
         <DeepSpaceStationStoreBonus>0.05</DeepSpaceStationStoreBonus>
         <DeepSpaceStationContractBonus>1.1</DeepSpaceStationContractBonus>
 
         <RepMult_Pos_Owner>1</RepMult_Pos_Owner>
         <RepMult_Pos_Friend>0.25</RepMult_Pos_Friend>
         <RepMult_Pos_Neutral>0</RepMult_Pos_Neutral>
-        <RepMult_Pos_Enemy>-1.25</RepMult_Pos_Enemy>
+        <RepMult_Pos_Enemy>0</RepMult_Pos_Enemy>
 
         <RepMult_Neg_Owner>1</RepMult_Neg_Owner>
         <RepMult_Neg_Friend>0.5</RepMult_Neg_Friend>
@@ -33,10 +37,15 @@
         <ReputationFriendlyMid>1000</ReputationFriendlyMid>
         <ReputationFriendlyMax>1500</ReputationFriendlyMax>
 
+        <ReputationDecayPerHour>50</ReputationDecayPerHour>
+
         <ReputationLevelValue>1000</ReputationLevelValue>
         <ReputationPlayerDefault>0</ReputationPlayerDefault>
+        <StoreCreationLimitPerPlayer>50</StoreCreationLimitPerPlayer> <!-- Maximuim number of items that can be listed per store blocks. Accepted value range is between 1-50 -->
 
         <Station_Distance_MinimalFromOtherStation>10000</Station_Distance_MinimalFromOtherStation>
+
+        <FactionBalanceRecoveryModifier>0.4</FactionBalanceRecoveryModifier> <!-- Simulates a background economy and gradually normalizes the wealth of each faction with each economy update. Formula: New Currency = Current Currency + (PerFactionInitialCurrency - Current Currency) * Recovery modifier -->
 
         <PirateId>
             <TypeId>MyObjectBuilder_FactionDefinition</TypeId>
@@ -53,5 +62,49 @@
             <SubtypeId>Default</SubtypeId>
         </Id>
         <ContractPerPlayerLimit>3</ContractPerPlayerLimit>
+    <Definition xsi:type="MyObjectBuilder_ContractRiskDefinition">
+        <Id>
+            <TypeId>MyObjectBuilder_ContractRiskDefinition</TypeId>
+            <SubtypeId>Default</SubtypeId>
+        </Id>
+        <CheckIntervalFrames>100</CheckIntervalFrames>
+        <SpawnDistanceFromPlayer>500</SpawnDistanceFromPlayer>
+        <DespawnDistance>16500</DespawnDistance>
+    </Definition>
+    <Definition xsi:type="MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition">
+        <Id>
+            <TypeId>MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition</TypeId>
+            <SubtypeId>Default</SubtypeId>
+        </Id>
+        <SpawnChance>0.35</SpawnChance>
+        <AllowEnemyFactions>true</AllowEnemyFactions>
+        <ContractEntries>
+            <ContractEntryData>
+                <Weight>1</Weight>
+                <ContractSubtypeId>Deliver_EncryptedDataStorage</ContractSubtypeId>
+                <ItemSubtypeId>EncryptedDataStorage</ItemSubtypeId>
+            </ContractEntryData>
+            <ContractEntryData>
+                <Weight>1</Weight>
+                <ContractSubtypeId>Deliver_InterceptedTransmissions</ContractSubtypeId>
+                <ItemSubtypeId>InterceptedTransmissions</ItemSubtypeId>
+            </ContractEntryData>
+            <ContractEntryData>
+                <Weight>1</Weight>
+                <ContractSubtypeId>Deliver_ResearchMaterials</ContractSubtypeId>
+                <ItemSubtypeId>ResearchMaterials</ItemSubtypeId>
+            </ContractEntryData>
+            <ContractEntryData>
+                <Weight>1</Weight>
+                <ContractSubtypeId>Deliver_SmuggledGoods</ContractSubtypeId>
+                <ItemSubtypeId>SmuggledGoods</ItemSubtypeId>
+            </ContractEntryData>
+            <ContractEntryData>
+                <Weight>1</Weight>
+                <ContractSubtypeId>Deliver_TechnicalBlueprints</ContractSubtypeId>
+                <ItemSubtypeId>TechnicalBlueprints</ItemSubtypeId>
+            </ContractEntryData>
+        </ContractEntries>
+    </Definition>
     </Definition>
 </Definitions>
