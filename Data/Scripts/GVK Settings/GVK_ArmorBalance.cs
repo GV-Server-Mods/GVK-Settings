@@ -203,11 +203,19 @@ namespace MikeDude.ArmorBalance
 				//Adjust container components to be proportional to block volume
                 if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
                 {
-                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, cargoDef.Size.Volume() > 1 ? 120 : 40);
+                    if (cargoDef.Size.Volume() >= 54)
+					{
+						ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  240);
+					}
+					else if (cargoDef.Size.Volume() >= 27)
+					{
+						ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  120);
+					}
+					else ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  40);
                 }
 								
-				//Make all 5x5 XL blocks have light edge type, and no deformation, and increase weld time
-                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("XL_") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
+				//Make all 5x5 XL and Econ2 Structural blocks have light edge type, and no deformation, and increase weld time
+                if (blockDef.CubeSize == MyCubeSize.Large && (blockDef.Id.SubtypeName.Contains("XL_") || blockDef.Id.SubtypeName.Contains("LargeBlockStructural_")) && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
                 {
 					blockDef.GeneralDamageMultiplier = 1.0f;
 					blockDef.UsesDeformation = false;
