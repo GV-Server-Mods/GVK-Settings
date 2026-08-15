@@ -14,14 +14,175 @@ using VRage.Utils;
 using VRageMath;
 using System.Security;
 
-
-// Code is based on Gauge's Balanced Deformation code, but heavily modified for more control. 
+// Code is based on Gauge's Balanced Deformation code, but heavily modified for more control.
 namespace MikeDude.ArmorBalance
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
     {
-        public const double hydroTankH2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
+        // ==================== CONFIGURATION ====================
+        // Centralized configuration for all armor and block modifiers.
+        // Modify these values to rebalance the server or accommodate game updates.
+        public static class Config
+        {
+            // Armor Properties
+            public static class Armor
+            {
+                public const float LightLargeDamageMultiplier = 1.0f;
+                public const float LightLargeDeformationRatio = 0.4f;
+                public const float LightSmallDamageMultiplier = 1.0f;
+                public const float LightSmallDeformationRatio = 0.4f;
+
+                public const float HeavyLargeDamageMultiplier = 1.0f;
+                public const float HeavyLargeDeformationRatio = 0.2f;
+                public const float HeavySmallDamageMultiplier = 1.0f;
+                public const float HeavySmallDeformationRatio = 0.2f;
+            }
+
+            // Weapons
+            public static class Weapons
+            {
+                public const float TurretDamageMultiplier = 0.5f;
+                public const float WeaponDamageMultiplier = 0.5f;
+            }
+
+            // Rotors & Hinges
+            public static class Rotors
+            {
+                public const float MotorStatorDamageMultiplier = 0.25f;
+                public const float MotorAdvancedStatorDamageMultiplier = 0.25f;
+                public const float RotorHeadDamageMultiplier = 0.25f;
+            }
+
+            // Hydrogen Tanks
+            public static class HydrogenTanks
+            {
+                public const float LeakPercent = 0.025f;
+                public const float GasExplosionDamageMultiplier = 0.00015f;
+                public const string GasExplosionSound = "HydrogenExplosion";
+                public const double H2Density = 15000000 / (2.5 * 2.5 * 2.5 * 27); // LG Large hydro tank capacity divided by its volume in meters
+            }
+
+            // Reactors
+            public static class Reactors
+            {
+                public const float LargeSingleBlockPowerOutput = 40f;
+                public const float LargeMultiBlockPowerOutput = 1210f;
+                public const float SmallSingleBlockPowerOutput = 1.0f;
+                public const float SmallMultiBlockPowerOutput = 30f;
+                public const float ProprietarySpeedMultiplier = 5f;
+            }
+
+            // Solar Panels
+            public static class Solar
+            {
+                public const float PowerOutputMultiplier = 2f;
+            }
+
+            // Containers
+            public static class Containers
+            {
+                public const int LargeContainerCompCount = 240; // 54+ volume
+                public const int MediumContainerCompCount = 120; // 27-54 volume
+                public const int SmallContainerCompCount = 40; // < 27 volume
+            }
+
+            // Structural Blocks (XL and Econ2)
+            public static class Structure
+            {
+                public const float XLLargeDamageMultiplier = 1.0f;
+                public const bool XLUsesDeformation = false;
+                public const float XLDeformationRatio = 0.45f;
+                public const string XLEdgeType = "Heavy";
+                public const int XLIntegrityPointsPerSec = 2500;
+            }
+
+            // Beam Blocks & Heat Vents
+            public static class BeamAndVent
+            {
+                public const float LargeDamageMultiplier = 1.0f;
+                public const float SmallDamageMultiplier = 1.0f;
+            }
+
+            // Suspension
+            public static class Suspension
+            {
+                public const float DamageMultiplier = 0.5f;
+                public const int IntegrityPointsPerSec = 500;
+            }
+
+            // Wheels
+            public static class Wheels
+            {
+                public const float DamageMultiplier = 0.75f;
+                public const int IntegrityPointsPerSec = 500;
+            }
+
+            // Beacons
+            public static class Beacons
+            {
+                public const int MaxBroadcastRadius = 100000;
+                public const int BlockBeaconPCU = 1;
+                public const float DisposableNpcDamageMultiplier = 0.1f;
+            }
+
+            // Thrusters
+            public static class Thrusters
+            {
+                public const float BaseDamageMultiplier = 0.5f;
+
+                // Hydrogen Thrusters
+                public const float HydrogenMaxPlanetaryInfluence = 0.25f;
+                public const float HydrogenMinPlanetaryInfluence = 0.0f;
+                public const float HydrogenEffectivenessAtMaxInfluence = 1.0f;
+                public const float HydrogenEffectivenessAtMinInfluence = 0.0f;
+                public const float HydrogenConsumptionFactorPerG = 0.0f;
+                public const float HydrogenSlowdownFactor = 1.0f;
+
+                // Flat Atmospheric Thrusters
+                public const float FlatAtmosphericMaxPlanetaryInfluence = 0.75f;
+                public const float FlatAtmosphericMinPlanetaryInfluence = 0.25f;
+                public const float FlatAtmosphericEffectivenessAtMaxInfluence = 1.0f;
+                public const float FlatAtmosphericEffectivenessAtMinInfluence = 0.0f;
+                public const float FlatAtmosphericConsumptionFactorPerG = 0.0f;
+                public const float FlatAtmosphericSlowdownFactor = 1.0f;
+
+                // Hover Engines
+                public const float HoverMaxPowerMultiplier = 3f;
+                public const float HoverMinPowerMultiplier = 10f;
+                public const string HoverThrusterType = "Ion";
+                public const float HoverDamageMultiplier = 1.0f;
+
+                // Ion Effect
+                public const string IonDestroyEffectSuffix = "_Blue";
+                public const string IonDamageEffect = "Damage_WeapExpl_Damaged_Blue";
+            }
+
+            // Gyros
+            public static class Gyros
+            {
+                public const float DamageMultiplier = 2.0f;
+            }
+
+            // Ship Control Blocks (Cockpits, Remote Controls, Timer Blocks, AI Blocks)
+            public static class ShipControl
+            {
+                public const float CockpitDamageMultiplier = 0.5f;
+                public const float RemoteControlDamageMultiplier = 0.5f;
+                public const float TimerBlockDamageMultiplier = 0.5f;
+                public const float AIBlockDamageMultiplier = 0.5f;
+                public const float ProgrammableBlockDamageMultiplier = 0.5f;
+                public const float TurretControllerDamageMultiplier = 0.5f;
+            }
+
+            // Laser Antenna
+            public static class LaserAntenna
+            {
+                public const bool RequireLineOfSight = false;
+            }
+        }
+
+        public const double hydroTankH2Density = Config.HydrogenTanks.H2Density;
 
         private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
@@ -31,475 +192,515 @@ namespace MikeDude.ArmorBalance
         {
             foreach (var blockDef in MyDefinitionManager.Static.GetDefinitionsOfType<MyCubeBlockDefinition>())
             {
-                var turretDef = blockDef as MyLargeTurretBaseDefinition;
-                var weaponDef = blockDef as MyWeaponBlockDefinition;
-                var sorterDef = blockDef as MyConveyorSorterDefinition;
-                var drillDef = blockDef as MyShipDrillDefinition;
-                var pistonBaseDef = blockDef as MyPistonBaseDefinition;
-                var beaconDef = blockDef as MyBeaconDefinition;
-                var suspensionDef = blockDef as MyMotorSuspensionDefinition;
-                var statorDef = blockDef as MyMotorStatorDefinition; //Motor stator is the base
-                var advStatorDef = blockDef as MyMotorAdvancedStatorDefinition; //Motor stator is the base
-                var thrustDef = blockDef as MyThrustDefinition;
-                var gyroDef = blockDef as MyGyroDefinition;
-                var upgradeModuleDef = blockDef as MyUpgradeModuleDefinition;
-                var cockpitDef = blockDef as MyCockpitDefinition;
-                var remoteControlDef = blockDef as MyRemoteControlDefinition;
-                var timerBlockDef = blockDef as MyTimerBlockDefinition;
-                var hydroTankDef = blockDef as MyGasTankDefinition;
-                var welderDef = blockDef as MyShipWelderDefinition;
-                // var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
-                var batteryDef = blockDef as MyBatteryBlockDefinition;
-                var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
-                var cargoDef = blockDef as MyCargoContainerDefinition;
-				var reactorDef = blockDef as MyReactorDefinition;
-				var solarDef = blockDef as MySolarPanelDefinition;
-				var defensiveCombatDef = blockDef as MyDefensiveCombatBlockDefinition;
-				var offensiveCombatDef = blockDef as MyOffensiveCombatBlockDefinition;
-				var pathRecorderDef = blockDef as MyPathRecorderBlockDefinition;
-				var basicMissionDef = blockDef as MyBasicMissionBlockDefinition;
-				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
-				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
+                // Apply general settings to all blocks
+                blockDef.UseModelIntersection = true; // Attempt to make things placeable in tight spaces
+                blockDef.PCU = 1; // Default PCU
 
-				// attempt to make things able to place better in tight spaces
-				blockDef.UseModelIntersection = true; 
+                // Process each block type
+                ProcessWeaponBlocks(blockDef);
+                ProcessArmorBlocks(blockDef);
+                ProcessRotorBlocks(blockDef);
+                ProcessHydrogenTanks(blockDef);
+                ProcessReactors(blockDef);
+                ProcessSolarPanels(blockDef);
+                ProcessLaserAntennas(blockDef);
+                ProcessContainers(blockDef);
+                ProcessStructuralBlocks(blockDef);
+                ProcessBeamAndVentBlocks(blockDef);
+                ProcessSuspension(blockDef);
+                ProcessWheels(blockDef);
+                ProcessBeacons(blockDef);
+                ProcessThrusters(blockDef);
+                ProcessGyros(blockDef);
+                ProcessShipControlBlocks(blockDef);
+            }
+        }
 
-				// Ensure all weapons have the 100% resistance buff
-                if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
+        // ==================== BLOCK TYPE HANDLERS ====================
+
+        /// <summary>
+        /// Process weapon blocks including turrets and sorters.
+        /// Weapons are given 100% resistance buff (damage multiplier = 0.5f).
+        /// </summary>
+        private void ProcessWeaponBlocks(MyCubeBlockDefinition blockDef)
+        {
+            var turretDef = blockDef as MyLargeTurretBaseDefinition;
+            var weaponDef = blockDef as MyWeaponBlockDefinition;
+            var sorterDef = blockDef as MyConveyorSorterDefinition;
+
+            if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
+            {
+                blockDef.GeneralDamageMultiplier = Config.Weapons.TurretDamageMultiplier;
+            }
+        }
+
+        /// <summary>
+        /// Process armor blocks (light and heavy).
+        /// Applies damage multipliers and deformation ratios per armor type and size.
+        /// </summary>
+        private void ProcessArmorBlocks(MyCubeBlockDefinition blockDef)
+        {
+            // Light armor
+            if (blockDef.EdgeType == "Light" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
+            {
+                if (blockDef.CubeSize == MyCubeSize.Large)
                 {
-                    blockDef.GeneralDamageMultiplier = 0.5f;
+                    blockDef.GeneralDamageMultiplier = Config.Armor.LightLargeDamageMultiplier;
+                    blockDef.DeformationRatio = Config.Armor.LightLargeDeformationRatio;
+                }
+                else if (blockDef.CubeSize == MyCubeSize.Small)
+                {
+                    blockDef.GeneralDamageMultiplier = Config.Armor.LightSmallDamageMultiplier;
+                    blockDef.DeformationRatio = Config.Armor.LightSmallDeformationRatio;
+                }
+            }
+
+            // Heavy armor
+            if (blockDef.EdgeType == "Heavy")
+            {
+                if (blockDef.CubeSize == MyCubeSize.Large)
+                {
+                    blockDef.GeneralDamageMultiplier = Config.Armor.HeavyLargeDamageMultiplier;
+                    blockDef.DeformationRatio = Config.Armor.HeavyLargeDeformationRatio;
+                }
+                else if (blockDef.CubeSize == MyCubeSize.Small)
+                {
+                    blockDef.GeneralDamageMultiplier = Config.Armor.HeavySmallDamageMultiplier;
+                    blockDef.DeformationRatio = Config.Armor.HeavySmallDeformationRatio;
+                }
+
+                // Flip component order (functional component at the end)
+                var lastCompIdx = blockDef.Components.Length - 1;
+                if (blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count &&
+                    blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
+                {
+                    var temp = blockDef.Components[0];
+                    blockDef.Components[0] = blockDef.Components[lastCompIdx];
+                    blockDef.Components[lastCompIdx] = temp;
+                }
+
+                // If no AwwScrap uncomment SetRatios
+                SetRatios(blockDef, blockDef.CriticalGroup);
+                // If we're using awwscrap, comment out the SetRatios above and uncomment SortAndSplitArmor below
+                //SortAndSplitArmor(blockDef);
+            }
+        }
+
+        /// <summary>
+        /// Process rotor and hinge blocks.
+        /// Apply damage resistance multiplier to motors and rotors.
+        /// </summary>
+        private void ProcessRotorBlocks(MyCubeBlockDefinition blockDef)
+        {
+            var statorDef = blockDef as MyMotorStatorDefinition;
+            var advStatorDef = blockDef as MyMotorAdvancedStatorDefinition;
+
+            if (statorDef != null)
+            {
+                statorDef.GeneralDamageMultiplier = Config.Rotors.MotorStatorDamageMultiplier;
+            }
+
+            if (advStatorDef != null)
+            {
+                advStatorDef.GeneralDamageMultiplier = Config.Rotors.MotorAdvancedStatorDamageMultiplier;
+            }
+
+            if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
+            {
+                blockDef.GeneralDamageMultiplier = Config.Rotors.RotorHeadDamageMultiplier;
+            }
+        }
+
+        /// <summary>
+        /// Process hydrogen tank blocks.
+        /// Standardize H2 tank capacity to scale linearly with block volume.
+        /// </summary>
+        private void ProcessHydrogenTanks(MyCubeBlockDefinition blockDef)
+        {
+            var hydroTankDef = blockDef as MyGasTankDefinition;
+
+            if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
+            {
+                hydroTankDef.LeakPercent = Config.HydrogenTanks.LeakPercent;
+                hydroTankDef.Capacity = (float)Math.Ceiling(
+                    hydroTankDef.Size.Volume() *
+                    Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) *
+                    hydroTankH2Density
+                );
+                hydroTankDef.GasExplosionMaxRadius = hydroTankDef.Size.Length() *
+                    (hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5f : 0.5f);
+                hydroTankDef.GasExplosionDamageMultiplier = Config.HydrogenTanks.GasExplosionDamageMultiplier;
+
+                if (string.IsNullOrEmpty(hydroTankDef.GasExplosionSound))
+                {
+                    hydroTankDef.GasExplosionSound = Config.HydrogenTanks.GasExplosionSound;
+                }
+
+                hydroTankDef.GasExplosionNeededVolumeToReachMaxRadius = hydroTankDef.Capacity;
+            }
+        }
+
+        /// <summary>
+        /// Process reactor blocks.
+        /// Adjust power output based on size and make NPC reactors more powerful.
+        /// </summary>
+        private void ProcessReactors(MyCubeBlockDefinition blockDef)
+        {
+            var reactorDef = blockDef as MyReactorDefinition;
+
+            if (reactorDef != null)
+            {
+                if (reactorDef.CubeSize == MyCubeSize.Large)
+                {
+                    if (reactorDef.Size.Volume() <= 1f)
+                    {
+                        reactorDef.MaxPowerOutput = Config.Reactors.LargeSingleBlockPowerOutput;
+                    }
+                    else
+                    {
+                        reactorDef.MaxPowerOutput = Config.Reactors.LargeMultiBlockPowerOutput;
+                    }
                 }
                 else
                 {
-                    blockDef.PCU = 1;
-                }
-
-                //light armor resistance and deformation
-                if (blockDef.EdgeType == "Light" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
-                {
-                    if (blockDef.CubeSize == MyCubeSize.Large)
+                    if (reactorDef.Size.Volume() <= 1f)
                     {
-                        blockDef.GeneralDamageMultiplier = 1.0f;
-                        blockDef.DeformationRatio = 0.4f; //this also affects impact resistance
+                        reactorDef.MaxPowerOutput = Config.Reactors.SmallSingleBlockPowerOutput;
                     }
-
-                    if (blockDef.CubeSize == MyCubeSize.Small)
+                    else
                     {
-                        blockDef.GeneralDamageMultiplier = 1.0f;
-                        blockDef.DeformationRatio = 0.4f;
-                    }
-                    //blockDef.PCU = lightArmorPCU;
-                }
-
-                //heavy armor resistance and deformation, and functional component order flip
-                if (blockDef.EdgeType == "Heavy")
-                {
-                    if (blockDef.CubeSize == MyCubeSize.Large)
-                    {
-                        blockDef.GeneralDamageMultiplier = 1.0f; //vanilla is all over the place
-                        blockDef.DeformationRatio = 0.2f;
-                    }
-
-                    if (blockDef.CubeSize == MyCubeSize.Small)
-                    {
-                        blockDef.GeneralDamageMultiplier = 1.0f;
-                        blockDef.DeformationRatio = 0.2f;
-                    }
-
-                    var lastCompIdx = blockDef.Components.Length - 1;
-                    if (blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count && blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
-                    {
-                        var temp = blockDef.Components[0];
-                        blockDef.Components[0] = blockDef.Components[lastCompIdx];
-                        blockDef.Components[lastCompIdx] = temp;
-                    }
-
-                    // If no AwwScrap uncomment SetRatios
-                    SetRatios(blockDef, blockDef.CriticalGroup);
-                    // If we're using awwscrap, comment out the SetRatios above and uncomment SortAndSplitArmor below
-                    //SortAndSplitArmor(blockDef);
-
-                    //blockDef.PCU = blastDoorPCU;
-                }
-
-                //rotors (includes hinges)
-                if (statorDef != null)
-                {
-                    statorDef.GeneralDamageMultiplier = 0.25f;
-                }
-
-                //adv rotors
-                if (advStatorDef != null)
-                {
-                    advStatorDef.GeneralDamageMultiplier = 0.25f;
-                }
-
-                //rotor and hinge top parts
-                if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
-                {
-                    blockDef.GeneralDamageMultiplier = 0.25f;
-                }
-
-				//Standardize H2 tank capacity to scale linearly with block volume
-                if (hydroTankDef != null && hydroTankDef.StoredGasId.SubtypeName == "Hydrogen")
-                {
-                    hydroTankDef.LeakPercent = 0.025f;
-                    hydroTankDef.Capacity = (float)Math.Ceiling(hydroTankDef.Size.Volume() * Math.Pow(hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5 : 0.5, 3) * hydroTankH2Density);
-                    hydroTankDef.GasExplosionMaxRadius = hydroTankDef.Size.Length() * (hydroTankDef.CubeSize == MyCubeSize.Large ? 2.5f : 0.5f);
-                    hydroTankDef.GasExplosionDamageMultiplier = 0.00015f;
-                    if (string.IsNullOrEmpty(hydroTankDef.GasExplosionSound))
-                    {
-                        hydroTankDef.GasExplosionSound = "HydrogenExplosion";
-                    }
-                    hydroTankDef.GasExplosionNeededVolumeToReachMaxRadius = hydroTankDef.Capacity;
-                }
-
-				//adjusting output of all reactors
-                if (reactorDef != null)
-				{
-					if (reactorDef.CubeSize == MyCubeSize.Large)
-					{
-						if (reactorDef.Size.Volume() <= 1f)
-						{
-							reactorDef.MaxPowerOutput = 40f; // 4:1 power output density to batteries
-						}
-						else
-						{
-							reactorDef.MaxPowerOutput = 1210f; // 25x more than small variant. Efficiency is increased via SBC.
-						}
-					}
-					else
-					{
-						if (reactorDef.Size.Volume() <= 1f)
-						{
-							reactorDef.MaxPowerOutput = 1.0f; // 4:1 power output density to batteries
-						}
-						else
-						{
-							reactorDef.MaxPowerOutput = 30f; // 30x more than small variant
-						}
-					}
-					//buffing output of NPC Proprietary reactors, and making them not require fuel so Proprietary U isn't needed
-					if (reactorDef.Id.SubtypeName.Contains("Proprietary"))
-					{
-						reactorDef.MaxPowerOutput *= 5f;
-						reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
-						//reactorDef.FuelInfos[0].Ratio = 100f; //this is readonly and doesnt work, same for H2 engines
-					}
-                }
-
-				//buffing output of solar to compensate for banned solar tracking scripts
-                if (solarDef != null)
-                {
-                    solarDef.MaxPowerOutput *= 2f;
-                }
-
-				//remove LOS check for laser antenna
-                if (laserAntennaDef != null)
-                {
-                    laserAntennaDef.RequireLineOfSight = false;
-                }
-
-				//Adjust container components to be proportional to block volume
-                if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
-                {
-                    if (cargoDef.Size.Volume() >= 54)
-					{
-						ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  240);
-					}
-					else if (cargoDef.Size.Volume() >= 27)
-					{
-						ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  120);
-					}
-					else ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent,  40);
-                }
-								
-				//Make all 5x5 XL and Econ2 Structural blocks have light edge type, and no deformation, and increase weld time
-                if (blockDef.CubeSize == MyCubeSize.Large && (blockDef.Id.SubtypeName.Contains("XL_") || blockDef.Id.SubtypeName.Contains("LargeBlockStructural_")) && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
-                {
-					blockDef.GeneralDamageMultiplier = 1.0f;
-					blockDef.UsesDeformation = false;
-					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
-					blockDef.EdgeType = "Heavy";
-					blockDef.IntegrityPointsPerSec = 2500;
-                }				
-
-                // Beam blocks and heat vents
-                if (blockDef.EdgeType == "Light" && (blockDef.Id.SubtypeName.Contains("BeamBlock") || blockDef.Id.SubtypeName.Contains("HeatVentBlock")))
-                {
-                    if (blockDef.CubeSize == MyCubeSize.Large)
-                    {
-                        blockDef.GeneralDamageMultiplier = 1f;
-                    }
-
-                    if (blockDef.CubeSize == MyCubeSize.Small)
-                    {
-                        blockDef.GeneralDamageMultiplier = 1f;
+                        reactorDef.MaxPowerOutput = Config.Reactors.SmallMultiBlockPowerOutput;
                     }
                 }
 
-                //suspension resistance buff
-                if (suspensionDef != null)
+                // Buff NPC Proprietary reactors and make them not require fuel
+                if (reactorDef.Id.SubtypeName.Contains("Proprietary"))
                 {
-                    suspensionDef.GeneralDamageMultiplier = 0.5f;
-                    suspensionDef.IntegrityPointsPerSec = 500;
-                }
-
-                //suspension wheels resistance buff
-                if (blockDef.Id.SubtypeName.Contains("Real"))
-                {
-                    blockDef.GeneralDamageMultiplier = 0.75f;
-                    blockDef.IntegrityPointsPerSec = 500;
-
-                    /*if (blockDef.Id.SubtypeName.Contains("5x5"))
-                    {
-                        blockDef.GeneralDamageMultiplier = 0.75f;
-                    }*/
-                }
-
-                //Do stuff to Beacons
-                if (beaconDef != null)
-                {
-                    if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
-                    {
-                        beaconDef.MaxBroadcastRadius = 100000;
-                    }
-
-                    if (beaconDef.Id.SubtypeName.Contains("BlockBeacon"))
-                    {
-                        beaconDef.PCU = 1; //this is so TopGrid doesn't pick random numbers when parent grid has 0 PCU.
-                    }
-
-                    if (beaconDef.Id.SubtypeName.Contains("DisposableNpc"))
-                    {
-                        beaconDef.GeneralDamageMultiplier = 0.1f;
-                    }
-                }
-
-                //Re-Tune Thrusters
-                if (thrustDef != null)
-                {
-                    thrustDef.GeneralDamageMultiplier = 0.5f;
-					//blockDef.IntegrityPointsPerSec = 500;
-
-                    if (!thrustDef.Id.SubtypeName.Contains("NPC") && !thrustDef.Id.SubtypeName.Contains("Hover"))
-                    {
-                        if (thrustDef.FuelConverter != null &&
-                            !thrustDef.FuelConverter.FuelId.IsNull() &&
-                            thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
-                        {
-                            thrustDef.MaxPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
-                            thrustDef.MinPlanetaryInfluence = 0f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
-                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
-                            thrustDef.EffectivenessAtMaxInfluence = 1f;
-                            thrustDef.EffectivenessAtMinInfluence = 0f;
-                            //thrustDef.NeedsAtmosphereForInfluence = false; //partially useless because it always searches for atmosphere regardless
-                            thrustDef.ConsumptionFactorPerG = 0f;
-                            thrustDef.SlowdownFactor = 1f;
-							//thrustDef.MinPowerConsumption *= 2f;
-                        }
-                        else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
-						{
-                            thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
-                            thrustDef.MinPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
-                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
-                            thrustDef.EffectivenessAtMaxInfluence = 1f;
-                            thrustDef.EffectivenessAtMinInfluence = 0f;
-                            thrustDef.ConsumptionFactorPerG = 0f;
-                            thrustDef.SlowdownFactor = 1f;
-						}
-						// Don't currently need this because they are banned through BlockRestrictions mod
-						/*
-						else if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
-						{
-                            thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
-                            thrustDef.MinPlanetaryInfluence = 0.5f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
-                            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f / (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
-                            thrustDef.EffectivenessAtMaxInfluence = 1f;
-                            thrustDef.EffectivenessAtMinInfluence = 0f;
-                            thrustDef.ConsumptionFactorPerG = 0f;
-                            thrustDef.SlowdownFactor = 1f;
-							//thrustDef.ForceMagnitude *= 2f;
-							//thrustDef.MinPowerConsumption *= 10f;
-						}
-                        else
-						{
-                            // disable other thrusters and make impossible to build
-							blockDef.Enabled = false;
-                            blockDef.Public = false;
-                            blockDef.GuiVisible = false;
-                            if (unobtainiumComponent != null)
-                            {
-                                InsertComponent(blockDef, 0, unobtainiumComponent, 1, genericScrap);
-                            }
-                        }
-						*/
-                    }
-					// Make hovers count as ions, increase power consumption and weld slower
-					if (thrustDef.Id.SubtypeName.Contains("Hover"))
-					{
-						thrustDef.ThrusterType = MyStringHash.GetOrCompute("Ion");
-						thrustDef.MaxPowerConsumption *= 3f;
-						thrustDef.MinPowerConsumption *= 10f;
-						if (thrustDef.Size.Volume() <= 1f)
-						{
-							thrustDef.DestroyEffect = "BlockDestroyedExplosion_Small";
-						}
-						else
-						{
-							thrustDef.DestroyEffect = "BlockDestroyedExplosion_Large";
-						}
-						//thrustDef.IntegrityPointsPerSec = 100;
-						thrustDef.GeneralDamageMultiplier = 1f;
-
-					}
-					// Add custom blue explosion particles to hovers and ions
-					if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
-					{
-						thrustDef.DestroyEffect = thrustDef.DestroyEffect + "_Blue";
-						thrustDef.DamageEffectName = "Damage_WeapExpl_Damaged_Blue";
-					}
-                }
-
-                //Nerf gyros because they are better than armor
-                if (gyroDef != null || (upgradeModuleDef != null && blockDef.Id.SubtypeName.Contains("Gyro")))
-                {
-                    blockDef.GeneralDamageMultiplier = 2;
-                }
-
-				//Buff resistance on critical ship control related blocks
-                //cockpits (but not desks, or chairs)
-                if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit"))
-                {
-                    cockpitDef.GeneralDamageMultiplier = 0.5f;
-                }
-				//AI blocks
-                if (defensiveCombatDef != null)
-                {
-                    defensiveCombatDef.GeneralDamageMultiplier = 0.5f;
-                }
-				//AI blocks
-                if (offensiveCombatDef != null)
-                {
-                    offensiveCombatDef.GeneralDamageMultiplier = 0.5f;
-                }
-				//AI blocks
-                if (pathRecorderDef != null)
-                {
-                    pathRecorderDef.GeneralDamageMultiplier = 0.5f;
-                }
-				//AI blocks
-                if (basicMissionDef != null)
-                {
-                    basicMissionDef.GeneralDamageMultiplier = 0.5f;
-                }
-				//Programmable Blocks
-                if (programmableBlockDef != null)
-                {
-                    programmableBlockDef.GeneralDamageMultiplier = 0.5f;
-                }
-                //remote controls
-                if (remoteControlDef != null)
-                {
-                    remoteControlDef.GeneralDamageMultiplier = 0.5f;
-                }
-                //timer blocks 
-                if (timerBlockDef != null)
-                {
-                    timerBlockDef.GeneralDamageMultiplier = 0.5f;
-                }
-                //CTC blocks 
-                if (turretControllerDef != null)
-                {
-                    turretControllerDef.GeneralDamageMultiplier = 0.5f;
-                }
-
-                // Fix the upgradeable O2/H2 gen (currently removed mod)
-                /*if (oxygenGeneratorDef != null)
-                {
-                    switch (oxygenGeneratorDef.Id.SubtypeId.String)
-                    {
-                        case "MA_O2":
-                            oxygenGeneratorDef.IceConsumptionPerSecond = 150;
-                            // Make the generator exactly as efficient as normal gens, otherwise it's even more OP
-                            oxygenGeneratorDef.OperationalPowerConsumption = 3;
-                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
-                            break;
-                        case "":
-                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
-                            break;
-                    }
-                }*/
-				
-				//reduce default battery pre-charge, and nerf resistance some
-                if (batteryDef != null)
-                {
-                    batteryDef.InitialStoredPowerRatio = 0.05f;
-					batteryDef.GeneralDamageMultiplier = 1.25f;
-                    foreach (var component in batteryDef.Components)
-                    {
-                        component.DeconstructItem = component.Definition;
-                    }
-					if (batteryDef.CubeSize == MyCubeSize.Large)
-					{
-						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
-						{
-							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 6f;
-							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 20f;
-							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 18f; // output rate is double input
-						}
-						else
-						{
-							batteryDef.MaxStoredPower = batteryDef.Size.Volume() * 3f;
-							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 10f;
-							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 9f; // output rate is double input
-						}
-					}
-					else
-					{
-						if (batteryDef.Id.SubtypeName.Contains("Prototech"))
-						{
-							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 9f;
-							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 1f; // accounts for 2 sizes of small grid batteries
-							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.75f; // output rate is double input
-						}
-						else
-						{
-							batteryDef.MaxStoredPower = batteryDef.Size.Volume() / 18f;
-							batteryDef.MaxPowerOutput = batteryDef.Size.Volume() * 0.5f; // accounts for 2 sizes of small grid batteries
-							batteryDef.RequiredPowerInput = batteryDef.Size.Volume() * 0.375f; // output rate is double input
-						}
-							
-					}
-                }
-												
-				//Add extra steel plates to conveyors to buff integrity
-                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName == "LargeBlockConveyor")
-                {
-                    InsertComponent(blockDef, blockDef.Components.Length, steelPlateComponent, 40);
-                }
-
-				//Make all Buster blocks have heavy edge type, and no deformation, and longer weld time
-                if (blockDef.CubeSize == MyCubeSize.Large && blockDef.Id.SubtypeName.Contains("MA_Buster") && blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
-                {
-					blockDef.DamageMultiplierExplosion = 1f; //vanilla is 7
-					blockDef.GeneralDamageMultiplier = 1f;
-					blockDef.UsesDeformation = false;
-					blockDef.DeformationRatio = 0.45f; //this seems to be a sweet spot between completely immune to collision, and popping with more than a light bump.
-					blockDef.EdgeType = "Heavy";
-					blockDef.IntegrityPointsPerSec = 500;
+                    reactorDef.MaxPowerOutput *= Config.Reactors.ProprietarySpeedMultiplier;
+                    reactorDef.FuelInfos = new MyReactorDefinition.FuelInfo[0];
                 }
             }
         }
 
-		// Main method to do the above changes
+        /// <summary>
+        /// Process solar panels.
+        /// Double power output to compensate for banned solar tracking scripts.
+        /// </summary>
+        private void ProcessSolarPanels(MyCubeBlockDefinition blockDef)
+        {
+            var solarDef = blockDef as MySolarPanelDefinition;
+
+            if (solarDef != null)
+            {
+                solarDef.MaxPowerOutput *= Config.Solar.PowerOutputMultiplier;
+            }
+        }
+
+        /// <summary>
+        /// Process laser antenna blocks.
+        /// Remove line of sight requirement.
+        /// </summary>
+        private void ProcessLaserAntennas(MyCubeBlockDefinition blockDef)
+        {
+            var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
+
+            if (laserAntennaDef != null)
+            {
+                laserAntennaDef.RequireLineOfSight = Config.LaserAntenna.RequireLineOfSight;
+            }
+        }
+
+        /// <summary>
+        /// Process cargo container blocks.
+        /// Adjust component counts to be proportional to block volume.
+        /// </summary>
+        private void ProcessContainers(MyCubeBlockDefinition blockDef)
+        {
+            var cargoDef = blockDef as MyCargoContainerDefinition;
+
+            if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
+            {
+                if (cargoDef.Size.Volume() >= 54)
+                {
+                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, Config.Containers.LargeContainerCompCount);
+                }
+                else if (cargoDef.Size.Volume() >= 27)
+                {
+                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, Config.Containers.MediumContainerCompCount);
+                }
+                else
+                {
+                    ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, Config.Containers.SmallContainerCompCount);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process structural blocks (5x5 XL and Econ2).
+        /// Make them heavy, remove deformation, and increase weld time.
+        /// </summary>
+        private void ProcessStructuralBlocks(MyCubeBlockDefinition blockDef)
+        {
+            if (blockDef.CubeSize == MyCubeSize.Large &&
+                (blockDef.Id.SubtypeName.Contains("XL_") || blockDef.Id.SubtypeName.Contains("LargeBlockStructural_")) &&
+                blockDef.BlockTopology == MyBlockTopology.TriangleMesh)
+            {
+                blockDef.GeneralDamageMultiplier = Config.Structure.XLLargeDamageMultiplier;
+                blockDef.UsesDeformation = Config.Structure.XLUsesDeformation;
+                blockDef.DeformationRatio = Config.Structure.XLDeformationRatio;
+                blockDef.EdgeType = Config.Structure.XLEdgeType;
+                blockDef.IntegrityPointsPerSec = Config.Structure.XLIntegrityPointsPerSec;
+            }
+        }
+
+        /// <summary>
+        /// Process beam blocks and heat vents.
+        /// Apply damage multiplier settings.
+        /// </summary>
+        private void ProcessBeamAndVentBlocks(MyCubeBlockDefinition blockDef)
+        {
+            if (blockDef.EdgeType == "Light" &&
+                (blockDef.Id.SubtypeName.Contains("BeamBlock") || blockDef.Id.SubtypeName.Contains("HeatVentBlock")))
+            {
+                if (blockDef.CubeSize == MyCubeSize.Large)
+                {
+                    blockDef.GeneralDamageMultiplier = Config.BeamAndVent.LargeDamageMultiplier;
+                }
+                else if (blockDef.CubeSize == MyCubeSize.Small)
+                {
+                    blockDef.GeneralDamageMultiplier = Config.BeamAndVent.SmallDamageMultiplier;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process suspension blocks.
+        /// Apply resistance buff and weld time.
+        /// </summary>
+        private void ProcessSuspension(MyCubeBlockDefinition blockDef)
+        {
+            var suspensionDef = blockDef as MyMotorSuspensionDefinition;
+
+            if (suspensionDef != null)
+            {
+                suspensionDef.GeneralDamageMultiplier = Config.Suspension.DamageMultiplier;
+                suspensionDef.IntegrityPointsPerSec = Config.Suspension.IntegrityPointsPerSec;
+            }
+        }
+
+        /// <summary>
+        /// Process wheel blocks.
+        /// Apply resistance buff and weld time.
+        /// </summary>
+        private void ProcessWheels(MyCubeBlockDefinition blockDef)
+        {
+            if (blockDef.Id.SubtypeName.Contains("Real"))
+            {
+                blockDef.GeneralDamageMultiplier = Config.Wheels.DamageMultiplier;
+                blockDef.IntegrityPointsPerSec = Config.Wheels.IntegrityPointsPerSec;
+            }
+        }
+
+        /// <summary>
+        /// Process beacon blocks.
+        /// Increase broadcast radius and adjust damage for specific beacon types.
+        /// </summary>
+        private void ProcessBeacons(MyCubeBlockDefinition blockDef)
+        {
+            var beaconDef = blockDef as MyBeaconDefinition;
+
+            if (beaconDef != null)
+            {
+                if (!beaconDef.Id.SubtypeName.Contains("DrillBlocker"))
+                {
+                    beaconDef.MaxBroadcastRadius = Config.Beacons.MaxBroadcastRadius;
+                }
+
+                if (beaconDef.Id.SubtypeName.Contains("BlockBeacon"))
+                {
+                    beaconDef.PCU = Config.Beacons.BlockBeaconPCU;
+                }
+
+                if (beaconDef.Id.SubtypeName.Contains("DisposableNpc"))
+                {
+                    beaconDef.GeneralDamageMultiplier = Config.Beacons.DisposableNpcDamageMultiplier;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process thruster blocks.
+        /// Adjust planetary influence, effectiveness, and special handling for hovers and ions.
+        /// </summary>
+        private void ProcessThrusters(MyCubeBlockDefinition blockDef)
+        {
+            var thrustDef = blockDef as MyThrustDefinition;
+
+            if (thrustDef == null)
+            {
+                return;
+            }
+
+            thrustDef.GeneralDamageMultiplier = Config.Thrusters.BaseDamageMultiplier;
+
+            // Regular hydrogen and atmospheric thrusters
+            if (!thrustDef.Id.SubtypeName.Contains("NPC") && !thrustDef.Id.SubtypeName.Contains("Hover"))
+            {
+                if (thrustDef.FuelConverter != null &&
+                    !thrustDef.FuelConverter.FuelId.IsNull() &&
+                    thrustDef.FuelConverter.FuelId.SubtypeId.Contains("Hydrogen"))
+                {
+                    ApplyHydrogenThrusterSettings(thrustDef);
+                }
+                else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
+                {
+                    ApplyFlatAtmosphericThrusterSettings(thrustDef);
+                }
+            }
+
+            // Hover engines
+            if (thrustDef.Id.SubtypeName.Contains("Hover"))
+            {
+                ApplyHoverThrusterSettings(thrustDef);
+            }
+
+            // Ion effect
+            if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
+            {
+                thrustDef.DestroyEffect = thrustDef.DestroyEffect + Config.Thrusters.IonDestroyEffectSuffix;
+                thrustDef.DamageEffectName = Config.Thrusters.IonDamageEffect;
+            }
+        }
+
+        private void ApplyHydrogenThrusterSettings(MyThrustDefinition thrustDef)
+        {
+            thrustDef.MaxPlanetaryInfluence = Config.Thrusters.HydrogenMaxPlanetaryInfluence;
+            thrustDef.MinPlanetaryInfluence = Config.Thrusters.HydrogenMinPlanetaryInfluence;
+            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f /
+                (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
+            thrustDef.EffectivenessAtMaxInfluence = Config.Thrusters.HydrogenEffectivenessAtMaxInfluence;
+            thrustDef.EffectivenessAtMinInfluence = Config.Thrusters.HydrogenEffectivenessAtMinInfluence;
+            thrustDef.ConsumptionFactorPerG = Config.Thrusters.HydrogenConsumptionFactorPerG;
+            thrustDef.SlowdownFactor = Config.Thrusters.HydrogenSlowdownFactor;
+        }
+
+        private void ApplyFlatAtmosphericThrusterSettings(MyThrustDefinition thrustDef)
+        {
+            thrustDef.MaxPlanetaryInfluence = Config.Thrusters.FlatAtmosphericMaxPlanetaryInfluence;
+            thrustDef.MinPlanetaryInfluence = Config.Thrusters.FlatAtmosphericMinPlanetaryInfluence;
+            thrustDef.InvDiffMinMaxPlanetaryInfluence = 1f /
+                (thrustDef.MaxPlanetaryInfluence - thrustDef.MinPlanetaryInfluence);
+            thrustDef.EffectivenessAtMaxInfluence = Config.Thrusters.FlatAtmosphericEffectivenessAtMaxInfluence;
+            thrustDef.EffectivenessAtMinInfluence = Config.Thrusters.FlatAtmosphericEffectivenessAtMinInfluence;
+            thrustDef.ConsumptionFactorPerG = Config.Thrusters.FlatAtmosphericConsumptionFactorPerG;
+            thrustDef.SlowdownFactor = Config.Thrusters.FlatAtmosphericSlowdownFactor;
+        }
+
+        private void ApplyHoverThrusterSettings(MyThrustDefinition thrustDef)
+        {
+            thrustDef.ThrusterType = MyStringHash.GetOrCompute(Config.Thrusters.HoverThrusterType);
+            thrustDef.MaxPowerConsumption *= Config.Thrusters.HoverMaxPowerMultiplier;
+            thrustDef.MinPowerConsumption *= Config.Thrusters.HoverMinPowerMultiplier;
+
+            if (thrustDef.Size.Volume() <= 1f)
+            {
+                thrustDef.DestroyEffect = "BlockDestroyedExplosion_Small";
+            }
+            else
+            {
+                thrustDef.DestroyEffect = "BlockDestroyedExplosion_Large";
+            }
+
+            thrustDef.GeneralDamageMultiplier = Config.Thrusters.HoverDamageMultiplier;
+        }
+
+        /// <summary>
+        /// Process gyro blocks.
+        /// Nerf gyros because they are better than armor.
+        /// </summary>
+        private void ProcessGyros(MyCubeBlockDefinition blockDef)
+        {
+            var gyroDef = blockDef as MyGyroDefinition;
+            var upgradeModuleDef = blockDef as MyUpgradeModuleDefinition;
+
+            if (gyroDef != null || (upgradeModuleDef != null && blockDef.Id.SubtypeName.Contains("Gyro")))
+            {
+                blockDef.GeneralDamageMultiplier = Config.Gyros.DamageMultiplier;
+            }
+        }
+
+        /// <summary>
+        /// Process ship control blocks (cockpits, remote controls, timer blocks, AI blocks, programmable blocks).
+        /// Buff resistance on critical ship control related blocks.
+        /// </summary>
+        private void ProcessShipControlBlocks(MyCubeBlockDefinition blockDef)
+        {
+            var cockpitDef = blockDef as MyCockpitDefinition;
+            var remoteControlDef = blockDef as MyRemoteControlDefinition;
+            var timerBlockDef = blockDef as MyTimerBlockDefinition;
+            var defensiveCombatDef = blockDef as MyDefensiveCombatBlockDefinition;
+            var offensiveCombatDef = blockDef as MyOffensiveCombatBlockDefinition;
+            var pathRecorderDef = blockDef as MyPathRecorderBlockDefinition;
+            var basicMissionDef = blockDef as MyBasicMissionBlockDefinition;
+            var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
+            var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
+
+            if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit"))
+            {
+                cockpitDef.GeneralDamageMultiplier = Config.ShipControl.CockpitDamageMultiplier;
+            }
+
+            if (defensiveCombatDef != null)
+            {
+                defensiveCombatDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+            }
+
+            if (offensiveCombatDef != null)
+            {
+                offensiveCombatDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+            }
+
+            if (pathRecorderDef != null)
+            {
+                pathRecorderDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+            }
+
+            if (basicMissionDef != null)
+            {
+                basicMissionDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+            }
+
+            if (programmableBlockDef != null)
+            {
+                programmableBlockDef.GeneralDamageMultiplier = Config.ShipControl.ProgrammableBlockDamageMultiplier;
+            }
+
+            if (remoteControlDef != null)
+            {
+                remoteControlDef.GeneralDamageMultiplier = Config.ShipControl.RemoteControlDamageMultiplier;
+            }
+
+            if (timerBlockDef != null)
+            {
+                timerBlockDef.GeneralDamageMultiplier = Config.ShipControl.TimerBlockDamageMultiplier;
+            }
+
+            if (turretControllerDef != null)
+            {
+                turretControllerDef.GeneralDamageMultiplier = Config.ShipControl.TurretControllerDamageMultiplier;
+            }
+        }
+
+        // ==================== HELPER METHODS ====================
+
+        // Main method to do the modifications
         public override void LoadData()
         {
             DoWork();
         }
 
         // Method to replace components in a block construction list
-		private static void ReplaceComponent(MyCubeBlockDefinition blockDef, int index, MyComponentDefinition newComp, int newCount, MyPhysicalItemDefinition deconstructItem = null)
+        private static void ReplaceComponent(MyCubeBlockDefinition blockDef, int index, MyComponentDefinition newComp, int newCount, MyPhysicalItemDefinition deconstructItem = null)
         {
             var comp = blockDef.Components[index];
             var oldCount = comp.Count;
@@ -625,7 +826,7 @@ namespace MikeDude.ArmorBalance
             InsertComponent(blockDef, nextCompIndex, blockDef.Components[nextCompIndex].Definition, nextCompHigh, makeCritical: true);
         }
 
-		// Method to set ratio of critical component and ownership of a block
+        // Method to set ratio of critical component and ownership of a block
         private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
         {
             var criticalIntegrity = 0f;
