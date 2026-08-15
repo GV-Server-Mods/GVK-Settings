@@ -17,8 +17,7 @@ namespace LimitedProdZone
     {
         private IMyRefinery refinery;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
-        private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
+        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -54,19 +53,18 @@ namespace LimitedProdZone
                 {
                     if (!refinery.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
-						if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
+                    // fast check: if there are no enabled beacons, skip
+                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                    if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                    {
+                        string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                        bool isBasicRefinery = false;
+                        isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
+                        if (isBasicRefinery == false)
                         {
-                            string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicRefinery = false;
-                            isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
-                            if (isBasicRefinery == false)
-                            {
-								refinery.Enabled = false;
-								return;
-                            }
+                            refinery.Enabled = false;
+                            return;
                         }
                     }
                 }
@@ -81,20 +79,18 @@ namespace LimitedProdZone
         {
             if (refinery.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
+                    string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                    bool isBasicRefinery = false;
+                    isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
+                    if (isBasicRefinery == false)
                     {
-                        string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicRefinery = false;
-						isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
-                        if (isBasicRefinery == false)
-                        {
-							refinery.Enabled = false;
-                        }
+                        refinery.Enabled = false;
                     }
-                }               
+                }
             }
         }
 

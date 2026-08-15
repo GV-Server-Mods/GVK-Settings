@@ -38,16 +38,7 @@ namespace LimitedProdZone
             base.Init(objectBuilder);
 
             beacon = (Entity as IMyBeacon);
-            LimitedProdZone_Assembler.beaconList.Add(beacon);
-            LimitedProdZone_Refinery.beaconList.Add(beacon);
-            LimitedProdZone_SmallGatlingGun.beaconList.Add(beacon);
-            LimitedProdZone_LargeGatlingTurret.beaconList.Add(beacon);
-            LimitedProdZone_LargeMissileTurret.beaconList.Add(beacon);
-            LimitedProdZone_SmallMissileLauncher.beaconList.Add(beacon);
-            LimitedProdZone_SmallMissileLauncherReload.beaconList.Add(beacon);
-            LimitedProdZone_InteriorTurret.beaconList.Add(beacon);
-            LimitedProdZone_ConveyorSorter.beaconList.Add(beacon);
-			LimitedProdZone_StaticDrill.beaconList.Add(beacon);
+            LimitedProdZone_Manager.AddBeacon(beacon);
             if (beacon != null)
             {
                 logicEnabled = true;
@@ -144,42 +135,8 @@ namespace LimitedProdZone
             }
                 
 
-            if (LimitedProdZone_Assembler.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_Assembler.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_Refinery.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_Refinery.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallGatlingGun.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallGatlingGun.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_LargeGatlingTurret.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_LargeGatlingTurret.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallMissileLauncher.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallMissileLauncher.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_SmallMissileLauncherReload.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_SmallMissileLauncherReload.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_InteriorTurret.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_InteriorTurret.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_ConveyorSorter.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_ConveyorSorter.beaconList.Remove(beacon);
-            }
-            if (LimitedProdZone_StaticDrill.beaconList.Contains(beacon))
-            {
-                LimitedProdZone_StaticDrill.beaconList.Remove(beacon);
-            }
+            // Remove from centralized manager
+            LimitedProdZone_Manager.RemoveBeacon(beacon);
         }
 
         public override void OnRemovedFromScene()

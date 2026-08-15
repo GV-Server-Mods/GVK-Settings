@@ -17,8 +17,7 @@ namespace LimitedProdZone
     {
         private IMyAssembler assembler;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
-        private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
+        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -54,16 +53,15 @@ namespace LimitedProdZone
                 {
                     if (!assembler.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
-						if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
-                        {
-                            string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-							if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) continue;
-							assembler.Enabled = false;
-							return;
-                        }
+                    // fast check: if there are no enabled beacons, skip
+                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                    if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                    {
+                        string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
+                        if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
+                        assembler.Enabled = false;
+                        return;
                     }
                 }
             }
@@ -77,17 +75,15 @@ namespace LimitedProdZone
         {
             if (assembler.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
-                    {
-						string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-						if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) continue;
-						assembler.Enabled = false;
-						return;
-                    }
-                }               
+                    string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
+                    if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
+                    assembler.Enabled = false;
+                    return;
+                }
             }
         }
 

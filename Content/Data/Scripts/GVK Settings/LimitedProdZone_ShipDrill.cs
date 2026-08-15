@@ -17,8 +17,7 @@ namespace LimitedProdZone
     {
         private IMyShipDrill staticDrill;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
-        private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
+        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -54,19 +53,17 @@ namespace LimitedProdZone
                 {
                     if (!staticDrill.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
-						if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                    if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                    {
+                        string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                        bool isBasicStaticDrill = false;
+                        isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                        if (isBasicStaticDrill == false)
                         {
-                            string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicStaticDrill = false;
-                            isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
-                            if (isBasicStaticDrill == false)
-                            {
-								staticDrill.Enabled = false;
-								return;
-                            }
+                            staticDrill.Enabled = false;
+                            return;
                         }
                     }
                 }
@@ -81,20 +78,18 @@ namespace LimitedProdZone
         {
             if (staticDrill.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+                    string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                    bool isBasicStaticDrill = false;
+                    isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                    if (isBasicStaticDrill == false)
                     {
-                        string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicStaticDrill = false;
-                        isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
-                        if (isBasicStaticDrill == false)
-                        {
-							staticDrill.Enabled = false;
-                        }
+                        staticDrill.Enabled = false;
                     }
-                }               
+                }
             }
         }
 

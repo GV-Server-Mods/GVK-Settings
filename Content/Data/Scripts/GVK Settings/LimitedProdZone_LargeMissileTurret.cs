@@ -18,8 +18,7 @@ namespace LimitedProdZone
     {
         private IMyLargeMissileTurret weapon;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
-        private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
+        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 		private static readonly MyDefinitionId StaticWeaponDef = new MyDefinitionId(typeof(MyObjectBuilder_LargeMissileTurret), "odin");
 		private static readonly MyStringHash DestructionHash = MyStringHash.GetOrCompute("Destruction");
 
@@ -61,19 +60,18 @@ namespace LimitedProdZone
 						weapon.SlimBlock.DoDamage(99999999999999f, DestructionHash, true, null, 0, 0, false, null);
 						return;
 					}
-					else
-					{
-						if (!weapon.Enabled) return;
-						foreach (var beacon in beaconList)
-						{                        
-							if (beacon == null || !beacon.Enabled) continue;
-							if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
-							{
-								weapon.Enabled = false;
-								return;
-							}
-						}
-					}
+                    else
+                    {
+                        if (!weapon.Enabled) return;
+
+                        if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                        if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                        {
+                            weapon.Enabled = false;
+                            return;
+                        }
+                    }
                 }
             }
             catch (Exception exc)
@@ -86,14 +84,12 @@ namespace LimitedProdZone
         {
             if (weapon.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (!LimitedProdZone_Manager.AnyEnabled) return;
+
+                if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
-                    {
-						weapon.Enabled = false;
-                    }
-                }               
+                    weapon.Enabled = false;
+                }
             }
         }
 
