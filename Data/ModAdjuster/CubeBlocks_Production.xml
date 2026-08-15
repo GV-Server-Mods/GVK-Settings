@@ -42,6 +42,7 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
+		<!-- Can't change GasInfo with mod adjuster, so Proto Gas Generator is separate -->
 		<!-- increase speed of O2 Generators -->
         <Definition xsi:type="MyObjectBuilder_OxygenGeneratorDefinition">
             <Id>
