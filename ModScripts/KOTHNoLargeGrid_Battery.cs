@@ -1,31 +1,27 @@
-﻿using SpaceEngineers.Game.ModAPI;
 using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
-namespace LimitedProdZone
+namespace KOTHNoLargeGrid
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_LargeGatlingTurret), false)]
-    public class LimitedProdZone_LargeGatlingTurret : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_BatteryBlock), false)]
+    public class KOTHNoLargeGrid_Battery : MyGameLogicComponent
     {
-        private IMyLargeGatlingTurret weapon;
+        private IMyBatteryBlock battery;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
-            weapon = (Entity as IMyLargeGatlingTurret);
-            if (weapon != null)
+            battery = (Entity as IMyBatteryBlock);
+            if (battery != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
@@ -40,7 +36,7 @@ namespace LimitedProdZone
 
             if (isServer)
             {
-                weapon.IsWorkingChanged += WorkingStateChange;
+                battery.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -52,32 +48,37 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!weapon.Enabled) return;
+                    if (!battery.Enabled) return;
+                    if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
 
-                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+                    var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
+                    if (faction != null && faction.IsEveryoneNpc()) return;
 
-                    if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                    if (KOTHNoLargeGrid_Manager.IsBlockInZone(battery))
                     {
-                        weapon.Enabled = false;
+                        battery.Enabled = false;
                         return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking KOTH battery position: {exc}");
             }
         }
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (weapon.Enabled)
+            if (battery.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
+                if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
 
-                if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
+                if (faction != null && faction.IsEveryoneNpc()) return;
+
+                if (KOTHNoLargeGrid_Manager.IsBlockInZone(battery))
                 {
-                    weapon.Enabled = false;
+                    battery.Enabled = false;
                 }
             }
         }
@@ -90,7 +91,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -98,7 +98,7 @@ namespace LimitedProdZone
                 return;
             }
 
-            var Block = Entity as IMyLargeGatlingTurret;
+            var Block = Entity as IMyBatteryBlock;
 
             if (Block == null) return;
 
@@ -106,17 +106,15 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    weapon.IsWorkingChanged -= WorkingStateChange;
+                    battery.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

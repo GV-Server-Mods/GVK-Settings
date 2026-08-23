@@ -1,30 +1,27 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SmallMissileLauncher), false)]
-    public class LimitedProdZone_SmallMissileLauncher : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Drill), false)]
+    public class LimitedProdZone_StaticDrill : MyGameLogicComponent
     {
-        private IMySmallMissileLauncher weapon;
+        private IMyShipDrill staticDrill;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
-            weapon = (Entity as IMySmallMissileLauncher);
-            if (weapon != null)
+            staticDrill = (Entity as IMyShipDrill);
+            if (staticDrill != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
@@ -39,7 +36,7 @@ namespace LimitedProdZone
 
             if (isServer)
             {
-                weapon.IsWorkingChanged += WorkingStateChange;
+                staticDrill.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -51,32 +48,36 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!weapon.Enabled) return;
+                    if (!staticDrill.Enabled) return;
 
-                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+                    string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                    bool isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                    if (isBasicStaticDrill) return;
 
-                    if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                    if (LimitedProdZone_Manager.IsPositionInWeaponZone(staticDrill.GetPosition()))
                     {
-                        weapon.Enabled = false;
+                        staticDrill.Enabled = false;
                         return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking LimitedProdZone ship drill position: {exc}");
             }
         }
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (weapon.Enabled)
+            if (staticDrill.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
+                string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                bool isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                if (isBasicStaticDrill) return;
 
-                if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                if (LimitedProdZone_Manager.IsPositionInWeaponZone(staticDrill.GetPosition()))
                 {
-                    weapon.Enabled = false;
+                    staticDrill.Enabled = false;
                 }
             }
         }
@@ -89,7 +90,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -97,7 +97,7 @@ namespace LimitedProdZone
                 return;
             }
 
-            var Block = Entity as IMySmallMissileLauncher;
+            var Block = Entity as IMyShipDrill;
 
             if (Block == null) return;
 
@@ -105,17 +105,15 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    weapon.IsWorkingChanged -= WorkingStateChange;
+                    staticDrill.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

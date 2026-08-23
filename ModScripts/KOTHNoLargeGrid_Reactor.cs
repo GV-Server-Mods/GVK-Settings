@@ -1,26 +1,20 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
-using Sandbox.Game.Entities;
-using Sandbox.Game.Screens.Helpers.RadialMenuActions;
 
-namespace NoLargeGridZone
+namespace KOTHNoLargeGrid
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Reactor), false)]
-    public class NoLargeGridZone_Reactor : MyGameLogicComponent
+    public class KOTHNoLargeGrid_Reactor : MyGameLogicComponent
     {
         private IMyReactor reactor;
         private bool isServer;
-
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -55,25 +49,21 @@ namespace NoLargeGridZone
                 if (isServer)
                 {
                     if (!reactor.Enabled) return;
+                    if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
 
-                    foreach (var beacon in beaconList)
+                    var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
+                    if (faction != null && faction.IsEveryoneNpc()) return; // Skip if owned by NPC
+
+                    if (KOTHNoLargeGrid_Manager.IsBlockInZone(reactor))
                     {
-						if (beacon == null || !beacon.Enabled) continue;
-                        if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
-						if (faction != null && faction.IsEveryoneNpc()) continue; //Skip if owned by NPC
-                        if (reactor.IsSameConstructAs(beacon)) continue; //Skip if powerblock is attached to NoPowerZoneBlock
-						if (Vector3D.DistanceSquared(reactor.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
-                        {                 
-                                reactor.Enabled = false;
-                                return;
-                        }
+                        reactor.Enabled = false;
+                        return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking KOTH reactor position: {exc}");
             }
         }
 
@@ -81,17 +71,14 @@ namespace NoLargeGridZone
         {
             if (reactor.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
+
+                var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
+                if (faction != null && faction.IsEveryoneNpc()) return;
+
+                if (KOTHNoLargeGrid_Manager.IsBlockInZone(reactor))
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-                    if (reactor.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(reactor.OwnerId);
-					if (faction != null && faction.IsEveryoneNpc()) continue; //Skip if owned by NPC
-                    if (reactor.IsSameConstructAs(beacon)) continue; //Skip if powerblock is attached to NoPowerZoneBlock
-						if (Vector3D.DistanceSquared(reactor.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
-                    {
-                        reactor.Enabled = false;
-                    }
+                    reactor.Enabled = false;
                 }
             }
         }
@@ -104,7 +91,6 @@ namespace NoLargeGridZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -122,15 +108,13 @@ namespace NoLargeGridZone
                 {
                     reactor.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

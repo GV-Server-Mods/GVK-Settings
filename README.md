@@ -31,10 +31,18 @@ NOTE: The downside to this mechanic is that players are unable to remove other f
 Scripts: LimitedProdZone_Assembler.cs, LimitedProdZone_Beacon.cs, LimitedProdZone_ConveyorSorter.cs, etc.
 
 Description: This provides the mechanic that shuts off large production and weapons in Z0, and allows them in higher zones.
-## KOTH anti-abuse
-Scripts: KOTHNoSafezone_Beacon.cs, KOTHNoSafezone_SafeZone.cs, KOTHNoSafezone_Projector.cs
+## KOTH anti-abuse (Safezone & Projector)
+Scripts: KOTHNoSafezone_Manager.cs, KOTHNoSafezone_Beacon.cs, KOTHNoSafezone_SafeZone.cs, KOTHNoSafezone_Projector.cs
 
 Description: This shuts off player-built safezone generators (aka siegable shields) and projectors that are within a set distance of a KOTH block.
+## KOTH No Thrusters
+Scripts: KOTHNoThrusters_Manager.cs, KOTHNoThrusters_Beacon.cs, KOTHNoThrusters_Thruster.cs
+
+Description: Shuts off non-NPC thrusters within 3km of an active KOTH NoThruster beacon.
+## KOTH No Large Grids
+Scripts: KOTHNoLargeGrid_Manager.cs, KOTHNoLargeGrid_Beacon.cs, KOTHNoLargeGrid_Battery.cs, KOTHNoLargeGrid_HydrogenEngine.cs, KOTHNoLargeGrid_Reactor.cs, KOTHNoLargeGrid_Solar.cs
+
+Description: Shuts off player large-grid power generation (batteries, hydrogen engines, reactors, solars) within 3km of an active KOTH NoLargeGrid beacon while preserving power on the KOTH beacon grid itself and small grids.
 ## Player-built safezone min radius
 Scripts: Safezone3kmCheck_Beacon.cs, Safezone3kmCheck_SafeZone.cs
 

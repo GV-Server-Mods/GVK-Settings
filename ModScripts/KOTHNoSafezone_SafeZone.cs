@@ -1,24 +1,15 @@
-﻿using SpaceEngineers.Game.ModAPI;
 using System;
 using VRage.ModAPI;
+using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
-using VRage.ObjectBuilders;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
+using SpaceEngineers.Game.ModAPI;
 using ObjectBuilders.SafeZone;
-using ProtoBuf;
-using VRage;
-using VRage.Game;
-using VRage.Game.ObjectBuilders;
-using VRage.Game.ObjectBuilders.ComponentSystem;
-using VRage.Network;
-using VRage.Serialization;
+using VRage.ObjectBuilders;
 using VRage.Utils;
+
 
 namespace KOTHNoSafezone
 {
@@ -27,7 +18,6 @@ namespace KOTHNoSafezone
     {
         private IMySafeZoneBlock safezoneblock;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -63,20 +53,16 @@ namespace KOTHNoSafezone
                 {
                     if (!safezoneblock.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
- 						if (Vector3D.DistanceSquared(safezoneblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
-                       {
-							safezoneblock.Enabled = false;
-							return;
-                        }
+                    if (KOTHNoSafezone_Manager.IsPositionInZone(safezoneblock.GetPosition()))
+                    {
+                        safezoneblock.Enabled = false;
+                        return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking KOTH safezone position: {exc}");
             }
         }
 
@@ -84,14 +70,10 @@ namespace KOTHNoSafezone
         {
             if (safezoneblock.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (KOTHNoSafezone_Manager.IsPositionInZone(safezoneblock.GetPosition()))
                 {
-					if (beacon == null || !beacon.Enabled) continue;
- 						if (Vector3D.DistanceSquared(safezoneblock.GetPosition(), beacon.GetPosition()) < 16000000) // use squared of 4000m for better performance
-                    {
-						safezoneblock.Enabled = false;
-                    }
-                }               
+                    safezoneblock.Enabled = false;
+                }
             }
         }
 
@@ -103,7 +85,6 @@ namespace KOTHNoSafezone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -121,15 +102,13 @@ namespace KOTHNoSafezone
                 {
                     safezoneblock.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

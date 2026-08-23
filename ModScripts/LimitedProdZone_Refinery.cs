@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
@@ -17,7 +15,6 @@ namespace LimitedProdZone
     {
         private IMyRefinery refinery;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -53,25 +50,20 @@ namespace LimitedProdZone
                 {
                     if (!refinery.Enabled) return;
 
-                    // fast check: if there are no enabled beacons, skip
-                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+                    string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                    bool isBasicRefinery = strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU");
+                    if (isBasicRefinery) return;
 
-                    if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                    if (LimitedProdZone_Manager.IsPositionInProductionZone(refinery.GetPosition()))
                     {
-                        string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
-                        bool isBasicRefinery = false;
-                        isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
-                        if (isBasicRefinery == false)
-                        {
-                            refinery.Enabled = false;
-                            return;
-                        }
+                        refinery.Enabled = false;
+                        return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking LimitedProdZone refinery position: {exc}");
             }
         }
 
@@ -79,17 +71,13 @@ namespace LimitedProdZone
         {
             if (refinery.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
+                string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
+                bool isBasicRefinery = strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU");
+                if (isBasicRefinery) return;
 
-                if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                if (LimitedProdZone_Manager.IsPositionInProductionZone(refinery.GetPosition()))
                 {
-                    string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
-                    bool isBasicRefinery = false;
-                    isBasicRefinery = (strSubBlockType.Contains("Blast Furnace") || strSubBlockType.Contains("LargeRefinery_NPC_CU"));
-                    if (isBasicRefinery == false)
-                    {
-                        refinery.Enabled = false;
-                    }
+                    refinery.Enabled = false;
                 }
             }
         }
@@ -102,7 +90,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -120,15 +107,13 @@ namespace LimitedProdZone
                 {
                     refinery.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

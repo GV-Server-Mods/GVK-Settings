@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
@@ -17,7 +15,6 @@ namespace LimitedProdZone
     {
         private IMyAssembler assembler;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -53,13 +50,11 @@ namespace LimitedProdZone
                 {
                     if (!assembler.Enabled) return;
 
-                    // fast check: if there are no enabled beacons, skip
-                    if (!LimitedProdZone_Manager.AnyEnabled) return;
+                    string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
+                    if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
 
-                    if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                    if (LimitedProdZone_Manager.IsPositionInProductionZone(assembler.GetPosition()))
                     {
-                        string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-                        if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
                         assembler.Enabled = false;
                         return;
                     }
@@ -67,7 +62,7 @@ namespace LimitedProdZone
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking LimitedProdZone assembler position: {exc}");
             }
         }
 
@@ -75,14 +70,12 @@ namespace LimitedProdZone
         {
             if (assembler.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
+                string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
+                if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
 
-                if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.ProductionRadiusSquared) // use squared of 35,000m for better performance
+                if (LimitedProdZone_Manager.IsPositionInProductionZone(assembler.GetPosition()))
                 {
-                    string strSubBlockType = assembler.BlockDefinition.SubtypeId.ToString();
-                    if (strSubBlockType.Contains("Basic") || strSubBlockType.Contains("Food")) return;
                     assembler.Enabled = false;
-                    return;
                 }
             }
         }
@@ -95,7 +88,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -113,15 +105,13 @@ namespace LimitedProdZone
                 {
                     assembler.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

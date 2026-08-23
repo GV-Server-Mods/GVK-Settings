@@ -1,30 +1,27 @@
-﻿using SpaceEngineers.Game.ModAPI;
+using SpaceEngineers.Game.ModAPI;
 using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_InteriorTurret), false)]
-    public class LimitedProdZone_InteriorTurret : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_LargeGatlingTurret), false)]
+    public class LimitedProdZone_LargeGatlingTurret : MyGameLogicComponent
     {
-        private IMyLargeInteriorTurret weapon;
+        private IMyLargeGatlingTurret weapon;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
-            weapon = (Entity as IMyLargeInteriorTurret);
+            weapon = (Entity as IMyLargeGatlingTurret);
             if (weapon != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
@@ -54,9 +51,7 @@ namespace LimitedProdZone
                 {
                     if (!weapon.Enabled) return;
 
-                    if (!LimitedProdZone_Manager.AnyEnabled) return;
-
-                    if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                    if (LimitedProdZone_Manager.IsPositionInWeaponZone(weapon.GetPosition()))
                     {
                         weapon.Enabled = false;
                         return;
@@ -65,7 +60,7 @@ namespace LimitedProdZone
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking LimitedProdZone large gatling turret position: {exc}");
             }
         }
 
@@ -73,9 +68,7 @@ namespace LimitedProdZone
         {
             if (weapon.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
-
-                if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                if (LimitedProdZone_Manager.IsPositionInWeaponZone(weapon.GetPosition()))
                 {
                     weapon.Enabled = false;
                 }
@@ -90,7 +83,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -98,7 +90,7 @@ namespace LimitedProdZone
                 return;
             }
 
-            var Block = Entity as IMyLargeInteriorTurret;
+            var Block = Entity as IMyLargeGatlingTurret;
 
             if (Block == null) return;
 
@@ -108,15 +100,13 @@ namespace LimitedProdZone
                 {
                     weapon.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

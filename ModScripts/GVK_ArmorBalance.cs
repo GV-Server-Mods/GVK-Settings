@@ -107,14 +107,14 @@ namespace MikeDude.ArmorBalance
             // Suspension
             public static class Suspension
             {
-                public const float DamageMultiplier = 0.5f;
+                public const float DamageMultiplier = 0.25f;
                 public const int IntegrityPointsPerSec = 500;
             }
 
             // Wheels
             public static class Wheels
             {
-                public const float DamageMultiplier = 0.75f;
+                public const float DamageMultiplier = 0.5f;
                 public const int IntegrityPointsPerSec = 500;
             }
 

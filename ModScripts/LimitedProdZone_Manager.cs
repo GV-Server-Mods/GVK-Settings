@@ -14,7 +14,9 @@ namespace LimitedProdZone
 
         // Shared center coordinate and radius constants (squared values for performance)
         public static readonly Vector3D LimitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
+        public const double ProductionRadius = 35000d;
         public const double ProductionRadiusSquared = 1225000000d; // 35,000^2
+        public const double WeaponRadius = 20000d;
         public const double WeaponRadiusSquared = 400000000d; // 20,000^2
 
         public static void AddBeacon(IMyBeacon beacon)
@@ -46,12 +48,29 @@ namespace LimitedProdZone
                     for (int i = 0; i < beacons.Count; i++)
                     {
                         var b = beacons[i];
-                        if (b != null && b.Enabled)
+                        if (b != null && !b.Closed && b.IsWorking && b.Enabled)
                             return true;
                     }
                 }
                 return false;
             }
         }
+
+        public static bool IsPositionInZone(Vector3D position, double radiusSquared)
+        {
+            if (!AnyEnabled) return false;
+            return Vector3D.DistanceSquared(position, LimitedProdCenterCoord) < radiusSquared;
+        }
+
+        public static bool IsPositionInProductionZone(Vector3D position)
+        {
+            return IsPositionInZone(position, ProductionRadiusSquared);
+        }
+
+        public static bool IsPositionInWeaponZone(Vector3D position)
+        {
+            return IsPositionInZone(position, WeaponRadiusSquared);
+        }
     }
 }
+

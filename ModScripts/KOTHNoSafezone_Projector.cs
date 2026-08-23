@@ -1,31 +1,27 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
-using Sandbox.Game.Entities;
 
-namespace NoLargeGridZone
+namespace KOTHNoSafezone
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_BatteryBlock), false)]
-    public class NoLargeGridZone_Battery : MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_Projector), false)]
+    public class KOTHNoSafezone_ProjectorBlock : MyGameLogicComponent
     {
-        private IMyBatteryBlock battery;
+        private IMyProjector projectorblock;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
-            battery = (Entity as IMyBatteryBlock);
-            if (battery != null)
+            projectorblock = (Entity as IMyProjector);
+            if (projectorblock != null)
             {
                 NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
@@ -40,7 +36,7 @@ namespace NoLargeGridZone
 
             if (isServer)
             {
-                battery.IsWorkingChanged += WorkingStateChange;
+                projectorblock.IsWorkingChanged += WorkingStateChange;
             }
         }
 
@@ -52,17 +48,14 @@ namespace NoLargeGridZone
             {
                 if (isServer)
                 {
-                    if (!battery.Enabled) return;
+                    if (!projectorblock.Enabled) return;
 
-                    foreach (var beacon in beaconList)
+                    string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
+                    if (strSubBlockType.Contains("MnM") && projectorblock.CubeGrid.IsStatic)
                     {
-						if (beacon == null || !beacon.Enabled) continue;
-                        if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
-						if (faction != null && faction.IsEveryoneNpc()) continue;
-                        if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
+                        if (KOTHNoSafezone_Manager.IsPositionInZone(projectorblock.GetPosition()))
                         {
-                            battery.Enabled = false;
+                            projectorblock.Enabled = false;
                             return;
                         }
                     }
@@ -70,23 +63,20 @@ namespace NoLargeGridZone
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking KOTH projector position: {exc}");
             }
         }
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (battery.Enabled)
+            if (projectorblock.Enabled)
             {
-                foreach (var beacon in beaconList)
+                string strSubBlockType = projectorblock.BlockDefinition.SubtypeId.ToString();
+                if (strSubBlockType.Contains("MnM") && projectorblock.CubeGrid.IsStatic)
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (battery.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(battery.OwnerId);
-					if (faction != null && faction.IsEveryoneNpc()) continue;
-					if (Vector3D.DistanceSquared(battery.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
+                    if (KOTHNoSafezone_Manager.IsPositionInZone(projectorblock.GetPosition()))
                     {
-                        battery.Enabled = false;
+                        projectorblock.Enabled = false;
                     }
                 }
             }
@@ -100,7 +90,6 @@ namespace NoLargeGridZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -108,7 +97,7 @@ namespace NoLargeGridZone
                 return;
             }
 
-            var Block = Entity as IMyBatteryBlock;
+            var Block = Entity as IMyProjector;
 
             if (Block == null) return;
 
@@ -116,17 +105,15 @@ namespace NoLargeGridZone
             {
                 if (isServer)
                 {
-                    battery.IsWorkingChanged -= WorkingStateChange;
+                    projectorblock.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

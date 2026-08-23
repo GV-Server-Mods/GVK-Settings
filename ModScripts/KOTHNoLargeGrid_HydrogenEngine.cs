@@ -1,24 +1,20 @@
-﻿using System;
+using System;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
-using Sandbox.Game.Entities;
 
-namespace NoLargeGridZone
+namespace KOTHNoLargeGrid
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_HydrogenEngine), false)]
-    public class NoLargeGridZone_Fueled : MyGameLogicComponent
+    public class KOTHNoLargeGrid_HydrogenEngine : MyGameLogicComponent
     {
         private IMyPowerProducer fueled;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -53,25 +49,21 @@ namespace NoLargeGridZone
                 if (isServer)
                 {
                     if (!fueled.Enabled) return;
+                    if (fueled.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
 
-                    foreach (var beacon in beaconList)
+                    var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(fueled.OwnerId);
+                    if (faction != null && faction.IsEveryoneNpc()) return; // Skip if owned by NPC
+
+                    if (KOTHNoLargeGrid_Manager.IsBlockInZone(fueled))
                     {
-						if (beacon == null || !beacon.Enabled) continue;
-                        if (fueled.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-						var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(fueled.OwnerId);
-						if (faction != null && faction.IsEveryoneNpc()) continue; //Skip if owned by NPC
-                        if (fueled.IsSameConstructAs(beacon)) continue; //Skip if powerblock is attached to NoPowerZoneBlock
-						if (Vector3D.DistanceSquared(fueled.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
-                        {
-                            fueled.Enabled = false;
-                            return;
-                        }
+                        fueled.Enabled = false;
+                        return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking KOTH hydrogen engine position: {exc}");
             }
         }
 
@@ -79,17 +71,14 @@ namespace NoLargeGridZone
         {
             if (fueled.Enabled)
             {
-                foreach (var beacon in beaconList)
+                if (fueled.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) return;
+
+                var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(fueled.OwnerId);
+                if (faction != null && faction.IsEveryoneNpc()) return;
+
+                if (KOTHNoLargeGrid_Manager.IsBlockInZone(fueled))
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (fueled.CubeGrid.GridSizeEnum.Equals(MyCubeSize.Small)) continue;
-					var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(fueled.OwnerId);
-					if (faction != null && faction.IsEveryoneNpc()) continue; //Skip if owned by NPC
-					if (fueled.IsSameConstructAs(beacon)) continue; //Skip if powerblock is attached to NoPowerZoneBlock
-						if (Vector3D.DistanceSquared(fueled.GetPosition(), beacon.GetPosition()) < 9000000) // use squared of 3000m for better performance
-                    {
-                        fueled.Enabled = false;
-                    }
+                    fueled.Enabled = false;
                 }
             }
         }
@@ -102,7 +91,6 @@ namespace NoLargeGridZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -120,15 +108,13 @@ namespace NoLargeGridZone
                 {
                     fueled.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

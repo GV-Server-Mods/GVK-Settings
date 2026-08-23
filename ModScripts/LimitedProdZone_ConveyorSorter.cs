@@ -1,15 +1,13 @@
-﻿using SpaceEngineers.Game.ModAPI;
 using System;
+using System.Collections.Generic;
 using VRage.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRageMath;
 using VRage.Game.ModAPI;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using VRage.ObjectBuilders;
 using VRage.Utils;
-using System.Collections.Generic;
 
 namespace LimitedProdZone
 {
@@ -18,17 +16,15 @@ namespace LimitedProdZone
     {
         private IMyConveyorSorter weapon;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = LimitedProdZone_Manager.LimitedProdCenterCoord; //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
-		private static readonly MyDefinitionId StaticWeaponDef = new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "ARYXMissileBattery");
-		private static readonly MyDefinitionId ConveyorSorterDef = new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorter");
-		private static readonly List<MyDefinitionId> ConveyorSorterDefs = new List<MyDefinitionId> 
-		{
-			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorter"),
-			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "MediumBlockConveyorSorter"),
-			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "SmallBlockConveyorSorter"),
-			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorterIndustrial") 	
-		};
-		private static readonly MyStringHash DestructionHash = MyStringHash.GetOrCompute("Destruction");
+        private static readonly MyDefinitionId StaticWeaponDef = new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "ARYXMissileBattery");
+        private static readonly List<MyDefinitionId> ConveyorSorterDefs = new List<MyDefinitionId> 
+        {
+            new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorter"),
+            new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "MediumBlockConveyorSorter"),
+            new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "SmallBlockConveyorSorter"),
+            new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorterIndustrial") 	
+        };
+        private static readonly MyStringHash DestructionHash = MyStringHash.GetOrCompute("Destruction");
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -62,28 +58,28 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-					if (weapon == null) return;
-					if ((weapon.BlockDefinition == StaticWeaponDef) && (weapon.CubeGrid != null) && !weapon.CubeGrid.IsStatic)
-					{
-						weapon.SlimBlock.DoDamage(99999999999999f, DestructionHash, true, null, 0, 0, false, null);
-						return;
-					}
-                    else
+                    if (weapon == null) return;
+                    if ((weapon.BlockDefinition == StaticWeaponDef) && (weapon.CubeGrid != null) && !weapon.CubeGrid.IsStatic)
                     {
-                        if (!weapon.Enabled) return;
+                        weapon.SlimBlock.DoDamage(99999999999999f, DestructionHash, true, null, 0, 0, false, null);
+                        return;
+                    }
 
-                        if (!LimitedProdZone_Manager.AnyEnabled) return;
+                    if (!weapon.Enabled) return;
 
-                        if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                    if (LimitedProdZone_Manager.IsPositionInWeaponZone(weapon.GetPosition()))
+                    {
+                        if (!ConveyorSorterDefs.Contains(weapon.BlockDefinition))
                         {
-                            if (!ConveyorSorterDefs.Contains(weapon.BlockDefinition)) weapon.Enabled = false;
+                            weapon.Enabled = false;
+                            return;
                         }
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"Failed checking LimitedProdZone conveyor sorter position: {exc}");
             }
         }
 
@@ -91,11 +87,12 @@ namespace LimitedProdZone
         {
             if (weapon.Enabled)
             {
-                if (!LimitedProdZone_Manager.AnyEnabled) return;
-
-                if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < LimitedProdZone_Manager.WeaponRadiusSquared) // use squared of 20,000m for better performance
+                if (LimitedProdZone_Manager.IsPositionInWeaponZone(weapon.GetPosition()))
                 {
-                    if (!ConveyorSorterDefs.Contains(weapon.BlockDefinition)) weapon.Enabled = false;
+                    if (!ConveyorSorterDefs.Contains(weapon.BlockDefinition))
+                    {
+                        weapon.Enabled = false;
+                    }
                 }
             }
         }
@@ -108,7 +105,6 @@ namespace LimitedProdZone
 
         public override void OnRemovedFromScene()
         {
-
             base.OnRemovedFromScene();
 
             if (Entity == null || Entity.MarkedForClose)
@@ -126,15 +122,13 @@ namespace LimitedProdZone
                 {
                     weapon.IsWorkingChanged -= WorkingStateChange;
                 }
-
             }
             catch (Exception exc)
             {
-
                 MyLog.Default.WriteLineAndConsole($"Failed to deregister event: {exc}");
                 return;
             }
-            //Unregister any handlers here
         }
     }
 }
+

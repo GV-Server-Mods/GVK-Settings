@@ -28,9 +28,20 @@
     <AdditionalFiles Include="thumb.png" Condition="Exists('thumb.png')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AdditionalFiles>
+	  <AdditionalFiles Include="thumb.jpg" Condition="Exists('thumb.jpg')">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AdditionalFiles>
+	  <AdditionalFiles Remove="bin\**" />
     <AdditionalFiles Remove="Content\*\**\*.cs" />
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
     <AdditionalFiles Remove="Content\Other content folders" />
     <AdditionalFiles Remove="Content\Data\SBC files can go here" />
-    <None Remove="thumb.png" />
+    <AdditionalFiles Remove="mdk.ini" />
+    <AdditionalFiles Remove="mdk.local.ini" />
+    <None Remove="mdk.ini" />
+    <None Remove="mdk.local.ini" />
+	<None Remove="thumb.png" />
   </ItemGroup>
 </Project>
