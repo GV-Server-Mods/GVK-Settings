@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using VRage.ModAPI;
@@ -22,7 +22,6 @@ namespace LimitedProdZone
     [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "LimitedProdZone" })]
     public class LimitedProdZone_Beacon : MyGameLogicComponent
     {
-        private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
         private IMyPlayer client;
         //private bool playerInZone;

@@ -229,7 +229,7 @@
 			<IgnoreDepth>false</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\KharakMap.dds</Texture>
+			<Texture>Textures\KharakMercator1080.dds</Texture>
 			<Reflectivity>0</Reflectivity>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
@@ -240,6 +240,24 @@
 				<X>1</X>
 				<Y>1</Y>
 			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>RadarGrid</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\RadarGrid.dds</Texture>
+			<Reflectivity>0</Reflectivity>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset><X>0</X><Y>0</Y></UVOffset>
+			<UVSize><X>1</X><Y>1</Y></UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -463,7 +481,58 @@
 			<IgnoreDepth>true</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\Particles\directional_arrow_white.dds</Texture>
+			<Texture>Textures\HUD\nav_arrow.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset><X>0</X><Y>0</Y></UVOffset>
+			<UVSize><X>1</X><Y>1</Y></UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>signal_up</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>true</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\HUD\signal_up.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset><X>0</X><Y>0</Y></UVOffset>
+			<UVSize><X>1</X><Y>1</Y></UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>signal_down</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>true</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\HUD\signal_down.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset><X>0</X><Y>0</Y></UVOffset>
+			<UVSize><X>1</X><Y>1</Y></UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>signal_level</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>true</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\HUD\signal_level.dds</Texture>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset><X>0</X><Y>0</Y></UVOffset>
 			<UVSize><X>1</X><Y>1</Y></UVSize>

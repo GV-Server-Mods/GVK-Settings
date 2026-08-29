@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using VRage.ModAPI;
@@ -22,29 +22,17 @@ namespace KOTHNoSafezone
     [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "ZoneBlock" })]
     public class KOTHNoSafezone_Beacon : MyGameLogicComponent
     {
-        private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
-        //private IMyPlayer client;
-        private bool playerInZone;
-        private IMyCharacter character;
-        private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
-
-        private bool logicEnabled = false;
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
             beacon = (Entity as IMyBeacon);
-            KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
-			if (beacon != null)
+            if (beacon != null)
             {
-                logicEnabled = true;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                KOTHNoSafezone_SafeZoneBlock.beaconList.Add(beacon);
             }
-
-            //client = MyAPIGateway.Session.LocalHumanPlayer;
         }
 
         /*public override void UpdateBeforeSimulation10()

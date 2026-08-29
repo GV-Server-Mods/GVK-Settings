@@ -1,4 +1,4 @@
-﻿using ObjectBuilders.SafeZone;
+using ObjectBuilders.SafeZone;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
@@ -26,9 +26,9 @@ namespace PSYCHO.SafeZoneAnimated
         // VARIABLES
         // =========
         // Defines the axis for switch.
-        static readonly int X = 1;
-        static readonly int Y = 2;
-        static readonly int Z = 3;
+        const int X = 1;
+        const int Y = 2;
+        const int Z = 3;
 
         public bool DoOnce = false;
         public IMySafeZoneBlock block;
@@ -255,10 +255,10 @@ namespace PSYCHO.SafeZoneAnimated
             var hingePos = new Vector3(HingePosX, HingePosY, HingePosZ); // This defines the location of a new pivot point.
             var MatrixTransl1 = Matrix.CreateTranslation(-(hingePos));
             var MatrixTransl2 = Matrix.CreateTranslation(hingePos);
-            var rotMatrix = subpart.PositionComp.LocalMatrix;
+            var rotMatrix = subpart.PositionComp.LocalMatrixRef;
             //rotMatrix *= (MatrixTransl1 * (Matrix.CreateRotationX(Rotator) * Matrix.CreateRotationY(RotY) * Matrix.CreateRotationZ(RotZ)) * MatrixTransl2);
             rotMatrix *= (MatrixTransl1 * _rotMatrixX * _rotMatrixY * _rotMatrixZ * MatrixTransl2);
-            subpart.PositionComp.LocalMatrix = rotMatrix;
+            subpart.PositionComp.SetLocalMatrix(ref rotMatrix, null, true);
             //MyAPIGateway.Utilities.ShowNotification(Rotator.ToString(), 1);
         }
 
@@ -268,13 +268,14 @@ namespace PSYCHO.SafeZoneAnimated
             {
                 switch (RotationAxis)
                 {
+                    case X:
                     default:
                         _rotMatrixX = Matrix.CreateRotationX(Rotator);
                         break;
-                    case 2:
+                    case Y:
                         _rotMatrixY = Matrix.CreateRotationY(Rotator);
                         break;
-                    case 3:
+                    case Z:
                         _rotMatrixZ = Matrix.CreateRotationZ(Rotator);
                         break;
                 }
@@ -283,13 +284,14 @@ namespace PSYCHO.SafeZoneAnimated
             {
                 switch (RotationAxis)
                 {
+                    case X:
                     default:
                         _rotMatrixX = Matrix.Identity;
                         break;
-                    case 2:
+                    case Y:
                         _rotMatrixY = Matrix.Identity;
                         break;
-                    case 3:
+                    case Z:
                         _rotMatrixZ = Matrix.Identity;
                         break;
                 }

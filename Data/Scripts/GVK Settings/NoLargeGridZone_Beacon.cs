@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using VRage.ModAPI;
@@ -22,28 +22,19 @@ namespace NoLargeGridZone
     [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "GVK_NoLargeGridZone" })]
     public class NoLargeGridZone_Beacon : MyGameLogicComponent
     {
-        private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
-        private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
-
-        private TextWriter logger = null;
-        private String timeofload = "" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
-        private bool logicEnabled = false;
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
             beacon = (Entity as IMyBeacon);
-            NoLargeGridZone_Reactor.beaconList.Add(beacon);
-            NoLargeGridZone_Battery.beaconList.Add(beacon);
-            NoLargeGridZone_Fueled.beaconList.Add(beacon);
-            NoLargeGridZone_Solar.beaconList.Add(beacon);
             if (beacon != null)
             {
-                logicEnabled = true;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                NoLargeGridZone_Reactor.beaconList.Add(beacon);
+                NoLargeGridZone_Battery.beaconList.Add(beacon);
+                NoLargeGridZone_Fueled.beaconList.Add(beacon);
+                NoLargeGridZone_Solar.beaconList.Add(beacon);
             }
         }
 

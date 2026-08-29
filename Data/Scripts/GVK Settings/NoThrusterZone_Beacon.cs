@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using VRage.ModAPI;
@@ -22,24 +22,16 @@ namespace KOTHNoThrusters
     [MyEntityComponentDescriptor(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Beacon), false, new string[] { "GVK_NoThrusterZone" })]
     public class KOTHNoThrusters_Beacon : MyGameLogicComponent
     {
-        private MyObjectBuilder_EntityBase _objectBuilder;
         private IMyBeacon beacon;
-        private IMyCharacter character;
-        private VRage.Game.ModAPI.Interfaces.IMyControllableEntity controller;
-
-        private bool logicEnabled = false;
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             base.Init(objectBuilder);
 
             beacon = (Entity as IMyBeacon);
-            KOTHNoThrusters_Thruster.beaconList.Add(beacon);
-			if (beacon != null)
+            if (beacon != null)
             {
-                logicEnabled = true;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_FRAME;
-                NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
+                KOTHNoThrusters_Thruster.beaconList.Add(beacon);
             }
         }
 
