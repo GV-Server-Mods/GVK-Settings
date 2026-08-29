@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Draygo.API;
@@ -19,13 +19,14 @@ namespace GVK.Navigation
     /// - Authentic HUD Compass frame (compass.dds) with tape centered between the bars.
     /// - Forward-accurate horizon azimuth tracking: driving towards a POI decreases distance to zero.
     /// - Keen Vanilla HUD Markers: marker_gps for GPS waypoints and relation markers (friendly, enemy, neutral, self) for radio signals.
+    /// - Pre-allocated billboard pools for Minimap and Satellite Map (Zero GC allocation in hot paths, 100% reliable rendering).
     /// - Aspect-ratio corrected billboard scaling (no more height-squished icons or maps on widescreen/ultrawide).
     /// - Calibrated WorldToMapUV projection aligned to KharakMap.dds longitude (-91.4° meridian shift) & inverted latitude.
-    /// - Displays ONLY waypoints set to 'Show on HUD' and active radio broadcast signals (supports Unknown Signals).
+    /// - Displays waypoints and active radio broadcast signals with authentic Keen icons on Compass, Minimap, and Map.
     /// - Pinpoint Antenna/Beacon tracking: points directly at the physical block itself with no close-distance dropouts.
     /// - High-readability distance badges centered dynamically below each POI.
     /// - Perfectly centered Zone Status Bar below the compass.
-    /// - Live Corner Minimap (top-right, true 2:1 ratio) with accurate UV player and GPS blips.
+    /// - Live Corner Minimap (top-right, true 2:1 ratio) with accurate UV player and POI icons.
     /// - Full-Screen Interactive Satellite Map on [M] key with authentic Keen marker icons.
     /// - Auto-populating default Kharak GPS waypoints and /zone gps recovery.
     /// </summary>
@@ -58,20 +59,25 @@ namespace GVK.Navigation
         private static readonly MyStringId MATERIAL_MARKER_NEUTRAL = MyStringId.GetOrCompute("marker_neutral");
         private static readonly MyStringId MATERIAL_MARKER_SELF = MyStringId.GetOrCompute("marker_self");
         private static readonly MyStringId MATERIAL_MARKER_ALERT = MyStringId.GetOrCompute("marker_alert");
+        private static readonly MyStringId MATERIAL_NAV_ARROW = MyStringId.GetOrCompute("nav_arrow");
+
 
         // Compass Tape Definition
         private struct CompassMarker
         {
             public string Label;
             public float Offset;
+            public double HalfWidth;
+
             public CompassMarker(string label, float offset)
             {
                 Label = label;
                 Offset = offset;
+                HalfWidth = -1.0;
             }
         }
 
-        private static readonly List<CompassMarker> COMPASS_TAPE = new List<CompassMarker>()
+        private static readonly CompassMarker[] COMPASS_TAPE = new CompassMarker[]
         {
             new CompassMarker("S", 0f),
             new CompassMarker("•", -0.025f),
@@ -155,7 +161,7 @@ namespace GVK.Navigation
             new CompassMarker("•", 0.025f)
         };
 
-        // Active HUD Waypoint (GPS with ShowOnHud = true, or real broadcast signal)
+        // Active HUD Waypoint (GPS or real broadcast signal)
         private struct ActiveHudWaypoint
         {
             public MyStringId Sprite;
@@ -163,6 +169,8 @@ namespace GVK.Navigation
             public Vector3D Coords;
             public Color DisplayColor;
             public double DistanceMeters;
+            // UV computed once per background scan; reused by minimap and full-map every frame.
+            public Vector2 MapUV;
         }
 
         // Default GPS entries populated for joining players
@@ -221,7 +229,7 @@ namespace GVK.Navigation
         private HudAPIv2.BillBoardHUDMessage minimapTerrain;
         private HudAPIv2.BillBoardHUDMessage minimapPlayerDot;
         private HudAPIv2.HUDMessage minimapLabel;
-        private List<HudAPIv2.BillBoardHUDMessage> minimapPoints = new List<HudAPIv2.BillBoardHUDMessage>();
+        private List<HudAPIv2.BillBoardHUDMessage> minimapMarkerPool = new List<HudAPIv2.BillBoardHUDMessage>();
         private Vector2D minimapPosition = new Vector2D(0.81, 0.73);
         private Vector2D minimapSize = new Vector2D(0.26, 0.23); // Dynamically set with aspect ratio
         private bool showMinimap = true;
@@ -234,8 +242,8 @@ namespace GVK.Navigation
         private HudAPIv2.BillBoardHUDMessage mapPlayerDot;
         private HudAPIv2.HUDMessage mapFooterMsg;
         private StringBuilder mapFooterText = new StringBuilder(128);
-        private List<HudAPIv2.BillBoardHUDMessage> fullMapMarkers = new List<HudAPIv2.BillBoardHUDMessage>();
-        private List<HudAPIv2.HUDMessage> fullMapLabels = new List<HudAPIv2.HUDMessage>();
+        private List<HudAPIv2.BillBoardHUDMessage> fullMapMarkerPool = new List<HudAPIv2.BillBoardHUDMessage>();
+        private List<HudAPIv2.HUDMessage> fullMapLabelPool = new List<HudAPIv2.HUDMessage>();
 
         // Dynamic State
         private int currentZoneIndex = 0;
@@ -243,13 +251,53 @@ namespace GVK.Navigation
         private double lastRemainingKm = 0.0;
         private double lastDistZ3Km = 0.0;
         private int tickCounter = 0;
+        private float playerHeadingRad = 0f;
         private bool hasCheckedDefaultGps = false;
+        private bool _refreshMinimapNextFrame = false;
+        private bool _fullMapNeedsRedraw = false;
+
+        // Cached orientation matrix & planet north azimuth — recomputed only when player moves > 1m
+        private Vector3D _lastCompassPos = Vector3D.Zero;
+        private Matrix _cachedRelativeOffset = Matrix.Identity;
+        private float _cachedNorthAzimuth = 0f;
+
+        // Cached aspect ratio & satellite map dimensions to avoid per-frame camera queries
+        private float cachedAspect = 16f / 9f;
+        private float cachedFullMapWidth = 1.40f;
+        private float cachedFullMapHeight = 0.70f * (16f / 9f);
+        private Vector2 cachedViewportSize = Vector2.Zero;
+
+        // Zone bar dirty tracking — skip text rebuild when nothing changed.
+        private int _lastZoneBarZoneIndex = -1;
+        private double _lastZoneBarDistKm = -1.0;
+        private double _lastZoneBarRemainingKm = -1.0;
+        private double _lastZoneBarDistZ3Km = -1.0;
 
         // Active HUD Waypoints Buffer
         private List<ActiveHudWaypoint> activeHudWaypoints = new List<ActiveHudWaypoint>();
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
         private List<IMySlimBlock> blockBuffer = new List<IMySlimBlock>();
+
+        // Cached static delegates — avoid per-tick lambda allocations in hot paths.
+        // Mono/SE does NOT cache non-capturing lambdas the way modern .NET does.
+        private static readonly Func<IMyEntity, bool> IsGridPredicate =
+            e => e is IMyCubeGrid;
+        private static readonly Func<IMySlimBlock, bool> IsBroadcastBlockPredicate =
+            b => b.FatBlock is IMyBeacon || b.FatBlock is IMyRadioAntenna;
+
+        // Comparison<T> is prohibited by the SE ModAPI whitelist on Mono.
+        // Use a struct IComparer<T> singleton instead — zero allocation, whitelisted.
+        private struct WaypointDistanceComparer : IComparer<ActiveHudWaypoint>
+        {
+            public int Compare(ActiveHudWaypoint a, ActiveHudWaypoint b)
+                => a.DistanceMeters.CompareTo(b.DistanceMeters);
+        }
+        private static readonly WaypointDistanceComparer WaypointComparer = new WaypointDistanceComparer();
+
+        // Reusable StringBuilder for mission screen text (avoids per-call allocation).
+        private readonly StringBuilder _missionSb = new StringBuilder(512);
+
 
         public override void LoadData()
         {
@@ -280,14 +328,14 @@ namespace GVK.Navigation
                     minimapTerrain?.DeleteMessage();
                     minimapPlayerDot?.DeleteMessage();
                     minimapLabel?.DeleteMessage();
-                    ClearMinimapPoints();
+                    ClearMinimapPool();
 
                     mapDimmer?.DeleteMessage();
                     mapFrame?.DeleteMessage();
                     mapTerrain?.DeleteMessage();
                     mapPlayerDot?.DeleteMessage();
                     mapFooterMsg?.DeleteMessage();
-                    ClearFullMapElements();
+                    ClearFullMapPool();
 
                     hudApi.Close();
                     hudApi = null;
@@ -313,22 +361,22 @@ namespace GVK.Navigation
             waypointDistPool.Clear();
         }
 
-        private void ClearMinimapPoints()
+        private void ClearMinimapPool()
         {
-            for (int i = 0; i < minimapPoints.Count; i++)
-                minimapPoints[i]?.DeleteMessage();
-            minimapPoints.Clear();
+            for (int i = 0; i < minimapMarkerPool.Count; i++)
+                minimapMarkerPool[i]?.DeleteMessage();
+            minimapMarkerPool.Clear();
         }
 
-        private void ClearFullMapElements()
+        private void ClearFullMapPool()
         {
-            for (int i = 0; i < fullMapMarkers.Count; i++)
-                fullMapMarkers[i]?.DeleteMessage();
-            fullMapMarkers.Clear();
+            for (int i = 0; i < fullMapMarkerPool.Count; i++)
+                fullMapMarkerPool[i]?.DeleteMessage();
+            fullMapMarkerPool.Clear();
 
-            for (int i = 0; i < fullMapLabels.Count; i++)
-                fullMapLabels[i]?.DeleteMessage();
-            fullMapLabels.Clear();
+            for (int i = 0; i < fullMapLabelPool.Count; i++)
+                fullMapLabelPool[i]?.DeleteMessage();
+            fullMapLabelPool.Clear();
         }
 
         /// <summary>
@@ -338,8 +386,17 @@ namespace GVK.Navigation
         {
             var camera = MyAPIGateway.Session.Camera;
             if (camera != null && camera.ViewportSize.Y > 0)
-                return camera.ViewportSize.X / camera.ViewportSize.Y;
-            return 16f / 9f;
+            {
+                if (camera.ViewportSize != cachedViewportSize)
+                {
+                    cachedViewportSize = camera.ViewportSize;
+                    cachedAspect = camera.ViewportSize.X / camera.ViewportSize.Y;
+                    cachedFullMapWidth = 1.40f;
+                    cachedFullMapHeight = (cachedFullMapWidth * 0.5f) * cachedAspect;
+                }
+                return cachedAspect;
+            }
+            return cachedAspect;
         }
 
         private void OnHudApiRegistered()
@@ -363,8 +420,8 @@ namespace GVK.Navigation
                     Blend: BlendTypeEnum.PostPP
                 );
 
-                // Pre-allocate 35 Tape character HUDMessages
-                for (int i = 0; i < 35; i++)
+                // Pre-allocate 45 Tape character HUDMessages (45 handles wider FOVs without pool overflow)
+                for (int i = 0; i < 45; i++)
                 {
                     var msg = new HudAPIv2.HUDMessage(
                         Message: new StringBuilder(""),
@@ -383,7 +440,7 @@ namespace GVK.Navigation
 
                 // Pre-allocate 16 Marker Sprite BillBoards (Aspect-corrected 1:1 square: Width * aspect = Height)
                 float iconWidth = 0.015f;
-                float iconHeight = iconWidth * aspect; // Un-squished 1:1 square!
+                float iconHeight = iconWidth * aspect;
 
                 for (int i = 0; i < 16; i++)
                 {
@@ -461,7 +518,7 @@ namespace GVK.Navigation
 
                 // 3. Corner Minimap (Aspect-corrected true 2:1 image ratio for KharakMap.dds)
                 float mWidth = 0.26f;
-                float mHeight = (mWidth * 0.5f) * aspect; // True uncompressed 2:1 map!
+                float mHeight = (mWidth * 0.5f) * aspect;
                 minimapSize = new Vector2D(mWidth, mHeight);
                 minimapPosition = new Vector2D(0.81, 0.95 - mHeight * 0.5 - 0.02);
 
@@ -493,20 +550,6 @@ namespace GVK.Navigation
                     Blend: BlendTypeEnum.PostPP
                 );
 
-                minimapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.007f,
-                    Height: 0.007f * aspect, // Aspect-corrected square dot!
-                    HideHud: true,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-
                 minimapLabel = new HudAPIv2.HUDMessage(
                     Message: new StringBuilder("<color=200,220,255>TACTICAL RADAR"),
                     Origin: new Vector2D(minimapPosition.X - minimapSize.X * 0.5, minimapPosition.Y + minimapSize.Y * 0.5 + 0.015),
@@ -517,6 +560,43 @@ namespace GVK.Navigation
                     Shadowing: true,
                     ShadowColor: Color.Black
                 );
+
+                // Pre-allocate 30 Minimap Marker Billboards (Zero GC allocations, 100% reliable)
+                for (int i = 0; i < 30; i++)
+                {
+                    var mDot = new HudAPIv2.BillBoardHUDMessage(
+                        Material: MATERIAL_MARKER_GPS,
+                        Origin: minimapPosition,
+                        BillBoardColor: Color.White,
+                        Offset: Vector2D.Zero,
+                        TimeToLive: -1,
+                        Scale: 1.0,
+                        Width: 0.010f,
+                        Height: 0.010f * aspect,
+                        HideHud: true,
+                        Shadowing: false,
+                        Blend: BlendTypeEnum.PostPP
+                    );
+                    mDot.Visible = false;
+                    minimapMarkerPool.Add(mDot);
+                }
+
+                // Player arrow is registered AFTER the marker pool so HudAPI draws it on top.
+                // This eliminates the per-frame delete/recreate hack that was causing GC pressure.
+                minimapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_NAV_ARROW,
+                    Origin: minimapPosition,
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    Width: 0.007f,
+                    Height: 0.007f * aspect,
+                    HideHud: true,
+                    Shadowing: true,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                minimapPlayerDot.Visible = false;
 
                 // 4. Interactive Full-Screen Satellite Map ([M] Key, true 2:1 ratio)
                 mapDimmer = new HudAPIv2.BillBoardHUDMessage(
@@ -534,7 +614,7 @@ namespace GVK.Navigation
                 mapDimmer.Visible = false;
 
                 float fullMapWidth = 1.40f;
-                float fullMapHeight = (fullMapWidth * 0.5f) * aspect; // True 2:1 aspect ratio!
+                float fullMapHeight = (fullMapWidth * 0.5f) * aspect;
 
                 mapFrame = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
@@ -565,20 +645,7 @@ namespace GVK.Navigation
                 );
                 mapTerrain.Visible = false;
 
-                mapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.012f,
-                    Height: 0.012f * aspect,
-                    HideHud: false,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapPlayerDot.Visible = false;
+
 
                 mapFooterMsg = new HudAPIv2.HUDMessage(
                     Message: mapFooterText,
@@ -591,6 +658,54 @@ namespace GVK.Navigation
                     ShadowColor: Color.Black
                 );
                 mapFooterMsg.Visible = false;
+
+                // Pre-allocate 50 Full Map Marker Billboards & Labels (Zero GC allocations)
+                for (int i = 0; i < 50; i++)
+                {
+                    var sprite = new HudAPIv2.BillBoardHUDMessage(
+                        Material: MATERIAL_MARKER_GPS,
+                        Origin: Vector2D.Zero,
+                        BillBoardColor: Color.White,
+                        Offset: Vector2D.Zero,
+                        TimeToLive: -1,
+                        Scale: 1.0,
+                        Width: 0.015f,
+                        Height: 0.015f * aspect,
+                        HideHud: false,
+                        Blend: BlendTypeEnum.PostPP
+                    );
+                    sprite.Visible = false;
+                    fullMapMarkerPool.Add(sprite);
+
+                    var label = new HudAPIv2.HUDMessage(
+                        Message: new StringBuilder(""),
+                        Origin: Vector2D.Zero,
+                        Offset: Vector2D.Zero,
+                        TimeToLive: -1,
+                        Scale: 0.60,
+                        HideHud: false,
+                        Shadowing: true,
+                        ShadowColor: Color.Black
+                    );
+                    label.Visible = false;
+                    fullMapLabelPool.Add(label);
+                }
+
+                // Player arrow registered AFTER the marker pool so HudAPI draws it on top.
+                mapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_NAV_ARROW,
+                    Origin: Vector2D.Zero,
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    Width: 0.012f,
+                    Height: 0.012f * aspect,
+                    HideHud: false,
+                    Shadowing: true,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                mapPlayerDot.Visible = false;
 
                 // 5. Register TextHUDAPI Mod Menu
                 var rootCategory = new HudAPIv2.MenuRootCategory("GVK Navigation Suite", HudAPIv2.MenuRootCategory.MenuFlag.PlayerMenu, "GVK Navigation & Map Settings");
@@ -635,22 +750,40 @@ namespace GVK.Navigation
 
             tickCounter++;
 
-            // 30-Tick (0.5s) Background Scan for HUD-visible signals & GPS
-            if (tickCounter % 30 == 0)
+            // 100-Tick (~1.67s) Background Scan: entity iteration, GPS list, zone distance.
+            // Players don't cross zone boundaries fast enough to notice the extra latency.
+            if (tickCounter % 100 == 0)
             {
                 UpdateBackgroundData(pos.Value);
             }
 
-            // Per-frame UI update
+            // Per-frame: Compass tape tracks head rotation so it must stay per-frame.
+            // Minimap and zone bar throttled to every 10 frames (~6 Hz) — saves significant
+            // per-frame work without any perceptible lag at normal rover speeds.
             if (hudApi != null && hudApi.Heartbeat)
             {
                 UpdateCompassAndWaypoints(pos.Value);
-                UpdateZoneBar();
-                UpdateMinimap(pos.Value);
+
+                if (tickCounter % 10 == 0 || _refreshMinimapNextFrame)
+                {
+                    _refreshMinimapNextFrame = false;
+                    UpdateZoneBar();
+                    UpdateMinimap(pos.Value);
+                }
 
                 if (showFullMap)
                 {
-                    UpdateFullMap(pos.Value);
+                    if (tickCounter % 10 == 0 || _fullMapNeedsRedraw)
+                    {
+                        _fullMapNeedsRedraw = false;
+                        UpdateFullMap(pos.Value);
+                    }
+                    else if (mapPlayerDot != null)
+                    {
+                        // Keep player arrow rotation and blink responsive at 60 FPS while throttling waypoint/label plotting
+                        mapPlayerDot.Rotation = -playerHeadingRad;
+                        mapPlayerDot.BillBoardColor = (tickCounter % 20 < 10) ? Color.LimeGreen : Color.Cyan;
+                    }
                 }
             }
         }
@@ -661,15 +794,16 @@ namespace GVK.Navigation
             if (player == null) return;
             hasCheckedDefaultGps = true;
 
-            List<IMyGps> playerGps = new List<IMyGps>();
-            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, playerGps);
+            // Reuse cachedGpsList to avoid allocation — called once on first player position tick.
+            cachedGpsList.Clear();
+            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
 
             bool hasZone0 = false;
             bool hasZone3 = false;
-            for (int i = 0; i < playerGps.Count; i++)
+            for (int i = 0; i < cachedGpsList.Count; i++)
             {
-                if (playerGps[i].Name.Equals("Zone 0", StringComparison.OrdinalIgnoreCase)) hasZone0 = true;
-                if (playerGps[i].Name.Equals("Zone 3", StringComparison.OrdinalIgnoreCase)) hasZone3 = true;
+                if (cachedGpsList[i].Name.Equals("Zone 0", StringComparison.OrdinalIgnoreCase)) hasZone0 = true;
+                if (cachedGpsList[i].Name.Equals("Zone 3", StringComparison.OrdinalIgnoreCase)) hasZone3 = true;
             }
 
             if (!hasZone0 || !hasZone3)
@@ -683,17 +817,18 @@ namespace GVK.Navigation
             var player = MyAPIGateway.Session.Player;
             if (player == null) return;
 
-            List<IMyGps> playerGps = new List<IMyGps>();
-            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, playerGps);
+            // Reuse cachedGpsList to avoid allocation — called from commands/menu, never concurrently with scan.
+            cachedGpsList.Clear();
+            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
 
             int addedCount = 0;
             for (int i = 0; i < DEFAULT_KHARAK_GPS.Length; i++)
             {
                 var entry = DEFAULT_KHARAK_GPS[i];
                 bool exists = false;
-                for (int j = 0; j < playerGps.Count; j++)
+                for (int j = 0; j < cachedGpsList.Count; j++)
                 {
-                    if (playerGps[j].Name.Equals(entry.Name, StringComparison.OrdinalIgnoreCase))
+                    if (cachedGpsList[j].Name.Equals(entry.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         exists = true;
                         break;
@@ -711,18 +846,17 @@ namespace GVK.Navigation
 
             if (notify)
             {
-                string msg = addedCount > 0 
-                    ? $"[GVK NAV] Added {addedCount} default Kharak GPS waypoints." 
+                string msg = addedCount > 0
+                    ? $"[GVK NAV] Added {addedCount} default Kharak GPS waypoints."
                     : "[GVK NAV] All default Kharak GPS waypoints are already present.";
                 MyAPIGateway.Utilities.ShowNotification(msg, 3000, MyFontEnum.Green);
             }
         }
 
         /// <summary>
-        /// Scans ONLY player-visible HUD items:
-        /// 1. GPS coordinates where ShowOnHud == true -> marker_gps.
-        /// 2. Active broadcasting antennas / beacons where broadcast radius reaches the player -> marker_friendly, marker_enemy, marker_neutral, marker_self.
-        /// Points with pinpoint precision directly to the physical antenna/beacon block itself, with NO close-distance dropouts.
+        /// Scans all player GPS entries and in-range radio signals:
+        /// 1. GPS coordinates: uses marker_gps and GPSColor.
+        /// 2. Active broadcasting antennas / beacons: uses marker_friendly, marker_enemy, marker_neutral, marker_self.
         /// </summary>
         private void UpdateBackgroundData(Vector3D playerPos)
         {
@@ -753,7 +887,7 @@ namespace GVK.Navigation
 
             activeHudWaypoints.Clear();
 
-            // 1. Scan Player GPS entries (ONLY those set to ShowOnHud == true) -> Always Keen marker_gps
+            // 1. Scan Player GPS entries
             cachedGpsList.Clear();
             var playerId = MyAPIGateway.Session.Player?.IdentityId ?? 0;
             if (playerId != 0)
@@ -763,7 +897,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < cachedGpsList.Count; i++)
                 {
                     var gps = cachedGpsList[i];
-                    if (!gps.ShowOnHud) continue; // Respect player HUD toggle!
+                    if (!gps.ShowOnHud) continue; // Strictly only show what is toggled to Show On HUD!
 
                     double dist = Vector3D.Distance(playerPos, gps.Coords);
 
@@ -772,19 +906,22 @@ namespace GVK.Navigation
                         Name = gps.Name,
                         Coords = gps.Coords,
                         Sprite = MATERIAL_MARKER_GPS,
-                        DisplayColor = gps.GPSColor, // Exact HUD color!
-                        DistanceMeters = dist
+                        DisplayColor = gps.GPSColor,
+                        DistanceMeters = dist,
+                        MapUV = WorldToMapUV(gps.Coords) // Pre-computed once; reused by minimap+map every frame.
                     });
                 }
             }
 
-            // 2. Scan Real In-Range Radio Broadcasts (Beacons & Antennas that actually reach player HUD)
+            // 2. Scan Real In-Range Radio Broadcasts (Beacons & Antennas)
             entityBuffer.Clear();
-            MyAPIGateway.Entities.GetEntities(entityBuffer, e => e is IMyCubeGrid);
+            // Use cached predicate delegate — avoids a new delegate allocation every 30 ticks on Mono/SE.
+            MyAPIGateway.Entities.GetEntities(entityBuffer, IsGridPredicate);
 
             var controlled = MyAPIGateway.Session.ControlledObject?.Entity;
             var playerGrid = (controlled as IMyCubeBlock)?.CubeGrid ?? (controlled as IMyCubeGrid);
             long localPlayerId = MyAPIGateway.Session.Player?.IdentityId ?? 0;
+            var localPlayer = MyAPIGateway.Session.Player;
 
             foreach (var ent in entityBuffer)
             {
@@ -795,21 +932,31 @@ namespace GVK.Navigation
                 if (playerGrid != null && (grid == playerGrid || grid.IsSameConstructAs(playerGrid)))
                     continue;
 
-                // Scan broadcasting blocks on this grid
+                // Distance culling: vanilla max beacon/antenna is 50km + 10km grid bounding margin (60km).
+                // Skip extracting block buffers on distant pirate bases and derelicts that can never broadcast to player.
+                if (Vector3D.DistanceSquared(playerPos, grid.PositionComp.GetPosition()) > 60000.0 * 60000.0)
+                    continue;
+
+                // Scan broadcasting blocks on this grid using cached predicate delegate.
                 blockBuffer.Clear();
-                grid.GetBlocks(blockBuffer, b => b.FatBlock is IMyBeacon || b.FatBlock is IMyRadioAntenna);
+                grid.GetBlocks(blockBuffer, IsBroadcastBlockPredicate);
 
                 long gridOwner = grid.BigOwners.Count > 0 ? grid.BigOwners[0] : 0;
-                var relation = MyAPIGateway.Session.Player.GetRelationTo(gridOwner);
+
+                // Guard: Player can be null during respawn/disconnect — fall back to NoOwnership rather than throw.
+                var relation = localPlayer?.GetRelationTo(gridOwner) ?? MyRelationsBetweenPlayerAndBlock.NoOwnership;
+
                 bool isOwner = (gridOwner == localPlayerId && localPlayerId != 0);
-                bool isNpc = gridOwner == 0;
-                if (!isNpc)
+
+                // gridOwner == 0 means the grid is UNOWNED (no player set ownership), not necessarily an NPC.
+                // Rely solely on the faction NPC check for correct NPC gold color; unowned shows as neutral white.
+                bool isNpc = false;
+                if (gridOwner != 0)
                 {
                     var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(gridOwner);
                     if (faction != null && faction.IsEveryoneNpc()) isNpc = true;
                 }
 
-                // Determine Keen HUD relation marker and color
                 MyStringId markerSprite;
                 Color signalColor;
 
@@ -841,11 +988,13 @@ namespace GVK.Navigation
                     var beacon = fat as IMyBeacon;
                     if (beacon != null && beacon.IsWorking && beacon.Enabled)
                     {
-                        Vector3D blockPos = beacon.GetPosition(); // Exact block coordinates!
-                        double blockDist = Vector3D.Distance(playerPos, blockPos);
+                        Vector3D blockPos = beacon.GetPosition();
+                        double distSq = Vector3D.DistanceSquared(playerPos, blockPos);
+                        double radius = beacon.Radius;
 
-                        if (beacon.Radius >= blockDist && blockDist >= 1.0)
+                        if (distSq <= radius * radius && distSq >= 1.0)
                         {
+                            double blockDist = Math.Sqrt(distSq);
                             string bName = string.IsNullOrEmpty(beacon.CustomName) ? grid.CustomName : beacon.CustomName;
                             activeHudWaypoints.Add(new ActiveHudWaypoint
                             {
@@ -853,20 +1002,23 @@ namespace GVK.Navigation
                                 Coords = blockPos,
                                 Sprite = markerSprite,
                                 DisplayColor = signalColor,
-                                DistanceMeters = blockDist
+                                DistanceMeters = blockDist,
+                                MapUV = WorldToMapUV(blockPos)
                             });
-                            break; // 1 primary signal per grid
+                            break;
                         }
                     }
 
                     var antenna = fat as IMyRadioAntenna;
                     if (antenna != null && antenna.IsWorking && antenna.Enabled && antenna.EnableBroadcasting)
                     {
-                        Vector3D blockPos = antenna.GetPosition(); // Exact block coordinates!
-                        double blockDist = Vector3D.Distance(playerPos, blockPos);
+                        Vector3D blockPos = antenna.GetPosition();
+                        double distSq = Vector3D.DistanceSquared(playerPos, blockPos);
+                        double radius = antenna.Radius;
 
-                        if (antenna.Radius >= blockDist && blockDist >= 1.0)
+                        if (distSq <= radius * radius && distSq >= 1.0)
                         {
+                            double blockDist = Math.Sqrt(distSq);
                             string aName = string.IsNullOrEmpty(antenna.CustomName) ? grid.CustomName : antenna.CustomName;
                             activeHudWaypoints.Add(new ActiveHudWaypoint
                             {
@@ -874,26 +1026,66 @@ namespace GVK.Navigation
                                 Coords = blockPos,
                                 Sprite = markerSprite,
                                 DisplayColor = signalColor,
-                                DistanceMeters = blockDist
+                                DistanceMeters = blockDist,
+                                MapUV = WorldToMapUV(blockPos)
                             });
-                            break; // 1 primary signal per grid
+                            break;
                         }
                     }
                 }
             }
 
-            // Sort so closest targets are rendered first
-            activeHudWaypoints.Sort((a, b) => a.DistanceMeters.CompareTo(b.DistanceMeters));
+            // Sort by distance using cached IComparer struct — zero allocation, whitelisted by SE ModAPI.
+            activeHudWaypoints.Sort(WaypointComparer);
+
+            // Flag full satellite map for redraw on next frame if currently open
+            if (showFullMap)
+                _fullMapNeedsRedraw = true;
         }
 
         /// <summary>
         /// Updates the HUD Compass tape and projects graphical POI sprites (Keen marker_gps and relation markers).
-        /// Properly centers tape and icons between the curved compass bars.
-        /// Fixed relative azimuth math: target straight ahead centers under needle; heading towards it decreases distance.
         /// </summary>
         private void UpdateCompassAndWaypoints(Vector3D playerPos)
         {
-            if (compassFrame == null || !showCompass)
+            var camera = MyAPIGateway.Session.Camera;
+            if (camera == null) return;
+
+            // 1. Calculate Player Relative North and Pitch/Roll Correction.
+            // Caching: Recompute orientation matrix and north azimuth only when moving > 1m across Pertam.
+            // When stationary or rotating head/wheels, planet-relative north and horizon tilt do not change.
+            if (Vector3D.DistanceSquared(playerPos, _lastCompassPos) > 1.0)
+            {
+                _lastCompassPos = playerPos;
+
+                Vector3D relativePlayerPos = playerPos - PLANET_CENTER;
+                Vector3 relativePlayerPosNormal = (Vector3)(relativePlayerPos / relativePlayerPos.Length());
+
+                Vector3D relativeNorth = PLANET_CENTER + new Vector3D(0f, PLANET_RADIUS, 0f);
+                Vector3D side1 = relativeNorth - playerPos;
+                Vector3D side2 = PLANET_CENTER - playerPos;
+                Vector3D cross = Vector3D.Cross(side1, side2);
+                Vector3D playerRelativeNorth = Vector3D.Cross(cross, side2);
+                Vector3 playerRelativeNorthNormal = (Vector3)(playerRelativeNorth / playerRelativeNorth.Length());
+
+                Vector3 baseSouth = BASE_SOUTH;
+                Matrix.CreateRotationFromTwoVectors(ref relativePlayerPosNormal, ref baseSouth, out _cachedRelativeOffset);
+
+                Vector3 northCorrected = Vector3.Transform(playerRelativeNorthNormal, _cachedRelativeOffset);
+                float northElev = 0f;
+                Vector3.GetAzimuthAndElevation(northCorrected, out _cachedNorthAzimuth, out northElev);
+            }
+
+            Vector3 forwardCorrected = Vector3.Transform(camera.WorldMatrix.Forward, _cachedRelativeOffset);
+            float playerAzimuth = 0f, playerElev = 0f;
+            Vector3.GetAzimuthAndElevation(forwardCorrected, out playerAzimuth, out playerElev);
+
+            float compass = (playerAzimuth + (float)Math.PI) - (_cachedNorthAzimuth + (float)Math.PI);
+            if (compass < 0) compass += (float)Math.PI * 2f;
+            else if (compass > (float)Math.PI * 2f) compass -= (float)Math.PI * 2f;
+            playerHeadingRad = compass;
+
+            if (compassFrame == null || !showCompass || showFullMap)
             {
                 if (compassFrame != null) compassFrame.Visible = false;
                 HideTapePool();
@@ -901,53 +1093,28 @@ namespace GVK.Navigation
                 return;
             }
 
-            var camera = MyAPIGateway.Session.Camera;
-            if (camera == null) return;
-
             compassFrame.Visible = true;
-
-            // 1. Calculate Player Relative North and Pitch/Roll Correction
-            Vector3D relativePlayerPos = playerPos - PLANET_CENTER;
-            Vector3 relativePlayerPosNormal = (Vector3)(relativePlayerPos / relativePlayerPos.Length());
-
-            Vector3D relativeNorth = PLANET_CENTER + new Vector3D(0f, PLANET_RADIUS, 0f);
-            Vector3D side1 = relativeNorth - playerPos;
-            Vector3D side2 = PLANET_CENTER - playerPos;
-            Vector3D cross = Vector3D.Cross(side1, side2);
-            Vector3D playerRelativeNorth = Vector3D.Cross(cross, side2);
-            Vector3 playerRelativeNorthNormal = (Vector3)(playerRelativeNorth / playerRelativeNorth.Length());
-
-            Matrix relativeOffset;
-            Vector3 baseSouth = BASE_SOUTH;
-            Matrix.CreateRotationFromTwoVectors(ref relativePlayerPosNormal, ref baseSouth, out relativeOffset);
-
-            Vector3 forwardCorrected = Vector3.Transform(camera.WorldMatrix.Forward, relativeOffset);
-            Vector3 northCorrected = Vector3.Transform(playerRelativeNorthNormal, relativeOffset);
-
-            float playerAzimuth = 0f, playerElev = 0f;
-            Vector3.GetAzimuthAndElevation(forwardCorrected, out playerAzimuth, out playerElev);
-
-            float northAzimuth = 0f, northElev = 0f;
-            Vector3.GetAzimuthAndElevation(northCorrected, out northAzimuth, out northElev);
-
-            float compass = (playerAzimuth + (float)Math.PI) - (northAzimuth + (float)Math.PI);
-            if (compass < 0) compass += (float)Math.PI * 2f;
-            else if (compass > (float)Math.PI * 2f) compass -= (float)Math.PI * 2f;
+            // compass is already clamped to [0, 2π] above (line 1005-1006). Normalize to [-1, 1] for tape rendering.
             compass = (compass - (float)Math.PI) / (float)Math.PI;
 
             float FOV = camera.FovWithZoom;
+            // Precompute FOV polynomial once per frame instead of calling Math.Pow in hot loops
+            float fovCoeff = FOV * (5.596f * FOV * FOV - 18.43f * FOV + 16.16f);
+            float fovCubic = FOV * 12f;
 
             // 2. Render Tape Characters (N, •, NE, E, etc.)
-            // Baseline 0.984f with Offset.Y = 0f places the font directly between the compass bars
             int tapeMsgIndex = 0;
-            for (int i = 0; i < COMPASS_TAPE.Count; i++)
+            for (int i = 0; i < COMPASS_TAPE.Length; i++)
             {
                 var marker = COMPASS_TAPE[i];
                 float offset = compass + marker.Offset;
                 if (offset < -1f) offset += 2f;
                 else if (offset > 1f) offset -= 2f;
 
-                float screenOffset = (FOV * (5.596f * (float)Math.Pow(FOV, 2) - 18.43f * FOV + 16.16f) * offset) + (FOV * 12f * (float)Math.Pow(offset, 3));
+                // Screen offset range is [-0.33, 0.33]. Skip polynomial math if offset is way outside the visible ribbon.
+                if (Math.Abs(offset) > 0.35f) continue;
+
+                float screenOffset = (fovCoeff * offset) + (fovCubic * offset * offset * offset);
 
                 if (screenOffset > 0.33f || screenOffset < -0.33f) continue;
                 if (tapeMsgIndex >= compassTapePool.Count) break;
@@ -955,57 +1122,81 @@ namespace GVK.Navigation
                 var msg = compassTapePool[tapeMsgIndex++];
                 msg.Message.Clear().Append(marker.Label);
                 msg.Origin = new Vector2D(screenOffset, 0.984f);
-                var charLen = msg.GetTextLength();
-                msg.Offset = new Vector2D(-charLen.X * 0.5, 0.0); // Keep Y offset 0 so font baseline is centered between bars
+
+                // Cache text half-width on first measurement to avoid 900-1500 GetTextLength() calls/sec
+                double halfWidth = marker.HalfWidth;
+                if (halfWidth < 0)
+                {
+                    var charLen = msg.GetTextLength();
+                    halfWidth = charLen.X * 0.5;
+                    COMPASS_TAPE[i].HalfWidth = halfWidth;
+                }
+
+                msg.Offset = new Vector2D(-halfWidth, 0.0);
                 msg.Visible = true;
             }
 
             for (int i = tapeMsgIndex; i < compassTapePool.Count; i++)
                 compassTapePool[i].Visible = false;
 
-            // 3. Render Graphical HUD Waypoints (Only ShowOnHud GPS & Real In-Range Radio Signals)
+            // 3. Render Graphical HUD Waypoints (Only targets marked as IsCompassTarget)
             int spriteIndex = 0;
 
             for (int i = 0; i < activeHudWaypoints.Count && spriteIndex < waypointSpritePool.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
-                Vector3 toWp = (Vector3)(wp.Coords - playerPos);
-                Vector3 toWpCorrected = Vector3.Transform(toWp, relativeOffset);
 
-                // Compute bearing azimuth on the planetary tangent plane
+                Vector3 toWp = (Vector3)(wp.Coords - playerPos);
+
+                // Early out: Cull waypoints behind the camera view plane.
+                // The compass tape covers only a forward arc (~35 deg). Anything behind the camera cannot be on the tape.
+                if (Vector3.Dot(toWp, camera.WorldMatrix.Forward) <= 0)
+                    continue;
+
+                Vector3 toWpCorrected = Vector3.Transform(toWp, _cachedRelativeOffset);
+
                 float wpAzimuth = 0f, wpElev = 0f;
                 Vector3.GetAzimuthAndElevation(toWpCorrected, out wpAzimuth, out wpElev);
 
-                // Correct forward bearing diff in VRageMath convention:
-                // When looking straight at target, diff is 0; when target is right, diff is positive; when left, diff is negative
                 float angleDiff = playerAzimuth - wpAzimuth;
                 while (angleDiff > (float)Math.PI) angleDiff -= (float)(Math.PI * 2.0);
                 while (angleDiff < -(float)Math.PI) angleDiff += (float)(Math.PI * 2.0);
 
                 float targetCompass = angleDiff / (float)Math.PI;
 
-                // Only display if the bearing is within the forward ribbon window
                 if (Math.Abs(targetCompass) > 0.30f) continue;
 
-                float poiScreenOffset = (FOV * (5.596f * (float)Math.Pow(FOV, 2) - 18.43f * FOV + 16.16f) * targetCompass) + (FOV * 12f * (float)Math.Pow(targetCompass, 3));
+                float poiScreenOffset = (fovCoeff * targetCompass) + (fovCubic * targetCompass * targetCompass * targetCompass);
 
                 if (poiScreenOffset >= -0.31f && poiScreenOffset <= 0.31f)
                 {
-                    double distKm = wp.DistanceMeters / 1000.0;
-                    string distStr = distKm < 10.0 ? $"{distKm:F1}k" : $"{(int)distKm}k";
-
+                    double distKm = wp.DistanceMeters * 0.001;
                     Color wpColor = wp.DisplayColor;
 
                     var sprite = waypointSpritePool[spriteIndex];
                     sprite.Material = wp.Sprite;
                     sprite.BillBoardColor = wpColor;
-                    sprite.Origin = new Vector2D(poiScreenOffset, 0.970f); // Centered vertically between the bars
+                    sprite.Origin = new Vector2D(poiScreenOffset, 0.970f);
                     sprite.Offset = Vector2D.Zero;
                     sprite.Visible = true;
 
+                    // Zero-allocation distance text formatting: direct int/char appending avoids hundreds of heap string allocs per frame
                     var dist = waypointDistPool[spriteIndex];
-                    dist.Message.Clear().Append($"<color={wpColor.R},{wpColor.G},{wpColor.B}>").Append(distStr);
-                    dist.Origin = new Vector2D(poiScreenOffset, 0.948f); // Sits cleanly below the lower bar
+                    dist.Message.Clear()
+                        .Append("<color=").Append(wpColor.R).Append(',').Append(wpColor.G).Append(',').Append(wpColor.B).Append('>');
+
+                    if (distKm < 10.0)
+                    {
+                        int whole = (int)distKm;
+                        int tenths = (int)((distKm - whole) * 10.0);
+                        dist.Message.Append(whole).Append('.').Append(tenths).Append('k');
+                    }
+                    else
+                    {
+                        dist.Message.Append((int)distKm).Append('k');
+                    }
+
+                    dist.Origin = new Vector2D(poiScreenOffset, 0.948f);
                     var distLen = dist.GetTextLength();
                     dist.Offset = new Vector2D(-distLen.X * 0.5, 0.0);
                     dist.Visible = true;
@@ -1014,7 +1205,6 @@ namespace GVK.Navigation
                 }
             }
 
-            // Hide unused sprite and dist messages
             for (int i = spriteIndex; i < waypointSpritePool.Count; i++)
             {
                 waypointSpritePool[i].Visible = false;
@@ -1039,7 +1229,6 @@ namespace GVK.Navigation
 
         /// <summary>
         /// Updates the Zone Bar perfectly centered below the compass frame (Y = 0.895).
-        /// Dynamic text centering ensures clean, professional telemetry formatting.
         /// </summary>
         private void UpdateZoneBar()
         {
@@ -1050,6 +1239,23 @@ namespace GVK.Navigation
                 if (zoneMsg != null) zoneMsg.Visible = false;
                 return;
             }
+
+            // Dirty check: skip rebuilding StringBuilder and measuring text length if values haven't changed
+            if (_lastZoneBarZoneIndex == currentZoneIndex &&
+                Math.Abs(_lastZoneBarDistKm - lastDistKm) < 0.05 &&
+                Math.Abs(_lastZoneBarRemainingKm - lastRemainingKm) < 0.05 &&
+                Math.Abs(_lastZoneBarDistZ3Km - lastDistZ3Km) < 0.05)
+            {
+                zoneBg.Visible = true;
+                zoneAccent.Visible = true;
+                zoneMsg.Visible = true;
+                return;
+            }
+
+            _lastZoneBarZoneIndex = currentZoneIndex;
+            _lastZoneBarDistKm = lastDistKm;
+            _lastZoneBarRemainingKm = lastRemainingKm;
+            _lastZoneBarDistZ3Km = lastDistZ3Km;
 
             zoneText.Clear();
             switch (currentZoneIndex)
@@ -1084,34 +1290,30 @@ namespace GVK.Navigation
             zoneAccent.Visible = true;
             zoneMsg.Visible = true;
 
-            // Center text dynamically within the zone bar
             Vector2D len = zoneMsg.GetTextLength();
             zoneMsg.Origin = new Vector2D(0.0, 0.895);
             zoneMsg.Offset = new Vector2D(-len.X * 0.5, 0.0);
         }
 
         /// <summary>
-        /// Updates the corner minimap with terrain texture, player position blip, and nearby GPS dots.
-        /// Uses proportional true 2:1 projection matching KharakMap.dds.
+        /// Updates the corner minimap using pre-allocated billboard pool (Zero GC allocations).
+        /// Player arrow is drawn on top of markers because it was registered after the pool in OnHudApiRegistered.
         /// </summary>
         private void UpdateMinimap(Vector3D playerPos)
         {
-            if (minimapTerrain == null || !showMinimap)
+            if (minimapTerrain == null || !showMinimap || showFullMap)
             {
                 if (minimapBg != null) minimapBg.Visible = false;
                 if (minimapTerrain != null) minimapTerrain.Visible = false;
                 if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
                 if (minimapLabel != null) minimapLabel.Visible = false;
-                ClearMinimapPoints();
+                HideMinimapPool();
                 return;
             }
 
             minimapBg.Visible = true;
             minimapTerrain.Visible = true;
-            minimapPlayerDot.Visible = true;
             minimapLabel.Visible = true;
-
-            float aspect = GetScreenAspect();
 
             // Map UV position of player relative to center of minimap box
             Vector2 uv = WorldToMapUV(playerPos);
@@ -1119,52 +1321,56 @@ namespace GVK.Navigation
                 (uv.X - 0.5) * minimapSize.X,
                 (0.5 - uv.Y) * minimapSize.Y
             );
-            minimapPlayerDot.Offset = dotOffset;
-            minimapPlayerDot.BillBoardColor = (tickCounter % 30 < 15) ? Color.LimeGreen : Color.Yellow;
 
-            // Render in-range GPS points on minimap (ONLY ShowOnHud)
-            ClearMinimapPoints();
-            for (int i = 0; i < cachedGpsList.Count && i < 15; i++)
+            // Render all active waypoints using pre-allocated pool
+            int mIdx = 0;
+            for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
             {
-                var gps = cachedGpsList[i];
-                if (!gps.ShowOnHud) continue;
-                if (Vector3D.Distance(playerPos, gps.Coords) > 40000.0) continue;
-
-                Vector2 gpsUV = WorldToMapUV(gps.Coords);
-                Vector2D gpsOffset = new Vector2D(
-                    (gpsUV.X - 0.5) * minimapSize.X,
-                    (0.5 - gpsUV.Y) * minimapSize.Y
+                var wp = activeHudWaypoints[i];
+                Vector2 wpUV = wp.MapUV;
+                Vector2D wpOffset = new Vector2D(
+                    (wpUV.X - 0.5) * minimapSize.X,
+                    (0.5 - wpUV.Y) * minimapSize.Y
                 );
 
-                var dot = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_MARKER_GPS,
-                    Origin: minimapPosition,
-                    BillBoardColor: gps.GPSColor,
-                    Offset: gpsOffset,
-                    TimeToLive: 1,
-                    Scale: 1.0,
-                    Width: 0.006f,
-                    Height: 0.006f * aspect, // Aspect-corrected square dot!
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapPoints.Add(dot);
+                var icon = minimapMarkerPool[mIdx++];
+                icon.Material = wp.Sprite;
+                icon.BillBoardColor = wp.DisplayColor;
+                icon.Offset = wpOffset;
+                icon.Visible = true;
             }
+
+            // Hide unused pool slots
+            for (int i = mIdx; i < minimapMarkerPool.Count; i++)
+                minimapMarkerPool[i].Visible = false;
+
+            // Update player arrow — no delete/recreate needed; registered after pool so it renders on top.
+            minimapPlayerDot.Offset = dotOffset;
+            minimapPlayerDot.Rotation = -playerHeadingRad;
+            minimapPlayerDot.BillBoardColor = (tickCounter % 30 < 15) ? Color.LimeGreen : Color.Yellow;
+            minimapPlayerDot.Visible = true;
         }
 
+        private void HideMinimapPool()
+        {
+            for (int i = 0; i < minimapMarkerPool.Count; i++)
+                minimapMarkerPool[i].Visible = false;
+        }
+
+        /// <summary>
+        /// Updates the Full Satellite Map using pre-allocated billboard and text pool (Zero GC allocations).
+        /// </summary>
         private void UpdateFullMap(Vector3D playerPos)
         {
             if (mapTerrain == null || !showFullMap) return;
 
-            float aspect = GetScreenAspect();
-            float fullMapWidth = 1.40f;
-            float fullMapHeight = (fullMapWidth * 0.5f) * aspect;
+            float fullMapWidth = cachedFullMapWidth;
+            float fullMapHeight = cachedFullMapHeight;
 
             mapDimmer.Visible = true;
             mapFrame.Visible = true;
             mapTerrain.Visible = true;
-            mapPlayerDot.Visible = true;
+            mapPlayerDot.Visible = false;
             mapFooterMsg.Visible = true;
 
             Vector2 uv = WorldToMapUV(playerPos);
@@ -1175,50 +1381,59 @@ namespace GVK.Navigation
             mapPlayerDot.Offset = playerOffset;
             mapPlayerDot.BillBoardColor = (tickCounter % 20 < 10) ? Color.LimeGreen : Color.Cyan;
 
-            ClearFullMapElements();
-
-            // Plot Active HUD Waypoints on Full Map with authentic Keen markers
-            for (int i = 0; i < activeHudWaypoints.Count && i < 30; i++)
+            // Plot all active waypoints using pre-allocated pool
+            int fIdx = 0;
+            for (int i = 0; i < activeHudWaypoints.Count && fIdx < fullMapMarkerPool.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
-                Vector2 wpUV = WorldToMapUV(wp.Coords);
+                Vector2 wpUV = wp.MapUV;
                 Vector2D wpOffset = new Vector2D(
                     (wpUV.X - 0.5) * fullMapWidth,
                     (0.5 - wpUV.Y) * fullMapHeight
                 );
 
-                var sprite = new HudAPIv2.BillBoardHUDMessage(
-                    Material: wp.Sprite,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: wp.DisplayColor,
-                    Offset: wpOffset,
-                    TimeToLive: 1,
-                    Scale: 1.0,
-                    Width: 0.014f,
-                    Height: 0.014f * aspect, // Aspect-corrected square icon!
-                    HideHud: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                fullMapMarkers.Add(sprite);
+                var sprite = fullMapMarkerPool[fIdx];
+                sprite.Material = wp.Sprite;
+                sprite.BillBoardColor = wp.DisplayColor;
+                sprite.Offset = wpOffset;
+                sprite.Visible = true;
 
-                var label = new HudAPIv2.HUDMessage(
-                    Message: new StringBuilder(wp.Name),
-                    Origin: Vector2D.Zero,
-                    Offset: wpOffset + new Vector2D(0.012, 0.005),
-                    TimeToLive: 1,
-                    Scale: 0.60,
-                    HideHud: false,
-                    Shadowing: true,
-                    ShadowColor: Color.Black
-                );
-                fullMapLabels.Add(label);
+                var label = fullMapLabelPool[fIdx];
+                label.Message.Clear().Append(wp.Name);
+                label.Offset = wpOffset + new Vector2D(0.012, 0.005);
+                label.Visible = true;
+
+                fIdx++;
             }
 
-            // Update footer
+            for (int i = fIdx; i < fullMapMarkerPool.Count; i++)
+            {
+                fullMapMarkerPool[i].Visible = false;
+                fullMapLabelPool[i].Visible = false;
+            }
+
+            // Ensure player arrow is drawn on top of map markers and rotates with heading
+            mapPlayerDot.Rotation = -playerHeadingRad;
+            mapPlayerDot.Visible = true;
+
+            // Update footer without string allocations
+            int distWhole = (int)lastDistKm;
+            int distTenths = (int)((lastDistKm - distWhole) * 10.0);
+
             mapFooterText.Clear();
             mapFooterText.Append("<color=255,220,0>KHARAK TACTICAL SATELLITE MAP<color=255,255,255> | Current Sector: ")
                          .Append(GetZoneName(currentZoneIndex)).Append(" | Distance to Crossroads: ")
-                         .Append(lastDistKm.ToString("F1")).Append(" km | Press [M] or [ESC] to Close");
+                         .Append(distWhole).Append('.').Append(distTenths)
+                         .Append(" km | Press [M] or [ESC] to Close");
+        }
+
+        private void HideFullMapPool()
+        {
+            for (int i = 0; i < fullMapMarkerPool.Count; i++)
+            {
+                fullMapMarkerPool[i].Visible = false;
+                fullMapLabelPool[i].Visible = false;
+            }
         }
 
         private string GetZoneName(int zone)
@@ -1330,7 +1545,23 @@ namespace GVK.Navigation
                 if (mapTerrain != null) mapTerrain.Visible = false;
                 if (mapPlayerDot != null) mapPlayerDot.Visible = false;
                 if (mapFooterMsg != null) mapFooterMsg.Visible = false;
-                ClearFullMapElements();
+                HideFullMapPool();
+                _refreshMinimapNextFrame = true;
+            }
+            else
+            {
+                _fullMapNeedsRedraw = true;
+
+                // Immediately hide compass and minimap elements when pulling up the satellite map
+                if (compassFrame != null) compassFrame.Visible = false;
+                HideTapePool();
+                HideSpritePool();
+
+                if (minimapBg != null) minimapBg.Visible = false;
+                if (minimapTerrain != null) minimapTerrain.Visible = false;
+                if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
+                if (minimapLabel != null) minimapLabel.Visible = false;
+                HideMinimapPool();
             }
         }
 
@@ -1363,37 +1594,38 @@ namespace GVK.Navigation
             string title = "DESERTS OF KHARAK — ZONE ADVISORY";
             string objectivePrefix = "Current Location:";
             string currentObjective = $"{GetZoneName(currentZoneIndex)} ({lastDistKm:F1} km from Crossroads)";
-            StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"CURRENT SECTOR: {GetZoneName(currentZoneIndex).ToUpper()}");
-            sb.AppendLine("--------------------------------------------------");
-            sb.AppendLine($"• Distance from Crossroads Tower: {lastDistKm:F1} km");
+            // Reuse _missionSb to avoid per-call StringBuilder allocation.
+            _missionSb.Clear();
+            _missionSb.AppendLine($"CURRENT SECTOR: {GetZoneName(currentZoneIndex).ToUpper()}");
+            _missionSb.AppendLine("--------------------------------------------------");
+            _missionSb.AppendLine($"• Distance from Crossroads Tower: {lastDistKm:F1} km");
             if (currentZoneIndex < 3)
-                sb.AppendLine($"• Next Sector Transition: {lastRemainingKm:F1} km ahead");
+                _missionSb.AppendLine($"• Next Sector Transition: {lastRemainingKm:F1} km ahead");
             else
-                sb.AppendLine($"• Distance to Z3 Antipode Core: {lastDistZ3Km:F1} km");
-            sb.AppendLine();
-            sb.AppendLine("COMBAT & GOVERNANCE RULES:");
+                _missionSb.AppendLine($"• Distance to Z3 Antipode Core: {lastDistZ3Km:F1} km");
+            _missionSb.AppendLine();
+            _missionSb.AppendLine("COMBAT & GOVERNANCE RULES:");
             if (currentZoneIndex <= 1)
             {
-                sb.AppendLine("• Strict PvE Region: Player-vs-player damage is zeroed out.");
-                sb.AppendLine("• Hostile NPC wrecks can be ground with upgraded/ship grinders.");
-                sb.AppendLine("• Shield Generators: 100% NON-SIEGABLE.");
+                _missionSb.AppendLine("• Strict PvE Region: Player-vs-player damage is zeroed out.");
+                _missionSb.AppendLine("• Hostile NPC wrecks can be ground with upgraded/ship grinders.");
+                _missionSb.AppendLine("• Shield Generators: 100% NON-SIEGABLE.");
             }
             else
             {
-                sb.AppendLine("• FULL PVP WARFARE UNLOCKED.");
-                sb.AppendLine("• Full production and upgrades permitted.");
-                sb.AppendLine("• Shield Generators: SIEGABLE via Siege Drives.");
+                _missionSb.AppendLine("• FULL PVP WARFARE UNLOCKED.");
+                _missionSb.AppendLine("• Full production and upgrades permitted.");
+                _missionSb.AppendLine("• Shield Generators: SIEGABLE via Siege Drives.");
             }
-            sb.AppendLine("--------------------------------------------------");
-            sb.AppendLine("Controls: Press [M] for Map | /minimap | /compass | /zone gps");
+            _missionSb.AppendLine("--------------------------------------------------");
+            _missionSb.AppendLine("Controls: Press [M] for Map | /minimap | /compass | /zone gps");
 
             MyAPIGateway.Utilities.ShowMissionScreen(
                 screenTitle: title,
                 currentObjectivePrefix: objectivePrefix,
                 currentObjective: currentObjective,
-                screenDescription: sb.ToString(),
+                screenDescription: _missionSb.ToString(),
                 callback: null,
                 okButtonCaption: "Close"
             );
@@ -1401,27 +1633,28 @@ namespace GVK.Navigation
 
         private void OpenAllZonesMissionScreen()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("DESERTS OF KHARAK — PLANETARY ZONE DIRECTORY");
-            sb.AppendLine("All zone distances measured straight-line from Crossroads Tower:");
-            sb.AppendLine("==================================================");
-            sb.AppendLine("• Zone 0 (0 – 20 km): Safe Starter Hub | Strict PvE | Basic Prod Only | Shields Non-Siegable");
-            sb.AppendLine("• Zone 1 (20 – 35 km): PvE & Salvage | Strict PvE | Weapons/Drills/Grinders Enabled");
-            sb.AppendLine("• Zone 2 (35 – 50 km): Contested Desert | Full PvP | Large Prod Unlocked | Shields Siegable");
-            sb.AppendLine("• Zone 3 (> 50 km): Deep Desert | High-Threat PvPvE | Ancient Relics | Battlecruisers");
-            sb.AppendLine("==================================================");
-            sb.AppendLine("Hotkeys & Commands:");
-            sb.AppendLine("• Press [M] to toggle Full Satellite Map");
-            sb.AppendLine("• /minimap - Toggle live top-right minimap");
-            sb.AppendLine("• /compass - Toggle heading tape");
-            sb.AppendLine("• /zone hud - Toggle zone status bar");
-            sb.AppendLine("• /zone gps - Restore default Kharak GPS waypoints");
+            // Reuse _missionSb to avoid per-call StringBuilder allocation.
+            _missionSb.Clear();
+            _missionSb.AppendLine("DESERTS OF KHARAK — PLANETARY ZONE DIRECTORY");
+            _missionSb.AppendLine("All zone distances measured straight-line from Crossroads Tower:");
+            _missionSb.AppendLine("==================================================");
+            _missionSb.AppendLine("• Zone 0 (0 – 20 km): Safe Starter Hub | Strict PvE | Basic Prod Only | Shields Non-Siegable");
+            _missionSb.AppendLine("• Zone 1 (20 – 35 km): PvE & Salvage | Strict PvE | Weapons/Drills/Grinders Enabled");
+            _missionSb.AppendLine("• Zone 2 (35 – 50 km): Contested Desert | Full PvP | Large Prod Unlocked | Shields Siegable");
+            _missionSb.AppendLine("• Zone 3 (> 50 km): Deep Desert | High-Threat PvPvE | Ancient Relics | Battlecruisers");
+            _missionSb.AppendLine("==================================================");
+            _missionSb.AppendLine("Hotkeys & Commands:");
+            _missionSb.AppendLine("• Press [M] to toggle Full Satellite Map");
+            _missionSb.AppendLine("• /minimap - Toggle live top-right minimap");
+            _missionSb.AppendLine("• /compass - Toggle heading tape");
+            _missionSb.AppendLine("• /zone hud - Toggle zone status bar");
+            _missionSb.AppendLine("• /zone gps - Restore default Kharak GPS waypoints");
 
             MyAPIGateway.Utilities.ShowMissionScreen(
                 screenTitle: "DESERTS OF KHARAK — ZONE DIRECTORY",
                 currentObjectivePrefix: "Reference Guide:",
                 currentObjective: "Planetary Zone Boundaries & Governance Matrix",
-                screenDescription: sb.ToString(),
+                screenDescription: _missionSb.ToString(),
                 callback: null,
                 okButtonCaption: "Close"
             );

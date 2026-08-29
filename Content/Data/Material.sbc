@@ -451,5 +451,22 @@
 			<UVOffset><X>0</X><Y>0</Y></UVOffset>
 			<UVSize><X>1</X><Y>1</Y></UVSize>
 		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>nav_arrow</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>true</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\Particles\directional_arrow_white.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset><X>0</X><Y>0</Y></UVOffset>
+			<UVSize><X>1</X><Y>1</Y></UVSize>
+		</TransparentMaterial>
 	</TransparentMaterials>
 </Definitions>
