@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
 using Sandbox.ModAPI.Weapons;
 using VRage.Game;
@@ -10,7 +9,17 @@ using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
 
-namespace GVK
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: GVK_NoPVPZone.cs
+// Original Author: Kamikaze
+// Adaptation & Zone 0 Logic: Mike Dude
+// Damage Filtering & Grinder Enhancements: Merii
+// Description: Enforces strict PvE within 20km of Crossroads Tower (Zone 0).
+// Intercepts damage events to block cross-faction grinding and unauthorized grid attacks.
+// =========================================================================
+
+namespace GVK.NoPVP
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class GVK_NoPVPZone : MySessionComponentBase
@@ -59,7 +68,7 @@ namespace GVK
                     if (attackerEntity == null) return;
 
                     var handGrinder = attackerEntity as IMyAngleGrinder;
-                    var shipGrinder = attackerEntity as IMyShipGrinder;
+                    var shipGrinder = attackerEntity as IMyShipGrinder ?? attackerEntity as IMyCubeBlock;
 
                     // --- CASE A: Inside Zone 0 (No Hacking / No Grinding other factions' grids) ---
                     if (IsInNoPvpZone(slimBlock.CubeGrid.GetPosition()))

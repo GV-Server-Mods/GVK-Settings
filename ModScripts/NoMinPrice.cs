@@ -1,29 +1,18 @@
-﻿using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Definitions;
-using Sandbox.Game.Entities;
-using Sandbox.Game.GameSystems;
-using Sandbox.ModAPI;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VRage;
-using VRage.Game;
 using VRage.Game.Components;
-using VRage.Game.Definitions.SessionComponents;
-using VRage.Input;
-using VRage.Utils;
-using VRageMath;
-using VRageRender.Messages;
-using VRage.Network;
 
-// Set min price to 1 for custom player store listings
-// List & transaction fees are not whitelisted in mod API. Edit those in SessionComponents_Economy.sbc
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: NoMinPrice.cs
+// Based on: "No Limits for '' PRICE PER UNIT ''" (Workshop #1907404695)
+// Integration for GVK: Mike Dude
+// Description: Sets the minimum price per unit on all physical item definitions
+// to 1 Space Credit, allowing custom player-owned trade stations and free-market pricing.
+// Note: Listing and transaction fees are defined in SessionComponents_Economy.sbc.
+// =========================================================================
 
-namespace GVTweaks.NoMinPrice
+namespace GVK.Economy
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     class NoMinPrice : MySessionComponentBase
@@ -33,7 +22,8 @@ namespace GVTweaks.NoMinPrice
             base.LoadData();
             var allDefs = MyDefinitionManager.Static.GetAllDefinitions();
 
-            foreach(var component in allDefs.OfType<MyPhysicalItemDefinition>()){
+            foreach (var component in allDefs.OfType<MyPhysicalItemDefinition>())
+            {
                 component.MinimalPricePerUnit = 1;
             }
         }

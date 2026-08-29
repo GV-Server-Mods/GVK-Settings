@@ -1,21 +1,21 @@
 using Sandbox.Definitions;
-using Sandbox.ModAPI;
 using VRage.Game.Components;
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Sandbox.Game.AI.Pathfinding.Obsolete;
-using Sandbox.Game.Entities;
 using VRage.Game;
-using VRage.ObjectBuilders;
-using VRage.Game.ObjectBuilders.ComponentSystem;
 using VRage.Utils;
 using VRageMath;
-using System.Security;
 
-// Code is based on Gauge's Balanced Deformation code, but heavily modified for more control.
-namespace MikeDude.ArmorBalance
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: GVK_ArmorBalance.cs
+// Original Foundation: Gauge (Balanced Deformation)
+// GVK Armor Balance & Structural Overhaul: Mike Dude
+// Deformation & Damage Filter Contributions: Merii
+// Description: Comprehensive armor balance, structural resistance, deformation
+// damage scaling, and heavy component survival tuning for planetary rover combat.
+// =========================================================================
+
+namespace GVK.ArmorBalance
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class ArmorBalance : MySessionComponentBase
@@ -25,7 +25,7 @@ namespace MikeDude.ArmorBalance
         // Modify these values to rebalance the server or accommodate game updates.
         public static class Config
         {
-            // Armor Properties
+            // Armor Properties (Deformation & Damage)
             public static class Armor
             {
                 public const float LightLargeDamageMultiplier = 1.0f;
@@ -39,19 +39,14 @@ namespace MikeDude.ArmorBalance
                 public const float HeavySmallDeformationRatio = 0.2f;
             }
 
-            // Weapons
-            public static class Weapons
-            {
-                public const float TurretDamageMultiplier = 0.5f;
-                public const float WeaponDamageMultiplier = 0.5f;
-            }
-
-            // Rotors & Hinges
+            // Mechanical Connections (Rotors, Hinges, Pistons)
             public static class Rotors
             {
                 public const float MotorStatorDamageMultiplier = 0.25f;
                 public const float MotorAdvancedStatorDamageMultiplier = 0.25f;
                 public const float RotorHeadDamageMultiplier = 0.25f;
+                public const float PistonBaseDamageMultiplier = 0.25f;
+                public const float PistonTopDamageMultiplier = 0.25f;
             }
 
             // Hydrogen Tanks
@@ -173,6 +168,8 @@ namespace MikeDude.ArmorBalance
                 public const float AIBlockDamageMultiplier = 0.5f;
                 public const float ProgrammableBlockDamageMultiplier = 0.5f;
                 public const float TurretControllerDamageMultiplier = 0.5f;
+                public const float EventControllerDamageMultiplier = 0.5f;
+                public const float BroadcastControllerDamageMultiplier = 0.5f;
             }
 
             // Laser Antenna
@@ -184,20 +181,21 @@ namespace MikeDude.ArmorBalance
 
         public const double hydroTankH2Density = Config.HydrogenTanks.H2Density;
 
-        private readonly MyPhysicalItemDefinition genericScrap = MyDefinitionManager.Static.GetPhysicalItemDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Ore), "Scrap"));
-        private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
-        private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
+        private MyComponentDefinition steelPlateComponent;
 
         private void DoWork()
         {
+            steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
+
             foreach (var blockDef in MyDefinitionManager.Static.GetDefinitionsOfType<MyCubeBlockDefinition>())
             {
+                if (blockDef == null) continue;
+
                 // Apply general settings to all blocks
                 blockDef.UseModelIntersection = true; // Attempt to make things placeable in tight spaces
                 blockDef.PCU = 1; // Default PCU
 
                 // Process each block type
-                ProcessWeaponBlocks(blockDef);
                 ProcessArmorBlocks(blockDef);
                 ProcessRotorBlocks(blockDef);
                 ProcessHydrogenTanks(blockDef);
@@ -219,27 +217,17 @@ namespace MikeDude.ArmorBalance
         // ==================== BLOCK TYPE HANDLERS ====================
 
         /// <summary>
-        /// Process weapon blocks including turrets and sorters.
-        /// Weapons are given 100% resistance buff (damage multiplier = 0.5f).
-        /// </summary>
-        private void ProcessWeaponBlocks(MyCubeBlockDefinition blockDef)
-        {
-            var turretDef = blockDef as MyLargeTurretBaseDefinition;
-            var weaponDef = blockDef as MyWeaponBlockDefinition;
-            var sorterDef = blockDef as MyConveyorSorterDefinition;
-
-            if (turretDef != null || weaponDef != null || (sorterDef != null && !sorterDef.Id.SubtypeName.Contains("ConveyorSorter")))
-            {
-                blockDef.GeneralDamageMultiplier = Config.Weapons.TurretDamageMultiplier;
-            }
-        }
-
-        /// <summary>
         /// Process armor blocks (light and heavy).
-        /// Applies damage multipliers and deformation ratios per armor type and size.
+        /// Applies damage multipliers and deformation ratios per armor type and size to prevent drastic deformation clipping.
         /// </summary>
         private void ProcessArmorBlocks(MyCubeBlockDefinition blockDef)
         {
+            // Skip structural blocks (XL and structural meshes are handled separately in ProcessStructuralBlocks)
+            if (blockDef.Id.SubtypeName.Contains("XL_") || blockDef.Id.SubtypeName.Contains("Structural"))
+            {
+                return;
+            }
+
             // Light armor
             if (blockDef.EdgeType == "Light" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
             {
@@ -256,7 +244,7 @@ namespace MikeDude.ArmorBalance
             }
 
             // Heavy armor
-            if (blockDef.EdgeType == "Heavy")
+            if (blockDef.EdgeType == "Heavy" && blockDef.BlockTopology != MyBlockTopology.TriangleMesh)
             {
                 if (blockDef.CubeSize == MyCubeSize.Large)
                 {
@@ -269,45 +257,54 @@ namespace MikeDude.ArmorBalance
                     blockDef.DeformationRatio = Config.Armor.HeavySmallDeformationRatio;
                 }
 
-                // Flip component order (functional component at the end)
-                var lastCompIdx = blockDef.Components.Length - 1;
-                if (blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count &&
-                    blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
+                // Flip component order (functional component at the end) if components array is valid
+                if (blockDef.Components != null && blockDef.Components.Length >= 2)
                 {
-                    var temp = blockDef.Components[0];
-                    blockDef.Components[0] = blockDef.Components[lastCompIdx];
-                    blockDef.Components[lastCompIdx] = temp;
+                    var lastCompIdx = blockDef.Components.Length - 1;
+                    if (blockDef.Components[0].Definition != null &&
+                        blockDef.Components[lastCompIdx].Definition != null &&
+                        blockDef.Components[0].Count > blockDef.Components[lastCompIdx].Count &&
+                        blockDef.Components[0].Definition.Id == blockDef.Components[lastCompIdx].Definition.Id)
+                    {
+                        var temp = blockDef.Components[0];
+                        blockDef.Components[0] = blockDef.Components[lastCompIdx];
+                        blockDef.Components[lastCompIdx] = temp;
+                    }
                 }
-
-                // If no AwwScrap uncomment SetRatios
-                SetRatios(blockDef, blockDef.CriticalGroup);
-                // If we're using awwscrap, comment out the SetRatios above and uncomment SortAndSplitArmor below
-                //SortAndSplitArmor(blockDef);
             }
         }
 
         /// <summary>
-        /// Process rotor and hinge blocks.
-        /// Apply damage resistance multiplier to motors and rotors.
+        /// Process mechanical connection blocks (rotors, hinges, pistons).
+        /// Apply damage resistance multiplier to prevent shearing under fire or impact.
         /// </summary>
         private void ProcessRotorBlocks(MyCubeBlockDefinition blockDef)
         {
             var statorDef = blockDef as MyMotorStatorDefinition;
             var advStatorDef = blockDef as MyMotorAdvancedStatorDefinition;
-
-            if (statorDef != null)
-            {
-                statorDef.GeneralDamageMultiplier = Config.Rotors.MotorStatorDamageMultiplier;
-            }
+            var pistonDef = blockDef as MyPistonBaseDefinition;
 
             if (advStatorDef != null)
             {
                 advStatorDef.GeneralDamageMultiplier = Config.Rotors.MotorAdvancedStatorDamageMultiplier;
             }
+            else if (statorDef != null)
+            {
+                statorDef.GeneralDamageMultiplier = Config.Rotors.MotorStatorDamageMultiplier;
+            }
+
+            if (pistonDef != null)
+            {
+                pistonDef.GeneralDamageMultiplier = Config.Rotors.PistonBaseDamageMultiplier;
+            }
 
             if (blockDef.Id.SubtypeName.Contains("Rotor") || blockDef.Id.SubtypeName.Contains("HingeHead"))
             {
                 blockDef.GeneralDamageMultiplier = Config.Rotors.RotorHeadDamageMultiplier;
+            }
+            else if (blockDef.Id.SubtypeName.Contains("PistonTop"))
+            {
+                blockDef.GeneralDamageMultiplier = Config.Rotors.PistonTopDamageMultiplier;
             }
         }
 
@@ -420,6 +417,11 @@ namespace MikeDude.ArmorBalance
 
             if (cargoDef != null && cargoDef.CubeSize == MyCubeSize.Large && cargoDef.Id.SubtypeName.Contains("Container"))
             {
+                if (steelPlateComponent == null || cargoDef.Components == null || cargoDef.Components.Length == 0)
+                {
+                    return;
+                }
+
                 if (cargoDef.Size.Volume() >= 54)
                 {
                     ReplaceComponent(cargoDef, cargoDef.Components.Length - 1, steelPlateComponent, Config.Containers.LargeContainerCompCount);
@@ -437,7 +439,7 @@ namespace MikeDude.ArmorBalance
 
         /// <summary>
         /// Process structural blocks (5x5 XL and Econ2).
-        /// Make them heavy, remove deformation, and increase weld time.
+        /// Make them heavy, remove deformation, and increase weld time for rigid impact resistance.
         /// </summary>
         private void ProcessStructuralBlocks(MyCubeBlockDefinition blockDef)
         {
@@ -567,7 +569,10 @@ namespace MikeDude.ArmorBalance
             // Ion effect
             if (thrustDef.ThrusterType == MyStringHash.GetOrCompute("Ion"))
             {
-                thrustDef.DestroyEffect = thrustDef.DestroyEffect + Config.Thrusters.IonDestroyEffectSuffix;
+                if (!string.IsNullOrEmpty(thrustDef.DestroyEffect) && !thrustDef.DestroyEffect.EndsWith(Config.Thrusters.IonDestroyEffectSuffix))
+                {
+                    thrustDef.DestroyEffect = thrustDef.DestroyEffect + Config.Thrusters.IonDestroyEffectSuffix;
+                }
                 thrustDef.DamageEffectName = Config.Thrusters.IonDamageEffect;
             }
         }
@@ -642,32 +647,30 @@ namespace MikeDude.ArmorBalance
             var offensiveCombatDef = blockDef as MyOffensiveCombatBlockDefinition;
             var pathRecorderDef = blockDef as MyPathRecorderBlockDefinition;
             var basicMissionDef = blockDef as MyBasicMissionBlockDefinition;
+            var flightMovementDef = blockDef as MyFlightMovementBlockDefinition;
+            var eventControllerDef = blockDef as MyEventControllerBlockDefinition;
+            var broadcastControllerDef = blockDef as MyBroadcastControllerDefinition;
             var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
             var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
 
-            if (cockpitDef != null && cockpitDef.Id.SubtypeName.Contains("Cockpit"))
+            if (cockpitDef != null)
             {
                 cockpitDef.GeneralDamageMultiplier = Config.ShipControl.CockpitDamageMultiplier;
             }
 
-            if (defensiveCombatDef != null)
+            if (defensiveCombatDef != null || offensiveCombatDef != null || pathRecorderDef != null || basicMissionDef != null || flightMovementDef != null)
             {
-                defensiveCombatDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+                blockDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
             }
 
-            if (offensiveCombatDef != null)
+            if (eventControllerDef != null)
             {
-                offensiveCombatDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+                eventControllerDef.GeneralDamageMultiplier = Config.ShipControl.EventControllerDamageMultiplier;
             }
 
-            if (pathRecorderDef != null)
+            if (broadcastControllerDef != null)
             {
-                pathRecorderDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
-            }
-
-            if (basicMissionDef != null)
-            {
-                basicMissionDef.GeneralDamageMultiplier = Config.ShipControl.AIBlockDamageMultiplier;
+                broadcastControllerDef.GeneralDamageMultiplier = Config.ShipControl.BroadcastControllerDamageMultiplier;
             }
 
             if (programmableBlockDef != null)
@@ -739,10 +742,10 @@ namespace MikeDude.ArmorBalance
                 blockDef.CriticalGroup = (ushort)componentIndex;
             }
             else
-            if (componentIndex <= blockDef.CriticalGroup)
-            {
-                blockDef.CriticalGroup += 1;
-            }
+                if (componentIndex <= blockDef.CriticalGroup)
+                {
+                    blockDef.CriticalGroup += 1;
+                }
 
             blockDef.MaxIntegrity += intDiff;
             blockDef.Mass += massDiff;
@@ -798,21 +801,6 @@ namespace MikeDude.ArmorBalance
             SetRatios(blockDef, blockDef.CriticalGroup);
         }
 
-        private static void ChangeComponentCount(MyCubeBlockDefinition blockDef, int index, int newCount)
-        {
-            var comp = blockDef.Components[index];
-            var oldCount = comp.Count;
-            var intDiff = comp.Definition.MaxIntegrity * (newCount - oldCount);
-            var massDiff = comp.Definition.Mass * (newCount - oldCount);
-
-            comp.Count = newCount;
-
-            blockDef.MaxIntegrity += intDiff;
-            blockDef.Mass += massDiff;
-
-            SetRatios(blockDef, blockDef.CriticalGroup);
-        }
-
         private void SortAndSplitArmor(MyCubeBlockDefinition blockDef)
         {
             if (blockDef.Components.Length <= 1 || blockDef.CriticalGroup == blockDef.Components.Length - 1)
@@ -829,18 +817,30 @@ namespace MikeDude.ArmorBalance
         // Method to set ratio of critical component and ownership of a block
         private static void SetRatios(MyCubeBlockDefinition blockDef, int criticalIndex)
         {
+            if (blockDef == null || blockDef.Components == null || blockDef.Components.Length == 0 || blockDef.MaxIntegrity <= 0f)
+            {
+                return;
+            }
+
             var criticalIntegrity = 0f;
             var ownershipIntegrity = 0f;
-            for (var index = 0; index <= criticalIndex; index++)
+            var clampedIndex = MathHelper.Clamp(criticalIndex, 0, blockDef.Components.Length - 1);
+
+            for (var index = 0; index <= clampedIndex; index++)
             {
                 var component = blockDef.Components[index];
+                if (component.Definition == null)
+                {
+                    continue;
+                }
+
                 if (ownershipIntegrity == 0f && component.Definition.Id.SubtypeName == "Computer")
                 {
                     ownershipIntegrity = criticalIntegrity + component.Definition.MaxIntegrity;
                 }
 
                 criticalIntegrity += component.Count * component.Definition.MaxIntegrity;
-                if (index == criticalIndex)
+                if (index == clampedIndex)
                 {
                     criticalIntegrity -= component.Definition.MaxIntegrity;
                 }
@@ -849,11 +849,14 @@ namespace MikeDude.ArmorBalance
             blockDef.CriticalIntegrityRatio = criticalIntegrity / blockDef.MaxIntegrity;
             blockDef.OwnershipIntegrityRatio = ownershipIntegrity / blockDef.MaxIntegrity;
 
-            var count = blockDef.BuildProgressModels.Length;
-            for (var index = 0; index < count; index++)
+            if (blockDef.BuildProgressModels != null)
             {
-                var buildPercent = (index + 1f) / count;
-                blockDef.BuildProgressModels[index].BuildRatioUpperBound = buildPercent * blockDef.CriticalIntegrityRatio;
+                var count = blockDef.BuildProgressModels.Length;
+                for (var index = 0; index < count; index++)
+                {
+                    var buildPercent = (index + 1f) / count;
+                    blockDef.BuildProgressModels[index].BuildRatioUpperBound = buildPercent * blockDef.CriticalIntegrityRatio;
+                }
             }
         }
     }

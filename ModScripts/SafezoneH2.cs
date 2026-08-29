@@ -1,93 +1,107 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Sandbox.Game;
+using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
-using Sandbox.ModAPI.Interfaces;
-using SpaceEngineers.Game.ModAPI;
-using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.ModAPI;
 using VRage.ModAPI;
+using VRageMath;
 
-namespace Klime.SafezoneH2
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: SafezoneH2.cs
+// Original Author: Klime (https://steamcommunity.com/sharedfiles/filedetails/?id=1871733117)
+// Description: Automatically provides infinite jetpack hydrogen to players inside
+// their own faction-owned safezone bubbles.
+// =========================================================================
+
+namespace GVK.SafeZone
 {
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
-    public class fov : MySessionComponentBase
+    public class SafezoneH2Session : MySessionComponentBase
     {
-        private List<IMySafeZoneBlock> safedict = new List<IMySafeZoneBlock>();
-        private List<IMyPlayer> allPlayer = new List<IMyPlayer>();
-        List<IMySlimBlock> allb = new List<IMySlimBlock>();
-        private int _timer = 0;
+        private readonly HashSet<MySafeZone> activeSafeZones = new HashSet<MySafeZone>();
+        private readonly List<IMyPlayer> players = new List<IMyPlayer>();
+        private int timer = 0;
+        private bool isServer = false;
 
-        public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
+        public override void LoadData()
         {
-            base.Init(sessionComponent);
-            MyVisualScriptLogicProvider.BlockBuilt += BlockBuilt;
+            isServer = MyAPIGateway.Session.IsServer;
+            if (!isServer)
+            {
+                SetUpdateOrder(MyUpdateOrder.NoUpdate);
+                return;
+            }
+
+            MyAPIGateway.Entities.OnEntityAdd += OnEntityAdd;
+            MyAPIGateway.Entities.OnEntityRemove += OnEntityRemove;
         }
 
-        private void BlockBuilt(string typeid, string subtypeid, string gridname, long blockid)
+        public override void BeforeStart()
         {
-            if (subtypeid.Contains("SafeZone"))
+            if (!isServer) return;
+
+            // Register existing safe zones at session start
+            HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
+            MyAPIGateway.Entities.GetEntities(entities, e => e is MySafeZone);
+            foreach (var entity in entities)
             {
-                IMySafeZoneBlock testSafe = MyAPIGateway.Entities.GetEntityById(blockid) as IMySafeZoneBlock;
-                if (testSafe != null && !safedict.Contains(testSafe))
-                {
-                    safedict.Add(testSafe);
-                }
+                OnEntityAdd(entity);
+            }
+        }
+
+        private void OnEntityAdd(IMyEntity entity)
+        {
+            var safeZone = entity as MySafeZone;
+            if (safeZone != null && !safeZone.MarkedForClose && !safeZone.Closed)
+            {
+                activeSafeZones.Add(safeZone);
+            }
+        }
+
+        private void OnEntityRemove(IMyEntity entity)
+        {
+            var safeZone = entity as MySafeZone;
+            if (safeZone != null)
+            {
+                activeSafeZones.Remove(safeZone);
             }
         }
 
         public override void UpdateBeforeSimulation()
         {
-            _timer += 1;
-            if (MyAPIGateway.Session.IsServer)
-            {
-                if (_timer == 1)
-                {
-                    HashSet<IMyEntity> allents = new HashSet<IMyEntity>();
-                    MyAPIGateway.Entities.GetEntities(allents);
-                    foreach (var ent in allents)
-                    {
-                        IMyCubeGrid cubeg = ent as IMyCubeGrid;
-                        if (cubeg != null)
-                        {
-                            allb.Clear();
-                            cubeg.GetBlocks(allb);
-                            foreach (var block in allb)
-                            {
-                                if (block.FatBlock != null)
-                                {
-                                    IMySafeZoneBlock testSafe = block.FatBlock as IMySafeZoneBlock;
-                                    if (testSafe != null && !safedict.Contains(testSafe))
-                                    {
-                                        safedict.Add(testSafe);
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
-                }
+            if (!isServer) return;
 
-                if (_timer % 30 == 0)
+            timer++;
+            if (timer % 30 != 0) return;
+
+            if (activeSafeZones.Count == 0) return;
+
+            players.Clear();
+            MyAPIGateway.Multiplayer.Players.GetPlayers(players);
+
+            foreach (var player in players)
+            {
+                var character = player.Character;
+                if (character == null || character.MarkedForClose || character.Closed)
+                    continue;
+
+                Vector3D playerPos = character.PositionComp.GetPosition();
+
+                foreach (var safeZone in activeSafeZones)
                 {
-                    allPlayer.Clear();
-                    MyAPIGateway.Multiplayer.Players.GetPlayers(allPlayer);
-                    for (int i = 0; i < allPlayer.Count; i++)
+                    if (safeZone == null || safeZone.MarkedForClose || safeZone.Closed)
+                        continue;
+
+                    if (!safeZone.Enabled)
+                        continue;
+
+                    // Native check handling both Sphere and Box safe zone shapes
+                    if (safeZone.Contains(playerPos))
                     {
-                        for (int j = 0; j < safedict.Count; j++)
-                        {
-                            if (MyAPIGateway.Entities.EntityExists(safedict[j].EntityId))
-                            {
-                                if (safedict[j].IsSafeZoneEnabled())
-                                {
-                                    if (allPlayer[i].Character != null && (allPlayer[i].Character.WorldMatrix.Translation - safedict[j].WorldMatrix.Translation).Length() <= safedict[j].GetValueFloat("SafeZoneSlider"))
-                                    {
-                                        MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(allPlayer[i].IdentityId, 1f);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                        MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(player.IdentityId, 1f);
+                        break;
                     }
                 }
             }
@@ -95,10 +109,14 @@ namespace Klime.SafezoneH2
 
         protected override void UnloadData()
         {
-            MyVisualScriptLogicProvider.BlockBuilt -= BlockBuilt;
-            allb = null;
-            allPlayer = null;
-            safedict = null;
+            if (isServer)
+            {
+                MyAPIGateway.Entities.OnEntityAdd -= OnEntityAdd;
+                MyAPIGateway.Entities.OnEntityRemove -= OnEntityRemove;
+            }
+
+            activeSafeZones.Clear();
+            players.Clear();
         }
     }
 }

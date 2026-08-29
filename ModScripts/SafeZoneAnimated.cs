@@ -1,14 +1,8 @@
-﻿using ObjectBuilders.SafeZone;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Game.Entities;
+using ObjectBuilders.SafeZone;
 using Sandbox.ModAPI;
 using Sandbox.ModAPI.Interfaces;
-using Sandbox.ModAPI.Interfaces.Terminal;
-using SpaceEngineers.Game.Entities.Blocks.SafeZone;
 using SpaceEngineers.Game.ModAPI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using VRage.Game.Components;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI;
@@ -16,7 +10,15 @@ using VRage.ModAPI;
 using VRage.ObjectBuilders;
 using VRageMath;
 
-namespace PSYCHO.SafeZoneAnimated
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: SafeZoneAnimated.cs
+// Original Author: TwitchingPsycho (https://steamcommunity.com/sharedfiles/filedetails/?id=2202391036)
+// Description: Animates the custom Siegable Shield Generator subpart with
+// continuous rotational spin matching shield activation and state.
+// =========================================================================
+
+namespace GVK.SafeZone
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SafeZoneBlock), false)]
     public class AnimateSafeZone : MyGameLogicComponent
@@ -26,9 +28,9 @@ namespace PSYCHO.SafeZoneAnimated
         // VARIABLES
         // =========
         // Defines the axis for switch.
-        static readonly int X = 1;
-        static readonly int Y = 2;
-        static readonly int Z = 3;
+        public const int AxisX = 1;
+        public const int AxisY = 2;
+        public const int AxisZ = 3;
 
         public bool DoOnce = false;
         public IMySafeZoneBlock block;
@@ -59,7 +61,7 @@ namespace PSYCHO.SafeZoneAnimated
         // ========================
         // User changable variables
         // ========================
-        static readonly int   RotationAxis = Z;            // X, Y, Z
+        static readonly int RotationAxis = AxisZ;            // AxisX, AxisY, AxisZ
         static readonly float MaxRotationSpeed = 0.1f;   // The max speed when shield is at max radius.
         static readonly float SpoolDownFactor = 0.0025f; // Slowdown factor.
         static readonly float SpoolUpFactor = 0.001f;    // Speedup factor.
@@ -120,7 +122,7 @@ namespace PSYCHO.SafeZoneAnimated
 
         public override void UpdateBeforeSimulation()
         {
-			if (MyAPIGateway.Utilities.IsDedicated) return;
+            if (MyAPIGateway.Utilities.IsDedicated) return;
 
             if (subpart == null && CheckForSubpart)
             {
@@ -145,9 +147,9 @@ namespace PSYCHO.SafeZoneAnimated
                 //if (!block.IsFunctional && !SafeZoneDamaged) return;                // Ignore damaged or build progress blocks.
                 if (SafeZoneIncomplete) return;                // Ignore build progress blocks.
                 if (block.CubeGrid.Physics == null) return;     // Ignore ghost grids (projections).
-				//if (block.IsWorking) newRotMatrixX = _rotMatrixX;
-                //else newRotMatrixX = Matrix.Identity;
-				
+                                                                //if (block.IsWorking) newRotMatrixX = _rotMatrixX;
+                                                                //else newRotMatrixX = Matrix.Identity;
+
                 if (DoOnce)
                 {
                     DoOnce = true;
@@ -255,10 +257,10 @@ namespace PSYCHO.SafeZoneAnimated
             var hingePos = new Vector3(HingePosX, HingePosY, HingePosZ); // This defines the location of a new pivot point.
             var MatrixTransl1 = Matrix.CreateTranslation(-(hingePos));
             var MatrixTransl2 = Matrix.CreateTranslation(hingePos);
-            var rotMatrix = subpart.PositionComp.LocalMatrix;
+            var rotMatrix = subpart.PositionComp.LocalMatrixRef;
             //rotMatrix *= (MatrixTransl1 * (Matrix.CreateRotationX(Rotator) * Matrix.CreateRotationY(RotY) * Matrix.CreateRotationZ(RotZ)) * MatrixTransl2);
             rotMatrix *= (MatrixTransl1 * _rotMatrixX * _rotMatrixY * _rotMatrixZ * MatrixTransl2);
-            subpart.PositionComp.LocalMatrix = rotMatrix;
+            subpart.PositionComp.SetLocalMatrix(ref rotMatrix);
             //MyAPIGateway.Utilities.ShowNotification(Rotator.ToString(), 1);
         }
 

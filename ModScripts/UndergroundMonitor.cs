@@ -1,57 +1,97 @@
-﻿using Sandbox.Game;
-using Sandbox.Game.Entities;
-using Sandbox.ModAPI;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VRage.Collections;
+using Sandbox.Common.ObjectBuilders;
+using Sandbox.Game;
+using Sandbox.Game.Entities;
+using Sandbox.ModAPI;
+using SpaceEngineers.Game.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
-using VRage.Game.Entity;
 using VRage.Game.ModAPI;
 using VRage.ModAPI;
 using VRageMath;
 
-namespace Underground_Monitor
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: UndergroundMonitor.cs
+// Original Author: Kamikaze (https://steamcommunity.com/sharedfiles/filedetails/?id=2713098288)
+// Adapted for GVK: Mike Dude
+// Description: Monitors grid subterranean depth against voxel surfaces, enforcing
+// server limits against illegal underground bases with automated SPRT transfer.
+// =========================================================================
+
+namespace GVK.UndergroundMonitor
 {
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public class Session : MySessionComponentBase
     {
-        private int UPDATE_RATE = 10;
-        private int PROCESS_AMOUNT = 20;
-        private int FLAGGED_TIME = 5;
-        private int METERS_BELOW_SURFACE = 50;
+        private const int UPDATE_INTERVAL_TICKS = 30; // Check a batch twice per second
+        private const int PROCESS_GRIDS_PER_BATCH = 10;
+        private const int FLAGGED_TIME_MINUTES = 5;
+
+        // Depth limits relative to original procedural heightmap elevation
+        private const double DEPTH_ATMOSPHERE_POWER = 5.0; // Wind & Solar (disabled below 5m)
+        private const double DEPTH_GENERAL_BLOCKS = 25.0;   // All other functional/terminal blocks (disabled below 25m)
 
         private bool isServer;
         private int ticks;
         private IMyFaction npcFaction;
         private long npcFactionId;
-        private MyConcurrentQueue<IMyCubeGrid> gridList = new MyConcurrentQueue<IMyCubeGrid>();
-        private ConcurrentDictionary<MyCubeBlock, int> blockCache = new ConcurrentDictionary<MyCubeBlock, int>();
+
+        private readonly Queue<IMyCubeGrid> gridQueue = new Queue<IMyCubeGrid>();
+        private readonly HashSet<long> registeredGridEntityIds = new HashSet<long>();
+        private readonly ConcurrentDictionary<MyCubeBlock, int> blockCache = new ConcurrentDictionary<MyCubeBlock, int>();
+        private readonly Dictionary<long, int> gridAlertCooldowns = new Dictionary<long, int>();
 
         public override void LoadData()
         {
             isServer = MyAPIGateway.Session.IsServer;
+            if (!isServer) return;
 
-            if (isServer)
-            {
-                MyAPIGateway.Entities.OnEntityAdd += EntityAdd;
-                MyAPIGateway.Entities.OnEntityRemove += EntityRemoved;
-                
-            }
+            MyAPIGateway.Entities.OnEntityAdd += EntityAdd;
+            MyAPIGateway.Entities.OnEntityRemove += EntityRemoved;
         }
 
         public override void BeforeStart()
         {
-            if (isServer)
+            if (!isServer) return;
+
+            FindNpcFaction();
+
+            // Populate all existing grids loaded with world save
+            HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
+            MyAPIGateway.Entities.GetEntities(entities, e => e is IMyCubeGrid);
+            foreach (var entity in entities)
             {
-                // Changed from COALITION to GAALSIEN so players can still clean it up or kill it
-				npcFaction = MyAPIGateway.Session.Factions.TryGetFactionByTag("GAALSIEN");
-                if (npcFaction != null)
-                    npcFactionId = npcFaction.FactionId;
+                EntityAdd(entity);
+            }
+        }
+
+        private void FindNpcFaction()
+        {
+            // 1. Primary: GAALSIEN
+            npcFaction = MyAPIGateway.Session.Factions.TryGetFactionByTag("GAALSIEN");
+            if (npcFaction != null)
+            {
+                npcFactionId = npcFaction.FactionId;
+                return;
+            }
+
+            // 2. Failsafe: SPRT (Default Keen Space Pirates)
+            npcFaction = MyAPIGateway.Session.Factions.TryGetFactionByTag("SPRT");
+            if (npcFaction != null)
+            {
+                npcFactionId = npcFaction.FactionId;
+                return;
+            }
+
+            // 3. Fallback: First available NPC faction
+            npcFaction = MyAPIGateway.Session.Factions.Factions.Values.FirstOrDefault(f => f.IsEveryoneNpc() || f.Tag.Length > 3);
+            if (npcFaction != null)
+            {
+                npcFactionId = npcFaction.FactionId;
             }
         }
 
@@ -60,205 +100,268 @@ namespace Underground_Monitor
             if (!isServer) return;
 
             ticks++;
-            RunProcess();
-            CheckFlagged();
 
-            if (ticks >= 3600)
-                ticks = 0;
+            if (ticks % UPDATE_INTERVAL_TICKS == 0)
+            {
+                ProcessGridBatch();
+            }
+
+            if (ticks % 60 == 0)
+            {
+                CheckFlaggedBlocks();
+                UpdateAlertCooldowns();
+            }
         }
 
-        private void RunProcess()
+        private void ProcessGridBatch()
         {
-            if (ticks % UPDATE_RATE != 0) return;
-            MyAPIGateway.Parallel.StartBackground(() =>
+            if (gridQueue.Count == 0) return;
+
+            int count = Math.Min(PROCESS_GRIDS_PER_BATCH, gridQueue.Count);
+            for (int i = 0; i < count; i++)
             {
-                if (npcFaction == null) return;
-                for (int i = 0; i < PROCESS_AMOUNT; i++)
+                IMyCubeGrid grid = gridQueue.Dequeue();
+                if (grid == null || grid.MarkedForClose || grid.Closed)
                 {
-                    IMyCubeGrid grid;
-                    if (!gridList.TryDequeue(out grid))
-                        continue;
-
-                    if (!CheckGrid(grid))
-                        continue;
-
-                    gridList.Enqueue(grid);
-                }
-            });
-        }
-
-        private void CheckFlagged()
-        {
-            if (ticks % 60 != 0) return;
-            if (npcFaction == null) return;
-            List<MyCubeBlock> temp = new List<MyCubeBlock>();
-            foreach (var item in blockCache.Keys)
-            {
-                if (item == null || item.MarkedForClose)
-                {
-                    temp.Add(item);
+                    if (grid != null) registeredGridEntityIds.Remove(grid.EntityId);
                     continue;
                 }
 
-                blockCache[item]++;
-                if (blockCache[item] / 60 >= FLAGGED_TIME)
+                if (CheckGrid(grid))
                 {
-                    MyPlanet planet = MyGamePruningStructure.GetClosestPlanet(item.PositionComp.GetPosition());
-                    if (planet == null)
-                    {
-                        temp.Add(item);
-                        continue;
-                    }
-
-                    IMyEntity planetEntity = planet as IMyEntity;
-                    if (planetEntity == null)
-                    {
-                        temp.Add(item);
-                        continue;
-                    }
-
-                    bool inGravity = planetEntity.Components.Get<MyGravityProviderComponent>().IsPositionInRange(item.PositionComp.GetPosition());
-                    if (!inGravity)
-                    {
-                        temp.Add(item);
-                        continue;
-                    }
-
-                    if (!IsUnderground(item, planetEntity, planet))
-                    {
-                        temp.Add(item);
-                        continue;
-                    }
-
-                    item.ChangeBlockOwnerRequest(0, MyOwnershipShareModeEnum.Faction);
-                    item.ChangeBlockOwnerRequest(npcFaction.FounderId, MyOwnershipShareModeEnum.Faction);
-                    temp.Add(item);
+                    gridQueue.Enqueue(grid);
                 }
-            }
-
-            foreach (var item in temp)
-            {
-                int value;
-                blockCache.TryRemove(item, out value);
+                else
+                {
+                    registeredGridEntityIds.Remove(grid.EntityId);
+                }
             }
         }
 
         private bool CheckGrid(IMyCubeGrid grid)
         {
-            if (grid == null || grid.MarkedForClose) return false;
-            MyCubeGrid cubeGrid = grid as MyCubeGrid;
+            if (grid == null || grid.MarkedForClose || grid.Closed) return false;
+            var cubeGrid = grid as MyCubeGrid;
             if (cubeGrid == null) return false;
 
-            IMyFaction gridFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(cubeGrid.BigOwners.FirstOrDefault());
-            if (gridFaction != null)
+            // Only monitor static grids anchored into the ground
+            if (!grid.IsStatic) return true;
+
+            // Ignore NPC/Admin grids
+            long ownerId = cubeGrid.BigOwners.FirstOrDefault();
+            if (ownerId != 0)
             {
-                if (gridFaction.FactionId == npcFactionId || gridFaction.Tag.Length > 3)
+                if (npcFaction != null && ownerId == npcFactionId) return true;
+                IMyFaction gridFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(ownerId);
+                if (gridFaction != null && (gridFaction.FactionId == npcFactionId || gridFaction.Tag.Length > 3))
                     return true;
             }
-
-            if (!grid.IsStatic) return true;
 
             MyPlanet planet = MyGamePruningStructure.GetClosestPlanet(grid.GetPosition());
             if (planet == null) return true;
 
-            IMyEntity planetEntity = planet as IMyEntity;
-            if (planetEntity == null) return true;
-
-            bool inGravity = planetEntity.Components.Get<MyGravityProviderComponent>().IsPositionInRange(grid.GetPosition());
-            if (!inGravity) return true;
+            Vector3D planetCenter = planet.PositionComp.GetPosition();
+            var gravityComp = planet.Components.Get<MyGravityProviderComponent>();
+            if (gravityComp == null || !gravityComp.IsPositionInRange(grid.GetPosition()))
+                return true;
 
             var blocks = cubeGrid.GetFatBlocks();
-            foreach(var block in blocks)
+            int newFlaggedOnGrid = 0;
+            string sampleBlockName = null;
+            double sampleDepth = 0;
+            bool sampleIsWindOrSolar = false;
+
+            foreach (var block in blocks)
             {
+                if (block == null || block.MarkedForClose || block.Closed) continue;
                 if (block.OwnerId == npcFactionId) continue;
-                IMyFaction blockFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(block.OwnerId);
-                if (blockFaction != null)
-                    if (blockFaction.Tag.Length > 3) continue;
 
-                if (!IsUnderground(block, planetEntity, planet))
+                // Exempt ship drills and drill-rig mechanics (pistons/rotors) from being shut down
+                if (IsExemptMiningBlock(block))
                     continue;
 
-                IMyCubeBlock cubeBlock = block as IMyCubeBlock;
-                if (cubeBlock == null) continue;
+                // Check allowable depth for this block type
+                double maxAllowedDepth = GetMaxAllowedDepth(block);
+                if (maxAllowedDepth < 0)
+                    continue; // Allowed at any depth (e.g. non-terminal structural blocks)
 
-                IMyFunctionalBlock myFunctionalBlock = block as IMyFunctionalBlock;
-                if (myFunctionalBlock != null)
+                Vector3D blockPos = block.PositionComp.GetPosition();
+                Vector3D surfacePoint = planet.GetClosestSurfacePointGlobal(ref blockPos);
+                double surfaceDist = Vector3D.Distance(surfacePoint, planetCenter);
+                double blockDist = Vector3D.Distance(blockPos, planetCenter);
+                double depth = surfaceDist - blockDist;
+
+                if (depth > maxAllowedDepth)
                 {
-                    MyAPIGateway.Utilities.InvokeOnGameThread(() => myFunctionalBlock.Enabled = false);
-                    if (!blockCache.ContainsKey(block) && myFunctionalBlock.IsFunctional)
+                    var functionalBlock = block as IMyFunctionalBlock;
+                    if (functionalBlock != null && functionalBlock.Enabled)
                     {
-                        blockCache.TryAdd(block, 0);
-                        SendChatAlert(block);
+                        functionalBlock.Enabled = false;
                     }
 
-                    continue;
-                }
-
-                IMyTerminalBlock tBlock = block as IMyTerminalBlock;
-                if (tBlock != null)
-                {
-                    if (!blockCache.ContainsKey(block) && tBlock.IsFunctional)
+                    if (!blockCache.ContainsKey(block))
                     {
                         blockCache.TryAdd(block, 0);
-                        SendChatAlert(block);
+                        newFlaggedOnGrid++;
+                        sampleBlockName = block.BlockDefinition.DisplayNameText ?? block.BlockDefinition.Id.SubtypeName;
+                        sampleDepth = depth;
+                        sampleIsWindOrSolar = (maxAllowedDepth == DEPTH_ATMOSPHERE_POWER);
                     }
-
-                    continue;
                 }
+            }
+
+            if (newFlaggedOnGrid > 0)
+            {
+                SendGridChatAlert(grid, ownerId, sampleBlockName, sampleDepth, newFlaggedOnGrid, sampleIsWindOrSolar);
             }
 
             return true;
         }
 
-        private bool IsUnderground(MyCubeBlock block, IMyEntity planetEntity, MyPlanet planet)
+        private bool IsExemptMiningBlock(MyCubeBlock block)
         {
-            if (block as IMyShipDrill != null) return false;
-            Vector3D pos = block.PositionComp.GetPosition();
-            var powerBlock = block as IMyPowerProducer;
-            bool isWindOrSolar = false;
-            if (powerBlock != null)
-                isWindOrSolar = powerBlock.BlockDefinition.SubtypeName.Contains("Solar") || powerBlock.BlockDefinition.SubtypeName.Contains("Wind");
- 
-            Vector3D objectPlanetOffset = pos - planetEntity.GetPosition();
-            double objectDistSq = objectPlanetOffset.LengthSquared();
-
-            Vector3D objectPlanetOffsetNormal = objectPlanetOffset;
-            objectPlanetOffsetNormal.Normalize();
-
-            float distance = isWindOrSolar ? 5 : METERS_BELOW_SURFACE;
-
-            Vector3D undergroundThreshold = planet.GetClosestSurfacePointGlobal(pos) - planetEntity.GetPosition() - objectPlanetOffsetNormal * distance;
-            double undergroundThresholdDistSq = undergroundThreshold.LengthSquared();
-
-            return objectDistSq < undergroundThresholdDistSq;
+            // Drills and mechanical drill extensions (pistons, rotors, hinges) are exempt so mining rigs don't get shut down
+            if (block is IMyShipDrill) return true;
+            if (block is IMyPistonBase) return true;
+            if (block is IMyMotorStator) return true;
+            return false;
         }
 
-        private void SendChatAlert(MyCubeBlock block)
+        private double GetMaxAllowedDepth(MyCubeBlock block)
         {
-            IMyCubeBlock cubeBlock = block as IMyCubeBlock;
-            if (cubeBlock == null) return;
-			// Removed no owner message so it doesn't spam everyone
-            /*if (block.OwnerId == 0)
+            // 1. Wind Turbines & Solar Panels: disabled below 5m
+            if (block is IMyWindTurbine || block is IMySolarPanel ||
+                block.BlockDefinition.Id.TypeId == typeof(MyObjectBuilder_WindTurbine) ||
+                block.BlockDefinition.Id.TypeId == typeof(MyObjectBuilder_SolarPanel))
             {
-                MyVisualScriptLogicProvider.SendChatMessageColored($"WARNING!! Block '{block?.BlockDefinition.Id.SubtypeName}' on grid '{cubeBlock?.CubeGrid.CustomName}' has no owner and is flagged as undergound and this is prohibited. {FLAGGED_TIME} mins to fix this or it will be changed to an NPC owner.", Color.Red, "[Server]", 0, "Red");
-                return;
-            }*/
-
-            if (GetPlayerFromId(block.OwnerId) != null)
-            {
-                MyVisualScriptLogicProvider.SendChatMessageColored($"WARNING!! Block '{block?.BlockDefinition.Id.SubtypeName}' on grid '{cubeBlock?.CubeGrid.CustomName}' is flagged as undergound and this is prohibited. You have {FLAGGED_TIME} mins to fix this or it will be changed to an NPC owner.", Color.Red, "[Server]", block.OwnerId, "Red");
-                return;
+                return DEPTH_ATMOSPHERE_POWER;
             }
 
-            IMyFaction faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(block.OwnerId);
-            if (faction == null) return;
-
-            var members = faction.Members;
-            foreach(var member in members)
+            // 2. All other functional or terminal blocks (production, power, containers, etc.): disabled below 25m
+            if (block is IMyFunctionalBlock || block is IMyTerminalBlock)
             {
-                if (GetPlayerFromId(member.Key) == null) continue;
-                MyVisualScriptLogicProvider.SendChatMessageColored($"WARNING!! Block '{block?.BlockDefinition.Id.SubtypeName}' on grid '{cubeBlock?.CubeGrid.CustomName}' is flagged as undergound and this is prohibited. You have {FLAGGED_TIME} mins to fix this or it will be changed to an NPC owner.", Color.Red, "[Server]", member.Key, "Red");
-                continue;
+                return DEPTH_GENERAL_BLOCKS;
+            }
+
+            // 3. Non-terminal structural blocks (armor blocks, plain conveyor tubes): No restriction
+            return -1.0;
+        }
+
+        private void CheckFlaggedBlocks()
+        {
+            if (blockCache.IsEmpty) return;
+
+            List<MyCubeBlock> toRemove = new List<MyCubeBlock>();
+
+            foreach (var kvp in blockCache)
+            {
+                MyCubeBlock block = kvp.Key;
+                if (block == null || block.MarkedForClose || block.Closed)
+                {
+                    toRemove.Add(block);
+                    continue;
+                }
+
+                int elapsedSeconds = kvp.Value + 1;
+                blockCache[block] = elapsedSeconds;
+
+                if (elapsedSeconds >= FLAGGED_TIME_MINUTES * 60)
+                {
+                    // Re-verify before transferring ownership
+                    MyPlanet planet = MyGamePruningStructure.GetClosestPlanet(block.PositionComp.GetPosition());
+                    if (planet != null)
+                    {
+                        Vector3D planetCenter = planet.PositionComp.GetPosition();
+                        Vector3D blockPos = block.PositionComp.GetPosition();
+                        Vector3D surfacePoint = planet.GetClosestSurfacePointGlobal(ref blockPos);
+                        double surfaceDist = Vector3D.Distance(surfacePoint, planetCenter);
+                        double blockDist = Vector3D.Distance(blockPos, planetCenter);
+                        double depth = surfaceDist - blockDist;
+
+                        double maxDepth = GetMaxAllowedDepth(block);
+                        if (maxDepth >= 0 && depth > maxDepth)
+                        {
+                            if (npcFaction == null)
+                                FindNpcFaction();
+
+                            long targetOwner = (npcFaction != null && npcFaction.FounderId != 0) ? npcFaction.FounderId : 0;
+                            block.ChangeOwner(targetOwner, MyOwnershipShareModeEnum.Faction);
+                        }
+                    }
+
+                    toRemove.Add(block);
+                }
+            }
+
+            foreach (var block in toRemove)
+            {
+                int val;
+                blockCache.TryRemove(block, out val);
+            }
+        }
+
+        private void SendGridChatAlert(IMyCubeGrid grid, long ownerId, string blockName, double depth, int count, bool isWindOrSolar)
+        {
+            if (gridAlertCooldowns.ContainsKey(grid.EntityId))
+                return;
+
+            gridAlertCooldowns[grid.EntityId] = 60; // 60s cooldown per grid
+
+            string gridName = string.IsNullOrEmpty(grid.CustomName) ? "Static Grid" : grid.CustomName;
+            string countText = count > 1 ? $" ({count} prohibited blocks)" : "";
+            string msg;
+
+            if (isWindOrSolar)
+            {
+                msg = $"[Server] ⚠️ Prohibited underground power '{blockName}'{countText} on '{gridName}' ({depth:0}m deep). Wind turbines & solar panels must be within 5m of the surface. Disabled.";
+            }
+            else
+            {
+                msg = $"[Server] ⚠️ Prohibited underground block '{blockName}'{countText} on '{gridName}' ({depth:0}m deep). Base blocks must be within 25m of surface due to voxel resets. Move above ground within {FLAGGED_TIME_MINUTES} mins.";
+            }
+
+            if (ownerId != 0)
+            {
+                IMyPlayer player = GetPlayerFromId(ownerId);
+                if (player != null)
+                {
+                    MyVisualScriptLogicProvider.SendChatMessageColored(msg, Color.Red, "[Server]", ownerId, "Red");
+                    return;
+                }
+
+                IMyFaction faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(ownerId);
+                if (faction != null)
+                {
+                    foreach (var member in faction.Members)
+                    {
+                        if (GetPlayerFromId(member.Key) != null)
+                        {
+                            MyVisualScriptLogicProvider.SendChatMessageColored(msg, Color.Red, "[Server]", member.Key, "Red");
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+
+        private void UpdateAlertCooldowns()
+        {
+            if (gridAlertCooldowns.Count == 0) return;
+
+            List<long> expired = new List<long>();
+            var keys = gridAlertCooldowns.Keys.ToList();
+            foreach (var key in keys)
+            {
+                gridAlertCooldowns[key]--;
+                if (gridAlertCooldowns[key] <= 0)
+                {
+                    expired.Add(key);
+                }
+            }
+
+            foreach (var key in expired)
+            {
+                gridAlertCooldowns.Remove(key);
             }
         }
 
@@ -266,13 +369,11 @@ namespace Underground_Monitor
         {
             List<IMyPlayer> players = new List<IMyPlayer>();
             MyAPIGateway.Players.GetPlayers(players);
-
             foreach (var player in players)
             {
                 if (player.IdentityId == playerId)
                     return player;
             }
-
             return null;
         }
 
@@ -280,9 +381,10 @@ namespace Underground_Monitor
         {
             IMyCubeGrid grid = entity as IMyCubeGrid;
             if (grid == null) return;
-            if (grid.Physics == null) return;
+            if (registeredGridEntityIds.Contains(grid.EntityId)) return;
 
-            gridList.Enqueue(grid);
+            registeredGridEntityIds.Add(grid.EntityId);
+            gridQueue.Enqueue(grid);
         }
 
         public void EntityRemoved(IMyEntity entity)
@@ -290,7 +392,8 @@ namespace Underground_Monitor
             IMyCubeGrid grid = entity as IMyCubeGrid;
             if (grid == null) return;
 
-            //gridList.Remove(grid);
+            registeredGridEntityIds.Remove(grid.EntityId);
+            gridAlertCooldowns.Remove(grid.EntityId);
         }
 
         protected override void UnloadData()
@@ -300,6 +403,12 @@ namespace Underground_Monitor
                 MyAPIGateway.Entities.OnEntityAdd -= EntityAdd;
                 MyAPIGateway.Entities.OnEntityRemove -= EntityRemoved;
             }
+
+            gridQueue.Clear();
+            registeredGridEntityIds.Clear();
+            blockCache.Clear();
+            gridAlertCooldowns.Clear();
         }
     }
 }
+

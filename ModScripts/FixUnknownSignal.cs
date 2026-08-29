@@ -1,15 +1,19 @@
-﻿using System;
 using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.ModAPI;
 using VRage.ModAPI;
-using VRage.Utils;
 
-// This changes the owner of unk signals if for some reason it picks a real player's entity ID
+// =========================================================================
+// GV: Deserts of Kharak (GVK) Server Settings & Mechanics
+// Script: FixUnknownSignal.cs
+// Original Author: Merii (highlyunavailable)
+// Description: Fixes vanilla Keen quirk where Unknown Signal drop pods spawn
+// assigned to real player entity IDs rather than an NPC faction.
+// =========================================================================
 
-namespace GVTweaks.ArmorBalance
+namespace GVK.UnknownSignal
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class FixUnknownSignal : MySessionComponentBase
