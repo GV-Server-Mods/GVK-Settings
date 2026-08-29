@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- GVK Ore Detector range buffs -->
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>LargeOreDetector</SubtypeId>
+			</Id>
+			<MaximumRange>200</MaximumRange>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>SmallBlockOreDetector</SubtypeId>
+			</Id>
+			<MaximumRange>100</MaximumRange>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>LargeOreDetectorReskin</SubtypeId>
+			</Id>
+			<MaximumRange>200</MaximumRange>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_OreDetectorDefinition">
+			<Id>
+				<TypeId>OreDetector</TypeId>
+				<SubtypeId>SmallOreDetectorReskin</SubtypeId>
+			</Id>
+			<MaximumRange>100</MaximumRange>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

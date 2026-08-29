@@ -5,3 +5,7 @@ obj/
 *.suo
 .mdk/
 mdk.ini
+mdk.local.ini
+desktop.ini
+*.bak
+*.orig
