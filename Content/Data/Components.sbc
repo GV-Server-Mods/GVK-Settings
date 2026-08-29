@@ -209,5 +209,37 @@
 			<Health>14</Health>
 			<CanPlayerOrder>false</CanPlayerOrder>
 		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>BIGCHUNGUS</SubtypeId>
+			</Id>
+			<DisplayName>BIGCHUNGUS</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Size><X>0.1</X><Y>0.1</Y><Z>0.1</Z></Size>
+			<Mass>1</Mass>
+			<Volume>1</Volume>
+			<Model>Models\Components\AlkalineCell.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>1</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>ADMINKIT</SubtypeId>
+			</Id>
+			<DisplayName>ADMINKIT</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
+			<Size><X>0.1</X><Y>0.1</Y><Z>0.1</Z></Size>
+			<Mass>1</Mass>
+			<Volume>1</Volume>
+			<Model>Models\Components\AlkalineCell.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>1</MaxIntegrity>
+			<Health>1</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
 	</Components>
 </Definitions>

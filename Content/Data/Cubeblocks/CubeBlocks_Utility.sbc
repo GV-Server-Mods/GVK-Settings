@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Added here because mod adjuster might be causing problems with this for some players -->
@@ -8,7 +8,7 @@
 				<SubtypeId>LargeJumpDrive</SubtypeId>
 			</Id>
 			<DisplayName>Siege Drive</DisplayName>
-			<Description>Siege Drives are used for sieging enemy Shield Generators. Only for Shields in Z1-Z3.</Description>
+			<Description>Siege Drives are used for sieging enemy Shield Generators. Only for Shields in Z2-Z3.</Description>
 			<Icon>Textures\GUI\Icons\Cubes\JumpDrive.dds</Icon>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
@@ -70,7 +70,7 @@
 			</Id>
 			<DisplayName>Siege Drive (Proto)</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\Prototech_JumpDrive.dds</Icon>
-			<Description>Siege Drives are used for sieging enemy Shield Generators. Only for Shields in Z1-Z3.</Description>
+			<Description>Siege Drives are used for sieging enemy Shield Generators. Only for Shields in Z2-Z3.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="3" y="3" z="3"/>

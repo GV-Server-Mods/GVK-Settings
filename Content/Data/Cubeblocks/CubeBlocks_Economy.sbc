@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Made safezones take little energy and no zone chips -->
@@ -79,7 +79,7 @@
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneReskin.dds</Icon>
 			<Description>Must NOT be on a grid with a Spec Core Beacon. Standalone Station Only.
 			
-			Low power, 0 Zone Chips. NOT siegable in Z0. Can be sieged in Z1-Z3.</Description>
+			Low power, 0 Zone Chips. NOT siegable in Z0-Z1. Can be sieged in Z2-Z3.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="2" y="2" z="3" />
