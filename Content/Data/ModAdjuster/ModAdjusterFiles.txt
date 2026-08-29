@@ -11,9 +11,8 @@ CubeBlocks_NPCThrusters-Ion.xml
 CubeBlocks_Production.xml
 CubeBlocks_Shelves.xml
 CubeBlocks_Thrusters.xml
-CubeBlocks_Tools.xml
+CubeBlocks_OreDetectors.xml
 Extra Reinforced Conveyors.xml
 PhysicalItems.xml
 PhysicalItems_Economy.xml
 SessionComponents_GVDropContainers.xml
-VoxelMaterials_Ice_03.xml

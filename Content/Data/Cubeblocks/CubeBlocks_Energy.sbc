@@ -551,14 +551,14 @@
 			<PCU>25</PCU>
 			<DLC>CoreSystems</DLC>
 		</Definition>
-		<!-- Make the new Fieldwork "Fusion Reactor" a replacement for the Adv Engine -->
+		<!-- Advanced Hydrogen Engine (Prototech H2 Engine) -->
 		<Definition xsi:type="MyObjectBuilder_HydrogenEngineDefinition">
 			<Id>
 				<TypeId>HydrogenEngine</TypeId>
 				<SubtypeId>LargePrototechReactor</SubtypeId>
 			</Id>
-			<DisplayName>Fusuion Reactor</DisplayName>
-			<Description>The Fusuion Reactor has 200% H2 efficiency, but can only placed on a Fortress grid</Description>
+			<DisplayName>Advanced Hydrogen Engine</DisplayName>
+			<Description>The Advanced Hydrogen Engine has 200% H2 efficiency; Fortress only.</Description>
 			<Icon>Textures\GUI\Icons\Cubes\Prototech_Reactor.dds</Icon>
 			<CubeSize>Large</CubeSize>
 			<GuiVisible>false</GuiVisible>

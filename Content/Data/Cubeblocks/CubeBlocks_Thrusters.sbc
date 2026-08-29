@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Don't double up changes to the same setting with Mod Adjuster and custom rebalancer scripts -->
@@ -21,6 +21,7 @@
             <SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
             <Components>
                 <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="PrototechPropulsionUnit" Count="3" />
                 <Component Subtype="Construction" Count="20" />
                 <Component Subtype="LargeTube" Count="4" />
                 <Component Subtype="MetalGrid" Count="8" />
@@ -128,6 +129,7 @@
             <SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
             <Components>
                 <Component Subtype="SteelPlate" Count="2" />
+                <Component Subtype="PrototechPropulsionUnit" Count="1" />
                 <Component Subtype="Construction" Count="20" />
                 <Component Subtype="LargeTube" Count="1" />
                 <Component Subtype="MetalGrid" Count="1" />
@@ -234,6 +236,7 @@
             <SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
             <Components>
                 <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="PrototechPropulsionUnit" Count="3" />
                 <Component Subtype="Construction" Count="20" />
                 <Component Subtype="LargeTube" Count="4" />
                 <Component Subtype="MetalGrid" Count="8" />
@@ -346,6 +349,7 @@
             <SilenceableByShipSoundSystem>true</SilenceableByShipSoundSystem>
             <Components>
                 <Component Subtype="SteelPlate" Count="2" />
+                <Component Subtype="PrototechPropulsionUnit" Count="1" />
                 <Component Subtype="Construction" Count="20" />
                 <Component Subtype="LargeTube" Count="1" />
                 <Component Subtype="MetalGrid" Count="1" />

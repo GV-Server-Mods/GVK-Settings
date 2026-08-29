@@ -15,7 +15,7 @@
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockLargeIndustrialContainer_Shared"/>
 			</Blocks>
 		</BlockVariantGroup>
-		<!-- Add HUGE blocks -->
+		<!-- GVK Gas Generators & Hydrogen Engines (including Prototech Advanced Blocks) -->
         <BlockVariantGroup>
             <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GasGeneratorGroup" />
             <Icon>Textures\GUI\Icons\Cubes\OxygenGenerator.dds</Icon>
@@ -24,7 +24,7 @@
             <Blocks>
                 <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="" />
                 <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGeneratorSmall" />
-                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGenerator3" />
+                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="LargeBlockPrototechOxygenGenerator" />
             </Blocks>
         </BlockVariantGroup>
         <BlockVariantGroup>
@@ -35,6 +35,7 @@
             <Blocks>
 		        <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngine" />
                 <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngine" />
+                <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargePrototechReactor" />
             </Blocks>
         </BlockVariantGroup>
 	</BlockVariantGroups>

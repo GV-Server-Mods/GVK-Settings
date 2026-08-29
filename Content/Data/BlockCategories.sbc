@@ -27,7 +27,8 @@
 				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
-				<string>OxygenGenerator/OxygenGenerator3</string>
+				<string>HydrogenEngine/LargePrototechReactor</string>
+				<string>OxygenGenerator/LargeBlockPrototechOxygenGenerator</string>
 			</ItemIds>
 		</Category>
 		<!-- Shared Cargos -->
@@ -50,8 +51,8 @@
 				<string>CargoContainer/SmallBlockMediumContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
-				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+				<string>HydrogenEngine/LargePrototechReactor</string>
+				<string>OxygenGenerator/LargeBlockPrototechOxygenGenerator</string>
 			</ItemIds>
 		</Category>
 		<!-- RB 3x3x3 tank -->
@@ -76,7 +77,6 @@
 			<Name>Section1_Position1_LargeBlocks</Name>
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
-				<string>OxygenGenerator/OxygenGenerator3</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
@@ -99,7 +99,6 @@
 			<Name>Section1_Position2_Nonarmor</Name>
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
-				<string>OxygenGenerator/OxygenGenerator3</string>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_MediumCore</string>
                 <string>Beacon/SmallBlockBeacon_Scrap</string>

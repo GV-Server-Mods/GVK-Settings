@@ -22,6 +22,7 @@
             <Color x="0.1222" y="0.05" z="0.46" />
         </BackgroundColorRanges>
         <Icon>Textures\FactionLogo\Homeworld\Hiigara.png</Icon>
+        <Icon>Textures\FactionLogo\Homeworld\Khaaneph.png</Icon>
         <Icon>Textures\FactionLogo\Homeworld\Kiith_Coalition.png</Icon>
         <Icon>Textures\FactionLogo\Homeworld\Kiith_Gaalsien.png</Icon>
         <Icon>Textures\FactionLogo\Homeworld\Kiith_Nabaal.png</Icon>

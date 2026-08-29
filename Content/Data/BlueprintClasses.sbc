@@ -117,9 +117,6 @@
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechPanelScraptoCUIngot" />
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechCapacitorScraptoCUIngot" />
 		<Entry Class="GVKCUIngots" BlueprintSubtypeId="PrototechCircuitryScraptoCUIngot" />
-		<!-- HUGE blocks -->
-		<Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/OxygenGenerator3" />
-		<Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/HugeHydrogenEngine3" />
         <!-- Prototech Blocks -->
         <Entry Class="LargeBlocks" BlueprintSubtypeId="JumpDrive/LargePrototechJumpDrive" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Thrust/LargeBlockPrototechThruster" />
@@ -127,6 +124,8 @@
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Assembler/LargePrototechAssembler" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Gyro/LargeBlockPrototechGyro" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="BatteryBlock/LargeBlockPrototechBattery" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/LargePrototechReactor" />
+        <Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/LargeBlockPrototechOxygenGenerator" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="Drill/LargeBlockPrototechDrill" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="JumpDrive/SmallPrototechJumpDrive" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="Thrust/SmallBlockPrototechThruster" />
