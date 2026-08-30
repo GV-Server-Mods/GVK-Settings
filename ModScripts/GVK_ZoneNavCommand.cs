@@ -16,7 +16,7 @@ namespace GVK.Navigation
 {
     /// <summary>
     /// Kharak Tactical Navigation, Compass, Minimap & Satellite Map Suite:
-    /// - Authentic HUD Compass frame (compass.dds) with tape centered between the bars.
+    /// - Programmatic tactical HUD compass frame (Square billboards) with tape centered between the bars.
     /// - Forward-accurate horizon azimuth tracking: driving towards a POI decreases distance to zero.
     /// - Keen Vanilla HUD Markers: marker_gps for GPS waypoints and relation markers (friendly, enemy, neutral, self) for radio signals.
     /// - Pre-allocated billboard pools for Minimap and Satellite Map (Zero GC allocation in hot paths, 100% reliable rendering).
@@ -48,9 +48,9 @@ namespace GVK.Navigation
         private const double ZONE_1_RADIUS = 35000.0;
         private const double ZONE_2_RADIUS = 50000.0;
 
-        // Texture Materials
+        // Texture Materials (NOTE: 'compass' / 'marker_alert' materials removed 2026-08 — unused dead code;
+        // the compass frame is drawn programmatically with Square billboards, not the compass.dds sprite.)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
-        private static readonly MyStringId MATERIAL_COMPASS = MyStringId.GetOrCompute("compass");
         private static readonly MyStringId MATERIAL_MAP = MyStringId.GetOrCompute("KharakMap");
         private static readonly MyStringId MATERIAL_RADAR_GRID = MyStringId.GetOrCompute("RadarGrid");
 
@@ -60,7 +60,6 @@ namespace GVK.Navigation
         private static readonly MyStringId MATERIAL_MARKER_ENEMY = MyStringId.GetOrCompute("marker_enemy");
         private static readonly MyStringId MATERIAL_MARKER_NEUTRAL = MyStringId.GetOrCompute("marker_neutral");
         private static readonly MyStringId MATERIAL_MARKER_SELF = MyStringId.GetOrCompute("marker_self");
-        private static readonly MyStringId MATERIAL_MARKER_ALERT = MyStringId.GetOrCompute("marker_alert");
         private static readonly MyStringId MATERIAL_NAV_ARROW = MyStringId.GetOrCompute("nav_arrow");
         private static readonly MyStringId MATERIAL_SIGNAL_UP = MyStringId.GetOrCompute("signal_up");
         private static readonly MyStringId MATERIAL_SIGNAL_DOWN = MyStringId.GetOrCompute("signal_down");
@@ -1442,61 +1441,62 @@ namespace GVK.Navigation
                     signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
                 }
 
+                // One marker per grid (de-clutter rule): track the NEAREST in-range broadcasting block.
+                // GetBlocks() ordering is arbitrary, so the old first-found 'break' could pin a far beacon
+                // while ignoring a much closer antenna on the same grid. Tracked via locals — zero allocations.
+                double bestDistSq = double.MaxValue;
+                Vector3D bestPos = Vector3D.Zero;
+                string bestName = null;
+
                 for (int bIdx = 0; bIdx < blockBuffer.Count; bIdx++)
                 {
                     var fat = blockBuffer[bIdx].FatBlock;
 
+                    // Resolve broadcast radius / position / name for beacons vs. actively broadcasting antennas.
+                    double radius;
+                    Vector3D blockPos;
+                    string blockName;
+
                     var beacon = fat as IMyBeacon;
-                    if (beacon != null && beacon.IsWorking && beacon.Enabled)
+                    if (beacon != null)
                     {
-                        Vector3D blockPos = beacon.GetPosition();
-                        double distSq = Vector3D.DistanceSquared(playerPos, blockPos);
-                        double radius = beacon.Radius;
-
-                        if (distSq <= radius * radius && distSq >= 1.0)
-                        {
-                            double blockDist = Math.Sqrt(distSq);
-                            string bName = string.IsNullOrEmpty(beacon.CustomName) ? grid.CustomName : beacon.CustomName;
-                            activeHudWaypoints.Add(new ActiveHudWaypoint
-                            {
-                                Name = bName,
-                                Coords = blockPos,
-                                Sprite = markerSprite,
-                                DisplayColor = signalColor,
-                                DistanceMeters = blockDist,
-                                MapUV = WorldToMapUV(blockPos),
-                                IsSignal = true,
-                                PlanetaryElevation = Vector3D.Distance(blockPos, PLANET_CENTER) - PLANET_RADIUS
-                            });
-                            break;
-                        }
+                        if (!beacon.IsWorking || !beacon.Enabled) continue;
+                        radius = beacon.Radius;
+                        blockPos = beacon.GetPosition();
+                        blockName = string.IsNullOrEmpty(beacon.CustomName) ? grid.CustomName : beacon.CustomName;
+                    }
+                    else
+                    {
+                        var antenna = fat as IMyRadioAntenna;
+                        if (antenna == null || !antenna.IsWorking || !antenna.Enabled || !antenna.EnableBroadcasting) continue;
+                        radius = antenna.Radius;
+                        blockPos = antenna.GetPosition();
+                        blockName = string.IsNullOrEmpty(antenna.CustomName) ? grid.CustomName : antenna.CustomName;
                     }
 
-                    var antenna = fat as IMyRadioAntenna;
-                    if (antenna != null && antenna.IsWorking && antenna.Enabled && antenna.EnableBroadcasting)
+                    double distSq = Vector3D.DistanceSquared(playerPos, blockPos);
+                    // distSq >= 1.0 keeps the marker from pinning exactly onto the player position.
+                    if (distSq <= radius * radius && distSq >= 1.0 && distSq < bestDistSq)
                     {
-                        Vector3D blockPos = antenna.GetPosition();
-                        double distSq = Vector3D.DistanceSquared(playerPos, blockPos);
-                        double radius = antenna.Radius;
-
-                        if (distSq <= radius * radius && distSq >= 1.0)
-                        {
-                            double blockDist = Math.Sqrt(distSq);
-                            string aName = string.IsNullOrEmpty(antenna.CustomName) ? grid.CustomName : antenna.CustomName;
-                            activeHudWaypoints.Add(new ActiveHudWaypoint
-                            {
-                                Name = aName,
-                                Coords = blockPos,
-                                Sprite = markerSprite,
-                                DisplayColor = signalColor,
-                                DistanceMeters = blockDist,
-                                MapUV = WorldToMapUV(blockPos),
-                                IsSignal = true,
-                                PlanetaryElevation = Vector3D.Distance(blockPos, PLANET_CENTER) - PLANET_RADIUS
-                            });
-                            break;
-                        }
+                        bestDistSq = distSq;
+                        bestPos = blockPos;
+                        bestName = blockName;
                     }
+                }
+
+                if (bestDistSq < double.MaxValue)
+                {
+                    activeHudWaypoints.Add(new ActiveHudWaypoint
+                    {
+                        Name = bestName,
+                        Coords = bestPos,
+                        Sprite = markerSprite,
+                        DisplayColor = signalColor,
+                        DistanceMeters = Math.Sqrt(bestDistSq),
+                        MapUV = WorldToMapUV(bestPos),
+                        IsSignal = true,
+                        PlanetaryElevation = Vector3D.Distance(bestPos, PLANET_CENTER) - PLANET_RADIUS
+                    });
                 }
             }
 
@@ -2247,8 +2247,10 @@ namespace GVK.Navigation
                     double rightDist = Vector3D.Dot(toTarget, rightTangent);
                     double horizDist = Math.Sqrt(fwdDist * fwdDist + rightDist * rightDist);
 
-                    // Skip contacts beyond 100 km limit, or own-grid contacts directly at dead-center (< 30m)
-                    if (horizDist > MAX_RADAR_TRACK_DIST || horizDist < 30.0) continue;
+                    // Skip signals beyond 100 km limit, or broadcast signals directly at dead-center (< 30m).
+                    // FIX: the < 30m dead-zone now only applies to signals (own-construct proximity clutter) —
+                    // GPS waypoints you are standing on (e.g. 'Zone 0' at Crossroads) still plot at center.
+                    if (horizDist > MAX_RADAR_TRACK_DIST || (wp.IsSignal && horizDist < 30.0)) continue;
 
                     double normDist;
                     bool isClamped = false;
@@ -2581,11 +2583,13 @@ namespace GVK.Navigation
 
         private void HideFullMapPool()
         {
+            // Loop each pool by its OWN count — the two pools are both 50 today, but coupling
+            // the bounds invites an IndexOutOfRange the moment one pool is resized independently.
             for (int i = 0; i < fullMapMarkerPool.Count; i++)
-            {
                 fullMapMarkerPool[i].Visible = false;
+
+            for (int i = 0; i < fullMapLabelPool.Count; i++)
                 fullMapLabelPool[i].Visible = false;
-            }
         }
 
         private string GetZoneName(int zone)
@@ -2788,6 +2792,9 @@ namespace GVK.Navigation
                 if (mapHeaderMsg != null) mapHeaderMsg.Visible = false;
                 if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
                 HideFullMapPool();
+                // Symmetry guard: hide the zone telemetry line immediately on close too, in case the
+                // next-tick refresh doesn't fire (e.g. HUD API heartbeat edge cases).
+                if (zoneDistMsg != null) zoneDistMsg.Visible = false;
                 _refreshMinimapNextFrame = true;
                 _refreshCompassNextFrame = true;
             }
@@ -2818,6 +2825,9 @@ namespace GVK.Navigation
                 if (zoneBg != null) zoneBg.Visible = false;
                 if (zoneAccent != null) zoneAccent.Visible = false;
                 if (zoneMsg != null) zoneMsg.Visible = false;
+                // FIX: zoneDistMsg was never hidden here, leaving the telemetry line floating
+                // over the satellite map (UpdateZoneBar is skipped while showFullMap is true).
+                if (zoneDistMsg != null) zoneDistMsg.Visible = false;
                 _compassElementsVisible = false;
                 _minimapElementsVisible = false;
                 _zoneBarElementsVisible = false;
