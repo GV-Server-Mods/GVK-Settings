@@ -15,21 +15,10 @@ using BlendTypeEnum = VRageRender.MyBillboard.BlendTypeEnum;
 namespace GVK.Navigation
 {
     /// <summary>
-    /// Kharak Tactical Navigation, Compass, Minimap & Satellite Map Suite:
-    /// - Programmatic tactical HUD compass frame (Square billboards) with tape centered between the bars.
-    /// - Forward-accurate horizon azimuth tracking: driving towards a POI decreases distance to zero.
-    /// - Keen Vanilla HUD Markers: marker_gps for GPS waypoints and relation markers (friendly, enemy, neutral, self) for radio signals.
-    /// - Pre-allocated billboard pools for Minimap and Satellite Map (Zero GC allocation in hot paths, 100% reliable rendering).
-    /// - Aspect-ratio corrected billboard scaling (no more height-squished icons or maps on widescreen/ultrawide).
-    /// - Calibrated WorldToMapUV projection aligned to KharakMap.dds longitude (-91.4° meridian shift) & inverted latitude.
-    /// - Displays waypoints and active radio broadcast signals with authentic Keen icons on Compass, Minimap, and Map.
-    /// - Pinpoint Antenna/Beacon tracking: points directly at the physical block itself with no close-distance dropouts.
-    /// - High-readability distance readouts (e.g. 1.2k, 15k) centered dynamically below each POI marker.
-    /// - Live Corner Minimap (top-right, true 2:1 ratio, 20% enlarged) with accurate UV player and POI icons.
-    /// - Unified Top-Right Tactical HUD: Zone Status & Border Countdown panel docked directly beneath the Minimap.
-    /// - Upper-center screen clear of zone text for unobstructed WeaponCore target lock & lead indicator HUDs.
-    /// - Full-Screen Interactive Satellite Map on [M] key with authentic Keen marker icons.
-    /// - Auto-populating default Kharak GPS waypoints and /zone gps recovery.
+    /// Kharak Tactical Navigation Suite: HUD compass ribbon, corner minimap / tactical radar,
+    /// zone status bar, and full-screen satellite map on [M]. Uses pre-allocated billboard pools
+    /// (zero GC in hot paths), Keen vanilla HUD marker icons, and a calibrated WorldToMapUV
+    /// projection aligned to KharakMap.dds. Configurable via chat commands and F2 mod menu.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public class GVK_ZoneNavCommand : MySessionComponentBase
@@ -48,8 +37,7 @@ namespace GVK.Navigation
         private const double ZONE_1_RADIUS = 35000.0;
         private const double ZONE_2_RADIUS = 50000.0;
 
-        // Texture Materials (NOTE: 'compass' / 'marker_alert' materials removed 2026-08 — unused dead code;
-        // the compass frame is drawn programmatically with Square billboards, not the compass.dds sprite.)
+        // Texture Materials ('compass'/'marker_alert' materials removed as unused; compass frame is drawn with Square billboards)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
         private static readonly MyStringId MATERIAL_MAP = MyStringId.GetOrCompute("KharakMap");
         private static readonly MyStringId MATERIAL_RADAR_GRID = MyStringId.GetOrCompute("RadarGrid");
@@ -2247,9 +2235,7 @@ namespace GVK.Navigation
                     double rightDist = Vector3D.Dot(toTarget, rightTangent);
                     double horizDist = Math.Sqrt(fwdDist * fwdDist + rightDist * rightDist);
 
-                    // Skip signals beyond 100 km limit, or broadcast signals directly at dead-center (< 30m).
-                    // FIX: the < 30m dead-zone now only applies to signals (own-construct proximity clutter) —
-                    // GPS waypoints you are standing on (e.g. 'Zone 0' at Crossroads) still plot at center.
+                    // < 30m dead-zone applies only to signals (own-construct clutter); GPS waypoints still plot at center.
                     if (horizDist > MAX_RADAR_TRACK_DIST || (wp.IsSignal && horizDist < 30.0)) continue;
 
                     double normDist;
@@ -2583,8 +2569,7 @@ namespace GVK.Navigation
 
         private void HideFullMapPool()
         {
-            // Loop each pool by its OWN count — the two pools are both 50 today, but coupling
-            // the bounds invites an IndexOutOfRange the moment one pool is resized independently.
+            // Loop each pool by its OWN count - coupling the bounds invites IndexOutOfRange if one pool is resized.
             for (int i = 0; i < fullMapMarkerPool.Count; i++)
                 fullMapMarkerPool[i].Visible = false;
 
@@ -2792,8 +2777,7 @@ namespace GVK.Navigation
                 if (mapHeaderMsg != null) mapHeaderMsg.Visible = false;
                 if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
                 HideFullMapPool();
-                // Symmetry guard: hide the zone telemetry line immediately on close too, in case the
-                // next-tick refresh doesn't fire (e.g. HUD API heartbeat edge cases).
+                // Hide the zone telemetry line immediately: UpdateZoneBar is skipped while the map is open.
                 if (zoneDistMsg != null) zoneDistMsg.Visible = false;
                 _refreshMinimapNextFrame = true;
                 _refreshCompassNextFrame = true;
@@ -2825,9 +2809,7 @@ namespace GVK.Navigation
                 if (zoneBg != null) zoneBg.Visible = false;
                 if (zoneAccent != null) zoneAccent.Visible = false;
                 if (zoneMsg != null) zoneMsg.Visible = false;
-                // FIX: zoneDistMsg was never hidden here, leaving the telemetry line floating
-                // over the satellite map (UpdateZoneBar is skipped while showFullMap is true).
-                if (zoneDistMsg != null) zoneDistMsg.Visible = false;
+                if (zoneDistMsg != null) zoneDistMsg.Visible = false; // also hidden: UpdateZoneBar is skipped while showFullMap is true
                 _compassElementsVisible = false;
                 _minimapElementsVisible = false;
                 _zoneBarElementsVisible = false;

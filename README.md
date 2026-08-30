@@ -23,14 +23,14 @@
 
 ## 2. Planetary Zone Architecture (Pertam Rover-Centric)
 
-All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.55, Y: 28019.04, Z: 37195.71}`.
+All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.55, Y: 28019.04, Z: 37195.71}`. Player-facing gameplay rules per zone (production tiers, PvP status, siegability) live in the [Steam Server Rules & Gameplay Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559) — this document covers what this repo implements and where.
 
-| Zone | Radius (from Crossroads) | Designation | Production Permitted | PvP / Combat Status | Shields & Sieges |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Zone 0** | $0 – 20\text{ km}$ | **Safe Starter Hub** | Basic Assembler, Basic Refinery, Basic Static Drill | **Strict PvE**: Player block & character damage zeroed out. NPCs deal **0 damage**. Hostile NPC wrecks & unowned derelicts can be ground for salvage. Military grid weapons disabled. | **NON-SIEGABLE** |
-| **Zone 1** | $20 – 35\text{ km}$ | **PvE & Salvage Frontier** | Basic Production Only, All Static Drills (Large Prod disabled) | **Strict PvE**: Weapons, ship drills & ship grinders unlocked for fighting hostile NPC derelicts and wreck salvage. Hostile NPCs can damage players. Player-vs-player damage and cross-faction player grinding blocked (`info.Amount = 0f`). | **NON-SIEGABLE** |
-| **Zone 2** | $35 – 50\text{ km}$ | **Contested Desert** | Full Large Production & Upgrade Modules Unlocked | **Full PvP & Warfare**: Uncapped player combat, medium defended wrecks, convoys, and cargo ships. | **SIEGABLE** via Siege Drives |
-| **Zone 3** | $> 50\text{ km}$ | **Deep Desert / Gaalsien Heart** | Full Uncapped Production | **High-Threat PvPvE**: Ancient relics, Gaalsien battlecruisers, convoys, and relic ammunition. | **SIEGABLE** via Siege Drives |
+| Zone | Radius (from Crossroads) | Designation | Enforced By (this repo) |
+| :--- | :--- | :--- | :--- |
+| **Zone 0** | $0 – 20\text{ km}$ | Safe Starter Hub | `GVK_NoPVPZone.cs`, `LimitedProdZone_*.cs` |
+| **Zone 1** | $20 – 35\text{ km}$ | PvE & Salvage Frontier | `GVK_NoPVPZone.cs`, `LimitedProdZone_*.cs` |
+| **Zone 2** | $35 – 50\text{ km}$ | Contested Desert | Vanilla rules (no zone enforcement) |
+| **Zone 3** | $> 50\text{ km}$ | Deep Desert / Gaalsien Heart | `GVK_Derelicts` MES spawn zones |
 
 > [!NOTE]
 > **Boundary Symmetry**: In `GVK_Derelicts`, the MES wreck spawn zones are centered at Pertam's exact surface antipode `{X: 3569.33, Y: 36772.94, Z: 26952.63}` with radii `57,000m` (Z1), `49,300m` (Z2), and `34,000m` (Z3), aligning to Crossroads zone borders with millimeter precision in every direction.
@@ -40,12 +40,21 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
 ## 3. Core Mod Systems & Scripts (`Data/Scripts/GVK Settings/`)
 
 ### `GVK_NoPVPZone.cs`
-- **Damage Interception Hook**: Hooks `MyAPIGateway.Session.DamageSystem.RegisterBeforeDamageHandler(0, grinder_handler)` server-side.
-- **Zone 0 (0 – 20km)**: Complete block and character damage immunity (`info.Amount = 0f`). NPCs deal zero damage. Players can safely grind hostile NPC wrecks and unowned derelicts.
-- **Zone 1 (20 – 35km)**: 
-  - Allows weapon, drill, and grinder damage to unowned blocks (`BigOwners.Count == 0`) and hostile NPC factions (`IsEveryoneNpc()` or tags `GAALSIEN`, `DERELICT`, `SPRT`, `KHAANEPH`).
-  - Allows hostile NPCs to damage player grids.
-- **Basic Grinder Anti-Hack & Anti-Hydroman Protection**: Basic starter hand grinders (`AngleGrinder`) are globally blocked from grinding or hacking enemy player blocks OR hostile NPC blocks (`info.Amount = 0f`), completely eliminating the naked "hydroman" respawn-rush exploit against NPCs and player bases. Players must construct upgraded hand grinders (Tiers 2–4) or rover ship grinders to dismantle or hack NPC assets.
+- **Damage Interception Hook**: Hooks `MyAPIGateway.Session.DamageSystem.RegisterBeforeDamageHandler(0, DamageHandler)` server-side in `BeforeStart()` (DamageSystem is not guaranteed ready during `Init()`). All handler state is method-local — damage handlers fire inline from multiple simulation/physics threads, so shared instance fields would be a race condition. Keen's `IMyDamageSystem` has no Unregister API (verified vs. game 1.208), so handler lifetime equals session lifetime by necessity.
+- **Block damage (Zone 0, 0 – 20km)**: All block damage zeroed (`info.Amount = 0f`) — total starter hub immunity for player grids.
+- **Block damage (Zone 1, 20 – 35km)**:
+  - Unowned blocks (`BigOwners.Count == 0`) and NPC-faction grids (`IsEveryoneNpc()` or tags `GAALSIEN`, `DERELICT`, `SPRT`, `KHAANEPH`) take weapon/drill/grinder damage. Friendly NPC structures (COALITION starter hub, Crossroads Tower) are protected by **MES invulnerability flags** in GVK_Derelicts — cross-system dependency.
+  - NPC attackers can damage player grids; self-damage and same-faction friendly fire allowed; cross-faction PvP damage zeroed.
+- **Character damage matrix (weapon, kinetic AND grinder damage vs. player bodies)**:
+  - **Fall / collision / environment damage (no attacker entity): allowed in ALL zones.** The desert is the tutorial — no false security in lower zones.
+  - **Self-inflicted damage (own ship's grinders/turrets/rams, own hand tools): allowed in ALL zones** so players don't develop bad habits that bite them in the deep desert.
+  - Same-faction friendly damage: allowed (Keen's friendly-fire toggle governs the rest).
+  - Zone 0: NPC and enemy-player damage to characters zeroed. Zone 1: NPC attackers allowed, enemy players zeroed. Beyond 35km: vanilla (full PvP).
+- **Grinder governance**:
+  - **Basic Grinder Anti-Hack & Anti-Hydroman (global)**: T1 starter hand grinders (`AngleGrinder`) are blocked from grinding/hacking enemy player blocks AND NPC blocks (`info.Amount = 0f`), eliminating the naked respawn-rush exploit. Allowed targets (self, same-faction, fully unowned debris) get a **1.2x QoL speed boost** in all zones.
+  - **NPC Hand Grinder Boost (global)**: T2–4 hand grinders grind NPC-owned blocks at **2x speed** in all zones. Hand drills and ship grinders are not boosted.
+  - Cross-faction grinding of player grids blocked in Z0/Z1; self/same-faction grinding allowed.
+- **Balancing stack (Suit Combat Balancer plugin interplay)**: The balancer scales hand tools vs. neutral/enemy factions (hack speeds 0.25/0.5/0.15, hand drills 1.0/1.0/0.5) and tool→player damage (25%); ship tools are exempt (full speed — the rover salvage path). Both handlers multiply `info.Amount`, so effects stack commutatively with no ordering hazards. Net effective hand-grinder speeds vs NPC blocks: terminal above functional **0.50x**, below functional **1.0x**, armor **0.30x** of vanilla.
 
 ### `GVK_ZoneNavCommand.cs` & `API/HudAPIv2.cs` (Kharak Tactical Navigation Suite)
 - **Top-Center Tactical Compass Ribbon**:
@@ -72,9 +81,9 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - **360° Outer-Edge Clamping**: Contacts beyond the active radar range (beyond 30 km in Log mode, or beyond selected range in Linear mode, up to 100 km) are pinned to the outer perimeter ring along their exact relative bearing at 75% scale and 80% opacity, providing complete 360-degree threat awareness without losing target bearings.
       - **Dynamic Altitude Signal Icons**:
         - Broadcast radio contacts (beacons and antennas) dynamically update their tactical icons based on true spherical planetary elevation relative to your vehicle (comparing radial altitude from Pertam's core, preventing planetary curvature from incorrectly flagging distant airborne contacts as 'below'):
-          - **Upward Arrow** (`signal_up`): Target is $> 50\text{ m}$ above you.
-          - **Equal Icon** (`signal_level`): Target is within $\pm 50\text{ m}$ altitude of you.
-          - **Downward Arrow** (`signal_down`): Target is $> 50\text{ m}$ below you.
+          - **Upward Arrow** (`signal_up`): Target is $> 200\text{ m}$ above you.
+          - **Equal Icon** (`signal_level`): Target is within $\pm 200\text{ m}$ altitude of you.
+          - **Downward Arrow** (`signal_down`): Target is $> 200\text{ m}$ below you.
         - Faction relation colors (Allied green, Enemy red, Neutral white, NPC gold, Self cyan) remain active to show alignment, while GPS waypoints continue using their distinct GPS marker pins.
         - **Subtle Drop Shadow & Contrast Halo**: Every HUD contact texture (`signal_up`, `signal_down`, `signal_level`, `nav_arrow`, `marker_friendly`, `marker_enemy`, `marker_neutral`, `marker_self`, `marker_alert`) features an avionics-grade soft black drop shadow halo engineered to match Keen's `marker_gps.dds`. This guarantees instant, crystal-clear readability against blinding desert sands, harsh sunlight, terrain clutter, and night skies alike.
       - **Local Tangent Projection**: Projects true relative distances along Pertam's local horizon plane.
@@ -128,119 +137,54 @@ Enforces industrial and military tiering across the planetary surface:
 
 ## 4. Grid Classes, Speeds & Spec Core Framework
 
-Grid class is determined by the installed Core Beacon block. Points: Utility Points (**UPs**), Mobility Points (**MPs**).
-
-| Grid Class | Grid Type | Max Speed | Max Blocks | Utility Points (UPs) | Mobility Points (MPs) | Interior Turret Cap | Special Traits |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Small Grid Core** | Small Grid Mobile | $120\text{ m/s}$ | 2,000 | 40 UPs | 140 MPs | 0 | Fast scouts & interceptors |
-| **Large Grid Light** | Large Grid Mobile | $90\text{ m/s}$ | 750 | 40 UPs | 80 MPs | 2 | Light logistics & patrol rovers |
-| **Large Grid Medium**| Large Grid Mobile | $80\text{ m/s}$ | 2,000 | 60 UPs | 140 MPs | 4 | Mainline combat rovers & mobile bases |
-| **Large Grid Heavy** | Large Grid Mobile | $70\text{ m/s}$ | 4,000 | 80 UPs | 200 MPs | 6 | Heavy battlecruisers & land ironclads |
-| **Fortress Station** | Static Station Only| Station | 6,000 | 120 UPs | 200 MPs | 8 | 50% passive damage reduction |
-| **Pipeline Station** | Static Station Only| Station | 50 | 10 UPs | 0 MPs | 1 | Wireless logistics hub |
-| **Shield Station**   | Static Station Only| Station | 50 | 10 UPs | 0 MPs | 0 | Dedicated shield outpost anchor |
-
-### Point Allocations & Hard Caps
-- **Mobility Points (MPs)**: Wheel Suspensions (10 MPs each, hard cap 20), Thrusters / Hovers (1 MP each, hard cap 200).
-- **Utility Points (UPs)**:
-  - Wind Turbines / Solar Panels: 1 UP (hard cap 20)
-  - Ship Drills (Regular / Advanced): 1 / 3 UPs (hard cap 10 / 3)
-  - Ship Welders: 2 UPs (cap 10) | Ship Grinders: 1 UP (cap 20)
-  - Pistons / Rotors / Hinges: 2 UPs (hard cap 10 each)
-  - Production (Basic / Regular / Advanced): 1 / 2 / 5 UPs (hard cap 20 / 10 / 4)
-  - Weapons: 1+ UPs (cap 50) | Relic Weapon Slots: 10 UPs (hard cap 2)
-  - H2 Engines / H2-O2 Gens: 0 UPs (cap 10 regular / 1 advanced)
-  - Shield Generator: 2 per Faction | SRBM / Odin: 14 / 16 UPs (1 per Faction) | Drill Blocker: 1 per Grid
+Grid classes, speeds, UP/MP point costs, and hard caps are maintained and enforced by the dedicated Spec Core / Ship Core mod (see the `/core check` command) and documented in the Steam Guide. They are intentionally **not** duplicated here to avoid two sources of truth drifting apart.
 
 ---
 
 ## 5. Siegable Shields & Siege Drives
 
-- **Shield Generators (SafeZoneBlockReskin)**:
-  - Replaces vanilla safezones. 250m radius, 1W operating power.
-  - Provides unlimited jetpack hydrogen to grid owners.
-  - **Zone 0 and Zone 1**: **100% NON-SIEGABLE**. Safe from all sieges.
-  - **Zone 2 and Zone 3**: **SIEGABLE** via player Siege Drives.
-- **Siege Drives (LargeJumpDrive & LargePrototechJumpDrive)**:
-  - Built on mobile large grids within $3\text{km}$ of the target shield generator.
-  - Activation cost: **100 Siege Chips** (acquired via trade, missions, and derelict salvage).
-  - Emits a high-visibility red laser pointing directly at the defending shield generator.
-- **Siege Cadence**:
-  - **Drain Time**: 30 minutes (shield drops from 100% to 0%). Attackers must protect the siege rover.
-  - **Recharge Time**: 15 minutes (shield charges back from 0% to 100% once the siege drive is neutralized).
+Shield generator mechanics (Kamikaze's Siegable Shields mod) and siege rules (chip costs, 3km build range, drain/recharge cadence) are documented in the Steam Guide. This repo contributes the safezone governor scripts listed in section 3 (`SafezoneAnimated.cs`, `SafezoneH2.cs`, `Safezone3kmCheck_*.cs`).
 
 ---
 
-## 6. Factions & Dynamic Alliance System
+## 6. Factions & Economy (SBC Definitions)
 
-- **Core Factions**:
-  - `COALITION` (Northern Kiithid, Founder: Rachel S'jet): Starter safe hub, free scrap refining, trade stations.
-  - `GAALSIEN` (Kiith Gaalsien, Founder: Khagaan): Hostile NPC desert raiders, convoys, and battlecruisers.
-  - `DERELICT`: Hostile automated defense wrecks and ancient technology caches.
-  - `KOTH`: King of the Hill objective sites.
-- **Dynamic NPC Alliances**:
-  - `SOBAN` (Kiith Soban, Founder: Soban the Red): Heavy mining and logistics Kiith.
-  - `KHAANEPH` (Khaaneph Scavengers): Clanless southern nomads and salvage specialists.
-  - **Alignment**: Factions choose a one-time alignment via `/alliance SOBAN` or `/alliance KHAANEPH`. NPC territories dynamically expand or contract based on asset defense, bounty missions, and convoy ambushes.
+Faction and economy SBC definitions ship in this repo (`Content/Data/`). Full gameplay details are in the Steam Guide; summary:
+
+- **Core Factions** (`Factions.sbc`): `COALITION` (starter hub, free scrap refining, trade), `GAALSIEN` (hostile raiders), `DERELICT` (automated defense wrecks), `KOTH` (objective sites). Dynamic alliances: `SOBAN`, `KHAANEPH` via the server's `/alliance` plugin.
+- **Currencies**: CUs (Construction Units) and RUs (Resource Units) ingots.
+- **Tech Components**: `[Tech] Igniter`, `Grav. Reflector`, `Bolt Carrier`, `Gun Cradle`, `Launch Assem.`, `Particle Emit.`, `Data Core`, `Turbo Encabulator` — drop from derelicts, boss wrecks, and military convoys.
+- **Scrap Tech Conversion**: NPC tech grinds into `[Scrap]`, refined to CUs for free at Coalition refineries.
 
 ---
 
-## 7. Economy, Components & Scrap Refining
+## 7. Server Operations Pointer
 
-- **Core Currencies & Ingots**:
-  - **CUs (Construction Units)**: Used for advanced hull armor, weapon assemblies, and heavy blocks.
-  - **RUs (Resource Units)**: Primary economic currency for trading, ship parts, and specialized utilities.
-- **Tech Components**:
-  - `[Tech] Igniter`, `[Tech] Grav. Reflector`, `[Tech] Bolt Carrier`, `[Tech] Gun Cradle`, `[Tech] Launch Assem.`, `[Tech] Particle Emit.`, `[Tech] Data Core`, `Turbo Encabulator`.
-  - Tech components drop exclusively from derelicts, boss wrecks, and military convoys.
-- **Scrap Tech Conversion**:
-  - NPC weapons and tech grind down into `[Scrap]` Tech components.
-  - 100% refined into CUs for free at Coalition Base (Z0), Skyport, Mastodon, Sevastopol, or Coalition mobile trade cruisers.
+Voxel reset cadence, offline faction safezones, cleanup automation, auto-hangar, and MnM/pipeline logistics are operated by the Torch server plugins and documented in the Steam Guide — not part of this repo.
 
 ---
 
-## 8. Server Logistics, Maintenance & Cleanup Cadence
+## 8. In-Game Commands Reference
 
-- **Daily Voxel Resets**:
-  - Pertam voxels reset daily to smooth crater gouging and Havok physics pits.
-  - Subterranean bases lower than $50\text{m}$ below the surface are automatically transferred to SPRT ownership.
-- **Offline Faction Safezones (FSZ)**:
-  - Automatically protects faction large grids (> 30 blocks) 60 seconds after the last faction member logs off.
-  - Requires no hostile/neutral player grids within $1,000\text{m}$.
-- **Cleanup Automation**:
-  - **Hourly Cleanup**: Any grid without an active beacon is deleted.
-  - **Debris Sweep (Every 30 Mins)**: Any grid split smaller than 3 blocks is deleted immediately.
-  - **Ejected Items**: Floating objects and connector-ejected items are purged instantly.
-  - **Auto-Hangar**: Inactive faction grids are archived to the server hangar after 8–14 days of player absence.
-- **Custom Logistics**:
-  - **Manufacturing & Maintenance (MnM)**: Performance-friendly projector welders. 1 active per construct, stationary ($< 2\text{ m/s}$). 1 Uranium = 3x boost for 20 minutes.
-  - **Pipelines**: Point-to-point wireless logistics connections between bases (`/pipeline toggle`).
-  - **Static Drills**: Passive resource wells with a 50m proximity penalty for duplicate ore wells.
+Commands provided by this repo's navigation suite (`GVK_ZoneNavCommand.cs`):
 
----
+| Command | Description |
+| :--- | :--- |
+| `[M]` key or `/map` | Toggles full-screen interactive Kharak Satellite Map with live GPS & signals. |
+| `/minimap` | Toggles top-right corner minimap radar card on/off. |
+| `/compass` | Toggles top-center heading ribbon and tactical waypoint bearing tape on/off. |
+| `/zone hud` | Toggles the top-right docked zone status and telemetry panel on/off. |
+| `/zone`, `/whereami`, `/loc` | Opens Mission Screen popup with current sector status and distances. |
+| `/zones` | Opens full 4-zone planetary matrix directory in Mission Screen modal. |
+| `/zone gps`, `/gps defaults` | Restores default Kharak GPS waypoints. |
+| `/nav rate [ticks]` | Sets or cycles HUD refresh rate (1–60 ticks). |
+| `/radar range [km]`, `/radar scale`, `/minimap size`, `/compass size` | Radar/scale tuning shortcuts (also in F2 mod menu). |
 
-## 9. In-Game Commands Reference
-
-| Category | Command | Description |
-| :--- | :--- | :--- |
-| **Navigation & Map** | `[M]` Key or `/map` | Toggles full-screen interactive Kharak Satellite Map with live GPS & signals. |
-| | `/minimap` | Toggles top-right corner minimap radar card on/off. |
-| | `/compass` | Toggles top-center heading ribbon and tactical waypoint bearing tape on/off. |
-| | `/zone hud` | Toggles the top-right docked zone status and telemetry panel on/off. |
-| | `/zone` or `/whereami` | Opens Keen Mission Screen popup with current sector status, distances, and rules. |
-| | `/zones` | Opens full 4-zone planetary matrix directory in Mission Screen modal. |
-| **Alliances** | `/alliance SOBAN` | Align your faction with Kiith Soban (one-time selection). |
-| | `/alliance KHAANEPH` | Align your faction with Khaaneph Scavengers. |
-| **Logistics** | `/pipeline toggle` | Connects or disconnects wireless logistics between pipeline stations. |
-| **Hangar** | `/hangar save` | Stores the aimed grid into your faction hangar. |
-| | `/hangar load <id>` | Spawns a stored grid from the hangar. |
-| | `/hangar list` | Lists all stored faction grids. |
-| **Beacon / Limits** | `/core check` | Displays current UP, MP, block count, and turret limit utilization. |
-| **Bounties** | `/bounty list` | Displays active player and NPC bounties. |
+Server-plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to their respective mods/plugins and are documented in the Steam Guide.
 
 ---
 
-## 10. Audio Engineering Reference
+## 9. Audio Engineering Reference
 
 When producing or modifying audio assets (`.sbc` SoundCategories and SoundRules):
 - **Tooling**: Use *Yakitori Audio Converter* for fast conversion to `.xwm`.
@@ -261,7 +205,7 @@ When producing or modifying audio assets (`.sbc` SoundCategories and SoundRules)
 
 ---
 
-## 11. External Mod Credits & Attributions
+## 10. External Mod Credits & Attributions
 
 - [Steam Server Rules & Gameplay Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559)
 - **Lifted Wheels Suspension**: Credit to *Zantulo* ([Workshop #2727185097](https://steamcommunity.com/sharedfiles/filedetails/?id=2727185097)).

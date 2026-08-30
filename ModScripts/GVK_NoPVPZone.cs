@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Sandbox.Game;
 using Sandbox.Game.Entities;
+using Sandbox.Game.Weapons;
 using Sandbox.ModAPI;
 using Sandbox.ModAPI.Weapons;
 using VRage.Game;
@@ -13,322 +12,389 @@ using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
 
-
+// NOTE: class/namespace name kept from the original "StarterGrinder" tool-boost script this
+// governance layer grew out of, to avoid touching session component identity.
 namespace StarterGrinder
 {
     /// <summary>
-    /// Enforces automated governance for Zone 0 (0 – 20km) and Zone 1 (20km – 35km) around Crossroads Tower.
-    /// Zone 0 provides complete starter immunity (all block damage zeroed).
-    /// Zone 1 provides PvE &amp; salvage protection: players and NPCs can engage hostile derelicts/wrecks,
-    /// but player-versus-player damage and cross-faction player grinding are strictly blocked.
+    /// GVK automated damage governance around Crossroads Tower.
+    /// Z0 (0-20km): player grids immune to entity damage; characters protected from NPC/enemy
+    /// damage. Z1 (20-35km): anti-PvP - player-vs-player damage/grinding blocked; NPC, self,
+    /// friendly and environment (falls/terrain) damage allowed. Global: T1 grinder anti-hack
+    /// with 1.2x boost, 2x T2-4 hand-grinder NPC salvage boost (stacks with Suit Combat Balancer).
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
     {
-        private IMySlimBlock reuse_slim;
-        private IMyAngleGrinder reuse_grinder;
-        private IMyShipGrinder ship_grinder;
-        private IMyFaction reuse_faction;
-        private IMyFaction reuse_faction_grinder;
-        private readonly string grinder_sub = "AngleGrinder";
-        private readonly float multiplier = 1.2f;
-        private readonly MyStringHash grindHash = MyStringHash.GetOrCompute("Grind");
+        /// <summary>Crossroads Tower beacon (Zone 0 center), top of tower.</summary>
+        private static readonly Vector3D CROSSROADS_TOWER = new Vector3D(62495.55, 28019.04, 37195.71);
 
-        /// <summary>
-        /// Crossroads Tower Beacon coordinate at top of tower (GPS: Zone 0 Center).
-        /// </summary>
-        private readonly Vector3D NO_DAMAGE_AREA = new Vector3D(62495.55, 28019.04, 37195.71);
-
-        /// <summary>
-        /// Zone 0 outer boundary in meters (20km). Complete damage immunity for all blocks.
-        /// </summary>
+        /// <summary>Zone 0 outer boundary in meters (20km). Safe Starter Hub.</summary>
         private const float ZONE_0_RADIUS = 20000f;
-        private const double ZONE_0_RADIUS_SQ = 400000000.0; // 20,000^2
+
+        /// <summary>Zone 1 outer boundary in meters (35km). PvE &amp; Salvage Frontier.</summary>
+        private const float ZONE_1_RADIUS = 35000f;
+
+        // Squared radii derived from the float constants above so they can never drift apart.
+        private static readonly double ZONE_0_RADIUS_SQ = ZONE_0_RADIUS * ZONE_0_RADIUS;
+        private static readonly double ZONE_1_RADIUS_SQ = ZONE_1_RADIUS * ZONE_1_RADIUS;
+
+        /// <summary>Vanilla subtype id of the Tier 1 starter hand grinder.</summary>
+        private const string BASIC_GRINDER_SUBTYPE = "AngleGrinder";
+
+        /// <summary>T1 grinder QoL boost on self/faction/unowned targets (Suit Combat Balancer doesn't scale these).</summary>
+        private const float BASIC_GRINDER_BOOST = 1.2f;
+
+        /// <summary>T2-4 hand grinder boost vs NPC blocks, all zones. Stacks with Suit Combat
+        /// Balancer (0.25/0.5/0.15) - net: 0.50x terminal, 1.0x below-functional, 0.30x armor.</summary>
+        private const float NPC_HAND_GRINDER_BOOST = 2.0f;
+
+        /// <summary>Vanilla damage type string hash applied by grinders (hand + ship).</summary>
+        private static readonly MyStringHash GRIND_DAMAGE = MyStringHash.GetOrCompute("Grind");
 
         /// <summary>
-        /// Zone 1 outer boundary in meters (35km). PvE only; zero PvP damage or cross-faction player grinding.
+        /// Registers the server damage handler in BeforeStart(): DamageSystem is not guaranteed
+        /// initialized during Init() (Keen session load-order quirk; matches ExplosiveDamageFix).
         /// </summary>
-        private const float NO_DAMAGE_RADIUS = 35000f;
-        private const double NO_DAMAGE_RADIUS_SQ = 1225000000.0; // 35,000^2
-
-        /// <summary>
-        /// Registers the damage handler on the server during session initialization.
-        /// </summary>
-        /// <param name="sessionComponent">The session component builder.</param>
-        public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
+        public override void BeforeStart()
         {
             if (MyAPIGateway.Session.IsServer)
             {
-                MyAPIGateway.Session.DamageSystem.RegisterBeforeDamageHandler(0, grinder_handler);
+                var damageSystem = MyAPIGateway.Session.DamageSystem;
+                if (damageSystem != null)
+                {
+                    damageSystem.RegisterBeforeDamageHandler(0, DamageHandler);
+                }
             }
         }
 
+        /// <summary>Keen's IMyDamageSystem has no Unregister API (verified 1.208): handler lives for the session.</summary>
+        protected override void UnloadData()
+        {
+            base.UnloadData();
+        }
+
         /// <summary>
-        /// Intercepts damage events on grids and characters prior to application.
-        /// Enforces Zone 0 god-mode, Zone 1 PvE protections, and global basic grinder hack-prevention.
+        /// Damage dispatcher. Handler locals are method-scoped on purpose: MyDamageSystem raises
+        /// before-handlers from multiple sim/physics threads, so shared fields would race.
         /// </summary>
-        /// <param name="target">The entity or slim block taking damage.</param>
-        /// <param name="info">The damage information struct, modified to 0f if blocked.</param>
-        private void grinder_handler(object target, ref MyDamageInformation info)
+        private void DamageHandler(object target, ref MyDamageInformation info)
         {
             try
             {
-                if (info.Type.Equals(grindHash))
-                {
-                    reuse_slim = target as IMySlimBlock;
-                    if (reuse_slim == null) return;
-
-                    IMyEntity ent = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
-                    if (ent == null) return;
-
-                    reuse_grinder = ent as IMyAngleGrinder;
-                    ship_grinder = ent as IMyShipGrinder;
-
-                    // -------------------------------------------------------------------------
-                    // RULE 1: BASIC STARTER GRINDER ANTI-HACK & ANTI-HYDROMAN (GLOBAL)
-                    // The basic spawn grinder (AngleGrinder) cannot hack enemy players OR hostile NPCs.
-                    // This eliminates the hydroman respawn-rush exploit.
-                    // Players must build an upgraded grinder (Tiers 2-4) or a ship grinder to hack/salvage NPCs.
-                    // -------------------------------------------------------------------------
-                    if (reuse_grinder != null && reuse_grinder.DefinitionId.SubtypeName == grinder_sub)
-                    {
-                        var slim_owner_id = reuse_slim.OwnerId;
-                        var slim_built_id = reuse_slim.BuiltBy;
-                        var grinder_owner = reuse_grinder.OwnerIdentityId;
-
-                        // Target has a functional block owner
-                        if (slim_owner_id != 0)
-                        {
-                            // Self-owned block: allow with boost
-                            if (slim_owner_id == grinder_owner)
-                            {
-                                info.Amount *= multiplier;
-                                return;
-                            }
-
-                            // Same-faction / allied player block: allow with boost
-                            reuse_faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(slim_owner_id);
-                            reuse_faction_grinder = MyAPIGateway.Session.Factions.TryGetPlayerFaction(grinder_owner);
-                            if (reuse_faction != null && reuse_faction_grinder != null && reuse_faction.FactionId == reuse_faction_grinder.FactionId)
-                            {
-                                info.Amount *= multiplier;
-                                return;
-                            }
-
-                            // Blocked: Basic starter grinder cannot grind/hack enemy players OR hostile NPCs!
-                            info.Amount = 0f;
-                            return;
-                        }
-
-                        // Target has no functional owner (armor blocks, unowned components)
-                        if (slim_built_id != 0)
-                        {
-                            // Self-built block: allow with boost
-                            if (grinder_owner == slim_built_id)
-                            {
-                                info.Amount *= multiplier;
-                                return;
-                            }
-
-                            // Same-faction / allied builder: allow with boost
-                            reuse_faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(slim_built_id);
-                            reuse_faction_grinder = MyAPIGateway.Session.Factions.TryGetPlayerFaction(grinder_owner);
-                            if (reuse_faction != null && reuse_faction_grinder != null && reuse_faction.FactionId == reuse_faction_grinder.FactionId)
-                            {
-                                info.Amount *= multiplier;
-                                return;
-                            }
-
-                            // Blocked: Built by an enemy player or hostile NPC!
-                            info.Amount = 0f;
-                            return;
-                        }
-
-                        // Completely unowned and unbuilt neutral debris/salvage: allow with boost
-                        info.Amount *= multiplier;
-                        return;
-                    }
-
-                    // -------------------------------------------------------------------------
-                    // RULE 2: ZONE 0 & ZONE 1 PVE GOVERNANCE (0 – 35km FROM CROSSROADS)
-                    // Upgraded hand grinders (Tiers 2-4) and ship grinders are fully authorized to
-                    // salvage unowned derelicts and hostile NPC wrecks in Z0 and Z1.
-                    // Cross-faction grinding of other player grids remains strictly blocked.
-                    // -------------------------------------------------------------------------
-                    if (IsInZone(reuse_slim, NO_DAMAGE_RADIUS_SQ))
-                    {
-                        long owner = reuse_slim.CubeGrid.BigOwners.FirstOrDefault();
-                        if (owner == 0) owner = reuse_slim.OwnerId;
-                        if (owner == 0) owner = reuse_slim.BuiltBy;
-
-                        // 1. Unowned blocks (wrecks, neutral derelicts) can ALWAYS be ground by upgraded/ship grinders
-                        if (owner == 0) return;
-
-                        // 2. Hostile NPC derelicts/wrecks can ALWAYS be ground down by upgraded/ship grinders
-                        IMyFaction targetFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(owner);
-                        if (targetFaction != null && (targetFaction.IsEveryoneNpc() || targetFaction.Tag == "GAALSIEN" || targetFaction.Tag == "DERELICT" || targetFaction.Tag == "SPRT" || targetFaction.Tag == "KHAANEPH"))
-                        {
-                            return;
-                        }
-
-                        // 3. Target is a player grid: resolve grinder owner (upgraded hand grinder or ship grinder)
-                        long grinderOwner = 0;
-                        if (reuse_grinder != null)
-                        {
-                            grinderOwner = reuse_grinder.OwnerIdentityId;
-                        }
-                        else if (ship_grinder != null)
-                        {
-                            grinderOwner = ship_grinder.OwnerId != 0 ? ship_grinder.OwnerId : ship_grinder.CubeGrid.BigOwners.FirstOrDefault();
-                        }
-
-                        // Self-owned blocks can always be ground
-                        if (grinderOwner != 0 && owner == grinderOwner) return;
-
-                        // Allied or same faction check
-                        if (grinderOwner != 0 && targetFaction != null)
-                        {
-                            IMyFaction grinderFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(grinderOwner);
-                            if (grinderFaction != null && targetFaction.FactionId == grinderFaction.FactionId) return;
-                        }
-
-                        // Block cross-faction grinding of player grids in Zone 0 and Zone 1
-                        info.Amount = 0f;
-                        return;
-                    }
-                }
+                if (info.Type.Equals(GRIND_DAMAGE))
+                    HandleGrindDamage(target, ref info);
                 else
-                {
-                    // Non-grind damage (weapons, kinetic, collisions, missiles)
-                    reuse_slim = target as IMySlimBlock;
-                    if (reuse_slim != null)
-                    {
-                        double distSq = Vector3D.DistanceSquared(reuse_slim.CubeGrid.GetPosition(), NO_DAMAGE_AREA);
-
-                        // If outside the 35km protected envelope, allow all normal damage
-                        if (distSq > NO_DAMAGE_RADIUS_SQ) return;
-
-                        // Zone 0 (0 – 20km): Total starter hub immunity for all blocks
-                        if (distSq <= ZONE_0_RADIUS_SQ)
-                        {
-                            info.Amount = 0f;
-                            return;
-                        }
-
-                        // Zone 1 (20km – 35km): PvE & Salvage Region
-                        // Target check: Unowned blocks (derelict wrecks) can take weapon damage
-                        long targetOwner = reuse_slim.CubeGrid.BigOwners.FirstOrDefault();
-                        if (targetOwner == 0) return;
-
-                        // Target check: Hostile NPC grids can take weapon damage
-                        IMyFaction targetFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(targetOwner);
-                        if (targetFaction != null && targetFaction.IsEveryoneNpc()) return;
-
-                        // Target is a player grid: Check attacker
-                        IMyEntity attackerEnt = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
-                        if (attackerEnt != null)
-                        {
-                            long attackerOwner = 0;
-                            IMyCubeBlock attackerBlock = attackerEnt as IMyCubeBlock;
-                            if (attackerBlock != null)
-                            {
-                                attackerOwner = attackerBlock.OwnerId != 0 ? attackerBlock.OwnerId : attackerBlock.CubeGrid.BigOwners.FirstOrDefault();
-                            }
-                            else
-                            {
-                                IMyCubeGrid attackerGrid = attackerEnt as IMyCubeGrid;
-                                if (attackerGrid != null)
-                                {
-                                    attackerOwner = attackerGrid.BigOwners.FirstOrDefault();
-                                }
-                                else
-                                {
-                                    IMyCharacter attackerChar = attackerEnt as IMyCharacter;
-                                    if (attackerChar != null)
-                                    {
-                                        attackerOwner = attackerChar.ControllerInfo?.ControllingIdentityId ?? 0;
-                                    }
-                                }
-                            }
-
-                            if (attackerOwner != 0)
-                            {
-                                IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
-
-                                // If attacker is an NPC faction, NPCs can damage players in Zone 1
-                                if (attackerFaction != null && attackerFaction.IsEveryoneNpc()) return;
-
-                                // Allow self-damage and same-faction friendly fire
-                                if (attackerOwner == targetOwner) return;
-                                if (targetFaction != null && attackerFaction != null && targetFaction.FactionId == attackerFaction.FactionId) return;
-                            }
-                        }
-
-                        // Cross-faction player vs player damage is blocked in Zone 1
-                        info.Amount = 0f;
-                        return;
-                    }
-
-                    // Character damage protection in Zone 0 and Zone 1
-                    IMyCharacter targetChar = target as IMyCharacter;
-                    if (targetChar != null)
-                    {
-                        double distSq = Vector3D.DistanceSquared(targetChar.GetPosition(), NO_DAMAGE_AREA);
-                        if (distSq <= NO_DAMAGE_RADIUS_SQ)
-                        {
-                            // In Zone 0: absolute character immunity
-                            if (distSq <= ZONE_0_RADIUS_SQ)
-                            {
-                                info.Amount = 0f;
-                                return;
-                            }
-
-                            // In Zone 1: allow NPCs to shoot players, but block player-on-player PvP
-                            IMyEntity attackerEnt = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
-                            if (attackerEnt != null)
-                            {
-                                long attackerIdentity = 0;
-                                IMyCharacter attackerChar = attackerEnt as IMyCharacter;
-                                if (attackerChar != null)
-                                {
-                                    attackerIdentity = attackerChar.ControllerInfo?.ControllingIdentityId ?? 0;
-                                }
-                                else
-                                {
-                                    IMyCubeBlock attackerBlock = attackerEnt as IMyCubeBlock;
-                                    if (attackerBlock != null)
-                                        attackerIdentity = attackerBlock.OwnerId;
-                                }
-
-                                if (attackerIdentity != 0)
-                                {
-                                    IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerIdentity);
-                                    if (attackerFaction != null && attackerFaction.IsEveryoneNpc()) return;
-                                }
-                            }
-
-                            // Block PvP player-on-player damage
-                            info.Amount = 0f;
-                        }
-                    }
-                }
+                    HandleOtherDamage(target, ref info);
             }
             catch (Exception ex)
             {
-                MyLog.Default.WriteLineAndConsole($"[GVK_NoPVPZone] Error in damage handler: {ex.Message}");
+                // Full exception (message + stack) so the log is actually diagnosable.
+                MyLog.Default.WriteLineAndConsole($"[GVK_NoPVPZone] Error in damage handler: {ex}");
             }
         }
 
         /// <summary>
-        /// Checks whether a block's parent grid is within a squared radius from Crossroads Beacon.
+        /// Grinder damage (hand + ship grinders) against blocks and characters.
         /// </summary>
-        /// <param name="block">The target block to test.</param>
-        /// <param name="radiusSq">The distance squared threshold.</param>
-        /// <returns>True if within the radius; otherwise false.</returns>
-        private bool IsInZone(IMySlimBlock block, double radiusSq)
+        private void HandleGrindDamage(object target, ref MyDamageInformation info)
         {
-            if (block?.CubeGrid == null) return false;
-            return Vector3D.DistanceSquared(block.CubeGrid.GetPosition(), NO_DAMAGE_AREA) <= radiusSq;
+            // Grind vs player bodies: the character matrix decides (blocks ship-grinder deaths in safe zones).
+            IMyCharacter groundCharacter = target as IMyCharacter;
+            if (groundCharacter != null)
+            {
+                HandleCharacterDamage(groundCharacter, ref info);
+                return;
+            }
+
+            IMySlimBlock slim = target as IMySlimBlock;
+            if (slim == null) return; // voxel / tree grinding: vanilla rules
+
+            IMyEntity attackerEntity = MyAPIGateway.Entities.GetEntityById(info.AttackerId);
+            if (attackerEntity == null) return;
+
+            IMyAngleGrinder handGrinder = attackerEntity as IMyAngleGrinder;
+            IMyShipGrinder shipGrinder = attackerEntity as IMyShipGrinder;
+
+            // GLOBAL: T1 starter grinder anti-hack ("hydroman" fix).
+            if (handGrinder != null && handGrinder.DefinitionId.SubtypeName == BASIC_GRINDER_SUBTYPE)
+            {
+                ApplyBasicGrinderRules(slim, handGrinder.OwnerIdentityId, ref info);
+                return;
+            }
+
+            // GLOBAL: NPC targets always salvageable; T2-4 hand grinders get the 2x boost.
+            // Friendly NPC structures (COALITION hub) are MES-protected in GVK_Derelicts - dependency, don't remove this allow without checking that config.
+            long owner = GetGridOwner(slim);
+            if (owner != 0)
+            {
+                IMyFaction ownerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(owner);
+                if (IsNpcFaction(ownerFaction))
+                {
+                    if (handGrinder != null)
+                        info.Amount *= NPC_HAND_GRINDER_BOOST;
+                    return;
+                }
+            }
+
+            // ZONE RULES: cross-faction grinding of PLAYER grids blocked in Z0/Z1; self/faction allowed.
+            if (!IsInZone(slim, ZONE_1_RADIUS_SQ)) return; // deep desert: vanilla rules
+
+            if (owner == 0) return; // unowned wrecks/debris: always salvageable in Z0/Z1
+
+            long grinderOwner = 0;
+            if (handGrinder != null)
+            {
+                grinderOwner = handGrinder.OwnerIdentityId;
+            }
+            else if (shipGrinder != null)
+            {
+                grinderOwner = shipGrinder.OwnerId != 0 ? shipGrinder.OwnerId : GridFirstOwner(shipGrinder.CubeGrid);
+            }
+
+            if (grinderOwner != 0 && owner == grinderOwner) return; // self-owned
+            if (grinderOwner != 0 && SameFaction(owner, grinderOwner)) return; // allied
+
+            info.Amount = 0f; // cross-faction PvP grinding blocked
+        }
+
+        /// <summary>
+        /// Ownership rules for the T1 basic grinder (global): allowed targets get the 1.2x boost;
+        /// enemy player/NPC blocks hard-blocked (kills the "hydroman" respawn-rush exploit).
+        /// </summary>
+        /// <param name="slim">Block being ground.</param>
+        /// <param name="grinderOwner">Identity currently wielding the basic grinder.</param>
+        /// <param name="info">Damage info, modified in place.</param>
+        private static void ApplyBasicGrinderRules(IMySlimBlock slim, long grinderOwner, ref MyDamageInformation info)
+        {
+            long slimOwner = slim.OwnerId;
+
+            // Target has a functional block owner
+            if (slimOwner != 0)
+            {
+                if (slimOwner == grinderOwner || SameFaction(slimOwner, grinderOwner))
+                {
+                    info.Amount *= BASIC_GRINDER_BOOST;
+                    return;
+                }
+
+                // Basic starter grinder cannot grind/hack enemy players or NPCs
+                info.Amount = 0f;
+                return;
+            }
+
+            // Target has no functional owner (armor blocks, unowned components): use builder id
+            long slimBuilder = slim.BuiltBy;
+            if (slimBuilder != 0)
+            {
+                if (grinderOwner == slimBuilder || SameFaction(slimBuilder, grinderOwner))
+                {
+                    info.Amount *= BASIC_GRINDER_BOOST;
+                    return;
+                }
+
+                // Built by an enemy player or NPC: blocked
+                info.Amount = 0f;
+                return;
+            }
+
+            // Completely unowned and unbuilt neutral debris/salvage: allowed with boost
+            info.Amount *= BASIC_GRINDER_BOOST;
+        }
+
+        /// <summary>
+        /// All non-grind damage (weapons, drills, kinetic, missiles, collisions) against
+        /// blocks and characters.
+        /// </summary>
+        private void HandleOtherDamage(object target, ref MyDamageInformation info)
+        {
+            IMySlimBlock slim = target as IMySlimBlock;
+            if (slim != null)
+            {
+                double distSq = Vector3D.DistanceSquared(slim.CubeGrid.GetPosition(), CROSSROADS_TOWER);
+
+                // Outside the 35km protected envelope: all normal damage applies
+                if (distSq > ZONE_1_RADIUS_SQ) return;
+
+                // Zone 0 (0-20km): total starter hub immunity for all blocks
+                if (distSq <= ZONE_0_RADIUS_SQ)
+                {
+                    info.Amount = 0f;
+                    return;
+                }
+
+                // Zone 1 (20-35km): PvE & Salvage Frontier
+                long targetOwner = GetGridOwner(slim);
+                if (targetOwner == 0) return; // unowned derelicts take weapon damage
+
+                IMyFaction targetFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(targetOwner);
+                if (IsNpcFaction(targetFaction)) return; // NPC grids take weapon damage
+
+                // Target is a player grid: resolve the attacker
+                long attackerOwner = ResolveAttackerOwner(info.AttackerId);
+
+                // Ownerless attacker = environment (terrain voxel-map collisions resolve to owner 0,
+                // unowned debris, meteors): allowed so rovers still eat crash damage in Z1.
+                if (attackerOwner == 0) return;
+
+                if (attackerOwner == targetOwner) return; // self-damage
+                if (SameFaction(attackerOwner, targetOwner)) return; // friendly fire
+
+                IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
+                if (IsNpcFaction(attackerFaction)) return; // NPCs can damage player grids in Z1
+
+                info.Amount = 0f; // PvP blocked
+                return;
+            }
+
+            IMyCharacter damagedCharacter = target as IMyCharacter;
+            if (damagedCharacter != null)
+            {
+                HandleCharacterDamage(damagedCharacter, ref info);
+            }
+        }
+
+        /// <summary>
+        /// Character damage matrix (weapons, kinetic AND grinder damage vs bodies):
+        /// environment/ownerless attackers and self/friendly damage always allowed;
+        /// Z0 blocks NPC and enemy-player damage; Z1 allows NPCs, blocks enemy players;
+        /// beyond 35km vanilla.
+        /// </summary>
+        private void HandleCharacterDamage(IMyCharacter targetCharacter, ref MyDamageInformation info)
+        {
+            double distSq = Vector3D.DistanceSquared(targetCharacter.GetPosition(), CROSSROADS_TOWER);
+            if (distSq > ZONE_1_RADIUS_SQ) return; // outside zones: vanilla rules
+
+            bool attackerEntityExists;
+            long attackerOwner = ResolveAttackerOwner(info.AttackerId, out attackerEntityExists);
+
+            // No attacker entity (AttackerId 0) = pure environment: always allowed.
+            if (!attackerEntityExists) return;
+
+            // Ownerless attacker = environment too: falling on terrain reports the VOXEL MAP as
+            // the attacker (Keen passes the contact entity id; terrain resolves to owner 0).
+            if (attackerOwner == 0) return;
+
+            long victimId = targetCharacter.ControllerInfo != null
+                ? targetCharacter.ControllerInfo.ControllingIdentityId
+                : 0;
+
+            // Self-inflicted (own tools/rams): allowed in all zones - bad-habit training.
+            if (victimId != 0 && attackerOwner == victimId) return;
+
+            if (victimId != 0 && attackerOwner != 0 && SameFaction(attackerOwner, victimId)) return;
+
+            // Z0: NPC and enemy-player damage blocked
+            if (distSq <= ZONE_0_RADIUS_SQ)
+            {
+                info.Amount = 0f;
+                return;
+            }
+
+            // Z1: NPC attackers allowed; enemy players blocked as safe default
+            if (attackerOwner != 0)
+            {
+                IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
+                if (IsNpcFaction(attackerFaction)) return;
+            }
+
+            info.Amount = 0f;
+        }
+
+        /// <summary>
+        /// Resolves the owning identity behind an attacking entity: cube blocks, grids (rams),
+        /// characters, and handheld tools (gun entities owned by their wielder).
+        /// </summary>
+        /// <param name="attackerEntityId">Entity id from MyDamageInformation.AttackerId.</param>
+        /// <param name="entityExists">False = environment damage (no attacker entity).</param>
+        /// <returns>Attacker identity id, or 0 if the entity exists but has no resolvable owner.</returns>
+        private static long ResolveAttackerOwner(long attackerEntityId, out bool entityExists)
+        {
+            entityExists = false;
+            if (attackerEntityId == 0) return 0;
+
+            IMyEntity attackerEntity = MyAPIGateway.Entities.GetEntityById(attackerEntityId);
+            if (attackerEntity == null) return 0;
+            entityExists = true;
+
+            IMyCubeBlock attackerBlock = attackerEntity as IMyCubeBlock;
+            if (attackerBlock != null)
+                return attackerBlock.OwnerId != 0 ? attackerBlock.OwnerId : GridFirstOwner(attackerBlock.CubeGrid);
+
+            IMyCubeGrid attackerGrid = attackerEntity as IMyCubeGrid;
+            if (attackerGrid != null)
+                return GridFirstOwner(attackerGrid);
+
+            IMyCharacter attackerCharacter = attackerEntity as IMyCharacter;
+            if (attackerCharacter != null && attackerCharacter.ControllerInfo != null)
+                return attackerCharacter.ControllerInfo.ControllingIdentityId;
+
+            // Handheld tools: gun objects whose OwnerIdentityId is the wielding player
+            IMyHandheldGunObject<MyToolBase> handTool = attackerEntity as IMyHandheldGunObject<MyToolBase>;
+            if (handTool != null)
+                return handTool.OwnerIdentityId;
+
+            return 0; // entity exists but ownership unresolvable
+        }
+
+        /// <summary>Overload for callers that only need the identity.</summary>
+        private static long ResolveAttackerOwner(long attackerEntityId)
+        {
+            bool entityExists;
+            return ResolveAttackerOwner(attackerEntityId, out entityExists);
+        }
+
+        /// <summary>
+        /// True if both identities belong to the same faction. Zero identities never match.
+        /// </summary>
+        private static bool SameFaction(long identityA, long identityB)
+        {
+            if (identityA == 0 || identityB == 0) return false;
+            IMyFaction factionA = MyAPIGateway.Session.Factions.TryGetPlayerFaction(identityA);
+            if (factionA == null) return false;
+            IMyFaction factionB = MyAPIGateway.Session.Factions.TryGetPlayerFaction(identityB);
+            return factionB != null && factionA.FactionId == factionB.FactionId;
+        }
+
+        /// <summary>
+        /// NPC faction check. IsEveryoneNpc() covers all NPCs incl. friendly COALITION - those
+        /// structures are MES-protected in GVK_Derelicts (cross-system dependency, don't simplify
+        /// this away). Tag list catches custom factions that misreport IsEveryoneNpc().
+        /// </summary>
+        private static bool IsNpcFaction(IMyFaction faction)
+        {
+            if (faction == null) return false;
+            if (faction.IsEveryoneNpc()) return true;
+            string tag = faction.Tag;
+            return tag == "GAALSIEN" || tag == "DERELICT" || tag == "SPRT" || tag == "KHAANEPH";
+        }
+
+        /// <summary>Grid ownership fallback chain: BigOwners, then OwnerId, then BuiltBy. Allocation-free.</summary>
+        private static long GetGridOwner(IMySlimBlock block)
+        {
+            if (block == null || block.CubeGrid == null) return 0;
+            var bigOwners = block.CubeGrid.BigOwners;
+            if (bigOwners.Count > 0) return bigOwners[0];
+            if (block.OwnerId != 0) return block.OwnerId;
+            return block.BuiltBy;
+        }
+
+        /// <summary>First BigOwner of a grid, or 0. Allocation-free.</summary>
+        private static long GridFirstOwner(IMyCubeGrid grid)
+        {
+            if (grid == null) return 0;
+            var bigOwners = grid.BigOwners;
+            return bigOwners.Count > 0 ? bigOwners[0] : 0;
+        }
+
+        /// <summary>
+        /// True if the block's grid center is within a squared radius of Crossroads Tower
+        /// (one verdict per grid, consistent with the other GVK zone scripts).
+        /// </summary>
+        private static bool IsInZone(IMySlimBlock block, double radiusSq)
+        {
+            if (block == null || block.CubeGrid == null) return false;
+            return Vector3D.DistanceSquared(block.CubeGrid.GetPosition(), CROSSROADS_TOWER) <= radiusSq;
         }
     }
 }
