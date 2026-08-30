@@ -59,14 +59,14 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
 ### `GVK_ZoneNavCommand.cs` & `API/HudAPIv2.cs` (Kharak Tactical Navigation Suite)
 - **Top-Center Tactical Compass Ribbon**:
   - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
-  - **Horizon Bearing Tracking with Authentic Keen HUD Icons**:
-    - **GPS Waypoints (`marker_gps`)**: Displays personal GPS waypoints set to "Show On HUD" in their exact user-configured GPS colors.
-    - **Active Radio Broadcasts (Antennas & Beacons)**: Automatically tracks broadcasting signals within communication range using Keen relation markers:
-      - 🟢 **Friendly / Faction**: `marker_friendly` (Green)
-      - 🔵 **Personal Grids**: `marker_self` (Cyan)
-      - 🔴 **Hostile NPCs & Enemy Grids**: `marker_enemy` (Red)
-      - 🟡 **Neutral NPCs & Trade Stations**: `marker_neutral` (Gold)
-      - ⚪ **Unowned Grids / Derelicts**: `marker_neutral` (White)
+  - **Horizon Bearing Tracking with Tactical HUD Icons**:
+    - **GPS Waypoints (`marker_gps`)**: Displays personal GPS waypoints set to "Show On HUD" using the custom dot icon in their exact user-configured GPS colors.
+    - **Active Radio Broadcasts (Antennas & Beacons)**: Automatically tracks broadcasting signals within communication range using dynamic elevation icons (`signal_up`, `signal_level`, `signal_down`) with color-coded faction standing:
+      - 🟢 **Friendly / Faction**: Green
+      - 🔵 **Personal Grids**: Cyan
+      - 🔴 **Hostile NPCs & Enemy Grids**: Red
+      - 🟡 **Neutral NPCs & Trade Stations**: Gold
+      - ⚪ **Unowned Grids / Derelicts**: White
     - **Dynamic Distance Badges**: High-readability distance readouts (e.g., `1.2k`, `15k`) dynamically centered below each icon in its matching marker color.
 - **Unified Top-Right Tactical Radar & Zone HUD**:
   - **Live Corner Minimap (Top-Right, Dual Modes)**:
@@ -84,8 +84,8 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
           - **Upward Arrow** (`signal_up`): Target is $> 200\text{ m}$ above you.
           - **Equal Icon** (`signal_level`): Target is within $\pm 200\text{ m}$ altitude of you.
           - **Downward Arrow** (`signal_down`): Target is $> 200\text{ m}$ below you.
-        - Faction relation colors (Allied green, Enemy red, Neutral white, NPC gold, Self cyan) remain active to show alignment, while GPS waypoints continue using their distinct GPS marker pins.
-        - **Subtle Drop Shadow & Contrast Halo**: Every HUD contact texture (`signal_up`, `signal_down`, `signal_level`, `nav_arrow`, `marker_friendly`, `marker_enemy`, `marker_neutral`, `marker_self`, `marker_alert`) features an avionics-grade soft black drop shadow halo engineered to match Keen's `marker_gps.dds`. This guarantees instant, crystal-clear readability against blinding desert sands, harsh sunlight, terrain clutter, and night skies alike.
+        - Faction relation colors (Allied green, Enemy red, Neutral white, NPC gold, Self cyan) remain active to show alignment, while GPS waypoints continue using their distinct GPS marker dots.
+        - **Subtle Drop Shadow & Contrast Halo**: Every HUD contact texture (`signal_up`, `signal_down`, `signal_level`, `nav_arrow`, and custom `marker_gps` dot) features an avionics-grade soft black drop shadow halo. This guarantees instant, crystal-clear readability against blinding desert sands, harsh sunlight, terrain clutter, and night skies alike.
       - **Local Tangent Projection**: Projects true relative distances along Pertam's local horizon plane.
     - **Integrated Tactical Header Box**: The mode and range telemetry (`TACTICAL RADAR (LOG: 30 KM)` or `SECTOR MAP`) is cleanly framed in crisp white text inside a docked header card directly above the minimap, matching the exact width of the minimap card with a tactical grey accent strip on the left edge.
     - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, and Zone status bar) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.

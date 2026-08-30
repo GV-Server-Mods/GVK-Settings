@@ -37,17 +37,13 @@ namespace GVK.Navigation
         private const double ZONE_1_RADIUS = 35000.0;
         private const double ZONE_2_RADIUS = 50000.0;
 
-        // Texture Materials ('compass'/'marker_alert' materials removed as unused; compass frame is drawn with Square billboards)
+        // Texture Materials (compass frame is drawn with Square billboards)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
         private static readonly MyStringId MATERIAL_MAP = MyStringId.GetOrCompute("KharakMap");
         private static readonly MyStringId MATERIAL_RADAR_GRID = MyStringId.GetOrCompute("RadarGrid");
 
-        // Keen Vanilla HUD Markers (from Textures\HUD\)
+        // Tactical HUD Markers (from Textures\HUD\)
         private static readonly MyStringId MATERIAL_MARKER_GPS = MyStringId.GetOrCompute("marker_gps");
-        private static readonly MyStringId MATERIAL_MARKER_FRIENDLY = MyStringId.GetOrCompute("marker_friendly");
-        private static readonly MyStringId MATERIAL_MARKER_ENEMY = MyStringId.GetOrCompute("marker_enemy");
-        private static readonly MyStringId MATERIAL_MARKER_NEUTRAL = MyStringId.GetOrCompute("marker_neutral");
-        private static readonly MyStringId MATERIAL_MARKER_SELF = MyStringId.GetOrCompute("marker_self");
         private static readonly MyStringId MATERIAL_NAV_ARROW = MyStringId.GetOrCompute("nav_arrow");
         private static readonly MyStringId MATERIAL_SIGNAL_UP = MyStringId.GetOrCompute("signal_up");
         private static readonly MyStringId MATERIAL_SIGNAL_DOWN = MyStringId.GetOrCompute("signal_down");
@@ -1405,27 +1401,21 @@ namespace GVK.Navigation
                     if (faction != null && faction.IsEveryoneNpc()) isNpc = true;
                 }
 
-                MyStringId markerSprite;
                 Color signalColor;
-
                 if (isOwner)
                 {
-                    markerSprite = MATERIAL_MARKER_SELF;
                     signalColor = new Color(100, 230, 255);
                 }
                 else if (relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner)
                 {
-                    markerSprite = MATERIAL_MARKER_FRIENDLY;
                     signalColor = new Color(100, 240, 100);
                 }
                 else if (relation == MyRelationsBetweenPlayerAndBlock.Enemies)
                 {
-                    markerSprite = MATERIAL_MARKER_ENEMY;
                     signalColor = new Color(255, 60, 60);
                 }
                 else
                 {
-                    markerSprite = MATERIAL_MARKER_NEUTRAL;
                     signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
                 }
 
@@ -1478,7 +1468,7 @@ namespace GVK.Navigation
                     {
                         Name = bestName,
                         Coords = bestPos,
-                        Sprite = markerSprite,
+                        Sprite = MATERIAL_SIGNAL_LEVEL,
                         DisplayColor = signalColor,
                         DistanceMeters = Math.Sqrt(bestDistSq),
                         MapUV = WorldToMapUV(bestPos),
