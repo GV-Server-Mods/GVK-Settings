@@ -67,103 +67,119 @@ namespace GVK.Navigation
         private static readonly MyStringId MATERIAL_SIGNAL_LEVEL = MyStringId.GetOrCompute("signal_level");
 
 
-        // Compass Tape Definition
-        private struct CompassMarker
+        /// <summary>
+        /// Graduation mark classification for the tactical HUD compass ribbon.
+        /// </summary>
+        private enum GraduationType
         {
-            public string Label;
-            public float Offset;
-            public double HalfWidth;
+            Cardinal,   // N, E, S, W (Top row: tactical amber, Bottom row: degree number)
+            Ordinal,    // NE, SE, SW, NW (Top row: tactical ice cyan, Bottom row: degree number)
+            MajorMark,  // 15°, 30°, 60°, etc. (Bottom row: degree number)
+            MediumTen,  // 10°, 20°, 40°, etc. (Medium tick)
+            MinorFive   // 5°, 25°, 35°, etc. (Minor tick)
+        }
 
-            public CompassMarker(string label, float offset)
+        /// <summary>
+        /// Represents a graduation tick with dual-tier labels (Top: Cardinals/Ordinals, Bottom: Numeric marks).
+        /// </summary>
+        private struct CompassGraduation
+        {
+            public readonly float Offset;
+            public readonly GraduationType Type;
+            public readonly string TopLabel;
+            public readonly string BottomLabel;
+            public double BaseTopHalfWidth;
+            public double BaseBottomHalfWidth;
+
+            public CompassGraduation(float offset, GraduationType type, string topLabel = null, string bottomLabel = null)
             {
-                Label = label;
                 Offset = offset;
-                HalfWidth = -1.0;
+                Type = type;
+                TopLabel = topLabel;
+                BottomLabel = bottomLabel;
+                BaseTopHalfWidth = -1.0;
+                BaseBottomHalfWidth = -1.0;
             }
         }
 
-        private static readonly CompassMarker[] COMPASS_TAPE = new CompassMarker[]
+        // Tactical Option C HUD Graduations:
+        // Top Row: Cardinals (N, E, S, W) and Ordinals (NE, SE, SW, NW)
+        // Bottom Row: Major Numeric marks every 15° (0, 15, 30, 45, 60, etc.)
+        // Intermediate: 10° Medium ticks and 5° Minor ticks
+        private static readonly CompassGraduation[] COMPASS_GRADUATIONS = new CompassGraduation[]
         {
-            new CompassMarker("S", 0f),
-            new CompassMarker("•", -0.025f),
-            new CompassMarker("•", -0.05f),
-            new CompassMarker("•", -0.075f),
-            new CompassMarker("•", -0.1f),
-            new CompassMarker("SSE", -0.125f),
-            new CompassMarker("•", -0.15f),
-            new CompassMarker("•", -0.175f),
-            new CompassMarker("•", -0.2f),
-            new CompassMarker("•", -0.225f),
-            new CompassMarker("SE", -0.25f),
-            new CompassMarker("•", -0.275f),
-            new CompassMarker("•", -0.3f),
-            new CompassMarker("•", -0.325f),
-            new CompassMarker("•", -0.35f),
-            new CompassMarker("ESE", -0.375f),
-            new CompassMarker("•", -0.4f),
-            new CompassMarker("•", -0.425f),
-            new CompassMarker("•", -0.45f),
-            new CompassMarker("•", -0.475f),
-            new CompassMarker("E", -0.5f),
-            new CompassMarker("•", -0.525f),
-            new CompassMarker("•", -0.55f),
-            new CompassMarker("•", -0.575f),
-            new CompassMarker("•", -0.6f),
-            new CompassMarker("ENE", -0.625f),
-            new CompassMarker("•", -0.65f),
-            new CompassMarker("•", -0.675f),
-            new CompassMarker("•", -0.7f),
-            new CompassMarker("•", -0.725f),
-            new CompassMarker("NE", -0.75f),
-            new CompassMarker("•", -0.775f),
-            new CompassMarker("•", -0.8f),
-            new CompassMarker("•", -0.825f),
-            new CompassMarker("•", -0.85f),
-            new CompassMarker("NNE", -0.875f),
-            new CompassMarker("•", -0.9f),
-            new CompassMarker("•", -0.925f),
-            new CompassMarker("•", -0.95f),
-            new CompassMarker("•", -0.975f),
-            new CompassMarker("N", -1.0f),
-            new CompassMarker("•", 0.975f),
-            new CompassMarker("•", 0.95f),
-            new CompassMarker("•", 0.925f),
-            new CompassMarker("•", 0.9f),
-            new CompassMarker("NNW", 0.875f),
-            new CompassMarker("•", 0.85f),
-            new CompassMarker("•", 0.825f),
-            new CompassMarker("•", 0.8f),
-            new CompassMarker("•", 0.775f),
-            new CompassMarker("NW", 0.75f),
-            new CompassMarker("•", 0.725f),
-            new CompassMarker("•", 0.7f),
-            new CompassMarker("•", 0.675f),
-            new CompassMarker("•", 0.65f),
-            new CompassMarker("WNW", 0.625f),
-            new CompassMarker("•", 0.6f),
-            new CompassMarker("•", 0.575f),
-            new CompassMarker("•", 0.55f),
-            new CompassMarker("•", 0.525f),
-            new CompassMarker("W", 0.5f),
-            new CompassMarker("•", 0.475f),
-            new CompassMarker("•", 0.45f),
-            new CompassMarker("•", 0.425f),
-            new CompassMarker("•", 0.4f),
-            new CompassMarker("WSW", 0.375f),
-            new CompassMarker("•", 0.35f),
-            new CompassMarker("•", 0.325f),
-            new CompassMarker("•", 0.3f),
-            new CompassMarker("•", 0.275f),
-            new CompassMarker("SW", 0.25f),
-            new CompassMarker("•", 0.225f),
-            new CompassMarker("•", 0.2f),
-            new CompassMarker("•", 0.175f),
-            new CompassMarker("•", 0.15f),
-            new CompassMarker("SSW", 0.125f),
-            new CompassMarker("•", 0.1f),
-            new CompassMarker("•", 0.075f),
-            new CompassMarker("•", 0.05f),
-            new CompassMarker("•", 0.025f)
+            new CompassGraduation(-1.00000f, GraduationType.Cardinal, "N", "0"),     // 0°
+            new CompassGraduation(-0.97222f, GraduationType.MinorFive, null, null),   // 5°
+            new CompassGraduation(-0.94444f, GraduationType.MediumTen, null, null),   // 10°
+            new CompassGraduation(-0.91667f, GraduationType.MajorMark, null, "15"),   // 15°
+            new CompassGraduation(-0.88889f, GraduationType.MediumTen, null, null),   // 20°
+            new CompassGraduation(-0.86111f, GraduationType.MinorFive, null, null),   // 25°
+            new CompassGraduation(-0.83333f, GraduationType.MajorMark, null, "30"),   // 30°
+            new CompassGraduation(-0.80556f, GraduationType.MinorFive, null, null),   // 35°
+            new CompassGraduation(-0.77778f, GraduationType.MediumTen, null, null),   // 40°
+            new CompassGraduation(-0.75000f, GraduationType.Ordinal, "NE", "45"),     // 45°
+            new CompassGraduation(-0.72222f, GraduationType.MediumTen, null, null),   // 50°
+            new CompassGraduation(-0.69444f, GraduationType.MinorFive, null, null),   // 55°
+            new CompassGraduation(-0.66667f, GraduationType.MajorMark, null, "60"),   // 60°
+            new CompassGraduation(-0.63889f, GraduationType.MinorFive, null, null),   // 65°
+            new CompassGraduation(-0.61111f, GraduationType.MediumTen, null, null),   // 70°
+            new CompassGraduation(-0.58333f, GraduationType.MajorMark, null, "75"),   // 75°
+            new CompassGraduation(-0.55556f, GraduationType.MediumTen, null, null),   // 80°
+            new CompassGraduation(-0.52778f, GraduationType.MinorFive, null, null),   // 85°
+            new CompassGraduation(-0.50000f, GraduationType.Cardinal, "E", "90"),     // 90°
+            new CompassGraduation(-0.47222f, GraduationType.MinorFive, null, null),   // 95°
+            new CompassGraduation(-0.44444f, GraduationType.MediumTen, null, null),   // 100°
+            new CompassGraduation(-0.41667f, GraduationType.MajorMark, null, "105"),  // 105°
+            new CompassGraduation(-0.38889f, GraduationType.MediumTen, null, null),   // 110°
+            new CompassGraduation(-0.36111f, GraduationType.MinorFive, null, null),   // 115°
+            new CompassGraduation(-0.33333f, GraduationType.MajorMark, null, "120"),  // 120°
+            new CompassGraduation(-0.30556f, GraduationType.MinorFive, null, null),   // 125°
+            new CompassGraduation(-0.27778f, GraduationType.MediumTen, null, null),   // 130°
+            new CompassGraduation(-0.25000f, GraduationType.Ordinal, "SE", "135"),    // 135°
+            new CompassGraduation(-0.22222f, GraduationType.MediumTen, null, null),   // 140°
+            new CompassGraduation(-0.19444f, GraduationType.MinorFive, null, null),   // 145°
+            new CompassGraduation(-0.16667f, GraduationType.MajorMark, null, "150"),  // 150°
+            new CompassGraduation(-0.13889f, GraduationType.MinorFive, null, null),   // 155°
+            new CompassGraduation(-0.11111f, GraduationType.MediumTen, null, null),   // 160°
+            new CompassGraduation(-0.08333f, GraduationType.MajorMark, null, "165"),  // 165°
+            new CompassGraduation(-0.05556f, GraduationType.MediumTen, null, null),   // 170°
+            new CompassGraduation(-0.02778f, GraduationType.MinorFive, null, null),   // 175°
+            new CompassGraduation(0.00000f, GraduationType.Cardinal, "S", "180"),    // 180°
+            new CompassGraduation(0.02778f, GraduationType.MinorFive, null, null),   // 185°
+            new CompassGraduation(0.05556f, GraduationType.MediumTen, null, null),   // 190°
+            new CompassGraduation(0.08333f, GraduationType.MajorMark, null, "195"),   // 195°
+            new CompassGraduation(0.11111f, GraduationType.MediumTen, null, null),   // 200°
+            new CompassGraduation(0.13889f, GraduationType.MinorFive, null, null),   // 205°
+            new CompassGraduation(0.16667f, GraduationType.MajorMark, null, "210"),   // 210°
+            new CompassGraduation(0.19444f, GraduationType.MinorFive, null, null),   // 215°
+            new CompassGraduation(0.22222f, GraduationType.MediumTen, null, null),   // 220°
+            new CompassGraduation(0.25000f, GraduationType.Ordinal, "SW", "225"),     // 225°
+            new CompassGraduation(0.27778f, GraduationType.MediumTen, null, null),   // 230°
+            new CompassGraduation(0.30556f, GraduationType.MinorFive, null, null),   // 235°
+            new CompassGraduation(0.33333f, GraduationType.MajorMark, null, "240"),   // 240°
+            new CompassGraduation(0.36111f, GraduationType.MinorFive, null, null),   // 245°
+            new CompassGraduation(0.38889f, GraduationType.MediumTen, null, null),   // 250°
+            new CompassGraduation(0.41667f, GraduationType.MajorMark, null, "255"),   // 255°
+            new CompassGraduation(0.44444f, GraduationType.MediumTen, null, null),   // 260°
+            new CompassGraduation(0.47222f, GraduationType.MinorFive, null, null),   // 265°
+            new CompassGraduation(0.50000f, GraduationType.Cardinal, "W", "270"),     // 270°
+            new CompassGraduation(0.52778f, GraduationType.MinorFive, null, null),   // 275°
+            new CompassGraduation(0.55556f, GraduationType.MediumTen, null, null),   // 280°
+            new CompassGraduation(0.58333f, GraduationType.MajorMark, null, "285"),   // 285°
+            new CompassGraduation(0.61111f, GraduationType.MediumTen, null, null),   // 290°
+            new CompassGraduation(0.63889f, GraduationType.MinorFive, null, null),   // 295°
+            new CompassGraduation(0.66667f, GraduationType.MajorMark, null, "300"),   // 300°
+            new CompassGraduation(0.69444f, GraduationType.MinorFive, null, null),   // 305°
+            new CompassGraduation(0.72222f, GraduationType.MediumTen, null, null),   // 310°
+            new CompassGraduation(0.75000f, GraduationType.Ordinal, "NW", "315"),     // 315°
+            new CompassGraduation(0.77778f, GraduationType.MediumTen, null, null),   // 320°
+            new CompassGraduation(0.80556f, GraduationType.MinorFive, null, null),   // 325°
+            new CompassGraduation(0.83333f, GraduationType.MajorMark, null, "330"),   // 330°
+            new CompassGraduation(0.86111f, GraduationType.MinorFive, null, null),   // 335°
+            new CompassGraduation(0.88889f, GraduationType.MediumTen, null, null),   // 340°
+            new CompassGraduation(0.91667f, GraduationType.MajorMark, null, "345"),   // 345°
+            new CompassGraduation(0.94444f, GraduationType.MediumTen, null, null),   // 350°
+            new CompassGraduation(0.97222f, GraduationType.MinorFive, null, null)    // 355°
         };
 
         // Active HUD Waypoint (GPS or real broadcast signal)
@@ -217,20 +233,20 @@ namespace GVK.Navigation
         // TextHUDAPI
         private HudAPIv2 hudApi;
 
-        // 1. Custom Programmatic Compass Elements
+        // 1. Custom Programmatic Tactical HUD Compass Elements
+        private const double COMPASS_TOP_Y = 0.982;
         private HudAPIv2.BillBoardHUDMessage compassBg;
-        private HudAPIv2.BillBoardHUDMessage compassTopLine;
-        private HudAPIv2.BillBoardHUDMessage compassBottomLine;
+        private HudAPIv2.BillBoardHUDMessage compassLeftAccent;
+        private HudAPIv2.BillBoardHUDMessage compassRightAccent;
         private HudAPIv2.BillBoardHUDMessage compassCenterPointer;
-        private HudAPIv2.HUDMessage compassCenterHeadingMsg;
-        private readonly StringBuilder compassCenterHeadingText = new StringBuilder(32);
+        private HudAPIv2.BillBoardHUDMessage compassCenterBottomPip;
+        private readonly List<HudAPIv2.BillBoardHUDMessage> compassTickPool = new List<HudAPIv2.BillBoardHUDMessage>();
         private readonly List<HudAPIv2.HUDMessage> compassTapePool = new List<HudAPIv2.HUDMessage>();
         private readonly List<HudAPIv2.BillBoardHUDMessage> waypointSpritePool = new List<HudAPIv2.BillBoardHUDMessage>();
         private readonly List<HudAPIv2.HUDMessage> waypointDistPool = new List<HudAPIv2.HUDMessage>();
         private bool showCompass = true;
         private bool _compassElementsVisible = false;
         private float compassScale = 1.0f;
-        private int _lastCompassDegree = -1;
 
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
         private HudAPIv2.HUDMessage zoneMsg;
@@ -287,6 +303,7 @@ namespace GVK.Navigation
             public bool ShowCompass { get; set; } = true;
             public float CompassScale { get; set; } = 1.0f;
             public bool ShowZoneBar { get; set; } = true;
+            public int UpdateTickRate { get; set; } = 5;
 
             public ZoneNavConfig() { }
         }
@@ -314,9 +331,11 @@ namespace GVK.Navigation
         private double lastRemainingKm = 0.0;
         private double lastDistZ3Km = 0.0;
         private int tickCounter = 0;
+        private int updateTickRate = 5;
         private float playerHeadingRad = 0f;
         private bool hasCheckedDefaultGps = false;
         private bool _refreshMinimapNextFrame = false;
+        private bool _refreshCompassNextFrame = false;
         private bool _fullMapNeedsRedraw = false;
 
         // Cached orientation matrix & planet north azimuth — recomputed only when player moves > 1m
@@ -362,6 +381,19 @@ namespace GVK.Navigation
         // Reusable StringBuilder for mission screen text (avoids per-call allocation).
         private readonly StringBuilder _missionSb = new StringBuilder(512);
 
+        // Compass tape visible waypoint entry (pre-sorted Painter's algorithm buffer)
+        private struct CompassVisibleWp
+        {
+            public int WpIndex;
+            public float ScreenOffset;
+            public CompassVisibleWp(int wpIndex, float screenOffset)
+            {
+                WpIndex = wpIndex;
+                ScreenOffset = screenOffset;
+            }
+        }
+        private readonly List<CompassVisibleWp> _compassVisibleWps = new List<CompassVisibleWp>(16);
+
         // Satellite Map Marker Cluster (Deconfliction / Waterfall Stacking up to 5+)
         private struct MapCluster
         {
@@ -399,6 +431,7 @@ namespace GVK.Navigation
                                 showCompass = cfg.ShowCompass;
                                 compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
                                 showZoneBar = cfg.ShowZoneBar;
+                                updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
                             }
                         }
                     }
@@ -424,7 +457,8 @@ namespace GVK.Navigation
                     MinimapScale = minimapScale,
                     ShowCompass = showCompass,
                     CompassScale = compassScale,
-                    ShowZoneBar = showZoneBar
+                    ShowZoneBar = showZoneBar,
+                    UpdateTickRate = updateTickRate
                 };
 
                 string xml = MyAPIGateway.Utilities.SerializeToXML(cfg);
@@ -460,12 +494,13 @@ namespace GVK.Navigation
                 if (hudApi != null)
                 {
                     compassBg?.DeleteMessage();
-                    compassTopLine?.DeleteMessage();
-                    compassBottomLine?.DeleteMessage();
+                    compassLeftAccent?.DeleteMessage();
+                    compassRightAccent?.DeleteMessage();
                     compassCenterPointer?.DeleteMessage();
-                    compassCenterHeadingMsg?.DeleteMessage();
+                    compassCenterBottomPip?.DeleteMessage();
                     ClearTapePool();
                     ClearSpritePool();
+                    _compassVisibleWps.Clear();
 
                     zoneMsg?.DeleteMessage();
                     zoneDistMsg?.DeleteMessage();
@@ -502,6 +537,10 @@ namespace GVK.Navigation
 
         private void ClearTapePool()
         {
+            for (int i = 0; i < compassTickPool.Count; i++)
+                compassTickPool[i]?.DeleteMessage();
+            compassTickPool.Clear();
+
             for (int i = 0; i < compassTapePool.Count; i++)
                 compassTapePool[i]?.DeleteMessage();
             compassTapePool.Clear();
@@ -563,62 +602,68 @@ namespace GVK.Navigation
                 float aspect = GetScreenAspect();
 
                 // 1. Custom Programmatic Tactical HUD Compass Frame
-                Vector2D compassOrigin = new Vector2D(0.0, 0.930);
+                float baseHeight = 0.076f;
+                Vector2D compassOrigin = new Vector2D(0.0, COMPASS_TOP_Y - baseHeight * 0.5);
 
                 compassBg = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: compassOrigin,
-                    BillBoardColor: new Color(10, 16, 24, 240),
+                    BillBoardColor: new Color(10, 16, 24, 240), // Matches minimapBg and zoneBg card background
                     Offset: Vector2D.Zero,
                     TimeToLive: -1,
                     Scale: 1.0,
-                    Width: 0.68f,
-                    Height: 0.056f * aspect,
+                    Width: 0.62f,
+                    Height: baseHeight,
                     HideHud: true,
                     Shadowing: true,
                     Blend: BlendTypeEnum.PostPP
                 );
                 compassBg.Visible = false;
 
-                compassTopLine = new HudAPIv2.BillBoardHUDMessage(
+                // Simple vertical accent bars on both left and right ends (matches zone status card accent)
+                float accentWidth = 0.005f;
+                float accentHeight = baseHeight - 0.006f;
+
+                compassLeftAccent = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: compassOrigin,
-                    BillBoardColor: new Color(160, 170, 180, 240),
-                    Offset: new Vector2D(0.0, 0.028f * aspect),
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: new Vector2D(-0.31f + 0.005f, 0.0),
                     TimeToLive: -1,
                     Scale: 1.0,
-                    Width: 0.68f,
-                    Height: 0.0018f,
+                    Width: accentWidth,
+                    Height: accentHeight,
                     HideHud: true,
                     Shadowing: false,
                     Blend: BlendTypeEnum.PostPP
                 );
-                compassTopLine.Visible = false;
+                compassLeftAccent.Visible = false;
 
-                compassBottomLine = new HudAPIv2.BillBoardHUDMessage(
+                compassRightAccent = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: compassOrigin,
-                    BillBoardColor: new Color(160, 170, 180, 240),
-                    Offset: new Vector2D(0.0, -0.028f * aspect),
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: new Vector2D(0.31f - 0.005f, 0.0),
                     TimeToLive: -1,
                     Scale: 1.0,
-                    Width: 0.68f,
-                    Height: 0.0018f,
+                    Width: accentWidth,
+                    Height: accentHeight,
                     HideHud: true,
                     Shadowing: false,
                     Blend: BlendTypeEnum.PostPP
                 );
-                compassBottomLine.Visible = false;
+                compassRightAccent.Visible = false;
 
+                // Precision Center Reticle: Top pointer (▼), bottom pip (▲), and central vertical lubber tick
                 compassCenterPointer = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_NAV_ARROW,
                     Origin: compassOrigin,
-                    BillBoardColor: new Color(255, 230, 40, 255),
-                    Offset: new Vector2D(0.0, 0.028f * aspect),
+                    BillBoardColor: new Color(255, 215, 60, 255),
+                    Offset: new Vector2D(0.0, baseHeight * 0.5),
                     TimeToLive: -1,
                     Scale: 1.0,
-                    Width: 0.012f,
-                    Height: 0.012f * aspect,
+                    Width: 0.010f,
+                    Height: 0.010f * aspect,
                     HideHud: true,
                     Shadowing: false,
                     Blend: BlendTypeEnum.PostPP
@@ -626,28 +671,51 @@ namespace GVK.Navigation
                 compassCenterPointer.Rotation = (float)Math.PI; // Rotated downward pointing at tape center
                 compassCenterPointer.Visible = false;
 
-                compassCenterHeadingMsg = new HudAPIv2.HUDMessage(
-                    Message: compassCenterHeadingText,
-                    Origin: new Vector2D(0.0, 0.930 + 0.028f * aspect + 0.010),
-                    Offset: Vector2D.Zero,
+                compassCenterBottomPip = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_NAV_ARROW,
+                    Origin: compassOrigin,
+                    BillBoardColor: new Color(255, 215, 60, 255),
+                    Offset: new Vector2D(0.0, -baseHeight * 0.5),
                     TimeToLive: -1,
-                    Scale: 0.72,
+                    Scale: 1.0,
+                    Width: 0.008f,
+                    Height: 0.008f * aspect,
                     HideHud: true,
-                    Shadowing: true,
-                    ShadowColor: Color.Black,
+                    Shadowing: false,
                     Blend: BlendTypeEnum.PostPP
                 );
-                compassCenterHeadingMsg.Visible = false;
+                compassCenterBottomPip.Rotation = 0f; // Pointing upward into tape center
+                compassCenterBottomPip.Visible = false;
 
-                // Pre-allocate 45 Tape character HUDMessages (45 handles wider FOVs without pool overflow)
-                for (int i = 0; i < 45; i++)
+                // Pre-allocate 25 Graduation Tick BillBoards
+                for (int i = 0; i < 25; i++)
+                {
+                    var tick = new HudAPIv2.BillBoardHUDMessage(
+                        Material: MATERIAL_SQUARE,
+                        Origin: Vector2D.Zero,
+                        BillBoardColor: Color.White,
+                        Offset: Vector2D.Zero,
+                        TimeToLive: -1,
+                        Scale: 1.0,
+                        Width: 0.0016f,
+                        Height: 0.010f,
+                        HideHud: true,
+                        Shadowing: false,
+                        Blend: BlendTypeEnum.PostPP
+                    );
+                    tick.Visible = false;
+                    compassTickPool.Add(tick);
+                }
+
+                // Pre-allocate 30 Tape Label HUDMessages (for dual-row top/bottom labels)
+                for (int i = 0; i < 30; i++)
                 {
                     var msg = new HudAPIv2.HUDMessage(
                         Message: new StringBuilder(""),
                         Origin: Vector2D.Zero,
                         Offset: Vector2D.Zero,
                         TimeToLive: -1,
-                        Scale: 0.90,
+                        Scale: 0.78,
                         HideHud: true,
                         Shadowing: true,
                         ShadowColor: Color.Black,
@@ -1097,6 +1165,16 @@ namespace GVK.Navigation
                 new HudAPIv2.MenuItem("Toggle Compass Tape", rootCategory, () => { ToggleCompass(); });
                 new HudAPIv2.MenuItem("Cycle Compass Size (75% / 100% / 125% / 150%)", rootCategory, () => { CycleCompassScale(); });
                 new HudAPIv2.MenuItem("Toggle Zone Status Bar", rootCategory, () => { ToggleZoneBar(); });
+                new HudAPIv2.MenuItem("Cycle HUD Refresh Rate (12Hz / 15Hz / 30Hz / 60Hz / 6Hz / 10Hz)", rootCategory, () => { CycleUpdateTickRate(); });
+
+                var rateCategory = new HudAPIv2.MenuSubCategory("HUD Refresh Rate Presets", rootCategory, "Select HUD Update Frequency");
+                new HudAPIv2.MenuItem("5 Ticks (12 Hz) - Recommended", rateCategory, () => { SetUpdateTickRate(5); });
+                new HudAPIv2.MenuItem("6 Ticks (10 Hz) - Balanced", rateCategory, () => { SetUpdateTickRate(6); });
+                new HudAPIv2.MenuItem("4 Ticks (15 Hz) - Ultra Smooth", rateCategory, () => { SetUpdateTickRate(4); });
+                new HudAPIv2.MenuItem("2 Ticks (30 Hz) - Half Framerate", rateCategory, () => { SetUpdateTickRate(2); });
+                new HudAPIv2.MenuItem("1 Tick (60 Hz) - Uncapped", rateCategory, () => { SetUpdateTickRate(1); });
+                new HudAPIv2.MenuItem("10 Ticks (6 Hz) - Battery / Sim Saver", rateCategory, () => { SetUpdateTickRate(10); });
+
                 new HudAPIv2.MenuItem("Restore Default Kharak GPS Waypoints", rootCategory, () => { PopulateDefaultGps(true); });
                 new HudAPIv2.MenuItem("Open Zone Advisory Mission Screen", rootCategory, () => { OpenZoneMissionScreen(); });
             }
@@ -1141,22 +1219,27 @@ namespace GVK.Navigation
                 UpdateBackgroundData(pos.Value);
             }
 
-            // Per-frame: Compass tape tracks head rotation so it must stay per-frame.
-            // Minimap and zone bar throttled to every 10 frames (~6 Hz) — saves significant
-            // per-frame work without any perceptible lag at normal rover speeds.
+            // Configurable HUD Cadence (default 5 ticks / 12 Hz):
+            // Compass, Minimap, Zone Bar, and FullMap all update on the user-configured updateTickRate.
+            // Saves significant per-frame CPU cycles and text formatting overhead while letting players
+            // dial in their preferred smoothness vs performance balance via /nav rate or F2 Mod Menu.
             if (hudApi != null && hudApi.Heartbeat)
             {
-                UpdateCompassAndWaypoints(pos.Value);
+                if (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame)
+                {
+                    _refreshCompassNextFrame = false;
+                    UpdateCompassAndWaypoints(pos.Value);
+                }
 
                 if (showFullMap)
                 {
-                    if (tickCounter % 10 == 0 || _fullMapNeedsRedraw)
+                    if (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw)
                     {
                         _fullMapNeedsRedraw = false;
                         UpdateFullMap(pos.Value);
                     }
                 }
-                else if (tickCounter % 10 == 0 || _refreshMinimapNextFrame)
+                else if (tickCounter % updateTickRate == 0 || _refreshMinimapNextFrame)
                 {
                     _refreshMinimapNextFrame = false;
                     UpdateZoneBar();
@@ -1164,7 +1247,6 @@ namespace GVK.Navigation
                 }
             }
         }
-
         private void CheckAndPopulateDefaultGps()
         {
             var player = MyAPIGateway.Session.Player;
@@ -1511,10 +1593,10 @@ namespace GVK.Navigation
                 {
                     _compassElementsVisible = false;
                     if (compassBg != null) compassBg.Visible = false;
-                    if (compassTopLine != null) compassTopLine.Visible = false;
-                    if (compassBottomLine != null) compassBottomLine.Visible = false;
+                    if (compassLeftAccent != null) compassLeftAccent.Visible = false;
+                    if (compassRightAccent != null) compassRightAccent.Visible = false;
                     if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                    if (compassCenterHeadingMsg != null) compassCenterHeadingMsg.Visible = false;
+                    if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
                     HideTapePool();
                     HideSpritePool();
                 }
@@ -1523,35 +1605,19 @@ namespace GVK.Navigation
 
             _compassElementsVisible = true;
             if (compassBg != null) compassBg.Visible = true;
-            if (compassTopLine != null) compassTopLine.Visible = true;
-            if (compassBottomLine != null) compassBottomLine.Visible = true;
-            if (compassCenterPointer != null) compassCenterPointer.Visible = true;
-            if (compassCenterHeadingMsg != null) compassCenterHeadingMsg.Visible = true;
-
-            // Live Digital Degree Heading Readout above reticle
-            int degreeHeading = (int)Math.Round(MathHelper.ToDegrees(compass)) % 360;
-            if (degreeHeading < 0) degreeHeading += 360;
-
-            if (_lastCompassDegree != degreeHeading && compassCenterHeadingMsg != null)
+            Color zoneCol = GetZoneColor(currentZoneIndex);
+            if (compassLeftAccent != null)
             {
-                _lastCompassDegree = degreeHeading;
-                compassCenterHeadingText.Clear();
-                compassCenterHeadingText.Append("<color=255,255,255>HEADING: <color=255,230,40>")
-                                        .Append(degreeHeading.ToString("D3"))
-                                        .Append("° ");
-
-                if (degreeHeading >= 338 || degreeHeading < 23) compassCenterHeadingText.Append("N");
-                else if (degreeHeading >= 23 && degreeHeading < 68) compassCenterHeadingText.Append("NE");
-                else if (degreeHeading >= 68 && degreeHeading < 113) compassCenterHeadingText.Append("E");
-                else if (degreeHeading >= 113 && degreeHeading < 158) compassCenterHeadingText.Append("SE");
-                else if (degreeHeading >= 158 && degreeHeading < 203) compassCenterHeadingText.Append("S");
-                else if (degreeHeading >= 203 && degreeHeading < 248) compassCenterHeadingText.Append("SW");
-                else if (degreeHeading >= 248 && degreeHeading < 293) compassCenterHeadingText.Append("W");
-                else compassCenterHeadingText.Append("NW");
-
-                var textLen = compassCenterHeadingMsg.GetTextLength();
-                compassCenterHeadingMsg.Offset = new Vector2D(-textLen.X * 0.5, 0.0);
+                compassLeftAccent.BillBoardColor = zoneCol;
+                compassLeftAccent.Visible = true;
             }
+            if (compassRightAccent != null)
+            {
+                compassRightAccent.BillBoardColor = zoneCol;
+                compassRightAccent.Visible = true;
+            }
+            if (compassCenterPointer != null) compassCenterPointer.Visible = true;
+            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = true;
 
             // compass is already clamped to [0, 2π] above. Normalize to [-1, 1] for tape rendering.
             compass = (compass - (float)Math.PI) / (float)Math.PI;
@@ -1560,15 +1626,34 @@ namespace GVK.Navigation
             // Precompute FOV polynomial once per frame instead of calling Math.Pow in hot loops
             float fovCoeff = FOV * (5.596f * FOV * FOV - 18.43f * FOV + 16.16f);
             float fovCubic = FOV * 12f;
-            float tapeSpan = 0.33f * compassScale;
+            float baseWidth = 0.54f + 0.08f * compassScale;
+            float tapeSpan = (baseWidth * 0.5f) - (0.012f * compassScale);
             float aspect = GetScreenAspect();
 
-            // 2. Render Tape Characters (N, •, NE, E, etc.) inside upper section of box
+            float baseHeight = 0.076f * compassScale;
+            double topY = COMPASS_TOP_Y;
+            double centerY = topY - baseHeight * 0.5;
+            double bottomY = topY - baseHeight;
+
+            float tickWidth = 0.0016f * compassScale;
+            float majorTickH = 0.007f * compassScale;
+            float mediumTickH = 0.005f * compassScale;
+            float minorTickH = 0.003f * compassScale;
+
+            // Dual row text layout:
+            // Top Row: Cardinals & Ordinals (N, NE, E, SE, S, SW, W, NW)
+            float topLabelY = (float)(topY - 0.008f * compassScale);
+            // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.) lowered so they never overlap letters
+            float bottomLabelY = (float)(topY - 0.027f * compassScale);
+
+            // 2. Render Tactical Graduation Ticks and Dual-Row Labels
+            int tickIndex = 0;
             int tapeMsgIndex = 0;
-            for (int i = 0; i < COMPASS_TAPE.Length; i++)
+
+            for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
             {
-                var marker = COMPASS_TAPE[i];
-                float offset = compass + marker.Offset;
+                var grad = COMPASS_GRADUATIONS[i];
+                float offset = compass + grad.Offset;
                 if (offset < -1f) offset += 2f;
                 else if (offset > 1f) offset -= 2f;
 
@@ -1578,44 +1663,107 @@ namespace GVK.Navigation
                 float screenOffset = (fovCoeff * offset) + (fovCubic * offset * offset * offset);
 
                 if (screenOffset > tapeSpan || screenOffset < -tapeSpan) continue;
-                if (tapeMsgIndex >= compassTapePool.Count) break;
 
-                var msg = compassTapePool[tapeMsgIndex++];
-                msg.Message.Clear();
-
-                string label = marker.Label;
-                if (label == "N" || label == "S" || label == "E" || label == "W")
-                    msg.Message.Append("<color=255,255,255>").Append(label);
-                else if (label == "NE" || label == "SE" || label == "SW" || label == "NW" ||
-                         label == "NNE" || label == "ENE" || label == "ESE" || label == "SSE" ||
-                         label == "SSW" || label == "WSW" || label == "WNW" || label == "NNW")
-                    msg.Message.Append("<color=180,205,230>").Append(label);
-                else
-                    msg.Message.Append("<color=120,140,160>").Append(label);
-
-                msg.Origin = new Vector2D(screenOffset, 0.930f + 0.014f * compassScale * aspect);
-
-                // Cache text half-width on first measurement to avoid 900-1500 GetTextLength() calls/sec
-                double halfWidth = marker.HalfWidth;
-                if (halfWidth < 0)
+                // Render graduation tick mark hanging down from the top rail
+                if (tickIndex < compassTickPool.Count)
                 {
-                    var charLen = msg.GetTextLength();
-                    halfWidth = charLen.X * 0.5;
-                    COMPASS_TAPE[i].HalfWidth = halfWidth;
+                    var tick = compassTickPool[tickIndex++];
+                    float tHeight;
+                    Color tColor;
+
+                    switch (grad.Type)
+                    {
+                        case GraduationType.Cardinal:
+                            tHeight = majorTickH;
+                            tColor = new Color(255, 215, 60, 240); // Kharak tactical amber
+                            break;
+                        case GraduationType.Ordinal:
+                        case GraduationType.MajorMark:
+                            tHeight = majorTickH;
+                            tColor = new Color(255, 255, 255, 240); // Crisp white
+                            break;
+                        case GraduationType.MediumTen:
+                            tHeight = mediumTickH;
+                            tColor = new Color(255, 255, 255, 200); // Clean white
+                            break;
+                        default:
+                            tHeight = minorTickH;
+                            tColor = new Color(255, 255, 255, 140); // Subtle white
+                            break;
+                    }
+
+                    tick.Origin = new Vector2D(screenOffset, topY - tHeight * 0.5f);
+                    tick.Width = tickWidth;
+                    tick.Height = tHeight;
+                    tick.BillBoardColor = tColor;
+                    tick.Visible = true;
                 }
 
-                msg.Offset = new Vector2D(-halfWidth, 0.0);
-                msg.Visible = true;
+                // Top Row: Cardinals (N, E, S, W) and Ordinals (NE, SE, SW, NW)
+                if (grad.TopLabel != null && tapeMsgIndex < compassTapePool.Count)
+                {
+                    var msg = compassTapePool[tapeMsgIndex++];
+                    msg.Message.Clear();
+                    msg.Scale = 0.58 * compassScale;
+
+                    if (grad.Type == GraduationType.Cardinal)
+                        msg.Message.Append("<color=255,215,60>").Append(grad.TopLabel);
+                    else
+                        msg.Message.Append("<color=255,255,255>").Append(grad.TopLabel);
+
+                    msg.Origin = new Vector2D(screenOffset, topLabelY);
+
+                    double baseHalfWidth = grad.BaseTopHalfWidth;
+                    if (baseHalfWidth < 0)
+                    {
+                        var charLen = msg.GetTextLength();
+                        baseHalfWidth = (charLen.X * 0.5) / compassScale;
+                        COMPASS_GRADUATIONS[i].BaseTopHalfWidth = baseHalfWidth;
+                    }
+
+                    msg.Offset = new Vector2D(-baseHalfWidth * compassScale, 0.0);
+                    msg.Visible = true;
+                }
+
+                // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.)
+                if (grad.BottomLabel != null && tapeMsgIndex < compassTapePool.Count)
+                {
+                    var msg = compassTapePool[tapeMsgIndex++];
+                    msg.Message.Clear();
+                    msg.Scale = 0.48 * compassScale;
+
+                    if (grad.Type == GraduationType.Cardinal)
+                        msg.Message.Append("<color=255,225,120>").Append(grad.BottomLabel);
+                    else
+                        msg.Message.Append("<color=255,255,255>").Append(grad.BottomLabel);
+
+                    msg.Origin = new Vector2D(screenOffset, bottomLabelY);
+
+                    double baseHalfWidth = grad.BaseBottomHalfWidth;
+                    if (baseHalfWidth < 0)
+                    {
+                        var charLen = msg.GetTextLength();
+                        baseHalfWidth = (charLen.X * 0.5) / compassScale;
+                        COMPASS_GRADUATIONS[i].BaseBottomHalfWidth = baseHalfWidth;
+                    }
+
+                    msg.Offset = new Vector2D(-baseHalfWidth * compassScale, 0.0);
+                    msg.Visible = true;
+                }
             }
+
+            for (int i = tickIndex; i < compassTickPool.Count; i++)
+                compassTickPool[i].Visible = false;
 
             for (int i = tapeMsgIndex; i < compassTapePool.Count; i++)
                 compassTapePool[i].Visible = false;
 
-            // 3. Render Graphical HUD Waypoints inside middle & lower section of box
-            int spriteIndex = 0;
+            // 3. Render Graphical HUD Waypoints (Painter's Algorithm: Distant waypoints render underneath, Closer waypoints render on top)
+            _compassVisibleWps.Clear();
             double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
 
-            for (int i = 0; i < activeHudWaypoints.Count && spriteIndex < waypointSpritePool.Count; i++)
+            // Pass 1: Collect up to waypointSpritePool.Count visible waypoints from activeHudWaypoints (which is pre-sorted closest-first).
+            for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < waypointSpritePool.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
 
@@ -1637,45 +1785,74 @@ namespace GVK.Navigation
 
                 float targetCompass = angleDiff / (float)Math.PI;
 
-                if (Math.Abs(targetCompass) > 0.30f) continue;
+                if (Math.Abs(targetCompass) > 0.35f) continue;
 
                 float poiScreenOffset = (fovCoeff * targetCompass) + (fovCubic * targetCompass * targetCompass * targetCompass);
 
                 if (poiScreenOffset >= -tapeSpan && poiScreenOffset <= tapeSpan)
                 {
-                    double distKm = wp.DistanceMeters * 0.001;
-                    Color wpColor = wp.DisplayColor;
-
-                    var sprite = waypointSpritePool[spriteIndex];
-                    sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
-                    sprite.Rotation = 0f;
-                    sprite.BillBoardColor = wpColor;
-                    sprite.Origin = new Vector2D(poiScreenOffset, 0.930f + 0.001f * compassScale * aspect);
-                    sprite.Offset = Vector2D.Zero;
-                    sprite.Visible = true;
-
-                    // Zero-allocation distance text formatting: direct int/char appending avoids hundreds of heap string allocs per frame
-                    var dist = waypointDistPool[spriteIndex];
-                    dist.Message.Clear()
-                        .Append("<color=").Append(wpColor.R).Append(',').Append(wpColor.G).Append(',').Append(wpColor.B).Append('>');
-
-                    if (distKm < 10.0)
-                    {
-                        int whole = (int)distKm;
-                        int tenths = (int)((distKm - whole) * 10.0);
-                        dist.Message.Append(whole).Append('.').Append(tenths).Append('k');
-                    }
-                    else
-                    {
-                        dist.Message.Append((int)distKm).Append('k');
-                    }
-
-                    dist.Origin = new Vector2D(poiScreenOffset, 0.930f - 0.015f * compassScale * aspect);
-                    var distLen = dist.GetTextLength();
-                    dist.Offset = new Vector2D(-distLen.X * 0.5, 0.0);
-                    dist.Visible = true;
-                    spriteIndex++;
+                    _compassVisibleWps.Add(new CompassVisibleWp(i, poiScreenOffset));
                 }
+            }
+
+            // Pass 2: Render in reverse order (from farthest down to closest) so closer waypoints are assigned higher
+            // TextHUDAPI pool indices and cleanly draw ON TOP of further waypoints.
+            int spriteIndex = 0;
+            for (int j = _compassVisibleWps.Count - 1; j >= 0; j--)
+            {
+                var vis = _compassVisibleWps[j];
+                var wp = activeHudWaypoints[vis.WpIndex];
+                float poiScreenOffset = vis.ScreenOffset;
+
+                double distKm = wp.DistanceMeters * 0.001;
+                Color wpColor = wp.DisplayColor;
+
+                // Distance-based perspective scaling for compass tape:
+                // 100m or closer: 100% full size
+                // 30km (30,000m) or farther: 70% size
+                // Smooth linear attenuation between 100m and 30,000m
+                float distT = (float)MathHelper.Clamp((wp.DistanceMeters - 100.0) / (30000.0 - 100.0), 0.0, 1.0);
+                float distFactor = 1.0f - 0.30f * distT;
+
+                float wWidth = 0.011f * compassScale * distFactor;
+                float wHeight = wWidth * aspect;
+
+                double spriteCenterY = topY - 0.046 * compassScale;
+                double spriteBottom = spriteCenterY - (wHeight * 0.5);
+                double textY = spriteBottom - (0.002 * compassScale);
+
+                var sprite = waypointSpritePool[spriteIndex];
+                sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
+                sprite.Rotation = 0f;
+                sprite.BillBoardColor = wpColor;
+                sprite.Width = wWidth;
+                sprite.Height = wHeight;
+                sprite.Origin = new Vector2D(poiScreenOffset, spriteCenterY);
+                sprite.Offset = Vector2D.Zero;
+                sprite.Visible = true;
+
+                // Zero-allocation distance text formatting: direct int/char appending avoids hundreds of heap string allocs per frame
+                var dist = waypointDistPool[spriteIndex];
+                dist.Scale = 0.46 * compassScale * distFactor;
+                dist.Message.Clear()
+                    .Append("<color=").Append(wpColor.R).Append(',').Append(wpColor.G).Append(',').Append(wpColor.B).Append('>');
+
+                if (distKm < 10.0)
+                {
+                    int whole = (int)distKm;
+                    int tenths = (int)((distKm - whole) * 10.0);
+                    dist.Message.Append(whole).Append('.').Append(tenths).Append('k');
+                }
+                else
+                {
+                    dist.Message.Append((int)distKm).Append('k');
+                }
+
+                dist.Origin = new Vector2D(poiScreenOffset, textY);
+                var distLen = dist.GetTextLength();
+                dist.Offset = new Vector2D(-distLen.X * 0.5, 0.0);
+                dist.Visible = true;
+                spriteIndex++;
             }
 
             for (int i = spriteIndex; i < waypointSpritePool.Count; i++)
@@ -1687,6 +1864,9 @@ namespace GVK.Navigation
 
         private void HideTapePool()
         {
+            for (int i = 0; i < compassTickPool.Count; i++)
+                compassTickPool[i].Visible = false;
+
             for (int i = 0; i < compassTapePool.Count; i++)
                 compassTapePool[i].Visible = false;
         }
@@ -2419,6 +2599,17 @@ namespace GVK.Navigation
             }
         }
 
+        private Color GetZoneColor(int zone)
+        {
+            switch (zone)
+            {
+                case 0: return Color.LimeGreen;
+                case 1: return Color.Yellow;
+                case 2: return Color.Orange;
+                default: return Color.Red;
+            }
+        }
+
         /// <summary>
         /// Converts planetary 3D world position to UV [0, 1] matching KharakMap.dds / Kharak Zone Map V3.
         /// Includes the -91.4° (-0.254) longitude shift to align Crossroads (U=0.273) and Zone 3 (U=0.749).
@@ -2562,6 +2753,25 @@ namespace GVK.Navigation
                 OpenAllZonesMissionScreen();
                 return;
             }
+
+            if (msg.StartsWith("/nav rate", StringComparison.OrdinalIgnoreCase) ||
+                msg.StartsWith("/zone rate", StringComparison.OrdinalIgnoreCase) ||
+                msg.StartsWith("/hud rate", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 3)
+                {
+                    int parsedTicks;
+                    if (int.TryParse(parts[2], out parsedTicks) && parsedTicks >= 1 && parsedTicks <= 60)
+                    {
+                        SetUpdateTickRate(parsedTicks);
+                        return;
+                    }
+                }
+                CycleUpdateTickRate();
+                return;
+            }
         }
 
         private void ToggleFullMap()
@@ -2579,6 +2789,7 @@ namespace GVK.Navigation
                 if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
                 HideFullMapPool();
                 _refreshMinimapNextFrame = true;
+                _refreshCompassNextFrame = true;
             }
             else
             {
@@ -2586,10 +2797,10 @@ namespace GVK.Navigation
 
                 // Immediately hide compass and minimap elements when pulling up the satellite map
                 if (compassBg != null) compassBg.Visible = false;
-                if (compassTopLine != null) compassTopLine.Visible = false;
-                if (compassBottomLine != null) compassBottomLine.Visible = false;
+                if (compassLeftAccent != null) compassLeftAccent.Visible = false;
+                if (compassRightAccent != null) compassRightAccent.Visible = false;
                 if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                if (compassCenterHeadingMsg != null) compassCenterHeadingMsg.Visible = false;
+                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
                 HideTapePool();
                 HideSpritePool();
 
@@ -2791,6 +3002,26 @@ namespace GVK.Navigation
             CycleRadarRange();
         }
 
+        private void SetUpdateTickRate(int ticks)
+        {
+            updateTickRate = Math.Max(1, Math.Min(60, ticks));
+            SaveConfig();
+            double hz = 60.0 / updateTickRate;
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] HUD Refresh Rate: {updateTickRate} ticks ({hz:F1} Hz)", 2500, MyFontEnum.Green);
+        }
+
+        private void CycleUpdateTickRate()
+        {
+            // Cycle common stepped divisors starting from 5 (12 Hz default):
+            // 5 (12 Hz) -> 4 (15 Hz) -> 2 (30 Hz) -> 1 (60 Hz) -> 10 (6 Hz) -> 6 (10 Hz) -> 5
+            if (updateTickRate == 5) SetUpdateTickRate(4);
+            else if (updateTickRate == 4) SetUpdateTickRate(2);
+            else if (updateTickRate == 2) SetUpdateTickRate(1);
+            else if (updateTickRate == 1) SetUpdateTickRate(10);
+            else if (updateTickRate == 10) SetUpdateTickRate(6);
+            else SetUpdateTickRate(5);
+        }
+
         private void CycleCompassScale()
         {
             if (compassScale < 0.85f)
@@ -2812,10 +3043,13 @@ namespace GVK.Navigation
         {
             compassScale = scale;
             float aspect = GetScreenAspect();
-            Vector2D compassOrigin = new Vector2D(0.0, 0.930);
 
-            float baseWidth = 0.68f * scale;
-            float baseHeight = (0.056f * scale) * aspect;
+            float baseWidth = 0.54f + 0.08f * scale;
+            float baseHeight = 0.076f * scale;
+            Vector2D compassOrigin = new Vector2D(0.0, COMPASS_TOP_Y - baseHeight * 0.5);
+
+            float accentWidth = 0.005f * scale;
+            float accentHeight = baseHeight - 0.006f * scale;
 
             if (compassBg != null)
             {
@@ -2823,53 +3057,65 @@ namespace GVK.Navigation
                 compassBg.Width = baseWidth;
                 compassBg.Height = baseHeight;
             }
-            if (compassTopLine != null)
+            if (compassLeftAccent != null)
             {
-                compassTopLine.Origin = compassOrigin;
-                compassTopLine.Width = baseWidth;
-                compassTopLine.Offset = new Vector2D(0.0, baseHeight * 0.5);
+                compassLeftAccent.Origin = compassOrigin;
+                compassLeftAccent.Width = accentWidth;
+                compassLeftAccent.Height = accentHeight;
+                compassLeftAccent.Offset = new Vector2D(-baseWidth * 0.5f + 0.005f * scale, 0.0);
             }
-            if (compassBottomLine != null)
+            if (compassRightAccent != null)
             {
-                compassBottomLine.Origin = compassOrigin;
-                compassBottomLine.Width = baseWidth;
-                compassBottomLine.Offset = new Vector2D(0.0, -baseHeight * 0.5);
+                compassRightAccent.Origin = compassOrigin;
+                compassRightAccent.Width = accentWidth;
+                compassRightAccent.Height = accentHeight;
+                compassRightAccent.Offset = new Vector2D(baseWidth * 0.5f - 0.005f * scale, 0.0);
             }
             if (compassCenterPointer != null)
             {
-                float pWidth = 0.012f * scale;
+                float pWidth = 0.010f * scale;
                 float pHeight = pWidth * aspect;
                 compassCenterPointer.Origin = compassOrigin;
                 compassCenterPointer.Width = pWidth;
                 compassCenterPointer.Height = pHeight;
                 compassCenterPointer.Offset = new Vector2D(0.0, baseHeight * 0.5);
             }
-            if (compassCenterHeadingMsg != null)
+            if (compassCenterBottomPip != null)
             {
-                compassCenterHeadingMsg.Origin = new Vector2D(0.0, 0.930 + baseHeight * 0.5 + 0.010 * scale);
-                compassCenterHeadingMsg.Scale = 0.72 * scale;
+                float pWidth = 0.008f * scale;
+                float pHeight = pWidth * aspect;
+                compassCenterBottomPip.Origin = compassOrigin;
+                compassCenterBottomPip.Width = pWidth;
+                compassCenterBottomPip.Height = pHeight;
+                compassCenterBottomPip.Offset = new Vector2D(0.0, -baseHeight * 0.5);
             }
             for (int i = 0; i < compassTapePool.Count; i++)
             {
                 if (compassTapePool[i] != null)
                 {
-                    compassTapePool[i].Scale = 0.85 * scale;
+                    compassTapePool[i].Scale = 0.55 * scale;
                 }
             }
             for (int i = 0; i < waypointSpritePool.Count; i++)
             {
                 if (waypointSpritePool[i] != null)
                 {
-                    float wWidth = 0.014f * scale;
+                    float wWidth = 0.011f * scale;
                     float wHeight = wWidth * aspect;
                     waypointSpritePool[i].Width = wWidth;
                     waypointSpritePool[i].Height = wHeight;
                 }
                 if (waypointDistPool[i] != null)
                 {
-                    waypointDistPool[i].Scale = 0.60 * scale;
+                    waypointDistPool[i].Scale = 0.46 * scale;
                 }
             }
+            for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
+            {
+                COMPASS_GRADUATIONS[i].BaseTopHalfWidth = -1.0;
+                COMPASS_GRADUATIONS[i].BaseBottomHalfWidth = -1.0;
+            }
+            _refreshCompassNextFrame = true;
         }
 
         private void ToggleCompass()
@@ -2879,12 +3125,16 @@ namespace GVK.Navigation
             {
                 _compassElementsVisible = false;
                 if (compassBg != null) compassBg.Visible = false;
-                if (compassTopLine != null) compassTopLine.Visible = false;
-                if (compassBottomLine != null) compassBottomLine.Visible = false;
+                if (compassLeftAccent != null) compassLeftAccent.Visible = false;
+                if (compassRightAccent != null) compassRightAccent.Visible = false;
                 if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                if (compassCenterHeadingMsg != null) compassCenterHeadingMsg.Visible = false;
+                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
                 HideTapePool();
                 HideSpritePool();
+            }
+            else
+            {
+                _refreshCompassNextFrame = true;
             }
             SaveConfig();
             string status = showCompass ? "ENABLED" : "DISABLED";
@@ -2973,6 +3223,7 @@ namespace GVK.Navigation
             _missionSb.AppendLine("• /minimap - Toggle live top-right minimap");
             _missionSb.AppendLine("• /compass - Toggle heading tape");
             _missionSb.AppendLine("• /zone hud - Toggle zone status bar");
+            _missionSb.AppendLine("• /nav rate [ticks] - Set or cycle HUD refresh rate (e.g. 6 = 10 Hz, 5 = 12 Hz, 1 = 60 Hz)");
             _missionSb.AppendLine("• /zone gps - Restore default Kharak GPS waypoints");
 
             MyAPIGateway.Utilities.ShowMissionScreen(
@@ -2980,7 +3231,6 @@ namespace GVK.Navigation
                 currentObjectivePrefix: "Reference Guide:",
                 currentObjective: "Planetary Zone Boundaries & Governance Matrix",
                 screenDescription: _missionSb.ToString(),
-                callback: null,
                 okButtonCaption: "Close"
             );
         }
