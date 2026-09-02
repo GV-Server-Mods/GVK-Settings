@@ -217,7 +217,7 @@ namespace GVK.Navigation
         private HudAPIv2 hudApi;
 
         // 1. Custom Programmatic Tactical HUD Compass Elements
-        private const double COMPASS_TOP_Y = 0.982;
+        private const double COMPASS_TOP_Y = 0.999;
         private HudAPIv2.BillBoardHUDMessage compassBg;
         private HudAPIv2.BillBoardHUDMessage compassLeftAccent;
         private HudAPIv2.BillBoardHUDMessage compassRightAccent;
@@ -230,6 +230,10 @@ namespace GVK.Navigation
         private bool showCompass = true;
         private bool _compassElementsVisible = false;
         private float compassScale = 1.0f;
+        private double compassOffsetX = 0.0;
+        private double compassOffsetY = 1.0;
+        private HudAPIv2.MenuSliderInput compassSliderX;
+        private HudAPIv2.MenuSliderInput compassSliderY;
 
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
         private HudAPIv2.HUDMessage zoneMsg;
@@ -255,6 +259,10 @@ namespace GVK.Navigation
         private bool showMinimap = true;
         private bool _minimapElementsVisible = false;
         private float minimapScale = 1.0f;
+        private double minimapOffsetX = 1.0;
+        private double minimapOffsetY = 1.0;
+        private HudAPIv2.MenuSliderInput minimapSliderX;
+        private HudAPIv2.MenuSliderInput minimapSliderY;
 
         public enum MinimapDisplayMode
         {
@@ -276,6 +284,38 @@ namespace GVK.Navigation
         private HudAPIv2.BillBoardHUDMessage radarFovLeft;
         private HudAPIv2.BillBoardHUDMessage radarFovRight;
 
+        private struct HudPreset
+        {
+            public readonly string Name;
+            public readonly double PosX;
+            public readonly double PosY;
+
+            public HudPreset(string name, double posX, double posY)
+            {
+                Name = name;
+                PosX = posX;
+                PosY = posY;
+            }
+        }
+
+        private static readonly HudPreset[] CompassPresets = new HudPreset[]
+        {
+            new HudPreset("Top-Center (Default)", 0.0, 1.0),
+            new HudPreset("Above Toolbar Center", 0.0, -0.85)
+        };
+
+        private static readonly HudPreset[] MinimapPresets = new HudPreset[]
+        {
+            new HudPreset("Top-Right (Default)", 1.0, 1.0),
+            new HudPreset("Upper-Mid Right (Below WC HUD)", 1.0, 0.72),
+            new HudPreset("Middle-Right", 1.0, 0.0),
+            new HudPreset("Bottom-Right (Above Toolbar)", 1.0, -1.0),
+            new HudPreset("Top-Left", -1.0, 1.0),
+            new HudPreset("Upper-Mid Left", -1.0, 0.72),
+            new HudPreset("Middle-Left", -1.0, 0.0),
+            new HudPreset("Bottom-Left (Above Health)", -1.0, -1.0)
+        };
+
         public class ZoneNavConfig
         {
             public bool ShowMinimap { get; set; } = true;
@@ -283,8 +323,14 @@ namespace GVK.Navigation
             public int RadarScale { get; set; } = 0;
             public double RadarRangeMeters { get; set; } = 3000.0;
             public float MinimapScale { get; set; } = 1.0f;
+            public double MinimapOffsetX { get; set; } = 1.0;
+            public double MinimapOffsetY { get; set; } = 1.0;
+
             public bool ShowCompass { get; set; } = true;
             public float CompassScale { get; set; } = 1.0f;
+            public double CompassOffsetX { get; set; } = 0.0;
+            public double CompassOffsetY { get; set; } = 1.0;
+
             public bool ShowZoneBar { get; set; } = true;
             public int UpdateTickRate { get; set; } = 5;
 
@@ -415,6 +461,12 @@ namespace GVK.Navigation
                                 compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
                                 showZoneBar = cfg.ShowZoneBar;
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
+                                minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
+                                minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
+                                compassOffsetX = MathHelper.Clamp(cfg.CompassOffsetX, -1.0, 1.0);
+                                compassOffsetY = MathHelper.Clamp(cfg.CompassOffsetY, -1.0, 1.0);
+                                UpdateMinimapSliderPercents();
+                                UpdateCompassSliderPercents();
                             }
                         }
                     }
@@ -438,8 +490,12 @@ namespace GVK.Navigation
                     RadarScale = (int)radarScale,
                     RadarRangeMeters = radarRangeMeters,
                     MinimapScale = minimapScale,
+                    MinimapOffsetX = minimapOffsetX,
+                    MinimapOffsetY = minimapOffsetY,
                     ShowCompass = showCompass,
                     CompassScale = compassScale,
+                    CompassOffsetX = compassOffsetX,
+                    CompassOffsetY = compassOffsetY,
                     ShowZoneBar = showZoneBar,
                     UpdateTickRate = updateTickRate
                 };
@@ -1144,9 +1200,85 @@ namespace GVK.Navigation
                 new HudAPIv2.MenuItem("Toggle Corner Minimap", rootCategory, () => { ToggleMinimap(); });
                 new HudAPIv2.MenuItem("Toggle Minimap Mode (Map / Radar)", rootCategory, () => { ToggleMinimapMode(); });
                 new HudAPIv2.MenuItem("Cycle Minimap Size (75% / 100% / 125% / 150%)", rootCategory, () => { CycleMinimapScale(); });
+                new HudAPIv2.MenuItem("Cycle Minimap Position Preset", rootCategory, () => { CycleMinimapPreset(); });
+
+                var minimapPosCategory = new HudAPIv2.MenuSubCategory("Minimap Position & Fine Tuning", rootCategory, "Fine-tune Minimap screen position and offsets");
+                new HudAPIv2.MenuItem("Cycle Preset Position", minimapPosCategory, () => { CycleMinimapPreset(); });
+                minimapSliderX = new HudAPIv2.MenuSliderInput(
+                    "Fine-Tune X Offset (Left <-> Right)",
+                    minimapPosCategory,
+                    MathHelper.Clamp((float)((minimapOffsetX + 1.0) * 0.5), 0f, 1f),
+                    "Adjust Minimap X Position",
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        SetMinimapOffset(val, minimapOffsetY);
+                    },
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        return $"Position X: {val:+0.00;-0.00;0.00} (Left <-> Right)";
+                    }
+                );
+                minimapSliderY = new HudAPIv2.MenuSliderInput(
+                    "Fine-Tune Y Offset (Down <-> Up)",
+                    minimapPosCategory,
+                    MathHelper.Clamp((float)((minimapOffsetY + 1.0) * 0.5), 0f, 1f),
+                    "Adjust Minimap Y Position",
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        SetMinimapOffset(minimapOffsetX, val);
+                    },
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
+                    }
+                );
+                new HudAPIv2.MenuItem("Nudge Left (-0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX - 0.02, minimapOffsetY); });
+                new HudAPIv2.MenuItem("Nudge Right (+0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX + 0.02, minimapOffsetY); });
+                new HudAPIv2.MenuItem("Nudge Up (+0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX, minimapOffsetY + 0.02); });
+                new HudAPIv2.MenuItem("Nudge Down (-0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX, minimapOffsetY - 0.02); });
+                new HudAPIv2.MenuItem("Reset Minimap Position to Top-Right (1.0, 1.0)", minimapPosCategory, () => { ResetMinimapOffset(); });
+
                 new HudAPIv2.MenuItem("Cycle Radar Range (1.5k / 3k / 5k / Log 30k)", rootCategory, () => { CycleRadarRange(); });
                 new HudAPIv2.MenuItem("Toggle Compass Tape", rootCategory, () => { ToggleCompass(); });
                 new HudAPIv2.MenuItem("Cycle Compass Size (75% / 100% / 125% / 150%)", rootCategory, () => { CycleCompassScale(); });
+                new HudAPIv2.MenuItem("Cycle Compass Position Preset (Top / Toolbar)", rootCategory, () => { CycleCompassPreset(); });
+
+                var compassPosCategory = new HudAPIv2.MenuSubCategory("Compass Position & Fine Tuning", rootCategory, "Fine-tune Compass ribbon screen position and offsets");
+                new HudAPIv2.MenuItem("Cycle Preset (Top / Toolbar)", compassPosCategory, () => { CycleCompassPreset(); });
+                compassSliderX = new HudAPIv2.MenuSliderInput(
+                    "Fine-Tune X Offset (Left <-> Right)",
+                    compassPosCategory,
+                    MathHelper.Clamp((float)((compassOffsetX + 1.0) * 0.5), 0f, 1f),
+                    "Adjust Compass X Position",
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        SetCompassOffset(val, compassOffsetY);
+                    },
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        return $"Position X: {val:+0.00;-0.00;0.00} (Left <-> Right)";
+                    }
+                );
+                compassSliderY = new HudAPIv2.MenuSliderInput(
+                    "Fine-Tune Y Offset (Down <-> Up)",
+                    compassPosCategory,
+                    MathHelper.Clamp((float)((compassOffsetY + 1.0) * 0.5), 0f, 1f),
+                    "Adjust Compass Y Position",
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        SetCompassOffset(compassOffsetX, val);
+                    },
+                    p => {
+                        double val = -1.0 + p * 2.0;
+                        return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
+                    }
+                );
+                new HudAPIv2.MenuItem("Nudge Left (-0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX - 0.02, compassOffsetY); });
+                new HudAPIv2.MenuItem("Nudge Right (+0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX + 0.02, compassOffsetY); });
+                new HudAPIv2.MenuItem("Nudge Up (+0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX, compassOffsetY + 0.02); });
+                new HudAPIv2.MenuItem("Nudge Down (-0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX, compassOffsetY - 0.02); });
+                new HudAPIv2.MenuItem("Reset Compass Position to Top-Center (0.0, 1.0)", compassPosCategory, () => { ResetCompassOffset(); });
+
                 new HudAPIv2.MenuItem("Toggle Zone Status Bar", rootCategory, () => { ToggleZoneBar(); });
                 new HudAPIv2.MenuItem("Cycle HUD Refresh Rate (12Hz / 15Hz / 30Hz / 60Hz / 6Hz / 10Hz)", rootCategory, () => { CycleUpdateTickRate(); });
 
@@ -1609,8 +1741,14 @@ namespace GVK.Navigation
             float aspect = GetScreenAspect();
 
             float baseHeight = 0.076f * compassScale;
-            double topY = COMPASS_TOP_Y;
-            double centerY = topY - baseHeight * 0.5;
+            double maxCompassCenterX = 0.999 - (baseWidth * 0.5);
+            double compassCenterX = compassOffsetX * maxCompassCenterX;
+
+            double maxCompassCenterY = 0.999 - (baseHeight * 0.5);
+            double minCompassCenterY = -0.999 + (baseHeight * 0.5);
+            double compassT = (compassOffsetY + 1.0) * 0.5;
+            double centerY = minCompassCenterY + compassT * (maxCompassCenterY - minCompassCenterY);
+            double topY = centerY + (baseHeight * 0.5);
             double bottomY = topY - baseHeight;
 
             float tickWidth = 0.0016f * compassScale;
@@ -1670,7 +1808,7 @@ namespace GVK.Navigation
                             break;
                     }
 
-                    tick.Origin = new Vector2D(screenOffset, topY - tHeight * 0.5f);
+                    tick.Origin = new Vector2D(compassCenterX + screenOffset, topY - tHeight * 0.5f);
                     tick.Width = tickWidth;
                     tick.Height = tHeight;
                     tick.BillBoardColor = tColor;
@@ -1689,7 +1827,7 @@ namespace GVK.Navigation
                     else
                         msg.Message.Append("<color=255,255,255>").Append(grad.TopLabel);
 
-                    msg.Origin = new Vector2D(screenOffset, topLabelY);
+                    msg.Origin = new Vector2D(compassCenterX + screenOffset, topLabelY);
 
                     double baseHalfWidth = grad.BaseTopHalfWidth;
                     if (baseHalfWidth < 0)
@@ -1715,7 +1853,7 @@ namespace GVK.Navigation
                     else
                         msg.Message.Append("<color=255,255,255>").Append(grad.BottomLabel);
 
-                    msg.Origin = new Vector2D(screenOffset, bottomLabelY);
+                    msg.Origin = new Vector2D(compassCenterX + screenOffset, bottomLabelY);
 
                     double baseHalfWidth = grad.BaseBottomHalfWidth;
                     if (baseHalfWidth < 0)
@@ -1805,7 +1943,7 @@ namespace GVK.Navigation
                 sprite.BillBoardColor = wpColor;
                 sprite.Width = wWidth;
                 sprite.Height = wHeight;
-                sprite.Origin = new Vector2D(poiScreenOffset, spriteCenterY);
+                sprite.Origin = new Vector2D(compassCenterX + poiScreenOffset, spriteCenterY);
                 sprite.Offset = Vector2D.Zero;
                 sprite.Visible = true;
 
@@ -1826,7 +1964,7 @@ namespace GVK.Navigation
                     dist.Message.Append((int)distKm).Append('k');
                 }
 
-                dist.Origin = new Vector2D(poiScreenOffset, textY);
+                dist.Origin = new Vector2D(compassCenterX + poiScreenOffset, textY);
                 var distLen = dist.GetTextLength();
                 dist.Offset = new Vector2D(-distLen.X * 0.5, 0.0);
                 dist.Visible = true;
@@ -1891,11 +2029,17 @@ namespace GVK.Navigation
             {
                 float minimapBgHeight = (float)minimapSize.Y + (0.008f * minimapScale) * aspect;
                 float minimapBgBottom = (float)(minimapPosition.Y - minimapBgHeight * 0.5f);
-                targetPos = new Vector2D(minimapPosition.X, minimapBgBottom - (0.005f * minimapScale) - (zoneHeight * 0.5f));
+                targetPos = new Vector2D(minimapPosition.X, minimapBgBottom - (0.004f * minimapScale) - (zoneHeight * 0.5f));
             }
             else
             {
-                targetPos = new Vector2D(0.97 - (zoneWidth * 0.5), 0.92);
+                double maxCenterX = 0.999 - (zoneWidth * 0.5);
+                double posX = minimapOffsetX * maxCenterX;
+                double maxCenterY = 0.999 - (zoneHeight * 0.5);
+                double minCenterY = -0.995 + (zoneHeight * 0.5);
+                double t = (minimapOffsetY + 1.0) * 0.5;
+                double posY = minCenterY + t * (maxCenterY - minCenterY);
+                targetPos = new Vector2D(posX, posY);
             }
 
             if (zonePosition != targetPos || Math.Abs(zoneBg.Width - zoneWidth) > 0.001f || Math.Abs(zoneBg.Height - zoneHeight) > 0.001f)
@@ -2048,11 +2192,21 @@ namespace GVK.Navigation
             float minimapBgHeight = (float)minimapSize.Y + (0.008f * minimapScale) * aspect;
             float minimapHeaderWidth = minimapBgWidth;
             float minimapHeaderHeight = 0.026f * minimapScale;
-            float headerGap = 0.005f * minimapScale;
+            float headerGap = 0.004f * minimapScale;
 
-            // Ensure minimapPosition and minimapBg match mode width
-            double targetPosX = 0.97 - (minimapBgWidth * 0.5);
-            if (Math.Abs(minimapPosition.X - targetPosX) > 0.0005 || Math.Abs(minimapBg.Width - minimapBgWidth) > 0.001f)
+            // Ensure minimapPosition and minimapBg match mode width and offsets
+            float zoneHeight = 0.056f * minimapScale;
+            float gap = 0.004f * minimapScale;
+
+            double maxCenterX = 0.999 - (minimapBgWidth * 0.5);
+            double targetPosX = minimapOffsetX * maxCenterX;
+
+            double maxCenterY = 0.999 - (minimapHeaderHeight + headerGap + minimapBgHeight * 0.5);
+            double minCenterY = -0.995 + zoneHeight + gap + (minimapBgHeight * 0.5);
+            double t = (minimapOffsetY + 1.0) * 0.5;
+            double targetPosY = minCenterY + t * (maxCenterY - minCenterY);
+
+            if (Math.Abs(minimapPosition.X - targetPosX) > 0.0005 || Math.Abs(minimapPosition.Y - targetPosY) > 0.0005 || Math.Abs(minimapBg.Width - minimapBgWidth) > 0.001f)
             {
                 ApplyMinimapScale(minimapScale);
             }
@@ -2682,6 +2836,42 @@ namespace GVK.Navigation
                 return;
             }
 
+            if (msg.Equals("/minimap preset", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/radar preset", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/zone minimap-preset", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                CycleMinimapPreset();
+                return;
+            }
+
+            if (msg.StartsWith("/minimap pos", StringComparison.OrdinalIgnoreCase) ||
+                msg.StartsWith("/radar pos", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 4)
+                {
+                    double px, py;
+                    if (double.TryParse(parts[2], out px) && double.TryParse(parts[3], out py))
+                    {
+                        SetMinimapOffset(px, py);
+                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Offset set to X:{px:F2}, Y:{py:F2}", 2500, MyFontEnum.Green);
+                        return;
+                    }
+                }
+                CycleMinimapPreset();
+                return;
+            }
+
+            if (msg.Equals("/minimap reset", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/radar reset", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ResetMinimapOffset();
+                return;
+            }
+
             if (msg.Equals("/compass", StringComparison.OrdinalIgnoreCase) ||
                 msg.Equals("/zone compass", StringComparison.OrdinalIgnoreCase))
             {
@@ -2696,6 +2886,39 @@ namespace GVK.Navigation
             {
                 sendToOthers = false;
                 CycleCompassScale();
+                return;
+            }
+
+            if (msg.Equals("/compass preset", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/zone compass-preset", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                CycleCompassPreset();
+                return;
+            }
+
+            if (msg.StartsWith("/compass pos", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 4)
+                {
+                    double px, py;
+                    if (double.TryParse(parts[2], out px) && double.TryParse(parts[3], out py))
+                    {
+                        SetCompassOffset(px, py);
+                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Offset set to X:{px:F2}, Y:{py:F2}", 2500, MyFontEnum.Green);
+                        return;
+                    }
+                }
+                CycleCompassPreset();
+                return;
+            }
+
+            if (msg.Equals("/compass reset", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ResetCompassOffset();
                 return;
             }
 
@@ -2877,15 +3100,24 @@ namespace GVK.Navigation
             float minimapBgWidth = (minimapMode == MinimapDisplayMode.TacticalRadar) ? radarBoxWidth : strategicBoxWidth;
             float minimapBgHeight = (float)minimapSize.Y + (0.008f * scale) * aspect;
             float minimapHeaderHeight = 0.026f * scale;
-            float headerGap = 0.005f * scale;
+            float headerGap = 0.004f * scale;
 
-            // Anchor neatly to the top-right screen corner: right edge fixed at ~0.97
-            double posX = 0.97 - (minimapBgWidth * 0.5);
-            double posY = 0.95 - (minimapBgHeight * 0.5) - minimapHeaderHeight - headerGap - 0.006;
-            minimapPosition = new Vector2D(posX, posY);
+            // Horizontal position: -1.0 (flush left -0.999) to +1.0 (flush right +0.999)
+            double maxCenterX = 0.999 - (minimapBgWidth * 0.5);
+            double posX = minimapOffsetX * maxCenterX;
 
-            float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
+            // Vertical position: -1.0 (flush bottom -0.995) to +1.0 (flush top +0.999)
+            float zoneHeight = 0.056f * scale;
+            float gap = 0.004f * scale;
+            double maxCenterY = 0.999 - (minimapHeaderHeight + headerGap + minimapBgHeight * 0.5);
+            double minCenterY = -0.995 + zoneHeight + gap + (minimapBgHeight * 0.5);
+            double t = (minimapOffsetY + 1.0) * 0.5;
+            double posY = minCenterY + t * (maxCenterY - minCenterY);
+
+            float minimapBgTop = (float)(posY + minimapBgHeight * 0.5);
             float minimapHeaderCenterY = minimapBgTop + headerGap + (minimapHeaderHeight * 0.5f);
+
+            minimapPosition = new Vector2D(posX, posY);
             Vector2D minimapHeaderPos = new Vector2D(minimapPosition.X, minimapHeaderCenterY);
 
             if (minimapHeaderBg != null)
@@ -2946,6 +3178,48 @@ namespace GVK.Navigation
                 minimapMarkerPool[i].Width = mSize;
                 minimapMarkerPool[i].Height = mSize * aspect;
             }
+        }
+
+        private void CycleMinimapPreset()
+        {
+            int currentIdx = -1;
+            for (int i = 0; i < MinimapPresets.Length; i++)
+            {
+                if (Math.Abs(minimapOffsetX - MinimapPresets[i].PosX) < 0.08 &&
+                    Math.Abs(minimapOffsetY - MinimapPresets[i].PosY) < 0.08)
+                {
+                    currentIdx = i;
+                    break;
+                }
+            }
+
+            int nextIdx = (currentIdx + 1) % MinimapPresets.Length;
+            SetMinimapOffset(MinimapPresets[nextIdx].PosX, MinimapPresets[nextIdx].PosY);
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Position: {MinimapPresets[nextIdx].Name}", 2500, MyFontEnum.Green);
+        }
+
+        private void SetMinimapOffset(double x, double y)
+        {
+            minimapOffsetX = MathHelper.Clamp(x, -1.0, 1.0);
+            minimapOffsetY = MathHelper.Clamp(y, -1.0, 1.0);
+            UpdateMinimapSliderPercents();
+            ApplyMinimapScale(minimapScale);
+            _refreshMinimapNextFrame = true;
+            SaveConfig();
+        }
+
+        private void ResetMinimapOffset()
+        {
+            SetMinimapOffset(1.0, 1.0);
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Minimap Position reset to Top-Right (1.0, 1.0)", 2500, MyFontEnum.Green);
+        }
+
+        private void UpdateMinimapSliderPercents()
+        {
+            if (minimapSliderX != null)
+                minimapSliderX.InitialPercent = MathHelper.Clamp((float)((minimapOffsetX + 1.0) * 0.5), 0f, 1f);
+            if (minimapSliderY != null)
+                minimapSliderY.InitialPercent = MathHelper.Clamp((float)((minimapOffsetY + 1.0) * 0.5), 0f, 1f);
         }
 
         private void CycleRadarRange()
@@ -3021,6 +3295,48 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon Size: {pct}%", 2500, MyFontEnum.Green);
         }
 
+        private void CycleCompassPreset()
+        {
+            int currentIdx = -1;
+            for (int i = 0; i < CompassPresets.Length; i++)
+            {
+                if (Math.Abs(compassOffsetX - CompassPresets[i].PosX) < 0.08 &&
+                    Math.Abs(compassOffsetY - CompassPresets[i].PosY) < 0.08)
+                {
+                    currentIdx = i;
+                    break;
+                }
+            }
+
+            int nextIdx = (currentIdx + 1) % CompassPresets.Length;
+            SetCompassOffset(CompassPresets[nextIdx].PosX, CompassPresets[nextIdx].PosY);
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Position: {CompassPresets[nextIdx].Name}", 2500, MyFontEnum.Green);
+        }
+
+        private void SetCompassOffset(double x, double y)
+        {
+            compassOffsetX = MathHelper.Clamp(x, -1.0, 1.0);
+            compassOffsetY = MathHelper.Clamp(y, -1.0, 1.0);
+            UpdateCompassSliderPercents();
+            ApplyCompassScale(compassScale);
+            _refreshCompassNextFrame = true;
+            SaveConfig();
+        }
+
+        private void ResetCompassOffset()
+        {
+            SetCompassOffset(0.0, 1.0);
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Compass Position reset to Top-Center (0.0, 1.0)", 2500, MyFontEnum.Green);
+        }
+
+        private void UpdateCompassSliderPercents()
+        {
+            if (compassSliderX != null)
+                compassSliderX.InitialPercent = MathHelper.Clamp((float)((compassOffsetX + 1.0) * 0.5), 0f, 1f);
+            if (compassSliderY != null)
+                compassSliderY.InitialPercent = MathHelper.Clamp((float)((compassOffsetY + 1.0) * 0.5), 0f, 1f);
+        }
+
         private void ApplyCompassScale(float scale)
         {
             compassScale = scale;
@@ -3028,7 +3344,16 @@ namespace GVK.Navigation
 
             float baseWidth = 0.54f + 0.08f * scale;
             float baseHeight = 0.076f * scale;
-            Vector2D compassOrigin = new Vector2D(0.0, COMPASS_TOP_Y - baseHeight * 0.5);
+
+            double maxCompassCenterX = 0.999 - (baseWidth * 0.5);
+            double compassCenterX = compassOffsetX * maxCompassCenterX;
+
+            double maxCompassCenterY = 0.999 - (baseHeight * 0.5);
+            double minCompassCenterY = -0.999 + (baseHeight * 0.5);
+            double compassT = (compassOffsetY + 1.0) * 0.5;
+            double compassCenterY = minCompassCenterY + compassT * (maxCompassCenterY - minCompassCenterY);
+
+            Vector2D compassOrigin = new Vector2D(compassCenterX, compassCenterY);
 
             float accentWidth = 0.005f * scale;
             float accentHeight = baseHeight - 0.006f * scale;
