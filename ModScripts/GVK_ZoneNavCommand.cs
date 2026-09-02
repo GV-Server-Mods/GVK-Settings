@@ -238,18 +238,26 @@ namespace GVK.Navigation
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
         private HudAPIv2.HUDMessage zoneMsg;
         private HudAPIv2.HUDMessage zoneDistMsg;
+        private HudAPIv2.HUDMessage zoneNextMsg;
         private HudAPIv2.BillBoardHUDMessage zoneBg;
         private HudAPIv2.BillBoardHUDMessage zoneAccent;
         private readonly StringBuilder zoneText = new StringBuilder(128);
         private readonly StringBuilder zoneDistText = new StringBuilder(128);
-        private bool showZoneBar = true;
+        private readonly StringBuilder zoneNextText = new StringBuilder(128);
+        public enum ZoneBarMode
+        {
+            CompassDock = 0,
+            RadarDock = 1,
+            Off = 2
+        }
+
+        private ZoneBarMode zoneBarMode = ZoneBarMode.CompassDock;
         private bool _zoneBarElementsVisible = false;
         private Vector2D zonePosition = Vector2D.Zero;
 
         // 3. Corner Minimap Elements (Top-Right: true 2:1 ratio for KharakMap, enlarged +20%)
-        private HudAPIv2.BillBoardHUDMessage minimapHeaderBg;
-        private HudAPIv2.BillBoardHUDMessage minimapHeaderAccent;
         private HudAPIv2.BillBoardHUDMessage minimapBg;
+        private HudAPIv2.BillBoardHUDMessage minimapAccent;
         private HudAPIv2.BillBoardHUDMessage minimapTerrain;
         private HudAPIv2.BillBoardHUDMessage minimapPlayerDot;
         private HudAPIv2.HUDMessage minimapLabel;
@@ -332,6 +340,8 @@ namespace GVK.Navigation
             public double CompassOffsetY { get; set; } = 1.0;
 
             public bool ShowZoneBar { get; set; } = true;
+            public int ZoneBarDockMode { get; set; } = 0;
+            public int ZoneBarMode { get; set; } = 0;
             public int UpdateTickRate { get; set; } = 5;
 
             public ZoneNavConfig() { }
@@ -381,6 +391,7 @@ namespace GVK.Navigation
         // Zone bar dirty tracking — skip text rebuild when nothing changed.
         private int _lastZoneBarZoneIndex = -1;
         private MinimapDisplayMode _lastZoneBarMinimapMode = (MinimapDisplayMode)(-1);
+        private ZoneBarMode _lastZoneBarMode = (ZoneBarMode)(-1);
         private double _lastZoneBarDistKm = -1.0;
         private double _lastZoneBarRemainingKm = -1.0;
         private double _lastZoneBarDistZ3Km = -1.0;
@@ -459,7 +470,15 @@ namespace GVK.Navigation
                                 minimapScale = (cfg.MinimapScale >= 0.70f && cfg.MinimapScale <= 1.60f) ? cfg.MinimapScale : 1.0f;
                                 showCompass = cfg.ShowCompass;
                                 compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
-                                showZoneBar = cfg.ShowZoneBar;
+                                if (cfg.ZoneBarMode >= 0 && cfg.ZoneBarMode <= 2)
+                                    zoneBarMode = (ZoneBarMode)cfg.ZoneBarMode;
+                                else if (!cfg.ShowZoneBar)
+                                    zoneBarMode = ZoneBarMode.Off;
+                                else if (cfg.ZoneBarDockMode == 1)
+                                    zoneBarMode = ZoneBarMode.CompassDock;
+                                else
+                                    zoneBarMode = ZoneBarMode.RadarDock;
+
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
                                 minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
                                 minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
@@ -496,7 +515,9 @@ namespace GVK.Navigation
                     CompassScale = compassScale,
                     CompassOffsetX = compassOffsetX,
                     CompassOffsetY = compassOffsetY,
-                    ShowZoneBar = showZoneBar,
+                    ShowZoneBar = (zoneBarMode != ZoneBarMode.Off),
+                    ZoneBarDockMode = (zoneBarMode == ZoneBarMode.CompassDock ? 1 : 0),
+                    ZoneBarMode = (int)zoneBarMode,
                     UpdateTickRate = updateTickRate
                 };
 
@@ -543,12 +564,12 @@ namespace GVK.Navigation
 
                     zoneMsg?.DeleteMessage();
                     zoneDistMsg?.DeleteMessage();
+                    zoneNextMsg?.DeleteMessage();
                     zoneBg?.DeleteMessage();
                     zoneAccent?.DeleteMessage();
 
-                    minimapHeaderBg?.DeleteMessage();
-                    minimapHeaderAccent?.DeleteMessage();
                     minimapBg?.DeleteMessage();
+                    minimapAccent?.DeleteMessage();
                     minimapTerrain?.DeleteMessage();
                     minimapPlayerDot?.DeleteMessage();
                     minimapLabel?.DeleteMessage();
@@ -808,45 +829,8 @@ namespace GVK.Navigation
                 minimapSize = new Vector2D(mWidth, mHeight);
                 minimapPosition = new Vector2D(0.81, 0.95 - mHeight * 0.5 - 0.045);
 
-                float minimapBgWidth = (float)minimapSize.X + 0.012f;
-                float minimapBgHeight = (float)minimapSize.Y + 0.006f * aspect;
-
-                // Minimap Header Card (Docked seamlessly directly above minimapBg)
-                float minimapHeaderWidth = minimapBgWidth;
-                float minimapHeaderHeight = 0.026f;
-                float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
-                float minimapHeaderCenterY = minimapBgTop + 0.003f + (minimapHeaderHeight * 0.5f);
-                Vector2D minimapHeaderPos = new Vector2D(minimapPosition.X, minimapHeaderCenterY);
-
-                minimapHeaderBg = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapHeaderPos,
-                    BillBoardColor: new Color(10, 16, 24, 240),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: minimapHeaderWidth,
-                    Height: minimapHeaderHeight,
-                    HideHud: true,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapHeaderBg.Visible = false;
-
-                minimapHeaderAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapHeaderPos,
-                    BillBoardColor: new Color(160, 170, 180, 240),
-                    Offset: new Vector2D(-minimapHeaderWidth * 0.5f + 0.004f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.004f,
-                    Height: minimapHeaderHeight - 0.004f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapHeaderAccent.Visible = false;
+                float minimapBgWidth = (float)minimapSize.X + 0.024f;
+                float minimapBgHeight = (float)minimapSize.Y + 0.008f * aspect;
 
                 minimapBg = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
@@ -862,6 +846,21 @@ namespace GVK.Navigation
                     Blend: BlendTypeEnum.PostPP
                 );
                 minimapBg.Visible = false;
+
+                minimapAccent = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_SQUARE,
+                    Origin: minimapPosition,
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: new Vector2D(-minimapBgWidth * 0.5f + 0.005f, 0.0),
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    Width: 0.005f,
+                    Height: minimapBgHeight - 0.006f,
+                    HideHud: true,
+                    Shadowing: false,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                minimapAccent.Visible = false;
 
                 minimapTerrain = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_MAP,
@@ -925,11 +924,11 @@ namespace GVK.Navigation
                 radarFovRight.Visible = false;
 
                 minimapLabel = new HudAPIv2.HUDMessage(
-                    Message: new StringBuilder("<color=255,255,255>TACTICAL RADAR"),
-                    Origin: new Vector2D(minimapPosition.X - minimapHeaderWidth * 0.5f + 0.014f, minimapHeaderCenterY + 0.007f),
+                    Message: new StringBuilder("<color=200,200,200>3.0 KM"),
+                    Origin: new Vector2D(minimapPosition.X + minimapBgWidth * 0.5f - 0.052f, minimapPosition.Y - minimapBgHeight * 0.5f + 0.016f),
                     Offset: Vector2D.Zero,
                     TimeToLive: -1,
-                    Scale: 0.60,
+                    Scale: 0.46,
                     HideHud: true,
                     Shadowing: true,
                     ShadowColor: Color.Black
@@ -973,11 +972,11 @@ namespace GVK.Navigation
                 minimapPlayerDot.Visible = false;
                 ApplyMinimapScale(minimapScale);
 
-                // 3. Zone Status & Telemetry Panel (Docked seamlessly below Corner Minimap in Top-Right)
-                float zoneWidth = (float)minimapSize.X + 0.012f;
+                // 3. Zone Status & Telemetry Panel (Docked seamlessly on Corner Minimap)
+                float zoneWidth = (float)minimapSize.X + 0.024f;
                 float zoneHeight = 0.056f;
-                float minimapBgBottom = (float)(minimapPosition.Y - ((float)minimapSize.Y + 0.006f * aspect) * 0.5f);
-                float zoneCenterY = minimapBgBottom - 0.004f - (zoneHeight * 0.5f);
+                float minimapBgTop = (float)(minimapPosition.Y + ((float)minimapSize.Y + 0.008f * aspect) * 0.5f);
+                float zoneCenterY = minimapBgTop + 0.004f + (zoneHeight * 0.5f);
                 zonePosition = new Vector2D(minimapPosition.X, zoneCenterY);
 
                 zoneBg = new HudAPIv2.BillBoardHUDMessage(
@@ -1037,6 +1036,20 @@ namespace GVK.Navigation
                     Blend: BlendTypeEnum.PostPP
                 );
                 zoneDistMsg.Visible = false;
+
+                // Line 3: Next Zone Distance Telemetry (for 3-row layout in compass mode)
+                zoneNextMsg = new HudAPIv2.HUDMessage(
+                    Message: zoneNextText,
+                    Origin: new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f, zonePosition.Y - 0.022f),
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 0.46,
+                    HideHud: true,
+                    Shadowing: true,
+                    ShadowColor: Color.Black,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                zoneNextMsg.Visible = false;
 
                 // 4. Interactive Full-Screen Satellite Map ([M] Key, true 2:1 ratio)
                 mapDimmer = new HudAPIv2.BillBoardHUDMessage(
@@ -1279,8 +1292,7 @@ namespace GVK.Navigation
                 new HudAPIv2.MenuItem("Nudge Down (-0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX, compassOffsetY - 0.02); });
                 new HudAPIv2.MenuItem("Reset Compass Position to Top-Center (0.0, 1.0)", compassPosCategory, () => { ResetCompassOffset(); });
 
-                new HudAPIv2.MenuItem("Toggle Zone Status Bar", rootCategory, () => { ToggleZoneBar(); });
-                new HudAPIv2.MenuItem("Cycle HUD Refresh Rate (12Hz / 15Hz / 30Hz / 60Hz / 6Hz / 10Hz)", rootCategory, () => { CycleUpdateTickRate(); });
+                new HudAPIv2.MenuItem("Cycle Zone Status (Compass Dock / Radar Dock / Off)", rootCategory, () => { CycleZoneBarMode(); });
 
                 var rateCategory = new HudAPIv2.MenuSubCategory("HUD Refresh Rate Presets", rootCategory, "Select HUD Update Frequency");
                 new HudAPIv2.MenuItem("5 Ticks (12 Hz) - Recommended", rateCategory, () => { SetUpdateTickRate(5); });
@@ -1724,7 +1736,7 @@ namespace GVK.Navigation
             if (compassRightAccent != null)
             {
                 compassRightAccent.BillBoardColor = zoneCol;
-                compassRightAccent.Visible = true;
+                compassRightAccent.Visible = (zoneBarMode != ZoneBarMode.CompassDock);
             }
             if (compassCenterPointer != null) compassCenterPointer.Visible = true;
             if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = true;
@@ -2002,7 +2014,7 @@ namespace GVK.Navigation
         /// </summary>
         private void UpdateZoneBar()
         {
-            if (zoneMsg == null || !showZoneBar || showFullMap)
+            if (zoneMsg == null || zoneBarMode == ZoneBarMode.Off || showFullMap)
             {
                 if (_zoneBarElementsVisible)
                 {
@@ -2011,37 +2023,69 @@ namespace GVK.Navigation
                     if (zoneAccent != null) zoneAccent.Visible = false;
                     if (zoneMsg != null) zoneMsg.Visible = false;
                     if (zoneDistMsg != null) zoneDistMsg.Visible = false;
+                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
                 }
                 return;
             }
             _zoneBarElementsVisible = true;
 
-            // Dynamically adjust position and width depending on minimap mode
-            float aspect = GetScreenAspect();
-            float radarGridDiameter = (float)minimapSize.Y * 0.95f;
-            float radarBoxWidth = (radarGridDiameter / aspect) + 0.024f * minimapScale;
-            float strategicBoxWidth = (float)minimapSize.X + 0.012f * minimapScale;
-            float zoneWidth = (minimapMode == MinimapDisplayMode.TacticalRadar) ? radarBoxWidth : strategicBoxWidth;
-            float zoneHeight = 0.056f * minimapScale;
-            bool isCompact = (minimapMode == MinimapDisplayMode.TacticalRadar);
+            float currentScale;
+            float zoneWidth;
+            float zoneHeight;
+            bool isCompact;
             Vector2D targetPos;
-            if (showMinimap)
+
+            if (zoneBarMode == ZoneBarMode.CompassDock)
             {
-                float minimapBgHeight = (float)minimapSize.Y + (0.008f * minimapScale) * aspect;
-                float gap = 0.004f * minimapScale;
-                float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
-                float zoneCenterY = minimapBgTop + gap + (zoneHeight * 0.5f);
-                targetPos = new Vector2D(minimapPosition.X, zoneCenterY);
+                currentScale = compassScale;
+                float compassBaseWidth = 0.54f + 0.08f * currentScale;
+                float compassBaseHeight = 0.076f * currentScale;
+                zoneWidth = compassBaseWidth * 0.28125f;
+                zoneHeight = compassBaseHeight;
+                isCompact = false;
+
+                double maxCompassCenterX = 0.999 - (compassBaseWidth * 0.5);
+                double compassCenterX = compassOffsetX * maxCompassCenterX;
+
+                double maxCompassCenterY = 0.999 - (compassBaseHeight * 0.5);
+                double minCompassCenterY = -0.999 + (compassBaseHeight * 0.5);
+                double compassT = (compassOffsetY + 1.0) * 0.5;
+                double compassCenterY = minCompassCenterY + compassT * (maxCompassCenterY - minCompassCenterY);
+
+                float compassGap = 0.006f * currentScale;
+                double posX = compassCenterX + (compassBaseWidth * 0.5) + compassGap + (zoneWidth * 0.5);
+                double posY = compassCenterY;
+                targetPos = new Vector2D(posX, posY);
             }
             else
             {
-                double maxCenterX = 0.999 - (zoneWidth * 0.5);
-                double posX = minimapOffsetX * maxCenterX;
-                double maxCenterY = 0.999 - (zoneHeight * 0.5);
-                double minCenterY = -0.995 + (zoneHeight * 0.5);
-                double t = (minimapOffsetY + 1.0) * 0.5;
-                double posY = minCenterY + t * (maxCenterY - minCenterY);
-                targetPos = new Vector2D(posX, posY);
+                currentScale = minimapScale;
+                float aspect = GetScreenAspect();
+                float radarGridDiameter = (float)minimapSize.Y * 0.95f;
+                float radarBoxWidth = (radarGridDiameter / aspect) + 0.024f * currentScale;
+                float strategicBoxWidth = (float)minimapSize.X + 0.024f * currentScale;
+                zoneWidth = (minimapMode == MinimapDisplayMode.TacticalRadar) ? radarBoxWidth : strategicBoxWidth;
+                zoneHeight = 0.056f * currentScale;
+                isCompact = (minimapMode == MinimapDisplayMode.TacticalRadar);
+
+                if (showMinimap)
+                {
+                    float minimapBgHeight = (float)minimapSize.Y + (0.008f * currentScale) * aspect;
+                    float gap = 0.004f * currentScale;
+                    float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
+                    float zoneCenterY = minimapBgTop + gap + (zoneHeight * 0.5f);
+                    targetPos = new Vector2D(minimapPosition.X, zoneCenterY);
+                }
+                else
+                {
+                    double maxCenterX = 0.999 - (zoneWidth * 0.5);
+                    double posX = minimapOffsetX * maxCenterX;
+                    double maxCenterY = 0.999 - (zoneHeight * 0.5);
+                    double minCenterY = -0.995 + (zoneHeight * 0.5);
+                    double t = (minimapOffsetY + 1.0) * 0.5;
+                    double posY = minCenterY + t * (maxCenterY - minCenterY);
+                    targetPos = new Vector2D(posX, posY);
+                }
             }
 
             if (zonePosition != targetPos || Math.Abs(zoneBg.Width - zoneWidth) > 0.001f || Math.Abs(zoneBg.Height - zoneHeight) > 0.001f)
@@ -2051,18 +2095,34 @@ namespace GVK.Navigation
                 zoneBg.Width = zoneWidth;
                 zoneBg.Height = zoneHeight;
                 zoneAccent.Origin = zonePosition;
-                zoneAccent.Width = 0.005f * minimapScale;
-                zoneAccent.Height = zoneHeight - 0.006f * minimapScale;
-                zoneAccent.Offset = new Vector2D(-zoneWidth * 0.5f + 0.005f * minimapScale, 0.0);
-                zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * minimapScale, zonePosition.Y + 0.018f * minimapScale);
-                zoneMsg.Scale = (isCompact ? 0.54 : 0.60) * minimapScale;
-                zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * minimapScale, zonePosition.Y - 0.008f * minimapScale);
-                zoneDistMsg.Scale = (isCompact ? 0.46 : 0.50) * minimapScale;
+                zoneAccent.Width = 0.005f * currentScale;
+                zoneAccent.Height = zoneHeight - 0.006f * currentScale;
+                zoneAccent.Offset = new Vector2D(-zoneWidth * 0.5f + 0.005f * currentScale, 0.0);
+                if (zoneBarMode == ZoneBarMode.CompassDock)
+                {
+                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y + 0.021f * currentScale);
+                    zoneMsg.Scale = 0.50 * currentScale;
+                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y + 0.001f * currentScale);
+                    zoneDistMsg.Scale = 0.44 * currentScale;
+                    if (zoneNextMsg != null)
+                    {
+                        zoneNextMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y - 0.019f * currentScale);
+                        zoneNextMsg.Scale = 0.44 * currentScale;
+                    }
+                }
+                else
+                {
+                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * currentScale, zonePosition.Y + 0.018f * currentScale);
+                    zoneMsg.Scale = (isCompact ? 0.54 : 0.60) * currentScale;
+                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * currentScale, zonePosition.Y - 0.008f * currentScale);
+                    zoneDistMsg.Scale = (isCompact ? 0.46 : 0.50) * currentScale;
+                }
             }
 
             // Dirty check: skip rebuilding StringBuilder if values haven't changed
             if (_lastZoneBarZoneIndex == currentZoneIndex &&
                 _lastZoneBarMinimapMode == minimapMode &&
+                _lastZoneBarMode == zoneBarMode &&
                 Math.Abs(_lastZoneBarDistKm - lastDistKm) < 0.05 &&
                 Math.Abs(_lastZoneBarRemainingKm - lastRemainingKm) < 0.05 &&
                 Math.Abs(_lastZoneBarDistZ3Km - lastDistZ3Km) < 0.05)
@@ -2071,89 +2131,138 @@ namespace GVK.Navigation
                 zoneAccent.Visible = true;
                 zoneMsg.Visible = true;
                 zoneDistMsg.Visible = true;
+                if (zoneBarMode == ZoneBarMode.CompassDock)
+                {
+                    if (zoneNextMsg != null) zoneNextMsg.Visible = true;
+                }
+                else
+                {
+                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
+                }
                 return;
             }
 
             _lastZoneBarZoneIndex = currentZoneIndex;
             _lastZoneBarMinimapMode = minimapMode;
+            _lastZoneBarMode = zoneBarMode;
             _lastZoneBarDistKm = lastDistKm;
             _lastZoneBarRemainingKm = lastRemainingKm;
             _lastZoneBarDistZ3Km = lastDistZ3Km;
 
             zoneText.Clear();
             zoneDistText.Clear();
-            switch (currentZoneIndex)
+            zoneNextText.Clear();
+
+            if (zoneBarMode == ZoneBarMode.CompassDock)
             {
-                case 0:
-                    zoneAccent.BillBoardColor = Color.LimeGreen;
-                    zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                    if (isCompact)
-                    {
-                        zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Next: <color=255,230,50>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append("k");
-                    }
-                    else
-                    {
-                        zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z1 Border in: <color=255,230,50>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    }
-                    break;
-                case 1:
-                    zoneAccent.BillBoardColor = Color.Yellow;
-                    zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                    if (isCompact)
-                    {
-                        zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>PvP: <color=255,165,0>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append("k");
-                    }
-                    else
-                    {
-                        zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>PvP Border in: <color=255,165,0>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    }
-                    break;
-                case 2:
-                    zoneAccent.BillBoardColor = Color.Orange;
-                    zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                    if (isCompact)
-                    {
-                        zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Z3: <color=255,50,50>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append("k");
-                    }
-                    else
-                    {
-                        zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z3 Border in: <color=255,50,50>")
-                                    .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    }
-                    break;
-                default:
-                    zoneAccent.BillBoardColor = Color.Red;
-                    zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                    if (isCompact)
-                    {
-                        zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Core: <color=255,50,50>")
-                                    .Append(lastDistZ3Km.ToString("F1")).Append("k");
-                    }
-                    else
-                    {
-                        zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                    .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Core Dist: <color=255,50,50>")
-                                    .Append(lastDistZ3Km.ToString("F1")).Append(" km");
-                    }
-                    break;
+                zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>").Append(lastDistKm.ToString("F1")).Append(" km");
+                switch (currentZoneIndex)
+                {
+                    case 0:
+                        zoneAccent.BillBoardColor = Color.LimeGreen;
+                        zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
+                        zoneNextText.Append("<color=220,220,220>Z1 Border in: <color=255,230,50>").Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        break;
+                    case 1:
+                        zoneAccent.BillBoardColor = Color.Yellow;
+                        zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
+                        zoneNextText.Append("<color=220,220,220>PvP Border in: <color=255,165,0>").Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        break;
+                    case 2:
+                        zoneAccent.BillBoardColor = Color.Orange;
+                        zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
+                        zoneNextText.Append("<color=220,220,220>Z3 Border in: <color=255,50,50>").Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        break;
+                    default:
+                        zoneAccent.BillBoardColor = Color.Red;
+                        zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
+                        zoneNextText.Append("<color=220,220,220>Core Dist: <color=255,50,50>").Append(lastDistZ3Km.ToString("F1")).Append(" km");
+                        break;
+                }
+            }
+            else
+            {
+                switch (currentZoneIndex)
+                {
+                    case 0:
+                        zoneAccent.BillBoardColor = Color.LimeGreen;
+                        zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
+                        if (isCompact)
+                        {
+                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Next: <color=255,230,50>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
+                        }
+                        else
+                        {
+                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z1 Border in: <color=255,230,50>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        }
+                        break;
+                    case 1:
+                        zoneAccent.BillBoardColor = Color.Yellow;
+                        zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
+                        if (isCompact)
+                        {
+                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>PvP: <color=255,165,0>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
+                        }
+                        else
+                        {
+                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>PvP Border in: <color=255,165,0>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        }
+                        break;
+                    case 2:
+                        zoneAccent.BillBoardColor = Color.Orange;
+                        zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
+                        if (isCompact)
+                        {
+                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Z3: <color=255,50,50>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
+                        }
+                        else
+                        {
+                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z3 Border in: <color=255,50,50>")
+                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                        }
+                        break;
+                    default:
+                        zoneAccent.BillBoardColor = Color.Red;
+                        zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
+                        if (isCompact)
+                        {
+                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Core: <color=255,50,50>")
+                                        .Append(lastDistZ3Km.ToString("F1")).Append("k");
+                        }
+                        else
+                        {
+                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
+                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Core Dist: <color=255,50,50>")
+                                        .Append(lastDistZ3Km.ToString("F1")).Append(" km");
+                        }
+                        break;
+                }
             }
 
             zoneBg.Visible = true;
             zoneAccent.Visible = true;
             zoneMsg.Visible = true;
             zoneDistMsg.Visible = true;
+            if (zoneBarMode == ZoneBarMode.CompassDock)
+            {
+                if (zoneNextMsg != null) zoneNextMsg.Visible = true;
+            }
+            else
+            {
+                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
+            }
         }
 
         /// <summary>
@@ -2166,9 +2275,8 @@ namespace GVK.Navigation
                 if (_minimapElementsVisible)
                 {
                     _minimapElementsVisible = false;
-                    if (minimapHeaderBg != null) minimapHeaderBg.Visible = false;
-                    if (minimapHeaderAccent != null) minimapHeaderAccent.Visible = false;
                     if (minimapBg != null) minimapBg.Visible = false;
+                    if (minimapAccent != null) minimapAccent.Visible = false;
                     if (minimapTerrain != null) minimapTerrain.Visible = false;
                     if (radarGrid != null) radarGrid.Visible = false;
                     if (radarFovLeft != null) radarFovLeft.Visible = false;
@@ -2180,21 +2288,14 @@ namespace GVK.Navigation
                 return;
             }
             _minimapElementsVisible = true;
-
-            if (minimapHeaderBg != null) minimapHeaderBg.Visible = true;
-            if (minimapHeaderAccent != null) minimapHeaderAccent.Visible = true;
             minimapBg.Visible = true;
-            minimapLabel.Visible = true;
 
             float aspect = GetScreenAspect();
             float radarGridDiameter = (float)minimapSize.Y * 0.95f;
             float radarBoxWidth = (radarGridDiameter / aspect) + 0.024f * minimapScale;
-            float strategicBoxWidth = (float)minimapSize.X + 0.012f * minimapScale;
+            float strategicBoxWidth = (float)minimapSize.X + 0.024f * minimapScale;
             float minimapBgWidth = (minimapMode == MinimapDisplayMode.TacticalRadar) ? radarBoxWidth : strategicBoxWidth;
             float minimapBgHeight = (float)minimapSize.Y + (0.008f * minimapScale) * aspect;
-            float minimapHeaderWidth = minimapBgWidth;
-            float minimapHeaderHeight = 0.026f * minimapScale;
-            float headerGap = 0.004f * minimapScale;
 
             // Ensure minimapPosition and minimapBg match mode width and offsets
             float zoneHeight = 0.056f * minimapScale;
@@ -2203,9 +2304,11 @@ namespace GVK.Navigation
             double maxCenterX = 0.999 - (minimapBgWidth * 0.5);
             double targetPosX = minimapOffsetX * maxCenterX;
 
-            float topBuffer = (showZoneBar ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            bool zoneBarOnMinimap = (zoneBarMode == ZoneBarMode.RadarDock);
+            float topBuffer = (zoneBarOnMinimap ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            float bottomBuffer = minimapBgHeight * 0.5f;
             double maxCenterY = 0.999 - topBuffer;
-            double minCenterY = -0.995 + minimapHeaderHeight + headerGap + (minimapBgHeight * 0.5);
+            double minCenterY = -0.995 + bottomBuffer;
             double t = (minimapOffsetY + 1.0) * 0.5;
             double targetPosY = minCenterY + t * (maxCenterY - minCenterY);
 
@@ -2214,22 +2317,17 @@ namespace GVK.Navigation
                 ApplyMinimapScale(minimapScale);
             }
 
-            float minimapBgBottom = (float)(minimapPosition.Y - minimapBgHeight * 0.5f);
-            float zoomCardCenterY = minimapBgBottom - headerGap - (minimapHeaderHeight * 0.5f);
-            Vector2D zoomCardPos = new Vector2D(minimapPosition.X, zoomCardCenterY);
-
-            if (minimapHeaderBg != null && (minimapHeaderBg.Origin != zoomCardPos || Math.Abs(minimapHeaderBg.Height - minimapHeaderHeight) > 0.001f || Math.Abs(minimapHeaderBg.Width - minimapHeaderWidth) > 0.001f))
+            Color zoneCol = GetZoneColor(currentZoneIndex);
+            if (minimapAccent != null)
             {
-                minimapHeaderBg.Origin = zoomCardPos;
-                minimapHeaderBg.Width = minimapHeaderWidth;
-                minimapHeaderBg.Height = minimapHeaderHeight;
-                minimapHeaderAccent.Origin = zoomCardPos;
-                minimapHeaderAccent.Width = 0.004f * minimapScale;
-                minimapHeaderAccent.Height = minimapHeaderHeight - 0.004f * minimapScale;
-                minimapHeaderAccent.Offset = new Vector2D(-minimapHeaderWidth * 0.5f + 0.004f * minimapScale, 0.0);
-                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapHeaderWidth * 0.5f + 0.014f * minimapScale, zoomCardCenterY + 0.007f * minimapScale);
-                minimapLabel.Scale = (minimapMode == MinimapDisplayMode.TacticalRadar ? 0.55 : 0.60) * minimapScale;
+                minimapAccent.Origin = minimapPosition;
+                minimapAccent.Width = 0.005f * minimapScale;
+                minimapAccent.Height = minimapBgHeight - 0.006f * minimapScale;
+                minimapAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.005f * minimapScale, 0.0);
+                minimapAccent.BillBoardColor = zoneCol;
+                minimapAccent.Visible = true;
             }
+
             int mIdx = 0;
 
             if (minimapMode == MinimapDisplayMode.StrategicMap)
@@ -2238,9 +2336,7 @@ namespace GVK.Navigation
                 if (radarGrid != null) radarGrid.Visible = false;
                 if (radarFovLeft != null) radarFovLeft.Visible = false;
                 if (radarFovRight != null) radarFovRight.Visible = false;
-
-                minimapLabel.Message.Clear();
-                minimapLabel.Message.Append("<color=255,255,255>SECTOR MAP");
+                if (minimapLabel != null) minimapLabel.Visible = false;
 
                 // Map UV position of player relative to center of minimap box
                 Vector2 uv = WorldToMapUV(playerPos);
@@ -2286,18 +2382,24 @@ namespace GVK.Navigation
                 minimapLabel.Message.Clear();
                 if (radarScale == RadarScaleMode.Logarithmic)
                 {
-                    minimapLabel.Message.Append("<color=255,255,255>RADAR (LOG: 30K)");
+                    minimapLabel.Message.Append("<color=200,200,200>30 KM <color=120,220,255>(LOG)");
                 }
                 else
                 {
                     int rangeKmInt = (int)(radarRangeMeters * 0.001);
                     int rangeKmDec = (int)((radarRangeMeters * 0.001 - rangeKmInt) * 10.0);
-                    minimapLabel.Message.Append("<color=255,255,255>RADAR (")
-                                        .Append(rangeKmInt);
+                    minimapLabel.Message.Append("<color=200,200,200>");
+                    minimapLabel.Message.Append(rangeKmInt);
                     if (rangeKmDec > 0)
                         minimapLabel.Message.Append('.').Append(rangeKmDec);
-                    minimapLabel.Message.Append(" KM)");
+                    minimapLabel.Message.Append(" KM");
                 }
+
+                double labelX = minimapPosition.X + (radarBoxWidth * 0.5) - (0.052f * minimapScale);
+                double labelY = minimapPosition.Y - (minimapBgHeight * 0.5) + (0.016f * minimapScale);
+                minimapLabel.Origin = new Vector2D(labelX, labelY);
+                minimapLabel.Scale = 0.46 * minimapScale;
+                minimapLabel.Visible = true;
 
                 // Radar circular radius on screen (aspect corrected for 1:1 circle)
                 float radarRadiusY = (float)minimapSize.Y * 0.46f;
@@ -2926,12 +3028,16 @@ namespace GVK.Navigation
             }
 
             if (msg.Equals("/zone hud", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone bar", StringComparison.OrdinalIgnoreCase))
+                msg.Equals("/zone bar", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/zone dock", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/zone mode", StringComparison.OrdinalIgnoreCase) ||
+                msg.Equals("/zone toggle", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
-                ToggleZoneBar();
+                CycleZoneBarMode();
                 return;
             }
+
 
             if (msg.Equals("/zone gps", StringComparison.OrdinalIgnoreCase) ||
                 msg.Equals("/gps defaults", StringComparison.OrdinalIgnoreCase))
@@ -3011,9 +3117,8 @@ namespace GVK.Navigation
                 HideTapePool();
                 HideSpritePool();
 
-                if (minimapHeaderBg != null) minimapHeaderBg.Visible = false;
-                if (minimapHeaderAccent != null) minimapHeaderAccent.Visible = false;
                 if (minimapBg != null) minimapBg.Visible = false;
+                if (minimapAccent != null) minimapAccent.Visible = false;
                 if (minimapTerrain != null) minimapTerrain.Visible = false;
                 if (radarGrid != null) radarGrid.Visible = false;
                 if (radarFovLeft != null) radarFovLeft.Visible = false;
@@ -3038,12 +3143,11 @@ namespace GVK.Navigation
             if (!showMinimap)
             {
                 _minimapElementsVisible = false;
-                if (minimapHeaderBg != null) minimapHeaderBg.Visible = false;
-                if (minimapHeaderAccent != null) minimapHeaderAccent.Visible = false;
                 if (radarGrid != null) radarGrid.Visible = false;
                 if (radarFovLeft != null) radarFovLeft.Visible = false;
                 if (radarFovRight != null) radarFovRight.Visible = false;
                 if (minimapBg != null) minimapBg.Visible = false;
+                if (minimapAccent != null) minimapAccent.Visible = false;
                 if (minimapTerrain != null) minimapTerrain.Visible = false;
                 if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
                 if (minimapLabel != null) minimapLabel.Visible = false;
@@ -3099,11 +3203,9 @@ namespace GVK.Navigation
 
             float radarGridDiameter = (float)minimapSize.Y * 0.95f;
             float radarBoxWidth = (radarGridDiameter / aspect) + 0.024f * scale;
-            float strategicBoxWidth = (float)minimapSize.X + 0.012f * scale;
+            float strategicBoxWidth = (float)minimapSize.X + 0.024f * scale;
             float minimapBgWidth = (minimapMode == MinimapDisplayMode.TacticalRadar) ? radarBoxWidth : strategicBoxWidth;
             float minimapBgHeight = (float)minimapSize.Y + (0.008f * scale) * aspect;
-            float minimapHeaderHeight = 0.026f * scale;
-            float headerGap = 0.004f * scale;
 
             // Horizontal position: -1.0 (flush left -0.999) to +1.0 (flush right +0.999)
             double maxCenterX = 0.999 - (minimapBgWidth * 0.5);
@@ -3113,41 +3215,42 @@ namespace GVK.Navigation
             float zoneHeight = 0.056f * scale;
             float gap = 0.004f * scale;
 
-            float topBuffer = (showZoneBar ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            bool zoneBarOnMinimap = (zoneBarMode == ZoneBarMode.RadarDock);
+            float topBuffer = (zoneBarOnMinimap ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            float bottomBuffer = minimapBgHeight * 0.5f;
             double maxCenterY = 0.999 - topBuffer;
-            double minCenterY = -0.995 + minimapHeaderHeight + headerGap + (minimapBgHeight * 0.5);
+            double minCenterY = -0.995 + bottomBuffer;
             double t = (minimapOffsetY + 1.0) * 0.5;
             double posY = minCenterY + t * (maxCenterY - minCenterY);
 
-            float minimapBgBottom = (float)(posY - minimapBgHeight * 0.5);
-            float zoomCardCenterY = minimapBgBottom - headerGap - (minimapHeaderHeight * 0.5f);
-
             minimapPosition = new Vector2D(posX, posY);
-            Vector2D zoomCardPos = new Vector2D(minimapPosition.X, zoomCardCenterY);
 
-            if (minimapHeaderBg != null)
-            {
-                minimapHeaderBg.Origin = zoomCardPos;
-                minimapHeaderBg.Width = minimapBgWidth;
-                minimapHeaderBg.Height = minimapHeaderHeight;
-            }
-            if (minimapHeaderAccent != null)
-            {
-                minimapHeaderAccent.Origin = zoomCardPos;
-                minimapHeaderAccent.Width = 0.004f * scale;
-                minimapHeaderAccent.Height = minimapHeaderHeight - 0.004f * scale;
-                minimapHeaderAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.004f * scale, 0.0);
-            }
             if (minimapLabel != null)
             {
-                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapBgWidth * 0.5f + 0.014f * scale, zoomCardCenterY + 0.007f * scale);
-                minimapLabel.Scale = (minimapMode == MinimapDisplayMode.TacticalRadar ? 0.55 : 0.60) * scale;
+                if (minimapMode == MinimapDisplayMode.TacticalRadar)
+                {
+                    double labelX = minimapPosition.X + (radarBoxWidth * 0.5) - (0.052f * scale);
+                    double labelY = minimapPosition.Y - (minimapBgHeight * 0.5) + (0.016f * scale);
+                    minimapLabel.Origin = new Vector2D(labelX, labelY);
+                    minimapLabel.Scale = 0.46 * scale;
+                }
+                else
+                {
+                    minimapLabel.Visible = false;
+                }
             }
             if (minimapBg != null)
             {
                 minimapBg.Origin = minimapPosition;
                 minimapBg.Width = minimapBgWidth;
                 minimapBg.Height = minimapBgHeight;
+            }
+            if (minimapAccent != null)
+            {
+                minimapAccent.Origin = minimapPosition;
+                minimapAccent.Width = 0.005f * scale;
+                minimapAccent.Height = minimapBgHeight - 0.006f * scale;
+                minimapAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.005f * scale, 0.0);
             }
             if (minimapTerrain != null)
             {
@@ -3324,6 +3427,7 @@ namespace GVK.Navigation
             compassOffsetY = MathHelper.Clamp(y, -1.0, 1.0);
             UpdateCompassSliderPercents();
             ApplyCompassScale(compassScale);
+            if (zoneBarMode == ZoneBarMode.CompassDock) _lastZoneBarZoneIndex = -1;
             _refreshCompassNextFrame = true;
             SaveConfig();
         }
@@ -3427,6 +3531,10 @@ namespace GVK.Navigation
                 COMPASS_GRADUATIONS[i].BaseTopHalfWidth = -1.0;
                 COMPASS_GRADUATIONS[i].BaseBottomHalfWidth = -1.0;
             }
+            if (zoneBarMode == ZoneBarMode.CompassDock)
+            {
+                _lastZoneBarZoneIndex = -1;
+            }
             _refreshCompassNextFrame = true;
         }
 
@@ -3453,22 +3561,39 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon: {status}", 2500, showCompass ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
-        private void ToggleZoneBar()
+        private void CycleZoneBarMode()
         {
-            showZoneBar = !showZoneBar;
-            if (!showZoneBar)
+            if (zoneBarMode == ZoneBarMode.CompassDock)
+                zoneBarMode = ZoneBarMode.RadarDock;
+            else if (zoneBarMode == ZoneBarMode.RadarDock)
+                zoneBarMode = ZoneBarMode.Off;
+            else
+                zoneBarMode = ZoneBarMode.CompassDock;
+
+            if (zoneBarMode == ZoneBarMode.Off)
             {
                 _zoneBarElementsVisible = false;
                 if (zoneBg != null) zoneBg.Visible = false;
                 if (zoneAccent != null) zoneAccent.Visible = false;
                 if (zoneMsg != null) zoneMsg.Visible = false;
                 if (zoneDistMsg != null) zoneDistMsg.Visible = false;
+                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
             }
+
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
+            _refreshCompassNextFrame = true;
+            _lastZoneBarZoneIndex = -1;
             SaveConfig();
-            string status = showZoneBar ? "ENABLED" : "DISABLED";
-            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status Bar: {status}", 2500, showZoneBar ? MyFontEnum.Green : MyFontEnum.Red);
+
+            string modeName;
+            switch (zoneBarMode)
+            {
+                case ZoneBarMode.CompassDock: modeName = "Compass Dock"; break;
+                case ZoneBarMode.RadarDock: modeName = "Radar Dock"; break;
+                default: modeName = "OFF"; break;
+            }
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status: {modeName}", 2500, zoneBarMode != ZoneBarMode.Off ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
         private void OpenZoneMissionScreen()
