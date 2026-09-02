@@ -301,7 +301,7 @@ namespace GVK.Navigation
         private static readonly HudPreset[] CompassPresets = new HudPreset[]
         {
             new HudPreset("Top-Center (Default)", 0.0, 1.0),
-            new HudPreset("Above Toolbar Center", 0.0, -0.85)
+            new HudPreset("Above Toolbar Center", 0.0, -0.71)
         };
 
         private static readonly HudPreset[] MinimapPresets = new HudPreset[]
