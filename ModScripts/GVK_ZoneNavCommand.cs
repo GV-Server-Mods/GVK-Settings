@@ -2028,8 +2028,10 @@ namespace GVK.Navigation
             if (showMinimap)
             {
                 float minimapBgHeight = (float)minimapSize.Y + (0.008f * minimapScale) * aspect;
-                float minimapBgBottom = (float)(minimapPosition.Y - minimapBgHeight * 0.5f);
-                targetPos = new Vector2D(minimapPosition.X, minimapBgBottom - (0.004f * minimapScale) - (zoneHeight * 0.5f));
+                float gap = 0.004f * minimapScale;
+                float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
+                float zoneCenterY = minimapBgTop + gap + (zoneHeight * 0.5f);
+                targetPos = new Vector2D(minimapPosition.X, zoneCenterY);
             }
             else
             {
@@ -2201,8 +2203,9 @@ namespace GVK.Navigation
             double maxCenterX = 0.999 - (minimapBgWidth * 0.5);
             double targetPosX = minimapOffsetX * maxCenterX;
 
-            double maxCenterY = 0.999 - (minimapHeaderHeight + headerGap + minimapBgHeight * 0.5);
-            double minCenterY = -0.995 + zoneHeight + gap + (minimapBgHeight * 0.5);
+            float topBuffer = (showZoneBar ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            double maxCenterY = 0.999 - topBuffer;
+            double minCenterY = -0.995 + minimapHeaderHeight + headerGap + (minimapBgHeight * 0.5);
             double t = (minimapOffsetY + 1.0) * 0.5;
             double targetPosY = minCenterY + t * (maxCenterY - minCenterY);
 
@@ -2211,20 +2214,20 @@ namespace GVK.Navigation
                 ApplyMinimapScale(minimapScale);
             }
 
-            float minimapBgTop = (float)(minimapPosition.Y + minimapBgHeight * 0.5f);
-            float minimapHeaderCenterY = minimapBgTop + headerGap + (minimapHeaderHeight * 0.5f);
-            Vector2D minimapHeaderPos = new Vector2D(minimapPosition.X, minimapHeaderCenterY);
+            float minimapBgBottom = (float)(minimapPosition.Y - minimapBgHeight * 0.5f);
+            float zoomCardCenterY = minimapBgBottom - headerGap - (minimapHeaderHeight * 0.5f);
+            Vector2D zoomCardPos = new Vector2D(minimapPosition.X, zoomCardCenterY);
 
-            if (minimapHeaderBg != null && (minimapHeaderBg.Origin != minimapHeaderPos || Math.Abs(minimapHeaderBg.Height - minimapHeaderHeight) > 0.001f || Math.Abs(minimapHeaderBg.Width - minimapHeaderWidth) > 0.001f))
+            if (minimapHeaderBg != null && (minimapHeaderBg.Origin != zoomCardPos || Math.Abs(minimapHeaderBg.Height - minimapHeaderHeight) > 0.001f || Math.Abs(minimapHeaderBg.Width - minimapHeaderWidth) > 0.001f))
             {
-                minimapHeaderBg.Origin = minimapHeaderPos;
+                minimapHeaderBg.Origin = zoomCardPos;
                 minimapHeaderBg.Width = minimapHeaderWidth;
                 minimapHeaderBg.Height = minimapHeaderHeight;
-                minimapHeaderAccent.Origin = minimapHeaderPos;
+                minimapHeaderAccent.Origin = zoomCardPos;
                 minimapHeaderAccent.Width = 0.004f * minimapScale;
                 minimapHeaderAccent.Height = minimapHeaderHeight - 0.004f * minimapScale;
                 minimapHeaderAccent.Offset = new Vector2D(-minimapHeaderWidth * 0.5f + 0.004f * minimapScale, 0.0);
-                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapHeaderWidth * 0.5f + 0.014f * minimapScale, minimapHeaderCenterY + 0.007f * minimapScale);
+                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapHeaderWidth * 0.5f + 0.014f * minimapScale, zoomCardCenterY + 0.007f * minimapScale);
                 minimapLabel.Scale = (minimapMode == MinimapDisplayMode.TacticalRadar ? 0.55 : 0.60) * minimapScale;
             }
             int mIdx = 0;
@@ -3109,33 +3112,35 @@ namespace GVK.Navigation
             // Vertical position: -1.0 (flush bottom -0.995) to +1.0 (flush top +0.999)
             float zoneHeight = 0.056f * scale;
             float gap = 0.004f * scale;
-            double maxCenterY = 0.999 - (minimapHeaderHeight + headerGap + minimapBgHeight * 0.5);
-            double minCenterY = -0.995 + zoneHeight + gap + (minimapBgHeight * 0.5);
+
+            float topBuffer = (showZoneBar ? (zoneHeight + gap) : 0f) + (minimapBgHeight * 0.5f);
+            double maxCenterY = 0.999 - topBuffer;
+            double minCenterY = -0.995 + minimapHeaderHeight + headerGap + (minimapBgHeight * 0.5);
             double t = (minimapOffsetY + 1.0) * 0.5;
             double posY = minCenterY + t * (maxCenterY - minCenterY);
 
-            float minimapBgTop = (float)(posY + minimapBgHeight * 0.5);
-            float minimapHeaderCenterY = minimapBgTop + headerGap + (minimapHeaderHeight * 0.5f);
+            float minimapBgBottom = (float)(posY - minimapBgHeight * 0.5);
+            float zoomCardCenterY = minimapBgBottom - headerGap - (minimapHeaderHeight * 0.5f);
 
             minimapPosition = new Vector2D(posX, posY);
-            Vector2D minimapHeaderPos = new Vector2D(minimapPosition.X, minimapHeaderCenterY);
+            Vector2D zoomCardPos = new Vector2D(minimapPosition.X, zoomCardCenterY);
 
             if (minimapHeaderBg != null)
             {
-                minimapHeaderBg.Origin = minimapHeaderPos;
+                minimapHeaderBg.Origin = zoomCardPos;
                 minimapHeaderBg.Width = minimapBgWidth;
                 minimapHeaderBg.Height = minimapHeaderHeight;
             }
             if (minimapHeaderAccent != null)
             {
-                minimapHeaderAccent.Origin = minimapHeaderPos;
+                minimapHeaderAccent.Origin = zoomCardPos;
                 minimapHeaderAccent.Width = 0.004f * scale;
                 minimapHeaderAccent.Height = minimapHeaderHeight - 0.004f * scale;
                 minimapHeaderAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.004f * scale, 0.0);
             }
             if (minimapLabel != null)
             {
-                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapBgWidth * 0.5f + 0.014f * scale, minimapHeaderCenterY + 0.007f * scale);
+                minimapLabel.Origin = new Vector2D(minimapPosition.X - minimapBgWidth * 0.5f + 0.014f * scale, zoomCardCenterY + 0.007f * scale);
                 minimapLabel.Scale = (minimapMode == MinimapDisplayMode.TacticalRadar ? 0.55 : 0.60) * scale;
             }
             if (minimapBg != null)
@@ -3459,10 +3464,8 @@ namespace GVK.Navigation
                 if (zoneMsg != null) zoneMsg.Visible = false;
                 if (zoneDistMsg != null) zoneDistMsg.Visible = false;
             }
-            else
-            {
-                _refreshMinimapNextFrame = true;
-            }
+            ApplyMinimapScale(minimapScale);
+            _refreshMinimapNextFrame = true;
             SaveConfig();
             string status = showZoneBar ? "ENABLED" : "DISABLED";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status Bar: {status}", 2500, showZoneBar ? MyFontEnum.Green : MyFontEnum.Red);
