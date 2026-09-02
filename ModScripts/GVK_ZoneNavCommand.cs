@@ -309,11 +309,11 @@ namespace GVK.Navigation
             new HudPreset("Top-Right (Default)", 1.0, 1.0),
             new HudPreset("Upper-Mid Right (Below WC HUD)", 1.0, 0.72),
             new HudPreset("Middle-Right", 1.0, 0.0),
-            new HudPreset("Bottom-Right (Above Toolbar)", 1.0, -1.0),
+            new HudPreset("Bottom-Right (Above Toolbar)", 0.67, -1.0),
             new HudPreset("Top-Left", -1.0, 1.0),
             new HudPreset("Upper-Mid Left", -1.0, 0.72),
             new HudPreset("Middle-Left", -1.0, 0.0),
-            new HudPreset("Bottom-Left (Above Health)", -1.0, -1.0)
+            new HudPreset("Bottom-Left (Above Health)", -0.48, -1.0)
         };
 
         public class ZoneNavConfig
