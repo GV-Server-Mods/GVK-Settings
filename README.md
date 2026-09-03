@@ -67,7 +67,7 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - 🔴 **Hostile NPCs & Enemy Grids**: Red
       - 🟡 **Neutral NPCs & Trade Stations**: Gold
       - ⚪ **Unowned Grids / Derelicts**: White
-    - **Dynamic Distance Badges**: High-readability distance readouts (e.g., `1.2k`, `15k`) dynamically centered below each icon in its matching marker color.
+    - **Dynamic Distance Badges**: High-readability distance readouts (e.g., `1.2k`, `15k`) dynamically centered below each icon in its matching marker color, with waypoint icons integrated on the numeric bearing line.
 - **Unified Top-Right Tactical Radar & Zone HUD**:
   - **Live Corner Minimap (Top-Right, Dual Modes)**:
     - **Strategic Map Mode (Global)**: High-resolution topographical map (true 2:1 ratio) displaying whole-planet position blip, heading indicator, personal GPS waypoints, and detected broadcast signals.
@@ -76,10 +76,8 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - **Dynamic FOV View Cone ("V" Indicator)**: Two razor-thin tactical cyan HUD rays (`0.0008f`) radiate upward from the center crosshair out to the radar perimeter, forming an authentic avionics "V" frustum that precisely tracks your camera's active on-screen viewport. Dynamically widens and narrows in real time with your in-game Field of View and camera/sniper/turret zoom levels! Any contact inside the "V" is directly visible through your windshield/screen.
       - **Concentric Range Rings**: 1km, 2km, and 3km rings with cardinal crosshairs and heading indicator.
       - **Dual Scaling Modes (Linear vs Logarithmic)**:
-        - **Linear Scale**: Selectable combat scanning ranges: 1.5 km, 3.0 km, and 5.0 km (`/radar range`).
-        - **Logarithmic Scale (0 - 30 km)**: Compresses the desert combat theater out to the planetary horizon using a 3-decade logarithmic scale: Inner ring $= 300\text{ m}$ (dogfight/CQB range), Middle ring $= 3.0\text{ km}$ (visual line-of-sight / standard engagement), Outer ring $= 30.0\text{ km}$ (planetary horizon / edge of planet curvature) (`/radar scale` or `/radar log`). Contacts beyond 30 km (up to 100 km) max out to the outer perimeter ring.
-      - **360° Outer-Edge Clamping**: Contacts beyond the active radar range (beyond 30 km in Log mode, or beyond selected range in Linear mode, up to 100 km) are pinned to the outer perimeter ring along their exact relative bearing at 75% scale and 80% opacity, providing complete 360-degree threat awareness without losing target bearings.
-      - **Dynamic Altitude Signal Icons**:
+        - **Linear Scale**: Selectable combat scanning ranges: 1.5 km, 3.0 km, and 5.0 km (configurable via `F2` menu).
+        - **Logarithmic Scale (0 - 30 km)**: Compresses the desert combat theater out to the planetary horizon using a 3-decade logarithmic scale: Inner ring $= 300\text{ m}$ (dogfight/CQB range), Middle ring $= 3.0\text{ km}$ (visual line-of-sight / standard engagement), Outer ring $= 30.0\text{ km}$ (planetary horizon / edge of planet curvature). Contacts beyond 30 km (up to 100 km) max out to the outer perimeter ring.
         - Broadcast radio contacts (beacons and antennas) dynamically update their tactical icons based on true spherical planetary elevation relative to your vehicle (comparing radial altitude from Pertam's core, preventing planetary curvature from incorrectly flagging distant airborne contacts as 'below'):
           - **Upward Arrow** (`signal_up`): Target is $> 200\text{ m}$ above you.
           - **Equal Icon** (`signal_level`): Target is within $\pm 200\text{ m}$ altitude of you.
@@ -89,31 +87,21 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - **Local Tangent Projection**: Projects true relative distances along Pertam's local horizon plane.
     - **Integrated Tactical Header Box**: The mode and range telemetry (`TACTICAL RADAR (LOG: 30 KM)` or `SECTOR MAP`) is cleanly framed in crisp white text inside a docked header card directly above the minimap, matching the exact width of the minimap card with a tactical grey accent strip on the left edge.
     - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, and Zone status bar) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
-    - **Instant Toggling**: Switch between Strategic Map and Tactical Radar modes via **`/radar`**, **`/minimap mode`**, or the **`F2` TextHUDAPI menu**.
-    - **Scale Toggling**: Switch between Linear and Logarithmic zoom via **`/radar scale`** or the **`F2` TextHUDAPI menu**.
-    - Toggle visibility on/off via `/minimap` or the F2 menu.
+    - **Instant Toggling**: Switch between Strategic Map and Tactical Radar modes via **`/gvk radar`** or the **`F2` TextHUDAPI menu**.
+    - **Scale & Range Tuning**: Switch between Linear and Logarithmic zoom and select ranges via the **`F2` TextHUDAPI menu**.
+    - Toggle visibility on/off via **`/gvk minimap`** or the F2 menu.
   - **Docked Zone Telemetry Status Panel**:
-    - Seamlessly docked directly beneath the minimap card in the top-right corner, leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
-    - Features a color-coded vertical threat accent strip and clear 2-line countdown telemetry:
-      - **Zone 0**: Lime Green `[ ZONE 0: SAFE HUB ]` | `Crossroads: 12.4 km | Z1 Border in: 7.6 km`
-      - **Zone 1**: Yellow `[ ZONE 1: PVE FRONTIER ]` | `Crossroads: 24.1 km | PvP Border in: 10.9 km`
+    - Seamlessly docked directly beneath the minimap card in the top-right corner (or top-center compass dock), leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
       - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`
       - **Zone 3**: Red `[ ZONE 3: GAALSIEN HEART ]` | `Crossroads: 54.2 km | Core Dist: 12.8 km`
-    - Toggleable via `/zone hud` or the F2 TextHUDAPI menu.
-- **Interactive Full-Screen Satellite Map (`M` Key / `/map`)**:
-  - Toggled with hotkey **`M`** (or `/map`) with zero plugin or LCD screen requirements.
+- **Interactive Full-Screen Satellite Map (`M` Key / `/gvk map`)**:
+  - Toggled with hotkey **`M`** (or `/gvk map`) with zero plugin or LCD screen requirements.
   - Displays high-resolution topographical Kharak map with 20 / 35 / 50 km zone boundaries.
   - **Real-Time "You Are Here" Blip**: Blinking player reticle tracking spherical lat/long on Pertam.
   - **Auto-Plotted Personal GPS List & Signals**: Reads `MyAPIGateway.Session.GPS` and active radio broadcasts, plotting them with 50% enlarged Keen icons and relation colors (Allied green, Derelict white, Hostile red, Neutral gold).
   - **Smart Tactical Label Truncation**: Waypoint and signal names exceeding 20 characters are compactly truncated (`[first 12]...[last 4]`, e.g. `KOTH Crashed...ship`) to prevent map text clutter while allowing common outpost names to show in full.
   - **Waterfall Signal Deconfliction**: Dense clusters of nearby signals (bases with multiple beacons/antennas) are automatically grouped. Up to 5 signals waterfall vertically with individual icons, while 6+ signals cap at 5 lines displaying the top 4 signals plus an overflow `+N more...` tag to prevent screen-space clutter.
   - **Docked Tactical Header Panel**: Features a color-accented status bar seamlessly integrated above the top of the map frame, displaying sector classification, Crossroads distance, border countdown, and keybindings in the matching zone threat color (Green/Yellow/Orange/Red).
-  - Pressing **`M`** or **Esc** closes the map overlay.
-- **Keen Mission Screen Objective Popups (`/zone`, `/whereami`, `/loc`)**:
-  - Pops up the official Keen scenario **Mission Screen** modal window (`ShowMissionScreen`) for sector briefing and rules matrix without chat spam.
-  - `/zones` opens the full planetary 4-zone matrix directory.
-
-### `LimitedProdZone_*.cs`
 Enforces industrial and military tiering across the planetary surface:
 - **`LimitedProdZone_Assembler.cs` & `Refinery.cs`**: Disables full-sized assemblers and refineries within $35\text{km}$ of Crossroads (unlocks in Zone 2).
 - **`LimitedProdZone_ShipDrill.cs`**: Disables mobile ship drills within $20\text{km}$ (Zone 0) to preserve starter hub terrain. Unlocks in Zone 1.
@@ -166,19 +154,19 @@ Voxel reset cadence, offline faction safezones, cleanup automation, auto-hangar,
 
 ## 8. In-Game Commands Reference
 
-Commands provided by this repo's navigation suite (`GVK_ZoneNavCommand.cs`):
+Commands provided by this repo's navigation suite (`GVK_ZoneNavCommand.cs`). All chat commands are prefixed with `/gvk` to guarantee zero collision with other mods, while fine-grained HUD positioning, sizing sliders, presets, radar ranges, and exact tick rates are managed directly via the **`F2` TextHUDAPI mod menu**:
 
 | Command | Description |
 | :--- | :--- |
-| `[M]` key or `/map` | Toggles full-screen interactive Kharak Satellite Map with live GPS & signals. |
-| `/minimap` | Toggles top-right corner minimap radar card on/off. |
-| `/compass` | Toggles top-center heading ribbon and tactical waypoint bearing tape on/off. |
-| `/zone hud` | Toggles the top-right docked zone status and telemetry panel on/off. |
-| `/zone`, `/whereami`, `/loc` | Opens Mission Screen popup with current sector status and distances. |
-| `/zones` | Opens full 4-zone planetary matrix directory in Mission Screen modal. |
-| `/zone gps`, `/gps defaults` | Restores default Kharak GPS waypoints. |
-| `/nav rate [ticks]` | Sets or cycles HUD refresh rate (1–60 ticks). |
-| `/radar range [km]`, `/radar scale`, `/minimap size`, `/compass size` | Radar/scale tuning shortcuts (also in F2 mod menu). |
+| `[M]` key or `/gvk map` | Toggles full-screen interactive Kharak Satellite Map with live GPS & signals. |
+| `/gvk minimap` | Toggles corner minimap radar card on/off. |
+| `/gvk radar` | Cycles minimap display mode between Strategic Map and Tactical Vector Radar. |
+| `/gvk compass` | Toggles top-center heading ribbon and tactical waypoint bearing tape on/off. |
+| `/gvk zone` | Cycles zone status bar mode (Compass Dock / Radar Dock / Off). |
+| `/gvk gps` | Restores default Kharak GPS waypoints (including Sevastopol trade station). |
+| `/gvk rate` | Cycles HUD refresh tick rate (12 Hz default → 15 Hz → 30 Hz → 60 Hz → 6 Hz → 10 Hz). |
+
+> [!TIP]
 
 Server-plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to their respective mods/plugins and are documented in the Steam Guide.
 
@@ -191,17 +179,7 @@ When producing or modifying audio assets (`.sbc` SoundCategories and SoundRules)
   - Sampling Frequency: `44.1 kHz` | Channels: `1 Mono` | Codec: `Unsigned 8-bit`
 - **D2 vs. D3 Space Engineers Audio Architecture**:
   - **D2 Sounds**: Non-directional stereo ambient sounds.
-  - **D3 Sounds**: Fully 3D directional in-game mono audio. **Must be Mono format**.
-  - Volume calibration: D2 sounds should be approximately `-12 dB` quieter than their D3 equivalents.
-- **Distant Sounds**:
-  - Sounds with attached `DistantSounds` must have `MaxDistance` equal to the `DistantSound` `MaxDistance`.
-  - Add 1.0 second of silence to the start of all distant sound files for atmospheric sound-travel delay (except loopables).
-- **Loopables**:
-  - Looping sounds must be `.wav` 32-bit float `44,100 Hz`.
   - Start, Loop, and End sound files must all share the exact same `.wav` audio format.
-  - All non-looping sound effects should be `.xwm` at `48 kbps`.
-- **Engine Timing**:
-  - `PreventSynchronization`: Minimum time in game ticks (60 ticks = 1 sec) before the sound definition can be re-triggered.
 
 ---
 

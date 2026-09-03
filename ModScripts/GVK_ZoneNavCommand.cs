@@ -203,7 +203,7 @@ namespace GVK.Navigation
         {
             new DefaultGpsEntry("Zone 0", "Zone 0 Safe Starter Hub", new Vector3D(62495.55, 28019.04, 37195.71), true, true, new Color(0, 255, 0)),
             new DefaultGpsEntry("Zone 3", "Zone 3 Deep Desert Center", new Vector3D(3569.33, 36772.94, 26952.63), true, false, new Color(255, 0, 0)),
-            new DefaultGpsEntry("Sevastapol", "Coalition Trade Station", new Vector3D(2990.66, 30484.89, 34060.65), false, false, new Color(239, 220, 0)),
+            new DefaultGpsEntry("Sevastopol", "Coalition Trade Station", new Vector3D(2990.66, 30484.89, 34060.65), false, false, new Color(239, 220, 0)),
             new DefaultGpsEntry("Skyport", "Aerial Trade Station", new Vector3D(40585.81, 59619.14, 46601.96), false, false, new Color(239, 220, 0)),
             new DefaultGpsEntry("Mastodon", "Southern Trade Station", new Vector3D(33475.48, 5361.51, 20848.44), false, false, new Color(239, 220, 0)),
             new DefaultGpsEntry("Rusty's", "Starter Trade Outpost", new Vector3D(61686.17, 27088.08, 38160.96), false, false, new Color(239, 220, 0)),
@@ -339,7 +339,7 @@ namespace GVK.Navigation
             public double CompassOffsetX { get; set; } = 0.0;
             public double CompassOffsetY { get; set; } = 1.0;
 
-            public bool ShowZoneBar { get; set; } = true;
+            public bool ShowZoneBar { get; set; } = true; // Legacy compat only — ZoneBarMode is the source of truth
             public int ZoneBarDockMode { get; set; } = 0;
             public int ZoneBarMode { get; set; } = 0;
             public int UpdateTickRate { get; set; } = 5;
@@ -418,8 +418,6 @@ namespace GVK.Navigation
         }
         private static readonly WaypointDistanceComparer WaypointComparer = new WaypointDistanceComparer();
 
-        // Reusable StringBuilder for mission screen text (avoids per-call allocation).
-        private readonly StringBuilder _missionSb = new StringBuilder(512);
 
         // Compass tape visible waypoint entry (pre-sorted Painter's algorithm buffer)
         private struct CompassVisibleWp
@@ -472,9 +470,9 @@ namespace GVK.Navigation
                                 compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
                                 if (cfg.ZoneBarMode >= 0 && cfg.ZoneBarMode <= 2)
                                     zoneBarMode = (ZoneBarMode)cfg.ZoneBarMode;
-                                else if (!cfg.ShowZoneBar)
+                                else if (!cfg.ShowZoneBar) // Legacy: pre-ZoneBarMode configs — disabled
                                     zoneBarMode = ZoneBarMode.Off;
-                                else if (cfg.ZoneBarDockMode == 1)
+                                else if (cfg.ZoneBarDockMode == 1) // Legacy: old DockMode 1 mapped to CompassDock
                                     zoneBarMode = ZoneBarMode.CompassDock;
                                 else
                                     zoneBarMode = ZoneBarMode.RadarDock;
@@ -662,7 +660,7 @@ namespace GVK.Navigation
                 float aspect = GetScreenAspect();
 
                 // 1. Custom Programmatic Tactical HUD Compass Frame
-                float baseHeight = 0.076f;
+                float baseHeight = GetCompassBaseHeight(1.0f);
                 Vector2D compassOrigin = new Vector2D(0.0, COMPASS_TOP_Y - baseHeight * 0.5);
 
                 compassBg = new HudAPIv2.BillBoardHUDMessage(
@@ -1303,7 +1301,9 @@ namespace GVK.Navigation
                 new HudAPIv2.MenuItem("10 Ticks (6 Hz) - Battery / Sim Saver", rateCategory, () => { SetUpdateTickRate(10); });
 
                 new HudAPIv2.MenuItem("Restore Default Kharak GPS Waypoints", rootCategory, () => { PopulateDefaultGps(true); });
-                new HudAPIv2.MenuItem("Open Zone Advisory Mission Screen", rootCategory, () => { OpenZoneMissionScreen(); });
+
+                // Ensure minimap dimensions are populated before the first UpdateMinimap/UpdateZoneBar run.
+                ApplyMinimapScale(minimapScale);
             }
             catch (Exception ex)
             {
@@ -1337,7 +1337,7 @@ namespace GVK.Navigation
                 CheckAndPopulateDefaultGps();
             }
 
-            tickCounter++;
+            if (++tickCounter > 120000) tickCounter = 0; // LCM of all modulo values; prevents int.MaxValue wrap
 
             // 100-Tick (~1.67s) Background Scan: entity iteration, GPS list, zone distance.
             // Players don't cross zone boundaries fast enough to notice the extra latency.
@@ -1414,7 +1414,11 @@ namespace GVK.Navigation
                 bool exists = false;
                 for (int j = 0; j < cachedGpsList.Count; j++)
                 {
-                    if (cachedGpsList[j].Name.Equals(entry.Name, StringComparison.OrdinalIgnoreCase))
+                    string gpsName = cachedGpsList[j].Name;
+                    if (gpsName.Equals(entry.Name, StringComparison.OrdinalIgnoreCase) ||
+                        // Migration: treat old misspelling as a match to avoid duplicate GPS entries
+                        (entry.Name.Equals("Sevastopol", StringComparison.OrdinalIgnoreCase) &&
+                         gpsName.Equals("Sevastapol", StringComparison.OrdinalIgnoreCase)))
                     {
                         exists = true;
                         break;
@@ -1748,11 +1752,11 @@ namespace GVK.Navigation
             // Precompute FOV polynomial once per frame instead of calling Math.Pow in hot loops
             float fovCoeff = FOV * (5.596f * FOV * FOV - 18.43f * FOV + 16.16f);
             float fovCubic = FOV * 12f;
-            float baseWidth = 0.54f + 0.08f * compassScale;
+            float baseWidth = GetCompassBaseWidth(compassScale);
             float tapeSpan = (baseWidth * 0.5f) - (0.012f * compassScale);
             float aspect = GetScreenAspect();
 
-            float baseHeight = 0.076f * compassScale;
+            float baseHeight = GetCompassBaseHeight(compassScale);
             double maxCompassCenterX = 0.999 - (baseWidth * 0.5);
             double compassCenterX = compassOffsetX * maxCompassCenterX;
 
@@ -1768,11 +1772,10 @@ namespace GVK.Navigation
             float mediumTickH = 0.005f * compassScale;
             float minorTickH = 0.003f * compassScale;
 
-            // Dual row text layout:
             // Top Row: Cardinals & Ordinals (N, NE, E, SE, S, SW, W, NW)
-            float topLabelY = (float)(topY - 0.008f * compassScale);
-            // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.) lowered so they never overlap letters
-            float bottomLabelY = (float)(topY - 0.027f * compassScale);
+            float topLabelY = (float)(topY - 0.006f * compassScale);
+            // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.) on the same line as waypoint markers
+            float bottomLabelY = (float)(topY - 0.020f * compassScale);
 
             // 2. Render Tactical Graduation Ticks and Dual-Row Labels
             int tickIndex = 0;
@@ -1945,9 +1948,10 @@ namespace GVK.Navigation
                 float wWidth = 0.011f * compassScale * distFactor;
                 float wHeight = wWidth * aspect;
 
-                double spriteCenterY = topY - 0.046 * compassScale;
+                // Markers share the same line/row as the numeric bearing degree marks
+                double spriteCenterY = topY - 0.026 * compassScale;
                 double spriteBottom = spriteCenterY - (wHeight * 0.5);
-                double textY = spriteBottom - (0.002 * compassScale);
+                double textY = spriteBottom - (0.0015 * compassScale);
 
                 var sprite = waypointSpritePool[spriteIndex];
                 sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
@@ -1961,7 +1965,7 @@ namespace GVK.Navigation
 
                 // Zero-allocation distance text formatting: direct int/char appending avoids hundreds of heap string allocs per frame
                 var dist = waypointDistPool[spriteIndex];
-                dist.Scale = 0.46 * compassScale * distFactor;
+                dist.Scale = 0.42 * compassScale * distFactor;
                 dist.Message.Clear()
                     .Append("<color=").Append(wpColor.R).Append(',').Append(wpColor.G).Append(',').Append(wpColor.B).Append('>');
 
@@ -2038,11 +2042,11 @@ namespace GVK.Navigation
             if (zoneBarMode == ZoneBarMode.CompassDock)
             {
                 currentScale = compassScale;
-                float compassBaseWidth = 0.54f + 0.08f * currentScale;
-                float compassBaseHeight = 0.076f * currentScale;
-                zoneWidth = compassBaseWidth * 0.28125f;
+                float compassBaseWidth = GetCompassBaseWidth(currentScale);
+                float compassBaseHeight = GetCompassBaseHeight(currentScale);
+                zoneWidth = 0.139f * currentScale;
                 zoneHeight = compassBaseHeight;
-                isCompact = false;
+                isCompact = true;
 
                 double maxCompassCenterX = 0.999 - (compassBaseWidth * 0.5);
                 double compassCenterX = compassOffsetX * maxCompassCenterX;
@@ -2100,15 +2104,11 @@ namespace GVK.Navigation
                 zoneAccent.Offset = new Vector2D(-zoneWidth * 0.5f + 0.005f * currentScale, 0.0);
                 if (zoneBarMode == ZoneBarMode.CompassDock)
                 {
-                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y + 0.021f * currentScale);
-                    zoneMsg.Scale = 0.50 * currentScale;
-                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y + 0.001f * currentScale);
-                    zoneDistMsg.Scale = 0.44 * currentScale;
-                    if (zoneNextMsg != null)
-                    {
-                        zoneNextMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.014f * currentScale, zonePosition.Y - 0.019f * currentScale);
-                        zoneNextMsg.Scale = 0.44 * currentScale;
-                    }
+                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.010f * currentScale, zonePosition.Y + 0.014f * currentScale);
+                    zoneMsg.Scale = 0.48 * currentScale;
+                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.010f * currentScale, zonePosition.Y - 0.006f * currentScale);
+                    zoneDistMsg.Scale = 0.40 * currentScale;
+                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
                 }
                 else
                 {
@@ -2131,14 +2131,7 @@ namespace GVK.Navigation
                 zoneAccent.Visible = true;
                 zoneMsg.Visible = true;
                 zoneDistMsg.Visible = true;
-                if (zoneBarMode == ZoneBarMode.CompassDock)
-                {
-                    if (zoneNextMsg != null) zoneNextMsg.Visible = true;
-                }
-                else
-                {
-                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-                }
+                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
                 return;
             }
 
@@ -2153,118 +2146,48 @@ namespace GVK.Navigation
             zoneDistText.Clear();
             zoneNextText.Clear();
 
-            if (zoneBarMode == ZoneBarMode.CompassDock)
+            switch (currentZoneIndex)
             {
-                zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>").Append(lastDistKm.ToString("F1")).Append(" km");
-                switch (currentZoneIndex)
-                {
-                    case 0:
-                        zoneAccent.BillBoardColor = Color.LimeGreen;
-                        zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                        zoneNextText.Append("<color=220,220,220>Z1 Border in: <color=255,230,50>").Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        break;
-                    case 1:
-                        zoneAccent.BillBoardColor = Color.Yellow;
-                        zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                        zoneNextText.Append("<color=220,220,220>PvP Border in: <color=255,165,0>").Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        break;
-                    case 2:
-                        zoneAccent.BillBoardColor = Color.Orange;
-                        zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                        zoneNextText.Append("<color=220,220,220>Z3 Border in: <color=255,50,50>").Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        break;
-                    default:
-                        zoneAccent.BillBoardColor = Color.Red;
-                        zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                        zoneNextText.Append("<color=220,220,220>Core Dist: <color=255,50,50>").Append(lastDistZ3Km.ToString("F1")).Append(" km");
-                        break;
-                }
-            }
-            else
-            {
-                switch (currentZoneIndex)
-                {
-                    case 0:
-                        zoneAccent.BillBoardColor = Color.LimeGreen;
-                        zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                        if (isCompact)
-                        {
-                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Next: <color=255,230,50>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
-                        }
-                        else
-                        {
-                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z1 Border in: <color=255,230,50>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        }
-                        break;
-                    case 1:
-                        zoneAccent.BillBoardColor = Color.Yellow;
-                        zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                        if (isCompact)
-                        {
-                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>PvP: <color=255,165,0>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
-                        }
-                        else
-                        {
-                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>PvP Border in: <color=255,165,0>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        }
-                        break;
-                    case 2:
-                        zoneAccent.BillBoardColor = Color.Orange;
-                        zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                        if (isCompact)
-                        {
-                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Z3: <color=255,50,50>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append("k");
-                        }
-                        else
-                        {
-                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Z3 Border in: <color=255,50,50>")
-                                        .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                        }
-                        break;
-                    default:
-                        zoneAccent.BillBoardColor = Color.Red;
-                        zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                        if (isCompact)
-                        {
-                            zoneDistText.Append("<color=220,220,220>Tower: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append("k <color=100,140,180>| <color=220,220,220>Core: <color=255,50,50>")
-                                        .Append(lastDistZ3Km.ToString("F1")).Append("k");
-                        }
-                        else
-                        {
-                            zoneDistText.Append("<color=220,220,220>Crossroads: <color=255,255,255>")
-                                        .Append(lastDistKm.ToString("F1")).Append(" km <color=100,140,180>| <color=220,220,220>Core Dist: <color=255,50,50>")
-                                        .Append(lastDistZ3Km.ToString("F1")).Append(" km");
-                        }
-                        break;
-                }
+                case 0:
+                    zoneAccent.BillBoardColor = Color.LimeGreen;
+                    zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
+                    zoneDistText.Append("<color=255,255,255>------<color=100,140,180> | <color=220,220,220>Zone 1: <color=255,230,50>")
+                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                    break;
+                case 1:
+                    zoneAccent.BillBoardColor = Color.Yellow;
+                    zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
+                    double z1ToLower = Math.Max(0.0, lastDistKm - 20.0);
+                    zoneDistText.Append("<color=220,220,220>Zone 0: <color=50,255,100>")
+                                .Append(z1ToLower.ToString("F1")).Append(" km")
+                                .Append("<color=100,140,180> | <color=220,220,220>Zone 2: <color=255,165,0>")
+                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                    break;
+                case 2:
+                    zoneAccent.BillBoardColor = Color.Orange;
+                    zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
+                    double z2ToLower = Math.Max(0.0, lastDistKm - 35.0);
+                    zoneDistText.Append("<color=220,220,220>Zone 1: <color=255,230,50>")
+                                .Append(z2ToLower.ToString("F1")).Append(" km")
+                                .Append("<color=100,140,180> | <color=220,220,220>Zone 3: <color=255,50,50>")
+                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
+                    break;
+                default:
+                    zoneAccent.BillBoardColor = Color.Red;
+                    zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
+                    double z3ToLower = Math.Max(0.0, lastDistKm - 50.0);
+                    zoneDistText.Append("<color=220,220,220>Zone 2: <color=255,165,0>")
+                                .Append(z3ToLower.ToString("F1")).Append(" km")
+                                .Append("<color=100,140,180> | <color=255,255,255>------");
+                    break;
             }
 
             zoneBg.Visible = true;
             zoneAccent.Visible = true;
             zoneMsg.Visible = true;
             zoneDistMsg.Visible = true;
-            if (zoneBarMode == ZoneBarMode.CompassDock)
-            {
-                if (zoneNextMsg != null) zoneNextMsg.Visible = true;
-            }
-            else
-            {
-                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-            }
+            if (zoneNextMsg != null) zoneNextMsg.Visible = false;
         }
-
         /// <summary>
         /// Updates the corner minimap or tactical vector radar using pre-allocated billboard pool (Zero GC allocations).
         /// </summary>
@@ -2597,7 +2520,7 @@ namespace GVK.Navigation
             mapDimmer.Visible = true;
             mapFrame.Visible = true;
             mapTerrain.Visible = true;
-            mapPlayerDot.Visible = false;
+            mapPlayerDot.Visible = false; // Deferred show — re-shown after all cluster markers so it renders on top (Z-order)
             mapHeaderBg.Visible = true;
             mapHeaderAccent.Visible = true;
             mapHeaderMsg.Visible = true;
@@ -2826,16 +2749,6 @@ namespace GVK.Navigation
                 fullMapLabelPool[i].Visible = false;
         }
 
-        private string GetZoneName(int zone)
-        {
-            switch (zone)
-            {
-                case 0: return "Zone 0 (Safe Hub)";
-                case 1: return "Zone 1 (PvE Frontier)";
-                case 2: return "Zone 2 (Contested PvP)";
-                default: return "Zone 3 (Gaalsien Deep Desert)";
-            }
-        }
 
         private Color GetZoneColor(int zone)
         {
@@ -2847,6 +2760,12 @@ namespace GVK.Navigation
                 default: return Color.Red;
             }
         }
+
+        /// <summary>Compass ribbon total width at the given scale factor. Single source of truth for all callers.</summary>
+        private float GetCompassBaseWidth(float scale) => 0.54f + 0.08f * scale;
+
+        /// <summary>Compass ribbon total height at the given scale factor. Single source of truth for all callers (reduced by 25%).</summary>
+        private float GetCompassBaseHeight(float scale) => 0.057f * scale;
 
         /// <summary>
         /// Converts planetary 3D world position to UV [0, 1] matching KharakMap.dds / Kharak Zone Map V3.
@@ -2878,208 +2797,52 @@ namespace GVK.Navigation
 
             string msg = messageText.Trim();
 
-            if (msg.Equals("/map", StringComparison.OrdinalIgnoreCase))
+            // All commands use /gvk prefix to avoid collision with other mods.
+            if (msg.Equals("/gvk map", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 ToggleFullMap();
                 return;
             }
 
-            if (msg.Equals("/radar", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/minimap mode", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone radar", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                ToggleMinimapMode();
-                return;
-            }
-
-            if (msg.StartsWith("/radar range", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length >= 3)
-                {
-                    double parsedKm;
-                    if (double.TryParse(parts[2], out parsedKm) && parsedKm >= 0.5 && parsedKm <= 20.0)
-                    {
-                        radarRangeMeters = parsedKm * 1000.0;
-                        _refreshMinimapNextFrame = true;
-                        SaveConfig();
-                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Radar Range set to {parsedKm:F1} km", 2500, MyFontEnum.Green);
-                        return;
-                    }
-                }
-                CycleRadarRange();
-                return;
-            }
-
-            if (msg.Equals("/radar scale", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar log", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar linear", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                ToggleRadarScale();
-                return;
-            }
-
-            if (msg.Equals("/minimap", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone minimap", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk minimap", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 ToggleMinimap();
                 return;
             }
 
-            if (msg.Equals("/minimap size", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/minimap scale", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar size", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar scale-size", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk radar", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
-                CycleMinimapScale();
+                ToggleMinimapMode();
                 return;
             }
 
-            if (msg.Equals("/minimap preset", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar preset", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone minimap-preset", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                CycleMinimapPreset();
-                return;
-            }
-
-            if (msg.StartsWith("/minimap pos", StringComparison.OrdinalIgnoreCase) ||
-                msg.StartsWith("/radar pos", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length >= 4)
-                {
-                    double px, py;
-                    if (double.TryParse(parts[2], out px) && double.TryParse(parts[3], out py))
-                    {
-                        SetMinimapOffset(px, py);
-                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Offset set to X:{px:F2}, Y:{py:F2}", 2500, MyFontEnum.Green);
-                        return;
-                    }
-                }
-                CycleMinimapPreset();
-                return;
-            }
-
-            if (msg.Equals("/minimap reset", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/radar reset", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                ResetMinimapOffset();
-                return;
-            }
-
-            if (msg.Equals("/compass", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone compass", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk compass", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 ToggleCompass();
                 return;
             }
 
-            if (msg.Equals("/compass size", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/compass scale", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone compass-size", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                CycleCompassScale();
-                return;
-            }
-
-            if (msg.Equals("/compass preset", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone compass-preset", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                CycleCompassPreset();
-                return;
-            }
-
-            if (msg.StartsWith("/compass pos", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length >= 4)
-                {
-                    double px, py;
-                    if (double.TryParse(parts[2], out px) && double.TryParse(parts[3], out py))
-                    {
-                        SetCompassOffset(px, py);
-                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Offset set to X:{px:F2}, Y:{py:F2}", 2500, MyFontEnum.Green);
-                        return;
-                    }
-                }
-                CycleCompassPreset();
-                return;
-            }
-
-            if (msg.Equals("/compass reset", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                ResetCompassOffset();
-                return;
-            }
-
-            if (msg.Equals("/zone hud", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone bar", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone dock", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone mode", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone toggle", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk zone", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 CycleZoneBarMode();
                 return;
             }
 
-
-            if (msg.Equals("/zone gps", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/gps defaults", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk gps", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 PopulateDefaultGps(notify: true);
                 return;
             }
 
-            if (msg.Equals("/zone", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/whereami", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/loc", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk rate", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
-                OpenZoneMissionScreen();
-                return;
-            }
-
-            if (msg.Equals("/zones", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone all", StringComparison.OrdinalIgnoreCase) ||
-                msg.Equals("/zone help", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                OpenAllZonesMissionScreen();
-                return;
-            }
-
-            if (msg.StartsWith("/nav rate", StringComparison.OrdinalIgnoreCase) ||
-                msg.StartsWith("/zone rate", StringComparison.OrdinalIgnoreCase) ||
-                msg.StartsWith("/hud rate", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                string[] parts = msg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length >= 3)
-                {
-                    int parsedTicks;
-                    if (int.TryParse(parts[2], out parsedTicks) && parsedTicks >= 1 && parsedTicks <= 60)
-                    {
-                        SetUpdateTickRate(parsedTicks);
-                        return;
-                    }
-                }
                 CycleUpdateTickRate();
                 return;
             }
@@ -3361,10 +3124,6 @@ namespace GVK.Navigation
             SaveConfig();
         }
 
-        private void ToggleRadarScale()
-        {
-            CycleRadarRange();
-        }
 
         private void SetUpdateTickRate(int ticks)
         {
@@ -3451,8 +3210,8 @@ namespace GVK.Navigation
             compassScale = scale;
             float aspect = GetScreenAspect();
 
-            float baseWidth = 0.54f + 0.08f * scale;
-            float baseHeight = 0.076f * scale;
+            float baseWidth = GetCompassBaseWidth(scale);
+            float baseHeight = GetCompassBaseHeight(scale);
 
             double maxCompassCenterX = 0.999 - (baseWidth * 0.5);
             double compassCenterX = compassOffsetX * maxCompassCenterX;
@@ -3523,7 +3282,7 @@ namespace GVK.Navigation
                 }
                 if (waypointDistPool[i] != null)
                 {
-                    waypointDistPool[i].Scale = 0.46 * scale;
+                    waypointDistPool[i].Scale = 0.42 * scale;
                 }
             }
             for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
@@ -3596,79 +3355,6 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status: {modeName}", 2500, zoneBarMode != ZoneBarMode.Off ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
-        private void OpenZoneMissionScreen()
-        {
-            Vector3D? pos = GetPlayerPosition();
-            if (!pos.HasValue) return;
-
-            string title = "DESERTS OF KHARAK — ZONE ADVISORY";
-            string objectivePrefix = "Current Location:";
-            string currentObjective = $"{GetZoneName(currentZoneIndex)} ({lastDistKm:F1} km from Crossroads)";
-
-            // Reuse _missionSb to avoid per-call StringBuilder allocation.
-            _missionSb.Clear();
-            _missionSb.AppendLine($"CURRENT SECTOR: {GetZoneName(currentZoneIndex).ToUpper()}");
-            _missionSb.AppendLine("--------------------------------------------------");
-            _missionSb.AppendLine($"• Distance from Crossroads Tower: {lastDistKm:F1} km");
-            if (currentZoneIndex < 3)
-                _missionSb.AppendLine($"• Next Sector Transition: {lastRemainingKm:F1} km ahead");
-            else
-                _missionSb.AppendLine($"• Distance to Z3 Antipode Core: {lastDistZ3Km:F1} km");
-            _missionSb.AppendLine();
-            _missionSb.AppendLine("COMBAT & GOVERNANCE RULES:");
-            if (currentZoneIndex <= 1)
-            {
-                _missionSb.AppendLine("• Strict PvE Region: Player-vs-player damage is zeroed out.");
-                _missionSb.AppendLine("• Hostile NPC wrecks can be ground with upgraded/ship grinders.");
-                _missionSb.AppendLine("• Shield Generators: 100% NON-SIEGABLE.");
-            }
-            else
-            {
-                _missionSb.AppendLine("• FULL PVP WARFARE UNLOCKED.");
-                _missionSb.AppendLine("• Full production and upgrades permitted.");
-                _missionSb.AppendLine("• Shield Generators: SIEGABLE via Siege Drives.");
-            }
-            _missionSb.AppendLine("--------------------------------------------------");
-            _missionSb.AppendLine("Controls: Press [M] for Map | /minimap | /compass | /zone gps");
-
-            MyAPIGateway.Utilities.ShowMissionScreen(
-                screenTitle: title,
-                currentObjectivePrefix: objectivePrefix,
-                currentObjective: currentObjective,
-                screenDescription: _missionSb.ToString(),
-                callback: null,
-                okButtonCaption: "Close"
-            );
-        }
-
-        private void OpenAllZonesMissionScreen()
-        {
-            // Reuse _missionSb to avoid per-call StringBuilder allocation.
-            _missionSb.Clear();
-            _missionSb.AppendLine("DESERTS OF KHARAK — PLANETARY ZONE DIRECTORY");
-            _missionSb.AppendLine("All zone distances measured straight-line from Crossroads Tower:");
-            _missionSb.AppendLine("==================================================");
-            _missionSb.AppendLine("• Zone 0 (0 – 20 km): Safe Starter Hub | Strict PvE | Basic Prod Only | Shields Non-Siegable");
-            _missionSb.AppendLine("• Zone 1 (20 – 35 km): PvE & Salvage | Strict PvE | Weapons/Drills/Grinders Enabled");
-            _missionSb.AppendLine("• Zone 2 (35 – 50 km): Contested Desert | Full PvP | Large Prod Unlocked | Shields Siegable");
-            _missionSb.AppendLine("• Zone 3 (> 50 km): Deep Desert | High-Threat PvPvE | Ancient Relics | Battlecruisers");
-            _missionSb.AppendLine("==================================================");
-            _missionSb.AppendLine("Hotkeys & Commands:");
-            _missionSb.AppendLine("• Press [M] to toggle Full Satellite Map");
-            _missionSb.AppendLine("• /minimap - Toggle live top-right minimap");
-            _missionSb.AppendLine("• /compass - Toggle heading tape");
-            _missionSb.AppendLine("• /zone hud - Toggle zone status bar");
-            _missionSb.AppendLine("• /nav rate [ticks] - Set or cycle HUD refresh rate (e.g. 6 = 10 Hz, 5 = 12 Hz, 1 = 60 Hz)");
-            _missionSb.AppendLine("• /zone gps - Restore default Kharak GPS waypoints");
-
-            MyAPIGateway.Utilities.ShowMissionScreen(
-                screenTitle: "DESERTS OF KHARAK — ZONE DIRECTORY",
-                currentObjectivePrefix: "Reference Guide:",
-                currentObjective: "Planetary Zone Boundaries & Governance Matrix",
-                screenDescription: _missionSb.ToString(),
-                okButtonCaption: "Close"
-            );
-        }
 
         private Vector3D? GetPlayerPosition()
         {
