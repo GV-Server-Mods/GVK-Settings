@@ -88,10 +88,17 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - **Perimeter Zone Direction Vectors**: Tactical vector rays spin around the outer 1/3rd perimeter ring of the radar (leaving the center 2/3rds completely unobscured for CQB contacts and reticles) in the accent color of the nearest lower zone (Lime Green / Yellow) and higher zone (Orange / Red), dynamically rotating with your live camera view and vehicle heading.
     - **Integrated Tactical Header Box**: The mode and range telemetry (`TACTICAL RADAR (LOG: 30 KM)` or `SECTOR MAP`) is cleanly framed in crisp white text inside a docked header card directly above the minimap, matching the exact width of the minimap card with a tactical grey accent strip on the left edge.
     - **Dynamic HUD Background Transparency & Palette**: All HUD element background cards (compass ribbon, zone status panel, tactical radar box, full satellite map frame, and map header) are rendered in Keen's signature HUD slate blue (`#29363E` / `RGB 41, 54, 62`) and automatically match the player's native Space Engineers **HUD Background Opacity** game setting in real time.
-    - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, and Zone status bar) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
-    - **Instant Toggling**: Switch between Strategic Map and Tactical Radar modes via **`/gvk radar`** or the **`F2` TextHUDAPI menu**.
-    - **Scale & Range Tuning**: Switch between Linear and Logarithmic zoom and select ranges via the **`F2` TextHUDAPI menu**.
-    - Toggle visibility on/off via **`/gvk minimap`** or the F2 menu.
+    - **Color-Coded Avionics F2 Mod Menu**: Reorganized into clean, focused subcategories (`▶ Radar & Minimap Settings...`, `▶ Compass Ribbon Settings...`, `▶ Performance & Presets...`) with real-time color badges (`[ON]`, `[OFF]`, `[3.0 KM]`, `[RADAR DOCK]`) that instantly show live status and update dynamically when clicked.
+    - **Modular Radar Visuals**: Full toggles for **Zone Direction Vectors** and **Camera Frustum FOV Cone** in the F2 menu and config.
+    - **Tactical Chat Commands**:
+      - `/gvk` or `/gvk help` - Avionics status report card & command list
+      - `/gvk radar` - Toggle between Tactical Radar and Strategic Sector Map
+      - `/gvk range [1.5|3|5|30]` - Direct radar range setting (or cycle)
+      - `/gvk compass` - Toggle Compass ribbon
+      - `/gvk zone` - Cycle Zone telemetry dock (Radar / Compass / Off)
+      - `/gvk rate` - Cycle HUD refresh frequency (15, 12, 10, 6 Hz)
+      - `/gvk reset` - Factory reset all navigation positions and preferences
+    - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, Zone status bar, and visual vector toggles) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
   - **Docked Zone Telemetry Status Panel**:
     - Seamlessly docked directly beneath the minimap card in the top-right corner (or top-center compass dock), leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
       - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`

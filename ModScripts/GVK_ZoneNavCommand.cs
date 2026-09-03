@@ -294,6 +294,22 @@ namespace GVK.Navigation
         private HudAPIv2.BillBoardHUDMessage radarLowerZoneLine;
         private HudAPIv2.BillBoardHUDMessage radarHigherZoneLine;
         private float cachedHudBkOpacity = -1f;
+        private bool showRadarZoneLines = true;
+        private bool showRadarFovLines = true;
+
+        private HudAPIv2.MenuItem menuRootMinimap;
+        private HudAPIv2.MenuItem menuRootCompass;
+        private HudAPIv2.MenuItem menuRootZone;
+        private HudAPIv2.MenuItem menuSubMinimapMode;
+        private HudAPIv2.MenuItem menuSubRadarRange;
+        private HudAPIv2.MenuItem menuSubMinimapScale;
+        private HudAPIv2.MenuItem menuSubZoneLines;
+        private HudAPIv2.MenuItem menuSubFovLines;
+        private HudAPIv2.MenuItem menuSubMinimapPreset;
+        private HudAPIv2.MenuItem menuSubCompassToggle;
+        private HudAPIv2.MenuItem menuSubCompassScale;
+        private HudAPIv2.MenuItem menuSubCompassPreset;
+        private HudAPIv2.MenuItem menuSubRate;
 
         private struct HudPreset
         {
@@ -346,6 +362,8 @@ namespace GVK.Navigation
             public int ZoneBarDockMode { get; set; } = 0;
             public int ZoneBarMode { get; set; } = 0;
             public int UpdateTickRate { get; set; } = 5;
+            public bool ShowRadarZoneLines { get; set; } = true;
+            public bool ShowRadarFovLines { get; set; } = true;
 
             public ZoneNavConfig() { }
         }
@@ -481,6 +499,8 @@ namespace GVK.Navigation
                                     zoneBarMode = ZoneBarMode.RadarDock;
 
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
+                                showRadarZoneLines = cfg.ShowRadarZoneLines;
+                                showRadarFovLines = cfg.ShowRadarFovLines;
                                 minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
                                 minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
                                 compassOffsetX = MathHelper.Clamp(cfg.CompassOffsetX, -1.0, 1.0);
@@ -519,7 +539,9 @@ namespace GVK.Navigation
                     ShowZoneBar = (zoneBarMode != ZoneBarMode.Off),
                     ZoneBarDockMode = (zoneBarMode == ZoneBarMode.CompassDock ? 1 : 0),
                     ZoneBarMode = (int)zoneBarMode,
-                    UpdateTickRate = updateTickRate
+                    UpdateTickRate = updateTickRate,
+                    ShowRadarZoneLines = showRadarZoneLines,
+                    ShowRadarFovLines = showRadarFovLines
                 };
 
                 string xml = MyAPIGateway.Utilities.SerializeToXML(cfg);
@@ -1240,19 +1262,26 @@ namespace GVK.Navigation
                 );
                 mapPlayerDot.Visible = false;
 
-                // 5. Register TextHUDAPI Mod Menu
+                // 5. Register TextHUDAPI Mod Menu (Organized Color-Coded Avionics Suite)
                 var rootCategory = new HudAPIv2.MenuRootCategory("GVK Navigation Suite", HudAPIv2.MenuRootCategory.MenuFlag.PlayerMenu, "GVK Navigation & Map Settings");
-                new HudAPIv2.MenuItem("Toggle Tactical Map (Key: M)", rootCategory, () => { ToggleFullMap(); });
-                new HudAPIv2.MenuItem("Toggle Corner Minimap", rootCategory, () => { ToggleMinimap(); });
-                new HudAPIv2.MenuItem("Toggle Minimap Mode (Map / Radar)", rootCategory, () => { ToggleMinimapMode(); });
-                new HudAPIv2.MenuItem("Cycle Minimap Size (75% / 100% / 125% / 150%)", rootCategory, () => { CycleMinimapScale(); });
-                new HudAPIv2.MenuItem("Cycle Minimap Position Preset", rootCategory, () => { CycleMinimapPreset(); });
 
-                var minimapPosCategory = new HudAPIv2.MenuSubCategory("Minimap Position & Fine Tuning", rootCategory, "Fine-tune Minimap screen position and offsets");
-                new HudAPIv2.MenuItem("Cycle Preset Position", minimapPosCategory, () => { CycleMinimapPreset(); });
+                new HudAPIv2.MenuItem("<color=187,233,246>[M] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
+                menuRootMinimap = new HudAPIv2.MenuItem("Minimap: ...", rootCategory, () => { ToggleMinimap(); });
+                menuRootCompass = new HudAPIv2.MenuItem("Compass Ribbon: ...", rootCategory, () => { ToggleCompass(); });
+                menuRootZone = new HudAPIv2.MenuItem("Zone Telemetry: ...", rootCategory, () => { CycleZoneBarMode(); });
+
+                // Submenu 1: Radar & Minimap Settings
+                var radarCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Radar & Minimap Settings...", rootCategory, "Tactical Radar & Minimap Configuration");
+                menuSubMinimapMode = new HudAPIv2.MenuItem("Mode: ...", radarCategory, () => { ToggleMinimapMode(); });
+                menuSubRadarRange = new HudAPIv2.MenuItem("Radar Range: ...", radarCategory, () => { CycleRadarRange(); });
+                menuSubMinimapScale = new HudAPIv2.MenuItem("Minimap Size: ...", radarCategory, () => { CycleMinimapScale(); });
+                menuSubZoneLines = new HudAPIv2.MenuItem("Zone Direction Vectors: ...", radarCategory, () => { ToggleRadarZoneLines(); });
+                menuSubFovLines = new HudAPIv2.MenuItem("Camera Frustum FOV: ...", radarCategory, () => { ToggleRadarFovLines(); });
+                menuSubMinimapPreset = new HudAPIv2.MenuItem("Snap Position: ...", radarCategory, () => { CycleMinimapPreset(); });
+
                 minimapSliderX = new HudAPIv2.MenuSliderInput(
                     "Fine-Tune X Offset (Left <-> Right)",
-                    minimapPosCategory,
+                    radarCategory,
                     MathHelper.Clamp((float)((minimapOffsetX + 1.0) * 0.5), 0f, 1f),
                     "Adjust Minimap X Position",
                     p => {
@@ -1266,7 +1295,7 @@ namespace GVK.Navigation
                 );
                 minimapSliderY = new HudAPIv2.MenuSliderInput(
                     "Fine-Tune Y Offset (Down <-> Up)",
-                    minimapPosCategory,
+                    radarCategory,
                     MathHelper.Clamp((float)((minimapOffsetY + 1.0) * 0.5), 0f, 1f),
                     "Adjust Minimap Y Position",
                     p => {
@@ -1278,22 +1307,17 @@ namespace GVK.Navigation
                         return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
                     }
                 );
-                new HudAPIv2.MenuItem("Nudge Left (-0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX - 0.02, minimapOffsetY); });
-                new HudAPIv2.MenuItem("Nudge Right (+0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX + 0.02, minimapOffsetY); });
-                new HudAPIv2.MenuItem("Nudge Up (+0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX, minimapOffsetY + 0.02); });
-                new HudAPIv2.MenuItem("Nudge Down (-0.02)", minimapPosCategory, () => { SetMinimapOffset(minimapOffsetX, minimapOffsetY - 0.02); });
-                new HudAPIv2.MenuItem("Reset Minimap Position to Top-Right (1.0, 1.0)", minimapPosCategory, () => { ResetMinimapOffset(); });
+                new HudAPIv2.MenuItem("<color=255,180,50>Reset Position to Top-Right", radarCategory, () => { ResetMinimapOffset(); });
 
-                new HudAPIv2.MenuItem("Cycle Radar Range (1.5k / 3k / 5k / Log 30k)", rootCategory, () => { CycleRadarRange(); });
-                new HudAPIv2.MenuItem("Toggle Compass Tape", rootCategory, () => { ToggleCompass(); });
-                new HudAPIv2.MenuItem("Cycle Compass Size (75% / 100% / 125% / 150%)", rootCategory, () => { CycleCompassScale(); });
-                new HudAPIv2.MenuItem("Cycle Compass Position Preset (Top / Toolbar)", rootCategory, () => { CycleCompassPreset(); });
+                // Submenu 2: Compass Ribbon Settings
+                var compassCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Compass Ribbon Settings...", rootCategory, "Compass Tape Positioning & Scaling");
+                menuSubCompassToggle = new HudAPIv2.MenuItem("Compass Tape: ...", compassCategory, () => { ToggleCompass(); });
+                menuSubCompassScale = new HudAPIv2.MenuItem("Compass Size: ...", compassCategory, () => { CycleCompassScale(); });
+                menuSubCompassPreset = new HudAPIv2.MenuItem("Snap Position: ...", compassCategory, () => { CycleCompassPreset(); });
 
-                var compassPosCategory = new HudAPIv2.MenuSubCategory("Compass Position & Fine Tuning", rootCategory, "Fine-tune Compass ribbon screen position and offsets");
-                new HudAPIv2.MenuItem("Cycle Preset (Top / Toolbar)", compassPosCategory, () => { CycleCompassPreset(); });
                 compassSliderX = new HudAPIv2.MenuSliderInput(
                     "Fine-Tune X Offset (Left <-> Right)",
-                    compassPosCategory,
+                    compassCategory,
                     MathHelper.Clamp((float)((compassOffsetX + 1.0) * 0.5), 0f, 1f),
                     "Adjust Compass X Position",
                     p => {
@@ -1307,7 +1331,7 @@ namespace GVK.Navigation
                 );
                 compassSliderY = new HudAPIv2.MenuSliderInput(
                     "Fine-Tune Y Offset (Down <-> Up)",
-                    compassPosCategory,
+                    compassCategory,
                     MathHelper.Clamp((float)((compassOffsetY + 1.0) * 0.5), 0f, 1f),
                     "Adjust Compass Y Position",
                     p => {
@@ -1319,27 +1343,22 @@ namespace GVK.Navigation
                         return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
                     }
                 );
-                new HudAPIv2.MenuItem("Nudge Left (-0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX - 0.02, compassOffsetY); });
-                new HudAPIv2.MenuItem("Nudge Right (+0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX + 0.02, compassOffsetY); });
-                new HudAPIv2.MenuItem("Nudge Up (+0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX, compassOffsetY + 0.02); });
-                new HudAPIv2.MenuItem("Nudge Down (-0.02)", compassPosCategory, () => { SetCompassOffset(compassOffsetX, compassOffsetY - 0.02); });
-                new HudAPIv2.MenuItem("Reset Compass Position to Top-Center (0.0, 1.0)", compassPosCategory, () => { ResetCompassOffset(); });
+                new HudAPIv2.MenuItem("<color=255,180,50>Reset Position to Top-Center", compassCategory, () => { ResetCompassOffset(); });
 
-                new HudAPIv2.MenuItem("Cycle Zone Status (Compass Dock / Radar Dock / Off)", rootCategory, () => { CycleZoneBarMode(); });
+                // Submenu 3: Performance & Presets
+                var perfCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Performance & Presets...", rootCategory, "HUD Refresh Frequency & System Tools");
+                menuSubRate = new HudAPIv2.MenuItem("Update Frequency: ...", perfCategory, () => { CycleUpdateTickRate(); });
+                new HudAPIv2.MenuItem("  - 15 Hz (4 Ticks) - Ultra Smooth", perfCategory, () => { SetUpdateTickRate(4); });
+                new HudAPIv2.MenuItem("  - 12 Hz (5 Ticks) - Recommended", perfCategory, () => { SetUpdateTickRate(5); });
+                new HudAPIv2.MenuItem("  - 10 Hz (6 Ticks) - Balanced", perfCategory, () => { SetUpdateTickRate(6); });
+                new HudAPIv2.MenuItem("  - 6 Hz (10 Ticks) - Power Saver", perfCategory, () => { SetUpdateTickRate(10); });
+                new HudAPIv2.MenuItem("<color=187,233,246>Restore Default Kharak GPS", perfCategory, () => { PopulateDefaultGps(true); });
+                new HudAPIv2.MenuItem("<color=255,90,90>Factory Reset All Settings", perfCategory, () => { ResetAllToFactoryDefaults(); });
 
-                var rateCategory = new HudAPIv2.MenuSubCategory("HUD Refresh Rate Presets", rootCategory, "Select HUD Update Frequency");
-                new HudAPIv2.MenuItem("5 Ticks (12 Hz) - Recommended", rateCategory, () => { SetUpdateTickRate(5); });
-                new HudAPIv2.MenuItem("6 Ticks (10 Hz) - Balanced", rateCategory, () => { SetUpdateTickRate(6); });
-                new HudAPIv2.MenuItem("4 Ticks (15 Hz) - Ultra Smooth", rateCategory, () => { SetUpdateTickRate(4); });
-                new HudAPIv2.MenuItem("2 Ticks (30 Hz) - Half Framerate", rateCategory, () => { SetUpdateTickRate(2); });
-                new HudAPIv2.MenuItem("1 Tick (60 Hz) - Uncapped", rateCategory, () => { SetUpdateTickRate(1); });
-                new HudAPIv2.MenuItem("10 Ticks (6 Hz) - Battery / Sim Saver", rateCategory, () => { SetUpdateTickRate(10); });
-
-                new HudAPIv2.MenuItem("Restore Default Kharak GPS Waypoints", rootCategory, () => { PopulateDefaultGps(true); });
-
-                // Ensure minimap dimensions are populated before the first UpdateMinimap/UpdateZoneBar run.
+                // Ensure minimap dimensions, background opacities, and live menu labels are populated
                 ApplyMinimapScale(minimapScale);
                 UpdateCardBackgroundOpacities();
+                UpdateMenuTexts();
             }
             catch (Exception ex)
             {
@@ -2375,7 +2394,7 @@ namespace GVK.Navigation
                 var camera = MyAPIGateway.Session.Camera;
 
                 // Dynamic Camera View Frustum "V" Indicator (widens/narrows with game FOV and zoom)
-                if (radarFovLeft != null && radarFovRight != null)
+                if (showRadarFovLines && radarFovLeft != null && radarFovRight != null)
                 {
                     float vFov = camera != null ? camera.FovWithZoom : 1.2217f;
                     float halfVFov = vFov * 0.5f;
@@ -2405,6 +2424,11 @@ namespace GVK.Navigation
                     radarFovLeft.Rotation = -halfHFov;
                     radarFovLeft.BillBoardColor = fovLineColor;
                     radarFovLeft.Visible = true;
+                }
+                else
+                {
+                    if (radarFovLeft != null) radarFovLeft.Visible = false;
+                    if (radarFovRight != null) radarFovRight.Visible = false;
                 }
 
                 // Tangent plane orientation relative to Pertam's local gravity (Camera-Facing orientation)
@@ -2555,7 +2579,7 @@ namespace GVK.Navigation
                     const double MID_RADIUS_FACTOR = 5.0 / 6.0;
 
                     // Lower Zone Vector Line (Radially inward toward Crossroads, outer 1/3rd of radar)
-                    if (currentZoneIndex > 0 && radarLowerZoneLine != null)
+                    if (showRadarZoneLines && currentZoneIndex > 0 && radarLowerZoneLine != null)
                     {
                         int lowerZoneIdx = currentZoneIndex - 1;
                         Color lowerCol = GetZoneColor(lowerZoneIdx);
@@ -2576,7 +2600,7 @@ namespace GVK.Navigation
                     }
 
                     // Higher Zone Vector Line (Radially outward away from Crossroads, outer 1/3rd of radar)
-                    if (currentZoneIndex < 3 && radarHigherZoneLine != null)
+                    if (showRadarZoneLines && currentZoneIndex < 3 && radarHigherZoneLine != null)
                     {
                         int higherZoneIdx = currentZoneIndex + 1;
                         Color higherCol = GetZoneColor(higherZoneIdx);
@@ -2947,6 +2971,13 @@ namespace GVK.Navigation
             string msg = messageText.Trim();
 
             // All commands use /gvk prefix to avoid collision with other mods.
+            if (msg.Equals("/gvk", StringComparison.OrdinalIgnoreCase) || msg.Equals("/gvk help", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ShowAvionicsStatusCard();
+                return;
+            }
+
             if (msg.Equals("/gvk map", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
@@ -2968,6 +2999,37 @@ namespace GVK.Navigation
                 return;
             }
 
+            if (msg.StartsWith("/gvk range", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                string[] parts = msg.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 3)
+                {
+                    double r;
+                    if (double.TryParse(parts[2], out r))
+                    {
+                        if (r >= 25.0)
+                        {
+                            radarScale = RadarScaleMode.Logarithmic;
+                            radarRangeMeters = 30000.0;
+                        }
+                        else
+                        {
+                            radarScale = RadarScaleMode.Linear;
+                            radarRangeMeters = MathHelper.Clamp(r * 1000.0, 500.0, 20000.0);
+                        }
+                        _refreshMinimapNextFrame = true;
+                        SaveConfig();
+                        UpdateMenuTexts();
+                        string rStr = radarScale == RadarScaleMode.Logarithmic ? "30.0 km (Logarithmic)" : $"{(radarRangeMeters * 0.001):0.#} km (Linear)";
+                        MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Tactical Radar Range: {rStr}", 2500, MyFontEnum.Green);
+                        return;
+                    }
+                }
+                CycleRadarRange();
+                return;
+            }
+
             if (msg.Equals("/gvk compass", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
@@ -2979,6 +3041,13 @@ namespace GVK.Navigation
             {
                 sendToOthers = false;
                 CycleZoneBarMode();
+                return;
+            }
+
+            if (msg.Equals("/gvk reset", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ResetAllToFactoryDefaults();
                 return;
             }
 
@@ -3067,6 +3136,7 @@ namespace GVK.Navigation
             }
             _refreshMinimapNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
             string status = showMinimap ? "ENABLED" : "DISABLED";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Corner Minimap: {status}", 2500, showMinimap ? MyFontEnum.Green : MyFontEnum.Red);
         }
@@ -3082,6 +3152,7 @@ namespace GVK.Navigation
             _lastZoneBarZoneIndex = -1;
             _refreshMinimapNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
             string modeName = (minimapMode == MinimapDisplayMode.TacticalRadar) ? "TACTICAL RADAR (LOCAL)" : "STRATEGIC MAP (GLOBAL)";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Mode: {modeName}", 2500, MyFontEnum.Green);
         }
@@ -3100,6 +3171,7 @@ namespace GVK.Navigation
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
             int pct = (int)Math.Round(minimapScale * 100);
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Size: {pct}%", 2500, MyFontEnum.Green);
         }
@@ -3228,6 +3300,7 @@ namespace GVK.Navigation
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
         }
 
         private void ResetMinimapOffset()
@@ -3273,6 +3346,7 @@ namespace GVK.Navigation
 
             _refreshMinimapNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
         }
 
 
@@ -3280,6 +3354,7 @@ namespace GVK.Navigation
         {
             updateTickRate = Math.Max(1, Math.Min(60, ticks));
             SaveConfig();
+            UpdateMenuTexts();
             double hz = 60.0 / updateTickRate;
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] HUD Refresh Rate: {updateTickRate} ticks ({hz:F1} Hz)", 2500, MyFontEnum.Green);
         }
@@ -3309,6 +3384,7 @@ namespace GVK.Navigation
 
             ApplyCompassScale(compassScale);
             SaveConfig();
+            UpdateMenuTexts();
             int pct = (int)Math.Round(compassScale * 100);
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon Size: {pct}%", 2500, MyFontEnum.Green);
         }
@@ -3340,6 +3416,7 @@ namespace GVK.Navigation
             if (zoneBarMode == ZoneBarMode.CompassDock) _lastZoneBarZoneIndex = -1;
             _refreshCompassNextFrame = true;
             SaveConfig();
+            UpdateMenuTexts();
         }
 
         private void ResetCompassOffset()
@@ -3467,6 +3544,7 @@ namespace GVK.Navigation
                 _refreshCompassNextFrame = true;
             }
             SaveConfig();
+            UpdateMenuTexts();
             string status = showCompass ? "ENABLED" : "DISABLED";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon: {status}", 2500, showCompass ? MyFontEnum.Green : MyFontEnum.Red);
         }
@@ -3495,6 +3573,7 @@ namespace GVK.Navigation
             _refreshCompassNextFrame = true;
             _lastZoneBarZoneIndex = -1;
             SaveConfig();
+            UpdateMenuTexts();
 
             string modeName;
             switch (zoneBarMode)
@@ -3504,6 +3583,159 @@ namespace GVK.Navigation
                 default: modeName = "OFF"; break;
             }
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status: {modeName}", 2500, zoneBarMode != ZoneBarMode.Off ? MyFontEnum.Green : MyFontEnum.Red);
+        }
+
+        private int GetCurrentMinimapPresetIndex()
+        {
+            for (int i = 0; i < MinimapPresets.Length; i++)
+            {
+                if (Math.Abs(minimapOffsetX - MinimapPresets[i].PosX) < 0.08 &&
+                    Math.Abs(minimapOffsetY - MinimapPresets[i].PosY) < 0.08)
+                    return i;
+            }
+            return 0;
+        }
+
+        private int GetCurrentCompassPresetIndex()
+        {
+            for (int i = 0; i < CompassPresets.Length; i++)
+            {
+                if (Math.Abs(compassOffsetX - CompassPresets[i].PosX) < 0.08 &&
+                    Math.Abs(compassOffsetY - CompassPresets[i].PosY) < 0.08)
+                    return i;
+            }
+            return 0;
+        }
+
+        private void ToggleRadarZoneLines()
+        {
+            showRadarZoneLines = !showRadarZoneLines;
+            SaveConfig();
+            if (!showRadarZoneLines)
+            {
+                if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
+                if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
+            }
+            _refreshMinimapNextFrame = true;
+            UpdateMenuTexts();
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Direction Vectors: {(showRadarZoneLines ? "ENABLED" : "DISABLED")}", 2500, showRadarZoneLines ? MyFontEnum.Green : MyFontEnum.Red);
+        }
+
+        private void ToggleRadarFovLines()
+        {
+            showRadarFovLines = !showRadarFovLines;
+            SaveConfig();
+            if (!showRadarFovLines)
+            {
+                if (radarFovLeft != null) radarFovLeft.Visible = false;
+                if (radarFovRight != null) radarFovRight.Visible = false;
+            }
+            _refreshMinimapNextFrame = true;
+            UpdateMenuTexts();
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Camera Frustum FOV: {(showRadarFovLines ? "ENABLED" : "DISABLED")}", 2500, showRadarFovLines ? MyFontEnum.Green : MyFontEnum.Red);
+        }
+
+        private void ResetAllToFactoryDefaults()
+        {
+            showMinimap = true;
+            minimapMode = MinimapDisplayMode.TacticalRadar;
+            radarScale = RadarScaleMode.Linear;
+            radarRangeMeters = 3000.0;
+            minimapScale = 1.0f;
+            minimapOffsetX = 1.0;
+            minimapOffsetY = 1.0;
+
+            showCompass = true;
+            compassScale = 1.0f;
+            compassOffsetX = 0.0;
+            compassOffsetY = 1.0;
+
+            zoneBarMode = ZoneBarMode.RadarDock;
+            updateTickRate = 5;
+            showRadarZoneLines = true;
+            showRadarFovLines = true;
+
+            ApplyMinimapScale(minimapScale);
+            ApplyCompassScale(compassScale);
+            UpdateMinimapSliderPercents();
+            UpdateCompassSliderPercents();
+            UpdateCardBackgroundOpacities();
+            _refreshMinimapNextFrame = true;
+            _refreshCompassNextFrame = true;
+            _lastZoneBarZoneIndex = -1;
+            SaveConfig();
+            UpdateMenuTexts();
+
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] All Navigation & Radar settings reset to factory defaults.", 3000, MyFontEnum.Green);
+        }
+
+        private void ShowAvionicsStatusCard()
+        {
+            string mStatus = showMinimap ? "ON" : "OFF";
+            string mMode = minimapMode == MinimapDisplayMode.TacticalRadar ? "TACTICAL RADAR" : "SECTOR MAP";
+            string mRange = radarScale == RadarScaleMode.Logarithmic ? "30 KM (Log)" : $"{(int)(radarRangeMeters * 0.001):0.#} KM";
+            string cStatus = showCompass ? "ON" : "OFF";
+            string zMode = zoneBarMode == ZoneBarMode.RadarDock ? "RADAR DOCKED" : (zoneBarMode == ZoneBarMode.CompassDock ? "COMPASS DOCKED" : "OFF");
+
+            MyAPIGateway.Utilities.ShowMessage("GVK NAV", $"Status: Radar [{mStatus}|{mMode}|{mRange}], Compass [{cStatus}], Zone [{zMode}], Rate [{updateTickRate}tk]");
+            MyAPIGateway.Utilities.ShowMessage("GVK NAV", "Commands: /gvk map, /gvk minimap, /gvk radar, /gvk range [km], /gvk compass, /gvk zone, /gvk rate, /gvk reset. Press [F2] for Mod Settings.");
+        }
+
+        private void UpdateMenuTexts()
+        {
+            if (menuRootMinimap != null)
+                menuRootMinimap.Text = $"Minimap: {(showMinimap ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuRootCompass != null)
+                menuRootCompass.Text = $"Compass Ribbon: {(showCompass ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuRootZone != null)
+            {
+                string zText = zoneBarMode == ZoneBarMode.RadarDock ? "<color=187,233,246>[RADAR DOCK]" :
+                               zoneBarMode == ZoneBarMode.CompassDock ? "<color=187,233,246>[COMPASS DOCK]" :
+                               "<color=255,90,90>[OFF]";
+                menuRootZone.Text = $"Zone Telemetry: {zText}";
+            }
+
+            if (menuSubMinimapMode != null)
+                menuSubMinimapMode.Text = (minimapMode == MinimapDisplayMode.TacticalRadar)
+                    ? "Mode: <color=187,233,246>[TACTICAL RADAR] <color=130,130,130>(Sector Map)"
+                    : "Mode: <color=130,130,130>(Tactical Radar) <color=187,233,246>[SECTOR MAP]";
+
+            if (menuSubRadarRange != null)
+                menuSubRadarRange.Text = (radarScale == RadarScaleMode.Logarithmic)
+                    ? "Radar Range: <color=255,230,40>[30 KM (Log)]"
+                    : $"Radar Range: <color=255,230,40>[{(int)(radarRangeMeters * 0.001):0.#} KM (Linear)]";
+
+            if (menuSubMinimapScale != null)
+                menuSubMinimapScale.Text = $"Minimap Size: <color=255,230,40>[{(int)Math.Round(minimapScale * 100)}%]";
+
+            if (menuSubZoneLines != null)
+                menuSubZoneLines.Text = $"Zone Direction Vectors: {(showRadarZoneLines ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubFovLines != null)
+                menuSubFovLines.Text = $"Camera Frustum FOV: {(showRadarFovLines ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMinimapPreset != null)
+            {
+                int pIdx = GetCurrentMinimapPresetIndex();
+                menuSubMinimapPreset.Text = $"Snap Position: <color=187,233,246>[{MinimapPresets[pIdx].Name}]";
+            }
+
+            if (menuSubCompassToggle != null)
+                menuSubCompassToggle.Text = $"Compass Tape: {(showCompass ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubCompassScale != null)
+                menuSubCompassScale.Text = $"Compass Size: <color=255,230,40>[{(int)Math.Round(compassScale * 100)}%]";
+
+            if (menuSubCompassPreset != null)
+            {
+                int cIdx = GetCurrentCompassPresetIndex();
+                menuSubCompassPreset.Text = $"Snap Position: <color=187,233,246>[{CompassPresets[cIdx].Name}]";
+            }
+
+            if (menuSubRate != null)
+                menuSubRate.Text = $"Update Frequency: <color=255,230,40>[{updateTickRate} Ticks ({(60f / updateTickRate):0.#} Hz)]";
         }
 
 
