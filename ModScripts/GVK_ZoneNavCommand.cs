@@ -291,6 +291,9 @@ namespace GVK.Navigation
         private HudAPIv2.BillBoardHUDMessage radarGrid;
         private HudAPIv2.BillBoardHUDMessage radarFovLeft;
         private HudAPIv2.BillBoardHUDMessage radarFovRight;
+        private HudAPIv2.BillBoardHUDMessage radarLowerZoneLine;
+        private HudAPIv2.BillBoardHUDMessage radarHigherZoneLine;
+        private float cachedHudBkOpacity = -1f;
 
         private struct HudPreset
         {
@@ -574,6 +577,8 @@ namespace GVK.Navigation
                     radarGrid?.DeleteMessage();
                     radarFovLeft?.DeleteMessage();
                     radarFovRight?.DeleteMessage();
+                    radarLowerZoneLine?.DeleteMessage();
+                    radarHigherZoneLine?.DeleteMessage();
                     ClearMinimapPool();
 
                     mapDimmer?.DeleteMessage();
@@ -879,7 +884,7 @@ namespace GVK.Navigation
                 radarGrid = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_RADAR_GRID,
                     Origin: minimapPosition,
-                    BillBoardColor: new Color(100, 220, 255, 200),
+                    BillBoardColor: new Color(187, 233, 246, 200),
                     Offset: Vector2D.Zero,
                     TimeToLive: -1,
                     Scale: 1.0,
@@ -894,7 +899,7 @@ namespace GVK.Navigation
                 radarFovLeft = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: minimapPosition,
-                    BillBoardColor: new Color(100, 220, 255, 140),
+                    BillBoardColor: new Color(187, 233, 246, 140),
                     Offset: Vector2D.Zero,
                     TimeToLive: -1,
                     Scale: 1.0,
@@ -909,7 +914,7 @@ namespace GVK.Navigation
                 radarFovRight = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: minimapPosition,
-                    BillBoardColor: new Color(100, 220, 255, 140),
+                    BillBoardColor: new Color(187, 233, 246, 140),
                     Offset: Vector2D.Zero,
                     TimeToLive: -1,
                     Scale: 1.0,
@@ -920,6 +925,36 @@ namespace GVK.Navigation
                     Blend: BlendTypeEnum.PostPP
                 );
                 radarFovRight.Visible = false;
+
+                radarLowerZoneLine = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_SQUARE,
+                    Origin: minimapPosition,
+                    BillBoardColor: Color.LimeGreen,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    Width: 0.0012f,
+                    Height: 0.1f,
+                    HideHud: true,
+                    Shadowing: false,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                radarLowerZoneLine.Visible = false;
+
+                radarHigherZoneLine = new HudAPIv2.BillBoardHUDMessage(
+                    Material: MATERIAL_SQUARE,
+                    Origin: minimapPosition,
+                    BillBoardColor: Color.Orange,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    Width: 0.0012f,
+                    Height: 0.1f,
+                    HideHud: true,
+                    Shadowing: false,
+                    Blend: BlendTypeEnum.PostPP
+                );
+                radarHigherZoneLine.Visible = false;
 
                 minimapLabel = new HudAPIv2.HUDMessage(
                     Message: new StringBuilder("<color=200,200,200>3.0 KM"),
@@ -1304,6 +1339,7 @@ namespace GVK.Navigation
 
                 // Ensure minimap dimensions are populated before the first UpdateMinimap/UpdateZoneBar run.
                 ApplyMinimapScale(minimapScale);
+                UpdateCardBackgroundOpacities();
             }
             catch (Exception ex)
             {
@@ -1344,6 +1380,12 @@ namespace GVK.Navigation
             if (tickCounter % 100 == 0)
             {
                 UpdateBackgroundData(pos.Value);
+
+                float currentHudOpacity = GetUserHudOpacity();
+                if (Math.Abs(currentHudOpacity - cachedHudBkOpacity) > 0.005f)
+                {
+                    UpdateCardBackgroundOpacities();
+                }
             }
 
             // Configurable HUD Cadence (default 5 ticks / 12 Hz):
@@ -2260,6 +2302,8 @@ namespace GVK.Navigation
                 if (radarFovLeft != null) radarFovLeft.Visible = false;
                 if (radarFovRight != null) radarFovRight.Visible = false;
                 if (minimapLabel != null) minimapLabel.Visible = false;
+                if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
+                if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
 
                 // Map UV position of player relative to center of minimap box
                 Vector2 uv = WorldToMapUV(playerPos);
@@ -2305,7 +2349,7 @@ namespace GVK.Navigation
                 minimapLabel.Message.Clear();
                 if (radarScale == RadarScaleMode.Logarithmic)
                 {
-                    minimapLabel.Message.Append("<color=200,200,200>30 KM <color=120,220,255>(LOG)");
+                    minimapLabel.Message.Append("<color=200,200,200>30 KM <color=187,233,246>(LOG)");
                 }
                 else
                 {
@@ -2340,27 +2384,25 @@ namespace GVK.Navigation
                     // Screen-space vector for right arm from (0,0) to perimeter
                     double armX = Math.Sin(halfHFov) * radarRadiusX;
                     double armY = Math.Cos(halfHFov) * radarRadiusY;
-                    float armLen = (float)Math.Sqrt(armX * armX + armY * armY);
-                    float armRot = (float)Math.Atan2(armX, armY);
 
-                    // Sleek tactical HUD line: 0.0008f width with semi-transparent cyan glow
-                    Color fovLineColor = new Color(120, 220, 255, 100);
+                    // Sleek tactical HUD line: 0.0008f width matching Keen HUD cyan
+                    Color fovLineColor = new Color(187, 233, 246, 110);
 
                     // Right arm of V (opens upward-right)
                     radarFovRight.Origin = minimapPosition;
-                    radarFovRight.Height = armLen;
+                    radarFovRight.Height = radarRadiusY;
                     radarFovRight.Width = 0.0008f;
                     radarFovRight.Offset = new Vector2D(armX * 0.5, armY * 0.5);
-                    radarFovRight.Rotation = armRot;
+                    radarFovRight.Rotation = halfHFov;
                     radarFovRight.BillBoardColor = fovLineColor;
                     radarFovRight.Visible = true;
 
                     // Left arm of V (opens upward-left)
                     radarFovLeft.Origin = minimapPosition;
-                    radarFovLeft.Height = armLen;
+                    radarFovLeft.Height = radarRadiusY;
                     radarFovLeft.Width = 0.0008f;
                     radarFovLeft.Offset = new Vector2D(-armX * 0.5, armY * 0.5);
-                    radarFovLeft.Rotation = -armRot;
+                    radarFovLeft.Rotation = -halfHFov;
                     radarFovLeft.BillBoardColor = fovLineColor;
                     radarFovLeft.Visible = true;
                 }
@@ -2494,6 +2536,71 @@ namespace GVK.Navigation
                 // High-visibility pulse: Electric Gold <-> Amber
                 minimapPlayerDot.BillBoardColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
                 minimapPlayerDot.Visible = true;
+
+                // Direction vector lines to nearest lower and higher zones
+                Vector3D toCrossroads = CROSSROADS_BEACON - playerPos;
+                Vector3D toCrossroadsTangent = toCrossroads - Vector3D.Dot(toCrossroads, upNormal) * upNormal;
+
+                if (toCrossroadsTangent.LengthSquared() > 0.001)
+                {
+                    toCrossroadsTangent.Normalize();
+                    double fwdDot = Vector3D.Dot(toCrossroadsTangent, fwdTangent);
+                    double rightDot = Vector3D.Dot(toCrossroadsTangent, rightTangent);
+                    double angleToLower = Math.Atan2(rightDot, fwdDot); // 0 = forward (up), pi/2 = right, -pi/2 = left, pi = rear
+                    double angleToHigher = angleToLower + Math.PI;
+                    if (angleToHigher > Math.PI) angleToHigher -= 2.0 * Math.PI;
+
+                    float lineWidth = 0.0014f * minimapScale;
+                    float lineSegmentHeight = radarRadiusY * (1f / 3f);
+                    const double MID_RADIUS_FACTOR = 5.0 / 6.0;
+
+                    // Lower Zone Vector Line (Radially inward toward Crossroads, outer 1/3rd of radar)
+                    if (currentZoneIndex > 0 && radarLowerZoneLine != null)
+                    {
+                        int lowerZoneIdx = currentZoneIndex - 1;
+                        Color lowerCol = GetZoneColor(lowerZoneIdx);
+                        double midX = Math.Sin(angleToLower) * radarRadiusX * MID_RADIUS_FACTOR;
+                        double midY = Math.Cos(angleToLower) * radarRadiusY * MID_RADIUS_FACTOR;
+
+                        radarLowerZoneLine.Origin = minimapPosition;
+                        radarLowerZoneLine.Width = lineWidth;
+                        radarLowerZoneLine.Height = lineSegmentHeight;
+                        radarLowerZoneLine.Offset = new Vector2D(midX, midY);
+                        radarLowerZoneLine.Rotation = (float)angleToLower;
+                        radarLowerZoneLine.BillBoardColor = new Color(lowerCol.R, lowerCol.G, lowerCol.B, 220);
+                        radarLowerZoneLine.Visible = true;
+                    }
+                    else if (radarLowerZoneLine != null)
+                    {
+                        radarLowerZoneLine.Visible = false;
+                    }
+
+                    // Higher Zone Vector Line (Radially outward away from Crossroads, outer 1/3rd of radar)
+                    if (currentZoneIndex < 3 && radarHigherZoneLine != null)
+                    {
+                        int higherZoneIdx = currentZoneIndex + 1;
+                        Color higherCol = GetZoneColor(higherZoneIdx);
+                        double midX = Math.Sin(angleToHigher) * radarRadiusX * MID_RADIUS_FACTOR;
+                        double midY = Math.Cos(angleToHigher) * radarRadiusY * MID_RADIUS_FACTOR;
+
+                        radarHigherZoneLine.Origin = minimapPosition;
+                        radarHigherZoneLine.Width = lineWidth;
+                        radarHigherZoneLine.Height = lineSegmentHeight;
+                        radarHigherZoneLine.Offset = new Vector2D(midX, midY);
+                        radarHigherZoneLine.Rotation = (float)angleToHigher;
+                        radarHigherZoneLine.BillBoardColor = new Color(higherCol.R, higherCol.G, higherCol.B, 220);
+                        radarHigherZoneLine.Visible = true;
+                    }
+                    else if (radarHigherZoneLine != null)
+                    {
+                        radarHigherZoneLine.Visible = false;
+                    }
+                }
+                else
+                {
+                    if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
+                    if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
+                }
             }
 
             // Hide unused pool slots
@@ -2505,6 +2612,8 @@ namespace GVK.Navigation
         {
             for (int i = 0; i < minimapMarkerPool.Count; i++)
                 minimapMarkerPool[i].Visible = false;
+            if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
+            if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
         }
 
         /// <summary>
@@ -2759,6 +2868,46 @@ namespace GVK.Navigation
                 case 2: return Color.Orange;
                 default: return Color.Red;
             }
+        }
+
+        /// <summary>
+        /// Reads the user's HUD background opacity setting from game config (HUDBkOpacity).
+        /// </summary>
+        private float GetUserHudOpacity()
+        {
+            try
+            {
+                if (MyAPIGateway.Session?.Config != null)
+                {
+                    return MathHelper.Clamp(MyAPIGateway.Session.Config.HUDBkOpacity, 0f, 1f);
+                }
+            }
+            catch
+            {
+                // Fallback if config is unavailable
+            }
+            return 1.0f;
+        }
+
+        /// <summary>
+        /// Synchronizes all HUD background card billboard colors with Keen's HUD slate blue (41, 54, 62)
+        /// scaled by the user's HUD background opacity setting.
+        /// </summary>
+        private void UpdateCardBackgroundOpacities()
+        {
+            float hudOpacity = GetUserHudOpacity();
+            cachedHudBkOpacity = hudOpacity;
+
+            byte cardAlpha = (byte)MathHelper.Clamp((int)(255f * hudOpacity), 0, 255);
+
+            // Keen signature HUD background slate blue: RGB (41, 54, 62)
+            Color cardBgColor = new Color(41, 54, 62, cardAlpha);
+
+            if (compassBg != null) compassBg.BillBoardColor = cardBgColor;
+            if (zoneBg != null) zoneBg.BillBoardColor = cardBgColor;
+            if (minimapBg != null) minimapBg.BillBoardColor = cardBgColor;
+            if (mapHeaderBg != null) mapHeaderBg.BillBoardColor = cardBgColor;
+            if (mapFrame != null) mapFrame.BillBoardColor = cardBgColor;
         }
 
         /// <summary>Compass ribbon total width at the given scale factor. Single source of truth for all callers.</summary>
@@ -3042,6 +3191,8 @@ namespace GVK.Navigation
                 minimapPlayerDot.Width = dotSize;
                 minimapPlayerDot.Height = dotSize * aspect;
             }
+            if (radarLowerZoneLine != null) radarLowerZoneLine.Origin = minimapPosition;
+            if (radarHigherZoneLine != null) radarHigherZoneLine.Origin = minimapPosition;
             for (int i = 0; i < minimapMarkerPool.Count; i++)
             {
                 minimapMarkerPool[i].Origin = minimapPosition;
