@@ -1,222 +1,7 @@
 <?xml version="1.0"?>
-<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<TransparentMaterials>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>FactionLimits</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\FactionLimits.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>GridLimits</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\GridLimits.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>BlockCosts</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\BlockCosts.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>SpecCoresIntro</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\SpecCoresIntro.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>SubgridBuilding</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\SubgridBuilding.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>CUs</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\CUs.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>RUs</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\RUs.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>Techs</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\Techs.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
-		<TransparentMaterial>
-			<Id>
-				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>CoalitionRefinery</SubtypeId>
-			</Id>
-			<AlphaMistingEnable>false</AlphaMistingEnable>
-			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
-			<AlphaSaturation>1</AlphaSaturation>
-			<Emissivity>0</Emissivity>
-			<IgnoreDepth>false</IgnoreDepth>
-			<NeedSort>false</NeedSort>
-			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\CoalitionRefinery.dds</Texture>
-			<Reflectivity>0</Reflectivity>
-			<UseAtlas>false</UseAtlas>
-			<UVOffset>
-				<X>0</X>
-				<Y>0</Y>
-			</UVOffset>
-			<UVSize>
-				<X>1</X>
-				<Y>1</Y>
-			</UVSize>
-		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
 				<TypeId>TransparentMaterialDefinition</TypeId>
@@ -256,8 +41,14 @@
 			<Texture>Textures\RadarGrid.dds</Texture>
 			<Reflectivity>0</Reflectivity>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -296,8 +87,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\POI_Home.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -313,8 +110,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\POI_Zone3.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -330,8 +133,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\POI_KOTH.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -347,8 +156,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\POI_Trade.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -364,8 +179,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\POI_Wreck.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -381,8 +202,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\HUD\marker_gps_dot.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -398,8 +225,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\HUD\nav_arrow.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -415,8 +248,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\HUD\signal_up.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -432,8 +271,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\HUD\signal_down.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 		<TransparentMaterial>
 			<Id>
@@ -449,8 +294,14 @@
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\HUD\signal_level.dds</Texture>
 			<UseAtlas>false</UseAtlas>
-			<UVOffset><X>0</X><Y>0</Y></UVOffset>
-			<UVSize><X>1</X><Y>1</Y></UVSize>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
 		</TransparentMaterial>
 	</TransparentMaterials>
 </Definitions>
