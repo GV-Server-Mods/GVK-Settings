@@ -97,6 +97,7 @@ All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.
       - `/gvk compass` - Toggle Compass ribbon
       - `/gvk zone` - Cycle Zone telemetry dock (Radar / Compass / Off)
       - `/gvk rate` - Cycle HUD refresh frequency (15, 12, 10, 6 Hz)
+      - `/gvk card` - Pop up the full-screen Avionics Mission Briefing screen
       - `/gvk reset` - Factory reset all navigation positions and preferences
     - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, Zone status bar, and visual vector toggles) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
   - **Docked Zone Telemetry Status Panel**:

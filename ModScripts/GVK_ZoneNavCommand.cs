@@ -2978,6 +2978,13 @@ namespace GVK.Navigation
                 return;
             }
 
+            if (msg.Equals("/gvk card", StringComparison.OrdinalIgnoreCase) || msg.Equals("/gvk popup", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ShowMissionScreenCard();
+                return;
+            }
+
             if (msg.Equals("/gvk map", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
@@ -3672,13 +3679,67 @@ namespace GVK.Navigation
         private void ShowAvionicsStatusCard()
         {
             string mStatus = showMinimap ? "ON" : "OFF";
-            string mMode = minimapMode == MinimapDisplayMode.TacticalRadar ? "TACTICAL RADAR" : "SECTOR MAP";
-            string mRange = radarScale == RadarScaleMode.Logarithmic ? "30 KM (Log)" : $"{(int)(radarRangeMeters * 0.001):0.#} KM";
+            string mRange = radarScale == RadarScaleMode.Logarithmic ? "30km Log" : $"{(radarRangeMeters * 0.001):0.#}km";
             string cStatus = showCompass ? "ON" : "OFF";
-            string zMode = zoneBarMode == ZoneBarMode.RadarDock ? "RADAR DOCKED" : (zoneBarMode == ZoneBarMode.CompassDock ? "COMPASS DOCKED" : "OFF");
+            string zMode = zoneBarMode == ZoneBarMode.RadarDock ? "Radar Dock" : (zoneBarMode == ZoneBarMode.CompassDock ? "Compass Dock" : "Off");
+            double hz = 60.0 / updateTickRate;
 
-            MyAPIGateway.Utilities.ShowMessage("GVK NAV", $"Status: Radar [{mStatus}|{mMode}|{mRange}], Compass [{cStatus}], Zone [{zMode}], Rate [{updateTickRate}tk]");
-            MyAPIGateway.Utilities.ShowMessage("GVK NAV", "Commands: /gvk map, /gvk minimap, /gvk radar, /gvk range [km], /gvk compass, /gvk zone, /gvk rate, /gvk reset. Press [F2] for Mod Settings.");
+            MyAPIGateway.Utilities.ShowMessage("GVK", $"Radar [{mStatus} {mRange}] | Compass [{cStatus}] | Zone [{zMode}] | {hz:0.#}Hz");
+            MyAPIGateway.Utilities.ShowMessage("GVK", "Commands: /gvk radar, range, compass, zone, reset, card. Press [F2] for GUI.");
+        }
+
+        private void ShowMissionScreenCard()
+        {
+            string mStatus = showMinimap ? "ENABLED" : "DISABLED";
+            string mMode = minimapMode == MinimapDisplayMode.TacticalRadar ? "TACTICAL RADAR" : "SECTOR MAP";
+            string mRange = radarScale == RadarScaleMode.Logarithmic ? "30.0 KM (Logarithmic)" : $"{(radarRangeMeters * 0.001):0.#} KM (Linear)";
+            string mPreset = MinimapPresets[GetCurrentMinimapPresetIndex()].Name;
+            int mPct = (int)Math.Round(minimapScale * 100);
+
+            string cStatus = showCompass ? "ENABLED" : "DISABLED";
+            string cPreset = CompassPresets[GetCurrentCompassPresetIndex()].Name;
+            int cPct = (int)Math.Round(compassScale * 100);
+
+            string zMode = zoneBarMode == ZoneBarMode.RadarDock ? "RADAR DOCKED" : (zoneBarMode == ZoneBarMode.CompassDock ? "COMPASS DOCKED" : "DISABLED");
+            string zName;
+            switch (currentZoneIndex)
+            {
+                case 0: zName = "Zone 0: Protected Hub (0 - 20 km)"; break;
+                case 1: zName = "Zone 1: PvE Frontier (20 - 35 km)"; break;
+                case 2: zName = "Zone 2: Contested Desert (35 - 50 km)"; break;
+                default: zName = "Zone 3: Gaalsien Heart (> 50 km)"; break;
+            }
+
+            double hz = 60.0 / updateTickRate;
+            int hudOpacityPct = (int)Math.Round(GetUserHudOpacity() * 100);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("=== ACTIVE TELEMETRY ===");
+            sb.AppendLine($"• Sector Location : {zName}");
+            sb.AppendLine($"• Radar / Minimap : {mStatus} [{mMode} | {mRange} | {mPreset} {mPct}%]");
+            sb.AppendLine($"• Compass Ribbon  : {cStatus} [{cPreset} {cPct}%]");
+            sb.AppendLine($"• Zone Status Bar : {zMode}");
+            sb.AppendLine($"• Refresh Rate    : {hz:0.#} Hz ({updateTickRate} Ticks) | HUD Opacity: {hudOpacityPct}%");
+            sb.AppendLine();
+            sb.AppendLine("=== QUICK CHAT COMMANDS ===");
+            sb.AppendLine("• /gvk radar       : Toggle Tactical Radar vs Sector Map");
+            sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
+            sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
+            sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
+            sb.AppendLine("• /gvk map (or M)  : Open Full-Screen Topographical Kharak Map");
+            sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Frequency (15, 12, 10, 6 Hz)");
+            sb.AppendLine("• /gvk reset       : Factory Reset All Positions & Preferences");
+            sb.AppendLine();
+            sb.AppendLine("Press [F2] anytime to open the interactive Mod Settings GUI.");
+
+            MyAPIGateway.Utilities.ShowMissionScreen(
+                "GVK NAVIGATION SUITE",
+                "AVIONICS STATUS",
+                $"{zName} | Radar: {mStatus} | Compass: {cStatus}",
+                sb.ToString(),
+                null,
+                "CLOSE"
+            );
         }
 
         private void UpdateMenuTexts()
