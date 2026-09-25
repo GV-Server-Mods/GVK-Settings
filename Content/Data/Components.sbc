@@ -189,6 +189,112 @@
 			<Health>40</Health>
 			<CanPlayerOrder>false</CanPlayerOrder>
 		</Component>
+		<!-- GVK Recovery Contract Items (1.210 Prosperity-style salvage, Component-typed for MES store orders) -->
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Recovery_EncryptedDataStorage</SubtypeId>
+			</Id>
+			<DisplayName>Encrypted Data Storage</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\EncryptedDataStorage.dds</Icon>
+			<Description>Sealed data vault recovered from derelict wreckage. Rustys Station pays a premium for these.</Description>
+			<Size>
+				<X>0.5</X>
+				<Y>0.5</Y>
+				<Z>0.5</Z>
+			</Size>
+			<Mass>40</Mass>
+			<Volume>30</Volume>
+			<Model>Models\Items\EncryptedDataStorage.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Recovery_InterceptedTransmissions</SubtypeId>
+			</Id>
+			<DisplayName>Intercepted Transmissions</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\InterceptedTransmissions.dds</Icon>
+			<Description>Recovered enemy comms logs. Mastodon Station pays a premium for these.</Description>
+			<Size>
+				<X>0.5</X>
+				<Y>0.5</Y>
+				<Z>0.5</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>0.8</Volume>
+			<Model>Models\Items\InterceptedTransmissions.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Recovery_ResearchMaterials</SubtypeId>
+			</Id>
+			<DisplayName>Research Materials</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\ResearchMaterials.dds</Icon>
+			<Description>Rare research salvage from the deep desert. Sevastapol Station pays a premium for these.</Description>
+			<Size>
+				<X>0.5</X>
+				<Y>0.5</Y>
+				<Z>0.5</Z>
+			</Size>
+			<Mass>8</Mass>
+			<Volume>20</Volume>
+			<Model>Models\Items\ResearchMaterials.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Recovery_TechnicalBlueprints</SubtypeId>
+			</Id>
+			<DisplayName>Technical Blueprints</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\TechnicalBlueprints.dds</Icon>
+			<Description>Pre-Cataclysm schematics cache. Skyport Station pays a premium for these.</Description>
+			<Size>
+				<X>0.5</X>
+				<Y>0.5</Y>
+				<Z>0.5</Z>
+			</Size>
+			<Mass>1</Mass>
+			<Volume>1</Volume>
+			<Model>Models\Items\TechnicalBlueprints.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>GVK_Recovery_SmuggledGoods</SubtypeId>
+			</Id>
+			<DisplayName>Smuggled Goods</DisplayName>
+			<Icon>Textures\GUI\Icons\Items\SmuggledGoods.dds</Icon>
+			<Description>Unmarked contraband of dubious origin. Sell only at the Scrap Town outpost - if you live that long.</Description>
+			<Size>
+				<X>0.5</X>
+				<Y>0.5</Y>
+				<Z>0.5</Z>
+			</Size>
+			<Mass>80</Mass>
+			<Volume>115</Volume>
+			<Model>Models\Items\SmuggledGoods.mwm</Model>
+			<PhysicalMaterial>Metal</PhysicalMaterial>
+			<MaxIntegrity>200</MaxIntegrity>
+			<Health>40</Health>
+			<CanPlayerOrder>false</CanPlayerOrder>
+		</Component>
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>

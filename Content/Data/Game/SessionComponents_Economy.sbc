@@ -62,6 +62,7 @@
             <SubtypeId>Default</SubtypeId>
         </Id>
         <ContractPerPlayerLimit>3</ContractPerPlayerLimit>
+    </Definition>
     <Definition xsi:type="MyObjectBuilder_ContractRiskDefinition">
         <Id>
             <TypeId>MyObjectBuilder_ContractRiskDefinition</TypeId>
@@ -70,41 +71,5 @@
         <CheckIntervalFrames>100</CheckIntervalFrames>
         <SpawnDistanceFromPlayer>500</SpawnDistanceFromPlayer>
         <DespawnDistance>16500</DespawnDistance>
-    </Definition>
-    <Definition xsi:type="MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition">
-        <Id>
-            <TypeId>MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition</TypeId>
-            <SubtypeId>Default</SubtypeId>
-        </Id>
-        <SpawnChance>0.35</SpawnChance>
-        <AllowEnemyFactions>true</AllowEnemyFactions>
-        <ContractEntries>
-            <ContractEntryData>
-                <Weight>1</Weight>
-                <ContractSubtypeId>Deliver_EncryptedDataStorage</ContractSubtypeId>
-                <ItemSubtypeId>EncryptedDataStorage</ItemSubtypeId>
-            </ContractEntryData>
-            <ContractEntryData>
-                <Weight>1</Weight>
-                <ContractSubtypeId>Deliver_InterceptedTransmissions</ContractSubtypeId>
-                <ItemSubtypeId>InterceptedTransmissions</ItemSubtypeId>
-            </ContractEntryData>
-            <ContractEntryData>
-                <Weight>1</Weight>
-                <ContractSubtypeId>Deliver_ResearchMaterials</ContractSubtypeId>
-                <ItemSubtypeId>ResearchMaterials</ItemSubtypeId>
-            </ContractEntryData>
-            <ContractEntryData>
-                <Weight>1</Weight>
-                <ContractSubtypeId>Deliver_SmuggledGoods</ContractSubtypeId>
-                <ItemSubtypeId>SmuggledGoods</ItemSubtypeId>
-            </ContractEntryData>
-            <ContractEntryData>
-                <Weight>1</Weight>
-                <ContractSubtypeId>Deliver_TechnicalBlueprints</ContractSubtypeId>
-                <ItemSubtypeId>TechnicalBlueprints</ItemSubtypeId>
-            </ContractEntryData>
-        </ContractEntries>
-    </Definition>
     </Definition>
 </Definitions>
