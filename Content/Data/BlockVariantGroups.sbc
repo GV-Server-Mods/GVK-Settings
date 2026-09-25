@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!--
+		Notes:
+		* A group with the same Subtype as a vanilla group REPLACES the vanilla group, so every vanilla member must be re-listed
+		  or it drops out of the G-menu (most variants are GuiVisible=false and are only reachable through their group).
+		* A block may only be in one group, and blocks sharing a BlockPairName must be in the same group.
+		* Ship tool groups (drills, welders, grinders, Salvage Beam Turret) are owned by the GVK ToolCore Tools mod. Do not define
+		  or override tool groups here.
+	-->
 	<BlockVariantGroups>
 		<!-- Shared Cargos -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_Shared_Cargos"/>
 			<DisplayName>GVK Shared Cargo Containers</DisplayName>
-            <Icon>Textures\GUI\Icons\Cubes\CargoContainer.dds</Icon>
-            <Icon>Textures\Icons\Shared_Icon_Overlay.dds</Icon>
+			<Icon>Textures\GUI\Icons\Cubes\CargoContainer.dds</Icon>
+			<Icon>Textures\Icons\Shared_Icon_Overlay.dds</Icon>
 			<Description/>
 			<Blocks>
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockSmallContainer_Shared"/>
@@ -15,28 +23,33 @@
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockLargeIndustrialContainer_Shared"/>
 			</Blocks>
 		</BlockVariantGroup>
-		<!-- GVK Gas Generators & Hydrogen Engines (including Prototech Advanced Blocks) -->
-        <BlockVariantGroup>
-            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GasGeneratorGroup" />
-            <Icon>Textures\GUI\Icons\Cubes\OxygenGenerator.dds</Icon>
-            <DisplayName>DisplayName_Block_OxygenGenerator</DisplayName>
-            <Description>Description_OxygenGenerator</Description>
-            <Blocks>
-                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="" />
-                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGeneratorSmall" />
-                <Block Type="MyObjectBuilder_OxygenGenerator" Subtype="LargeBlockPrototechOxygenGenerator" />
-            </Blocks>
-        </BlockVariantGroup>
-        <BlockVariantGroup>
-            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="HydrogenEngineGroup" />
-            <Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
-            <DisplayName>DisplayName_Block_Hydrogen_Engine</DisplayName>
-            <Description>Description_PowerGenerator</Description>
-            <Blocks>
-		        <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngine" />
-                <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngine" />
-                <Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargePrototechReactor" />
-            </Blocks>
-        </BlockVariantGroup>
+		<!-- Vanilla O2/H2 Generators (incl. Lab variants) + Prototech Advanced O2/H2 Generator -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GasGeneratorGroup"/>
+			<Icon>Textures\GUI\Icons\Cubes\OxygenGenerator.dds</Icon>
+			<DisplayName>DisplayName_Block_OxygenGenerator</DisplayName>
+			<Description>Description_OxygenGenerator</Description>
+			<Blocks>
+				<Block Type="MyObjectBuilder_OxygenGenerator" Subtype=""/>
+				<Block Type="MyObjectBuilder_OxygenGenerator" Subtype="OxygenGeneratorSmall"/>
+				<Block Type="MyObjectBuilder_OxygenGenerator" Subtype="LargeBlockOxygenGeneratorLab"/>
+				<Block Type="MyObjectBuilder_OxygenGenerator" Subtype="SmallBlockOxygenGeneratorLab"/>
+				<Block Type="MyObjectBuilder_OxygenGenerator" Subtype="LargeBlockPrototechOxygenGenerator"/>
+			</Blocks>
+		</BlockVariantGroup>
+		<!-- Vanilla Hydrogen Engines (incl. reskins) + Prototech Advanced Hydrogen Engine -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="HydrogenEngineGroup"/>
+			<Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
+			<DisplayName>DisplayName_Block_Hydrogen_Engine</DisplayName>
+			<Description>Description_PowerGenerator</Description>
+			<Blocks>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngine"/>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngine"/>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngineReskin"/>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngineReskin"/>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargePrototechReactor"/>
+			</Blocks>
+		</BlockVariantGroup>
 	</BlockVariantGroups>
 </Definitions>

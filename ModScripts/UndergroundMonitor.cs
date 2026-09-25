@@ -222,6 +222,12 @@ namespace GVK.UndergroundMonitor
         {
             // Drills and mechanical drill extensions (pistons, rotors, hinges) are exempt so mining rigs don't get shut down
             if (block is IMyShipDrill) return true;
+            // GVK ToolCore drills are ConveyorSorter blocks (GVK_*Drill*), so they don't implement IMyShipDrill
+            if (block.BlockDefinition.Id.TypeId == typeof(MyObjectBuilder_ConveyorSorter))
+            {
+                string subtype = block.BlockDefinition.Id.SubtypeName;
+                if (subtype.StartsWith("GVK_") && subtype.Contains("Drill")) return true;
+            }
             if (block is IMyPistonBase) return true;
             if (block is IMyMotorStator) return true;
             return false;

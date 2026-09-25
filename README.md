@@ -67,7 +67,7 @@ Special thanks to the following modders and community authors whose code, assets
 
 ## 5. Underground Base Monitor
 * **Script**: `ModScripts/UndergroundMonitor.cs`
-* **Description**: Monitors grid elevations relative to voxel terrain meshes. Automatically detects illegal subterranean bases dug deeper than server limits and handles automated warnings and faction transfer to SPRT.
+* **Description**: Monitors grid elevations relative to voxel terrain meshes. Automatically detects illegal subterranean bases dug deeper than server limits and handles automated warnings and faction transfer to SPRT. Ship drills (vanilla and GVK ToolCore) and drill-rig mechanics (pistons, rotors, hinges) are exempt.
 
 ## 6. Safezone Enhancements
 * **Scripts**:
@@ -80,7 +80,7 @@ Special thanks to the following modders and community authors whose code, assets
 
 ## 8. Tool Enhancer
 * **Script**: `ModScripts/ToolEnhancer.cs`
-* **Description**: Adjusts internal inventory capacities for ship tools to prevent clogging during salvage operations.
+* **Description**: Adjusts internal inventory capacities for legacy vanilla ship tools (welders, grinders, drills) to prevent clogging during salvage operations. Current ship tools, their G-menu variant groups, and the Salvage Beam Turret are owned by the **GVK ToolCore Tools** mod, which takes precedence over this mod for all tool definitions.
 
 ## 9. Unknown Signal Ownership Correction
 * **Script**: `ModScripts/FixUnknownSignal.cs`

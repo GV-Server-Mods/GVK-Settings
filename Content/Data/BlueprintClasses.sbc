@@ -126,7 +126,7 @@
         <Entry Class="LargeBlocks" BlueprintSubtypeId="BatteryBlock/LargeBlockPrototechBattery" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="HydrogenEngine/LargePrototechReactor" />
         <Entry Class="LargeBlocks" BlueprintSubtypeId="OxygenGenerator/LargeBlockPrototechOxygenGenerator" />
-        <Entry Class="LargeBlocks" BlueprintSubtypeId="Drill/LargeBlockPrototechDrill" />
+        <!-- Prototech Drill is owned by GVK ToolCore Tools (ConveyorSorter/GVK_LargePrototechDrill); vanilla Drill/LargeBlockPrototechDrill is hidden there -->
         <Entry Class="SmallBlocks" BlueprintSubtypeId="JumpDrive/SmallPrototechJumpDrive" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="Thrust/SmallBlockPrototechThruster" />
         <Entry Class="SmallBlocks" BlueprintSubtypeId="Refinery/SmallPrototechRefinery" />

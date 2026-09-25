@@ -11,11 +11,10 @@
 				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmall"/>
 				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmallCurved"/>
 				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctSmallT"/>
-                <Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctT" />
-                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayDuct" />				
-                <Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorElbowDuct" />
-                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayAltDuct" />
-                <Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor5WayDuct" />				
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorElbowDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayAltDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor5WayDuct"/>
 			</Blocks>
 		</BlockVariantGroup>
 	</BlockVariantGroups>
