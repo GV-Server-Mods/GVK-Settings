@@ -1,0 +1,48 @@
+{
+	// GVK_Settings — build tasks
+	// NOTE: Mal.Mdk2.ModPackager runs "mdk pack" automatically after every build,
+	// which deploys the mod to %APPDATA%\SpaceEngineers\Mods\GVK_Settings
+	// (including dependency DLLs and the mdk.meta marker file it uses to
+	// identify the folder). DO NOT manually copy/robocopy into that folder —
+	// removing mdk.meta makes "mdk pack" fail with exit code -1.
+	// Ctrl+Shift+B (Run Build Task) = build Release + auto-deploy by MDK2.
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build (Release) + MDK Deploy",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"GVK_Settings.csproj",
+				"-c",
+				"Release",
+				"--nologo"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Build (Debug)",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"GVK_Settings.csproj",
+				"-c",
+				"Debug",
+				"--nologo"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": "$msCompile"
+		}
+	]
+}
