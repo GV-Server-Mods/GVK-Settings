@@ -1,4 +1,5 @@
-﻿using Sandbox.Game;
+﻿using Sandbox.Common.ObjectBuilders;
+using Sandbox.Game;
 using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
 using System;
@@ -213,6 +214,12 @@ namespace Underground_Monitor
         private bool IsUnderground(MyCubeBlock block, IMyEntity planetEntity, MyPlanet planet)
         {
             if (block as IMyShipDrill != null) return false;
+            // GVK ToolCore drills are ConveyorSorter blocks (GVK_*Drill*), so they don't implement IMyShipDrill
+            if (block.BlockDefinition.Id.TypeId == typeof(MyObjectBuilder_ConveyorSorter))
+            {
+                string subtype = block.BlockDefinition.Id.SubtypeName;
+                if (subtype.StartsWith("GVK_", StringComparison.Ordinal) && subtype.Contains("Drill")) return false;
+            }
             Vector3D pos = block.PositionComp.GetPosition();
             var powerBlock = block as IMyPowerProducer;
             bool isWindOrSolar = false;
