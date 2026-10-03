@@ -35,7 +35,7 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeaconReskin"/>
 			</Blocks>
 		</BlockVariantGroup>
-		<!-- Vanilla group + Huge H2 Engine (workshop 2409384685, which ships no group of its own) -->
+		<!-- Vanilla group + Prototech reactor (Advanced Hydrogen Engine, Fortress only) -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="HydrogenEngineGroup"/>
 			<Icon>Textures\GUI\Icons\Cubes\HydrogenEngineLarge.dds</Icon>
@@ -46,7 +46,7 @@
 				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargeHydrogenEngineReskin"/>
 				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngine"/>
 				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="SmallHydrogenEngineReskin"/>
-				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="HugeHydrogenEngine3"/>
+				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargePrototechReactor"/>
 			</Blocks>
 		</BlockVariantGroup>
 	</BlockVariantGroups>

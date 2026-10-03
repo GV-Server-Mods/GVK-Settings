@@ -17,8 +17,8 @@
 				<string>Beacon/SmallCargoScanner</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
-				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+				<string>HydrogenEngine/LargePrototechReactor</string>
+				<string>OxygenGenerator/LargeBlockPrototechOxygenGenerator</string>
 				<string>OxygenTank/RB_HydrogenTankMedium_Small</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
@@ -36,8 +36,8 @@
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
-				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
+				<string>HydrogenEngine/LargePrototechReactor</string>
+				<string>OxygenGenerator/LargeBlockPrototechOxygenGenerator</string>
 			</ItemIds>
 		</Category>
 		<!-- Vanilla tabs - ItemIds merge into the vanilla category -->
@@ -60,8 +60,6 @@
 				<string>CargoContainer/LargeBlockSmallContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeContainer_Shared</string>
 				<string>CargoContainer/LargeBlockLargeIndustrialContainer_Shared</string>
-				<string>OxygenGenerator/OxygenGenerator3</string>
-				<string>HydrogenEngine/HugeHydrogenEngine3</string>
 				<string>Conveyor/Conveyor4WayDuct</string>
 				<string>Conveyor/ConveyorElbowDuct</string>
 				<string>Conveyor/Conveyor4WayAltDuct</string>
@@ -92,7 +90,6 @@
 			<Name>Section1_Position2_Nonarmor</Name>
 			<StrictSearch>true</StrictSearch>
 			<ItemIds>
-				<string>OxygenGenerator/OxygenGenerator3</string>
 				<string>Beacon/SmallBlockBeacon</string>
 				<string>Beacon/SmallBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
