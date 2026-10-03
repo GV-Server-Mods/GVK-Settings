@@ -5,9 +5,11 @@ Issues and specs for the **entire GV: Deserts of Kharak server** live as GitHub 
 ## Hub tracker rules
 
 - This one repo tracks every GVK concern: core settings, WeaponCore, NPCs/MES, Torch plugins, server config, economy, season checklists, and every other GVK mod repo.
-- **Never create issues in other `GV-Server-Mods` repos.** If one turns up there, move it with `gh issue transfer <n> GV-Server-Mods/GVK-Settings -R GV-Server-Mods/<repo>`.
+- **Never create issues in other Kharak-only repos** (every `GVK-*` repo and `GVK_ToolCore_Tools`). If one turns up there, move it with `gh issue transfer <n> GV-Server-Mods/GVK-Settings -R GV-Server-Mods/<repo>`.
+- **Shared and independent repos keep their own trackers**: the `GV-*` repos, `PhysicsOptimizations`, `GridDefender`, `TorchRemoteCleanupPlugin`, `SpecCores_BeaconLimits`, `se-dev-mes`, and `Modular-Encounters-Systems`. A bug in one of them that is Kharak-specific still goes in the hub, with that repo as its Component.
 - **Always pass `-R GV-Server-Mods/GVK-Settings`** to `gh issue` commands, so they hit the hub even when run from another repo's clone.
 - Commits and PRs in other repos reference hub issues by full path: `Fixes GV-Server-Mods/GVK-Settings#123`.
+- An old issue number from GVK-Derelicts, GVK-Weapons-Pack, GVK-Character, GVK-Suspension, or GVK-Spec-Cores-Addon maps to its hub number in `Docs/agents/issue-migration.md`.
 - The code for an issue may live in a different repo. Use the issue's **Component** field (see `Docs/agents/triage-labels.md`) to find it, and work in that repo's clone.
 
 ## Conventions
