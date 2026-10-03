@@ -15,6 +15,29 @@
 			</Blocks>
 		</BlockVariantGroup>
 		<!-- Vanilla overrides below replace Keen's whole group: re-sync with Content\Data\BlockVariantGroups.sbc after game updates -->
+		<!-- Overrides AQD - Conveyor Expansion's copy (drops bulk containers and cargo terminals) and keeps its conveyor access block.
+		     GVK_Settings must stay above AQD - Conveyor Expansion in the mod list so this one loads last. -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="ContainerGroup"/>
+			<Icon>Textures\GUI\Icons\Cubes\container.dds</Icon>
+			<DisplayName>DisplayName_BlockGroup_ContainerGroup</DisplayName>
+			<Description>Description_BlockGroup_ContainerGroup</Description>
+			<Blocks>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockSmallContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockCargoTerminal"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockCargoTerminalHalf"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockLargeContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="SmallBlockSmallContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="SmallBlockMediumContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="SmallBlockLargeContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="SmallBlockModularContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockLargeIndustrialContainer"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockBulkContainerA"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockBulkContainerB"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="LargeBlockBulkContainerC"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="AQD_LG_ConveyorAccess"/>
+			</Blocks>
+		</BlockVariantGroup>
 		<!-- Keeps vanilla Id so the vanilla radial-menu beacon slot shows the GVK core beacons -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="BeaconGroup"/>
