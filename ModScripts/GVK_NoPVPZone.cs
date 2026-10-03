@@ -8,6 +8,7 @@ using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI;
+using VRage.Game.ObjectBuilders.Components;
 using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
@@ -21,7 +22,8 @@ namespace StarterGrinder
     /// Z0 (0-20km): player grids immune to entity damage; characters protected from NPC/enemy
     /// damage. Z1 (20-35km): anti-PvP - player-vs-player damage/grinding blocked; NPC, self,
     /// friendly and environment (falls/terrain) damage allowed. Global: T1 grinder anti-hack
-    /// with 1.2x boost, 2x T2-4 hand-grinder NPC salvage boost (stacks with Suit Combat Balancer).
+    /// with 1.2x boost, 2x T2-4 hand-grinder NPC salvage boost (stacks with Suit Combat Balancer),
+    /// and no sandstorm (Weather) damage to characters inside safe zones that block damage.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
@@ -51,6 +53,9 @@ namespace StarterGrinder
 
         /// <summary>Vanilla damage type string hash applied by grinders (hand + ship).</summary>
         private static readonly MyStringHash GRIND_DAMAGE = MyStringHash.GetOrCompute("Grind");
+
+        /// <summary>Sandstorm health hazard damage. Vanilla MyCharacter.DoDamage skips the safe zone check for this type.</summary>
+        private static readonly MyStringHash WEATHER_DAMAGE = MyDamageType.Weather;
 
         /// <summary>
         /// Registers the server damage handler in BeforeStart(): DamageSystem is not guaranteed
@@ -84,6 +89,8 @@ namespace StarterGrinder
             {
                 if (info.Type.Equals(GRIND_DAMAGE))
                     HandleGrindDamage(target, ref info);
+                else if (info.Type.Equals(WEATHER_DAMAGE))
+                    HandleWeatherDamage(target, ref info);
                 else
                     HandleOtherDamage(target, ref info);
             }
@@ -156,6 +163,18 @@ namespace StarterGrinder
             if (grinderOwner != 0 && SameFaction(owner, grinderOwner)) return; // allied
 
             info.Amount = 0f; // cross-faction PvP grinding blocked
+        }
+
+        /// <summary>
+        /// Weather (sandstorm) damage: cancelled for characters inside a safe zone that blocks damage.
+        /// Outside such zones it stays vanilla. Other hazard types (asphyxia, temperature, hunger) are untouched.
+        /// </summary>
+        private static void HandleWeatherDamage(object target, ref MyDamageInformation info)
+        {
+            if (!(target is IMyCharacter)) return;
+            MyEntity character = target as MyEntity;
+            if (character != null && !MySessionComponentSafeZones.IsActionAllowed(character, MySafeZoneAction.Damage))
+                info.Amount = 0f;
         }
 
         /// <summary>
