@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- Ammo stockpile explosion sounds. Vanilla DetonationData.CalculateAmmoExplosionEffects returns
+	     Explosion_Ammunition{Tiny,Small,Medium,Large} by stored ammo volume and uses it as both the particle
+	     and the sound cue, but vanilla ships no sounds with these names (silent explosions plus
+	     "Could not find any sound" log spam). These reuse vanilla wave files only. -->
+	<Sounds>
+		<!-- Under 125 L of ammo: small missile blast, quieter -->
+		<Sound>
+			<Id>
+				<TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+				<SubtypeId>Explosion_AmmunitionTiny</SubtypeId>
+			</Id>
+			<Category>WEP_EXPL</Category>
+			<MaxDistance>150</MaxDistance>
+			<PreventSynchronization>5</PreventSynchronization>
+			<DistantSounds>
+				<DistantSound Distance="50" Sound="WepExplDistA" />
+				<DistantSound Distance="250" Sound="WepExplDistB" />
+			</DistantSounds>
+			<DynamicMusicCategory>HeavyFight</DynamicMusicCategory>
+			<DynamicMusicAmount>25</DynamicMusicAmount>
+			<Volume>0.6</Volume>
+			<Waves>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+				</Wave>
+			</Waves>
+		</Sound>
+		<!-- Under 16,000 L: small missile blast -->
+		<Sound>
+			<Id>
+				<TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+				<SubtypeId>Explosion_AmmunitionSmall</SubtypeId>
+			</Id>
+			<Category>WEP_EXPL</Category>
+			<MaxDistance>200</MaxDistance>
+			<PreventSynchronization>5</PreventSynchronization>
+			<DistantSounds>
+				<DistantSound Distance="50" Sound="WepExplDistA" />
+				<DistantSound Distance="250" Sound="WepExplDistB" />
+				<DistantSound Distance="600" Sound="WepExplDistC" />
+			</DistantSounds>
+			<DynamicMusicCategory>HeavyFight</DynamicMusicCategory>
+			<DynamicMusicAmount>25</DynamicMusicAmount>
+			<Volume>0.9</Volume>
+			<Waves>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+				</Wave>
+			</Waves>
+		</Sound>
+		<!-- Under 100,000 L: full weapon blast, carries further -->
+		<Sound>
+			<Id>
+				<TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+				<SubtypeId>Explosion_AmmunitionMedium</SubtypeId>
+			</Id>
+			<Category>WEP_EXPL</Category>
+			<MaxDistance>300</MaxDistance>
+			<PreventSynchronization>5</PreventSynchronization>
+			<DistantSounds>
+				<DistantSound Distance="50" Sound="WepExplDistA" />
+				<DistantSound Distance="250" Sound="WepExplDistB" />
+				<DistantSound Distance="600" Sound="WepExplDistC" />
+			</DistantSounds>
+			<DynamicMusicCategory>HeavyFight</DynamicMusicCategory>
+			<DynamicMusicAmount>25</DynamicMusicAmount>
+			<Volume>1.0</Volume>
+			<Waves>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+				</Wave>
+				<Wave Type="D2">
+					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+				</Wave>
+			</Waves>
+		</Sound>
+		<!-- 100,000 L and up: hydrogen-tank blast -->
+		<Sound>
+			<Id>
+				<TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+				<SubtypeId>Explosion_AmmunitionLarge</SubtypeId>
+			</Id>
+			<Category>WEP_EXPL</Category>
+			<MaxDistance>400</MaxDistance>
+			<PreventSynchronization>5</PreventSynchronization>
+			<DistantSounds>
+				<DistantSound Distance="100" Sound="HydrogenExplosionDist" />
+			</DistantSounds>
+			<DynamicMusicCategory>HeavyFight</DynamicMusicCategory>
+			<DynamicMusicAmount>25</DynamicMusicAmount>
+			<Volume>1.0</Volume>
+			<Waves>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\H2_Explo_1.wav</Start>
+				</Wave>
+				<Wave Type="D3">
+					<Start>ARC\EXPL\H2_Explo_2.wav</Start>
+				</Wave>
+			</Waves>
+		</Sound>
+	</Sounds>
+</Definitions>
