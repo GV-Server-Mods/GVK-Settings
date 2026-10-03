@@ -32,10 +32,12 @@ namespace GVK.Navigation
         private static readonly Vector3D CROSSROADS_BEACON = new Vector3D(62495.55, 28019.04, 37195.71);
         private static readonly Vector3D Z3_CENTER = new Vector3D(3569.33, 36772.94, 26952.63);
 
-        // Zone radii from Crossroads
+        // Zone spheres mirror the GVK-Derelicts [MES Zone] profiles (GVK-Universal-Zone.sbc), which are
+        // canonical; keep in sync. Zone 0 is centred on Crossroads, Zones 1-3 on Z3_CENTER.
         private const double ZONE_0_RADIUS = 20000.0;
-        private const double ZONE_1_RADIUS = 35000.0;
-        private const double ZONE_2_RADIUS = 50000.0;
+        private const double ZONE_1_RADIUS = 57043.0;
+        private const double ZONE_2_RADIUS = 49300.0;
+        private const double ZONE_3_RADIUS = 34000.0;
 
         // Texture Materials (compass frame is drawn with Square billboards)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
@@ -388,7 +390,8 @@ namespace GVK.Navigation
         // Dynamic State
         private int currentZoneIndex = 0;
         private double lastDistKm = 0.0;
-        private double lastRemainingKm = 0.0;
+        private double lastRemainingKm = 0.0; // to the next-higher zone
+        private double lastToLowerKm = 0.0;   // to the next-lower zone
         private double lastDistZ3Km = 0.0;
         private int tickCounter = 0;
         private int updateTickRate = 5;
@@ -413,7 +416,7 @@ namespace GVK.Navigation
         private int _lastZoneBarZoneIndex = -1;
         private MinimapDisplayMode _lastZoneBarMinimapMode = (MinimapDisplayMode)(-1);
         private ZoneBarMode _lastZoneBarMode = (ZoneBarMode)(-1);
-        private double _lastZoneBarDistKm = -1.0;
+        private double _lastZoneBarToLowerKm = -1.0;
         private double _lastZoneBarRemainingKm = -1.0;
         private double _lastZoneBarDistZ3Km = -1.0;
 
@@ -1505,36 +1508,60 @@ namespace GVK.Navigation
         }
 
         /// <summary>
+        /// Zone index (0-3) from the MES zone spheres, plus straight-line distances to the next-lower and
+        /// next-higher zone. Zone 0 wins where it overlaps Zone 1; otherwise the highest containing sphere wins.
+        /// Outside every sphere (high altitude), the zone whose boundary is nearest.
+        /// </summary>
+        private static int ClassifyZone(Vector3D pos, out double toLowerM, out double toHigherM)
+        {
+            double d0 = Vector3D.Distance(pos, CROSSROADS_BEACON);
+            double d3 = Vector3D.Distance(pos, Z3_CENTER);
+
+            int zone;
+            if (d0 <= ZONE_0_RADIUS) zone = 0;
+            else if (d3 <= ZONE_3_RADIUS) zone = 3;
+            else if (d3 <= ZONE_2_RADIUS) zone = 2;
+            else if (d3 <= ZONE_1_RADIUS) zone = 1;
+            else zone = (d0 - ZONE_0_RADIUS) < (d3 - ZONE_1_RADIUS) ? 0 : 1;
+
+            switch (zone)
+            {
+                case 0:
+                    toLowerM = 0.0;
+                    toHigherM = ZONE_0_RADIUS - d0; // leave the Zone 0 sphere
+                    break;
+                case 1:
+                    toLowerM = d0 - ZONE_0_RADIUS;  // enter the Zone 0 sphere
+                    toHigherM = d3 - ZONE_2_RADIUS;
+                    break;
+                case 2:
+                    toLowerM = ZONE_2_RADIUS - d3;
+                    toHigherM = d3 - ZONE_3_RADIUS;
+                    break;
+                default:
+                    toLowerM = ZONE_3_RADIUS - d3;
+                    toHigherM = 0.0;
+                    break;
+            }
+
+            toLowerM = Math.Max(0.0, toLowerM);
+            toHigherM = Math.Max(0.0, toHigherM);
+            return zone;
+        }
+
+        /// <summary>
         /// Scans all player GPS entries and in-range radio signals:
         /// 1. GPS coordinates: uses marker_gps and GPSColor.
         /// 2. Active broadcasting antennas / beacons: uses marker_friendly, marker_enemy, marker_neutral, marker_self.
         /// </summary>
         private void UpdateBackgroundData(Vector3D playerPos)
         {
-            double distMeters = Vector3D.Distance(playerPos, CROSSROADS_BEACON);
-            lastDistKm = distMeters / 1000.0;
+            double toLowerM, toHigherM;
+            currentZoneIndex = ClassifyZone(playerPos, out toLowerM, out toHigherM);
+            lastToLowerKm = toLowerM / 1000.0;
+            lastRemainingKm = toHigherM / 1000.0;
+            lastDistKm = Vector3D.Distance(playerPos, CROSSROADS_BEACON) / 1000.0;
             lastDistZ3Km = Vector3D.Distance(playerPos, Z3_CENTER) / 1000.0;
-
-            if (distMeters <= ZONE_0_RADIUS)
-            {
-                currentZoneIndex = 0;
-                lastRemainingKm = (ZONE_0_RADIUS - distMeters) / 1000.0;
-            }
-            else if (distMeters <= ZONE_1_RADIUS)
-            {
-                currentZoneIndex = 1;
-                lastRemainingKm = (ZONE_1_RADIUS - distMeters) / 1000.0;
-            }
-            else if (distMeters <= ZONE_2_RADIUS)
-            {
-                currentZoneIndex = 2;
-                lastRemainingKm = (ZONE_2_RADIUS - distMeters) / 1000.0;
-            }
-            else
-            {
-                currentZoneIndex = 3;
-                lastRemainingKm = 0.0;
-            }
 
             activeHudWaypoints.Clear();
 
@@ -2184,7 +2211,7 @@ namespace GVK.Navigation
             if (_lastZoneBarZoneIndex == currentZoneIndex &&
                 _lastZoneBarMinimapMode == minimapMode &&
                 _lastZoneBarMode == zoneBarMode &&
-                Math.Abs(_lastZoneBarDistKm - lastDistKm) < 0.05 &&
+                Math.Abs(_lastZoneBarToLowerKm - lastToLowerKm) < 0.05 &&
                 Math.Abs(_lastZoneBarRemainingKm - lastRemainingKm) < 0.05 &&
                 Math.Abs(_lastZoneBarDistZ3Km - lastDistZ3Km) < 0.05)
             {
@@ -2199,7 +2226,7 @@ namespace GVK.Navigation
             _lastZoneBarZoneIndex = currentZoneIndex;
             _lastZoneBarMinimapMode = minimapMode;
             _lastZoneBarMode = zoneBarMode;
-            _lastZoneBarDistKm = lastDistKm;
+            _lastZoneBarToLowerKm = lastToLowerKm;
             _lastZoneBarRemainingKm = lastRemainingKm;
             _lastZoneBarDistZ3Km = lastDistZ3Km;
 
@@ -2218,27 +2245,24 @@ namespace GVK.Navigation
                 case 1:
                     zoneAccent.BillBoardColor = Color.Yellow;
                     zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                    double z1ToLower = Math.Max(0.0, lastDistKm - 20.0);
                     zoneDistText.Append("<color=220,220,220>Zone 0: <color=50,255,100>")
-                                .Append(z1ToLower.ToString("F1")).Append(" km")
+                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
                                 .Append("<color=100,140,180> | <color=220,220,220>Zone 2: <color=255,165,0>")
                                 .Append(lastRemainingKm.ToString("F1")).Append(" km");
                     break;
                 case 2:
                     zoneAccent.BillBoardColor = Color.Orange;
                     zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                    double z2ToLower = Math.Max(0.0, lastDistKm - 35.0);
                     zoneDistText.Append("<color=220,220,220>Zone 1: <color=255,230,50>")
-                                .Append(z2ToLower.ToString("F1")).Append(" km")
+                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
                                 .Append("<color=100,140,180> | <color=220,220,220>Zone 3: <color=255,50,50>")
                                 .Append(lastRemainingKm.ToString("F1")).Append(" km");
                     break;
                 default:
                     zoneAccent.BillBoardColor = Color.Red;
                     zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                    double z3ToLower = Math.Max(0.0, lastDistKm - 50.0);
                     zoneDistText.Append("<color=220,220,220>Zone 2: <color=255,165,0>")
-                                .Append(z3ToLower.ToString("F1")).Append(" km")
+                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
                                 .Append("<color=100,140,180> | <color=255,255,255>------");
                     break;
             }
@@ -2814,7 +2838,7 @@ namespace GVK.Navigation
                 case 0:
                     zoneAccentColor = Color.LimeGreen;
                     mapHeaderText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                    double rem0 = Math.Max(0.0, 20.0 - lastDistKm);
+                    double rem0 = lastRemainingKm;
                     int rem0Whole = (int)rem0;
                     int rem0Tenths = (int)((rem0 - rem0Whole) * 10.0);
                     mapHeaderSubText.Append("Z1 Border in: <color=255,230,50>")
@@ -2823,7 +2847,7 @@ namespace GVK.Navigation
                 case 1:
                     zoneAccentColor = Color.Yellow;
                     mapHeaderText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                    double rem1 = Math.Max(0.0, 35.0 - lastDistKm);
+                    double rem1 = lastRemainingKm;
                     int rem1Whole = (int)rem1;
                     int rem1Tenths = (int)((rem1 - rem1Whole) * 10.0);
                     mapHeaderSubText.Append("PvP Border in: <color=255,165,0>")
@@ -2832,7 +2856,7 @@ namespace GVK.Navigation
                 case 2:
                     zoneAccentColor = Color.Orange;
                     mapHeaderText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                    double rem2 = Math.Max(0.0, 50.0 - lastDistKm);
+                    double rem2 = lastRemainingKm;
                     int rem2Whole = (int)rem2;
                     int rem2Tenths = (int)((rem2 - rem2Whole) * 10.0);
                     mapHeaderSubText.Append("Z3 Border in: <color=255,50,50>")
@@ -3704,10 +3728,10 @@ namespace GVK.Navigation
             string zName;
             switch (currentZoneIndex)
             {
-                case 0: zName = "Zone 0: Protected Hub (0 - 20 km)"; break;
-                case 1: zName = "Zone 1: PvE Frontier (20 - 35 km)"; break;
-                case 2: zName = "Zone 2: Contested Desert (35 - 50 km)"; break;
-                default: zName = "Zone 3: Gaalsien Heart (> 50 km)"; break;
+                case 0: zName = "Zone 0: Protected Hub (~0 - 20 km from Crossroads)"; break;
+                case 1: zName = "Zone 1: PvE Frontier (~20 - 35 km from Crossroads)"; break;
+                case 2: zName = "Zone 2: Contested Desert (~35 - 50 km from Crossroads)"; break;
+                default: zName = "Zone 3: Gaalsien Heart (~50+ km from Crossroads)"; break;
             }
 
             double hz = 60.0 / updateTickRate;
