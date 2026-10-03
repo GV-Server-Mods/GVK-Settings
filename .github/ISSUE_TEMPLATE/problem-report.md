@@ -2,7 +2,7 @@
 name: Problem Report
 about: Something technical is negatively impacting gameplay
 title: "[Problem Report]"
-labels: Problem
+labels: bug
 assignees: ''
 
 ---
