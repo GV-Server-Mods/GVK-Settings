@@ -125,7 +125,7 @@ Enforces industrial and military tiering across the planetary surface:
 
 ### Player Safezone Governors
 - **`SafezoneAnimated.cs`**: Manages visual shield animations and logic for player-built safezone generators (Kamikaze's Siegable Shields). 250m radius, 1W power.
-- **`SafezoneH2.cs`**: Provides free, unlimited jetpack hydrogen to players within their own active safezone bubble.
+- **`SafezoneH2.cs`**: Refills the jetpack hydrogen of any player inside an enabled safezone bubble (any owner, NPC safezones included). Safezone blocks are tracked as they enter and leave the world, so pasted, hangared and MES-spawned zones work without a restart.
 - **`Safezone3kmCheck_*.cs`**: Prevents players from activating overlapping safezones within 3km of another player shield generator.
 
 ### Armor Rebalancing

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ObjectBuilders.SafeZone;
 using Sandbox.Game;
 using Sandbox.ModAPI;
 using Sandbox.ModAPI.Interfaces;
@@ -7,87 +8,50 @@ using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.ModAPI;
 using VRage.ModAPI;
+using VRage.ObjectBuilders;
+using VRageMath;
 
 namespace Klime.SafezoneH2
 {
+    // Server only: refills the hydrogen of every player standing inside an enabled safezone.
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public class fov : MySessionComponentBase
     {
-        private List<IMySafeZoneBlock> safedict = new List<IMySafeZoneBlock>();
-        private List<IMyPlayer> allPlayer = new List<IMyPlayer>();
-        List<IMySlimBlock> allb = new List<IMySlimBlock>();
-        private int _timer = 0;
+        // Kept current by SafezoneH2Block, so zones that arrive by paste, hangar or MES spawn count too.
+        public static readonly HashSet<IMySafeZoneBlock> Zones = new HashSet<IMySafeZoneBlock>();
 
-        public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
-        {
-            base.Init(sessionComponent);
-            MyVisualScriptLogicProvider.BlockBuilt += BlockBuilt;
-        }
-
-        private void BlockBuilt(string typeid, string subtypeid, string gridname, long blockid)
-        {
-            if (subtypeid.Contains("SafeZone"))
-            {
-                IMySafeZoneBlock testSafe = MyAPIGateway.Entities.GetEntityById(blockid) as IMySafeZoneBlock;
-                if (testSafe != null && !safedict.Contains(testSafe))
-                {
-                    safedict.Add(testSafe);
-                }
-            }
-        }
+        private readonly List<IMyPlayer> _players = new List<IMyPlayer>();
+        private ITerminalProperty<float> _radius;
+        private int _timer;
 
         public override void UpdateBeforeSimulation()
         {
-            _timer += 1;
-            if (MyAPIGateway.Session.IsServer)
-            {
-                if (_timer == 1)
-                {
-                    HashSet<IMyEntity> allents = new HashSet<IMyEntity>();
-                    MyAPIGateway.Entities.GetEntities(allents);
-                    foreach (var ent in allents)
-                    {
-                        IMyCubeGrid cubeg = ent as IMyCubeGrid;
-                        if (cubeg != null)
-                        {
-                            allb.Clear();
-                            cubeg.GetBlocks(allb);
-                            foreach (var block in allb)
-                            {
-                                if (block.FatBlock != null)
-                                {
-                                    IMySafeZoneBlock testSafe = block.FatBlock as IMySafeZoneBlock;
-                                    if (testSafe != null && !safedict.Contains(testSafe))
-                                    {
-                                        safedict.Add(testSafe);
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
-                }
+            if (++_timer % 30 != 0 || Zones.Count == 0 || !MyAPIGateway.Session.IsServer)
+                return;
 
-                if (_timer % 30 == 0)
+            _players.Clear();
+            MyAPIGateway.Multiplayer.Players.GetPlayers(_players);
+            foreach (var player in _players)
+            {
+                var character = player.Character;
+                if (character == null)
+                    continue;
+
+                var position = character.WorldMatrix.Translation;
+                foreach (var zone in Zones)
                 {
-                    allPlayer.Clear();
-                    MyAPIGateway.Multiplayer.Players.GetPlayers(allPlayer);
-                    for (int i = 0; i < allPlayer.Count; i++)
+                    if (!zone.IsSafeZoneEnabled())
+                        continue;
+
+                    var radiusProp = _radius ?? (_radius = zone.GetProperty("SafeZoneSlider") as ITerminalProperty<float>);
+                    if (radiusProp == null)
+                        continue;
+
+                    var radius = radiusProp.GetValue(zone);
+                    if (Vector3D.DistanceSquared(position, zone.WorldMatrix.Translation) <= radius * radius)
                     {
-                        for (int j = 0; j < safedict.Count; j++)
-                        {
-                            if (MyAPIGateway.Entities.EntityExists(safedict[j].EntityId))
-                            {
-                                if (safedict[j].IsSafeZoneEnabled())
-                                {
-                                    if (allPlayer[i].Character != null && (allPlayer[i].Character.WorldMatrix.Translation - safedict[j].WorldMatrix.Translation).Length() <= safedict[j].GetValueFloat("SafeZoneSlider"))
-                                    {
-                                        MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(allPlayer[i].IdentityId, 1f);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                        MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(player.IdentityId, 1f);
+                        break;
                     }
                 }
             }
@@ -95,10 +59,49 @@ namespace Klime.SafezoneH2
 
         protected override void UnloadData()
         {
-            MyVisualScriptLogicProvider.BlockBuilt -= BlockBuilt;
-            allb = null;
-            allPlayer = null;
-            safedict = null;
+            Zones.Clear();
+        }
+    }
+
+    // Registers each safezone block while it is in the world. Other GameLogic on this type
+    // (SafeZoneAnimated, KOTHNoSafezone) is combined with this one by the game.
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SafeZoneBlock), false)]
+    public class SafezoneH2Block : MyGameLogicComponent
+    {
+        private IMySafeZoneBlock _zone;
+
+        public override void Init(MyObjectBuilder_EntityBase objectBuilder)
+        {
+            base.Init(objectBuilder);
+            _zone = Entity as IMySafeZoneBlock;
+            if (_zone != null)
+                NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
+        }
+
+        public override void OnAddedToScene()
+        {
+            base.OnAddedToScene();
+            if (_zone != null)
+                NeedsUpdate |= MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
+        }
+
+        public override void UpdateOnceBeforeFrame()
+        {
+            if (_zone != null && !_zone.MarkedForClose && MyAPIGateway.Multiplayer.IsServer)
+                fov.Zones.Add(_zone);
+        }
+
+        public override void OnRemovedFromScene()
+        {
+            base.OnRemovedFromScene();
+            if (_zone != null)
+                fov.Zones.Remove(_zone);
+        }
+
+        public override void Close()
+        {
+            if (_zone != null)
+                fov.Zones.Remove(_zone);
         }
     }
 }
