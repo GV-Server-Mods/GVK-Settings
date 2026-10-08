@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CubeBlocks>
 		<!-- Adjust top level armor and add tech to proto gyros -->
@@ -107,6 +107,108 @@
 			<Id>
 				<TypeId>Cockpit</TypeId>
 				<SubtypeId>SmallBlockCapCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust small closed sloped cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockClosedSlopedCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust small open sloped cockpit health/cost (non-conveyored, less features) -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockOpenSlopedCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="8"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="2"/>
+				<Component Subtype="Computer" Count="10"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust large closed sloped cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>LargeBlockClosedSlopedCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="20"/>
+				<Component Subtype="Construction" Count="20"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="8"/>
+				<Component Subtype="Computer" Count="100"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="60"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust large open sloped cockpit health/cost (non-conveyored, less features) -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>LargeBlockOpenSlopedCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="15"/>
+				<Component Subtype="Construction" Count="15"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="4"/>
+				<Component Subtype="Computer" Count="80"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+				<Component Subtype="BulletproofGlass" Count="20"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust small flush cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>SmallBlockFlushCockpit</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
+		<!-- Adjust decorative fighter cockpit health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>DBSmallBlockFighterCockpit</SubtypeId>
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
