@@ -193,7 +193,7 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Recovery_EncryptedDataStorage</SubtypeId>
+				<SubtypeId>GVK_SalvageGoods_EncryptedDataStorage</SubtypeId>
 			</Id>
 			<DisplayName>Encrypted Data Storage</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\EncryptedDataStorage.dds</Icon>
@@ -214,7 +214,7 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Recovery_InterceptedTransmissions</SubtypeId>
+				<SubtypeId>GVK_SalvageGoods_InterceptedTransmissions</SubtypeId>
 			</Id>
 			<DisplayName>Intercepted Transmissions</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\InterceptedTransmissions.dds</Icon>
@@ -235,7 +235,7 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Recovery_ResearchMaterials</SubtypeId>
+				<SubtypeId>GVK_SalvageGoods_ResearchMaterials</SubtypeId>
 			</Id>
 			<DisplayName>Research Materials</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ResearchMaterials.dds</Icon>
@@ -256,7 +256,7 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Recovery_TechnicalBlueprints</SubtypeId>
+				<SubtypeId>GVK_SalvageGoods_TechnicalBlueprints</SubtypeId>
 			</Id>
 			<DisplayName>Technical Blueprints</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\TechnicalBlueprints.dds</Icon>
@@ -277,7 +277,7 @@
 		<Component>
 			<Id>
 				<TypeId>Component</TypeId>
-				<SubtypeId>GVK_Recovery_SmuggledGoods</SubtypeId>
+				<SubtypeId>GVK_SalvageGoods_SmuggledGoods</SubtypeId>
 			</Id>
 			<DisplayName>Smuggled Goods</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\SmuggledGoods.dds</Icon>
