@@ -17,7 +17,6 @@ namespace LimitedProdZone
     {
         private IMyShipDrill staticDrill;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
         private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -54,26 +53,22 @@ namespace LimitedProdZone
                 {
                     if (!staticDrill.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
-						if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+					if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+                    {
+                        string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                        bool isBasicStaticDrill = false;
+                        isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                        if (isBasicStaticDrill == false)
                         {
-                            string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
-                            bool isBasicStaticDrill = false;
-                            isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
-                            if (isBasicStaticDrill == false)
-                            {
-								staticDrill.Enabled = false;
-								return;
-                            }
+							staticDrill.Enabled = false;
+							return;
                         }
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"LimitedProdZone check failed: {exc}");
             }
         }
 
@@ -81,20 +76,16 @@ namespace LimitedProdZone
         {
             if (staticDrill.Enabled)
             {
-                foreach (var beacon in beaconList)
+				if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+                    string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
+                    Boolean isBasicStaticDrill = false;
+                    isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
+                    if (isBasicStaticDrill == false)
                     {
-                        string strSubBlockType = staticDrill.BlockDefinition.SubtypeId.ToString();
-                        Boolean isBasicStaticDrill = false;
-                        isBasicStaticDrill = strSubBlockType.Contains("BasicStaticDrill");
-                        if (isBasicStaticDrill == false)
-                        {
-							staticDrill.Enabled = false;
-                        }
+						staticDrill.Enabled = false;
                     }
-                }               
+                }
             }
         }
 

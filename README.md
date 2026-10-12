@@ -116,7 +116,8 @@ Enforces industrial and military tiering across the planetary surface:
 - **`LimitedProdZone_Assembler.cs` & `Refinery.cs`**: Disables full-sized assemblers and refineries within $35\text{km}$ of Crossroads (unlocks in Zone 2).
 - **`LimitedProdZone_ShipDrill.cs`**: Disables mobile ship drills within $20\text{km}$ (Zone 0) to preserve starter hub terrain. Unlocks in Zone 1.
 - **`LimitedProdZone_LargeGatlingTurret.cs`, `LargeMissileTurret.cs`, `SmallGatlingGun.cs`, `SmallMissileLauncher*.cs`, `InteriorTurret.cs`**: Disables military weapons within $20\text{km}$ (Zone 0). Unlocks in Zone 1 for PvE defense and wreck clearance.
-- **`LimitedProdZone_ConveyorSorter.cs` & `Beacon.cs`**: Zone-based utility governors.
+- **`LimitedProdZone_ConveyorSorter.cs`**: Disables weaponised conveyor sorters (such as the missile battery) within $20\text{km}$ (Zone 0); plain conveyor sorters stay on.
+- All `LimitedProdZone_*.cs` scripts measure from the fixed Crossroads Tower coordinate, so they work whether or not the tower grid is loaded or concealed. The tower's `LimitedProdZone` beacon no longer does anything.
 
 ### King of the Hill (KOTH) Anti-Abuse
 - **`KOTHNoSafezone_*.cs`**: Detects proximity to KOTH capture structures (e.g. Khar Toba, Kalash Site, Crashed Starship). Shuts off player-built safezone generators and projectors within range.

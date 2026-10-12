@@ -17,7 +17,6 @@ namespace LimitedProdZone
     {
         private IMySmallMissileLauncher weapon;
         private bool isServer;
-        public static List<IMyBeacon> beaconList = new List<IMyBeacon>();
         private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -54,20 +53,16 @@ namespace LimitedProdZone
                 {
                     if (!weapon.Enabled) return;
 
-                    foreach (var beacon in beaconList)
-                    {                        
-						if (beacon == null || !beacon.Enabled) continue;
-						if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
-                        {
-							weapon.Enabled = false;
-							return;
-                        }
+					if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
+                    {
+						weapon.Enabled = false;
+						return;
                     }
                 }
             }
             catch (Exception exc)
             {
-                MyLog.Default.WriteLineAndConsole($"Failed looping through beacon list: {exc}");
+                MyLog.Default.WriteLineAndConsole($"LimitedProdZone check failed: {exc}");
             }
         }
 
@@ -75,14 +70,10 @@ namespace LimitedProdZone
         {
             if (weapon.Enabled)
             {
-                foreach (var beacon in beaconList)
+				if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
                 {
-					if (beacon == null || !beacon.Enabled) continue;
-					if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
-                    {
-						weapon.Enabled = false;
-                    }
-                }               
+					weapon.Enabled = false;
+                }
             }
         }
 
