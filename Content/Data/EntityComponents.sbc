@@ -108,5 +108,27 @@
             </Id>
             <Size x="3.5" y="1.5" z="2.5" />
         </EntityComponent>
+        <!-- fix bulk cargo volume size to 2x large cargo (matches 6x3x3 block bounding box: 15m x 7.5m x 7.5m = 843,750 L) -->
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>LargeBlockBulkContainerA</SubtypeId>
+            </Id>
+            <Size x="15" y="7.5" z="7.5" />
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>LargeBlockBulkContainerB</SubtypeId>
+            </Id>
+            <Size x="15" y="7.5" z="7.5" />
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+            <Id>
+                <TypeId>Inventory</TypeId>
+                <SubtypeId>LargeBlockBulkContainerC</SubtypeId>
+            </Id>
+            <Size x="15" y="7.5" z="7.5" />
+        </EntityComponent>
 	</EntityComponents>
 </Definitions>

@@ -52,6 +52,7 @@
 			<ItemIds>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_SupportCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>
@@ -94,6 +95,7 @@
 				<string>Beacon/SmallBlockBeacon_Scrap</string>
 				<string>Beacon/LargeBlockBeacon</string>
 				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_SupportCore</string>
 				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
 				<string>Beacon/LargeBlockBeacon_Fortress</string>
 				<string>Beacon/LargeBlockBeacon_Pipeline</string>

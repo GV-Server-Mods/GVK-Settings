@@ -48,6 +48,7 @@
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="SmallBlockBeacon"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_MediumCore"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_SupportCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_HeavyCore"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Fortress"/>
 				<Block Type="MyObjectBuilder_Beacon" Subtype="LargeBlockBeacon_Pipeline"/>
