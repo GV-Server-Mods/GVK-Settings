@@ -269,7 +269,7 @@
 			<Icon>Textures\Icons\Fortress_Icon_Overlay.dds</Icon>
 			<Description>The Core block is required for all permanent grids. Do not combine with other Cores.
 			
-			6000 block limit, 0 MPs, 120 UPs, 8 Int. Turrets, Static Only.</Description>
+			6000 block limit, 120 UPs, 200 MPs (staging/PMWs), 8 Int. Turrets, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -323,7 +323,7 @@
 			<Icon>Textures\Icons\Pipeline_Icon_Overlay.dds</Icon>
 			<Description>Station Core only for Pipeline hubs. Do not combine with other Cores. 
 			
-			50 block limit, 2 Drills, 10 UPs, 1 Interior Turret, Static Only.</Description>
+			50 block limit, 10 UPs (2 Drills, 5 Rotors/Hinges), 1 Int. Turret, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
@@ -377,7 +377,7 @@
 			<Icon>Textures\Icons\Shield_Icon_Overlay.dds</Icon>
 			<Description>Station Core only for Shield Generators. Do not combine with other Cores. 
 			
-			50 block limit, 10 UPs, No weapons, Static Only.</Description>
+			50 block limit, 1 Shield Gen, 10 Wind/Solar, 1 Drill Blocker, Static Only.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="1" y="2" z="1"/>
