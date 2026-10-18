@@ -64,24 +64,25 @@
 				<SubtypeId>RespawnMoonRover</SubtypeId>
 			</Id>
 			<DisplayName>DisplayName_PlanetaryLander</DisplayName>
-			<Icon>Textures\GUI\Icons\RespawnShips\RespawnMoonPod.png</Icon>
+			<Icon>Textures\GUI\Icons\RespawnShips\RespawnRover.png</Icon>
 			<CooldownSeconds>900</CooldownSeconds>
-			<Prefab>RespawnMoonPod</Prefab>
-			<PlanetDeployAltitude>8</PlanetDeployAltitude>
+			<Prefab>RespawnRover</Prefab>
+			<PlanetDeployAltitude>15</PlanetDeployAltitude>
 			<UseForPlanetsWithoutAtmosphere>true</UseForPlanetsWithoutAtmosphere>
-			<HelpTextLocalizationId>RespawnScreeenHelpTextSpawn</HelpTextLocalizationId>
+			<HelpTextLocalizationId>Description_RespawnRover</HelpTextLocalizationId>
 		</Ship>
 		<Ship Enabled="false">
 			<Id>
 				<TypeId>RespawnShipDefinition</TypeId>
-				<SubtypeId>RespawnSpacePod</SubtypeId>
+				<SubtypeId>RespawnSpace</SubtypeId>
 			</Id>
 			<DisplayName>DisplayName_RespawnPodSpace</DisplayName>
-			<Icon>Textures\GUI\Icons\RespawnShips\RespawnSpacePod.png</Icon>
+			<Icon>Textures\GUI\Icons\RespawnShips\RespawnSpace.png</Icon>
 			<CooldownSeconds>900</CooldownSeconds>
-			<Prefab>RespawnSpacePod</Prefab>
+			<Prefab>RespawnSpace</Prefab>
 			<UseForSpace>true</UseForSpace>
-			<HelpTextLocalizationId>RespawnScreeenHelpTextSpaceSpawn</HelpTextLocalizationId>
+			<SpawnNearProceduralAsteroids>true</SpawnNearProceduralAsteroids>
+			<HelpTextLocalizationId>Description_SpacePod</HelpTextLocalizationId>
 		</Ship>
 	</RespawnShips>
 </Definitions>

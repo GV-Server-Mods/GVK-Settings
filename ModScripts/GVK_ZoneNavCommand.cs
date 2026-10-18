@@ -393,6 +393,7 @@ namespace GVK.Navigation
         private double lastRemainingKm = 0.0; // to the next-higher zone
         private double lastToLowerKm = 0.0;   // to the next-lower zone
         private double lastDistZ3Km = 0.0;
+        private bool inSpace = false; // outside Kharak's gravity well
         private int tickCounter = 0;
         private int updateTickRate = 5;
         private float playerHeadingRad = 0f;
@@ -414,6 +415,7 @@ namespace GVK.Navigation
 
         // Zone bar dirty tracking — skip text rebuild when nothing changed.
         private int _lastZoneBarZoneIndex = -1;
+        private bool _lastZoneBarInSpace = false;
         private MinimapDisplayMode _lastZoneBarMinimapMode = (MinimapDisplayMode)(-1);
         private ZoneBarMode _lastZoneBarMode = (ZoneBarMode)(-1);
         private double _lastZoneBarToLowerKm = -1.0;
@@ -1563,6 +1565,9 @@ namespace GVK.Navigation
             lastDistKm = Vector3D.Distance(playerPos, CROSSROADS_BEACON) / 1000.0;
             lastDistZ3Km = Vector3D.Distance(playerPos, Z3_CENTER) / 1000.0;
 
+            float gravityInterference;
+            inSpace = MyAPIGateway.Physics.CalculateNaturalGravityAt(playerPos, out gravityInterference).LengthSquared() < 1e-4f;
+
             activeHudWaypoints.Clear();
 
             // 1. Scan Player GPS entries
@@ -1819,7 +1824,7 @@ namespace GVK.Navigation
 
             _compassElementsVisible = true;
             if (compassBg != null) compassBg.Visible = true;
-            Color zoneCol = GetZoneColor(currentZoneIndex);
+            Color zoneCol = GetCurrentAccentColor();
             if (compassLeftAccent != null)
             {
                 compassLeftAccent.BillBoardColor = zoneCol;
@@ -2209,6 +2214,7 @@ namespace GVK.Navigation
 
             // Dirty check: skip rebuilding StringBuilder if values haven't changed
             if (_lastZoneBarZoneIndex == currentZoneIndex &&
+                _lastZoneBarInSpace == inSpace &&
                 _lastZoneBarMinimapMode == minimapMode &&
                 _lastZoneBarMode == zoneBarMode &&
                 Math.Abs(_lastZoneBarToLowerKm - lastToLowerKm) < 0.05 &&
@@ -2224,6 +2230,7 @@ namespace GVK.Navigation
             }
 
             _lastZoneBarZoneIndex = currentZoneIndex;
+            _lastZoneBarInSpace = inSpace;
             _lastZoneBarMinimapMode = minimapMode;
             _lastZoneBarMode = zoneBarMode;
             _lastZoneBarToLowerKm = lastToLowerKm;
@@ -2233,6 +2240,22 @@ namespace GVK.Navigation
             zoneText.Clear();
             zoneDistText.Clear();
             zoneNextText.Clear();
+
+            if (inSpace)
+            {
+                zoneAccent.BillBoardColor = Color.Magenta;
+                zoneText.Append("<color=255,80,255>[ SPAAAAAACE!!! ]");
+                zoneDistText.Append("<color=220,220,220>Kharak gravity: <color=255,80,255>LOST<color=100,140,180> | <color=220,220,220>Below: ")
+                            .Append(currentZoneIndex == 0 ? "<color=50,255,100>" : currentZoneIndex == 1 ? "<color=255,230,50>" : currentZoneIndex == 2 ? "<color=255,165,0>" : "<color=255,50,50>")
+                            .Append("Zone ").Append(currentZoneIndex);
+
+                zoneBg.Visible = true;
+                zoneAccent.Visible = true;
+                zoneMsg.Visible = true;
+                zoneDistMsg.Visible = true;
+                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
+                return;
+            }
 
             switch (currentZoneIndex)
             {
@@ -2325,7 +2348,7 @@ namespace GVK.Navigation
                 ApplyMinimapScale(minimapScale);
             }
 
-            Color zoneCol = GetZoneColor(currentZoneIndex);
+            Color zoneCol = GetCurrentAccentColor();
             if (minimapAccent != null)
             {
                 minimapAccent.Origin = minimapPosition;
@@ -2874,7 +2897,7 @@ namespace GVK.Navigation
             }
 
             mapHeaderSubText.Append("          <color=160,180,200>[ Press 'M' or ESC to Close ]");
-            mapHeaderAccent.BillBoardColor = zoneAccentColor;
+            mapHeaderAccent.BillBoardColor = inSpace ? Color.Magenta : zoneAccentColor;
         }
 
         /// <summary>
@@ -2906,6 +2929,11 @@ namespace GVK.Navigation
                 fullMapLabelPool[i].Visible = false;
         }
 
+
+        private Color GetCurrentAccentColor()
+        {
+            return inSpace ? Color.Magenta : GetZoneColor(currentZoneIndex);
+        }
 
         private Color GetZoneColor(int zone)
         {
