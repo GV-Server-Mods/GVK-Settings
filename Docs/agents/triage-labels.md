@@ -10,6 +10,10 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 | `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
 | `wontfix`                  | `wontfix`            | Will not be actioned                     |
 
+### GVK-specific state: `waiting-upstream`
+
+A sixth state role, used in place of `ready-for-human` when the next step belongs to an upstream maintainer (MES, WeaponCore). It means the issue is already filed upstream and nothing is left for us to do until they respond; an issue that still needs us to file or propose something stays `ready-for-human`. It always comes with the `upstream` label, and the issue links the upstream issue or PR. When the fix ships, move it to `ready-for-human` (or `ready-for-agent`) for the follow-up work.
+
 ## Category labels
 
 | Label in mattpocock/skills | Label in our tracker | Meaning                                  |
