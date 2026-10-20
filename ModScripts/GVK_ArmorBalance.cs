@@ -47,8 +47,6 @@ namespace MikeDude.ArmorBalance
                 var remoteControlDef = blockDef as MyRemoteControlDefinition;
                 var timerBlockDef = blockDef as MyTimerBlockDefinition;
                 var hydroTankDef = blockDef as MyGasTankDefinition;
-                var welderDef = blockDef as MyShipWelderDefinition;
-                // var oxygenGeneratorDef = blockDef as MyOxygenGeneratorDefinition;
                 var batteryDef = blockDef as MyBatteryBlockDefinition;
                 var laserAntennaDef = blockDef as MyLaserAntennaDefinition;
                 var cargoDef = blockDef as MyCargoContainerDefinition;
@@ -413,23 +411,6 @@ namespace MikeDude.ArmorBalance
                 {
                     turretControllerDef.GeneralDamageMultiplier = 0.5f;
                 }
-
-                // Fix the upgradeable O2/H2 gen (currently removed mod)
-                /*if (oxygenGeneratorDef != null)
-                {
-                    switch (oxygenGeneratorDef.Id.SubtypeId.String)
-                    {
-                        case "MA_O2":
-                            oxygenGeneratorDef.IceConsumptionPerSecond = 150;
-                            // Make the generator exactly as efficient as normal gens, otherwise it's even more OP
-                            oxygenGeneratorDef.OperationalPowerConsumption = 3;
-                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
-                            break;
-                        case "":
-                            ChangeComponentCount(oxygenGeneratorDef, oxygenGeneratorDef.Components.Length - 1, 25);
-                            break;
-                    }
-                }*/
 				
 				//reduce default battery pre-charge, and nerf resistance some
                 if (batteryDef != null)
