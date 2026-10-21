@@ -23,7 +23,8 @@ namespace StarterGrinder
     /// damage. Z1 (20-35km): anti-PvP - player-vs-player damage/grinding blocked; NPC, self,
     /// friendly and environment (falls/terrain) damage allowed. Global: T1 grinder anti-hack
     /// with 1.2x boost, 2x T2-4 hand-grinder NPC salvage boost (stacks with Suit Combat Balancer),
-    /// and no sandstorm (Weather) damage to characters inside safe zones that block damage.
+    /// and no weather, radiation, asphyxia, low-pressure or temperature damage to characters inside
+    /// safe zones that block damage.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
@@ -54,8 +55,13 @@ namespace StarterGrinder
         /// <summary>Vanilla damage type string hash applied by grinders (hand + ship).</summary>
         private static readonly MyStringHash GRIND_DAMAGE = MyStringHash.GetOrCompute("Grind");
 
-        /// <summary>Sandstorm health hazard damage. Vanilla MyCharacter.DoDamage skips the safe zone check for this type.</summary>
+        /// <summary>Environment hazard damage types that vanilla MyCharacter.DoDamage lets through safe zones
+        /// (Suicide and Hunger stay vanilla).</summary>
         private static readonly MyStringHash WEATHER_DAMAGE = MyDamageType.Weather;
+        private static readonly MyStringHash RADIOACTIVITY_DAMAGE = MyDamageType.Radioactivity;
+        private static readonly MyStringHash ASPHYXIA_DAMAGE = MyDamageType.Asphyxia;
+        private static readonly MyStringHash LOW_PRESSURE_DAMAGE = MyDamageType.LowPressure;
+        private static readonly MyStringHash TEMPERATURE_DAMAGE = MyDamageType.Temperature;
 
         /// <summary>
         /// Registers the server damage handler in BeforeStart(): DamageSystem is not guaranteed
@@ -89,8 +95,8 @@ namespace StarterGrinder
             {
                 if (info.Type.Equals(GRIND_DAMAGE))
                     HandleGrindDamage(target, ref info);
-                else if (info.Type.Equals(WEATHER_DAMAGE))
-                    HandleWeatherDamage(target, ref info);
+                else if (IsSafeZoneHazard(info.Type))
+                    HandleHazardDamage(target, ref info);
                 else
                     HandleOtherDamage(target, ref info);
             }
@@ -165,11 +171,18 @@ namespace StarterGrinder
             info.Amount = 0f; // cross-faction PvP grinding blocked
         }
 
+        /// <summary>True for the hazard types safe zones shelter characters from.</summary>
+        private static bool IsSafeZoneHazard(MyStringHash type)
+        {
+            return type.Equals(WEATHER_DAMAGE) || type.Equals(RADIOACTIVITY_DAMAGE) || type.Equals(ASPHYXIA_DAMAGE)
+                || type.Equals(LOW_PRESSURE_DAMAGE) || type.Equals(TEMPERATURE_DAMAGE);
+        }
+
         /// <summary>
-        /// Weather (sandstorm) damage: cancelled for characters inside a safe zone that blocks damage.
-        /// Outside such zones it stays vanilla. Other hazard types (asphyxia, temperature, hunger) are untouched.
+        /// Weather, radiation, asphyxia, low-pressure and temperature damage: cancelled for characters
+        /// inside a safe zone that blocks damage. Outside such zones it stays vanilla.
         /// </summary>
-        private static void HandleWeatherDamage(object target, ref MyDamageInformation info)
+        private static void HandleHazardDamage(object target, ref MyDamageInformation info)
         {
             if (!(target is IMyCharacter)) return;
             MyEntity character = target as MyEntity;
