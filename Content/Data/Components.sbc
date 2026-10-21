@@ -239,7 +239,7 @@
 			</Id>
 			<DisplayName>Research Materials</DisplayName>
 			<Icon>Textures\GUI\Icons\Items\ResearchMaterials.dds</Icon>
-			<Description>Rare research salvage from the deep desert. Sevastapol Station pays a premium for these.</Description>
+			<Description>Rare research salvage from the deep desert. Sevastopol Station pays a premium for these.</Description>
 			<Size>
 				<X>0.5</X>
 				<Y>0.5</Y>

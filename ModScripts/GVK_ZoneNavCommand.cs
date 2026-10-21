@@ -1481,10 +1481,7 @@ namespace GVK.Navigation
                 for (int j = 0; j < cachedGpsList.Count; j++)
                 {
                     string gpsName = cachedGpsList[j].Name;
-                    if (gpsName.Equals(entry.Name, StringComparison.OrdinalIgnoreCase) ||
-                        // Migration: treat old misspelling as a match to avoid duplicate GPS entries
-                        (entry.Name.Equals("Sevastopol", StringComparison.OrdinalIgnoreCase) &&
-                         gpsName.Equals("Sevastapol", StringComparison.OrdinalIgnoreCase)))
+                    if (gpsName.Equals(entry.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         exists = true;
                         break;
