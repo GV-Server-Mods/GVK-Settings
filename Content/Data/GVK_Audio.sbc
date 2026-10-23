@@ -23,34 +23,34 @@
 			<Volume>0.6</Volume>
 			<Waves>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d01.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d05.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d04.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d03.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d02.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d01.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d02.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d03.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d04.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d05.wav</Start>
 				</Wave>
 			</Waves>
 		</Sound>
@@ -73,34 +73,34 @@
 			<Volume>0.9</Volume>
 			<Waves>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d01.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d05.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d04.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d03.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d02.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d01.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d02.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d03.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d04.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d05.wav</Start>
 				</Wave>
 			</Waves>
 		</Sound>
@@ -123,34 +123,34 @@
 			<Volume>1.0</Volume>
 			<Waves>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d01.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d05.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d04.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d03.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d02.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\ArcWepExpl3d01.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl3d01.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d02.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d02.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d03.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d03.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d04.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d04.wav</Start>
 				</Wave>
 				<Wave Type="D2">
-					<Start>ARC\EXPL\ArcWepExpl2d05.wav</Start>
+					<Start>Audio\ARC\EXPL\ArcWepExpl2d05.wav</Start>
 				</Wave>
 			</Waves>
 		</Sound>
@@ -171,10 +171,10 @@
 			<Volume>1.0</Volume>
 			<Waves>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\H2_Explo_1.wav</Start>
+					<Start>Audio\ARC\EXPL\H2_Explo_1.wav</Start>
 				</Wave>
 				<Wave Type="D3">
-					<Start>ARC\EXPL\H2_Explo_2.wav</Start>
+					<Start>Audio\ARC\EXPL\H2_Explo_2.wav</Start>
 				</Wave>
 			</Waves>
 		</Sound>
