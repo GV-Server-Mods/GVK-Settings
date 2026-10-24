@@ -178,6 +178,7 @@ namespace GVK.Navigation
             // UV computed once per background scan; reused by minimap and full-map every frame.
             public Vector2 MapUV;
             public bool IsSignal;
+            public bool IsOwnOrFaction; // Signals only: owned by the player or shared with their faction
             public double PlanetaryElevation;
         }
 
@@ -230,6 +231,9 @@ namespace GVK.Navigation
         private readonly List<HudAPIv2.BillBoardHUDMessage> waypointSpritePool = new List<HudAPIv2.BillBoardHUDMessage>();
         private readonly List<HudAPIv2.HUDMessage> waypointDistPool = new List<HudAPIv2.HUDMessage>();
         private bool showCompass = true;
+        private bool showCompassGps = true;
+        private bool showCompassSignals = true;
+        private bool showCompassOwnSignals = true;
         private bool _compassElementsVisible = false;
         private float compassScale = 1.0f;
         private double compassOffsetX = 0.0;
@@ -267,6 +271,9 @@ namespace GVK.Navigation
         private Vector2D minimapPosition = new Vector2D(0.81, 0.73);
         private Vector2D minimapSize = new Vector2D(0.312, 0.277); // Dynamically set with aspect ratio (+20%)
         private bool showMinimap = true;
+        private bool showMinimapGps = true;
+        private bool showMinimapSignals = true;
+        private bool showMinimapOwnSignals = true;
         private bool _minimapElementsVisible = false;
         private float minimapScale = 1.0f;
         private double minimapOffsetX = 1.0;
@@ -308,7 +315,13 @@ namespace GVK.Navigation
         private HudAPIv2.MenuItem menuSubZoneLines;
         private HudAPIv2.MenuItem menuSubFovLines;
         private HudAPIv2.MenuItem menuSubMinimapPreset;
+        private HudAPIv2.MenuItem menuSubMinimapGps;
+        private HudAPIv2.MenuItem menuSubMinimapSignals;
+        private HudAPIv2.MenuItem menuSubMinimapOwnSignals;
         private HudAPIv2.MenuItem menuSubCompassToggle;
+        private HudAPIv2.MenuItem menuSubCompassGps;
+        private HudAPIv2.MenuItem menuSubCompassSignals;
+        private HudAPIv2.MenuItem menuSubCompassOwnSignals;
         private HudAPIv2.MenuItem menuSubCompassScale;
         private HudAPIv2.MenuItem menuSubCompassPreset;
         private HudAPIv2.MenuItem menuSubRate;
@@ -354,8 +367,23 @@ namespace GVK.Navigation
             public float MinimapScale { get; set; } = 1.0f;
             public double MinimapOffsetX { get; set; } = 1.0;
             public double MinimapOffsetY { get; set; } = 1.0;
+            public bool ShowMinimapGps { get; set; } = true;
+            public bool ShowMinimapSignals { get; set; } = true;
+            public bool ShowMinimapOwnSignals { get; set; } = true;
 
             public bool ShowCompass { get; set; } = true;
+            public bool ShowCompassGps { get; set; } = true;
+            public bool ShowCompassSignals { get; set; } = true;
+            public bool ShowCompassOwnSignals { get; set; } = true;
+
+            public bool ShowMapGpsLabels { get; set; } = true;
+            public bool ShowMapSignalLabels { get; set; } = true;
+            public bool ShowMapOwnSignals { get; set; } = true;
+            public bool StackMapIcons { get; set; } = true;
+            public int MapKey { get; set; } = (int)MyKeys.M;
+            public bool MapKeyShift { get; set; } = false;
+            public bool MapKeyCtrl { get; set; } = false;
+            public bool MapKeyAlt { get; set; } = false;
             public float CompassScale { get; set; } = 1.0f;
             public double CompassOffsetX { get; set; } = 0.0;
             public double CompassOffsetY { get; set; } = 1.0;
@@ -374,6 +402,13 @@ namespace GVK.Navigation
 
         // 4. Interactive Full-Screen Satellite Map ([M] Key, true 2:1 ratio)
         private bool showFullMap = false;
+        private MyKeys mapKey = MyKeys.M;
+        private bool mapKeyShift = false;
+        private bool mapKeyCtrl = false;
+        private bool mapKeyAlt = false;
+        private string mapKeyLabel = "M"; // e.g. "Ctrl+M"; rebuilt only when the binding changes
+        private HudAPIv2.MenuItem menuRootOpenMap;
+        private HudAPIv2.MenuKeybindInput menuSubMapKey;
         private HudAPIv2.BillBoardHUDMessage mapDimmer;
         private HudAPIv2.BillBoardHUDMessage mapFrame;
         private HudAPIv2.BillBoardHUDMessage mapTerrain;
@@ -461,15 +496,36 @@ namespace GVK.Navigation
         // Satellite Map Marker Cluster (Deconfliction / Waterfall Stacking up to 5+)
         private struct MapCluster
         {
+            public Vector2D Sum;      // Sum of member map offsets; Position = Sum / Count
             public Vector2D Position;
-            public int Count;
-            public int WpIndex0;
-            public int WpIndex1;
-            public int WpIndex2;
-            public int WpIndex3;
-            public int WpIndex4;
+            public int Count;         // 0 once merged into another cluster
+            public int Parent;        // Self, or the cluster this one was merged into
+            public float LabelWidth;  // Widest member label
+            public bool Labelled;     // False: every stack placement would overlap a nearer cluster's, so draw dots only
+            public float DirY;        // Stack direction: -1 down, 1 up, 0 = default for its position
+            public bool FlipX;        // Labels on the left of the icons
+            public double NudgeY;     // Lone markers only: label shifted up or down from its icon
         }
         private List<MapCluster> _cachedMapClusters = new List<MapCluster>(32);
+
+        // Map layout cache: rebuilt only when waypoints, label toggles or screen size change, not every redraw.
+        private bool _mapLayoutDirty = true;
+        private readonly List<int> _mapPlainWps = new List<int>(64);    // Waypoints drawn as a dot with no label
+        private readonly List<int> _mapLabelWps = new List<int>(64);    // Labelled waypoints, nearest first
+        private readonly List<int> _mapLabelRoots = new List<int>(64);  // Final cluster of each labelled waypoint
+        private readonly List<float> _mapLabelWidths = new List<float>(64);   // Measured width of each labelled waypoint's name
+        private float _mapOverflowWidth;
+        private double _mapTextHeight = 0.016; // Measured height of one label line
+        private readonly List<int> _mapClusterShown = new List<int>(32);
+        private HudAPIv2.HUDMessage _mapLabelMeasure; // Hidden; sizes labels for overlap checks
+        private bool showMapGpsLabels = true;
+        private bool showMapSignalLabels = true;
+        private bool showMapOwnSignals = true;
+        private bool stackMapIcons = true; // False: every icon at its true position; stacks list names only
+        private HudAPIv2.MenuItem menuSubMapOwnSignals;
+        private HudAPIv2.MenuItem menuSubMapGpsLabels;
+        private HudAPIv2.MenuItem menuSubMapSignalLabels;
+        private HudAPIv2.MenuItem menuSubMapStackIcons;
 
 
         private void LoadConfig()
@@ -493,6 +549,23 @@ namespace GVK.Navigation
                                 radarRangeMeters = (cfg.RadarRangeMeters >= 500.0 && cfg.RadarRangeMeters <= 50000.0) ? cfg.RadarRangeMeters : 3000.0;
                                 minimapScale = (cfg.MinimapScale >= 0.70f && cfg.MinimapScale <= 1.60f) ? cfg.MinimapScale : 1.0f;
                                 showCompass = cfg.ShowCompass;
+                                showCompassGps = cfg.ShowCompassGps;
+                                showCompassSignals = cfg.ShowCompassSignals;
+                                showCompassOwnSignals = cfg.ShowCompassOwnSignals;
+                                showMapGpsLabels = cfg.ShowMapGpsLabels;
+                                showMapSignalLabels = cfg.ShowMapSignalLabels;
+                                showMapOwnSignals = cfg.ShowMapOwnSignals;
+                                stackMapIcons = cfg.StackMapIcons;
+                                if (IsValidMapKey((MyKeys)cfg.MapKey))
+                                {
+                                    mapKey = (MyKeys)cfg.MapKey;
+                                    mapKeyShift = cfg.MapKeyShift;
+                                    mapKeyCtrl = cfg.MapKeyCtrl;
+                                    mapKeyAlt = cfg.MapKeyAlt;
+                                }
+                                showMinimapGps = cfg.ShowMinimapGps;
+                                showMinimapSignals = cfg.ShowMinimapSignals;
+                                showMinimapOwnSignals = cfg.ShowMinimapOwnSignals;
                                 compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
                                 if (cfg.ZoneBarMode >= 0 && cfg.ZoneBarMode <= 2)
                                     zoneBarMode = (ZoneBarMode)cfg.ZoneBarMode;
@@ -538,6 +611,20 @@ namespace GVK.Navigation
                     MinimapOffsetX = minimapOffsetX,
                     MinimapOffsetY = minimapOffsetY,
                     ShowCompass = showCompass,
+                    ShowCompassGps = showCompassGps,
+                    ShowCompassSignals = showCompassSignals,
+                    ShowCompassOwnSignals = showCompassOwnSignals,
+                    ShowMapGpsLabels = showMapGpsLabels,
+                    ShowMapSignalLabels = showMapSignalLabels,
+                    ShowMapOwnSignals = showMapOwnSignals,
+                    StackMapIcons = stackMapIcons,
+                    MapKey = (int)mapKey,
+                    MapKeyShift = mapKeyShift,
+                    MapKeyCtrl = mapKeyCtrl,
+                    MapKeyAlt = mapKeyAlt,
+                    ShowMinimapGps = showMinimapGps,
+                    ShowMinimapSignals = showMinimapSignals,
+                    ShowMinimapOwnSignals = showMinimapOwnSignals,
                     CompassScale = compassScale,
                     CompassOffsetX = compassOffsetX,
                     CompassOffsetY = compassOffsetY,
@@ -617,6 +704,7 @@ namespace GVK.Navigation
                     mapHeaderMsg?.DeleteMessage();
                     mapHeaderSubMsg?.DeleteMessage();
                     ClearFullMapPool();
+                    _mapLabelMeasure?.DeleteMessage();
                     _cachedMapClusters.Clear();
 
                     hudApi.Close();
@@ -679,6 +767,7 @@ namespace GVK.Navigation
                     cachedAspect = camera.ViewportSize.X / camera.ViewportSize.Y;
                     cachedFullMapWidth = 1.40f;
                     cachedFullMapHeight = (cachedFullMapWidth * 0.5f) * cachedAspect;
+                    _mapLayoutDirty = true;
                 }
                 return cachedAspect;
             }
@@ -1219,8 +1308,8 @@ namespace GVK.Navigation
                 );
                 mapHeaderSubMsg.Visible = false;
 
-                // Pre-allocate 50 Full Map Marker Billboards & Labels (+50% scale: 0.0225f, Zero GC allocations)
-                for (int i = 0; i < 50; i++)
+                // Pre-allocate 100 Full Map Marker Billboards & Labels (+50% scale: 0.0225f, Zero GC allocations)
+                for (int i = 0; i < 100; i++)
                 {
                     var sprite = new HudAPIv2.BillBoardHUDMessage(
                         Material: MATERIAL_MARKER_GPS,
@@ -1251,6 +1340,18 @@ namespace GVK.Navigation
                     fullMapLabelPool.Add(label);
                 }
 
+                _mapLabelMeasure = new HudAPIv2.HUDMessage(
+                    Message: new StringBuilder(""),
+                    Origin: Vector2D.Zero,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 0.60,
+                    HideHud: false,
+                    Shadowing: true,
+                    ShadowColor: Color.Black
+                );
+                _mapLabelMeasure.Visible = false;
+
                 // Player arrow registered on very top of stack (High-visibility Electric Gold: 0.018f)
                 mapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_NAV_ARROW,
@@ -1270,7 +1371,7 @@ namespace GVK.Navigation
                 // 5. Register TextHUDAPI Mod Menu (Organized Color-Coded Avionics Suite)
                 var rootCategory = new HudAPIv2.MenuRootCategory("GVK Navigation Suite", HudAPIv2.MenuRootCategory.MenuFlag.PlayerMenu, "GVK Navigation & Map Settings");
 
-                new HudAPIv2.MenuItem("<color=187,233,246>[M] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
+                menuRootOpenMap = new HudAPIv2.MenuItem("<color=187,233,246>[M] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
                 menuRootMinimap = new HudAPIv2.MenuItem("Minimap: ...", rootCategory, () => { ToggleMinimap(); });
                 menuRootCompass = new HudAPIv2.MenuItem("Compass Ribbon: ...", rootCategory, () => { ToggleCompass(); });
                 menuRootZone = new HudAPIv2.MenuItem("Zone Telemetry: ...", rootCategory, () => { CycleZoneBarMode(); });
@@ -1282,6 +1383,9 @@ namespace GVK.Navigation
                 menuSubMinimapScale = new HudAPIv2.MenuItem("Minimap Size: ...", radarCategory, () => { CycleMinimapScale(); });
                 menuSubZoneLines = new HudAPIv2.MenuItem("Zone Direction Vectors: ...", radarCategory, () => { ToggleRadarZoneLines(); });
                 menuSubFovLines = new HudAPIv2.MenuItem("Camera Frustum FOV: ...", radarCategory, () => { ToggleRadarFovLines(); });
+                menuSubMinimapGps = new HudAPIv2.MenuItem("GPS: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapGps, "Minimap GPS"); });
+                menuSubMinimapSignals = new HudAPIv2.MenuItem("Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapSignals, "Minimap Signals"); });
+                menuSubMinimapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapOwnSignals, "Minimap Own & Faction Signals"); });
                 menuSubMinimapPreset = new HudAPIv2.MenuItem("Snap Position: ...", radarCategory, () => { CycleMinimapPreset(); });
 
                 minimapSliderX = new HudAPIv2.MenuSliderInput(
@@ -1317,6 +1421,9 @@ namespace GVK.Navigation
                 // Submenu 2: Compass Ribbon Settings
                 var compassCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Compass Ribbon Settings...", rootCategory, "Compass Tape Positioning & Scaling");
                 menuSubCompassToggle = new HudAPIv2.MenuItem("Compass Tape: ...", compassCategory, () => { ToggleCompass(); });
+                menuSubCompassGps = new HudAPIv2.MenuItem("GPS: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassGps, "Compass GPS"); });
+                menuSubCompassSignals = new HudAPIv2.MenuItem("Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassSignals, "Compass Signals"); });
+                menuSubCompassOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassOwnSignals, "Compass Own & Faction Signals"); });
                 menuSubCompassScale = new HudAPIv2.MenuItem("Compass Size: ...", compassCategory, () => { CycleCompassScale(); });
                 menuSubCompassPreset = new HudAPIv2.MenuItem("Snap Position: ...", compassCategory, () => { CycleCompassPreset(); });
 
@@ -1350,7 +1457,15 @@ namespace GVK.Navigation
                 );
                 new HudAPIv2.MenuItem("<color=255,180,50>Reset Position to Top-Center", compassCategory, () => { ResetCompassOffset(); });
 
-                // Submenu 3: Performance & Presets
+                // Submenu 3: Satellite Map Markers (label toggles hide only names; markers stay)
+                var mapCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Satellite Map Settings...", rootCategory, "Satellite Map Markers & Labels");
+                menuSubMapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapOwnSignals, "Map Own & Faction Signals"); });
+                menuSubMapGpsLabels = new HudAPIv2.MenuItem("GPS Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapGpsLabels, "Map GPS Labels"); });
+                menuSubMapSignalLabels = new HudAPIv2.MenuItem("Signal Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapSignalLabels, "Map Signal Labels"); });
+                menuSubMapStackIcons = new HudAPIv2.MenuItem("Stack Icons: ...", mapCategory, () => { ToggleMarkerFilter(ref stackMapIcons, "Map Icon Stacking"); });
+                menuSubMapKey = new HudAPIv2.MenuKeybindInput("Map Key: ...", mapCategory, "Satellite Map Key - Press any key", SetMapKey);
+
+                // Submenu 4: Performance & Presets
                 var perfCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Performance & Presets...", rootCategory, "HUD Refresh Frequency & System Tools");
                 menuSubRate = new HudAPIv2.MenuItem("Update Frequency: ...", perfCategory, () => { CycleUpdateTickRate(); });
                 new HudAPIv2.MenuItem("  - 15 Hz (4 Ticks) - Ultra Smooth", perfCategory, () => { SetUpdateTickRate(4); });
@@ -1363,6 +1478,7 @@ namespace GVK.Navigation
                 // Ensure minimap dimensions, background opacities, and live menu labels are populated
                 ApplyMinimapScale(minimapScale);
                 UpdateCardBackgroundOpacities();
+                UpdateMapKeyLabel();
                 UpdateMenuTexts();
             }
             catch (Exception ex)
@@ -1375,10 +1491,14 @@ namespace GVK.Navigation
         {
             if (MyAPIGateway.Utilities.IsDedicated) return;
 
-            // Handle [M] Keypress for Full Map
+            // Handle the map key (default [M]); modifiers must match exactly so Ctrl+M doesn't also fire on M
             if (!MyAPIGateway.Gui.ChatEntryVisible && !MyAPIGateway.Gui.IsCursorVisible)
             {
-                if (MyAPIGateway.Input.IsNewKeyPressed(MyKeys.M))
+                var input = MyAPIGateway.Input;
+                if (input.IsNewKeyPressed(mapKey)
+                    && input.IsAnyShiftKeyPressed() == mapKeyShift
+                    && input.IsAnyCtrlKeyPressed() == mapKeyCtrl
+                    && input.IsAnyAltKeyPressed() == mapKeyAlt)
                 {
                     ToggleFullMap();
                 }
@@ -1639,6 +1759,8 @@ namespace GVK.Navigation
                     if (faction != null && faction.IsEveryoneNpc()) isNpc = true;
                 }
 
+                bool isOwnOrFaction = isOwner || relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner;
+
                 Color signalColor;
                 if (isOwner)
                 {
@@ -1711,6 +1833,7 @@ namespace GVK.Navigation
                         DistanceMeters = Math.Sqrt(bestDistSq),
                         MapUV = WorldToMapUV(bestPos),
                         IsSignal = true,
+                        IsOwnOrFaction = isOwnOrFaction,
                         PlanetaryElevation = Vector3D.Distance(bestPos, PLANET_CENTER) - PLANET_RADIUS
                     });
                 }
@@ -1718,6 +1841,7 @@ namespace GVK.Navigation
 
             // Sort by distance using cached IComparer struct — zero allocation, whitelisted by SE ModAPI.
             activeHudWaypoints.Sort(WaypointComparer);
+            _mapLayoutDirty = true;
 
             // Flag full satellite map for redraw on next frame if currently open
             if (showFullMap)
@@ -1987,6 +2111,7 @@ namespace GVK.Navigation
             for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < waypointSpritePool.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
+                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals)) continue;
 
                 Vector3 toWp = (Vector3)(wp.Coords - playerPos);
 
@@ -2381,6 +2506,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
                 {
                     var wp = activeHudWaypoints[i];
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals)) continue;
                     Vector2 wpUV = wp.MapUV;
                     Vector2D wpOffset = new Vector2D(
                         (wpUV.X - 0.5) * minimapSize.X,
@@ -2512,6 +2638,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
                 {
                     var wp = activeHudWaypoints[i];
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals)) continue;
                     Vector3D toTarget = wp.Coords - playerPos;
                     double fwdDist = Vector3D.Dot(toTarget, fwdTangent);
                     double rightDist = Vector3D.Dot(toTarget, rightTangent);
@@ -2713,110 +2840,69 @@ namespace GVK.Navigation
             mapPlayerDot.Rotation = -playerHeadingRad;
             mapPlayerDot.BillBoardColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
 
-            // 1. Proximity Clustering (Radius ~0.038 screen units, ~2-3km on planetary surface)
-            _cachedMapClusters.Clear();
-            const double CLUSTER_DIST_SQ = 0.038 * 0.038;
-
-            for (int i = 0; i < activeHudWaypoints.Count; i++)
+            // 1. Clusters and label placement are cached; rebuilt only when waypoints, label toggles or screen size change
+            if (_mapLayoutDirty)
             {
-                var wp = activeHudWaypoints[i];
-                Vector2 wpUV = wp.MapUV;
-                Vector2D wpOffset = new Vector2D(
-                    (wpUV.X - 0.5) * fullMapWidth,
-                    (0.5 - wpUV.Y) * fullMapHeight
-                );
-
-                int foundCluster = -1;
-                for (int c = 0; c < _cachedMapClusters.Count; c++)
-                {
-                    if (Vector2D.DistanceSquared(wpOffset, _cachedMapClusters[c].Position) < CLUSTER_DIST_SQ)
-                    {
-                        foundCluster = c;
-                        break;
-                    }
-                }
-
-                if (foundCluster >= 0)
-                {
-                    var cluster = _cachedMapClusters[foundCluster];
-                    if (cluster.Count == 1) cluster.WpIndex1 = i;
-                    else if (cluster.Count == 2) cluster.WpIndex2 = i;
-                    else if (cluster.Count == 3) cluster.WpIndex3 = i;
-                    else if (cluster.Count == 4) cluster.WpIndex4 = i;
-                    cluster.Count++;
-                    _cachedMapClusters[foundCluster] = cluster;
-                }
-                else
-                {
-                    _cachedMapClusters.Add(new MapCluster
-                    {
-                        Position = wpOffset,
-                        Count = 1,
-                        WpIndex0 = i,
-                        WpIndex1 = -1,
-                        WpIndex2 = -1,
-                        WpIndex3 = -1,
-                        WpIndex4 = -1
-                    });
-                }
+                _mapLayoutDirty = false;
+                BuildMapLayout(fullMapWidth, fullMapHeight);
             }
 
-            // 2. Render Clusters with Vertical Waterfall Deconfliction (capped at 5 lines max)
+            // 2. Unlabelled markers first, at their true positions, so label stacks draw on top of them
             int sIdx = 0; // Sprite pool index
             int lIdx = 0; // Label pool index
-            const float LINE_SPACING = 0.024f;
 
-            for (int c = 0; c < _cachedMapClusters.Count && sIdx < fullMapMarkerPool.Count && lIdx < fullMapLabelPool.Count; c++)
+            for (int k = 0; k < _mapPlainWps.Count && sIdx < fullMapMarkerPool.Count; k++)
+            {
+                int wpIdx = _mapPlainWps[k];
+                DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, fullMapWidth, fullMapHeight), playerElevation);
+            }
+
+            for (int j = 0; j < _mapLabelWps.Count && sIdx < fullMapMarkerPool.Count; j++)
+            {
+                if (stackMapIcons && _cachedMapClusters[_mapLabelRoots[j]].Labelled) continue;
+                int wpIdx = _mapLabelWps[j];
+                DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, fullMapWidth, fullMapHeight), playerElevation);
+            }
+
+            // 3. Labelled clusters with Vertical Waterfall Deconfliction (4 names nearest first, then "+N more...")
+            for (int c = 0; c < _mapClusterShown.Count; c++)
+                _mapClusterShown[c] = 0;
+
+            for (int j = 0; j < _mapLabelWps.Count && lIdx < fullMapLabelPool.Count; j++)
+            {
+                int root = _mapLabelRoots[j];
+                var cluster = _cachedMapClusters[root];
+                if (!cluster.Labelled) continue;
+
+                int slot = _mapClusterShown[root]++;
+                int itemsToShow = (cluster.Count <= 5) ? cluster.Count : 4;
+                if (slot >= itemsToShow) continue;
+
+                int wpIdx = _mapLabelWps[j];
+                Vector2D slotPos = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * slot);
+                if (stackMapIcons)
+                {
+                    if (sIdx >= fullMapMarkerPool.Count) break;
+                    DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, slotPos, playerElevation);
+                }
+
+                var label = fullMapLabelPool[lIdx++];
+                FormatWaypointLabel(label, activeHudWaypoints[wpIdx].Name);
+                label.Offset = slotPos + new Vector2D(GetMapLabelOffsetX(ref cluster, _mapLabelWidths[j]), MAP_LABEL_OFFSET_Y + cluster.NudgeY);
+                label.Visible = true;
+            }
+
+            // If > 5 markers, slot 5 displays the overflow tag: "+N more..."
+            for (int c = 0; c < _cachedMapClusters.Count && lIdx < fullMapLabelPool.Count; c++)
             {
                 var cluster = _cachedMapClusters[c];
-                Vector2D basePos = cluster.Position;
-                // Invert waterfall upwards if marker is near the bottom edge of the satellite map
-                float dirY = (basePos.Y < -0.40) ? 1.0f : -1.0f;
+                if (!cluster.Labelled || cluster.Count <= 5) continue;
 
-                int itemsToShow = (cluster.Count <= 5) ? cluster.Count : 4;
-                for (int slot = 0; slot < itemsToShow && sIdx < fullMapMarkerPool.Count && lIdx < fullMapLabelPool.Count; slot++)
-                {
-                    int wpIdx = -1;
-                    switch (slot)
-                    {
-                        case 0: wpIdx = cluster.WpIndex0; break;
-                        case 1: wpIdx = cluster.WpIndex1; break;
-                        case 2: wpIdx = cluster.WpIndex2; break;
-                        case 3: wpIdx = cluster.WpIndex3; break;
-                        case 4: wpIdx = cluster.WpIndex4; break;
-                    }
-
-                    if (wpIdx >= 0 && wpIdx < activeHudWaypoints.Count)
-                    {
-                        var wp = activeHudWaypoints[wpIdx];
-                        Vector2D slotPos = basePos + new Vector2D(0.0, dirY * LINE_SPACING * slot);
-
-                        var sprite = fullMapMarkerPool[sIdx++];
-                        sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
-                        sprite.Rotation = 0f;
-                        sprite.BillBoardColor = wp.DisplayColor;
-                        sprite.Offset = slotPos;
-                        sprite.Visible = true;
-
-                        var label = fullMapLabelPool[lIdx++];
-                        FormatWaypointLabel(label, wp.Name);
-                        label.Offset = slotPos + new Vector2D(0.015, 0.005);
-                        label.Visible = true;
-                    }
-                }
-
-                // If > 5 signals, slot 5 displays the overflow tag: "+N more..."
-                if (cluster.Count > 5 && lIdx < fullMapLabelPool.Count)
-                {
-                    Vector2D slotPosOverflow = basePos + new Vector2D(0.0, dirY * LINE_SPACING * 4f);
-                    var labelOverflow = fullMapLabelPool[lIdx++];
-                    labelOverflow.Message.Clear()
-                                 .Append("<color=170,210,245>+")
-                                 .Append(cluster.Count - 4)
-                                 .Append(" more...");
-                    labelOverflow.Offset = slotPosOverflow + new Vector2D(0.015, 0.005);
-                    labelOverflow.Visible = true;
-                }
+                Vector2D slotPosOverflow = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * 4f);
+                var labelOverflow = fullMapLabelPool[lIdx++];
+                FormatMapOverflowLabel(labelOverflow, cluster.Count - 4);
+                labelOverflow.Offset = slotPosOverflow + new Vector2D(GetMapLabelOffsetX(ref cluster, _mapOverflowWidth), MAP_LABEL_OFFSET_Y);
+                labelOverflow.Visible = true;
             }
 
             // Hide unused slots in the pools
@@ -2893,8 +2979,246 @@ namespace GVK.Navigation
                     break;
             }
 
-            mapHeaderSubText.Append("          <color=160,180,200>[ Press 'M' or ESC to Close ]");
+            mapHeaderSubText.Append("          <color=160,180,200>[ Press '").Append(mapKeyLabel).Append("' or ESC to Close ]");
             mapHeaderAccent.BillBoardColor = inSpace ? Color.Magenta : zoneAccentColor;
+        }
+
+        private const double MAP_CLUSTER_DIST_SQ = 0.038 * 0.038;   // ~2-3 km: markers this close share one stack
+        private const double MAP_MERGE_MAX_DIST_SQ = 0.076 * 0.076; // Overlapping stacks closer than this merge; farther ones fall back to dots
+        private const float MAP_LINE_SPACING = 0.024f;
+        private const double MAP_LABEL_OFFSET_X = 0.015;
+        private const double MAP_LABEL_OFFSET_Y = 0.005;
+        private const double MAP_ICON_HALF_WIDTH = 0.005;  // Visible dot, not the full 0.0225 sprite
+        private const double MAP_ICON_HALF_HEIGHT = 0.008;
+        private const double MAP_LABEL_GAP = 0.003;        // Minimum clear space between two stacks
+
+        /// <summary>
+        /// Groups labelled waypoints into label stacks so no two stacks overlap. Filtered-out signals are skipped;
+        /// waypoints whose label is toggled off become plain dots. Nearby stacks that would overlap merge; a stack that would still overlap a nearer one
+        /// draws its markers as dots at their true positions. Runs only when <see cref="_mapLayoutDirty"/> is set.
+        /// </summary>
+        private void BuildMapLayout(float fullMapWidth, float fullMapHeight)
+        {
+            _mapPlainWps.Clear();
+            _mapLabelWps.Clear();
+            _mapLabelRoots.Clear();
+            _mapLabelWidths.Clear();
+            _cachedMapClusters.Clear();
+
+            // Proximity clustering around each cluster's running centre (waypoints arrive nearest first)
+            for (int i = 0; i < activeHudWaypoints.Count; i++)
+            {
+                var wp = activeHudWaypoints[i];
+                if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals)) continue;
+                if (!(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels))
+                {
+                    _mapPlainWps.Add(i);
+                    continue;
+                }
+
+                Vector2D wpOffset = GetMapOffset(wp.MapUV, fullMapWidth, fullMapHeight);
+                if (_mapLabelMeasure != null) FormatWaypointLabel(_mapLabelMeasure, wp.Name);
+                float width = MeasureMapLabel();
+
+                int found = -1;
+                for (int c = 0; c < _cachedMapClusters.Count; c++)
+                {
+                    if (Vector2D.DistanceSquared(wpOffset, _cachedMapClusters[c].Position) < MAP_CLUSTER_DIST_SQ)
+                    {
+                        found = c;
+                        break;
+                    }
+                }
+
+                if (found < 0)
+                {
+                    found = _cachedMapClusters.Count;
+                    _cachedMapClusters.Add(new MapCluster { Parent = found });
+                }
+
+                var cluster = _cachedMapClusters[found];
+                cluster.Sum += wpOffset;
+                cluster.Count++;
+                cluster.Position = cluster.Sum / cluster.Count;
+                if (width > cluster.LabelWidth) cluster.LabelWidth = width;
+                _cachedMapClusters[found] = cluster;
+
+                _mapLabelWps.Add(i);
+                _mapLabelRoots.Add(found);
+                _mapLabelWidths.Add(width);
+            }
+
+            if (_mapLabelMeasure != null) FormatMapOverflowLabel(_mapLabelMeasure, 99);
+            float overflowWidth = MeasureMapLabel();
+            _mapOverflowWidth = overflowWidth;
+            double textHeight = _mapLabelMeasure != null ? Math.Abs(_mapLabelMeasure.GetTextLength().Y) : 0.0;
+            _mapTextHeight = textHeight > 0.0 ? textHeight : 0.016;
+
+            // Merge nearby clusters whose stacks overlap; the nearer (lower index) cluster absorbs the other
+            bool merged = true;
+            for (int pass = 0; merged && pass < 32; pass++)
+            {
+                merged = false;
+                for (int a = 0; a < _cachedMapClusters.Count; a++)
+                {
+                    var ca = _cachedMapClusters[a];
+                    if (ca.Count == 0) continue;
+
+                    for (int b = a + 1; b < _cachedMapClusters.Count; b++)
+                    {
+                        var cb = _cachedMapClusters[b];
+                        if (cb.Count == 0) continue;
+                        if (Vector2D.DistanceSquared(ca.Position, cb.Position) > MAP_MERGE_MAX_DIST_SQ) continue;
+                        if (!MapStacksOverlap(ref ca, true, ref cb, true, overflowWidth)) continue;
+
+                        ca.Sum += cb.Sum;
+                        ca.Count += cb.Count;
+                        ca.Position = ca.Sum / ca.Count;
+                        if (cb.LabelWidth > ca.LabelWidth) ca.LabelWidth = cb.LabelWidth;
+                        cb.Count = 0;
+                        cb.Parent = a;
+                        _cachedMapClusters[b] = cb;
+                        merged = true;
+                    }
+
+                    _cachedMapClusters[a] = ca;
+                }
+            }
+
+            for (int j = 0; j < _mapLabelRoots.Count; j++)
+            {
+                int r = _mapLabelRoots[j];
+                while (_cachedMapClusters[r].Parent != r) r = _cachedMapClusters[r].Parent;
+                _mapLabelRoots[j] = r;
+            }
+
+            // Place stacks nearest first. A stack that would overlap an already placed one tries the other stack
+            // direction, then labels on the left; a lone marker instead tries its name half a line lower or higher
+            // on each side. If every placement overlaps, the cluster shows dots only.
+            _mapClusterShown.Clear();
+            for (int c = 0; c < _cachedMapClusters.Count; c++)
+            {
+                _mapClusterShown.Add(0);
+                var cluster = _cachedMapClusters[c];
+                cluster.Labelled = false;
+                if (cluster.Count == 1)
+                {
+                    cluster.DirY = GetMapStackDir(cluster.Position);
+                    for (int option = 0; option < 6 && !cluster.Labelled; option++)
+                    {
+                        cluster.FlipX = option >= 3;
+                        int nudge = option % 3;
+                        cluster.NudgeY = nudge == 0 ? 0.0 : (nudge == 1 ? -0.5 : 0.5) * MAP_LINE_SPACING;
+                        cluster.Labelled = !OverlapsPlacedStack(ref cluster, c, overflowWidth);
+                    }
+                }
+                else if (cluster.Count > 1)
+                {
+                    float preferredDir = GetMapStackDir(cluster.Position);
+                    for (int option = 0; option < 4 && !cluster.Labelled; option++)
+                    {
+                        cluster.FlipX = option >= 2;
+                        cluster.DirY = (option % 2 == 0) ? preferredDir : -preferredDir;
+                        cluster.Labelled = !OverlapsPlacedStack(ref cluster, c, overflowWidth);
+                    }
+                }
+                _cachedMapClusters[c] = cluster;
+            }
+        }
+
+        private bool OverlapsPlacedStack(ref MapCluster cluster, int clusterIndex, float overflowWidth)
+        {
+            // A lone marker's icon stays at its true position whether or not it gets a label, so only its text
+            // can collide. Placed stacks keep their icons in the box so later labels don't cover them.
+            bool candidateIcons = cluster.Count > 1;
+            for (int p = 0; p < clusterIndex; p++)
+            {
+                var placed = _cachedMapClusters[p];
+                if (placed.Labelled && MapStacksOverlap(ref cluster, candidateIcons, ref placed, true, overflowWidth))
+                    return true;
+            }
+            return false;
+        }
+
+        private float MeasureMapLabel()
+        {
+            float width = _mapLabelMeasure != null ? (float)_mapLabelMeasure.GetTextLength().X : 0f;
+            return width > 0f ? width : 0.15f; // Fallback: about the width of a full-length label
+        }
+
+        private bool MapStacksOverlap(ref MapCluster a, bool aIcons, ref MapCluster b, bool bIcons, float overflowWidth)
+        {
+            double aMinX, aMaxX, aMinY, aMaxY, bMinX, bMaxX, bMinY, bMaxY;
+            GetMapStackBox(ref a, overflowWidth, aIcons, out aMinX, out aMaxX, out aMinY, out aMaxY);
+            GetMapStackBox(ref b, overflowWidth, bIcons, out bMinX, out bMaxX, out bMinY, out bMaxY);
+            return aMinX < bMaxX + MAP_LABEL_GAP && bMinX < aMaxX + MAP_LABEL_GAP
+                && aMinY < bMaxY + MAP_LABEL_GAP && bMinY < aMaxY + MAP_LABEL_GAP;
+        }
+
+        /// <summary>
+        /// Screen rectangle covered by a cluster's label text (up to 5 lines) and, if requested, its icon column.
+        /// Uses the measured text height and the visible dot size, not the full sprite size.
+        /// </summary>
+        private void GetMapStackBox(ref MapCluster c, float overflowWidth, bool includeIcons, out double minX, out double maxX, out double minY, out double maxY)
+        {
+            int lines = c.Count <= 5 ? c.Count : 5;
+            float width = (c.Count > 5 && overflowWidth > c.LabelWidth) ? overflowWidth : c.LabelWidth;
+            float dirY = c.DirY != 0f ? c.DirY : GetMapStackDir(c.Position);
+            double lastSlotY = c.Position.Y + dirY * MAP_LINE_SPACING * (lines - 1);
+            double topSlotY = Math.Max(c.Position.Y, lastSlotY);
+            double bottomSlotY = Math.Min(c.Position.Y, lastSlotY);
+
+            // Each text line hangs down from MAP_LABEL_OFFSET_Y above its slot, shifted by any nudge
+            maxY = topSlotY + MAP_LABEL_OFFSET_Y + c.NudgeY;
+            minY = bottomSlotY + MAP_LABEL_OFFSET_Y - _mapTextHeight + c.NudgeY;
+            if (c.FlipX)
+            {
+                maxX = c.Position.X - MAP_LABEL_OFFSET_X;
+                minX = maxX - width;
+            }
+            else
+            {
+                minX = c.Position.X + MAP_LABEL_OFFSET_X;
+                maxX = minX + width;
+            }
+
+            if (includeIcons)
+            {
+                minX = Math.Min(minX, c.Position.X - MAP_ICON_HALF_WIDTH);
+                maxX = Math.Max(maxX, c.Position.X + MAP_ICON_HALF_WIDTH);
+                minY = Math.Min(minY, bottomSlotY - MAP_ICON_HALF_HEIGHT);
+                maxY = Math.Max(maxY, topSlotY + MAP_ICON_HALF_HEIGHT);
+            }
+        }
+
+        /// <summary>Label text starts right of the icon, or ends left of it when the stack is flipped.</summary>
+        private static double GetMapLabelOffsetX(ref MapCluster c, float labelWidth)
+        {
+            return c.FlipX ? -MAP_LABEL_OFFSET_X - labelWidth : MAP_LABEL_OFFSET_X;
+        }
+
+        /// <summary>Stacks grow downward, or upward when the cluster is near the bottom edge of the map.</summary>
+        private float GetMapStackDir(Vector2D pos) => pos.Y < -0.40 ? 1.0f : -1.0f;
+
+        private static Vector2D GetMapOffset(Vector2 uv, float fullMapWidth, float fullMapHeight)
+            => new Vector2D((uv.X - 0.5) * fullMapWidth, (0.5 - uv.Y) * fullMapHeight);
+
+        private void DrawMapMarker(HudAPIv2.BillBoardHUDMessage sprite, int wpIdx, Vector2D offset, double playerElevation)
+        {
+            var wp = activeHudWaypoints[wpIdx];
+            sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
+            sprite.Rotation = 0f;
+            sprite.BillBoardColor = wp.DisplayColor;
+            sprite.Offset = offset;
+            sprite.Visible = true;
+        }
+
+        private void FormatMapOverflowLabel(HudAPIv2.HUDMessage label, int hiddenCount)
+        {
+            label.Message.Clear()
+                 .Append("<color=170,210,245>+")
+                 .Append(hiddenCount)
+                 .Append(" more...");
         }
 
         /// <summary>
@@ -3605,6 +3929,55 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon: {status}", 2500, showCompass ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
+        private static bool IsValidMapKey(MyKeys key)
+        {
+            // Escape always closes the map, so it can't also be the toggle key
+            return key != MyKeys.None && key != MyKeys.Escape;
+        }
+
+        private void SetMapKey(MyKeys key, bool shift, bool ctrl, bool alt)
+        {
+            if (!IsValidMapKey(key))
+            {
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] That key can't open the map; keeping " + mapKeyLabel, 2500, MyFontEnum.Red);
+                return;
+            }
+
+            mapKey = key;
+            mapKeyShift = shift;
+            mapKeyCtrl = ctrl;
+            mapKeyAlt = alt;
+            UpdateMapKeyLabel();
+            SaveConfig();
+            UpdateMenuTexts();
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Satellite Map Key: " + mapKeyLabel, 2500, MyFontEnum.Green);
+        }
+
+        private void UpdateMapKeyLabel()
+        {
+            string name = MyAPIGateway.Input?.GetKeyName(mapKey);
+            if (string.IsNullOrEmpty(name)) name = mapKey.ToString();
+            mapKeyLabel = (mapKeyCtrl ? "Ctrl+" : "") + (mapKeyShift ? "Shift+" : "") + (mapKeyAlt ? "Alt+" : "") + name;
+        }
+
+        /// <summary>Flips one compass, minimap or satellite map marker filter and redraws every display.</summary>
+        private void ToggleMarkerFilter(ref bool setting, string name)
+        {
+            setting = !setting;
+            _refreshCompassNextFrame = true;
+            _refreshMinimapNextFrame = true;
+            _mapLayoutDirty = true;
+            _fullMapNeedsRedraw = true;
+            SaveConfig();
+            UpdateMenuTexts();
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] {name}: {(setting ? "ENABLED" : "DISABLED")}", 2500, setting ? MyFontEnum.Green : MyFontEnum.Red);
+        }
+
+        private static bool IsMarkerShown(ref ActiveHudWaypoint wp, bool showGps, bool showSignals, bool showOwnSignals)
+        {
+            return wp.IsSignal ? showSignals && (showOwnSignals || !wp.IsOwnOrFaction) : showGps;
+        }
+
         private void CycleZoneBarMode()
         {
             if (zoneBarMode == ZoneBarMode.CompassDock)
@@ -3702,6 +4075,22 @@ namespace GVK.Navigation
             minimapOffsetY = 1.0;
 
             showCompass = true;
+            showCompassGps = true;
+            showCompassSignals = true;
+            showCompassOwnSignals = true;
+            showMapGpsLabels = true;
+            showMapSignalLabels = true;
+            showMapOwnSignals = true;
+            stackMapIcons = true;
+            mapKey = MyKeys.M;
+            mapKeyShift = false;
+            mapKeyCtrl = false;
+            mapKeyAlt = false;
+            UpdateMapKeyLabel();
+            showMinimapGps = true;
+            showMinimapSignals = true;
+            showMinimapOwnSignals = true;
+            _mapLayoutDirty = true;
             compassScale = 1.0f;
             compassOffsetX = 0.0;
             compassOffsetY = 1.0;
@@ -3775,7 +4164,7 @@ namespace GVK.Navigation
             sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
             sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
             sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
-            sb.AppendLine("• /gvk map (or M)  : Open Full-Screen Topographical Kharak Map");
+            sb.AppendLine($"• /gvk map (or {mapKeyLabel})  : Open Full-Screen Topographical Kharak Map");
             sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Frequency (15, 12, 10, 6 Hz)");
             sb.AppendLine("• /gvk reset       : Factory Reset All Positions & Preferences");
             sb.AppendLine();
@@ -3835,6 +4224,15 @@ namespace GVK.Navigation
             if (menuSubCompassToggle != null)
                 menuSubCompassToggle.Text = $"Compass Tape: {(showCompass ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
 
+            if (menuSubCompassGps != null)
+                menuSubCompassGps.Text = $"GPS: {(showCompassGps ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubCompassSignals != null)
+                menuSubCompassSignals.Text = $"Signals: {(showCompassSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubCompassOwnSignals != null)
+                menuSubCompassOwnSignals.Text = $"Own & Faction Signals: {(showCompassOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
             if (menuSubCompassScale != null)
                 menuSubCompassScale.Text = $"Compass Size: <color=255,230,40>[{(int)Math.Round(compassScale * 100)}%]";
 
@@ -3843,6 +4241,33 @@ namespace GVK.Navigation
                 int cIdx = GetCurrentCompassPresetIndex();
                 menuSubCompassPreset.Text = $"Snap Position: <color=187,233,246>[{CompassPresets[cIdx].Name}]";
             }
+
+            if (menuSubMapGpsLabels != null)
+                menuSubMapGpsLabels.Text = $"GPS Labels: {(showMapGpsLabels ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMapSignalLabels != null)
+                menuSubMapSignalLabels.Text = $"Signal Labels: {(showMapSignalLabels ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMapOwnSignals != null)
+                menuSubMapOwnSignals.Text = $"Own & Faction Signals: {(showMapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuRootOpenMap != null)
+                menuRootOpenMap.Text = $"<color=187,233,246>[{mapKeyLabel}] Open Satellite Map";
+
+            if (menuSubMapKey != null)
+                menuSubMapKey.Text = $"Map Key: <color=255,230,40>[{mapKeyLabel}]";
+
+            if (menuSubMapStackIcons != null)
+                menuSubMapStackIcons.Text = $"Stack Icons: {(stackMapIcons ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMinimapGps != null)
+                menuSubMinimapGps.Text = $"GPS: {(showMinimapGps ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMinimapSignals != null)
+                menuSubMinimapSignals.Text = $"Signals: {(showMinimapSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+
+            if (menuSubMinimapOwnSignals != null)
+                menuSubMinimapOwnSignals.Text = $"Own & Faction Signals: {(showMinimapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
 
             if (menuSubRate != null)
                 menuSubRate.Text = $"Update Frequency: <color=255,230,40>[{updateTickRate} Ticks ({(60f / updateTickRate):0.#} Hz)]";
