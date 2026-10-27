@@ -1,0 +1,110 @@
+<#
+.SYNOPSIS
+    Rebuilds the generated tables in README.md and Docs/design/README.md from the design docs, so they can't drift.
+
+.DESCRIPTION
+    Each design doc in Docs/design/ has front matter with:
+        scripts:   - <path or glob>: <one-line description>
+        commands:  - <chat command>: <one-line description>
+    This script rewrites the text between these marker pairs:
+        README.md:             <!-- GENERATED:player-commands -->, <!-- GENERATED:scripts -->
+        Docs/design/README.md: <!-- GENERATED:design-docs -->
+    It also checks the docs against the code and reports:
+        - a ModScripts/*.cs file that no `scripts:` entry covers
+        - a `scripts:` entry that matches no file
+        - a /gvk command the code handles that no `commands:` entry lists, or the reverse
+        - a command listed under `commands:` that no script mentions
+
+.PARAMETER Check
+    Report whether the generated text is out of date, or the docs disagree with the code, without writing
+    anything (exit code 1 if so).
+#>
+[CmdletBinding()]
+param([switch]$Check)
+
+$ErrorActionPreference = 'Stop'
+$root = Split-Path -Parent $PSScriptRoot
+$readmePath = Join-Path $root 'README.md'
+$indexPath = Join-Path $root 'Docs\design\README.md'
+$scriptsDir = Join-Path $root 'ModScripts'
+$problems = @()
+
+function Get-FrontMatter([string]$path) {
+    $m = [regex]::Match([IO.File]::ReadAllText($path), '(?s)\A---\r?\n(.*?)\r?\n---')
+    if ($m.Success) { $m.Groups[1].Value } else { $null }
+}
+function Get-Entries([string]$fm, [string]$key) {
+    # Lines under `key:` that look like `  - something: description`, up to the next top-level key.
+    $block = [regex]::Match($fm, "(?ms)^${key}:\s*\r?\n(.*?)(?=^\S|\z)")
+    foreach ($line in ($block.Groups[1].Value -split '\r?\n')) {
+        $e = [regex]::Match($line, '^\s+-\s+(.+?):\s+(.+?)\s*$')
+        if ($e.Success) { [pscustomobject]@{ Name = $e.Groups[1].Value; Text = $e.Groups[2].Value } }
+    }
+}
+
+$docs = Get-ChildItem (Join-Path $root 'Docs\design') -Filter *.md | Where-Object { $_.Name -ne 'README.md' } | Sort-Object Name
+$scriptRows = @(); $commandRows = @(); $indexRows = @()
+$scriptEntries = @(); $commandEntries = @()
+foreach ($doc in $docs) {
+    $fm = Get-FrontMatter $doc.FullName
+    if (-not $fm) { $problems += "$($doc.Name) has no front matter"; continue }
+    $title = [regex]::Match($fm, '(?m)^title:\s*(.+?)\s*$').Groups[1].Value
+    $covers = ([regex]::Matches($fm, '(?m)^  - [^:]+$')).Count
+    $indexRows += "| [$title]($($doc.Name)) | $covers | $([regex]::Match($fm, '(?m)^checked:\s*(\S+)').Groups[1].Value) |"
+    foreach ($e in Get-Entries $fm 'scripts') {
+        $scriptEntries += $e
+        $scriptRows += "| ``$(Split-Path $e.Name -Leaf)`` | $($e.Text) | [$title](Docs/design/$($doc.Name)) |"
+    }
+    foreach ($e in Get-Entries $fm 'commands') {
+        $commandEntries += $e
+        $commandRows += "| ``$($e.Name)`` | $($e.Text) |"
+    }
+}
+$indexRows = $indexRows | ForEach-Object { $_ -replace '\|\s*\|$', '| - |' }
+
+# --- Checks against the code -------------------------------------------------------------------
+$files = Get-ChildItem $scriptsDir -Recurse -Filter *.cs | ForEach-Object { $_.FullName.Substring($root.Length + 1) -replace '\\', '/' }
+foreach ($f in $files) {
+    if (-not ($scriptEntries | Where-Object { $f -like $_.Name })) { $problems += "$f is not covered by any 'scripts:' entry in Docs/design" }
+}
+foreach ($e in $scriptEntries) {
+    if (-not ($files | Where-Object { $_ -like $e.Name })) { $problems += "'scripts:' entry $($e.Name) matches no file" }
+}
+$navCode = [IO.File]::ReadAllText((Join-Path $scriptsDir 'GVK_ZoneNavCommand.cs'))
+$codeCommands = [regex]::Matches($navCode, '"(/gvk \w+)"') | ForEach-Object { $_.Groups[1].Value.ToLower() } | Sort-Object -Unique
+$docCommands = $commandEntries | Where-Object { $_.Name -like '/gvk *' } | ForEach-Object { $_.Name.ToLower() }
+foreach ($c in $codeCommands) { if ($docCommands -notcontains $c) { $problems += "code handles $c but no 'commands:' entry lists it" } }
+foreach ($c in $docCommands) { if ($codeCommands -notcontains $c) { $problems += "'commands:' lists $c but the code does not handle it" } }
+$allCode = ($files | ForEach-Object { [IO.File]::ReadAllText((Join-Path $root $_)) }) -join "`n"
+foreach ($e in $commandEntries | Where-Object { $_.Name -notlike '/gvk *' }) {
+    if ($allCode.IndexOf($e.Name, [StringComparison]::OrdinalIgnoreCase) -lt 0) { $problems += "'commands:' lists $($e.Name) but no script mentions it" }
+}
+
+# --- Write -----------------------------------------------------------------------------------
+function Set-Block([string]$text, [string]$key, [string[]]$lines, [string]$nl) {
+    $pattern = "(?s)(<!-- GENERATED:$key -->).*?(<!-- /GENERATED:$key -->)"
+    if ($text -notmatch $pattern) { $script:problems += "missing GENERATED:$key markers"; return $text }
+    $block = $nl + '<!-- Generated by tools/Update-Readme.ps1 from the design docs. Do not edit by hand. -->' + $nl + '*Generated by `tools/Update-Readme.ps1` from the design docs. To change it, edit the docs in `Docs/design/`.*' + $nl + $nl + ($lines -join $nl) + $nl
+    [regex]::Replace($text, $pattern, { param($m) $m.Groups[1].Value + $block + $m.Groups[2].Value })
+}
+$readme = [IO.File]::ReadAllText($readmePath)
+$nl = if ($readme.Contains("`r`n")) { "`r`n" } else { "`n" }
+$newReadme = Set-Block $readme 'player-commands' (@('| Command | What it does |', '| --- | --- |') + $commandRows) $nl
+$newReadme = Set-Block $newReadme 'scripts' (@('| Script | What it does | Details |', '| --- | --- | --- |') + $scriptRows) $nl
+$index = [IO.File]::ReadAllText($indexPath)
+$newIndex = Set-Block $index 'design-docs' (@('| Doc | Covered files | Checked |', '| --- | --- | --- |') + $indexRows) $nl
+
+foreach ($p in $problems) { Write-Warning $p }
+$stale = ($newReadme -cne $readme) -or ($newIndex -cne $index)
+if ($Check) {
+    if ($stale) { Write-Output 'Generated docs are out of date.' }
+    if ($stale -or $problems.Count) { exit 1 }
+    Write-Output 'Generated docs are up to date.'; exit 0
+}
+if ($stale) {
+    $utf8 = New-Object Text.UTF8Encoding($false)
+    [IO.File]::WriteAllText($readmePath, $newReadme, $utf8)
+    [IO.File]::WriteAllText($indexPath, $newIndex, $utf8)
+    Write-Output 'Generated docs regenerated.'
+} else { Write-Output 'Generated docs are up to date.' }
+if ($problems.Count) { exit 1 }

@@ -1,0 +1,79 @@
+---
+title: Zone navigation HUD (`/gvk`)
+covers:
+  - ModScripts/GVK_ZoneNavCommand.cs
+  - ModScripts/API/HudAPIv2.cs
+scripts:
+  - ModScripts/GVK_ZoneNavCommand.cs: The /gvk HUD: compass, radar, minimap and satellite map
+  - ModScripts/API/HudAPIv2.cs: The Text HUD API the HUD draws with
+commands:
+  - /gvk help: Avionics status report card and command list (also plain /gvk)
+  - /gvk map: Full-screen satellite map with GPS and signals (the map key, default M, does the same)
+  - /gvk minimap: Corner minimap on or off
+  - /gvk radar: Cycle the minimap between Strategic Map and Tactical Radar
+  - /gvk range: Set the radar range (1.5, 3, 5 or 30 km), or cycle it
+  - /gvk compass: Compass ribbon and bearing tape on or off
+  - /gvk zone: Cycle the zone status bar (Compass dock, Radar dock, Off)
+  - /gvk gps: Restore the default Kharak GPS waypoints
+  - /gvk rate: Cycle the HUD refresh rate
+  - /gvk card: Full-screen Avionics Mission Briefing
+  - /gvk reset: Reset all navigation positions and preferences
+---
+
+# Zone navigation HUD (`/gvk`)
+
+- **Top-Center Tactical Compass Ribbon**:
+  - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
+  - **Horizon Bearing Tracking with Tactical HUD Icons**:
+    - **GPS Waypoints (`marker_gps`)**: Displays personal GPS waypoints set to "Show On HUD" using the custom dot icon in their exact user-configured GPS colors.
+    - **Active Radio Broadcasts (Antennas & Beacons)**: Automatically tracks broadcasting signals within communication range using dynamic elevation icons (`signal_up`, `signal_level`, `signal_down`) with color-coded faction standing:
+      - 🟢 **Friendly / Faction**: Green
+      - 🔵 **Personal Grids**: Cyan
+      - 🔴 **Hostile NPCs & Enemy Grids**: Red
+      - 🟡 **Neutral NPCs & Trade Stations**: Gold
+      - ⚪ **Unowned Grids / Derelicts**: White
+    - **Dynamic Distance Badges**: High-readability distance readouts (e.g., `1.2k`, `15k`) dynamically centered below each icon in its matching marker color, with waypoint icons integrated on the numeric bearing line.
+- **Unified Top-Right Tactical Radar & Zone HUD**:
+  - **Live Corner Minimap (Top-Right, Dual Modes)**:
+    - **Strategic Map Mode (Global)**: High-resolution topographical map (true 2:1 ratio) displaying whole-planet position blip, heading indicator, personal GPS waypoints, and detected broadcast signals.
+    - **Tactical Vector Radar Mode (Local)**: Player-centered combat vector radar with:
+      - **Camera-Facing Orientation & High-Visibility Player Reticle**: The radar aligns directly to your live camera view / line-of-sight in real time. Your rover/character forward heading is designated by an enlarged, high-visibility **Electric Gold / Amber pulsing chevron** layered over a **deep black contrast backing**, ensuring instantaneous visual distinction against all terrains and signals. Own-grid cockpit and antenna waypoints (< 30m) are automatically suppressed to keep the center reticle 100% clutter-free.
+      - **Dynamic FOV View Cone ("V" Indicator)**: Two razor-thin tactical cyan HUD rays (`0.0008f`) radiate upward from the center crosshair out to the radar perimeter, forming an authentic avionics "V" frustum that precisely tracks your camera's active on-screen viewport. Dynamically widens and narrows in real time with your in-game Field of View and camera/sniper/turret zoom levels! Any contact inside the "V" is directly visible through your windshield/screen.
+      - **Concentric Range Rings**: 1km, 2km, and 3km rings with cardinal crosshairs and heading indicator.
+      - **Dual Scaling Modes (Linear vs Logarithmic)**:
+        - **Linear Scale**: Selectable combat scanning ranges: 1.5 km, 3.0 km, and 5.0 km (configurable via `F2` menu).
+        - **Logarithmic Scale (0 - 30 km)**: Compresses the desert combat theater out to the planetary horizon using a 3-decade logarithmic scale: Inner ring $= 300\text{ m}$ (dogfight/CQB range), Middle ring $= 3.0\text{ km}$ (visual line-of-sight / standard engagement), Outer ring $= 30.0\text{ km}$ (planetary horizon / edge of planet curvature). Contacts beyond 30 km (up to 100 km) max out to the outer perimeter ring.
+        - Broadcast radio contacts (beacons and antennas) dynamically update their tactical icons based on true spherical planetary elevation relative to your vehicle (comparing radial altitude from Pertam's core, preventing planetary curvature from incorrectly flagging distant airborne contacts as 'below'):
+          - **Upward Arrow** (`signal_up`): Target is $> 200\text{ m}$ above you.
+          - **Equal Icon** (`signal_level`): Target is within $\pm 200\text{ m}$ altitude of you.
+          - **Downward Arrow** (`signal_down`): Target is $> 200\text{ m}$ below you.
+        - Faction relation colors (Allied green, Enemy red, Neutral white, NPC gold, Self cyan) remain active to show alignment, while GPS waypoints continue using their distinct GPS marker dots.
+        - **Subtle Drop Shadow & Contrast Halo**: Every HUD contact texture (`signal_up`, `signal_down`, `signal_level`, `nav_arrow`, and custom `marker_gps` dot) features an avionics-grade soft black drop shadow halo. This guarantees instant, crystal-clear readability against blinding desert sands, harsh sunlight, terrain clutter, and night skies alike.
+      - **Local Tangent Projection**: Projects true relative distances along Pertam's local horizon plane.
+      - **Perimeter Zone Direction Vectors**: Tactical vector rays spin around the outer 1/3rd perimeter ring of the radar (leaving the center 2/3rds completely unobscured for CQB contacts and reticles) in the accent color of the nearest lower zone (Lime Green / Yellow) and higher zone (Orange / Red), dynamically rotating with your live camera view and vehicle heading.
+    - **Integrated Tactical Header Box**: The mode and range telemetry (`TACTICAL RADAR (LOG: 30 KM)` or `SECTOR MAP`) is cleanly framed in crisp white text inside a docked header card directly above the minimap, matching the exact width of the minimap card with a tactical grey accent strip on the left edge.
+    - **Dynamic HUD Background Transparency & Palette**: All HUD element background cards (compass ribbon, zone status panel, tactical radar box, full satellite map frame, and map header) are rendered in Keen's signature HUD slate blue (`#29363E` / `RGB 41, 54, 62`) and automatically match the player's native Space Engineers **HUD Background Opacity** game setting in real time.
+    - **Color-Coded Avionics F2 Mod Menu**: Reorganized into clean, focused subcategories (`▶ Radar & Minimap Settings...`, `▶ Compass Ribbon Settings...`, `▶ Performance & Presets...`) with real-time color badges (`[ON]`, `[OFF]`, `[3.0 KM]`, `[RADAR DOCK]`) that instantly show live status and update dynamically when clicked.
+    - **Modular Radar Visuals**: Full toggles for **Zone Direction Vectors** and **Camera Frustum FOV Cone** in the F2 menu and config.
+    - **Tactical Chat Commands**:
+      - `/gvk` or `/gvk help` - Avionics status report card & command list
+      - `/gvk radar` - Toggle between Tactical Radar and Strategic Sector Map
+      - `/gvk range [1.5|3|5|30]` - Direct radar range setting (or cycle)
+      - `/gvk compass` - Toggle Compass ribbon
+      - `/gvk zone` - Cycle Zone telemetry dock (Radar / Compass / Off)
+      - `/gvk rate` - Cycle HUD refresh frequency (15, 12, 10, 6 Hz)
+      - `/gvk card` - Pop up the full-screen Avionics Mission Briefing screen
+      - `/gvk reset` - Factory reset all navigation positions and preferences
+    - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, Zone status bar, and visual vector toggles) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
+  - **Docked Zone Telemetry Status Panel**:
+    - Seamlessly docked directly beneath the minimap card in the top-right corner (or top-center compass dock), leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
+      - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`
+      - **Zone 3**: Red `[ ZONE 3: GAALSIEN HEART ]` | `Crossroads: 54.2 km | Core Dist: 12.8 km`
+- **Interactive Full-Screen Satellite Map (`M` Key / `/gvk map`)**:
+  - Toggled with the map key (default **`M`**, remappable in F2 > Satellite Map Settings) or `/gvk map`, with zero plugin or LCD screen requirements.
+  - Displays high-resolution topographical Kharak map with 20 / 35 / 50 km zone boundaries.
+  - **Real-Time "You Are Here" Blip**: Blinking player reticle tracking spherical lat/long on Pertam.
+  - **Auto-Plotted Personal GPS List & Signals**: Reads `MyAPIGateway.Session.GPS` and active radio broadcasts, plotting them with 50% enlarged Keen icons and relation colors (Allied green, Derelict white, Hostile red, Neutral gold).
+  - **Smart Tactical Label Truncation**: Waypoint and signal names exceeding 20 characters are compactly truncated (`[first 12]...[last 4]`, e.g. `KOTH Crashed...ship`) to prevent map text clutter while allowing common outpost names to show in full.
+  - **Waterfall Signal Deconfliction**: Dense clusters of nearby signals (bases with multiple beacons/antennas) are automatically grouped. Up to 5 signals waterfall vertically with individual icons, while 6+ signals cap at 5 lines displaying the top 4 signals plus an overflow `+N more...` tag to prevent screen-space clutter.
+  - **Docked Tactical Header Panel**: Features a color-accented status bar seamlessly integrated above the top of the map frame, displaying sector classification, Crossroads distance, border countdown, and keybindings in the matching zone threat color (Green/Yellow/Orange/Red).

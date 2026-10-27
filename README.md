@@ -1,201 +1,139 @@
-# GV: Deserts of Kharak (GVK) — Server Settings & Systems Design Document
+# GVK_Settings
 
-> **Primary Reference & Mod Documentation**  
-> **Steam Server Rules & Gameplay Guide**: [Steam Guide #2781522559](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559)  
-> **Steam Workshop Mod Collection**: [Steam Collection #2650582206](https://steamcommunity.com/sharedfiles/filedetails/?id=2650582206)  
-> **KSH Modding Reference**: [Space Engineers Modding Wiki](https://spaceengineers.wiki.gg/wiki/Modding)
+The core settings mod for the **GV: Deserts of Kharak (GVK)** server, and the home of the hub issue tracker for every GVK repo. It holds the SBC overrides and ModAdjuster files, the faction and economy definitions, the Block Restrictions config, and the server scripts that enforce the rules.
 
----
+## Philosophy
+GVK is a rover-centric PvPvE server on one planet, Kharak, themed on Homeworld: Deserts of Kharak. These are the ideas every change is measured against:
+- **Rules are enforced by code, not by trust.** Every constraint, such as zone boundaries, KOTH restrictions, safezone anti-stacking and grid limits, is a script, a setting or a limit. If it can't be enforced automatically, it isn't a rule, and admins don't police or referee.
+- **Simple for players.** Rules are few, intuitive and have as few exceptions as possible, so players spend their time driving, salvaging and fighting, not studying a rulebook.
+- **Lean on mods.** Solve a problem with a small internal script or an SBC override before adding another third-party mod. New dependencies are the exception, and some get ruled out for good: no ladders, for example, because they would change how every ship and base is designed.
+- **The desert is the tutorial.** Danger is real from the start: falls, collisions and self-inflicted damage hurt everywhere, and only PvP is switched off in the starter zones. Risk grows as you travel outward.
+- **Change at season boundaries.** Big changes (new mods, renamed encounters, new block rules) land when a season starts, so existing builds and saved NPC data aren't broken mid-season.
+- **Docs move with rules.** When a rule changes in code, the player guide changes with it.
+- **Open tracking.** Work, ideas and decisions live in one public tracker, the hub on this repo's issues.
 
-## 1. Design Philosophy & Core Pillars
+## Requirements
+Part of the GVK mod set, loaded with the rest of the [Steam collection](https://steamcommunity.com/sharedfiles/filedetails/?id=2650582206). The Steam guide ([players' rules and gameplay](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559)) is the authority for gameplay rules; this repo does not repeat them.
 
-1. **100% Automated Governance (Zero "Trust Me Bro™" Rules)**:
-   Every server constraint (zone boundaries, KOTH restrictions, safezone anti-stacking, grid limits, illegal block counts) is enforced programmatically via active ModAPI systems rather than admin policing or Discord tickets. If a rule exists, the code makes violating it mechanically impossible.
-2. **Sim-Speed & GC Optimization (Target: 60 TPS Server Health)**:
-   - Zero allocations in hot simulation paths (`UpdateBeforeSimulation`, `UpdateAfterSimulation`).
-   - Reusable static object buffers, squared distances (`Vector3D.DistanceSquared`) to avoid expensive square root operations, and stepped update intervals (`10th` or `100th` frame).
-3. **Anti-Mod-Bloat Architecture**:
-   Aggressively minimize third-party mod dependencies. Prefer lightweight, highly optimized internal C# scripts and SBC overrides within `GVK_Settings` to maintain fast client join times, low memory footprints, and engine stability.
-4. **Low Cognitive Overhead**:
-   Keep rules intuitive with clean numbers (e.g. 20 / 35 / 50 km boundaries) so players spend time driving, salvaging, and fighting rather than memorizing a complex rulebook.
+## Operator cheat sheet
+Where the settings an operator changes live:
 
----
+| What | File |
+| --- | --- |
+| Faction identity reputations (COALITION, GAALSIEN, DERELICT, KOTH static; SOBAN and KHAANEPH start at -1500) | `Content/Data/Factions.sbc` |
+| Economy and reputation settings (decay per hour, store limits, fees) | `Content/Data/Game/SessionComponents_Economy.sbc` |
+| Block Restrictions (bans and caps) | `Content/Data/BlockRestrictions_GVK.sbc` |
+| Sounds | `Content/Data/GVK_Audio.sbc` |
+| Grid classes, speeds, MP and UP budgets | the Ship Core Framework pack (GVK_ShipCoreFramework), not here |
 
-## 2. Planetary Zone Architecture (Pertam Rover-Centric)
+Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk help` lists them):
 
-All distance zones originate from the **Crossroads Tower Beacon** at `{X: 62495.55, Y: 28019.04, Z: 37195.71}`. Player-facing gameplay rules per zone (production tiers, PvP status, siegability) live in the [Steam Server Rules & Gameplay Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559) — this document covers what this repo implements and where.
+<!-- GENERATED:player-commands -->
+<!-- Generated by tools/Update-Readme.ps1 from the design docs. Do not edit by hand. -->
+*Generated by `tools/Update-Readme.ps1` from the design docs. To change it, edit the docs in `Docs/design/`.*
 
-| Zone | Radius (from Crossroads) | Designation | Enforced By (this repo) |
-| :--- | :--- | :--- | :--- |
-| **Zone 0** | $0 – 20\text{ km}$ | Safe Starter Hub | `GVK_NoPVPZone.cs`, `LimitedProdZone_*.cs` |
-| **Zone 1** | $20 – 35\text{ km}$ | PvE & Salvage Frontier | `GVK_NoPVPZone.cs`, `LimitedProdZone_*.cs` |
-| **Zone 2** | $35 – 50\text{ km}$ | Contested Desert | Vanilla rules (no zone enforcement) |
-| **Zone 3** | $> 50\text{ km}$ | Deep Desert / Gaalsien Heart | `GVK_Derelicts` MES spawn zones |
+| Command | What it does |
+| --- | --- |
+| `/toggleprediction` | Client only: switch the multiplayer prediction mode |
+| `/gvk help` | Avionics status report card and command list (also plain /gvk) |
+| `/gvk map` | Full-screen satellite map with GPS and signals (the map key, default M, does the same) |
+| `/gvk minimap` | Corner minimap on or off |
+| `/gvk radar` | Cycle the minimap between Strategic Map and Tactical Radar |
+| `/gvk range` | Set the radar range (1.5, 3, 5 or 30 km), or cycle it |
+| `/gvk compass` | Compass ribbon and bearing tape on or off |
+| `/gvk zone` | Cycle the zone status bar (Compass dock, Radar dock, Off) |
+| `/gvk gps` | Restore the default Kharak GPS waypoints |
+| `/gvk rate` | Cycle the HUD refresh rate |
+| `/gvk card` | Full-screen Avionics Mission Briefing |
+| `/gvk reset` | Reset all navigation positions and preferences |
+<!-- /GENERATED:player-commands -->
 
-> [!NOTE]
-> **Boundary Symmetry**: In `GVK_Derelicts`, the MES wreck spawn zones are centered at Pertam's exact surface antipode `{X: 3569.33, Y: 36772.94, Z: 26952.63}` with radii `57,000m` (Z1), `49,300m` (Z2), and `34,000m` (Z3), aligning to Crossroads zone borders with millimeter precision in every direction.
+Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to those plugins and are explained in the Steam guide.
 
----
+## Scripts (`ModScripts/`)
+<!-- GENERATED:scripts -->
+<!-- Generated by tools/Update-Readme.ps1 from the design docs. Do not edit by hand. -->
+*Generated by `tools/Update-Readme.ps1` from the design docs. To change it, edit the docs in `Docs/design/`.*
 
-## 3. Core Mod Systems & Scripts (`Data/Scripts/GVK Settings/`)
+| Script | What it does | Details |
+| --- | --- | --- |
+| `SafeZoneAnimated.cs` | Safezone generator animation and logic | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `SafezoneH2.cs` | Refills jetpack hydrogen inside any enabled safezone | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `GVK_ArmorBalance.cs` | Armor deformation and resistance tuning | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `UndergroundMonitor.cs` | Switches off blocks buried under the terrain (ToolCore drills exempt) | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `ToolEnhancer.cs` | Slightly larger ship grinder inventory so they clog less | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `NoMinPrice.cs` | Lets custom player store listings go down to a price of 1 | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `FixUnknownSignal.cs` | Server only: reassigns an unknown signal that picked a real player's ID | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `GVK_PredictionSwitcher.cs` | Client only: the integrated Multiplayer Prediction Switcher | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
+| `GVK_NoPVPZone.cs` | Damage rules by zone: no PvP in the starter zones, fall and self damage everywhere | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
+| `LimitedProdZone_*.cs` | Switch off heavy production, ship drills and military weapons near the Crossroads, by zone | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
+| `NoLargeGridZone_*.cs` | Switch off large grid power near small-grid-only KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
+| `NoThrusterZone_*.cs` | Switch off non-NPC thrusters near rover-only KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
+| `KOTHNoSafezone_*.cs` | Switch off player safezone generators and projectors near KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
+| `GVK_ZoneNavCommand.cs` | The /gvk HUD: compass, radar, minimap and satellite map | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `HudAPIv2.cs` | The Text HUD API the HUD draws with | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+<!-- /GENERATED:scripts -->
 
-### `GVK_NoPVPZone.cs`
-- **Damage Interception Hook**: Hooks `MyAPIGateway.Session.DamageSystem.RegisterBeforeDamageHandler(0, DamageHandler)` server-side in `BeforeStart()` (DamageSystem is not guaranteed ready during `Init()`). All handler state is method-local — damage handlers fire inline from multiple simulation/physics threads, so shared instance fields would be a race condition. Keen's `IMyDamageSystem` has no Unregister API (verified vs. game 1.208), so handler lifetime equals session lifetime by necessity.
-- **Block damage (Zone 0, 0 – 20km)**: All block damage zeroed (`info.Amount = 0f`) — total starter hub immunity for player grids.
-- **Block damage (Zone 1, 20 – 35km)**:
-  - Unowned blocks (`BigOwners.Count == 0`) and NPC-faction grids (`IsEveryoneNpc()` or tags `GAALSIEN`, `DERELICT`, `SPRT`, `KHAANEPH`) take weapon/drill/grinder damage. Friendly NPC structures (COALITION starter hub, Crossroads Tower) are protected by **MES invulnerability flags** in GVK_Derelicts — cross-system dependency.
-  - NPC attackers can damage player grids; self-damage and same-faction friendly fire allowed; cross-faction PvP damage zeroed.
-- **Character damage matrix (weapon, kinetic AND grinder damage vs. player bodies)**:
-  - **Fall / collision / environment damage (no attacker entity): allowed in ALL zones.** The desert is the tutorial — no false security in lower zones.
-  - **Self-inflicted damage (own ship's grinders/turrets/rams, own hand tools): allowed in ALL zones** so players don't develop bad habits that bite them in the deep desert.
-  - Same-faction friendly damage: allowed (Keen's friendly-fire toggle governs the rest).
-  - Zone 0: NPC and enemy-player damage to characters zeroed. Zone 1: NPC attackers allowed, enemy players zeroed. Beyond 35km: vanilla (full PvP).
-- **Grinder governance**:
-  - **Basic Grinder Anti-Hack & Anti-Hydroman (global)**: T1 starter hand grinders (`AngleGrinder`) are blocked from grinding/hacking enemy player blocks AND NPC blocks (`info.Amount = 0f`), eliminating the naked respawn-rush exploit. Allowed targets (self, same-faction, fully unowned debris) get a **1.2x QoL speed boost** in all zones.
-  - **NPC Hand Grinder Boost (global)**: T2–4 hand grinders grind NPC-owned blocks at **2x speed** in all zones. Hand drills and ship grinders are not boosted.
-  - Cross-faction grinding of player grids blocked in Z0/Z1; self/same-faction grinding allowed.
-- **Balancing stack (Suit Combat Balancer plugin interplay)**: The balancer scales hand tools vs. neutral/enemy factions (hack speeds 0.25/0.5/0.15, hand drills 1.0/1.0/0.5) and tool→player damage (25%); ship tools are exempt (full speed — the rover salvage path). Both handlers multiply `info.Amount`, so effects stack commutatively with no ordering hazards. Net effective hand-grinder speeds vs NPC blocks: terminal above functional **0.50x**, below functional **1.0x**, armor **0.30x** of vanilla.
+## Who enforces what
+This repo enforces the zone, KOTH, safezone and underground rules. The rest are done by other parts of the mod set:
 
-### `GVK_ZoneNavCommand.cs` & `API/HudAPIv2.cs` (Kharak Tactical Navigation Suite)
-- **Top-Center Tactical Compass Ribbon**:
-  - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
-  - **Horizon Bearing Tracking with Tactical HUD Icons**:
-    - **GPS Waypoints (`marker_gps`)**: Displays personal GPS waypoints set to "Show On HUD" using the custom dot icon in their exact user-configured GPS colors.
-    - **Active Radio Broadcasts (Antennas & Beacons)**: Automatically tracks broadcasting signals within communication range using dynamic elevation icons (`signal_up`, `signal_level`, `signal_down`) with color-coded faction standing:
-      - 🟢 **Friendly / Faction**: Green
-      - 🔵 **Personal Grids**: Cyan
-      - 🔴 **Hostile NPCs & Enemy Grids**: Red
-      - 🟡 **Neutral NPCs & Trade Stations**: Gold
-      - ⚪ **Unowned Grids / Derelicts**: White
-    - **Dynamic Distance Badges**: High-readability distance readouts (e.g., `1.2k`, `15k`) dynamically centered below each icon in its matching marker color, with waypoint icons integrated on the numeric bearing line.
-- **Unified Top-Right Tactical Radar & Zone HUD**:
-  - **Live Corner Minimap (Top-Right, Dual Modes)**:
-    - **Strategic Map Mode (Global)**: High-resolution topographical map (true 2:1 ratio) displaying whole-planet position blip, heading indicator, personal GPS waypoints, and detected broadcast signals.
-    - **Tactical Vector Radar Mode (Local)**: Player-centered combat vector radar with:
-      - **Camera-Facing Orientation & High-Visibility Player Reticle**: The radar aligns directly to your live camera view / line-of-sight in real time. Your rover/character forward heading is designated by an enlarged, high-visibility **Electric Gold / Amber pulsing chevron** layered over a **deep black contrast backing**, ensuring instantaneous visual distinction against all terrains and signals. Own-grid cockpit and antenna waypoints (< 30m) are automatically suppressed to keep the center reticle 100% clutter-free.
-      - **Dynamic FOV View Cone ("V" Indicator)**: Two razor-thin tactical cyan HUD rays (`0.0008f`) radiate upward from the center crosshair out to the radar perimeter, forming an authentic avionics "V" frustum that precisely tracks your camera's active on-screen viewport. Dynamically widens and narrows in real time with your in-game Field of View and camera/sniper/turret zoom levels! Any contact inside the "V" is directly visible through your windshield/screen.
-      - **Concentric Range Rings**: 1km, 2km, and 3km rings with cardinal crosshairs and heading indicator.
-      - **Dual Scaling Modes (Linear vs Logarithmic)**:
-        - **Linear Scale**: Selectable combat scanning ranges: 1.5 km, 3.0 km, and 5.0 km (configurable via `F2` menu).
-        - **Logarithmic Scale (0 - 30 km)**: Compresses the desert combat theater out to the planetary horizon using a 3-decade logarithmic scale: Inner ring $= 300\text{ m}$ (dogfight/CQB range), Middle ring $= 3.0\text{ km}$ (visual line-of-sight / standard engagement), Outer ring $= 30.0\text{ km}$ (planetary horizon / edge of planet curvature). Contacts beyond 30 km (up to 100 km) max out to the outer perimeter ring.
-        - Broadcast radio contacts (beacons and antennas) dynamically update their tactical icons based on true spherical planetary elevation relative to your vehicle (comparing radial altitude from Pertam's core, preventing planetary curvature from incorrectly flagging distant airborne contacts as 'below'):
-          - **Upward Arrow** (`signal_up`): Target is $> 200\text{ m}$ above you.
-          - **Equal Icon** (`signal_level`): Target is within $\pm 200\text{ m}$ altitude of you.
-          - **Downward Arrow** (`signal_down`): Target is $> 200\text{ m}$ below you.
-        - Faction relation colors (Allied green, Enemy red, Neutral white, NPC gold, Self cyan) remain active to show alignment, while GPS waypoints continue using their distinct GPS marker dots.
-        - **Subtle Drop Shadow & Contrast Halo**: Every HUD contact texture (`signal_up`, `signal_down`, `signal_level`, `nav_arrow`, and custom `marker_gps` dot) features an avionics-grade soft black drop shadow halo. This guarantees instant, crystal-clear readability against blinding desert sands, harsh sunlight, terrain clutter, and night skies alike.
-      - **Local Tangent Projection**: Projects true relative distances along Pertam's local horizon plane.
-      - **Perimeter Zone Direction Vectors**: Tactical vector rays spin around the outer 1/3rd perimeter ring of the radar (leaving the center 2/3rds completely unobscured for CQB contacts and reticles) in the accent color of the nearest lower zone (Lime Green / Yellow) and higher zone (Orange / Red), dynamically rotating with your live camera view and vehicle heading.
-    - **Integrated Tactical Header Box**: The mode and range telemetry (`TACTICAL RADAR (LOG: 30 KM)` or `SECTOR MAP`) is cleanly framed in crisp white text inside a docked header card directly above the minimap, matching the exact width of the minimap card with a tactical grey accent strip on the left edge.
-    - **Dynamic HUD Background Transparency & Palette**: All HUD element background cards (compass ribbon, zone status panel, tactical radar box, full satellite map frame, and map header) are rendered in Keen's signature HUD slate blue (`#29363E` / `RGB 41, 54, 62`) and automatically match the player's native Space Engineers **HUD Background Opacity** game setting in real time.
-    - **Color-Coded Avionics F2 Mod Menu**: Reorganized into clean, focused subcategories (`▶ Radar & Minimap Settings...`, `▶ Compass Ribbon Settings...`, `▶ Performance & Presets...`) with real-time color badges (`[ON]`, `[OFF]`, `[3.0 KM]`, `[RADAR DOCK]`) that instantly show live status and update dynamically when clicked.
-    - **Modular Radar Visuals**: Full toggles for **Zone Direction Vectors** and **Camera Frustum FOV Cone** in the F2 menu and config.
-    - **Tactical Chat Commands**:
-      - `/gvk` or `/gvk help` - Avionics status report card & command list
-      - `/gvk radar` - Toggle between Tactical Radar and Strategic Sector Map
-      - `/gvk range [1.5|3|5|30]` - Direct radar range setting (or cycle)
-      - `/gvk compass` - Toggle Compass ribbon
-      - `/gvk zone` - Cycle Zone telemetry dock (Radar / Compass / Off)
-      - `/gvk rate` - Cycle HUD refresh frequency (15, 12, 10, 6 Hz)
-      - `/gvk card` - Pop up the full-screen Avionics Mission Briefing screen
-      - `/gvk reset` - Factory reset all navigation positions and preferences
-    - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, Zone status bar, and visual vector toggles) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
-  - **Docked Zone Telemetry Status Panel**:
-    - Seamlessly docked directly beneath the minimap card in the top-right corner (or top-center compass dock), leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
-      - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`
-      - **Zone 3**: Red `[ ZONE 3: GAALSIEN HEART ]` | `Crossroads: 54.2 km | Core Dist: 12.8 km`
-- **Interactive Full-Screen Satellite Map (`M` Key / `/gvk map`)**:
-  - Toggled with hotkey **`M`** (or `/gvk map`) with zero plugin or LCD screen requirements.
-  - Displays high-resolution topographical Kharak map with 20 / 35 / 50 km zone boundaries.
-  - **Real-Time "You Are Here" Blip**: Blinking player reticle tracking spherical lat/long on Pertam.
-  - **Auto-Plotted Personal GPS List & Signals**: Reads `MyAPIGateway.Session.GPS` and active radio broadcasts, plotting them with 50% enlarged Keen icons and relation colors (Allied green, Derelict white, Hostile red, Neutral gold).
-  - **Smart Tactical Label Truncation**: Waypoint and signal names exceeding 20 characters are compactly truncated (`[first 12]...[last 4]`, e.g. `KOTH Crashed...ship`) to prevent map text clutter while allowing common outpost names to show in full.
-  - **Waterfall Signal Deconfliction**: Dense clusters of nearby signals (bases with multiple beacons/antennas) are automatically grouped. Up to 5 signals waterfall vertically with individual icons, while 6+ signals cap at 5 lines displaying the top 4 signals plus an overflow `+N more...` tag to prevent screen-space clutter.
-  - **Docked Tactical Header Panel**: Features a color-accented status bar seamlessly integrated above the top of the map frame, displaying sector classification, Crossroads distance, border countdown, and keybindings in the matching zone threat color (Green/Yellow/Orange/Red).
-Enforces industrial and military tiering across the planetary surface:
-- **`LimitedProdZone_Assembler.cs` & `Refinery.cs`**: Disables full-sized assemblers and refineries within $35\text{km}$ of Crossroads (unlocks in Zone 2).
-- **`LimitedProdZone_ShipDrill.cs`**: Disables mobile ship drills within $20\text{km}$ (Zone 0) to preserve starter hub terrain. Unlocks in Zone 1.
-- **`LimitedProdZone_LargeGatlingTurret.cs`, `LargeMissileTurret.cs`, `SmallGatlingGun.cs`, `SmallMissileLauncher*.cs`, `InteriorTurret.cs`**: Disables military weapons within $20\text{km}$ (Zone 0). Unlocks in Zone 1 for PvE defense and wreck clearance.
-- **`LimitedProdZone_ConveyorSorter.cs`**: Disables weaponised conveyor sorters (such as the missile battery) within $20\text{km}$ (Zone 0); plain conveyor sorters stay on.
-- All `LimitedProdZone_*.cs` scripts measure from the fixed Crossroads Tower coordinate, so they work whether or not the tower grid is loaded or concealed. The tower's `LimitedProdZone` beacon no longer does anything.
+| Rule area | Enforced by |
+| --- | --- |
+| Damage and PvP by zone | `GVK_NoPVPZone.cs` |
+| Production, drills and military weapons by zone | `LimitedProdZone_*.cs` |
+| KOTH sites (no large grids, no thrusters, no player safezones in range) | `NoLargeGridZone_*.cs`, `NoThrusterZone_*.cs`, `KOTHNoSafezone_*.cs` |
+| Bases hidden under the terrain | `UndergroundMonitor.cs` |
+| Banned and capped blocks | `Content/Data/BlockRestrictions_GVK.sbc` (read by the Block Restrictions mod) |
+| Grid size, speed, MP and UP budgets | The Ship Core Framework pack, [GVK-ShipCoreFramework](https://github.com/GV-Server-Mods/GVK-ShipCoreFramework) |
+| Safezone sieges and the enemy check | [GVK-SiegeableSafeZones-NPC](https://github.com/GV-Server-Mods/GVK-SiegeableSafeZones-NPC) |
+| Tool limits and the salvage turret's anti-bunker rule | [GVK_ToolCore_Tools](https://github.com/GV-Server-Mods/GVK_ToolCore_Tools) |
+| Beacon counts | The beacon limiter mod ([SpecCores_BeaconLimits](https://github.com/GV-Server-Mods/SpecCores_BeaconLimits)) |
+| Collision damage on large grids | The [GridDefender](https://github.com/GV-Server-Mods/GridDefender) plugin |
+| Storage, offline protection, cleanup and recovery | The Faction Hangar mod and the Torch plugins; the Steam guide explains them |
+| Everything NPC | [GVK-Derelicts](https://github.com/GV-Server-Mods/GVK-Derelicts) |
 
-### King of the Hill (KOTH) Anti-Abuse
-- **`KOTHNoSafezone_*.cs`**: Detects proximity to KOTH capture structures (e.g. Khar Toba, Kalash Site, Crashed Starship). Shuts off player-built safezone generators and projectors within range.
-- **`NoLargeGridZone_Beacon.cs`**: Shuts off large grid power within 3km of small-grid-only KOTH sites.
-- **`NoThrusterZone_Beacon.cs`**: Shuts off non-NPC thrusters within 3km of rover-only KOTH sites to enforce ground vehicle combat.
+## Making common changes
+- **A block ban or cap:** edit `Content/Data/BlockRestrictions_GVK.sbc`. On a server that has run before, delete the stale `Storage/2053202808.sbm_BlockRestrictions/BlockRestrictions.cfg` in the save before the first boot, so the mod repopulates from the file.
+- **A faction's reputation:** `Content/Data/Factions.sbc`. COALITION, GAALSIEN, DERELICT and KOTH are static identities. SOBAN and KHAANEPH stay non-static so the alliance plugin can move them, and a static faction's reputation cannot be changed at run time once a value is stored.
+- **Economy and reputation settings:** `Content/Data/Game/SessionComponents_Economy.sbc`. The reputation decay per hour is 0 on purpose, because decay drifts reputation back toward zero and would undo alliance standing.
+- **Anything a player can see:** change the Steam guide in the same pass.
 
-### Player Safezone Governors
-- **`SafezoneAnimated.cs`**: Manages visual shield animations and logic for player-built safezone generators (Kamikaze's Siegable Shields). 250m radius, 1W power.
-- **`SafezoneH2.cs`**: Refills the jetpack hydrogen of any player inside an enabled safezone bubble (any owner, NPC safezones included). Safezone blocks are tracked as they enter and leave the world, so pasted, hangared and MES-spawned zones work without a restart.
-- **`Safezone3kmCheck_*.cs`**: Prevents players from activating overlapping safezones within 3km of another player shield generator.
+## Building and testing
+This is an MDK2 mod project. From the repo root run `dotnet build -c Release`, or press Ctrl+Shift+B in VS Code (`.vscode/tasks.json`); `Mal.Mdk2.ModPackager` packs the mod and deploys it to your local Mods folder. Check that the deployed copy has your change before any in-game test. The performance rules for server scripts (frame-time budget, allocations, hot paths) are in the `se-mod-performance` skill; read it before writing script code.
 
-### Armor Rebalancing
-- **`GVK_ArmorBalance.cs`**: Dynamic armor deformation and resistance adjustments to balance rover-on-rover combat and missile impacts.
+## If you are building your own server mods with this as a reference
+Patterns here that are worth borrowing, each with the file to read:
+- **Register the damage handler in `BeforeStart`, not `Init`**, because the damage system isn't guaranteed ready earlier ([zone enforcement](Docs/design/zone-enforcement.md)).
+- **Measure zones from a fixed coordinate** instead of a grid, so the rule works whether or not that grid is loaded or concealed (the `LimitedProdZone_*` scripts, same doc).
+- **Track blocks and grids through add and remove events** instead of scanning every tick (`SafezoneH2.cs`, `GVK_PredictionSwitcher.cs`).
+- **Keep server-only and client-only code apart** (`FixUnknownSignal.cs` runs on the server, `GVK_PredictionSwitcher.cs` on the client).
+- **Let the data define the rule**: banned blocks, faction reputations and economy settings live in SBC files, not in code.
+- **A full HUD on the Text HUD API**: [zone nav HUD](Docs/design/zone-nav-hud.md).
 
----
+## Contributing
+Open issues in the hub tracker, [GV-Server-Mods/GVK-Settings](https://github.com/GV-Server-Mods/GVK-Settings/issues), for every GVK repo; set the Component field so it lands with the right repo. The labels and triage roles are in [Docs/agents/triage-labels.md](Docs/agents/triage-labels.md) and the tracker rules in [Docs/agents/issue-tracker.md](Docs/agents/issue-tracker.md).
 
-## 4. Grid Classes, Speeds & Spec Core Framework
+## Folder map
+| Path | What is in it |
+| --- | --- |
+| `Content/` | Block, blueprint, faction, economy and audio definitions, and ModAdjuster files |
+| `ModScripts/` | The server and client scripts above |
+| `Docs/design/` | How the scripts are built ([index](Docs/design/README.md)) |
+| `tools/` | `Update-Readme.ps1`: rebuilds the generated README tables and checks the docs against the code |
+| `Docs/agents/` | Hub issue tracker rules, triage labels, domain context |
+| `Archive/` | Retired scripts, kept for reference |
+| `.out-of-scope/` | Ideas that were decided against, with the reason |
 
-Grid classes, speeds, UP/MP point costs, and hard caps are maintained and enforced by the dedicated Spec Core / Ship Core mod (see the `/core check` command) and documented in the Steam Guide. They are intentionally **not** duplicated here to avoid two sources of truth drifting apart.
+## Design docs
+[Docs/design/README.md](Docs/design/README.md).
 
----
+## Quick links
+- Hub board and issues: [GV-Server-Mods/GVK-Settings](https://github.com/GV-Server-Mods/GVK-Settings)
+- Steam guide: [players' rules and gameplay](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559); mod collection: [2650582206](https://steamcommunity.com/sharedfiles/filedetails/?id=2650582206)
+- Skills: [se-dev-kharak](https://github.com/GV-Server-Mods/se-dev-kharak), [se-dev-mes](https://github.com/GV-Server-Mods/se-dev-mes)
+- Space Engineers modding reference: [Modding wiki](https://spaceengineers.wiki.gg/wiki/Modding)
 
-## 5. Siegable Shields & Siege Drives
-
-Shield generator mechanics (Kamikaze's Siegable Shields mod) and siege rules (chip costs, 3km build range, drain/recharge cadence) are documented in the Steam Guide. This repo contributes the safezone governor scripts listed in section 3 (`SafezoneAnimated.cs`, `SafezoneH2.cs`, `Safezone3kmCheck_*.cs`).
-
----
-
-## 6. Factions & Economy (SBC Definitions)
-
-Faction and economy SBC definitions ship in this repo (`Content/Data/`). Full gameplay details are in the Steam Guide; summary:
-
-- **Core Factions** (`Factions.sbc`): `COALITION` (starter hub, free scrap refining, trade), `GAALSIEN` (hostile raiders), `DERELICT` (automated defense wrecks), `KOTH` (objective sites). Dynamic alliances: `SOBAN`, `KHAANEPH` via the server's `/alliance` plugin.
-- **Currencies**: CUs (Construction Units) and RUs (Resource Units) ingots.
-- **Tech Components**: `[Tech] Igniter`, `Grav. Reflector`, `Bolt Carrier`, `Gun Cradle`, `Launch Assem.`, `Particle Emit.`, `Data Core`, `Turbo Encabulator` — drop from derelicts, boss wrecks, and military convoys.
-- **Scrap Tech Conversion**: NPC tech grinds into `[Scrap]`, refined to CUs for free at Coalition refineries.
-
----
-
-## 7. Server Operations Pointer
-
-Voxel reset cadence, offline faction safezones, cleanup automation, auto-hangar, and MnM/pipeline logistics are operated by the Torch server plugins and documented in the Steam Guide — not part of this repo.
-
----
-
-## 8. In-Game Commands Reference
-
-Commands provided by this repo's navigation suite (`GVK_ZoneNavCommand.cs`). All chat commands are prefixed with `/gvk` to guarantee zero collision with other mods, while fine-grained HUD positioning, sizing sliders, presets, radar ranges, and exact tick rates are managed directly via the **`F2` TextHUDAPI mod menu**:
-
-| Command | Description |
-| :--- | :--- |
-| `[M]` key or `/gvk map` | Toggles full-screen interactive Kharak Satellite Map with live GPS & signals. |
-| `/gvk minimap` | Toggles corner minimap radar card on/off. |
-| `/gvk radar` | Cycles minimap display mode between Strategic Map and Tactical Vector Radar. |
-| `/gvk compass` | Toggles top-center heading ribbon and tactical waypoint bearing tape on/off. |
-| `/gvk zone` | Cycles zone status bar mode (Compass Dock / Radar Dock / Off). |
-| `/gvk gps` | Restores default Kharak GPS waypoints (including Sevastopol trade station). |
-| `/gvk rate` | Cycles HUD refresh tick rate (12 Hz default → 15 Hz → 30 Hz → 60 Hz → 6 Hz → 10 Hz). |
-
-> [!TIP]
-
-Server-plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to their respective mods/plugins and are documented in the Steam Guide.
-
----
-
-## 9. Audio Engineering Reference
-
-When producing or modifying audio assets (`.sbc` SoundCategories and SoundRules):
-- **Tooling**: Use *Yakitori Audio Converter* for fast conversion to `.xwm`.
-  - Sampling Frequency: `44.1 kHz` | Channels: `1 Mono` | Codec: `Unsigned 8-bit`
-- **D2 vs. D3 Space Engineers Audio Architecture**:
-  - **D2 Sounds**: Non-directional stereo ambient sounds.
-  - Start, Loop, and End sound files must all share the exact same `.wav` audio format.
-
----
-
-## 10. External Mod Credits & Attributions
-
+## Credits
 - [Steam Server Rules & Gameplay Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2781522559)
 - **Lifted Wheels Suspension**: Credit to *Zantulo* ([Workshop #2727185097](https://steamcommunity.com/sharedfiles/filedetails/?id=2727185097)).
 - **Animated Safezone Generator**: Credit to *TwitchingPsycho* ([Workshop #2202391036](https://steamcommunity.com/sharedfiles/filedetails/?id=2202391036)).
@@ -204,4 +142,3 @@ When producing or modifying audio assets (`.sbc` SoundCategories and SoundRules)
   - [Workshop #1871733117](https://steamcommunity.com/sharedfiles/filedetails/?id=1871733117)
   - [Workshop #2533952116](https://steamcommunity.com/sharedfiles/filedetails/?id=2533952116)
   - [Workshop #1844150178](https://steamcommunity.com/sharedfiles/filedetails/?id=1844150178)
-
