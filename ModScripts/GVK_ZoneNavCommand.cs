@@ -3351,7 +3351,7 @@ namespace GVK.Navigation
                 return;
             }
 
-            if (msg.Equals("/gvk card", StringComparison.OrdinalIgnoreCase) || msg.Equals("/gvk popup", StringComparison.OrdinalIgnoreCase))
+            if (msg.Equals("/gvk card", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
                 ShowMissionScreenCard();
