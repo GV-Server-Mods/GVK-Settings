@@ -37,7 +37,7 @@
         <ReputationFriendlyMid>1000</ReputationFriendlyMid>
         <ReputationFriendlyMax>1500</ReputationFriendlyMax>
 
-        <ReputationDecayPerHour>50</ReputationDecayPerHour>
+        <ReputationDecayPerHour>0</ReputationDecayPerHour>
 
         <ReputationLevelValue>1000</ReputationLevelValue>
         <ReputationPlayerDefault>0</ReputationPlayerDefault>
