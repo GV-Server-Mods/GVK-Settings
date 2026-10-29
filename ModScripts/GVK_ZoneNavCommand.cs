@@ -180,7 +180,14 @@ namespace GVK.Navigation
             public bool IsSignal;
             public bool IsOwnOrFaction; // Signals only: owned by the player or shared with their faction
             public double PlanetaryElevation;
+            public int KothState;      // 0 = not a KOTH, KOTH_OPEN (flashes) or KOTH_NEXT (steady, dimmed)
+            public double KothRadius;  // KOTH capture radius in metres, for the satellite map ring
+            public double KothMapRadius; // That radius as a fraction of the map width (UV units)
         }
+
+        private const int KOTH_OPEN = 1;
+        private const int KOTH_NEXT = 2;
+        private static readonly Color KOTH_COLOR = new Color(255, 128, 31);
 
         // Default GPS entries populated for joining players
         private struct DefaultGpsEntry
@@ -370,8 +377,11 @@ namespace GVK.Navigation
             public bool ShowMinimapGps { get; set; } = true;
             public bool ShowMinimapSignals { get; set; } = true;
             public bool ShowMinimapOwnSignals { get; set; } = true;
+            public bool ShowMinimapKoth { get; set; } = true;
 
             public bool ShowCompass { get; set; } = true;
+            public bool ShowCompassKoth { get; set; } = true;
+            public bool ShowMapKoth { get; set; } = true;
             public bool ShowCompassGps { get; set; } = true;
             public bool ShowCompassSignals { get; set; } = true;
             public bool ShowCompassOwnSignals { get; set; } = true;
@@ -522,6 +532,18 @@ namespace GVK.Navigation
         private bool showMapSignalLabels = true;
         private bool showMapOwnSignals = true;
         private bool stackMapIcons = true; // False: every icon at its true position; stacks list names only
+        private bool showMapKoth = true;
+        private bool showMinimapKoth = true;
+        private bool showCompassKoth = true;
+        private HudAPIv2.MenuItem menuSubMapKoth;
+        private HudAPIv2.MenuItem menuSubMinimapKoth;
+        private HudAPIv2.MenuItem menuSubCompassKoth;
+        private readonly List<HudAPIv2.BillBoardHUDMessage> kothRingPool = new List<HudAPIv2.BillBoardHUDMessage>();
+        private const int KOTH_RING_DOTS = 24;
+        private static readonly double[] KOTH_RING_COS = BuildRingTable(true);
+        private static readonly double[] KOTH_RING_SIN = BuildRingTable(false);
+        private bool _kothFlashBright = true;
+        private const int KOTH_RING_MAX_ZONES = 4;
         private HudAPIv2.MenuItem menuSubMapOwnSignals;
         private HudAPIv2.MenuItem menuSubMapGpsLabels;
         private HudAPIv2.MenuItem menuSubMapSignalLabels;
@@ -556,6 +578,9 @@ namespace GVK.Navigation
                                 showMapSignalLabels = cfg.ShowMapSignalLabels;
                                 showMapOwnSignals = cfg.ShowMapOwnSignals;
                                 stackMapIcons = cfg.StackMapIcons;
+                                showMapKoth = cfg.ShowMapKoth;
+                                showMinimapKoth = cfg.ShowMinimapKoth;
+                                showCompassKoth = cfg.ShowCompassKoth;
                                 if (IsValidMapKey((MyKeys)cfg.MapKey))
                                 {
                                     mapKey = (MyKeys)cfg.MapKey;
@@ -618,6 +643,9 @@ namespace GVK.Navigation
                     ShowMapSignalLabels = showMapSignalLabels,
                     ShowMapOwnSignals = showMapOwnSignals,
                     StackMapIcons = stackMapIcons,
+                    ShowMapKoth = showMapKoth,
+                    ShowMinimapKoth = showMinimapKoth,
+                    ShowCompassKoth = showCompassKoth,
                     MapKey = (int)mapKey,
                     MapKeyShift = mapKeyShift,
                     MapKeyCtrl = mapKeyCtrl,
@@ -751,6 +779,10 @@ namespace GVK.Navigation
             for (int i = 0; i < fullMapLabelPool.Count; i++)
                 fullMapLabelPool[i]?.DeleteMessage();
             fullMapLabelPool.Clear();
+
+            for (int i = 0; i < kothRingPool.Count; i++)
+                kothRingPool[i]?.DeleteMessage();
+            kothRingPool.Clear();
         }
 
         /// <summary>
@@ -1308,6 +1340,25 @@ namespace GVK.Navigation
                 );
                 mapHeaderSubMsg.Visible = false;
 
+                // KOTH capture rings, created before the markers so they draw underneath them
+                for (int i = 0; i < KOTH_RING_DOTS * KOTH_RING_MAX_ZONES; i++)
+                {
+                    var dot = new HudAPIv2.BillBoardHUDMessage(
+                        Material: MATERIAL_SQUARE,
+                        Origin: Vector2D.Zero,
+                        BillBoardColor: KOTH_COLOR,
+                        Offset: Vector2D.Zero,
+                        TimeToLive: -1,
+                        Scale: 1.0,
+                        Width: 0.0025f,
+                        Height: 0.0025f * aspect,
+                        HideHud: false,
+                        Blend: BlendTypeEnum.PostPP
+                    );
+                    dot.Visible = false;
+                    kothRingPool.Add(dot);
+                }
+
                 // Pre-allocate 100 Full Map Marker Billboards & Labels (+50% scale: 0.0225f, Zero GC allocations)
                 for (int i = 0; i < 100; i++)
                 {
@@ -1386,6 +1437,7 @@ namespace GVK.Navigation
                 menuSubMinimapGps = new HudAPIv2.MenuItem("GPS: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapGps, "Minimap GPS"); });
                 menuSubMinimapSignals = new HudAPIv2.MenuItem("Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapSignals, "Minimap Signals"); });
                 menuSubMinimapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapOwnSignals, "Minimap Own & Faction Signals"); });
+                menuSubMinimapKoth = new HudAPIv2.MenuItem("KOTH: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapKoth, "Minimap KOTH"); });
                 menuSubMinimapPreset = new HudAPIv2.MenuItem("Snap Position: ...", radarCategory, () => { CycleMinimapPreset(); });
 
                 minimapSliderX = new HudAPIv2.MenuSliderInput(
@@ -1424,6 +1476,7 @@ namespace GVK.Navigation
                 menuSubCompassGps = new HudAPIv2.MenuItem("GPS: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassGps, "Compass GPS"); });
                 menuSubCompassSignals = new HudAPIv2.MenuItem("Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassSignals, "Compass Signals"); });
                 menuSubCompassOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassOwnSignals, "Compass Own & Faction Signals"); });
+                menuSubCompassKoth = new HudAPIv2.MenuItem("KOTH: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassKoth, "Compass KOTH"); });
                 menuSubCompassScale = new HudAPIv2.MenuItem("Compass Size: ...", compassCategory, () => { CycleCompassScale(); });
                 menuSubCompassPreset = new HudAPIv2.MenuItem("Snap Position: ...", compassCategory, () => { CycleCompassPreset(); });
 
@@ -1460,6 +1513,7 @@ namespace GVK.Navigation
                 // Submenu 3: Satellite Map Markers (label toggles hide only names; markers stay)
                 var mapCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Satellite Map Settings...", rootCategory, "Satellite Map Markers & Labels");
                 menuSubMapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapOwnSignals, "Map Own & Faction Signals"); });
+                menuSubMapKoth = new HudAPIv2.MenuItem("KOTH: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapKoth, "Map KOTH"); });
                 menuSubMapGpsLabels = new HudAPIv2.MenuItem("GPS Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapGpsLabels, "Map GPS Labels"); });
                 menuSubMapSignalLabels = new HudAPIv2.MenuItem("Signal Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapSignalLabels, "Map Signal Labels"); });
                 menuSubMapStackIcons = new HudAPIv2.MenuItem("Stack Icons: ...", mapCategory, () => { ToggleMarkerFilter(ref stackMapIcons, "Map Icon Stacking"); });
@@ -1521,8 +1575,12 @@ namespace GVK.Navigation
 
             // 100-Tick (~1.67s) Background Scan: entity iteration, GPS list, zone distance.
             // Players don't cross zone boundaries fast enough to notice the extra latency.
+            // KOTH flash phase for this tick: bright for 36 of every 60 ticks (0.6 s of each second)
+            _kothFlashBright = tickCounter % 60 < 36;
+
             if (tickCounter % 100 == 0)
             {
+                KothClientData.Changed = false;
                 UpdateBackgroundData(pos.Value);
 
                 float currentHudOpacity = GetUserHudOpacity();
@@ -1530,6 +1588,12 @@ namespace GVK.Navigation
                 {
                     UpdateCardBackgroundOpacities();
                 }
+            }
+            else if (KothClientData.Changed)
+            {
+                // New KOTH state (about once a second): refresh only the KOTH markers, not the full entity scan
+                KothClientData.Changed = false;
+                RefreshKothWaypoints(pos.Value);
             }
 
             // Configurable HUD Cadence (default 5 ticks / 12 Hz):
@@ -1839,6 +1903,9 @@ namespace GVK.Navigation
                 }
             }
 
+            // 3. KOTH zones from the GVK KOTH plugin
+            AddKothWaypoints(playerPos);
+
             // Sort by distance using cached IComparer struct — zero allocation, whitelisted by SE ModAPI.
             activeHudWaypoints.Sort(WaypointComparer);
             _mapLayoutDirty = true;
@@ -2111,7 +2178,7 @@ namespace GVK.Navigation
             for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < waypointSpritePool.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals)) continue;
+                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth)) continue;
 
                 Vector3 toWp = (Vector3)(wp.Coords - playerPos);
 
@@ -2151,7 +2218,7 @@ namespace GVK.Navigation
                 float poiScreenOffset = vis.ScreenOffset;
 
                 double distKm = wp.DistanceMeters * 0.001;
-                Color wpColor = wp.DisplayColor;
+                Color wpColor = GetMarkerColor(ref wp);
 
                 // Distance-based perspective scaling for compass tape:
                 // 100m or closer: 100% full size
@@ -2506,7 +2573,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
                 {
                     var wp = activeHudWaypoints[i];
-                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals)) continue;
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
                     Vector2 wpUV = wp.MapUV;
                     Vector2D wpOffset = new Vector2D(
                         (wpUV.X - 0.5) * minimapSize.X,
@@ -2519,7 +2586,7 @@ namespace GVK.Navigation
                     float mSize = 0.012f * minimapScale;
                     icon.Width = mSize;
                     icon.Height = mSize * aspect;
-                    icon.BillBoardColor = wp.DisplayColor;
+                    icon.BillBoardColor = GetMarkerColor(ref wp);
                     icon.Offset = wpOffset;
                     icon.Visible = true;
                 }
@@ -2638,7 +2705,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
                 {
                     var wp = activeHudWaypoints[i];
-                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals)) continue;
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
                     Vector3D toTarget = wp.Coords - playerPos;
                     double fwdDist = Vector3D.Dot(toTarget, fwdTangent);
                     double rightDist = Vector3D.Dot(toTarget, rightTangent);
@@ -2698,7 +2765,7 @@ namespace GVK.Navigation
                     float rSize = 0.012f * minimapScale;
                     icon.Width = rSize;
                     icon.Height = rSize * aspect;
-                    icon.BillBoardColor = isClamped ? wp.DisplayColor * 0.80f : wp.DisplayColor;
+                    icon.BillBoardColor = isClamped ? GetMarkerColor(ref wp) * 0.80f : GetMarkerColor(ref wp);
 
                     icon.Offset = wpOffset;
                     icon.Visible = true;
@@ -2846,6 +2913,8 @@ namespace GVK.Navigation
                 _mapLayoutDirty = false;
                 BuildMapLayout(fullMapWidth, fullMapHeight);
             }
+
+            DrawKothRings(fullMapWidth, fullMapHeight);
 
             // 2. Unlabelled markers first, at their true positions, so label stacks draw on top of them
             int sIdx = 0; // Sprite pool index
@@ -3009,8 +3078,8 @@ namespace GVK.Navigation
             for (int i = 0; i < activeHudWaypoints.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals)) continue;
-                if (!(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels))
+                if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals, showMapKoth)) continue;
+                if (wp.KothState == 0 && !(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels)) // KOTH labels always show
                 {
                     _mapPlainWps.Add(i);
                     continue;
@@ -3208,7 +3277,7 @@ namespace GVK.Navigation
             var wp = activeHudWaypoints[wpIdx];
             sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
             sprite.Rotation = 0f;
-            sprite.BillBoardColor = wp.DisplayColor;
+            sprite.BillBoardColor = GetMarkerColor(ref wp);
             sprite.Offset = offset;
             sprite.Visible = true;
         }
@@ -3248,6 +3317,43 @@ namespace GVK.Navigation
 
             for (int i = 0; i < fullMapLabelPool.Count; i++)
                 fullMapLabelPool[i].Visible = false;
+
+            for (int i = 0; i < kothRingPool.Count; i++)
+                kothRingPool[i].Visible = false;
+        }
+
+        /// <summary>
+        /// Draws each KOTH's capture radius as a ring of dots on the satellite map. The ring's size comes from
+        /// projecting a point one radius away along the planet surface, so it matches the map's scale there.
+        /// </summary>
+        private void DrawKothRings(float fullMapWidth, float fullMapHeight)
+        {
+            int dot = 0;
+            for (int w = 0; w < activeHudWaypoints.Count; w++)
+            {
+                var wp = activeHudWaypoints[w];
+                if (wp.KothState == 0 || wp.KothRadius <= 0 || !showMapKoth)
+                    continue;
+                if (dot + KOTH_RING_DOTS > kothRingPool.Count)
+                    break;
+
+                Vector2D center = GetMapOffset(wp.MapUV, fullMapWidth, fullMapHeight);
+                double radius = wp.KothMapRadius * fullMapWidth;
+                if (radius < 0.004)
+                    radius = 0.004; // Keep tiny zones visible as a ring around the icon
+
+                Color color = GetMarkerColor(ref wp);
+                for (int i = 0; i < KOTH_RING_DOTS; i++)
+                {
+                    var ringDot = kothRingPool[dot++];
+                    ringDot.Offset = center + new Vector2D(KOTH_RING_COS[i] * radius, KOTH_RING_SIN[i] * radius * cachedAspect);
+                    ringDot.BillBoardColor = color;
+                    ringDot.Visible = true;
+                }
+            }
+
+            for (int i = dot; i < kothRingPool.Count; i++)
+                kothRingPool[i].Visible = false;
         }
 
 
@@ -3973,9 +4079,95 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] {name}: {(setting ? "ENABLED" : "DISABLED")}", 2500, setting ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
-        private static bool IsMarkerShown(ref ActiveHudWaypoint wp, bool showGps, bool showSignals, bool showOwnSignals)
+        private static bool IsMarkerShown(ref ActiveHudWaypoint wp, bool showGps, bool showSignals, bool showOwnSignals, bool showKoth)
         {
+            if (wp.KothState != 0) return showKoth;
             return wp.IsSignal ? showSignals && (showOwnSignals || !wp.IsOwnOrFaction) : showGps;
+        }
+
+        /// <summary>
+        /// Marker colour for this frame: open KOTHs flash (bright 0.6 s, faint 0.4 s), the next KOTH is dimmed,
+        /// everything else uses its own colour.
+        /// </summary>
+        private Color GetMarkerColor(ref ActiveHudWaypoint wp)
+        {
+            if (wp.KothState == KOTH_OPEN && !_kothFlashBright)
+                return wp.DisplayColor * 0.25f;
+            return wp.DisplayColor;
+        }
+
+        /// <summary>
+        /// A KOTH's capture radius as a distance in map UV units: projects a point one radius away along the
+        /// planet surface. Computed when KOTH markers refresh, not on every map redraw.
+        /// </summary>
+        private double KothRingMapRadius(Vector3D center, double radiusMeters)
+        {
+            Vector3D up = center - PLANET_CENTER;
+            up.Normalize();
+            Vector3D edge = center + Vector3D.CalculatePerpendicularVector(up) * radiusMeters;
+            Vector2 uvCenter = WorldToMapUV(center);
+            Vector2 uvEdge = WorldToMapUV(edge);
+            double d = (uvEdge - uvCenter).Length();
+            return d > 0.25 ? 0.0 : d; // Across the map's wrap seam the projection jumps; fall back to the minimum ring
+        }
+
+        private static double[] BuildRingTable(bool cos)
+        {
+            var table = new double[KOTH_RING_DOTS];
+            for (int i = 0; i < KOTH_RING_DOTS; i++)
+            {
+                double angle = MathHelper.TwoPi * i / KOTH_RING_DOTS;
+                table[i] = cos ? Math.Cos(angle) : Math.Sin(angle);
+            }
+            return table;
+        }
+
+        /// <summary>
+        /// Replaces only the KOTH markers (removed from the end backwards, then re-added and re-sorted), so new
+        /// KOTH state doesn't trigger the full grid and broadcast scan in <see cref="UpdateBackgroundData"/>.
+        /// </summary>
+        private void RefreshKothWaypoints(Vector3D playerPos)
+        {
+            for (int i = activeHudWaypoints.Count - 1; i >= 0; i--)
+            {
+                if (activeHudWaypoints[i].KothState != 0)
+                    activeHudWaypoints.RemoveAtFast(i);
+            }
+
+            AddKothWaypoints(playerPos);
+            activeHudWaypoints.Sort(WaypointComparer);
+            _mapLayoutDirty = true;
+            _refreshCompassNextFrame = true;
+            _refreshMinimapNextFrame = true;
+            if (showFullMap)
+                _fullMapNeedsRedraw = true;
+        }
+
+        /// <summary>Adds the open KOTHs and the next one from <see cref="KothClientData"/> as markers.</summary>
+        private void AddKothWaypoints(Vector3D playerPos)
+        {
+            for (int i = 0; i < KothClientData.Zones.Count; i++)
+            {
+                var zone = KothClientData.Zones[i];
+                string label = zone.Open
+                    ? "KOTH " + zone.Name + " " + (int)Math.Round(MathHelper.Clamp(zone.Fraction, 0.0, 1.0) * 100.0) + "%"
+                    : "KOTH " + zone.Name + " " + zone.StartUtc.ToLocalTime().ToString("ddd HH:mm");
+
+                activeHudWaypoints.Add(new ActiveHudWaypoint
+                {
+                    Name = label,
+                    Coords = zone.Position,
+                    Sprite = MATERIAL_MARKER_GPS,
+                    DisplayColor = zone.Open ? KOTH_COLOR : KOTH_COLOR * 0.55f,
+                    DistanceMeters = Vector3D.Distance(playerPos, zone.Position),
+                    MapUV = WorldToMapUV(zone.Position),
+                    IsSignal = false,
+                    PlanetaryElevation = Vector3D.Distance(zone.Position, PLANET_CENTER) - PLANET_RADIUS,
+                    KothState = zone.Open ? KOTH_OPEN : KOTH_NEXT,
+                    KothRadius = zone.Radius,
+                    KothMapRadius = KothRingMapRadius(zone.Position, zone.Radius)
+                });
+            }
         }
 
         private void CycleZoneBarMode()
@@ -4082,6 +4274,9 @@ namespace GVK.Navigation
             showMapSignalLabels = true;
             showMapOwnSignals = true;
             stackMapIcons = true;
+            showMapKoth = true;
+            showMinimapKoth = true;
+            showCompassKoth = true;
             mapKey = MyKeys.M;
             mapKeyShift = false;
             mapKeyCtrl = false;
@@ -4232,6 +4427,8 @@ namespace GVK.Navigation
 
             if (menuSubCompassOwnSignals != null)
                 menuSubCompassOwnSignals.Text = $"Own & Faction Signals: {(showCompassOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+            if (menuSubCompassKoth != null)
+                menuSubCompassKoth.Text = $"KOTH: {(showCompassKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
 
             if (menuSubCompassScale != null)
                 menuSubCompassScale.Text = $"Compass Size: <color=255,230,40>[{(int)Math.Round(compassScale * 100)}%]";
@@ -4250,6 +4447,8 @@ namespace GVK.Navigation
 
             if (menuSubMapOwnSignals != null)
                 menuSubMapOwnSignals.Text = $"Own & Faction Signals: {(showMapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+            if (menuSubMapKoth != null)
+                menuSubMapKoth.Text = $"KOTH: {(showMapKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
 
             if (menuRootOpenMap != null)
                 menuRootOpenMap.Text = $"<color=187,233,246>[{mapKeyLabel}] Open Satellite Map";
@@ -4268,6 +4467,8 @@ namespace GVK.Navigation
 
             if (menuSubMinimapOwnSignals != null)
                 menuSubMinimapOwnSignals.Text = $"Own & Faction Signals: {(showMinimapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
+            if (menuSubMinimapKoth != null)
+                menuSubMinimapKoth.Text = $"KOTH: {(showMinimapKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
 
             if (menuSubRate != null)
                 menuSubRate.Text = $"Update Frequency: <color=255,230,40>[{updateTickRate} Ticks ({(60f / updateTickRate):0.#} Hz)]";

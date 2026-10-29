@@ -9,6 +9,7 @@ How the GVK_Settings scripts are built, one file per group, next to the files th
 | Doc | Covered files | Checked |
 | --- | --- | --- |
 | [Audio engineering notes](audio-engineering.md) | 1 | - |
+| [KOTH client (HUD panel, boundary, fireworks)](koth-client.md) | 1 | - |
 | [Safezone, armor and utility scripts](safezone-and-utility-scripts.md) | 1 | - |
 | [Zone enforcement scripts](zone-enforcement.md) | 1 | - |
 | [Zone navigation HUD (`/gvk`)](zone-nav-hud.md) | 1 | - |

@@ -57,6 +57,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 
 | Script | What it does | Details |
 | --- | --- | --- |
+| `GVK_KothClient.cs` | Client only: KOTH capture panel, zone boundary and fireworks from the GVK KOTH plugin | [KOTH client (HUD panel, boundary, fireworks)](Docs/design/koth-client.md) |
 | `SafeZoneAnimated.cs` | Safezone generator animation and logic | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
 | `SafezoneH2.cs` | Refills jetpack hydrogen inside any enabled safezone | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
 | `GVK_ArmorBalance.cs` | Armor deformation and resistance tuning | [Safezone, armor and utility scripts](Docs/design/safezone-and-utility-scripts.md) |
