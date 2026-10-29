@@ -27,6 +27,22 @@ namespace GVK.Navigation
             public double Fraction;     // Capture bar, 0-1 (open zones)
             public int Participants;    // Counted at the last server check (open zones)
             public DateTime StartUtc;   // When it opens (next zone)
+            public long EntityId;       // NPC zones: the grid the zone follows (0 for fixed zones)
+        }
+
+        /// <summary>
+        /// Where the zone is this frame: the centre of its grid if that grid is loaded on this client (smooth for
+        /// moving zones), otherwise the last position the server sent (updated about once a second).
+        /// </summary>
+        public static Vector3D LivePosition(ref Zone zone)
+        {
+            if (zone.EntityId != 0)
+            {
+                var entity = MyAPIGateway.Entities.GetEntityById(zone.EntityId);
+                if (entity != null && !entity.MarkedForClose)
+                    return entity.PositionComp.WorldAABB.Center;
+            }
+            return zone.Position;
         }
 
         public static readonly List<Zone> Zones = new List<Zone>();
@@ -190,6 +206,8 @@ namespace GVK.Navigation
                     {
                         zone.Fraction = double.Parse(f[6], c);
                         zone.Participants = int.Parse(f[7], c);
+                        if (f.Length >= 9)
+                            zone.EntityId = long.Parse(f[8], c);
                     }
                     else
                     {
@@ -243,7 +261,7 @@ namespace GVK.Navigation
                 for (int i = 0; i < KothClientData.Zones.Count; i++)
                 {
                     var zone = KothClientData.Zones[i];
-                    if (zone.Open && Vector3D.DistanceSquared(pos, zone.Position) <= zone.Radius * zone.Radius)
+                    if (zone.Open && Vector3D.DistanceSquared(pos, KothClientData.LivePosition(ref zone)) <= zone.Radius * zone.Radius)
                     {
                         inside = i;
                         break;
@@ -338,11 +356,13 @@ namespace GVK.Navigation
                 if (!zone.Open)
                     continue;
 
+                // Follow the zone's grid every frame when it's loaded, so a moving zone's boundary moves smoothly
+                Vector3D center = KothClientData.LivePosition(ref zone);
                 double showWithin = zone.Radius + BOUNDARY_SHOW_MARGIN;
-                if (Vector3D.DistanceSquared(cameraPos, zone.Position) > showWithin * showWithin)
+                if (Vector3D.DistanceSquared(cameraPos, center) > showWithin * showWithin)
                     continue;
 
-                var matrix = MatrixD.CreateTranslation(zone.Position);
+                var matrix = MatrixD.CreateTranslation(center);
                 var color = new Color(255, 128, 31) * 0.35f;
                 MySimpleObjectDraw.DrawTransparentSphere(ref matrix, (float)zone.Radius, ref color,
                     MySimpleObjectRasterizer.Wireframe, 16, null, MATERIAL_LINE, 1.0f, -1, null, BlendTypeEnum.Standard);

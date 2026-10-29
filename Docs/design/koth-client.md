@@ -22,6 +22,7 @@ The player side of the GVK KOTH Torch plugin ([GV-Server-Mods/GVK-KOTH-Plugin](h
 
 ## Zone boundary
 - A faint orange wireframe sphere at the capture radius, drawn only when the camera is within the radius plus 1 km. Zones are visual only; nothing about them is a safe zone.
+- For NPC zones (Flying KOTH) the server sends the grid's entity id, and the sphere and the inside-zone check follow that grid every frame while it is loaded on the client, so a moving zone's boundary moves smoothly. If the grid isn't loaded, they use the last position the server sent (about once a second).
 
 ## Fireworks
 - When a capture bar completes, players within 5 km see 8 vanilla firework bursts (`Explosion_Firework_*`) above the zone over a few seconds.
