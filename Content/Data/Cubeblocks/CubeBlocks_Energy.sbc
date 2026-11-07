@@ -7,9 +7,9 @@
                 <TypeId>Reactor</TypeId>
                 <SubtypeId>LargeBlockLargeGenerator</SubtypeId>
             </Id>
-            <DisplayName>Large Reactors have increased Uranium consumption efficiency.</DisplayName>
+            <DisplayName>DisplayName_Block_LargeReactor</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\nuclear_reactor_large.dds</Icon>
-            <Description>Description_Reactor</Description>
+            <Description>Large Reactors have increased Uranium consumption efficiency.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
@@ -103,9 +103,9 @@
                 <TypeId>Reactor</TypeId>
                 <SubtypeId>LargeBlockLargeGeneratorWarfare2</SubtypeId>
             </Id>
-            <DisplayName>Large Reactors have increased Uranium consumption efficiency.</DisplayName>
+            <DisplayName>DisplayName_Block_LargeReactorWarfare2</DisplayName>
             <Icon>Textures\GUI\Icons\Cubes\ReactorReskinLarge.dds</Icon>
-            <Description>Description_Reactor</Description>
+            <Description>Large Reactors have increased Uranium consumption efficiency.</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
