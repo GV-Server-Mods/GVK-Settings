@@ -26,7 +26,22 @@ namespace LimitedProdZone
 			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorter"),
 			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "MediumBlockConveyorSorter"),
 			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "SmallBlockConveyorSorter"),
-			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorterIndustrial") 	
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "LargeBlockConveyorSorterIndustrial"),
+			// ToolCore tools work in Zone 0 (decision D2, 2026-11-12)
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeShipWelder"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeShipWelderReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallShipWelder"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallShipWelderReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeShipGrinder"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeShipGrinderReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallShipGrinder"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallShipGrinderReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeBlockDrill"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeBlockDrillReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallBlockDrill"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_SmallBlockDrillReskin"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargePrototechDrill"),
+			new MyDefinitionId(typeof(MyObjectBuilder_ConveyorSorter), "GVK_LargeSalvageBeamTurret")
 		};
 		private static readonly MyStringHash DestructionHash = MyStringHash.GetOrCompute("Destruction");
 

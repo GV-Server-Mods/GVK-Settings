@@ -591,7 +591,12 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -611,7 +616,12 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="40"/>
-				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="15"/>
 				<Component Subtype="LargeTube" Count="20"/>
 				<Component Subtype="MetalGrid" Count="15"/>
@@ -631,7 +641,12 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -651,7 +666,12 @@
 			</Id>
 			<Components>
 				<Component Subtype="SteelPlate" Count="5"/>
-				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
 				<Component Subtype="Construction" Count="10"/>
 				<Component Subtype="LargeTube" Count="3"/>
 				<Component Subtype="MetalGrid" Count="3"/>
@@ -753,7 +773,12 @@
             </Id>
             <Components>
                 <Component Subtype="SteelPlate" Count="100" />
-				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="50" />
                 <Component Subtype="MetalGrid" Count="40" />
@@ -773,7 +798,12 @@
             </Id>
             <Components>
                 <Component Subtype="SteelPlate" Count="15" />
-				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
                 <Component Subtype="Construction" Count="30" />
                 <Component Subtype="LargeTube" Count="8" />
                 <Component Subtype="MetalGrid" Count="10" />
@@ -833,7 +863,12 @@
             </Id>
             <Components>
                 <Component Subtype="SteelPlate" Count="100" />
-				<Component Subtype="PrototechPropulsionUnit" Count="50"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
                 <Component Subtype="Construction" Count="40" />
                 <Component Subtype="LargeTube" Count="50" />
                 <Component Subtype="MetalGrid" Count="40" />
@@ -853,7 +888,12 @@
             </Id>
             <Components>
                 <Component Subtype="SteelPlate" Count="15" />
-				<Component Subtype="PrototechPropulsionUnit" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
                 <Component Subtype="Construction" Count="30" />
                 <Component Subtype="LargeTube" Count="8" />
                 <Component Subtype="MetalGrid" Count="10" />
