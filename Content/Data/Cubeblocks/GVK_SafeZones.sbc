@@ -10,9 +10,9 @@
 			</Id>
 			<DisplayName>Shield Generator</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneBlock.dds</Icon>
-			<Description>Must NOT be on a grid with a Spec Core Beacon. Standalone Station Only.
+			<Description>Needs a Shield Core Beacon on the grid. Station Only. Max 2 per faction, shared with Shield Generator Type II.
 			
-			Low power, 0 Zone Chips. NOT siegable in Z0. Can be sieged in Z1-Z3.</Description>
+			Low power, 0 Zone Chips. NOT siegable in Z0-Z1. Can be sieged in Z2-Z3.</Description>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="2" y="2" z="3"/>
@@ -77,7 +77,7 @@
 			</Id>
 			<DisplayName>Shield Generator Type II</DisplayName>
 			<Icon>Textures\GUI\Icons\Cubes\SafeZoneReskin.dds</Icon>
-			<Description>Must NOT be on a grid with a Spec Core Beacon. Standalone Station Only.
+			<Description>Needs a Shield Core Beacon on the grid. Station Only. Max 2 per faction, shared with the Shield Generator.
 			
 			Low power, 0 Zone Chips. NOT siegable in Z0-Z1. Can be sieged in Z2-Z3.</Description>
 			<CubeSize>Large</CubeSize>
