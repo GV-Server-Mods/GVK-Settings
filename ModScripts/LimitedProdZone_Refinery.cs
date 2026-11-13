@@ -51,7 +51,7 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!refinery.Enabled) return;
+                    if (!refinery.Enabled || ZoneNpc.IsNpcOwner(refinery.OwnerId)) return;
 
 					if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                     {
@@ -74,7 +74,7 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (refinery.Enabled)
+            if (refinery.Enabled && !ZoneNpc.IsNpcOwner(refinery.OwnerId))
             {
 				if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                 {

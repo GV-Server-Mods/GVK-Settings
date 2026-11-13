@@ -51,7 +51,7 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!assembler.Enabled) return;
+                    if (!assembler.Enabled || ZoneNpc.IsNpcOwner(assembler.OwnerId)) return;
 
 					if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                     {
@@ -70,7 +70,7 @@ namespace LimitedProdZone
 
         private void WorkingStateChange(IMyCubeBlock block)
         {
-            if (assembler.Enabled)
+            if (assembler.Enabled && !ZoneNpc.IsNpcOwner(assembler.OwnerId))
             {
 				if (Vector3D.DistanceSquared(assembler.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
                 {

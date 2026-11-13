@@ -51,7 +51,11 @@ namespace LimitedProdZone
             {
                 if (isServer)
                 {
-                    if (!staticDrill.Enabled) return;
+                    if (!staticDrill.Enabled)
+                    {
+                        if (ZoneNpc.ShouldReArm(staticDrill, limitedProdCenterCoord)) staticDrill.Enabled = true;
+                        return;
+                    }
 
 					if (Vector3D.DistanceSquared(staticDrill.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
                     {

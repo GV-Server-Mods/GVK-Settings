@@ -85,7 +85,11 @@ namespace LimitedProdZone
 					}
 					else
 					{
-						if (!weapon.Enabled) return;
+						if (!weapon.Enabled)
+						{
+						    if (ZoneNpc.ShouldReArm(weapon, limitedProdCenterCoord)) weapon.Enabled = true;
+						    return;
+						}
 						if (Vector3D.DistanceSquared(weapon.GetPosition(), limitedProdCenterCoord) < 400000000) // use squared of 20,000m for better performance
 						{
 							if (!ConveyorSorterDefs.Contains(weapon.BlockDefinition)) weapon.Enabled = false;
