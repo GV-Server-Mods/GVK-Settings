@@ -130,5 +130,18 @@
             </Id>
             <Size x="15" y="7.5" z="7.5" />
         </EntityComponent>
+        <!-- Services Terminal Repair tab: vanilla values, except it works on an MES-spawned NPC station,
+             repairing owned grids within 250 m of the terminal (vanilla needs a Keen economy station's safe zone).
+             Players can't build the terminal (Block Restrictions). Salvage stays vanilla (off outside stations). (GVK-Settings#634) -->
+        <EntityComponent xsi:type="MyObjectBuilder_RepairServiceComponentDefinition">
+            <Id>
+                <TypeId>RepairServiceComponent</TypeId>
+                <SubtypeId>ServicesTerminal</SubtypeId>
+            </Id>
+            <BaseCostPerBlock>100</BaseCostPerBlock>
+            <FriendlyReputationDiscountMin>0.0</FriendlyReputationDiscountMin>
+            <FriendlyReputationDiscountMax>0.1</FriendlyReputationDiscountMax>
+            <WorksOutsideStation>true</WorksOutsideStation>
+        </EntityComponent>
 	</EntityComponents>
 </Definitions>
