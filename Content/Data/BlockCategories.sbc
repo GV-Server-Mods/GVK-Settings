@@ -112,6 +112,27 @@
 				<TypeId>GuiBlockCategoryDefinition</TypeId>
 				<SubtypeId/>
 			</Id>
+			<DisplayName>DisplayName_Category_Utility</DisplayName>
+			<Name>Section1_Position3_Utility</Name>
+			<StrictSearch>true</StrictSearch>
+			<ItemIds>
+				<string>Beacon/SmallBlockBeacon</string>
+				<string>Beacon/SmallBlockBeacon_Scrap</string>
+				<string>Beacon/LargeBlockBeacon</string>
+				<string>Beacon/LargeBlockBeacon_MediumCore</string>
+				<string>Beacon/LargeBlockBeacon_SupportCore</string>
+				<string>Beacon/LargeBlockBeacon_HeavyCore</string>
+				<string>Beacon/LargeBlockBeacon_Fortress</string>
+				<string>Beacon/LargeBlockBeacon_Pipeline</string>
+				<string>Beacon/LargeBlockBeacon_ShieldCore</string>
+				<string>Beacon/LargeBlockBeacon_Scrap</string>
+			</ItemIds>
+		</Category>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
 			<DisplayName>DisplayName_Category_Logistics</DisplayName>
 			<Name>Section1_Position3_Logistics</Name>
 			<StrictSearch>true</StrictSearch>
