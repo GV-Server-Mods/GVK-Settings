@@ -683,7 +683,7 @@ namespace GVK.Navigation
             {
                 LoadConfig();
                 MyAPIGateway.Utilities.MessageEntered += OnMessageEntered;
-                hudApi = new HudAPIv2(OnHudApiRegistered);
+                hudApi = GvkHudApi.Register(OnHudApiRegistered);
             }
         }
 
@@ -735,7 +735,7 @@ namespace GVK.Navigation
                     _mapLabelMeasure?.DeleteMessage();
                     _cachedMapClusters.Clear();
 
-                    hudApi.Close();
+                    GvkHudApi.Release(OnHudApiRegistered);
                     hudApi = null;
                 }
             }

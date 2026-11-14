@@ -102,7 +102,7 @@ namespace GVK.Navigation
 
             MyAPIGateway.Multiplayer.RegisterSecureMessageHandler(CHANNEL, OnMessage);
             registered = true;
-            hudApi = new HudAPIv2(OnHudApiRegistered);
+            hudApi = GvkHudApi.Register(OnHudApiRegistered);
         }
 
         protected override void UnloadData()
@@ -116,7 +116,7 @@ namespace GVK.Navigation
                 panelBg?.DeleteMessage();
                 panelAccent?.DeleteMessage();
                 panelMsg?.DeleteMessage();
-                hudApi.Close();
+                GvkHudApi.Release(OnHudApiRegistered);
                 hudApi = null;
             }
 
