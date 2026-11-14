@@ -1693,7 +1693,8 @@ namespace GVK.Navigation
         /// <summary>
         /// Zone index (0-3) from the MES zone spheres, plus straight-line distances to the next-lower and
         /// next-higher zone. Zone 0 wins where it overlaps Zone 1; otherwise the highest containing sphere wins.
-        /// Outside every sphere (high altitude), the zone whose boundary is nearest.
+        /// Outside every sphere (the sky just past the Zone 0 edge, high altitude) counts as Zone 1, as in
+        /// GVK_NoPVPZone.cs and the production limits.
         /// </summary>
         private static int ClassifyZone(Vector3D pos, out double toLowerM, out double toHigherM)
         {
@@ -1704,8 +1705,7 @@ namespace GVK.Navigation
             if (d0 <= ZONE_0_RADIUS) zone = 0;
             else if (d3 <= ZONE_3_RADIUS) zone = 3;
             else if (d3 <= ZONE_2_RADIUS) zone = 2;
-            else if (d3 <= ZONE_1_RADIUS) zone = 1;
-            else zone = (d0 - ZONE_0_RADIUS) < (d3 - ZONE_1_RADIUS) ? 0 : 1;
+            else zone = 1; // inside the Zone 1 sphere, or outside every sphere
 
             switch (zone)
             {
