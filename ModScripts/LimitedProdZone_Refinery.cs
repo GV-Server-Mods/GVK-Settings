@@ -17,7 +17,6 @@ namespace LimitedProdZone
     {
         private IMyRefinery refinery;
         private bool isServer;
-        private Vector3D limitedProdCenterCoord = new Vector3D(62495, 28019, 37195); //[Coordinates:{X:62495.55 Y:28019.04 Z:37195.71}]
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -53,7 +52,7 @@ namespace LimitedProdZone
                 {
                     if (!refinery.Enabled || ZoneNpc.IsNpcOwner(refinery.OwnerId)) return;
 
-					if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
+					if (ZoneSpheres.IsZone0Or1(refinery.GetPosition()))
                     {
                         string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                         bool isBasicRefinery = false;
@@ -76,7 +75,7 @@ namespace LimitedProdZone
         {
             if (refinery.Enabled && !ZoneNpc.IsNpcOwner(refinery.OwnerId))
             {
-				if (Vector3D.DistanceSquared(refinery.GetPosition(), limitedProdCenterCoord) < 1225000000) // use squared of 35,000m for better performance
+				if (ZoneSpheres.IsZone0Or1(refinery.GetPosition()))
                 {
                     string strSubBlockType = refinery.BlockDefinition.SubtypeId.ToString();
                     Boolean isBasicRefinery = false;

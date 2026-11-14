@@ -18,9 +18,9 @@ using VRageMath;
 namespace StarterGrinder
 {
     /// <summary>
-    /// GVK automated damage governance around Crossroads Tower.
-    /// Z0 (0-20km): player grids immune to entity damage; characters protected from NPC/enemy
-    /// damage. Z1 (20-35km): anti-PvP - player-vs-player damage/grinding blocked; NPC, self,
+    /// GVK automated damage governance by MES zone sphere.
+    /// Z0: player grids immune to entity damage; characters protected from NPC/enemy
+    /// damage. Z1: anti-PvP - player-vs-player damage/grinding blocked; NPC, self,
     /// friendly and environment (falls/terrain) damage allowed. Global: T1 grinder anti-hack
     /// with 1.2x boost, 2x T2-4 hand-grinder NPC salvage boost (stacks with Suit Combat Balancer),
     /// and no weather, radiation, asphyxia, low-pressure or temperature damage to characters inside
@@ -29,18 +29,15 @@ namespace StarterGrinder
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class StarterGrinder : MySessionComponentBase
     {
-        /// <summary>Crossroads Tower beacon (Zone 0 center), top of tower.</summary>
+        // Zone spheres mirror the GVK-Derelicts [MES Zone] profiles (GVK-Universal-Zone.sbc), which are
+        // canonical, and GVK_ZoneNavCommand.cs; keep in sync. Zone 0 is centred on Crossroads, Zones 1-3
+        // on Z3_CENTER. Zone 1 = outside the Zone 0 and Zone 2 spheres, so it matches the /gvk zone bar.
         private static readonly Vector3D CROSSROADS_TOWER = new Vector3D(62495.55, 28019.04, 37195.71);
-
-        /// <summary>Zone 0 outer boundary in meters (20km). Safe Starter Hub.</summary>
-        private const float ZONE_0_RADIUS = 20000f;
-
-        /// <summary>Zone 1 outer boundary in meters (35km). PvE &amp; Salvage Frontier.</summary>
-        private const float ZONE_1_RADIUS = 35000f;
-
-        // Squared radii derived from the float constants above so they can never drift apart.
-        private static readonly double ZONE_0_RADIUS_SQ = ZONE_0_RADIUS * ZONE_0_RADIUS;
-        private static readonly double ZONE_1_RADIUS_SQ = ZONE_1_RADIUS * ZONE_1_RADIUS;
+        private static readonly Vector3D Z3_CENTER = new Vector3D(3569.33, 36772.94, 26952.63);
+        private const double ZONE_0_RADIUS = 20000.0;
+        private const double ZONE_2_RADIUS = 49300.0;
+        private const double ZONE_0_RADIUS_SQ = ZONE_0_RADIUS * ZONE_0_RADIUS;
+        private const double ZONE_2_RADIUS_SQ = ZONE_2_RADIUS * ZONE_2_RADIUS;
 
         /// <summary>Vanilla subtype id of the Tier 1 starter hand grinder.</summary>
         private const string BASIC_GRINDER_SUBTYPE = "AngleGrinder";
@@ -150,10 +147,11 @@ namespace StarterGrinder
                 }
             }
 
-            // ZONE RULES: cross-faction grinding of PLAYER grids blocked in Z0/Z1; self/faction allowed.
-            if (!IsInZone(slim, ZONE_1_RADIUS_SQ)) return; // deep desert: vanilla rules
+            // ZONE RULES: cross-faction grinding of PLAYER grids blocked unless grinder and target
+            // are both in Zones 2-3; self/faction allowed.
+            if (ProtectedZone(slim.CubeGrid.GetPosition()) >= 2 && ProtectedZone(AttackerPosition(attackerEntity)) >= 2) return;
 
-            if (owner == 0) return; // unowned wrecks/debris: always salvageable in Z0/Z1
+            if (owner == 0) return; // unowned wrecks/debris: always salvageable
 
             long grinderOwner = 0;
             if (handGrinder != null)
@@ -236,44 +234,48 @@ namespace StarterGrinder
 
         /// <summary>
         /// All non-grind damage (weapons, drills, kinetic, missiles, collisions) against
-        /// blocks and characters.
+        /// blocks and characters. PvP lands only when target AND attacker are in Zone 2 or 3,
+        /// so nobody can shoot out of Zone 0/1 at players who can't shoot back.
         /// </summary>
         private void HandleOtherDamage(object target, ref MyDamageInformation info)
         {
             IMySlimBlock slim = target as IMySlimBlock;
             if (slim != null)
             {
-                double distSq = Vector3D.DistanceSquared(slim.CubeGrid.GetPosition(), CROSSROADS_TOWER);
+                int zone = ProtectedZone(slim.CubeGrid.GetPosition());
 
-                // Outside the 35km protected envelope: all normal damage applies
-                if (distSq > ZONE_1_RADIUS_SQ) return;
-
-                // Zone 0 (0-20km): total starter hub immunity for all blocks
-                if (distSq <= ZONE_0_RADIUS_SQ)
+                // Zone 0: total starter hub immunity for all blocks
+                if (zone == 0)
                 {
                     info.Amount = 0f;
                     return;
                 }
 
-                // Zone 1 (20-35km): PvE & Salvage Frontier
+                // No attacker entity = environment (meteors, debris): normal damage
+                IMyEntity attacker = GetAttacker(info.AttackerId);
+                if (attacker == null) return;
+
+                // Target and attacker both in Zones 2-3: all normal damage applies
+                if (zone >= 2 && ProtectedZone(AttackerPosition(attacker)) >= 2) return;
+
+                // Target in Zone 1, or attacker in Zone 0/1: only PvP is blocked
                 long targetOwner = GetGridOwner(slim);
                 if (targetOwner == 0) return; // unowned derelicts take weapon damage
 
                 IMyFaction targetFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(targetOwner);
                 if (IsNpcFaction(targetFaction)) return; // NPC grids take weapon damage
 
-                // Target is a player grid: resolve the attacker
-                long attackerOwner = ResolveAttackerOwner(info.AttackerId);
+                long attackerOwner = ResolveOwner(attacker);
 
                 // Ownerless attacker = environment (terrain voxel-map collisions resolve to owner 0,
-                // unowned debris, meteors): allowed so rovers still eat crash damage in Z1.
+                // unowned debris): allowed so rovers still eat crash damage in Z1.
                 if (attackerOwner == 0) return;
 
                 if (attackerOwner == targetOwner) return; // self-damage
                 if (SameFaction(attackerOwner, targetOwner)) return; // friendly fire
 
                 IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
-                if (IsNpcFaction(attackerFaction)) return; // NPCs can damage player grids in Z1
+                if (IsNpcFaction(attackerFaction)) return; // NPCs can damage player grids
 
                 info.Amount = 0f; // PvP blocked
                 return;
@@ -290,21 +292,21 @@ namespace StarterGrinder
         /// Character damage matrix (weapons, kinetic AND grinder damage vs bodies):
         /// environment/ownerless attackers and self/friendly damage always allowed;
         /// Z0 blocks NPC and enemy-player damage; Z1 allows NPCs, blocks enemy players;
-        /// beyond 35km vanilla.
+        /// Zones 2-3 vanilla unless an enemy player attacks from Zone 0/1.
         /// </summary>
         private void HandleCharacterDamage(IMyCharacter targetCharacter, ref MyDamageInformation info)
         {
-            double distSq = Vector3D.DistanceSquared(targetCharacter.GetPosition(), CROSSROADS_TOWER);
-            if (distSq > ZONE_1_RADIUS_SQ) return; // outside zones: vanilla rules
-
-            bool attackerEntityExists;
-            long attackerOwner = ResolveAttackerOwner(info.AttackerId, out attackerEntityExists);
-
             // No attacker entity (AttackerId 0) = pure environment: always allowed.
-            if (!attackerEntityExists) return;
+            IMyEntity attacker = GetAttacker(info.AttackerId);
+            if (attacker == null) return;
+
+            // Victim and attacker both in Zones 2-3: vanilla rules
+            int zone = ProtectedZone(targetCharacter.GetPosition());
+            if (zone >= 2 && ProtectedZone(AttackerPosition(attacker)) >= 2) return;
 
             // Ownerless attacker = environment too: falling on terrain reports the VOXEL MAP as
             // the attacker (Keen passes the contact entity id; terrain resolves to owner 0).
+            long attackerOwner = ResolveOwner(attacker);
             if (attackerOwner == 0) return;
 
             long victimId = targetCharacter.ControllerInfo != null
@@ -317,38 +319,42 @@ namespace StarterGrinder
             if (victimId != 0 && attackerOwner != 0 && SameFaction(attackerOwner, victimId)) return;
 
             // Z0: NPC and enemy-player damage blocked
-            if (distSq <= ZONE_0_RADIUS_SQ)
+            if (zone == 0)
             {
                 info.Amount = 0f;
                 return;
             }
 
-            // Z1: NPC attackers allowed; enemy players blocked as safe default
-            if (attackerOwner != 0)
-            {
-                IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
-                if (IsNpcFaction(attackerFaction)) return;
-            }
+            // Z1 victim, or attacker in Z0/Z1: NPC attackers allowed; enemy players blocked
+            IMyFaction attackerFaction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(attackerOwner);
+            if (IsNpcFaction(attackerFaction)) return;
 
             info.Amount = 0f;
         }
 
-        /// <summary>
-        /// Resolves the owning identity behind an attacking entity: cube blocks, grids (rams),
-        /// characters, and handheld tools (gun entities owned by their wielder).
-        /// </summary>
-        /// <param name="attackerEntityId">Entity id from MyDamageInformation.AttackerId.</param>
-        /// <param name="entityExists">False = environment damage (no attacker entity).</param>
-        /// <returns>Attacker identity id, or 0 if the entity exists but has no resolvable owner.</returns>
-        private static long ResolveAttackerOwner(long attackerEntityId, out bool entityExists)
+        /// <summary>Attacking entity, or null for environment damage (AttackerId 0 or entity gone).</summary>
+        private static IMyEntity GetAttacker(long attackerEntityId)
         {
-            entityExists = false;
-            if (attackerEntityId == 0) return 0;
+            return attackerEntityId == 0 ? null : MyAPIGateway.Entities.GetEntityById(attackerEntityId);
+        }
 
-            IMyEntity attackerEntity = MyAPIGateway.Entities.GetEntityById(attackerEntityId);
-            if (attackerEntity == null) return 0;
-            entityExists = true;
+        /// <summary>
+        /// Position that decides the attacker's zone: its grid for blocks (one verdict per grid,
+        /// as for targets), otherwise the entity itself (grid, character, hand tool or gun).
+        /// </summary>
+        private static Vector3D AttackerPosition(IMyEntity attacker)
+        {
+            IMyCubeBlock block = attacker as IMyCubeBlock;
+            return block != null && block.CubeGrid != null ? block.CubeGrid.GetPosition() : attacker.GetPosition();
+        }
 
+        /// <summary>
+        /// Owning identity behind an attacking entity: cube blocks, grids (rams), characters,
+        /// hand tools, and hand rifles/pistols (their bullets name the gun as the attacker).
+        /// </summary>
+        /// <returns>Attacker identity id, or 0 if the entity has no resolvable owner.</returns>
+        private static long ResolveOwner(IMyEntity attackerEntity)
+        {
             IMyCubeBlock attackerBlock = attackerEntity as IMyCubeBlock;
             if (attackerBlock != null)
                 return attackerBlock.OwnerId != 0 ? attackerBlock.OwnerId : GridFirstOwner(attackerBlock.CubeGrid);
@@ -366,14 +372,12 @@ namespace StarterGrinder
             if (handTool != null)
                 return handTool.OwnerIdentityId;
 
-            return 0; // entity exists but ownership unresolvable
-        }
+            // Hand rifles and pistols are MyGunBase guns, not tools
+            IMyAutomaticRifleGun handGun = attackerEntity as IMyAutomaticRifleGun;
+            if (handGun != null)
+                return handGun.OwnerIdentityId;
 
-        /// <summary>Overload for callers that only need the identity.</summary>
-        private static long ResolveAttackerOwner(long attackerEntityId)
-        {
-            bool entityExists;
-            return ResolveAttackerOwner(attackerEntityId, out entityExists);
+            return 0; // entity exists but ownership unresolvable
         }
 
         /// <summary>
@@ -420,13 +424,15 @@ namespace StarterGrinder
         }
 
         /// <summary>
-        /// True if the block's grid center is within a squared radius of Crossroads Tower
-        /// (one verdict per grid, consistent with the other GVK zone scripts).
+        /// Zone rules at a position: 0 = Zone 0 sphere, 1 = Zone 1 (outside the Zone 0 and Zone 2
+        /// spheres), 2 = Zone 2 or 3 (vanilla). Zone 0 wins where it overlaps Zone 2 deep
+        /// underground, as on the /gvk zone bar. Blocks are judged by their grid's position (one
+        /// verdict per grid). Squared distances, allocation-free.
         /// </summary>
-        private static bool IsInZone(IMySlimBlock block, double radiusSq)
+        private static int ProtectedZone(Vector3D position)
         {
-            if (block == null || block.CubeGrid == null) return false;
-            return Vector3D.DistanceSquared(block.CubeGrid.GetPosition(), CROSSROADS_TOWER) <= radiusSq;
+            if (Vector3D.DistanceSquared(position, CROSSROADS_TOWER) <= ZONE_0_RADIUS_SQ) return 0;
+            return Vector3D.DistanceSquared(position, Z3_CENTER) > ZONE_2_RADIUS_SQ ? 1 : 2;
         }
     }
 }
