@@ -1,0 +1,61 @@
+# Player wiki site (hub #738): builds the pages listed in the private wiki's site/include.txt
+# and publishes them to https://gv-server-mods.github.io/GVK-Settings/.
+# The wiki stays private: this reads it with a read-only deploy key (secret WIKI_DEPLOY_KEY),
+# and only the built site is published; no wiki content is committed here.
+# Triggers are schedule and manual only, so pull requests from forks never reach the key.
+name: Player wiki site
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # daily, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out the private wiki
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: GV-Server-Mods/gvk-wiki
+          ssh-key: ${{ secrets.WIKI_DEPLOY_KEY }}
+          persist-credentials: false
+          path: wiki
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install Zensical (pinned with hashes in the wiki)
+        run: python -m pip install --disable-pip-version-check --require-hashes -r wiki/site/requirements.txt
+
+      - name: Build the site (fails on a leak or a broken link)
+        run: python wiki/site/build.py
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: wiki/site/build/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
