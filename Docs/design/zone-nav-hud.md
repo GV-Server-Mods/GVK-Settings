@@ -3,9 +3,11 @@ title: Zone navigation HUD (`/gvk`)
 covers:
   - ModScripts/GVK_ZoneNavCommand.cs
   - ModScripts/API/HudAPIv2.cs
+  - ModScripts/GVK_HudApiShared.cs
 scripts:
   - ModScripts/GVK_ZoneNavCommand.cs: The /gvk HUD: compass, radar, minimap and satellite map
   - ModScripts/API/HudAPIv2.cs: The Text HUD API the HUD draws with
+  - ModScripts/GVK_HudApiShared.cs: The one Text HUD API instance the /gvk HUD and the KOTH client share
 commands:
   - /gvk help: Avionics status report card and command list (also plain /gvk)
   - /gvk map: Full-screen satellite map with GPS and signals (the map key, default M, does the same)
@@ -22,6 +24,7 @@ commands:
 
 # Zone navigation HUD (`/gvk`)
 
+- **One Text HUD API per mod**: HudAPIv2 registers only one instance per mod; a second one never registers and its callback never runs. The `/gvk` HUD and the [KOTH client](koth-client.md) both take the shared instance from `GvkHudApi.Register` (`GVK_HudApiShared.cs`), which runs each script's setup once the API is active and closes it after the last `Release`. Never call `new HudAPIv2` in another script of this mod.
 - **Top-Center Tactical Compass Ribbon**:
   - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
   - **Horizon Bearing Tracking with Tactical HUD Icons**:

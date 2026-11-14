@@ -73,6 +73,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `KOTHNoSafezone_*.cs` | Switch off player safezone generators and projectors near KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
 | `GVK_ZoneNavCommand.cs` | The /gvk HUD: compass, radar, minimap and satellite map | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `HudAPIv2.cs` | The Text HUD API the HUD draws with | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_HudApiShared.cs` | The one Text HUD API instance the /gvk HUD and the KOTH client share | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what
