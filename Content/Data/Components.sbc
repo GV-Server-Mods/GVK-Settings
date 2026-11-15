@@ -300,7 +300,7 @@
 				<TypeId>Component</TypeId>
 				<SubtypeId>GVK_Unobtanium</SubtypeId>
 			</Id>
-			<DisplayName>Unobtanium</DisplayName>
+			<DisplayName>Unobtainium</DisplayName>
             <Icon>Textures\GUI\Icons\Items\ZoneChip_Item.dds</Icon>
             <Size>
                 <X>0.1</X>
