@@ -247,7 +247,7 @@
 			<BaseProductionTimeInSeconds>1</BaseProductionTimeInSeconds>
 		</Blueprint>
 		<!-- Scrap to CU -->
-		<!-- Scrap should be 1/3 because of the 3x ore-to-ingot world multiplier -->
+		<!-- Scrap returns 1/3 of the tech blueprint: what the 3x-efficiency assembler spends, so 100% back (owner, 2026-11-14) -->
 		<Blueprint>
 			<Id>
 				<TypeId>BlueprintDefinition</TypeId>
@@ -261,10 +261,10 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCoolingUnitScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="0.9" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="9.2" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="4.6" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.7" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="1.13" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="12.23" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="6.13" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.93" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.2</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -281,11 +281,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPropulsionUnitScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="1.7" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="1.4" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="0.1" TypeId="Ingot" SubtypeId="Uranium"/>
-				<Item Amount="0.4" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="2.27" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="1.87" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="0.07" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="0.47" TypeId="Ingot" SubtypeId="Silicon"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.5</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -302,11 +302,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechMachineryScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="3.4" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="45.7" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="11.5" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="6.9" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="6.9" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="4.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="60.93" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="15.23" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="9.17" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="9.17" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
 			<BaseProductionTimeInSeconds>0.9</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -323,11 +323,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechFrameScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Cobalt"/>
-				<Item Amount="0.5" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="1.2" TypeId="Ingot" SubtypeId="Magnesium"/>
-				<Item Amount="0.3" TypeId="Ingot" SubtypeId="Uranium"/>
+				<Item Amount="15" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="1.9" TypeId="Ingot" SubtypeId="Cobalt"/>
+				<Item Amount="0.63" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="1.6" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="0.33" TypeId="Ingot" SubtypeId="Uranium"/>
 			</Results>
 			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -344,11 +344,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechPanelScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="11.3" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="29.1" TypeId="Ingot" SubtypeId="Iron"/>
-				<Item Amount="0.8" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="3" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="1.5" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="15" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="38.77" TypeId="Ingot" SubtypeId="Iron"/>
+				<Item Amount="1" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="3.9" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1.97" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>3</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -365,11 +365,11 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCapacitorScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="22.5" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="30.8" TypeId="Ingot" SubtypeId="Nickel"/>
-				<Item Amount="1.6" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="3.1" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="0.8" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="30" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="41.07" TypeId="Ingot" SubtypeId="Nickel"/>
+				<Item Amount="2.07" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="4.13" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="1.03" TypeId="Ingot" SubtypeId="Gold"/>
 			</Results>
 			<BaseProductionTimeInSeconds>6</BaseProductionTimeInSeconds>
 		</Blueprint>
@@ -386,12 +386,12 @@
 				<Item Amount="1" TypeId="Ore" SubtypeId="PrototechCircuitryScrap"/>
 			</Prerequisites>
 			<Results>
-				<Item Amount="225" TypeId="Ingot" SubtypeId="GVK_CUs"/>
-				<Item Amount="14" TypeId="Ingot" SubtypeId="Platinum"/>
-				<Item Amount="28" TypeId="Ingot" SubtypeId="Silver"/>
-				<Item Amount="69.9" TypeId="Ingot" SubtypeId="Silicon"/>
-				<Item Amount="14" TypeId="Ingot" SubtypeId="Gold"/>
-				<Item Amount="35" TypeId="Ingot" SubtypeId="Magnesium"/>
+				<Item Amount="300" TypeId="Ingot" SubtypeId="GVK_CUs"/>
+				<Item Amount="18.63" TypeId="Ingot" SubtypeId="Platinum"/>
+				<Item Amount="37.27" TypeId="Ingot" SubtypeId="Silver"/>
+				<Item Amount="93.1" TypeId="Ingot" SubtypeId="Silicon"/>
+				<Item Amount="18.63" TypeId="Ingot" SubtypeId="Gold"/>
+				<Item Amount="46.57" TypeId="Ingot" SubtypeId="Magnesium"/>
 			</Results>
 			<BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
 		</Blueprint>
