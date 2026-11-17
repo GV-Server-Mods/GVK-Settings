@@ -221,5 +221,22 @@
 			</Components>
 			<CriticalComponent Subtype="Computer" Index="0"/>
 		</Definition>
+		<!-- Adjust fighter cockpit type II health so its not P2W -->
+		<Definition xsi:type="MyObjectBuilder_CockpitDefinition">
+			<Id>
+				<TypeId>Cockpit</TypeId>
+				<SubtypeId>FighterCockpitType2</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="Motor" Count="1"/>
+				<Component Subtype="Display" Count="5"/>
+				<Component Subtype="Computer" Count="15"/>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="BulletproofGlass" Count="30"/>
+			</Components>
+			<CriticalComponent Subtype="Computer" Index="0"/>
+		</Definition>
 	</CubeBlocks>
 </Definitions>

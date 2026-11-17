@@ -53,6 +53,7 @@
             <Component>MySessionComponentIngameHelp</Component>
             <Component Type="MyObjectbuilder_AutopilotPathfindingComponentDefinition" Subtype="Default">MyAutopilotPathfindingComponent</Component>
             <Component Type="MyObjectbuilder_AiRvoComponentDefinition" Subtype="Default">MyAiRvoComponent</Component>
+            <Component Type="MyObjectBuilder_CountermeasureSystemDefinition" Subtype="Default">MyCountermeasureSessionComponent</Component>
         </SessionComponents>
 		<EncounterColors>
 			<Color Hex="#801919" />
@@ -75,8 +76,9 @@
 
         <SessionComponents Combine="Union">
             <Component>MyTerminalControls</Component>
+            <Component>MyEntityLifetimeMonitorComponent</Component>
             <Component>MySpaceFaunaComponent</Component>
-            <Component>MyStationBotComponent</Component>
+            <Component>MyBotAnchorComponent</Component>
             <Component>MySpaceBuildComponent</Component>
             <Component>MySpacePlanetTrackComponent</Component>
             <Component>MySpaceRespawnComponent</Component>
@@ -91,6 +93,7 @@
             <Component>MyWarheads</Component>
             <Component>MyExplosions</Component>
             <Component>MyMissiles</Component>
+            <Component>MyMissileLockWarningSystem</Component>
             <Component>MyProjectiles</Component>
             <Component>MyOreDetectorSessionComponent</Component>
             <Component>MyNeutralShipSpawner</Component>
@@ -113,6 +116,7 @@
             <Component>MyCampaignSessionComponent</Component>
             <Component>MyEntityTransformationSystem</Component>
             <Component>MySessionComponentResearch</Component>
+            <Component>MyEmpDisruptionSystem</Component>
             <Component>MySteamAchievements</Component>
             <Component>MySessionComponentTrash</Component>            
             <Component>MyAnselSessionComponent</Component>
@@ -130,19 +134,21 @@
             <Component Type="MyObjectBuilder_SessionComponentItemTriggeredContractsDefinition" Subtype="Default">MySessionComponentItemTriggeredContracts</Component>
             <Component>MyPlanetaryEncountersGenerator</Component>
             <Component Type="MyObjectbuilder_HazardExposureComponentDefinition" Subtype="Default">MyHazardExposureComponent</Component>
+            <Component Type="MyObjectBuilder_JumpSignatureSystemDefinition" Subtype="Default">MyJumpSignatureSystem</Component>
             <Component>MyGridsStorageSessionComponent</Component>
             <Component>MyEntityComponentUpdater</Component>
         </SessionComponents>
-		<ExplosionAmmoVolumeMin>1</ExplosionAmmoVolumeMin>
-		<ExplosionAmmoVolumeMax>421875</ExplosionAmmoVolumeMax>
-		<!-- 15000 or just under a small cargo, new value makes it require more cargo before reaching max explosion -->
-		<ExplosionRadiusMin>0.3</ExplosionRadiusMin>
-		<ExplosionRadiusMax>20</ExplosionRadiusMax>
-		<!-- 30 -->
-		<ExplosionDamagePerLiter>0.1</ExplosionDamagePerLiter>
-		<!-- 1 -->
-		<ExplosionDamageMax>2000</ExplosionDamageMax>
-		<!-- 5000 or one rocket explosion (pre explosion modifier) -->
+        <!-- Only intentional difference from vanilla 1.211: GVK's cook-off values below (vanilla value in each comment). -->
+        <ExplosionAmmoVolumeMin>1</ExplosionAmmoVolumeMin>
+        <ExplosionAmmoVolumeMax>421875</ExplosionAmmoVolumeMax>
+        <!-- 15000 or just under a small cargo, new value makes it require more cargo before reaching max explosion -->
+        <ExplosionRadiusMin>0.3</ExplosionRadiusMin>
+        <ExplosionRadiusMax>20</ExplosionRadiusMax>
+        <!-- 30 -->
+        <ExplosionDamagePerLiter>0.65</ExplosionDamagePerLiter>
+        <!-- 6.5 -->
+        <ExplosionDamageMax>13000</ExplosionDamageMax>
+        <!-- 25000 -->
         <EncounterColors>
 			<Color Hex="#801919" />
 			<Color Hex="#174973" />

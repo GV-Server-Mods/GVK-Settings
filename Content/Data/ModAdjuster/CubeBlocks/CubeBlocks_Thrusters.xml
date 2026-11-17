@@ -765,6 +765,96 @@
 			<ForceMagnitude>75000</ForceMagnitude>
 			<MaxPowerConsumption>0.3750</MaxPowerConsumption>
 		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockLargeFlatAtmosphericThrustRound</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="40"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="50">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="15"/>
+				<Component Subtype="LargeTube" Count="20"/>
+				<Component Subtype="MetalGrid" Count="15"/>
+				<Component Subtype="Motor" Count="400"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="50"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<BuildTimeSeconds>100</BuildTimeSeconds>
+			<ForceMagnitude>6000000</ForceMagnitude>
+			<MaxPowerConsumption>30</MaxPowerConsumption>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>LargeBlockSmallFlatAtmosphericThrustRound</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="5"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="5">
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>PrototechPropulsionUnitScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="3"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="SteelPlate" Count="10"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>600000</ForceMagnitude>
+			<MaxPowerConsumption>3</MaxPowerConsumption>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockLargeFlatAtmosphericThrustRound</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="4"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="3"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="2"/>
+				<Component Subtype="MetalGrid" Count="3"/>
+				<Component Subtype="Motor" Count="30"/>
+				<Component Subtype="Construction" Count="4"/>
+				<Component Subtype="SteelPlate" Count="4"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<BuildTimeSeconds>10</BuildTimeSeconds>
+			<ForceMagnitude>750000</ForceMagnitude>
+			<MaxPowerConsumption>3.75</MaxPowerConsumption>
+		</Definition>
+		<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+			<Id>
+				<TypeId>Thrust</TypeId>
+				<SubtypeId>SmallBlockSmallFlatAtmosphericThrustRound</SubtypeId>
+			</Id>
+			<Components>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="PrototechPropulsionUnit" Count="1"/>
+				<Component Subtype="Construction" Count="10"/>
+				<Component Subtype="LargeTube" Count="1"/>
+				<Component Subtype="MetalGrid" Count="1"/>
+				<Component Subtype="Motor" Count="6"/>
+				<Component Subtype="Construction" Count="1"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+			</Components>
+			<CriticalComponent Subtype="Motor" Index="0"/>
+			<BuildTimeSeconds>2</BuildTimeSeconds>
+			<ForceMagnitude>75000</ForceMagnitude>
+			<MaxPowerConsumption>0.3750</MaxPowerConsumption>
+		</Definition>
 		<!-- Re-added regular small grid atmo thrusters -->
 		        <Definition xsi:type="MyObjectBuilder_ThrustDefinition">
             <Id>

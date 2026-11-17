@@ -1497,4 +1497,189 @@
 			</Group>
 		</ModExtensions>
 	</Definition>
+	<!-- Warfare 3 round flats -->
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockLargeFlatAtmosphericThrustRound -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockLargeFlatAtmosphericThrustRound</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockLargeFlatAtmosphericThrustRound"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:1;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 1;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- LargeBlockSmallFlatAtmosphericThrustRound -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>LargeBlockSmallFlatAtmosphericThrustRound</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="LargeBlockSmallFlatAtmosphericThrustRound"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.5;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockLargeFlatAtmosphericThrustRound -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockLargeFlatAtmosphericThrustRound</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockLargeFlatAtmosphericThrustRound"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.2;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size : 0.2;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
+	<Definition xsi:type="MyObjectBuilder_ThrustDefinition">
+		<!-- SmallBlockSmallFlatAtmosphericThrustRound -->
+		<Id>
+			<TypeId>Thrust</TypeId>
+			<SubtypeId>SmallBlockSmallFlatAtmosphericThrustRound</SubtypeId>
+		</Id>
+		<!-- Normal Keen Properties 
+    ...
+    -->
+		<ModExtensions>
+			<ModComponents>
+				<GameLogicComponent Name="MwiComponent"/>
+			</ModComponents>
+			<Group Name="ThrusterCompData">
+				<Text Name="ID" Value="SmallBlockSmallFlatAtmosphericThrustRound"/>
+				<!--REQUIRED! No specific value required Debugging  -->
+				<Boolean Name="hideVanillaFlame" Value="true"/>
+				<Decimal Name="ThrustRateGain" Value="0.01"/>
+				<Decimal Name="ThrustRateLoss" Value="0.02"/>
+				<Boolean Name="UseEmissive" Value="false"/>
+				<Text Name="EmitterSetup" Value="                    
+                    Particle : MDB_ThrusterFlame_Atmo_TFX;
+                    Type: PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset: 0;
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;
+                    =
+                    Particle : MDB_ThrusterSmoke_Atmo_TFX;
+                    Type : PARTICLE;
+                    AtmoOnly: FALSE ;
+                    ThrustMin : 0.05;
+                    ThrustMax : 1;
+                    Size:0.07;
+                    Offset : 0;                    
+                    VelocityScalingFrom: 0.25;
+                    VelocityScalingTo: 1;
+                    Dummies : thruster_flame;                                       
+                    "/>
+			</Group>
+		</ModExtensions>
+	</Definition>
 </Definitions>

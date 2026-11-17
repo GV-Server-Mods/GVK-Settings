@@ -64,23 +64,20 @@
 	<BlueprintClassEntries>
 		<!-- SKits -->	
 		<Entry Class="SKitScrapDestroyer" BlueprintSubtypeId="MetalScrapDestroyer" />
-		<!-- Basic Assemblers -->	
-		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+		<!-- Basic Assemblers -->
         <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
         <Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
-		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Canvas" />
-		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0030_Datapad" />
+		<Entry Class="GVKBasicEquipment" BlueprintSubtypeId="Position0040_Canvas" />
 		<Entry Class="SimpleComponents" BlueprintSubtypeId="001_PrototechMachinery" />
-		<!-- Large Assemblers -->	
-		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
+		<!-- Large Assemblers -->
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0010_OxygenBottle" />
         <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0020_HydrogenBottle" />
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0021_Medkit"/>
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0022_Powerkit"/>
 		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0023_RadiationKit"/>
-		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0030_Canvas" />
-		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Datapad" />
-        <Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position00075_FireworksBoxRainbow" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0030_Datapad" />
+		<Entry Class="GVKEliteEquipment" BlueprintSubtypeId="Position0040_Canvas" />
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="001_PrototechMachinery" />
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="002_PrototechPropulsionUnit" />
 		<Entry Class="GVKEliteComponents" BlueprintSubtypeId="003_PrototechCoolingUnit" />
