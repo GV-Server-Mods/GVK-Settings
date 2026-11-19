@@ -250,11 +250,11 @@
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<Ratio>0.5</Ratio>
-					<!-- 1.0 is 1x, 0.5 is double efficient -->
+					<Ratio>1</Ratio>
+					<!-- Ratio does not change H2 use for engines. FuelProductionToCapacityMultiplier does: L of H2 per MWh = 3600 / multiplier (0.01 vanilla, 0.02 = 2x, 0.04 = 4x). Hub #818 -->
 				</FuelInfo>
 			</FuelInfos>
-			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<FuelProductionToCapacityMultiplier>0.02</FuelProductionToCapacityMultiplier>
 			<PrimarySound>ArcBlockHydrogenEngine</PrimarySound>
 			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
 			<DamagedSound>ParticleWeapExpl</DamagedSound>
@@ -343,11 +343,11 @@
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<Ratio>0.5</Ratio>
-					<!-- 1.0 is 1x, 0.5 is double efficient -->
+					<Ratio>1</Ratio>
+					<!-- Ratio does not change H2 use for engines. FuelProductionToCapacityMultiplier does: L of H2 per MWh = 3600 / multiplier (0.01 vanilla, 0.02 = 2x, 0.04 = 4x). Hub #818 -->
 				</FuelInfo>
 			</FuelInfos>
-			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<FuelProductionToCapacityMultiplier>0.02</FuelProductionToCapacityMultiplier>
 			<PrimarySound>ArcBlockHydrogenEngine</PrimarySound>
 			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
 			<DamagedSound>ParticleWeapExpl</DamagedSound>
@@ -423,11 +423,11 @@
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<Ratio>0.5</Ratio>
-					<!-- 1.0 is 1x, 0.5 is double efficient -->
+					<Ratio>1</Ratio>
+					<!-- Ratio does not change H2 use for engines. FuelProductionToCapacityMultiplier does: L of H2 per MWh = 3600 / multiplier (0.01 vanilla, 0.02 = 2x, 0.04 = 4x). Hub #818 -->
 				</FuelInfo>
 			</FuelInfos>
-			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<FuelProductionToCapacityMultiplier>0.02</FuelProductionToCapacityMultiplier>
 			<PrimarySound>ArcBlockHydrogenEngineReskinLarge</PrimarySound>
 			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
 			<DamagedSound>ParticleWeapExpl</DamagedSound>
@@ -524,11 +524,11 @@
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<Ratio>0.5</Ratio>
-					<!-- 1.0 is 1x, 0.5 is double efficient -->
+					<Ratio>1</Ratio>
+					<!-- Ratio does not change H2 use for engines. FuelProductionToCapacityMultiplier does: L of H2 per MWh = 3600 / multiplier (0.01 vanilla, 0.02 = 2x, 0.04 = 4x). Hub #818 -->
 				</FuelInfo>
 			</FuelInfos>
-			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<FuelProductionToCapacityMultiplier>0.02</FuelProductionToCapacityMultiplier>
 			<PrimarySound>ArcBlockHydrogenEngineReskinSmall</PrimarySound>
 			<DamageEffectName>Damage_WeapExpl_Damaged</DamageEffectName>
 			<DamagedSound>ParticleWeapExpl</DamagedSound>
@@ -628,11 +628,11 @@
 						<TypeId>GasProperties</TypeId>
 						<SubtypeId>Hydrogen</SubtypeId>
 					</Id>
-					<Ratio>0.25</Ratio>
-					<!-- 1.0 is 1x, 0.5 is double efficient -->
+					<Ratio>1</Ratio>
+					<!-- Ratio does not change H2 use for engines. FuelProductionToCapacityMultiplier does: L of H2 per MWh = 3600 / multiplier (0.01 vanilla, 0.02 = 2x, 0.04 = 4x). Hub #818 -->
 				</FuelInfo>
 			</FuelInfos>
-			<FuelProductionToCapacityMultiplier>0.01</FuelProductionToCapacityMultiplier>
+			<FuelProductionToCapacityMultiplier>0.04</FuelProductionToCapacityMultiplier>
 			<PrimarySound>ArcShipLrgFusionLrg</PrimarySound>
 			<DamageEffectName>Damage_Electrical_Prototech_Reactor</DamageEffectName>
 			<DamagedSound>ParticleElectrical</DamagedSound>
