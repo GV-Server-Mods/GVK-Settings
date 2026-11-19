@@ -1406,7 +1406,7 @@
 					[Type]MyObjectBuilder_ConveyorSorter/ARYXMissileBattery[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
-					[FactionMaxCount]1[/FactionMaxCount]
+					[FactionMaxCount]0[/FactionMaxCount]
 					[AllowedForNPC]true[/AllowedForNPC]
 					[AllowedForPlayer]true[/AllowedForPlayer]
 					[AllowedForUnowned]false[/AllowedForUnowned]

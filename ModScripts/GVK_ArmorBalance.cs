@@ -296,7 +296,9 @@ namespace MikeDude.ArmorBalance
                             thrustDef.SlowdownFactor = 1f;
 							//thrustDef.MinPowerConsumption *= 2f;
                         }
-                        else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust"))
+                        // Flat atmospherics, plus small-grid regular and sci-fi atmospherics, share one altitude profile
+                        else if (thrustDef.Id.SubtypeName.Contains("FlatAtmosphericThrust") ||
+                            (thrustDef.Id.SubtypeName.StartsWith("SmallBlock") && thrustDef.Id.SubtypeName.Contains("AtmosphericThrust")))
 						{
                             thrustDef.MaxPlanetaryInfluence = 0.75f; //atmosphere % where thrust is 100% or EffectivenessAtMaxInfluence
                             thrustDef.MinPlanetaryInfluence = 0.25f; //atmosphere % where thrust is 0% or EffectivenessAtMinInfluence
