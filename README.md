@@ -121,7 +121,7 @@ Open issues in the hub tracker, [GV-Server-Mods/GVK-Settings](https://github.com
 | `Content/` | Block, blueprint, faction, economy and audio definitions, and ModAdjuster files |
 | `ModScripts/` | The server and client scripts above |
 | `Docs/design/` | How the scripts are built ([index](Docs/design/README.md)) |
-| `tools/` | `Update-Readme.ps1`: rebuilds the generated README tables and checks the docs against the code |
+| `tools/` | `Update-Readme.ps1`: rebuilds the generated README tables and checks the docs against the code. `icon_tilt.py`: gives flat blocks and items a steeper camera in Keen's Icon Studio, as Keen's own icons have |
 | `Docs/agents/` | Hub issue tracker rules, triage labels, domain context |
 | `Archive/` | Retired scripts, kept for reference |
 | `.out-of-scope/` | Ideas that were decided against, with the reason |
