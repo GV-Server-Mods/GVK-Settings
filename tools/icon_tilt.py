@@ -106,12 +106,12 @@ def definitions(mod):
         except ET.ParseError:
             continue                              # prefabs and other files that are not definitions
         for d in root.iter():
-            idn, model = d.find("Id"), (d.findtext("Model") or "").strip()
-            if idn is None or not model or d.find("Icon") is None:
+            idn, model, icon = d.find("Id"), (d.findtext("Model") or "").strip(), (d.findtext("Icon") or "").strip()
+            if idn is None or not model or not icon:
                 continue
             t = idn.findtext("TypeId") or idn.get("Type") or ""
             s = idn.findtext("SubtypeId") or idn.get("Subtype") or ""
-            yield (s or re.sub("^MyObjectBuilder_", "", t) + "#EMPTY_SUBTYPE"), model
+            yield (s or re.sub("^MyObjectBuilder_", "", t) + "#EMPTY_SUBTYPE"), model, icon
 
 
 def keen_keys():
@@ -134,11 +134,17 @@ def main():
     cur = json.load(open(a.overrides, encoding="utf-8"))
     changed = 0
     for mod in a.mods:
-        seen = set()
-        for key, model in definitions(mod):
+        seen, own = set(), 0
+        for key, model, icon in definitions(mod):
             if key in seen or key in keen:
                 continue
             seen.add(key)
+            if not os.path.exists(os.path.join(mod, icon)):   # a tweaked vanilla definition keeps Keen's icon
+                if key in cur:
+                    print(f"  {key}: uses a vanilla icon, entry removed")
+                    del cur[key]; changed += 1
+                continue
+            own += 1
             path = next((p for p in (os.path.join(mod, model), os.path.join(a.content, model)) if os.path.exists(p)), None)
             if not path:
                 print(f"  {key}: model not found ({model})"); continue
@@ -153,7 +159,7 @@ def main():
             elif not want and key in cur:
                 print(f"  {key}: back to {BASE}")
                 del cur[key]; changed += 1
-        print(f"{os.path.basename(mod.rstrip(chr(92) + '/'))}: {len(seen)} subtypes checked")
+        print(f"{os.path.basename(mod.rstrip(chr(92) + '/'))}: {own} of {len(seen)} subtypes have the mod's own icon")
     if changed and not a.dry_run:
         with open(a.overrides, "w", encoding="utf-8", newline="\n") as f:
             json.dump(cur, f, indent=2, ensure_ascii=False)
