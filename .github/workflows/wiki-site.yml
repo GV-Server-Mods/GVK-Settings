@@ -28,7 +28,7 @@ jobs:
           ssh-key: ${{ secrets.WIKI_DEPLOY_KEY }}
           persist-credentials: false
           path: wiki
-          fetch-depth: 1
+          fetch-depth: 0 # full history: each page shows the date its wiki source last changed
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
