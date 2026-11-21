@@ -9,3 +9,4 @@ mdk.local.ini
 *.bak
 *.orig
 desktop.ini
+__pycache__/

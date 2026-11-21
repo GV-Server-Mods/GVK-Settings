@@ -7,7 +7,7 @@
 				<SubtypeId>GVK_CUs</SubtypeId>
 			</Id>
 			<DisplayName>Construction Units</DisplayName>
-			<Icon>Textures\GUI\Icons\ingot\potassium_ingot.dds</Icon>
+			<Icon>Textures\Icons\CopperIngot.dds</Icon>
 			<Icon>Textures\Icons\CU icon.png</Icon>
 			<IconSymbol>C.U.</IconSymbol>
 			<Size>
