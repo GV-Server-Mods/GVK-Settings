@@ -317,7 +317,22 @@ namespace GVK.Navigation
         private static readonly string[] MAP_BORDER_LABELS = { "Z1 Border in: ", "PvP Border in: ", "Z3 Border in: ", "Core Dist: " };
         private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
         private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
-        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add GPS   |   Point at a marker for details";
+        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point at a marker for details";
+        private const float MAP_HINT_SCALE = 0.62f;     // Text HUD API scale of the controls line (was 0.46, too small)
+
+        // Right-click menu: asks before adding a GPS at the click, or before removing the GPS clicked
+        private readonly GvkScreenLayer _ssMapMenu = new GvkScreenLayer();
+        private bool _mapMenuOpen;
+        private bool _mapMenuRemove;        // False: add a GPS at the click; true: remove the GPS clicked
+        private Vector2D _mapMenuAt;        // Click point, Text HUD API units
+        private double _mapMenuU;           // Map UV of the click, for adding
+        private double _mapMenuV;
+        private string _mapMenuGpsName;     // GPS to remove, found again by name and position
+        private Vector3D _mapMenuGpsCoords;
+        private string _mapMenuTitle;
+        private MapHit _mapMenuOk;          // Button boxes from the last menu build
+        private MapHit _mapMenuCancel;
+        private int _mapPointNext = 1;      // Next "Map Point N", so quick adds don't wait on the server's GPS list
         private Vector3D _mapPlayerPos;
         private float _mapZoom = 1f;
         private double _mapViewU = 0.5;
@@ -4167,7 +4182,13 @@ namespace GVK.Navigation
             }
             _ssMap.AddRun(_ssMapCloseText, MAP_HINT_COLOR);
 
-            _ssMap.AddText(MAP_CONTROLS_HINT, 0.0, -topOfFrame - 0.006f, 0.46f * textScale, MAP_HINT_COLOR,
+            // Controls line on its own card docked under the frame, mirroring the header
+            float hintScale = MAP_HINT_SCALE * textScale;
+            double hintW = _ssMap.MeasureWidthHud(MAP_CONTROLS_HINT, hintScale) + 0.04;
+            double hintH = _ssMap.LineHeightHud(hintScale) + 0.012;
+            double hintTop = -topOfFrame - 0.004;
+            _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, hintTop - hintH * 0.5, hintW, hintH, card);
+            _ssMap.AddText(MAP_CONTROLS_HINT, 0.0, hintTop - 0.006, hintScale, new Color(220, 230, 240),
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_TOP, true);
         }
 
@@ -4283,8 +4304,39 @@ namespace GVK.Navigation
             bool hasCursor = _ssMap.TryGetCursorHud(out cursor);
             bool inFrame = hasCursor && Math.Abs(cursor.X) <= _ssMapW * 0.5 && Math.Abs(cursor.Y) <= _ssMapH * 0.5;
             bool viewMoved = false;
-
             int wheel = input.DeltaMouseScrollWheelValue();
+
+            // The right-click menu takes the clicks while it is open; Esc is handled in OnMapScreenCancelling
+            if (_mapMenuOpen)
+            {
+                bool leftClick = hasCursor && input.IsNewLeftMousePressed();
+                if (input.IsNewKeyPressed(MyKeys.Enter) || (leftClick && IsInMapHit(ref _mapMenuOk, cursor)))
+                {
+                    ConfirmMapMenu();
+                    return;
+                }
+                if (leftClick)
+                {
+                    CloseMapMenu(); // Cancel, or a click anywhere else
+                    return;
+                }
+                if (input.IsNewRightMousePressed())
+                {
+                    CloseMapMenu();
+                    if (inFrame) OpenMapMenu(cursor);
+                }
+                else if (wheel != 0 || !hasCursor)
+                {
+                    CloseMapMenu(); // Zooming moves the map out from under the menu
+                }
+
+                if (_mapMenuOpen)
+                {
+                    BuildMapMenu(hasCursor, cursor);
+                    return;
+                }
+            }
+
             if (wheel != 0) viewMoved = ZoomMap(wheel, inFrame ? cursor : Vector2D.Zero);
 
             if (_mapDragging)
@@ -4308,16 +4360,140 @@ namespace GVK.Navigation
                 _mapDragLast = cursor;
             }
 
-            if (inFrame && input.IsNewRightMousePressed())
-                AddGpsFromMap(cursor);
-
             if (viewMoved)
             {
                 _mapLayoutDirty = true;
                 BuildScreenSpaceFullMap();
             }
 
+            if (inFrame && !_mapDragging && input.IsNewRightMousePressed())
+            {
+                OpenMapMenu(cursor);
+                BuildMapMenu(true, cursor);
+                return;
+            }
+
             UpdateMapTooltip(inFrame && !_mapDragging, cursor);
+        }
+
+        /// <summary>The marker or label under a point, last drawn first; -1 if none.</summary>
+        private int FindMapHit(Vector2D cursor)
+        {
+            for (int i = _mapHits.Count - 1; i >= 0; i--)
+            {
+                var h = _mapHits[i];
+                if (IsInMapHit(ref h, cursor))
+                    return h.Wp >= 0 && h.Wp < activeHudWaypoints.Count ? h.Wp : -1;
+            }
+            return -1;
+        }
+
+        private static bool IsInMapHit(ref MapHit h, Vector2D p)
+        {
+            return p.X >= h.MinX && p.X <= h.MaxX && p.Y >= h.MinY && p.Y <= h.MaxY;
+        }
+
+        /// <summary>
+        /// Right-click menu at a point: on a GPS marker or label it offers to remove that GPS, anywhere else to add
+        /// one there. Signals and KOTH markers aren't GPS points, so a click on them offers to add one.
+        /// </summary>
+        private void OpenMapMenu(Vector2D cursor)
+        {
+            _ssMapTip.Clear();
+            _mapDragging = false;
+            int wpIdx = FindMapHit(cursor);
+            _mapMenuRemove = wpIdx >= 0 && !activeHudWaypoints[wpIdx].IsSignal && activeHudWaypoints[wpIdx].KothState == 0;
+            _mapMenuAt = cursor;
+            if (_mapMenuRemove)
+            {
+                var wp = activeHudWaypoints[wpIdx];
+                _mapMenuGpsName = wp.Name ?? string.Empty;
+                _mapMenuGpsCoords = wp.Coords;
+                _mapMenuTitle = "Remove GPS '" + _mapMenuGpsName + "'?";
+            }
+            else
+            {
+                _mapMenuU = MathHelper.Clamp(_mapViewU + cursor.X / (_ssMapW * _mapZoom), 0.0, 1.0);
+                _mapMenuV = MathHelper.Clamp(_mapViewV - cursor.Y / (_ssMapH * _mapZoom), 0.0, 1.0);
+                _mapMenuTitle = "Add a GPS here?";
+            }
+            _mapMenuOpen = true;
+        }
+
+        private void CloseMapMenu()
+        {
+            _mapMenuOpen = false;
+            _ssMapMenu.Clear();
+        }
+
+        private void ConfirmMapMenu()
+        {
+            bool remove = _mapMenuRemove;
+            CloseMapMenu();
+            if (remove) RemoveGpsFromMap(_mapMenuGpsName, _mapMenuGpsCoords);
+            else AddGpsFromMap(_mapMenuU, _mapMenuV);
+        }
+
+        /// <summary>Esc closes the right-click menu first, then the map.</summary>
+        public bool OnMapScreenCancelling()
+        {
+            if (!_mapMenuOpen) return true;
+            CloseMapMenu();
+            return false;
+        }
+
+        /// <summary>The right-click menu card: a question, then the action and Cancel buttons; the one under the cursor lights up.</summary>
+        private void BuildMapMenu(bool hasCursor, Vector2D cursor)
+        {
+            _ssMapTip.Clear();
+            if (!_ssMapMenu.Begin(_ssMapViewport)) return;
+            float aspect = _ssMapViewport.X / _ssMapViewport.Y;
+            float titleScale = 0.60f * _ssMapTextScale;
+            float buttonScale = 0.60f * _ssMapTextScale;
+            string okText = _mapMenuRemove ? "Remove" : "Add GPS";
+            const string CANCEL_TEXT = "Cancel";
+
+            // Where the new GPS goes, so the player sees the spot before confirming
+            if (!_mapMenuRemove)
+                _ssMapMenu.AddSprite(MATERIAL_MARKER_GPS, _mapMenuAt.X, _mapMenuAt.Y, 0.0225f, 0.0225f * aspect, new Color(187, 233, 246));
+
+            double titleW = _ssMapMenu.MeasureWidthHud(_mapMenuTitle, titleScale);
+            double titleH = _ssMapMenu.LineHeightHud(titleScale);
+            double buttonTextH = _ssMapMenu.LineHeightHud(buttonScale);
+            double buttonW = Math.Max(_ssMapMenu.MeasureWidthHud(okText, buttonScale), _ssMapMenu.MeasureWidthHud(CANCEL_TEXT, buttonScale)) + 0.03;
+            double buttonH = buttonTextH + 0.008 * aspect;
+            double padX = 0.010;
+            double padY = 0.008 * aspect;
+            double gap = 0.010;
+            double boxW = 0.004 + padX * 2.0 + Math.Max(titleW, buttonW * 2.0 + gap);
+            double boxH = padY * 3.0 + titleH + buttonH;
+
+            double left = _mapMenuAt.X + 0.016;
+            double top = _mapMenuAt.Y - 0.016 * aspect;
+            if (left + boxW > 0.99) left = _mapMenuAt.X - 0.016 - boxW;
+            if (top - boxH < -0.99) top = _mapMenuAt.Y + 0.016 * aspect + boxH;
+
+            Color accent = _mapMenuRemove ? new Color(255, 80, 70) : new Color(187, 233, 246);
+            _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 245));
+            _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, accent);
+            double textX = left + 0.004 + padX;
+            _ssMapMenu.AddText(_mapMenuTitle, textX, top - padY, titleScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
+
+            double buttonTop = top - padY * 2.0 - titleH;
+            _mapMenuOk = AddMapMenuButton(okText, textX, buttonTop, buttonW, buttonH, buttonScale, accent, hasCursor, cursor);
+            _mapMenuCancel = AddMapMenuButton(CANCEL_TEXT, textX + buttonW + gap, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
+        }
+
+        private MapHit AddMapMenuButton(string text, double left, double top, double width, double height, float scale, Color color, bool hasCursor, Vector2D cursor)
+        {
+            var box = new MapHit { Wp = -1, MinX = left, MaxX = left + width, MinY = top - height, MaxY = top };
+            bool hover = hasCursor && IsInMapHit(ref box, cursor);
+            _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + width * 0.5, top - height * 0.5, width, height,
+                hover ? new Color(70, 95, 112, 255) : new Color(41, 54, 62, 255));
+            if (hover) _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + width * 0.5, top - height + 0.002, width, 0.004, color);
+            _ssMapMenu.AddText(text, left + width * 0.5, top - height * 0.5, scale, hover ? Color.White : color,
+                MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
+            return box;
         }
 
         /// <summary>Card beside the cursor for the marker or label under it: full name, what it is, how far.</summary>
@@ -4326,17 +4502,8 @@ namespace GVK.Navigation
             _ssMapTip.Clear();
             if (!active) return;
 
-            int wpIdx = -1;
-            for (int i = _mapHits.Count - 1; i >= 0; i--) // Last drawn is on top
-            {
-                var h = _mapHits[i];
-                if (cursor.X >= h.MinX && cursor.X <= h.MaxX && cursor.Y >= h.MinY && cursor.Y <= h.MaxY)
-                {
-                    wpIdx = h.Wp;
-                    break;
-                }
-            }
-            if (wpIdx < 0 || wpIdx >= activeHudWaypoints.Count || !_ssMapTip.Begin(_ssMapViewport)) return;
+            int wpIdx = FindMapHit(cursor);
+            if (wpIdx < 0 || !_ssMapTip.Begin(_ssMapViewport)) return;
 
             var wp = activeHudWaypoints[wpIdx];
             float nameScale = 0.60f * _ssMapTextScale;
@@ -4392,13 +4559,11 @@ namespace GVK.Navigation
         /// Adds a GPS on the ground at a point on the map: the map projection run backwards gives the direction
         /// from the planet centre, then the planet's surface along it. Named "Map Point N", the next free N.
         /// </summary>
-        private void AddGpsFromMap(Vector2D cursor)
+        private void AddGpsFromMap(double u, double v)
         {
             var player = MyAPIGateway.Session?.Player;
             if (player == null) return;
 
-            double u = MathHelper.Clamp(_mapViewU + cursor.X / (_ssMapW * _mapZoom), 0.0, 1.0);
-            double v = MathHelper.Clamp(_mapViewV - cursor.Y / (_ssMapH * _mapZoom), 0.0, 1.0);
             double lat = Math.PI * 0.5 - v * Math.PI;
             double lon = u * 2.0 * Math.PI - Math.PI + 0.2540 * 2.0 * Math.PI; // Undo WorldToMapUV's prime meridian shift
             var dir = new Vector3D(Math.Cos(lat) * Math.Cos(lon), -Math.Sin(lat), Math.Cos(lat) * Math.Sin(lon));
@@ -4408,7 +4573,7 @@ namespace GVK.Navigation
 
             cachedGpsList.Clear();
             MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
-            int next = 1;
+            int next = _mapPointNext;
             for (int i = 0; i < cachedGpsList.Count; i++)
             {
                 string gpsName = cachedGpsList[i].Name;
@@ -4419,11 +4584,34 @@ namespace GVK.Navigation
             }
 
             string name = "Map Point " + next;
+            _mapPointNext = next + 1;
             var gps = MyAPIGateway.Session.GPS.Create(name, "Added from the GVK satellite map", point, true);
             MyAPIGateway.Session.GPS.AddGps(player.IdentityId, gps);
             _gpsRescanTicks = 30;
             double km = Vector3D.Distance(_mapPlayerPos, point) * 0.001;
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Added GPS '{name}', {km:0.0} km away", 2500, MyFontEnum.Green);
+        }
+
+        /// <summary>Removes the player's GPS with this name at this position (the map's copy may be up to a scan old).</summary>
+        private void RemoveGpsFromMap(string name, Vector3D coords)
+        {
+            var player = MyAPIGateway.Session?.Player;
+            if (player == null) return;
+
+            cachedGpsList.Clear();
+            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
+            for (int i = 0; i < cachedGpsList.Count; i++)
+            {
+                var gps = cachedGpsList[i];
+                if (gps.Name == name && Vector3D.DistanceSquared(gps.Coords, coords) < 1.0)
+                {
+                    MyAPIGateway.Session.GPS.RemoveGps(player.IdentityId, gps);
+                    _gpsRescanTicks = 30;
+                    MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Removed GPS '{name}'", 2500, MyFontEnum.Green);
+                    return;
+                }
+            }
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] GPS '{name}' is already gone", 2500, MyFontEnum.Red);
         }
 
         /// <summary>The map screen's draw, every frame while it is open, faded with the screen.</summary>
@@ -4434,6 +4622,7 @@ namespace GVK.Navigation
             {
                 _ssMap.Draw(MyScreenSpaceLayer.BelowHud, alpha);
                 _ssMapTip.Draw(MyScreenSpaceLayer.BelowHud, alpha);
+                _ssMapMenu.Draw(MyScreenSpaceLayer.BelowHud, alpha);
             }
             catch (Exception ex)
             {
@@ -4442,6 +4631,7 @@ namespace GVK.Navigation
                 ClearScreenSpaceHud();
                 _ssMap.Clear();
                 _ssMapTip.Clear();
+                CloseMapMenu();
                 CloseFullMap();
             }
         }
@@ -4673,6 +4863,7 @@ namespace GVK.Navigation
             if (MapScreenOpen)
             {
                 _ssMapTip.Clear();
+                CloseMapMenu();
                 _mapScreen.Close(); // Fades out; OnMapScreenClosed comes back here to finish
                 return;
             }
@@ -4680,6 +4871,7 @@ namespace GVK.Navigation
             showFullMap = false;
             _ssMap.Clear();
             _ssMapTip.Clear();
+            CloseMapMenu();
             _mapHits.Clear();
             _mapDragging = false;
             if (mapDimmer != null) mapDimmer.Visible = false;

@@ -21,6 +21,11 @@ namespace GVK.Navigation
             _owner.HandleMapScreenInput();
         }
 
+        protected override bool OnCancelling()
+        {
+            return _owner.OnMapScreenCancelling();
+        }
+
         protected override void OnDraw(float transitionAlpha)
         {
             _owner.DrawMapScreen(transitionAlpha);
