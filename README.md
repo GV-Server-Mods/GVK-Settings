@@ -35,7 +35,7 @@ Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk hel
 | Command | What it does |
 | --- | --- |
 | `/toggleprediction` | Client only: switch the multiplayer prediction mode |
-| `/gvk help` | Avionics status report card and command list (also plain /gvk) |
+| `/gvk help` | Status line and command list in chat (also plain /gvk) |
 | `/gvk map` | Full-screen satellite map with GPS and signals (the map key, default =, does the same) |
 | `/gvk minimap` | Corner minimap on or off |
 | `/gvk radar` | Cycle the minimap between Strategic Map and Tactical Radar |
@@ -44,7 +44,6 @@ Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk hel
 | `/gvk zone` | Cycle the zone status bar (Compass dock, Radar dock, Off) |
 | `/gvk gps` | Restore the default Kharak GPS waypoints |
 | `/gvk rate` | Cycle the HUD refresh rate |
-| `/gvk card` | Full-screen Avionics Mission Briefing |
 | `/gvk reset` | Reset all navigation positions and preferences |
 | `/gvk settings` | Open the navigation settings screen (also the Settings button on the satellite map) |
 <!-- /GENERATED:player-commands -->

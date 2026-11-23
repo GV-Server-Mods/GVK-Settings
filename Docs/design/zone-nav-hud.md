@@ -11,7 +11,7 @@ scripts:
   - ModScripts/GVK_MapScreen.cs: The satellite map as a game screen (mouse and keyboard) with the screen API
   - ModScripts/GVK_SettingsScreen.cs: The /gvk settings screen: every navigation setting in a game screen with the mouse
 commands:
-  - /gvk help: Avionics status report card and command list (also plain /gvk)
+  - /gvk help: Status line and command list in chat (also plain /gvk)
   - /gvk map: Full-screen satellite map with GPS and signals (the map key, default =, does the same)
   - /gvk minimap: Corner minimap on or off
   - /gvk radar: Cycle the minimap between Strategic Map and Tactical Radar
@@ -20,7 +20,6 @@ commands:
   - /gvk zone: Cycle the zone status bar (Compass dock, Radar dock, Off)
   - /gvk gps: Restore the default Kharak GPS waypoints
   - /gvk rate: Cycle the HUD refresh rate
-  - /gvk card: Full-screen Avionics Mission Briefing
   - /gvk reset: Reset all navigation positions and preferences
   - /gvk settings: Open the navigation settings screen (also the Settings button on the satellite map)
 ---
@@ -70,13 +69,12 @@ commands:
     - **Settings screen**: `/gvk settings` (see above), with each value shown in colour on its row.
     - **Modular Radar Visuals**: Full toggles for **Zone Direction Vectors** and **Camera Frustum FOV Cone** on the settings screen and in the config.
     - **Tactical Chat Commands**:
-      - `/gvk` or `/gvk help` - Avionics status report card & command list
+      - `/gvk` or `/gvk help` - Status line and command list in chat
       - `/gvk radar` - Toggle between Tactical Radar and Strategic Sector Map
       - `/gvk range [1.5|3|5|30]` - Direct radar range setting (or cycle)
       - `/gvk compass` - Toggle Compass ribbon
       - `/gvk zone` - Cycle Zone telemetry dock (Radar / Compass / Off)
       - `/gvk rate` - Cycle HUD refresh rate (12, 15, 30, 60, 6, 10 Hz)
-      - `/gvk card` - Pop up the full-screen Avionics Mission Briefing screen
       - `/gvk reset` - Factory reset all navigation positions and preferences
     - **Persistent Client Configuration**: All player preferences (Minimap visibility, Strategic/Radar mode, Linear/Log scale, Radar range, Compass ribbon, Zone status bar, and visual vector toggles) automatically save to local storage (`GVK_ZoneNavConfig.xml`) and persist seamlessly across world reloads, server restarts, and game reconnects.
   - **Docked Zone Telemetry Status Panel**:
