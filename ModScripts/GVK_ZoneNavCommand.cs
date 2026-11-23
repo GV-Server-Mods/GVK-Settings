@@ -257,7 +257,9 @@ namespace GVK.Navigation
         private readonly GvkScreenLayer _ssCompass = new GvkScreenLayer();
         private HudAPIv2.HUDMessage _ssTextCalibrator; // Hidden; matches screen API text size to Text HUD API's
         private const string SS_CALIBRATION_TEXT = "0123456789NESW";
-        private const float SS_TEXT_SCALE_FALLBACK = 1.0f; // Used until Text HUD API can be measured
+        // Used when Text HUD API can't be measured. Measured in game 2026-11-22 at 2560x1440: Text HUD API width
+        // 0.15586 vs screen API 289.6 px. It holds at any resolution, but only at the UI scale it was measured at.
+        private const float SS_TEXT_SCALE_FALLBACK = 0.689f;
         private float _ssTextScale = -1f;                  // Screen API scale per Text HUD API scale unit
         private Vector2 _ssTextCalibViewport = Vector2.Zero;
         private float _ssCalibSsWidth = 0f;
