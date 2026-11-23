@@ -247,6 +247,24 @@ namespace GVK.Navigation
         private double compassOffsetY = 1.0;
         private HudAPIv2.MenuSliderInput compassSliderX;
         private HudAPIv2.MenuSliderInput compassSliderY;
+        private const int COMPASS_MAX_TICKS = 25;
+        private const int COMPASS_MAX_LABELS = 30;
+        private const int COMPASS_MAX_WAYPOINTS = 16;
+
+        // Screen-space renderer test (vanilla screen API, SE 1.211): draws the compass without Text HUD API.
+        // /gvk ss switches between it and the Text HUD API compass. Same layout math, so the two should match.
+        private bool useScreenSpaceCompass = true;
+        private readonly GvkScreenLayer _ssCompass = new GvkScreenLayer();
+        private HudAPIv2.HUDMessage _ssTextCalibrator; // Hidden; matches screen API text size to Text HUD API's
+        private const string SS_CALIBRATION_TEXT = "0123456789NESW";
+        private const float SS_TEXT_SCALE_FALLBACK = 1.0f; // Used until Text HUD API can be measured
+        private float _ssTextScale = -1f;                  // Screen API scale per Text HUD API scale unit
+        private Vector2 _ssTextCalibViewport = Vector2.Zero;
+        private float _ssCalibSsWidth = 0f;
+        private bool _ssLoggedFallback = false;
+        private bool _ssMaterialsChecked = false;
+        private static readonly string[] _ssDistanceTenths = new string[100]; // "0.0k".."9.9k", filled on first use
+        private static readonly string[] _ssDistanceWhole = new string[1000]; // "10k".."999k", filled on first use
 
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
         private HudAPIv2.HUDMessage zoneMsg;
@@ -404,6 +422,7 @@ namespace GVK.Navigation
             public int UpdateTickRate { get; set; } = 5;
             public bool ShowRadarZoneLines { get; set; } = true;
             public bool ShowRadarFovLines { get; set; } = true;
+            public bool UseScreenSpaceCompass { get; set; } = true;
 
             public ZoneNavConfig() { }
         }
@@ -604,6 +623,7 @@ namespace GVK.Navigation
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
                                 showRadarZoneLines = cfg.ShowRadarZoneLines;
                                 showRadarFovLines = cfg.ShowRadarFovLines;
+                                useScreenSpaceCompass = cfg.UseScreenSpaceCompass;
                                 minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
                                 minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
                                 compassOffsetX = MathHelper.Clamp(cfg.CompassOffsetX, -1.0, 1.0);
@@ -661,7 +681,8 @@ namespace GVK.Navigation
                     ZoneBarMode = (int)zoneBarMode,
                     UpdateTickRate = updateTickRate,
                     ShowRadarZoneLines = showRadarZoneLines,
-                    ShowRadarFovLines = showRadarFovLines
+                    ShowRadarFovLines = showRadarFovLines,
+                    UseScreenSpaceCompass = useScreenSpaceCompass
                 };
 
                 string xml = MyAPIGateway.Utilities.SerializeToXML(cfg);
@@ -733,6 +754,7 @@ namespace GVK.Navigation
                     mapHeaderSubMsg?.DeleteMessage();
                     ClearFullMapPool();
                     _mapLabelMeasure?.DeleteMessage();
+                    _ssTextCalibrator?.DeleteMessage();
                     _cachedMapClusters.Clear();
 
                     GvkHudApi.Release(OnHudApiRegistered);
@@ -1403,6 +1425,17 @@ namespace GVK.Navigation
                 );
                 _mapLabelMeasure.Visible = false;
 
+                _ssTextCalibrator = new HudAPIv2.HUDMessage(
+                    Message: new StringBuilder(SS_CALIBRATION_TEXT),
+                    Origin: Vector2D.Zero,
+                    Offset: Vector2D.Zero,
+                    TimeToLive: -1,
+                    Scale: 1.0,
+                    HideHud: false
+                );
+                _ssTextCalibrator.Visible = false;
+                _ssTextScale = -1f; // Re-measure now that Text HUD API is available
+
                 // Player arrow registered on very top of stack (High-visibility Electric Gold: 0.018f)
                 mapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_NAV_ARROW,
@@ -1600,14 +1633,17 @@ namespace GVK.Navigation
             // Compass, Minimap, Zone Bar, and FullMap all update on the user-configured updateTickRate.
             // Saves significant per-frame CPU cycles and text formatting overhead while letting players
             // dial in their preferred smoothness vs performance balance via /nav rate or F2 Mod Menu.
-            if (hudApi != null && hudApi.Heartbeat)
-            {
-                if (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame)
-                {
-                    _refreshCompassNextFrame = false;
-                    UpdateCompassAndWaypoints(pos.Value);
-                }
+            bool hudApiReady = hudApi != null && hudApi.Heartbeat;
 
+            // The screen-space compass doesn't need Text HUD API, so it updates without it
+            if ((hudApiReady || useScreenSpaceCompass) && (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame))
+            {
+                _refreshCompassNextFrame = false;
+                UpdateCompassAndWaypoints(pos.Value);
+            }
+
+            if (hudApiReady)
+            {
                 if (showFullMap)
                 {
                     if (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw)
@@ -1994,37 +2030,37 @@ namespace GVK.Navigation
             else if (vehCompass > (float)Math.PI * 2f) vehCompass -= (float)Math.PI * 2f;
             playerHeadingRad = vehCompass;
 
-            if (compassBg == null || !showCompass || showFullMap)
+            bool screenSpace = useScreenSpaceCompass;
+            if (!showCompass || showFullMap || (!screenSpace && compassBg == null))
             {
-                if (_compassElementsVisible)
-                {
-                    _compassElementsVisible = false;
-                    if (compassBg != null) compassBg.Visible = false;
-                    if (compassLeftAccent != null) compassLeftAccent.Visible = false;
-                    if (compassRightAccent != null) compassRightAccent.Visible = false;
-                    if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                    if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
-                    HideTapePool();
-                    HideSpritePool();
-                }
+                HideHudApiCompass();
+                _ssCompass.Clear();
                 return;
             }
 
-            _compassElementsVisible = true;
-            if (compassBg != null) compassBg.Visible = true;
             Color zoneCol = GetCurrentAccentColor();
-            if (compassLeftAccent != null)
+            if (screenSpace)
             {
-                compassLeftAccent.BillBoardColor = zoneCol;
-                compassLeftAccent.Visible = true;
+                HideHudApiCompass();
             }
-            if (compassRightAccent != null)
+            else
             {
-                compassRightAccent.BillBoardColor = zoneCol;
-                compassRightAccent.Visible = (zoneBarMode != ZoneBarMode.CompassDock);
+                _ssCompass.Clear();
+                _compassElementsVisible = true;
+                compassBg.Visible = true;
+                if (compassLeftAccent != null)
+                {
+                    compassLeftAccent.BillBoardColor = zoneCol;
+                    compassLeftAccent.Visible = true;
+                }
+                if (compassRightAccent != null)
+                {
+                    compassRightAccent.BillBoardColor = zoneCol;
+                    compassRightAccent.Visible = (zoneBarMode != ZoneBarMode.CompassDock);
+                }
+                if (compassCenterPointer != null) compassCenterPointer.Visible = true;
+                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = true;
             }
-            if (compassCenterPointer != null) compassCenterPointer.Visible = true;
-            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = true;
 
             // compass is already clamped to [0, 2π] above. Normalize to [-1, 1] for tape rendering.
             compass = (compass - (float)Math.PI) / (float)Math.PI;
@@ -2057,6 +2093,13 @@ namespace GVK.Navigation
             float topLabelY = (float)(topY - 0.006f * compassScale);
             // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.) on the same line as waypoint markers
             float bottomLabelY = (float)(topY - 0.020f * compassScale);
+
+            if (screenSpace)
+            {
+                BuildScreenSpaceCompass(playerPos, camera, compass, playerAzimuth, fovCoeff, fovCubic, tapeSpan, aspect,
+                    baseWidth, baseHeight, compassCenterX, centerY, topY, topLabelY, bottomLabelY, zoneCol);
+                return;
+            }
 
             // 2. Render Tactical Graduation Ticks and Dual-Row Labels
             int tickIndex = 0;
@@ -2171,42 +2214,10 @@ namespace GVK.Navigation
                 compassTapePool[i].Visible = false;
 
             // 3. Render Graphical HUD Waypoints (Painter's Algorithm: Distant waypoints render underneath, Closer waypoints render on top)
-            _compassVisibleWps.Clear();
             double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
 
             // Pass 1: Collect up to waypointSpritePool.Count visible waypoints from activeHudWaypoints (which is pre-sorted closest-first).
-            for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < waypointSpritePool.Count; i++)
-            {
-                var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth)) continue;
-
-                Vector3 toWp = (Vector3)(wp.Coords - playerPos);
-
-                // Early out: Cull waypoints behind the camera view plane.
-                // The compass tape covers only a forward arc (~35 deg). Anything behind the camera cannot be on the tape.
-                if (Vector3.Dot(toWp, camera.WorldMatrix.Forward) <= 0)
-                    continue;
-
-                Vector3 toWpCorrected = Vector3.Transform(toWp, _cachedRelativeOffset);
-
-                float wpAzimuth = 0f, wpElev = 0f;
-                Vector3.GetAzimuthAndElevation(toWpCorrected, out wpAzimuth, out wpElev);
-
-                float angleDiff = playerAzimuth - wpAzimuth;
-                while (angleDiff > (float)Math.PI) angleDiff -= (float)(Math.PI * 2.0);
-                while (angleDiff < -(float)Math.PI) angleDiff += (float)(Math.PI * 2.0);
-
-                float targetCompass = angleDiff / (float)Math.PI;
-
-                if (Math.Abs(targetCompass) > 0.35f) continue;
-
-                float poiScreenOffset = (fovCoeff * targetCompass) + (fovCubic * targetCompass * targetCompass * targetCompass);
-
-                if (poiScreenOffset >= -tapeSpan && poiScreenOffset <= tapeSpan)
-                {
-                    _compassVisibleWps.Add(new CompassVisibleWp(i, poiScreenOffset));
-                }
-            }
+            CollectCompassWaypoints(playerPos, camera, playerAzimuth, fovCoeff, fovCubic, tapeSpan, waypointSpritePool.Count);
 
             // Pass 2: Render in reverse order (from farthest down to closest) so closer waypoints are assigned higher
             // TextHUDAPI pool indices and cleanly draw ON TOP of further waypoints.
@@ -2274,6 +2285,263 @@ namespace GVK.Navigation
                 waypointSpritePool[i].Visible = false;
                 waypointDistPool[i].Visible = false;
             }
+        }
+
+        /// <summary>
+        /// Fills _compassVisibleWps with up to maxCount shown waypoints that fall on the compass tape,
+        /// nearest first (activeHudWaypoints is sorted by distance).
+        /// </summary>
+        private void CollectCompassWaypoints(Vector3D playerPos, IMyCamera camera, float playerAzimuth, float fovCoeff, float fovCubic, float tapeSpan, int maxCount)
+        {
+            _compassVisibleWps.Clear();
+            for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < maxCount; i++)
+            {
+                var wp = activeHudWaypoints[i];
+                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth)) continue;
+
+                Vector3 toWp = (Vector3)(wp.Coords - playerPos);
+
+                // Early out: Cull waypoints behind the camera view plane.
+                // The compass tape covers only a forward arc (~35 deg). Anything behind the camera cannot be on the tape.
+                if (Vector3.Dot(toWp, camera.WorldMatrix.Forward) <= 0)
+                    continue;
+
+                Vector3 toWpCorrected = Vector3.Transform(toWp, _cachedRelativeOffset);
+
+                float wpAzimuth = 0f, wpElev = 0f;
+                Vector3.GetAzimuthAndElevation(toWpCorrected, out wpAzimuth, out wpElev);
+
+                float angleDiff = playerAzimuth - wpAzimuth;
+                while (angleDiff > (float)Math.PI) angleDiff -= (float)(Math.PI * 2.0);
+                while (angleDiff < -(float)Math.PI) angleDiff += (float)(Math.PI * 2.0);
+
+                float targetCompass = angleDiff / (float)Math.PI;
+
+                if (Math.Abs(targetCompass) > 0.35f) continue;
+
+                float poiScreenOffset = (fovCoeff * targetCompass) + (fovCubic * targetCompass * targetCompass * targetCompass);
+
+                if (poiScreenOffset >= -tapeSpan && poiScreenOffset <= tapeSpan)
+                {
+                    _compassVisibleWps.Add(new CompassVisibleWp(i, poiScreenOffset));
+                }
+            }
+        }
+
+        private void HideHudApiCompass()
+        {
+            if (!_compassElementsVisible) return;
+            _compassElementsVisible = false;
+            if (compassBg != null) compassBg.Visible = false;
+            if (compassLeftAccent != null) compassLeftAccent.Visible = false;
+            if (compassRightAccent != null) compassRightAccent.Visible = false;
+            if (compassCenterPointer != null) compassCenterPointer.Visible = false;
+            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
+            HideTapePool();
+            HideSpritePool();
+        }
+
+        /// <summary>
+        /// Screen-space compass (renderer test): the Text HUD API compass layout, in the same order and units,
+        /// written to _ssCompass for Draw() to replay every frame. ApplyCompassScale holds the old frame geometry.
+        /// </summary>
+        private void BuildScreenSpaceCompass(Vector3D playerPos, IMyCamera camera, float compass, float playerAzimuth,
+            float fovCoeff, float fovCubic, float tapeSpan, float aspect, float baseWidth, float baseHeight,
+            double centerX, double centerY, double topY, float topLabelY, float bottomLabelY, Color zoneCol)
+        {
+            if (!_ssCompass.Begin(camera.ViewportSize)) return;
+            CheckScreenSpaceAssets();
+            float textScale = GetScreenSpaceTextScale(camera.ViewportSize);
+            float s = compassScale;
+            const MyGuiDrawAlignEnum TOP_CENTER = MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_TOP;
+
+            // Frame: card, zone accents (right one hidden when the zone bar docks there), gold pointer and pip
+            _ssCompass.AddSprite(MATERIAL_SQUARE, centerX, centerY, baseWidth, baseHeight, GetCardBgColor());
+            float accentWidth = 0.005f * s;
+            float accentHeight = baseHeight - 0.006f * s;
+            _ssCompass.AddSprite(MATERIAL_SQUARE, centerX - baseWidth * 0.5 + 0.005 * s, centerY, accentWidth, accentHeight, zoneCol);
+            if (zoneBarMode != ZoneBarMode.CompassDock)
+                _ssCompass.AddSprite(MATERIAL_SQUARE, centerX + baseWidth * 0.5 - 0.005 * s, centerY, accentWidth, accentHeight, zoneCol);
+            var gold = new Color(255, 215, 60, 255);
+            _ssCompass.AddSprite(MATERIAL_NAV_ARROW, centerX, centerY + baseHeight * 0.5, 0.010 * s, 0.010 * s * aspect, gold, (float)Math.PI);
+            _ssCompass.AddSprite(MATERIAL_NAV_ARROW, centerX, centerY - baseHeight * 0.5, 0.008 * s, 0.008 * s * aspect, gold);
+
+            // Ticks first, then labels, so labels draw over ticks as they did with Text HUD API
+            float tickWidth = 0.0016f * s;
+            int ticks = 0;
+            int labels = 0;
+            for (int pass = 0; pass < 2; pass++)
+            {
+                for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
+                {
+                    var grad = COMPASS_GRADUATIONS[i];
+                    if (pass == 1 && grad.TopLabel == null && grad.BottomLabel == null) continue;
+
+                    float offset = compass + grad.Offset;
+                    if (offset < -1f) offset += 2f;
+                    else if (offset > 1f) offset -= 2f;
+                    if (Math.Abs(offset) > 0.35f) continue;
+
+                    float screenOffset = (fovCoeff * offset) + (fovCubic * offset * offset * offset);
+                    if (screenOffset > tapeSpan || screenOffset < -tapeSpan) continue;
+                    double x = centerX + screenOffset;
+
+                    if (pass == 0)
+                    {
+                        if (ticks >= COMPASS_MAX_TICKS) continue;
+                        ticks++;
+                        float h;
+                        Color c;
+                        switch (grad.Type)
+                        {
+                            case GraduationType.Cardinal: h = 0.007f * s; c = new Color(255, 215, 60, 240); break;
+                            case GraduationType.Ordinal:
+                            case GraduationType.MajorMark: h = 0.007f * s; c = new Color(255, 255, 255, 240); break;
+                            case GraduationType.MediumTen: h = 0.005f * s; c = new Color(255, 255, 255, 200); break;
+                            default: h = 0.003f * s; c = new Color(255, 255, 255, 140); break;
+                        }
+                        _ssCompass.AddSprite(MATERIAL_SQUARE, x, topY - h * 0.5, tickWidth, h, c);
+                        continue;
+                    }
+
+                    bool cardinal = grad.Type == GraduationType.Cardinal;
+                    if (grad.TopLabel != null && labels < COMPASS_MAX_LABELS)
+                    {
+                        labels++;
+                        _ssCompass.AddText(grad.TopLabel, x, topLabelY, 0.58f * s * textScale,
+                            cardinal ? new Color(255, 215, 60) : Color.White, TOP_CENTER, true);
+                    }
+                    if (grad.BottomLabel != null && labels < COMPASS_MAX_LABELS)
+                    {
+                        labels++;
+                        _ssCompass.AddText(grad.BottomLabel, x, bottomLabelY, 0.48f * s * textScale,
+                            cardinal ? new Color(255, 225, 120) : Color.White, TOP_CENTER, true);
+                    }
+                }
+            }
+
+            // Waypoints farthest first, so nearer icons draw on top
+            CollectCompassWaypoints(playerPos, camera, playerAzimuth, fovCoeff, fovCubic, tapeSpan, COMPASS_MAX_WAYPOINTS);
+            double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
+            for (int j = _compassVisibleWps.Count - 1; j >= 0; j--)
+            {
+                var vis = _compassVisibleWps[j];
+                var wp = activeHudWaypoints[vis.WpIndex];
+                double x = centerX + vis.ScreenOffset;
+                Color wpColor = GetMarkerColor(ref wp);
+
+                // Full size at 100 m or closer, 70% at 30 km or farther
+                float distT = (float)MathHelper.Clamp((wp.DistanceMeters - 100.0) / (30000.0 - 100.0), 0.0, 1.0);
+                float distFactor = 1.0f - 0.30f * distT;
+                float wWidth = 0.011f * s * distFactor;
+                float wHeight = wWidth * aspect;
+                double spriteCenterY = topY - 0.026 * s;
+                double textY = spriteCenterY - wHeight * 0.5 - 0.0015 * s;
+
+                _ssCompass.AddSprite(GetWaypointMaterial(ref wp, playerElevation), x, spriteCenterY, wWidth, wHeight, wpColor);
+                // Text HUD API colour tags carried RGB only, so the distance text stays opaque while the icon fades
+                _ssCompass.AddText(GetCompassDistanceText(wp.DistanceMeters * 0.001), x, textY, 0.42f * s * distFactor * textScale,
+                    new Color(wpColor.R, wpColor.G, wpColor.B), TOP_CENTER, true);
+            }
+        }
+
+        /// <summary>"1.5k" below 10 km, "12k" above; strings are cached so redraws don't allocate.</summary>
+        private static string GetCompassDistanceText(double distKm)
+        {
+            if (distKm < 10.0)
+            {
+                int whole = (int)distKm;
+                int tenths = (int)((distKm - whole) * 10.0);
+                int idx = MathHelper.Clamp(whole * 10 + tenths, 0, 99);
+                return _ssDistanceTenths[idx] ?? (_ssDistanceTenths[idx] = (idx / 10) + "." + (idx % 10) + "k");
+            }
+            int km = (int)distKm;
+            if (km >= _ssDistanceWhole.Length) return km + "k";
+            return _ssDistanceWhole[km] ?? (_ssDistanceWhole[km] = km + "k");
+        }
+
+        /// <summary>
+        /// Screen API text scale that matches one unit of Text HUD API scale, measured from a hidden Text HUD API
+        /// message. Re-measured when the window size or the player's UI scale changes the screen API's width.
+        /// </summary>
+        private float GetScreenSpaceTextScale(Vector2 viewport)
+        {
+            float ssWidth = GvkScreenLayer.MeasureWidthPixels(SS_CALIBRATION_TEXT, 1f);
+            if (_ssTextScale > 0f && viewport == _ssTextCalibViewport && Math.Abs(ssWidth - _ssCalibSsWidth) < 0.01f)
+                return _ssTextScale;
+
+            double hudWidth = _ssTextCalibrator != null ? _ssTextCalibrator.GetTextLength().X : 0.0;
+            if (ssWidth > 0f && hudWidth > 0.0)
+            {
+                _ssTextScale = (float)(hudWidth * 0.5 * viewport.X / ssWidth);
+                _ssTextCalibViewport = viewport;
+                _ssCalibSsWidth = ssWidth;
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale {_ssTextScale:0.0000} at {viewport.X:0}x{viewport.Y:0}: Text HUD API width {hudWidth:0.00000}, screen API width {ssWidth:0.0} px");
+                return _ssTextScale;
+            }
+
+            if (!_ssLoggedFallback)
+            {
+                _ssLoggedFallback = true;
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale: Text HUD API not measurable, using {SS_TEXT_SCALE_FALLBACK}");
+            }
+            return SS_TEXT_SCALE_FALLBACK;
+        }
+
+        /// <summary>Logs once if the screen API can't resolve a compass material or the font.</summary>
+        private void CheckScreenSpaceAssets()
+        {
+            if (_ssMaterialsChecked) return;
+            _ssMaterialsChecked = true;
+            LogIfMaterialMissing(MATERIAL_SQUARE);
+            LogIfMaterialMissing(MATERIAL_NAV_ARROW);
+            LogIfMaterialMissing(MATERIAL_MARKER_GPS);
+            LogIfMaterialMissing(MATERIAL_SIGNAL_UP);
+            LogIfMaterialMissing(MATERIAL_SIGNAL_DOWN);
+            LogIfMaterialMissing(MATERIAL_SIGNAL_LEVEL);
+            if (!MyScreenSpaceText.IsFontAvailable(GvkScreenLayer.FONT))
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API: font '{GvkScreenLayer.FONT}' not found");
+        }
+
+        private static void LogIfMaterialMissing(MyStringId material)
+        {
+            if (!MyScreenSpaceSprite.IsMaterialAvailable(material))
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API: material '{material.String}' not found");
+        }
+
+        /// <summary>Keen HUD slate blue at the player's HUD background opacity, as UpdateCardBackgroundOpacities sets.</summary>
+        private Color GetCardBgColor()
+        {
+            float opacity = cachedHudBkOpacity >= 0f ? cachedHudBkOpacity : GetUserHudOpacity();
+            return new Color(41, 54, 62, (byte)MathHelper.Clamp((int)(255f * opacity), 0, 255));
+        }
+
+        public override void Draw()
+        {
+            if (!useScreenSpaceCompass || !showCompass || showFullMap || _ssCompass.Count == 0) return;
+            if (GvkScreenLayer.IsHudHidden()) return;
+            try
+            {
+                _ssCompass.Draw();
+            }
+            catch (Exception ex)
+            {
+                // A renderer test must not take the game down: fall back to the Text HUD API compass
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API compass draw failed, switching back to Text HUD API: {ex}");
+                useScreenSpaceCompass = false;
+                _ssCompass.Clear();
+                _refreshCompassNextFrame = true;
+            }
+        }
+
+        private void ToggleScreenSpaceCompass()
+        {
+            useScreenSpaceCompass = !useScreenSpaceCompass;
+            if (!useScreenSpaceCompass) _ssCompass.Clear();
+            _refreshCompassNextFrame = true;
+            SaveConfig();
+            string renderer = useScreenSpaceCompass ? "SCREEN API (new)" : "TEXT HUD API (old)";
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Renderer: {renderer}", 2500, MyFontEnum.Green);
         }
 
         private void HideTapePool()
@@ -3523,6 +3791,13 @@ namespace GVK.Navigation
                 return;
             }
 
+            if (msg.Equals("/gvk ss", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                ToggleScreenSpaceCompass();
+                return;
+            }
+
             if (msg.Equals("/gvk zone", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
@@ -4358,6 +4633,7 @@ namespace GVK.Navigation
             sb.AppendLine("• /gvk radar       : Toggle Tactical Radar vs Sector Map");
             sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
             sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
+            sb.AppendLine("• /gvk ss          : Compass Renderer Test (Screen API vs Text HUD API)");
             sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
             sb.AppendLine($"• /gvk map (or {mapKeyLabel})  : Open Full-Screen Topographical Kharak Map");
             sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Frequency (15, 12, 10, 6 Hz)");
