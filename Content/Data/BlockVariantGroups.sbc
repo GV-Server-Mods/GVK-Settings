@@ -61,7 +61,7 @@
 		<!-- Keeps vanilla Id so the vanilla radial-menu beacon slot shows the GVK core beacons -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="BeaconGroup"/>
-			<Icon>Textures\GUI\Icons\Cubes\beacon.dds</Icon>
+			<Icon>Textures\GUI\Icons\Cubes\Core_Light.dds</Icon>
 			<DisplayName>Core Beacons</DisplayName>
 			<Description>Description_Beacon</Description>
 			<Blocks>

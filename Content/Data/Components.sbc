@@ -155,6 +155,7 @@
 			</Id>
 			<DisplayName>Turbo Encabulator</DisplayName>
 			<Icon>Textures\GUI\Icons\Components\AlkalineCell.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
 			<Size>
 				<X>0.5</X>
 				<Y>0.3</Y>
