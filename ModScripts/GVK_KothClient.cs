@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Draygo.API;
 using Sandbox.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
@@ -80,13 +79,7 @@ namespace GVK.Navigation
             public string Effect;
         }
 
-        private HudAPIv2 hudApi;
-        private HudAPIv2.BillBoardHUDMessage panelBg;
-        private HudAPIv2.BillBoardHUDMessage panelAccent;
-        private HudAPIv2.HUDMessage panelMsg;
-        private readonly StringBuilder panelText = new StringBuilder(160);
-
-        // Capture panel layout in Text HUD API units, shared by both renderers
+        // Capture panel layout in HUD units (-1..1, Y up, whole window)
         private const double PANEL_X = -0.80;
         private const double PANEL_Y = 0.45;
         private const float PANEL_WIDTH = 0.36f;
@@ -98,7 +91,7 @@ namespace GVK.Navigation
         private static readonly Color BAR_FILLED_COLOR = new Color(255, 200, 60);
         private static readonly Color BAR_EMPTY_COLOR = new Color(90, 100, 110);
 
-        // Screen API panel (/gvk ss). Strings are cached so the 6 Hz rebuild doesn't allocate.
+        // Capture panel, drawn with the screen API. Strings are cached so the 6 Hz rebuild doesn't allocate.
         private readonly GvkScreenLayer _ssPanel = new GvkScreenLayer();
         private static readonly string[] BAR_RUNS = new string[21];      // "", "|", "||" .. 20 bars
         private static readonly string[] PERCENT_TEXT = new string[101]; // "0%" .. "100%", filled on first use
@@ -110,11 +103,9 @@ namespace GVK.Navigation
         private readonly List<PendingFirework> fireworks = new List<PendingFirework>();
         private readonly Random random = new Random();
         private DateTime lastMessageUtc = DateTime.MinValue;
-        private int lastPercent = -1;
-        private int lastParticipants = -1;
-        private string lastName;
         private int tick;
         private bool registered;
+        private bool _ssPanelDrawFailed; // A draw error turns the panel off for the session
 
         public override void LoadData()
         {
@@ -123,7 +114,6 @@ namespace GVK.Navigation
 
             MyAPIGateway.Multiplayer.RegisterSecureMessageHandler(CHANNEL, OnMessage);
             registered = true;
-            hudApi = GvkHudApi.Register(OnHudApiRegistered);
         }
 
         protected override void UnloadData()
@@ -132,54 +122,8 @@ namespace GVK.Navigation
                 MyAPIGateway.Multiplayer.UnregisterSecureMessageHandler(CHANNEL, OnMessage);
             registered = false;
 
-            if (hudApi != null)
-            {
-                panelBg?.DeleteMessage();
-                panelAccent?.DeleteMessage();
-                panelMsg?.DeleteMessage();
-                GvkHudApi.Release(OnHudApiRegistered);
-                hudApi = null;
-            }
-
             KothClientData.Zones.Clear();
             KothClientData.Changed = true;
-        }
-
-        private void OnHudApiRegistered()
-        {
-            var origin = new Vector2D(PANEL_X, PANEL_Y);
-            panelBg = new HudAPIv2.BillBoardHUDMessage(
-                Material: MATERIAL_SQUARE,
-                Origin: origin,
-                BillBoardColor: PANEL_BG_COLOR,
-                Width: PANEL_WIDTH,
-                Height: PANEL_HEIGHT,
-                HideHud: true,
-                Shadowing: true,
-                Blend: BlendTypeEnum.PostPP);
-            panelBg.Visible = false;
-
-            panelAccent = new HudAPIv2.BillBoardHUDMessage(
-                Material: MATERIAL_SQUARE,
-                Origin: origin,
-                BillBoardColor: KOTH_ORANGE,
-                Offset: new Vector2D(-0.18 + 0.004, 0.0),
-                Width: 0.005f,
-                Height: 0.069f,
-                HideHud: true,
-                Shadowing: false,
-                Blend: BlendTypeEnum.PostPP);
-            panelAccent.Visible = false;
-
-            panelMsg = new HudAPIv2.HUDMessage(
-                Message: panelText,
-                Origin: new Vector2D(origin.X - 0.18 + 0.014, origin.Y + 0.028),
-                Scale: PANEL_TEXT_SCALE,
-                HideHud: true,
-                Shadowing: true,
-                ShadowColor: Color.Black,
-                Blend: BlendTypeEnum.PostPP);
-            panelMsg.Visible = false;
         }
 
         // --- Messages from the plugin ------------------------------------------------------------------------
@@ -271,10 +215,6 @@ namespace GVK.Navigation
 
         private void UpdatePanel()
         {
-            bool screenApi = GvkScreenLayer.UseScreenApi;
-            if (panelMsg == null && !screenApi)
-                return;
-
             var player = MyAPIGateway.Session?.Player?.Character;
             int inside = -1;
             if (player != null)
@@ -291,54 +231,20 @@ namespace GVK.Navigation
                 }
             }
 
-            bool show = inside >= 0;
-            if (panelMsg != null)
+            if (inside < 0)
             {
-                bool showHudApi = show && !screenApi;
-                panelBg.Visible = showHudApi;
-                panelAccent.Visible = showHudApi;
-                panelMsg.Visible = showHudApi;
-            }
-            if (!show)
-            {
-                lastPercent = -1; // Rebuild the text next time the panel shows
                 _ssPanel.Clear();
                 return;
             }
 
             var z = KothClientData.Zones[inside];
             int percent = (int)Math.Round(MathHelper.Clamp(z.Fraction, 0.0, 1.0) * 100.0);
-
-            if (screenApi)
-            {
-                lastPercent = -1; // Text HUD API text is rebuilt if the renderer switches back
-                BuildScreenPanel(z.Name, percent, z.Participants);
-                return;
-            }
-            _ssPanel.Clear();
-
-            // Rebuild the text only when something shown has changed
-            if (percent == lastPercent && z.Participants == lastParticipants && string.Equals(z.Name, lastName))
-                return;
-            lastPercent = percent;
-            lastParticipants = z.Participants;
-            lastName = z.Name;
-
-            int filled = percent / 5;
-            panelText.Clear();
-            panelText.Append("<color=255,128,31>KOTH ").Append(z.Name).Append("<color=180,195,210>  |  <color=255,255,255>")
-                     .Append(percent).Append("%\n<color=255,200,60>");
-            for (int i = 0; i < 20; i++)
-            {
-                if (i == filled) panelText.Append("<color=90,100,110>");
-                panelText.Append('|');
-            }
-            panelText.Append("<color=180,195,210>  counted: <color=255,255,255>").Append(z.Participants);
+            BuildScreenPanel(z.Name, percent, z.Participants);
         }
 
         /// <summary>
-        /// Screen API capture panel: the Text HUD API layout in OnHudApiRegistered, in the same units.
-        /// Each colour that was a colour tag is its own text run.
+        /// Capture panel: the zone name and %, then a 20-step bar and the players counted.
+        /// Each colour (a colour tag under Text HUD API) is its own text run.
         /// </summary>
         private void BuildScreenPanel(string name, int percent, int participants)
         {
@@ -363,7 +269,7 @@ namespace GVK.Navigation
             string percentText = PERCENT_TEXT[percent] ?? (PERCENT_TEXT[percent] = percent + "%");
             int filled = percent / 5;
 
-            _ssPanel.BeginRuns(PANEL_X - 0.18 + 0.014, PANEL_Y + 0.028, PANEL_TEXT_SCALE * GvkScreenLayer.TextScale, true);
+            _ssPanel.BeginRuns(PANEL_X - 0.18 + 0.014, PANEL_Y + 0.028, PANEL_TEXT_SCALE * GvkScreenLayer.MeasureTextScale(camera.ViewportSize), true);
             _ssPanel.AddRun(_ssNameText, KOTH_ORANGE);
             _ssPanel.AddRun("  |  ", PANEL_LABEL_COLOR);
             _ssPanel.AddRun(percentText, Color.White);
@@ -453,7 +359,7 @@ namespace GVK.Navigation
 
         private void DrawScreenPanel()
         {
-            if (!GvkScreenLayer.UseScreenApi || _ssPanel.Count == 0 || GvkScreenLayer.IsHudHidden())
+            if (_ssPanelDrawFailed || _ssPanel.Count == 0 || GvkScreenLayer.IsHudHidden())
                 return;
             try
             {
@@ -461,9 +367,9 @@ namespace GVK.Navigation
             }
             catch (Exception ex)
             {
-                // The new renderer must not take the game down: fall back to Text HUD API (the nav HUD follows)
-                MyLog.Default.WriteLineAndConsole("[GVK_KothClient] Screen API panel draw failed, switching back to Text HUD API: " + ex);
-                GvkScreenLayer.UseScreenApi = false;
+                // A draw error must not take the game down: the panel stays off for the rest of the session
+                MyLog.Default.WriteLineAndConsole("[GVK_KothClient] Capture panel draw failed, panel off for this session: " + ex);
+                _ssPanelDrawFailed = true;
                 _ssPanel.Clear();
             }
         }

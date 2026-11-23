@@ -9,8 +9,8 @@ using VRageMath;
 namespace GVK.Navigation
 {
     /// <summary>
-    /// The /gvk settings screen (MyModScreen, SE 1.211): the F2 Mod Settings menu's settings as a game screen
-    /// with the mouse, so they no longer need Text HUD API. Opened with /gvk settings or the map's Settings button.
+    /// The /gvk settings screen (MyModScreen, SE 1.211): every navigation setting in a game screen used with
+    /// the mouse (it replaced Text HUD API's F2 menu). Opened with /gvk settings or the map's Settings button.
     /// GVK_ZoneNavCommand does the layout, input and drawing; this class only forwards the screen's callbacks.
     /// </summary>
     public class GvkSettingsScreen : MyModScreen
@@ -54,7 +54,7 @@ namespace GVK.Navigation
         private const int S_C_SNAP = 36, S_C_X = 37, S_C_Y = 38, S_C_RESET = 39;
         private const int S_MAP_OWN = 50, S_MAP_KOTH = 51, S_MAP_GPS_LABELS = 52, S_MAP_SIGNAL_LABELS = 53;
         private const int S_MAP_STACK = 54, S_MAP_KEY = 55;
-        private const int S_RATE = 70, S_RENDERER = 71, S_DEFAULT_GPS = 72, S_FACTORY_RESET = 73;
+        private const int S_RATE = 70, S_DEFAULT_GPS = 72, S_FACTORY_RESET = 73;
         private const int HIT_CLOSE = -1;       // Hit codes below zero: the Close button, then the tabs
         private const int HIT_TAB = -100;       // HIT_TAB - tab index
 
@@ -66,7 +66,7 @@ namespace GVK.Navigation
                     S_MM_SNAP, S_MM_X, S_MM_Y, S_MM_RESET },
             new[] { S_C_TAPE, S_C_GPS, S_C_SIGNALS, S_C_OWN, S_C_KOTH, S_C_SIZE, S_C_SNAP, S_C_X, S_C_Y, S_C_RESET },
             new[] { S_MAP_OWN, S_MAP_KOTH, S_MAP_GPS_LABELS, S_MAP_SIGNAL_LABELS, S_MAP_STACK, S_MAP_KEY },
-            new[] { S_RATE, S_RENDERER, S_DEFAULT_GPS, S_FACTORY_RESET },
+            new[] { S_RATE, S_DEFAULT_GPS, S_FACTORY_RESET },
         };
         private const int SETTINGS_MAX_ROWS = 13;
 
@@ -86,14 +86,14 @@ namespace GVK.Navigation
         private bool _settingsDirty = true;
         private Vector2 _settingsViewport;
         private int _settingsDragRow;                // Slider row being dragged, 0 for none
-        private double _settingsTrackMin;            // Slider track, Text HUD API units, from the last build
+        private double _settingsTrackMin;            // Slider track, HUD units, from the last build
         private double _settingsTrackMax;
         private bool _settingsCapturing;             // Waiting for the new map key
         private bool _settingsCaptureSkipFrame;      // The click that started the capture is not the key
         private bool _settingsResetArmed;            // Factory reset asks for a second click
         private bool _settingsReturnToMap;           // Opened from the map's Settings button; reopen the map on close
         private int _mapReopenTicks;                 // Ticks left to reopen the map once its fade-out has finished
-        private const double SETTINGS_TRACK_GRAB = 0.02; // Slack around the slider track for the press, Text HUD API units
+        private const double SETTINGS_TRACK_GRAB = 0.02; // Slack around the slider track for the press, HUD units
         private const int MAP_REOPEN_TICKS = 60;
 
         private bool SettingsScreenOpen => _settingsScreen != null && _settingsScreen.IsOpen;
@@ -273,7 +273,6 @@ namespace GVK.Navigation
             else
             {
                 ApplyCompassScale(compassScale);
-                if (zoneBarMode == ZoneBarMode.CompassDock) _lastZoneBarZoneIndex = -1;
                 _refreshCompassNextFrame = true;
             }
             _settingsDirty = true;
@@ -353,7 +352,6 @@ namespace GVK.Navigation
                     _settingsCaptureSkipFrame = true;
                     break;
                 case S_RATE: CycleUpdateTickRate(); break;
-                case S_RENDERER: ToggleScreenSpaceHud(); break;
                 case S_DEFAULT_GPS: PopulateDefaultGps(true); break;
                 case S_FACTORY_RESET:
                     if (_settingsResetArmed)
@@ -404,7 +402,6 @@ namespace GVK.Navigation
                 case S_MAP_STACK: return "Stack Icons";
                 case S_MAP_KEY: return "Map Key";
                 case S_RATE: return "Update Frequency";
-                case S_RENDERER: return "HUD Renderer (test)";
                 case S_DEFAULT_GPS: return "Restore Default Kharak GPS";
                 case S_FACTORY_RESET: return "Factory Reset All Settings";
                 default: return string.Empty;
@@ -465,9 +462,6 @@ namespace GVK.Navigation
                     if (_settingsCapturing) return "Press a key (Esc cancels)";
                     return mapKeyLabel;
                 case S_RATE: return (60.0 / updateTickRate).ToString("0.#") + " Hz (" + updateTickRate + " ticks)";
-                case S_RENDERER:
-                    color = SET_CHOICE;
-                    return GvkScreenLayer.UseScreenApi ? "Screen API" : "Text HUD API";
                 case S_FACTORY_RESET:
                     color = SET_OFF;
                     return _settingsResetArmed ? "Click again to reset everything" : null;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Draygo.API;
 using Sandbox.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
@@ -10,15 +9,14 @@ using VRage.Input;
 using VRage.ModAPI;
 using VRage.Utils;
 using VRageMath;
-using BlendTypeEnum = VRageRender.MyBillboard.BlendTypeEnum;
 
 namespace GVK.Navigation
 {
     /// <summary>
     /// Kharak Tactical Navigation Suite: HUD compass ribbon, corner minimap / tactical radar,
-    /// zone status bar, and full-screen satellite map on the map key (default =). Uses pre-allocated billboard pools
-    /// (zero GC in hot paths), Keen vanilla HUD marker icons, and a calibrated WorldToMapUV
-    /// projection aligned to KharakMap.dds. Configurable via chat commands and F2 mod menu.
+    /// zone status bar, and full-screen satellite map on the map key (default =), all drawn with the game's
+    /// screen API (SE 1.211), Keen vanilla HUD marker icons, and a calibrated WorldToMapUV projection aligned
+    /// to KharakMap.dds. Configurable with /gvk chat commands and the /gvk settings screen.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public partial class GVK_ZoneNavCommand : MySessionComponentBase
@@ -73,8 +71,6 @@ namespace GVK.Navigation
             public readonly GraduationType Type;
             public readonly string TopLabel;
             public readonly string BottomLabel;
-            public double BaseTopHalfWidth;
-            public double BaseBottomHalfWidth;
 
             public CompassGraduation(float offset, GraduationType type, string topLabel = null, string bottomLabel = null)
             {
@@ -82,8 +78,6 @@ namespace GVK.Navigation
                 Type = type;
                 TopLabel = topLabel;
                 BottomLabel = bottomLabel;
-                BaseTopHalfWidth = -1.0;
-                BaseBottomHalfWidth = -1.0;
             }
         }
 
@@ -230,46 +224,29 @@ namespace GVK.Navigation
             new DefaultGpsEntry("KOTH Crashed Starship", "King of the Hill Site", new Vector3D(25893.61, 61095.89, 25703.05), false, false, new Color(255, 128, 31))
         };
 
-        // TextHUDAPI
-        private HudAPIv2 hudApi;
-
         // 1. Custom Programmatic Tactical HUD Compass Elements
-        private const double COMPASS_TOP_Y = 0.999;
-        private HudAPIv2.BillBoardHUDMessage compassBg;
-        private HudAPIv2.BillBoardHUDMessage compassLeftAccent;
-        private HudAPIv2.BillBoardHUDMessage compassRightAccent;
-        private HudAPIv2.BillBoardHUDMessage compassCenterPointer;
-        private HudAPIv2.BillBoardHUDMessage compassCenterBottomPip;
-        private readonly List<HudAPIv2.BillBoardHUDMessage> compassTickPool = new List<HudAPIv2.BillBoardHUDMessage>();
-        private readonly List<HudAPIv2.HUDMessage> compassTapePool = new List<HudAPIv2.HUDMessage>();
-        private readonly List<HudAPIv2.BillBoardHUDMessage> waypointSpritePool = new List<HudAPIv2.BillBoardHUDMessage>();
-        private readonly List<HudAPIv2.HUDMessage> waypointDistPool = new List<HudAPIv2.HUDMessage>();
         private bool showCompass = true;
         private bool showCompassGps = true;
         private bool showCompassSignals = true;
         private bool showCompassOwnSignals = true;
-        private bool _compassElementsVisible = false;
         private float compassScale = 1.0f;
         private double compassOffsetX = 0.0;
         private double compassOffsetY = 1.0;
-        private HudAPIv2.MenuSliderInput compassSliderX;
-        private HudAPIv2.MenuSliderInput compassSliderY;
         private const int COMPASS_MAX_TICKS = 25;
         private const int COMPASS_MAX_LABELS = 30;
         private const int COMPASS_MAX_WAYPOINTS = 16;
 
-        // Screen API renderer (vanilla screen API, SE 1.211): draws the compass, zone bar and minimap without
-        // Text HUD API. /gvk ss (GvkScreenLayer.UseScreenApi) switches between it and the Text HUD API HUD.
+        // HUD draw lists (vanilla screen API, SE 1.211). Laid out in HUD units (-1..1, Y up, whole window),
+        // the units the HUD had under Text HUD API, which this mod used until 2026-11.
         // Same layout math in the same units, so the two should match. Drawn in this order, as created before.
         private readonly GvkScreenLayer _ssCompass = new GvkScreenLayer();
         private readonly GvkScreenLayer _ssMinimap = new GvkScreenLayer();
         private readonly GvkScreenLayer _ssZoneBar = new GvkScreenLayer();
         private const int MINIMAP_MAX_MARKERS = 30;
-        private HudAPIv2.HUDMessage _ssTextCalibrator; // Hidden; matches screen API text size to Text HUD API's
-        private const string SS_CALIBRATION_TEXT = "0123456789NESW";
-        private float _ssTextScale = -1f;                  // Measured screen API scale per Text HUD API scale unit
-        private Vector2 _ssTextCalibViewport = Vector2.Zero;
         private float _minimapLayoutBgWidth = -1f;         // Minimap card width as ApplyMinimapScale last laid it out
+        private bool _hudLayoutInit;                       // First-tick layout done (see UpdateBeforeSimulation)
+        private bool _ssHudDrawFailed;                     // A draw error turns the HUD off for the session
+        private bool _ssMapDrawFailed;                     // And the satellite map
         private long _ssRangeKey = long.MinValue;          // Radar range label, re-formatted only when it changes
         private string _ssRangeText;
         private long _ssLowerKmKey = long.MinValue;
@@ -289,8 +266,6 @@ namespace GVK.Navigation
         };
         private static readonly Color ZONE_LABEL_COLOR = new Color(220, 220, 220);
         private static readonly Color ZONE_SEPARATOR_COLOR = new Color(100, 140, 180);
-        private float _ssCalibSsWidth = 0f;
-        private bool _ssLoggedFallback = false;
         private bool _ssMaterialsChecked = false;
         private static readonly string[] _ssDistanceTenths = new string[100]; // "0.0k".."9.9k", filled on first use
         private static readonly string[] _ssDistanceWhole = new string[1000]; // "10k".."999k", filled on first use
@@ -303,7 +278,7 @@ namespace GVK.Navigation
         private const float MAP_MAX_ZOOM = 3f;          // The 2160 px map picture is soft past this
         private const double MAP_ZOOM_STEP = 1.25;      // Per mouse-wheel notch
         private const double MAP_HOVER_HALF = 0.009;    // Hover box half width around a marker (height scaled by aspect)
-        private const float MAP_LABEL_SCALE = 0.60f;    // Text HUD API scale of the map labels
+        private const float MAP_LABEL_SCALE = 0.60f;    // HUD text scale of the map labels
         private struct MapHit
         {
             public int Wp;
@@ -318,13 +293,13 @@ namespace GVK.Navigation
         private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
         private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
         private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point at a marker for details";
-        private const float MAP_HINT_SCALE = 0.62f;     // Text HUD API scale of the controls line (was 0.46, too small)
+        private const float MAP_HINT_SCALE = 0.62f;     // HUD text scale of the controls line (was 0.46, too small)
 
         // Right-click menu: asks before adding a GPS at the click, or before removing the GPS clicked
         private readonly GvkScreenLayer _ssMapMenu = new GvkScreenLayer();
         private bool _mapMenuOpen;
         private bool _mapMenuRemove;        // False: add a GPS at the click; true: remove the GPS clicked
-        private Vector2D _mapMenuAt;        // Click point, Text HUD API units
+        private Vector2D _mapMenuAt;        // Click point, HUD units
         private double _mapMenuU;           // Map UV of the click, for adding
         private double _mapMenuV;
         private string _mapMenuGpsName;     // GPS to remove, found again by name and position
@@ -343,7 +318,7 @@ namespace GVK.Navigation
         private float _mapZoom = 1f;
         private double _mapViewU = 0.5;
         private double _mapViewV = 0.5;
-        private float _ssMapW;              // Frame size in Text HUD API units from the last build; 0 before the first
+        private float _ssMapW;              // Frame size in HUD units from the last build; 0 before the first
         private float _ssMapH;
         private Vector2 _ssMapViewport;
         private float _ssMapTextScale;
@@ -361,14 +336,6 @@ namespace GVK.Navigation
         private string _ssMapCloseText;
 
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
-        private HudAPIv2.HUDMessage zoneMsg;
-        private HudAPIv2.HUDMessage zoneDistMsg;
-        private HudAPIv2.HUDMessage zoneNextMsg;
-        private HudAPIv2.BillBoardHUDMessage zoneBg;
-        private HudAPIv2.BillBoardHUDMessage zoneAccent;
-        private readonly StringBuilder zoneText = new StringBuilder(128);
-        private readonly StringBuilder zoneDistText = new StringBuilder(128);
-        private readonly StringBuilder zoneNextText = new StringBuilder(128);
         public enum ZoneBarMode
         {
             CompassDock = 0,
@@ -377,28 +344,17 @@ namespace GVK.Navigation
         }
 
         private ZoneBarMode zoneBarMode = ZoneBarMode.CompassDock;
-        private bool _zoneBarElementsVisible = false;
-        private Vector2D zonePosition = Vector2D.Zero;
 
         // 3. Corner Minimap Elements (Top-Right: true 2:1 ratio for KharakMap, enlarged +20%)
-        private HudAPIv2.BillBoardHUDMessage minimapBg;
-        private HudAPIv2.BillBoardHUDMessage minimapAccent;
-        private HudAPIv2.BillBoardHUDMessage minimapTerrain;
-        private HudAPIv2.BillBoardHUDMessage minimapPlayerDot;
-        private HudAPIv2.HUDMessage minimapLabel;
-        private readonly List<HudAPIv2.BillBoardHUDMessage> minimapMarkerPool = new List<HudAPIv2.BillBoardHUDMessage>();
         private Vector2D minimapPosition = new Vector2D(0.81, 0.73);
         private Vector2D minimapSize = new Vector2D(0.312, 0.277); // Dynamically set with aspect ratio (+20%)
         private bool showMinimap = true;
         private bool showMinimapGps = true;
         private bool showMinimapSignals = true;
         private bool showMinimapOwnSignals = true;
-        private bool _minimapElementsVisible = false;
         private float minimapScale = 1.0f;
         private double minimapOffsetX = 1.0;
         private double minimapOffsetY = 1.0;
-        private HudAPIv2.MenuSliderInput minimapSliderX;
-        private HudAPIv2.MenuSliderInput minimapSliderY;
 
         public enum MinimapDisplayMode
         {
@@ -416,34 +372,10 @@ namespace GVK.Navigation
         private RadarScaleMode radarScale = RadarScaleMode.Linear;
         private const double LOG_THIRD = 1.0 / 3.0;
         private double radarRangeMeters = 3000.0;
-        private HudAPIv2.BillBoardHUDMessage radarGrid;
-        private HudAPIv2.BillBoardHUDMessage radarFovLeft;
-        private HudAPIv2.BillBoardHUDMessage radarFovRight;
-        private HudAPIv2.BillBoardHUDMessage radarLowerZoneLine;
-        private HudAPIv2.BillBoardHUDMessage radarHigherZoneLine;
         private float cachedHudBkOpacity = -1f;
         private bool showRadarZoneLines = true;
         private bool showRadarFovLines = true;
 
-        private HudAPIv2.MenuItem menuRootMinimap;
-        private HudAPIv2.MenuItem menuRootCompass;
-        private HudAPIv2.MenuItem menuRootZone;
-        private HudAPIv2.MenuItem menuSubMinimapMode;
-        private HudAPIv2.MenuItem menuSubRadarRange;
-        private HudAPIv2.MenuItem menuSubMinimapScale;
-        private HudAPIv2.MenuItem menuSubZoneLines;
-        private HudAPIv2.MenuItem menuSubFovLines;
-        private HudAPIv2.MenuItem menuSubMinimapPreset;
-        private HudAPIv2.MenuItem menuSubMinimapGps;
-        private HudAPIv2.MenuItem menuSubMinimapSignals;
-        private HudAPIv2.MenuItem menuSubMinimapOwnSignals;
-        private HudAPIv2.MenuItem menuSubCompassToggle;
-        private HudAPIv2.MenuItem menuSubCompassGps;
-        private HudAPIv2.MenuItem menuSubCompassSignals;
-        private HudAPIv2.MenuItem menuSubCompassOwnSignals;
-        private HudAPIv2.MenuItem menuSubCompassScale;
-        private HudAPIv2.MenuItem menuSubCompassPreset;
-        private HudAPIv2.MenuItem menuSubRate;
 
         private struct HudPreset
         {
@@ -517,7 +449,7 @@ namespace GVK.Navigation
             public int UpdateTickRate { get; set; } = 5;
             public bool ShowRadarZoneLines { get; set; } = true;
             public bool ShowRadarFovLines { get; set; } = true;
-            public bool UseScreenApi { get; set; } = true;
+            // UseScreenApi (the old /gvk ss switch) is gone; XmlSerializer skips it in older config files
 
             public ZoneNavConfig() { }
         }
@@ -535,20 +467,6 @@ namespace GVK.Navigation
         private bool mapKeyCtrl = false;
         private bool mapKeyAlt = false;
         private string mapKeyLabel = "="; // e.g. "Ctrl+M"; rebuilt only when the binding changes
-        private HudAPIv2.MenuItem menuRootOpenMap;
-        private HudAPIv2.MenuKeybindInput menuSubMapKey;
-        private HudAPIv2.BillBoardHUDMessage mapDimmer;
-        private HudAPIv2.BillBoardHUDMessage mapFrame;
-        private HudAPIv2.BillBoardHUDMessage mapTerrain;
-        private HudAPIv2.BillBoardHUDMessage mapPlayerDot;
-        private HudAPIv2.BillBoardHUDMessage mapHeaderBg;
-        private HudAPIv2.BillBoardHUDMessage mapHeaderAccent;
-        private HudAPIv2.HUDMessage mapHeaderMsg;
-        private HudAPIv2.HUDMessage mapHeaderSubMsg;
-        private readonly StringBuilder mapHeaderText = new StringBuilder(128);
-        private readonly StringBuilder mapHeaderSubText = new StringBuilder(128);
-        private readonly List<HudAPIv2.BillBoardHUDMessage> fullMapMarkerPool = new List<HudAPIv2.BillBoardHUDMessage>();
-        private readonly List<HudAPIv2.HUDMessage> fullMapLabelPool = new List<HudAPIv2.HUDMessage>();
 
         // Dynamic State
         private int currentZoneIndex = 0;
@@ -570,20 +488,9 @@ namespace GVK.Navigation
         private Matrix _cachedRelativeOffset = Matrix.Identity;
         private float _cachedNorthAzimuth = 0f;
 
-        // Cached aspect ratio & satellite map dimensions to avoid per-frame camera queries
+        // Cached aspect ratio, to avoid per-frame camera queries
         private float cachedAspect = 16f / 9f;
-        private float cachedFullMapWidth = 1.40f;
-        private float cachedFullMapHeight = 0.70f * (16f / 9f);
         private Vector2 cachedViewportSize = Vector2.Zero;
-
-        // Zone bar dirty tracking — skip text rebuild when nothing changed.
-        private int _lastZoneBarZoneIndex = -1;
-        private bool _lastZoneBarInSpace = false;
-        private MinimapDisplayMode _lastZoneBarMinimapMode = (MinimapDisplayMode)(-1);
-        private ZoneBarMode _lastZoneBarMode = (ZoneBarMode)(-1);
-        private double _lastZoneBarToLowerKm = -1.0;
-        private double _lastZoneBarRemainingKm = -1.0;
-        private double _lastZoneBarDistZ3Km = -1.0;
 
         // Active HUD Waypoints Buffer
         private List<ActiveHudWaypoint> activeHudWaypoints = new List<ActiveHudWaypoint>();
@@ -645,7 +552,6 @@ namespace GVK.Navigation
         private float _mapOverflowWidth;
         private double _mapTextHeight = 0.016; // Measured height of one label line
         private readonly List<int> _mapClusterShown = new List<int>(32);
-        private HudAPIv2.HUDMessage _mapLabelMeasure; // Hidden; sizes labels for overlap checks
         private bool showMapGpsLabels = true;
         private bool showMapSignalLabels = true;
         private bool showMapOwnSignals = true;
@@ -653,19 +559,10 @@ namespace GVK.Navigation
         private bool showMapKoth = true;
         private bool showMinimapKoth = true;
         private bool showCompassKoth = true;
-        private HudAPIv2.MenuItem menuSubMapKoth;
-        private HudAPIv2.MenuItem menuSubMinimapKoth;
-        private HudAPIv2.MenuItem menuSubCompassKoth;
-        private readonly List<HudAPIv2.BillBoardHUDMessage> kothRingPool = new List<HudAPIv2.BillBoardHUDMessage>();
         private const int KOTH_RING_DOTS = 24;
         private static readonly double[] KOTH_RING_COS = BuildRingTable(true);
         private static readonly double[] KOTH_RING_SIN = BuildRingTable(false);
         private bool _kothFlashBright = true;
-        private const int KOTH_RING_MAX_ZONES = 4;
-        private HudAPIv2.MenuItem menuSubMapOwnSignals;
-        private HudAPIv2.MenuItem menuSubMapGpsLabels;
-        private HudAPIv2.MenuItem menuSubMapSignalLabels;
-        private HudAPIv2.MenuItem menuSubMapStackIcons;
 
 
         private void LoadConfig()
@@ -724,13 +621,10 @@ namespace GVK.Navigation
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
                                 showRadarZoneLines = cfg.ShowRadarZoneLines;
                                 showRadarFovLines = cfg.ShowRadarFovLines;
-                                GvkScreenLayer.UseScreenApi = cfg.UseScreenApi;
                                 minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
                                 minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
                                 compassOffsetX = MathHelper.Clamp(cfg.CompassOffsetX, -1.0, 1.0);
                                 compassOffsetY = MathHelper.Clamp(cfg.CompassOffsetY, -1.0, 1.0);
-                                UpdateMinimapSliderPercents();
-                                UpdateCompassSliderPercents();
                             }
                         }
                     }
@@ -783,8 +677,7 @@ namespace GVK.Navigation
                     ZoneBarMode = (int)zoneBarMode,
                     UpdateTickRate = updateTickRate,
                     ShowRadarZoneLines = showRadarZoneLines,
-                    ShowRadarFovLines = showRadarFovLines,
-                    UseScreenApi = GvkScreenLayer.UseScreenApi
+                    ShowRadarFovLines = showRadarFovLines
                 };
 
                 string xml = MyAPIGateway.Utilities.SerializeToXML(cfg);
@@ -806,7 +699,6 @@ namespace GVK.Navigation
             {
                 LoadConfig();
                 MyAPIGateway.Utilities.MessageEntered += OnMessageEntered;
-                hudApi = GvkHudApi.Register(OnHudApiRegistered);
             }
         }
 
@@ -817,96 +709,9 @@ namespace GVK.Navigation
                 SaveConfig();
                 MyAPIGateway.Utilities.MessageEntered -= OnMessageEntered;
 
-                if (hudApi != null)
-                {
-                    compassBg?.DeleteMessage();
-                    compassLeftAccent?.DeleteMessage();
-                    compassRightAccent?.DeleteMessage();
-                    compassCenterPointer?.DeleteMessage();
-                    compassCenterBottomPip?.DeleteMessage();
-                    ClearTapePool();
-                    ClearSpritePool();
-                    _compassVisibleWps.Clear();
-
-                    zoneMsg?.DeleteMessage();
-                    zoneDistMsg?.DeleteMessage();
-                    zoneNextMsg?.DeleteMessage();
-                    zoneBg?.DeleteMessage();
-                    zoneAccent?.DeleteMessage();
-
-                    minimapBg?.DeleteMessage();
-                    minimapAccent?.DeleteMessage();
-                    minimapTerrain?.DeleteMessage();
-                    minimapPlayerDot?.DeleteMessage();
-                    minimapLabel?.DeleteMessage();
-                    radarGrid?.DeleteMessage();
-                    radarFovLeft?.DeleteMessage();
-                    radarFovRight?.DeleteMessage();
-                    radarLowerZoneLine?.DeleteMessage();
-                    radarHigherZoneLine?.DeleteMessage();
-                    ClearMinimapPool();
-
-                    mapDimmer?.DeleteMessage();
-                    mapFrame?.DeleteMessage();
-                    mapTerrain?.DeleteMessage();
-                    mapPlayerDot?.DeleteMessage();
-                    mapHeaderBg?.DeleteMessage();
-                    mapHeaderAccent?.DeleteMessage();
-                    mapHeaderMsg?.DeleteMessage();
-                    mapHeaderSubMsg?.DeleteMessage();
-                    ClearFullMapPool();
-                    _mapLabelMeasure?.DeleteMessage();
-                    _ssTextCalibrator?.DeleteMessage();
-                    _cachedMapClusters.Clear();
-
-                    GvkHudApi.Release(OnHudApiRegistered);
-                    hudApi = null;
-                }
+                _compassVisibleWps.Clear();
+                _cachedMapClusters.Clear();
             }
-        }
-
-        private void ClearTapePool()
-        {
-            for (int i = 0; i < compassTickPool.Count; i++)
-                compassTickPool[i]?.DeleteMessage();
-            compassTickPool.Clear();
-
-            for (int i = 0; i < compassTapePool.Count; i++)
-                compassTapePool[i]?.DeleteMessage();
-            compassTapePool.Clear();
-        }
-
-        private void ClearSpritePool()
-        {
-            for (int i = 0; i < waypointSpritePool.Count; i++)
-                waypointSpritePool[i]?.DeleteMessage();
-            waypointSpritePool.Clear();
-
-            for (int i = 0; i < waypointDistPool.Count; i++)
-                waypointDistPool[i]?.DeleteMessage();
-            waypointDistPool.Clear();
-        }
-
-        private void ClearMinimapPool()
-        {
-            for (int i = 0; i < minimapMarkerPool.Count; i++)
-                minimapMarkerPool[i]?.DeleteMessage();
-            minimapMarkerPool.Clear();
-        }
-
-        private void ClearFullMapPool()
-        {
-            for (int i = 0; i < fullMapMarkerPool.Count; i++)
-                fullMapMarkerPool[i]?.DeleteMessage();
-            fullMapMarkerPool.Clear();
-
-            for (int i = 0; i < fullMapLabelPool.Count; i++)
-                fullMapLabelPool[i]?.DeleteMessage();
-            fullMapLabelPool.Clear();
-
-            for (int i = 0; i < kothRingPool.Count; i++)
-                kothRingPool[i]?.DeleteMessage();
-            kothRingPool.Clear();
         }
 
         /// <summary>
@@ -921,759 +726,11 @@ namespace GVK.Navigation
                 {
                     cachedViewportSize = camera.ViewportSize;
                     cachedAspect = camera.ViewportSize.X / camera.ViewportSize.Y;
-                    cachedFullMapWidth = 1.40f;
-                    cachedFullMapHeight = (cachedFullMapWidth * 0.5f) * cachedAspect;
                     _mapLayoutDirty = true;
                 }
                 return cachedAspect;
             }
             return cachedAspect;
-        }
-
-        private void OnHudApiRegistered()
-        {
-            try
-            {
-                float aspect = GetScreenAspect();
-
-                // 1. Custom Programmatic Tactical HUD Compass Frame
-                float baseHeight = GetCompassBaseHeight(1.0f);
-                Vector2D compassOrigin = new Vector2D(0.0, COMPASS_TOP_Y - baseHeight * 0.5);
-
-                compassBg = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: compassOrigin,
-                    BillBoardColor: new Color(10, 16, 24, 240), // Matches minimapBg and zoneBg card background
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.62f,
-                    Height: baseHeight,
-                    HideHud: true,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                compassBg.Visible = false;
-
-                // Simple vertical accent bars on both left and right ends (matches zone status card accent)
-                float accentWidth = 0.005f;
-                float accentHeight = baseHeight - 0.006f;
-
-                compassLeftAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: compassOrigin,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: new Vector2D(-0.31f + 0.005f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: accentWidth,
-                    Height: accentHeight,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                compassLeftAccent.Visible = false;
-
-                compassRightAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: compassOrigin,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: new Vector2D(0.31f - 0.005f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: accentWidth,
-                    Height: accentHeight,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                compassRightAccent.Visible = false;
-
-                // Precision Center Reticle: Top pointer (▼), bottom pip (▲), and central vertical lubber tick
-                compassCenterPointer = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_NAV_ARROW,
-                    Origin: compassOrigin,
-                    BillBoardColor: new Color(255, 215, 60, 255),
-                    Offset: new Vector2D(0.0, baseHeight * 0.5),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.010f,
-                    Height: 0.010f * aspect,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                compassCenterPointer.Rotation = (float)Math.PI; // Rotated downward pointing at tape center
-                compassCenterPointer.Visible = false;
-
-                compassCenterBottomPip = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_NAV_ARROW,
-                    Origin: compassOrigin,
-                    BillBoardColor: new Color(255, 215, 60, 255),
-                    Offset: new Vector2D(0.0, -baseHeight * 0.5),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.008f,
-                    Height: 0.008f * aspect,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                compassCenterBottomPip.Rotation = 0f; // Pointing upward into tape center
-                compassCenterBottomPip.Visible = false;
-
-                // Pre-allocate 25 Graduation Tick BillBoards
-                for (int i = 0; i < 25; i++)
-                {
-                    var tick = new HudAPIv2.BillBoardHUDMessage(
-                        Material: MATERIAL_SQUARE,
-                        Origin: Vector2D.Zero,
-                        BillBoardColor: Color.White,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 1.0,
-                        Width: 0.0016f,
-                        Height: 0.010f,
-                        HideHud: true,
-                        Shadowing: false,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    tick.Visible = false;
-                    compassTickPool.Add(tick);
-                }
-
-                // Pre-allocate 30 Tape Label HUDMessages (for dual-row top/bottom labels)
-                for (int i = 0; i < 30; i++)
-                {
-                    var msg = new HudAPIv2.HUDMessage(
-                        Message: new StringBuilder(""),
-                        Origin: Vector2D.Zero,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 0.78,
-                        HideHud: true,
-                        Shadowing: true,
-                        ShadowColor: Color.Black,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    msg.Visible = false;
-                    compassTapePool.Add(msg);
-                }
-
-                // Pre-allocate 16 Marker Sprite BillBoards (Aspect-corrected 1:1 square: Width * aspect = Height)
-                float iconWidth = 0.015f;
-                float iconHeight = iconWidth * aspect;
-
-                for (int i = 0; i < 16; i++)
-                {
-                    var sprite = new HudAPIv2.BillBoardHUDMessage(
-                        Material: MATERIAL_MARKER_GPS,
-                        Origin: Vector2D.Zero,
-                        BillBoardColor: Color.White,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 1.0,
-                        Width: iconWidth,
-                        Height: iconHeight,
-                        HideHud: true,
-                        Shadowing: true,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    sprite.Visible = false;
-                    waypointSpritePool.Add(sprite);
-
-                    var distMsg = new HudAPIv2.HUDMessage(
-                        Message: new StringBuilder(""),
-                        Origin: Vector2D.Zero,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 0.68,
-                        HideHud: true,
-                        Shadowing: true,
-                        ShadowColor: Color.Black,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    distMsg.Visible = false;
-                    waypointDistPool.Add(distMsg);
-                }
-                ApplyCompassScale(compassScale);
-
-                // 2. Corner Minimap (Aspect-corrected true 2:1 image ratio for KharakMap.dds, enlarged +20%)
-                float mWidth = 0.312f;
-                float mHeight = (mWidth * 0.5f) * aspect;
-                minimapSize = new Vector2D(mWidth, mHeight);
-                minimapPosition = new Vector2D(0.81, 0.95 - mHeight * 0.5 - 0.045);
-
-                float minimapBgWidth = (float)minimapSize.X + 0.024f;
-                float minimapBgHeight = (float)minimapSize.Y + 0.008f * aspect;
-
-                minimapBg = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: new Color(10, 16, 24, 240),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: minimapBgWidth,
-                    Height: minimapBgHeight,
-                    HideHud: true,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapBg.Visible = false;
-
-                minimapAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: new Vector2D(-minimapBgWidth * 0.5f + 0.005f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.005f,
-                    Height: minimapBgHeight - 0.006f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapAccent.Visible = false;
-
-                minimapTerrain = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_MAP,
-                    Origin: minimapPosition,
-                    BillBoardColor: Color.White,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: (float)minimapSize.X,
-                    Height: (float)minimapSize.Y,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapTerrain.Visible = false;
-
-                float radarGridDiameter = (float)minimapSize.Y * 0.95f;
-                radarGrid = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_RADAR_GRID,
-                    Origin: minimapPosition,
-                    BillBoardColor: new Color(187, 233, 246, 200),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: radarGridDiameter / aspect,
-                    Height: radarGridDiameter,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                radarGrid.Visible = false;
-
-                radarFovLeft = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: new Color(187, 233, 246, 140),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.0018f,
-                    Height: 0.1f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                radarFovLeft.Visible = false;
-
-                radarFovRight = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: new Color(187, 233, 246, 140),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.0018f,
-                    Height: 0.1f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                radarFovRight.Visible = false;
-
-                radarLowerZoneLine = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.0012f,
-                    Height: 0.1f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                radarLowerZoneLine.Visible = false;
-
-                radarHigherZoneLine = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: minimapPosition,
-                    BillBoardColor: Color.Orange,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.0012f,
-                    Height: 0.1f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                radarHigherZoneLine.Visible = false;
-
-                minimapLabel = new HudAPIv2.HUDMessage(
-                    Message: new StringBuilder("<color=200,200,200>3.0 KM"),
-                    Origin: new Vector2D(minimapPosition.X + minimapBgWidth * 0.5f - 0.052f, minimapPosition.Y - minimapBgHeight * 0.5f + 0.016f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.46,
-                    HideHud: true,
-                    Shadowing: true,
-                    ShadowColor: Color.Black
-                );
-                minimapLabel.Visible = false;
-
-                // Pre-allocate 30 Minimap Marker Billboards (+20% scale: 0.012f, Zero GC allocations)
-                for (int i = 0; i < 30; i++)
-                {
-                    var mDot = new HudAPIv2.BillBoardHUDMessage(
-                        Material: MATERIAL_MARKER_GPS,
-                        Origin: minimapPosition,
-                        BillBoardColor: Color.White,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 1.0,
-                        Width: 0.012f,
-                        Height: 0.012f * aspect,
-                        HideHud: true,
-                        Shadowing: false,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    mDot.Visible = false;
-                    minimapMarkerPool.Add(mDot);
-                }
-
-                // Player arrow registered on very top of stack (High-visibility Electric Gold: 0.017f)
-                minimapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_NAV_ARROW,
-                    Origin: minimapPosition,
-                    BillBoardColor: new Color(255, 230, 40, 255),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.017f,
-                    Height: 0.017f * aspect,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                minimapPlayerDot.Visible = false;
-                ApplyMinimapScale(minimapScale);
-
-                // 3. Zone Status & Telemetry Panel (Docked seamlessly on Corner Minimap)
-                float zoneWidth = (float)minimapSize.X + 0.024f;
-                float zoneHeight = 0.056f;
-                float minimapBgTop = (float)(minimapPosition.Y + ((float)minimapSize.Y + 0.008f * aspect) * 0.5f);
-                float zoneCenterY = minimapBgTop + 0.004f + (zoneHeight * 0.5f);
-                zonePosition = new Vector2D(minimapPosition.X, zoneCenterY);
-
-                zoneBg = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: zonePosition,
-                    BillBoardColor: new Color(10, 16, 24, 240),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: zoneWidth,
-                    Height: zoneHeight,
-                    HideHud: true,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                zoneBg.Visible = false;
-
-                zoneAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: zonePosition,
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: new Vector2D(-zoneWidth * 0.5f + 0.005f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.005f,
-                    Height: zoneHeight - 0.006f,
-                    HideHud: true,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                zoneAccent.Visible = false;
-
-                // Line 1: Zone Classification Header
-                zoneMsg = new HudAPIv2.HUDMessage(
-                    Message: zoneText,
-                    Origin: new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f, zonePosition.Y + 0.013f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.60,
-                    HideHud: true,
-                    Shadowing: true,
-                    ShadowColor: Color.Black,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                zoneMsg.Visible = false;
-
-                // Line 2: Distance & Border Countdown Telemetry
-                zoneDistMsg = new HudAPIv2.HUDMessage(
-                    Message: zoneDistText,
-                    Origin: new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f, zonePosition.Y - 0.013f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.50,
-                    HideHud: true,
-                    Shadowing: true,
-                    ShadowColor: Color.Black,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                zoneDistMsg.Visible = false;
-
-                // Line 3: Next Zone Distance Telemetry (for 3-row layout in compass mode)
-                zoneNextMsg = new HudAPIv2.HUDMessage(
-                    Message: zoneNextText,
-                    Origin: new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f, zonePosition.Y - 0.022f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.46,
-                    HideHud: true,
-                    Shadowing: true,
-                    ShadowColor: Color.Black,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                zoneNextMsg.Visible = false;
-
-                // 4. Interactive Full-Screen Satellite Map (map key, true 2:1 ratio)
-                mapDimmer = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: new Color(0, 0, 0, 190),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 2.0f,
-                    Height: 2.0f,
-                    HideHud: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapDimmer.Visible = false;
-
-                float fullMapWidth = 1.40f;
-                float fullMapHeight = (fullMapWidth * 0.5f) * aspect;
-
-                mapFrame = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: new Color(15, 22, 30, 245),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: fullMapWidth + 0.02f,
-                    Height: fullMapHeight + 0.01f * aspect,
-                    HideHud: false,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapFrame.Visible = false;
-
-                mapTerrain = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_MAP,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: Color.White,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: fullMapWidth,
-                    Height: fullMapHeight,
-                    HideHud: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapTerrain.Visible = false;
-
-
-
-                float mapHeaderWidth = fullMapWidth + 0.02f;
-                float mapHeaderHeight = 0.056f;
-                float topOfFrame = (fullMapHeight + 0.01f * aspect) * 0.5f;
-                float mapHeaderCenterY = topOfFrame + 0.004f + (mapHeaderHeight * 0.5f);
-
-                mapHeaderBg = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: new Vector2D(0.0, mapHeaderCenterY),
-                    BillBoardColor: new Color(10, 16, 24, 240),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: mapHeaderWidth,
-                    Height: mapHeaderHeight,
-                    HideHud: false,
-                    Shadowing: true,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapHeaderBg.Visible = false;
-
-                mapHeaderAccent = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_SQUARE,
-                    Origin: new Vector2D(0.0, mapHeaderCenterY),
-                    BillBoardColor: Color.LimeGreen,
-                    Offset: new Vector2D(-mapHeaderWidth * 0.5f + 0.005f, 0.0),
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.005f,
-                    Height: mapHeaderHeight - 0.006f,
-                    HideHud: false,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapHeaderAccent.Visible = false;
-
-                mapHeaderMsg = new HudAPIv2.HUDMessage(
-                    Message: mapHeaderText,
-                    Origin: new Vector2D(-mapHeaderWidth * 0.5f + 0.016f, mapHeaderCenterY + 0.013f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.62,
-                    HideHud: false,
-                    Shadowing: true,
-                    ShadowColor: Color.Black
-                );
-                mapHeaderMsg.Visible = false;
-
-                mapHeaderSubMsg = new HudAPIv2.HUDMessage(
-                    Message: mapHeaderSubText,
-                    Origin: new Vector2D(-mapHeaderWidth * 0.5f + 0.016f, mapHeaderCenterY - 0.011f),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.50,
-                    HideHud: false,
-                    Shadowing: true,
-                    ShadowColor: Color.Black
-                );
-                mapHeaderSubMsg.Visible = false;
-
-                // KOTH capture rings, created before the markers so they draw underneath them
-                for (int i = 0; i < KOTH_RING_DOTS * KOTH_RING_MAX_ZONES; i++)
-                {
-                    var dot = new HudAPIv2.BillBoardHUDMessage(
-                        Material: MATERIAL_SQUARE,
-                        Origin: Vector2D.Zero,
-                        BillBoardColor: KOTH_COLOR,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 1.0,
-                        Width: 0.0025f,
-                        Height: 0.0025f * aspect,
-                        HideHud: false,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    dot.Visible = false;
-                    kothRingPool.Add(dot);
-                }
-
-                // Pre-allocate 100 Full Map Marker Billboards & Labels (+50% scale: 0.0225f, Zero GC allocations)
-                for (int i = 0; i < 100; i++)
-                {
-                    var sprite = new HudAPIv2.BillBoardHUDMessage(
-                        Material: MATERIAL_MARKER_GPS,
-                        Origin: Vector2D.Zero,
-                        BillBoardColor: Color.White,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 1.0,
-                        Width: 0.0225f,
-                        Height: 0.0225f * aspect,
-                        HideHud: false,
-                        Blend: BlendTypeEnum.PostPP
-                    );
-                    sprite.Visible = false;
-                    fullMapMarkerPool.Add(sprite);
-
-                    var label = new HudAPIv2.HUDMessage(
-                        Message: new StringBuilder(""),
-                        Origin: Vector2D.Zero,
-                        Offset: Vector2D.Zero,
-                        TimeToLive: -1,
-                        Scale: 0.60,
-                        HideHud: false,
-                        Shadowing: true,
-                        ShadowColor: Color.Black
-                    );
-                    label.Visible = false;
-                    fullMapLabelPool.Add(label);
-                }
-
-                _mapLabelMeasure = new HudAPIv2.HUDMessage(
-                    Message: new StringBuilder(""),
-                    Origin: Vector2D.Zero,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 0.60,
-                    HideHud: false,
-                    Shadowing: true,
-                    ShadowColor: Color.Black
-                );
-                _mapLabelMeasure.Visible = false;
-
-                _ssTextCalibrator = new HudAPIv2.HUDMessage(
-                    Message: new StringBuilder(SS_CALIBRATION_TEXT),
-                    Origin: Vector2D.Zero,
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    HideHud: false
-                );
-                _ssTextCalibrator.Visible = false;
-                _ssTextScale = -1f; // Re-measure now that Text HUD API is available
-
-                // Player arrow registered on very top of stack (High-visibility Electric Gold: 0.018f)
-                mapPlayerDot = new HudAPIv2.BillBoardHUDMessage(
-                    Material: MATERIAL_NAV_ARROW,
-                    Origin: Vector2D.Zero,
-                    BillBoardColor: new Color(255, 230, 40, 255),
-                    Offset: Vector2D.Zero,
-                    TimeToLive: -1,
-                    Scale: 1.0,
-                    Width: 0.018f,
-                    Height: 0.018f * aspect,
-                    HideHud: false,
-                    Shadowing: false,
-                    Blend: BlendTypeEnum.PostPP
-                );
-                mapPlayerDot.Visible = false;
-
-                // 5. Register TextHUDAPI Mod Menu (Organized Color-Coded Avionics Suite)
-                var rootCategory = new HudAPIv2.MenuRootCategory("GVK Navigation Suite", HudAPIv2.MenuRootCategory.MenuFlag.PlayerMenu, "GVK Navigation & Map Settings");
-
-                menuRootOpenMap = new HudAPIv2.MenuItem("<color=187,233,246>[=] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
-                menuRootMinimap = new HudAPIv2.MenuItem("Minimap: ...", rootCategory, () => { ToggleMinimap(); });
-                menuRootCompass = new HudAPIv2.MenuItem("Compass Ribbon: ...", rootCategory, () => { ToggleCompass(); });
-                menuRootZone = new HudAPIv2.MenuItem("Zone Telemetry: ...", rootCategory, () => { CycleZoneBarMode(); });
-
-                // Submenu 1: Radar & Minimap Settings
-                var radarCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Radar & Minimap Settings...", rootCategory, "Tactical Radar & Minimap Configuration");
-                menuSubMinimapMode = new HudAPIv2.MenuItem("Mode: ...", radarCategory, () => { ToggleMinimapMode(); });
-                menuSubRadarRange = new HudAPIv2.MenuItem("Radar Range: ...", radarCategory, () => { CycleRadarRange(); });
-                menuSubMinimapScale = new HudAPIv2.MenuItem("Minimap Size: ...", radarCategory, () => { CycleMinimapScale(); });
-                menuSubZoneLines = new HudAPIv2.MenuItem("Zone Direction Vectors: ...", radarCategory, () => { ToggleRadarZoneLines(); });
-                menuSubFovLines = new HudAPIv2.MenuItem("Camera Frustum FOV: ...", radarCategory, () => { ToggleRadarFovLines(); });
-                menuSubMinimapGps = new HudAPIv2.MenuItem("GPS: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapGps, "Minimap GPS"); });
-                menuSubMinimapSignals = new HudAPIv2.MenuItem("Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapSignals, "Minimap Signals"); });
-                menuSubMinimapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapOwnSignals, "Minimap Own & Faction Signals"); });
-                menuSubMinimapKoth = new HudAPIv2.MenuItem("KOTH: ...", radarCategory, () => { ToggleMarkerFilter(ref showMinimapKoth, "Minimap KOTH"); });
-                menuSubMinimapPreset = new HudAPIv2.MenuItem("Snap Position: ...", radarCategory, () => { CycleMinimapPreset(); });
-
-                minimapSliderX = new HudAPIv2.MenuSliderInput(
-                    "Fine-Tune X Offset (Left <-> Right)",
-                    radarCategory,
-                    MathHelper.Clamp((float)((minimapOffsetX + 1.0) * 0.5), 0f, 1f),
-                    "Adjust Minimap X Position",
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        SetMinimapOffset(val, minimapOffsetY);
-                    },
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        return $"Position X: {val:+0.00;-0.00;0.00} (Left <-> Right)";
-                    }
-                );
-                minimapSliderY = new HudAPIv2.MenuSliderInput(
-                    "Fine-Tune Y Offset (Down <-> Up)",
-                    radarCategory,
-                    MathHelper.Clamp((float)((minimapOffsetY + 1.0) * 0.5), 0f, 1f),
-                    "Adjust Minimap Y Position",
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        SetMinimapOffset(minimapOffsetX, val);
-                    },
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
-                    }
-                );
-                new HudAPIv2.MenuItem("<color=255,180,50>Reset Position to Top-Right", radarCategory, () => { ResetMinimapOffset(); });
-
-                // Submenu 2: Compass Ribbon Settings
-                var compassCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Compass Ribbon Settings...", rootCategory, "Compass Tape Positioning & Scaling");
-                menuSubCompassToggle = new HudAPIv2.MenuItem("Compass Tape: ...", compassCategory, () => { ToggleCompass(); });
-                menuSubCompassGps = new HudAPIv2.MenuItem("GPS: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassGps, "Compass GPS"); });
-                menuSubCompassSignals = new HudAPIv2.MenuItem("Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassSignals, "Compass Signals"); });
-                menuSubCompassOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassOwnSignals, "Compass Own & Faction Signals"); });
-                menuSubCompassKoth = new HudAPIv2.MenuItem("KOTH: ...", compassCategory, () => { ToggleMarkerFilter(ref showCompassKoth, "Compass KOTH"); });
-                menuSubCompassScale = new HudAPIv2.MenuItem("Compass Size: ...", compassCategory, () => { CycleCompassScale(); });
-                menuSubCompassPreset = new HudAPIv2.MenuItem("Snap Position: ...", compassCategory, () => { CycleCompassPreset(); });
-
-                compassSliderX = new HudAPIv2.MenuSliderInput(
-                    "Fine-Tune X Offset (Left <-> Right)",
-                    compassCategory,
-                    MathHelper.Clamp((float)((compassOffsetX + 1.0) * 0.5), 0f, 1f),
-                    "Adjust Compass X Position",
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        SetCompassOffset(val, compassOffsetY);
-                    },
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        return $"Position X: {val:+0.00;-0.00;0.00} (Left <-> Right)";
-                    }
-                );
-                compassSliderY = new HudAPIv2.MenuSliderInput(
-                    "Fine-Tune Y Offset (Down <-> Up)",
-                    compassCategory,
-                    MathHelper.Clamp((float)((compassOffsetY + 1.0) * 0.5), 0f, 1f),
-                    "Adjust Compass Y Position",
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        SetCompassOffset(compassOffsetX, val);
-                    },
-                    p => {
-                        double val = -1.0 + p * 2.0;
-                        return $"Position Y: {val:+0.00;-0.00;0.00} (Down <-> Up)";
-                    }
-                );
-                new HudAPIv2.MenuItem("<color=255,180,50>Reset Position to Top-Center", compassCategory, () => { ResetCompassOffset(); });
-
-                // Submenu 3: Satellite Map Markers (label toggles hide only names; markers stay)
-                var mapCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Satellite Map Settings...", rootCategory, "Satellite Map Markers & Labels");
-                menuSubMapOwnSignals = new HudAPIv2.MenuItem("Own & Faction Signals: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapOwnSignals, "Map Own & Faction Signals"); });
-                menuSubMapKoth = new HudAPIv2.MenuItem("KOTH: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapKoth, "Map KOTH"); });
-                menuSubMapGpsLabels = new HudAPIv2.MenuItem("GPS Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapGpsLabels, "Map GPS Labels"); });
-                menuSubMapSignalLabels = new HudAPIv2.MenuItem("Signal Labels: ...", mapCategory, () => { ToggleMarkerFilter(ref showMapSignalLabels, "Map Signal Labels"); });
-                menuSubMapStackIcons = new HudAPIv2.MenuItem("Stack Icons: ...", mapCategory, () => { ToggleMarkerFilter(ref stackMapIcons, "Map Icon Stacking"); });
-                menuSubMapKey = new HudAPIv2.MenuKeybindInput("Map Key: ...", mapCategory, "Satellite Map Key - Press any key", SetMapKey);
-
-                // Submenu 4: Performance & Presets
-                var perfCategory = new HudAPIv2.MenuSubCategory("<color=187,233,246>> Performance & Presets...", rootCategory, "HUD Refresh Frequency & System Tools");
-                menuSubRate = new HudAPIv2.MenuItem("Update Frequency: ...", perfCategory, () => { CycleUpdateTickRate(); });
-                new HudAPIv2.MenuItem("  - 15 Hz (4 Ticks) - Ultra Smooth", perfCategory, () => { SetUpdateTickRate(4); });
-                new HudAPIv2.MenuItem("  - 12 Hz (5 Ticks) - Recommended", perfCategory, () => { SetUpdateTickRate(5); });
-                new HudAPIv2.MenuItem("  - 10 Hz (6 Ticks) - Balanced", perfCategory, () => { SetUpdateTickRate(6); });
-                new HudAPIv2.MenuItem("  - 6 Hz (10 Ticks) - Power Saver", perfCategory, () => { SetUpdateTickRate(10); });
-                new HudAPIv2.MenuItem("<color=187,233,246>Restore Default Kharak GPS", perfCategory, () => { PopulateDefaultGps(true); });
-                new HudAPIv2.MenuItem("<color=255,90,90>Factory Reset All Settings", perfCategory, () => { ResetAllToFactoryDefaults(); });
-
-                // Ensure minimap dimensions, background opacities, and live menu labels are populated
-                ApplyMinimapScale(minimapScale);
-                UpdateCardBackgroundOpacities();
-                UpdateMapKeyLabel();
-                UpdateMenuTexts();
-            }
-            catch (Exception ex)
-            {
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Error in OnHudApiRegistered: {ex.Message}");
-            }
         }
 
         public override void UpdateBeforeSimulation()
@@ -1687,15 +744,20 @@ namespace GVK.Navigation
                 ToggleFullMap();
             }
 
-            // Not while the settings screen is up: its Esc (closing it, or cancelling a key capture) is not for the map
-            if (showFullMap && !MapScreenOpen && !SettingsScreenOpen && MyAPIGateway.Input.IsNewKeyPressed(MyKeys.Escape))
-            {
-                CloseFullMap();
-            }
             UpdateMapReopen();
 
             Vector3D? pos = GetPlayerPosition();
             if (!pos.HasValue) return;
+
+            if (!_hudLayoutInit)
+            {
+                // First tick with a player (the camera and input are up by now): lay out the minimap for this
+                // window, which the zone bar's Radar Dock reads even with the minimap off, and name the map key
+                // loaded from the config for the map's close hint and the settings screen
+                _hudLayoutInit = true;
+                ApplyMinimapScale(minimapScale);
+                UpdateMapKeyLabel();
+            }
 
             if (!hasCheckedDefaultGps)
             {
@@ -1730,14 +792,9 @@ namespace GVK.Navigation
             }
 
             // Configurable HUD Cadence (default 5 ticks / 12 Hz):
-            // Compass, Minimap, Zone Bar, and FullMap all update on the user-configured updateTickRate.
-            // Saves significant per-frame CPU cycles and text formatting overhead while letting players
-            // dial in their preferred smoothness vs performance balance via /nav rate or F2 Mod Menu.
-            bool hudApiReady = hudApi != null && hudApi.Heartbeat;
-
-            // The screen API HUD doesn't need Text HUD API, so it updates without it. The full map still does.
-            bool screenApi = GvkScreenLayer.UseScreenApi;
-            if ((hudApiReady || screenApi) && (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame))
+            // Compass, Minimap, Zone Bar, and the satellite map all rebuild on the player's updateTickRate
+            // (/gvk rate or the settings screen), trading smoothness against CPU time.
+            if (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame)
             {
                 _refreshCompassNextFrame = false;
                 UpdateCompassAndWaypoints(pos.Value);
@@ -1754,13 +811,8 @@ namespace GVK.Navigation
                         BuildScreenSpaceFullMap();
                     }
                 }
-                else if (hudApiReady && (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw))
-                {
-                    _fullMapNeedsRedraw = false;
-                    UpdateFullMap(pos.Value);
-                }
             }
-            else if ((hudApiReady || screenApi) && (tickCounter % updateTickRate == 0 || _refreshMinimapNextFrame))
+            else if (tickCounter % updateTickRate == 0 || _refreshMinimapNextFrame)
             {
                 _refreshMinimapNextFrame = false;
                 UpdateZoneBar();
@@ -2143,37 +1195,14 @@ namespace GVK.Navigation
             else if (vehCompass > (float)Math.PI * 2f) vehCompass -= (float)Math.PI * 2f;
             playerHeadingRad = vehCompass;
 
-            bool screenSpace = GvkScreenLayer.UseScreenApi;
-            if (!showCompass || showFullMap || (!screenSpace && compassBg == null))
+            // The heading above feeds the minimap and map arrows, so it is worked out even with the compass off
+            if (!showCompass || showFullMap)
             {
-                HideHudApiCompass();
                 _ssCompass.Clear();
                 return;
             }
 
             Color zoneCol = GetCurrentAccentColor();
-            if (screenSpace)
-            {
-                HideHudApiCompass();
-            }
-            else
-            {
-                _ssCompass.Clear();
-                _compassElementsVisible = true;
-                compassBg.Visible = true;
-                if (compassLeftAccent != null)
-                {
-                    compassLeftAccent.BillBoardColor = zoneCol;
-                    compassLeftAccent.Visible = true;
-                }
-                if (compassRightAccent != null)
-                {
-                    compassRightAccent.BillBoardColor = zoneCol;
-                    compassRightAccent.Visible = (zoneBarMode != ZoneBarMode.CompassDock);
-                }
-                if (compassCenterPointer != null) compassCenterPointer.Visible = true;
-                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = true;
-            }
 
             // compass is already clamped to [0, 2π] above. Normalize to [-1, 1] for tape rendering.
             compass = (compass - (float)Math.PI) / (float)Math.PI;
@@ -2195,209 +1224,14 @@ namespace GVK.Navigation
             double compassT = (compassOffsetY + 1.0) * 0.5;
             double centerY = minCompassCenterY + compassT * (maxCompassCenterY - minCompassCenterY);
             double topY = centerY + (baseHeight * 0.5);
-            double bottomY = topY - baseHeight;
-
-            float tickWidth = 0.0016f * compassScale;
-            float majorTickH = 0.007f * compassScale;
-            float mediumTickH = 0.005f * compassScale;
-            float minorTickH = 0.003f * compassScale;
 
             // Top Row: Cardinals & Ordinals (N, NE, E, SE, S, SW, W, NW)
             float topLabelY = (float)(topY - 0.006f * compassScale);
             // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.) on the same line as waypoint markers
             float bottomLabelY = (float)(topY - 0.020f * compassScale);
 
-            if (screenSpace)
-            {
-                BuildScreenSpaceCompass(playerPos, camera, compass, playerAzimuth, fovCoeff, fovCubic, tapeSpan, aspect,
-                    baseWidth, baseHeight, compassCenterX, centerY, topY, topLabelY, bottomLabelY, zoneCol);
-                return;
-            }
-
-            // 2. Render Tactical Graduation Ticks and Dual-Row Labels
-            int tickIndex = 0;
-            int tapeMsgIndex = 0;
-
-            for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
-            {
-                var grad = COMPASS_GRADUATIONS[i];
-                float offset = compass + grad.Offset;
-                if (offset < -1f) offset += 2f;
-                else if (offset > 1f) offset -= 2f;
-
-                // Screen offset range is [-0.35, 0.35]. Skip polynomial math if offset is way outside the visible ribbon.
-                if (Math.Abs(offset) > 0.35f) continue;
-
-                float screenOffset = (fovCoeff * offset) + (fovCubic * offset * offset * offset);
-
-                if (screenOffset > tapeSpan || screenOffset < -tapeSpan) continue;
-
-                // Render graduation tick mark hanging down from the top rail
-                if (tickIndex < compassTickPool.Count)
-                {
-                    var tick = compassTickPool[tickIndex++];
-                    float tHeight;
-                    Color tColor;
-
-                    switch (grad.Type)
-                    {
-                        case GraduationType.Cardinal:
-                            tHeight = majorTickH;
-                            tColor = new Color(255, 215, 60, 240); // Kharak tactical amber
-                            break;
-                        case GraduationType.Ordinal:
-                        case GraduationType.MajorMark:
-                            tHeight = majorTickH;
-                            tColor = new Color(255, 255, 255, 240); // Crisp white
-                            break;
-                        case GraduationType.MediumTen:
-                            tHeight = mediumTickH;
-                            tColor = new Color(255, 255, 255, 200); // Clean white
-                            break;
-                        default:
-                            tHeight = minorTickH;
-                            tColor = new Color(255, 255, 255, 140); // Subtle white
-                            break;
-                    }
-
-                    tick.Origin = new Vector2D(compassCenterX + screenOffset, topY - tHeight * 0.5f);
-                    tick.Width = tickWidth;
-                    tick.Height = tHeight;
-                    tick.BillBoardColor = tColor;
-                    tick.Visible = true;
-                }
-
-                // Top Row: Cardinals (N, E, S, W) and Ordinals (NE, SE, SW, NW)
-                if (grad.TopLabel != null && tapeMsgIndex < compassTapePool.Count)
-                {
-                    var msg = compassTapePool[tapeMsgIndex++];
-                    msg.Message.Clear();
-                    msg.Scale = 0.58 * compassScale;
-
-                    if (grad.Type == GraduationType.Cardinal)
-                        msg.Message.Append("<color=255,215,60>").Append(grad.TopLabel);
-                    else
-                        msg.Message.Append("<color=255,255,255>").Append(grad.TopLabel);
-
-                    msg.Origin = new Vector2D(compassCenterX + screenOffset, topLabelY);
-
-                    double baseHalfWidth = grad.BaseTopHalfWidth;
-                    if (baseHalfWidth < 0)
-                    {
-                        var charLen = msg.GetTextLength();
-                        baseHalfWidth = (charLen.X * 0.5) / compassScale;
-                        COMPASS_GRADUATIONS[i].BaseTopHalfWidth = baseHalfWidth;
-                    }
-
-                    msg.Offset = new Vector2D(-baseHalfWidth * compassScale, 0.0);
-                    msg.Visible = true;
-                }
-
-                // Bottom Row: Major numeric bearing marks (0, 15, 30, 45, 60, etc.)
-                if (grad.BottomLabel != null && tapeMsgIndex < compassTapePool.Count)
-                {
-                    var msg = compassTapePool[tapeMsgIndex++];
-                    msg.Message.Clear();
-                    msg.Scale = 0.48 * compassScale;
-
-                    if (grad.Type == GraduationType.Cardinal)
-                        msg.Message.Append("<color=255,225,120>").Append(grad.BottomLabel);
-                    else
-                        msg.Message.Append("<color=255,255,255>").Append(grad.BottomLabel);
-
-                    msg.Origin = new Vector2D(compassCenterX + screenOffset, bottomLabelY);
-
-                    double baseHalfWidth = grad.BaseBottomHalfWidth;
-                    if (baseHalfWidth < 0)
-                    {
-                        var charLen = msg.GetTextLength();
-                        baseHalfWidth = (charLen.X * 0.5) / compassScale;
-                        COMPASS_GRADUATIONS[i].BaseBottomHalfWidth = baseHalfWidth;
-                    }
-
-                    msg.Offset = new Vector2D(-baseHalfWidth * compassScale, 0.0);
-                    msg.Visible = true;
-                }
-            }
-
-            for (int i = tickIndex; i < compassTickPool.Count; i++)
-                compassTickPool[i].Visible = false;
-
-            for (int i = tapeMsgIndex; i < compassTapePool.Count; i++)
-                compassTapePool[i].Visible = false;
-
-            // 3. Render Graphical HUD Waypoints (Painter's Algorithm: Distant waypoints render underneath, Closer waypoints render on top)
-            double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
-
-            // Pass 1: Collect up to waypointSpritePool.Count visible waypoints from activeHudWaypoints (which is pre-sorted closest-first).
-            CollectCompassWaypoints(playerPos, camera, playerAzimuth, fovCoeff, fovCubic, tapeSpan, waypointSpritePool.Count);
-
-            // Pass 2: Render in reverse order (from farthest down to closest) so closer waypoints are assigned higher
-            // TextHUDAPI pool indices and cleanly draw ON TOP of further waypoints.
-            int spriteIndex = 0;
-            for (int j = _compassVisibleWps.Count - 1; j >= 0; j--)
-            {
-                var vis = _compassVisibleWps[j];
-                var wp = activeHudWaypoints[vis.WpIndex];
-                float poiScreenOffset = vis.ScreenOffset;
-
-                double distKm = wp.DistanceMeters * 0.001;
-                Color wpColor = GetMarkerColor(ref wp);
-
-                // Distance-based perspective scaling for compass tape:
-                // 100m or closer: 100% full size
-                // 30km (30,000m) or farther: 70% size
-                // Smooth linear attenuation between 100m and 30,000m
-                float distT = (float)MathHelper.Clamp((wp.DistanceMeters - 100.0) / (30000.0 - 100.0), 0.0, 1.0);
-                float distFactor = 1.0f - 0.30f * distT;
-
-                float wWidth = 0.011f * compassScale * distFactor;
-                float wHeight = wWidth * aspect;
-
-                // Markers share the same line/row as the numeric bearing degree marks
-                double spriteCenterY = topY - 0.026 * compassScale;
-                double spriteBottom = spriteCenterY - (wHeight * 0.5);
-                double textY = spriteBottom - (0.0015 * compassScale);
-
-                var sprite = waypointSpritePool[spriteIndex];
-                sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
-                sprite.Rotation = 0f;
-                sprite.BillBoardColor = wpColor;
-                sprite.Width = wWidth;
-                sprite.Height = wHeight;
-                sprite.Origin = new Vector2D(compassCenterX + poiScreenOffset, spriteCenterY);
-                sprite.Offset = Vector2D.Zero;
-                sprite.Visible = true;
-
-                // Zero-allocation distance text formatting: direct int/char appending avoids hundreds of heap string allocs per frame
-                var dist = waypointDistPool[spriteIndex];
-                dist.Scale = 0.42 * compassScale * distFactor;
-                dist.Message.Clear()
-                    .Append("<color=").Append(wpColor.R).Append(',').Append(wpColor.G).Append(',').Append(wpColor.B).Append('>');
-
-                if (distKm < 10.0)
-                {
-                    int whole = (int)distKm;
-                    int tenths = (int)((distKm - whole) * 10.0);
-                    dist.Message.Append(whole).Append('.').Append(tenths).Append('k');
-                }
-                else
-                {
-                    dist.Message.Append((int)distKm).Append('k');
-                }
-
-                dist.Origin = new Vector2D(compassCenterX + poiScreenOffset, textY);
-                var distLen = dist.GetTextLength();
-                dist.Offset = new Vector2D(-distLen.X * 0.5, 0.0);
-                dist.Visible = true;
-                spriteIndex++;
-            }
-
-            for (int i = spriteIndex; i < waypointSpritePool.Count; i++)
-            {
-                waypointSpritePool[i].Visible = false;
-                waypointDistPool[i].Visible = false;
-            }
+            BuildScreenSpaceCompass(playerPos, camera, compass, playerAzimuth, fovCoeff, fovCubic, tapeSpan, aspect,
+                baseWidth, baseHeight, compassCenterX, centerY, topY, topLabelY, bottomLabelY, zoneCol);
         }
 
         /// <summary>
@@ -2441,22 +1275,9 @@ namespace GVK.Navigation
             }
         }
 
-        private void HideHudApiCompass()
-        {
-            if (!_compassElementsVisible) return;
-            _compassElementsVisible = false;
-            if (compassBg != null) compassBg.Visible = false;
-            if (compassLeftAccent != null) compassLeftAccent.Visible = false;
-            if (compassRightAccent != null) compassRightAccent.Visible = false;
-            if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
-            HideTapePool();
-            HideSpritePool();
-        }
-
         /// <summary>
-        /// Screen-space compass (renderer test): the Text HUD API compass layout, in the same order and units,
-        /// written to _ssCompass for Draw() to replay every frame. ApplyCompassScale holds the old frame geometry.
+        /// Compass ribbon, written to _ssCompass for Draw() to replay every frame (the layout the Text HUD API
+        /// compass had, in the same order and units).
         /// </summary>
         private void BuildScreenSpaceCompass(Vector3D playerPos, IMyCamera camera, float compass, float playerAzimuth,
             float fovCoeff, float fovCubic, float tapeSpan, float aspect, float baseWidth, float baseHeight,
@@ -2573,37 +1394,8 @@ namespace GVK.Navigation
             return _ssDistanceWhole[km] ?? (_ssDistanceWhole[km] = km + "k");
         }
 
-        /// <summary>
-        /// Screen API text scale that matches one unit of Text HUD API scale, measured from a hidden Text HUD API
-        /// message. Re-measured when the window size or the player's UI scale changes the screen API's width.
-        /// Also sets GvkScreenLayer.TextScale for the KOTH panel.
-        /// </summary>
-        private float GetScreenSpaceTextScale(Vector2 viewport)
-        {
-            float ssWidth = GvkScreenLayer.MeasureWidthPixels(SS_CALIBRATION_TEXT, 1f);
-            if (_ssTextScale > 0f && viewport == _ssTextCalibViewport && Math.Abs(ssWidth - _ssCalibSsWidth) < 0.01f)
-                return _ssTextScale;
-
-            bool hudApiReady = hudApi != null && hudApi.Heartbeat;
-            double hudWidth = (hudApiReady && _ssTextCalibrator != null) ? _ssTextCalibrator.GetTextLength().X : 0.0;
-            if (ssWidth > 0f && hudWidth > 0.0)
-            {
-                _ssTextScale = (float)(hudWidth * 0.5 * viewport.X / ssWidth);
-                _ssTextCalibViewport = viewport;
-                _ssCalibSsWidth = ssWidth;
-                GvkScreenLayer.TextScale = _ssTextScale;
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale {_ssTextScale:0.0000} at {viewport.X:0}x{viewport.Y:0}: Text HUD API width {hudWidth:0.00000}, screen API width {ssWidth:0.0} px");
-                return _ssTextScale;
-            }
-
-            if (!_ssLoggedFallback)
-            {
-                _ssLoggedFallback = true;
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale: Text HUD API not measurable, using {GvkScreenLayer.TEXT_SCALE_DEFAULT}");
-            }
-            GvkScreenLayer.TextScale = GvkScreenLayer.TEXT_SCALE_DEFAULT;
-            return GvkScreenLayer.TEXT_SCALE_DEFAULT;
-        }
+        /// <summary>Screen API text scale per HUD text scale unit (see GvkScreenLayer.MeasureTextScale).</summary>
+        private static float GetScreenSpaceTextScale(Vector2 viewport) => GvkScreenLayer.MeasureTextScale(viewport);
 
         /// <summary>Logs once if the screen API can't resolve a compass material or the font.</summary>
         private void CheckScreenSpaceAssets()
@@ -2637,20 +1429,20 @@ namespace GVK.Navigation
 
         public override void Draw()
         {
-            if (!GvkScreenLayer.UseScreenApi || showFullMap) return;
+            if (_ssHudDrawFailed || showFullMap) return;
             if (GvkScreenLayer.IsHudHidden()) return;
             try
             {
-                // Same order the Text HUD API elements were created in: compass, minimap, zone bar
+                // Drawn compass, minimap, zone bar: the order the Text HUD API elements were created in
                 if (showCompass && _ssCompass.Count > 0) _ssCompass.Draw();
                 if (showMinimap && _ssMinimap.Count > 0) _ssMinimap.Draw();
                 if (zoneBarMode != ZoneBarMode.Off && _ssZoneBar.Count > 0) _ssZoneBar.Draw();
             }
             catch (Exception ex)
             {
-                // The new renderer must not take the game down: fall back to the Text HUD API HUD
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API HUD draw failed, switching back to Text HUD API: {ex}");
-                GvkScreenLayer.UseScreenApi = false;
+                // A draw error must not take the game down: the HUD stays off for the rest of the session
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] HUD draw failed, HUD off for this session: {ex}");
+                _ssHudDrawFailed = true;
                 ClearScreenSpaceHud();
             }
         }
@@ -2664,51 +1456,17 @@ namespace GVK.Navigation
             _refreshMinimapNextFrame = true;
         }
 
-        private void ToggleScreenSpaceHud()
-        {
-            if (showFullMap && !MapScreenOpen) CloseFullMap(); // The map reopens in the other renderer
-            GvkScreenLayer.UseScreenApi = !GvkScreenLayer.UseScreenApi;
-            ClearScreenSpaceHud();
-            // Text HUD API minimap re-places itself only when its card width is off; force that on the way back
-            _minimapLayoutBgWidth = -1f;
-            SaveConfig();
-            string renderer = GvkScreenLayer.UseScreenApi ? "SCREEN API (new)" : "TEXT HUD API (old)";
-            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] HUD Renderer: {renderer}", 2500, MyFontEnum.Green);
-        }
-
-        private void HideTapePool()
-        {
-            for (int i = 0; i < compassTickPool.Count; i++)
-                compassTickPool[i].Visible = false;
-
-            for (int i = 0; i < compassTapePool.Count; i++)
-                compassTapePool[i].Visible = false;
-        }
-
-        private void HideSpritePool()
-        {
-            for (int i = 0; i < waypointSpritePool.Count; i++)
-            {
-                waypointSpritePool[i].Visible = false;
-                waypointDistPool[i].Visible = false;
-            }
-        }
-
         /// <summary>
         /// Updates the Zone Status Panel docked directly below the minimap in the top-right corner.
         /// Keeps the area below the compass ribbon clear for WeaponCore target lock and lead indicator HUDs.
         /// </summary>
         private void UpdateZoneBar()
         {
-            bool screenSpace = GvkScreenLayer.UseScreenApi;
-            if (zoneBarMode == ZoneBarMode.Off || showFullMap || (!screenSpace && zoneMsg == null))
+            if (zoneBarMode == ZoneBarMode.Off || showFullMap)
             {
-                HideHudApiZoneBar();
                 _ssZoneBar.Clear();
                 return;
             }
-            if (screenSpace) HideHudApiZoneBar();
-            else _ssZoneBar.Clear();
 
             float currentScale;
             float zoneWidth;
@@ -2769,139 +1527,12 @@ namespace GVK.Navigation
                 }
             }
 
-            if (screenSpace)
-            {
-                BuildScreenSpaceZoneBar(targetPos, zoneWidth, zoneHeight, currentScale, isCompact);
-                return;
-            }
-            _zoneBarElementsVisible = true;
-
-            if (zonePosition != targetPos || Math.Abs(zoneBg.Width - zoneWidth) > 0.001f || Math.Abs(zoneBg.Height - zoneHeight) > 0.001f)
-            {
-                zonePosition = targetPos;
-                zoneBg.Origin = zonePosition;
-                zoneBg.Width = zoneWidth;
-                zoneBg.Height = zoneHeight;
-                zoneAccent.Origin = zonePosition;
-                zoneAccent.Width = 0.005f * currentScale;
-                zoneAccent.Height = zoneHeight - 0.006f * currentScale;
-                zoneAccent.Offset = new Vector2D(-zoneWidth * 0.5f + 0.005f * currentScale, 0.0);
-                if (zoneBarMode == ZoneBarMode.CompassDock)
-                {
-                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.010f * currentScale, zonePosition.Y + 0.014f * currentScale);
-                    zoneMsg.Scale = 0.48 * currentScale;
-                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.010f * currentScale, zonePosition.Y - 0.006f * currentScale);
-                    zoneDistMsg.Scale = 0.40 * currentScale;
-                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-                }
-                else
-                {
-                    zoneMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * currentScale, zonePosition.Y + 0.018f * currentScale);
-                    zoneMsg.Scale = (isCompact ? 0.54 : 0.60) * currentScale;
-                    zoneDistMsg.Origin = new Vector2D(zonePosition.X - zoneWidth * 0.5f + 0.016f * currentScale, zonePosition.Y - 0.008f * currentScale);
-                    zoneDistMsg.Scale = (isCompact ? 0.46 : 0.50) * currentScale;
-                }
-            }
-
-            // Dirty check: skip rebuilding StringBuilder if values haven't changed
-            if (_lastZoneBarZoneIndex == currentZoneIndex &&
-                _lastZoneBarInSpace == inSpace &&
-                _lastZoneBarMinimapMode == minimapMode &&
-                _lastZoneBarMode == zoneBarMode &&
-                Math.Abs(_lastZoneBarToLowerKm - lastToLowerKm) < 0.05 &&
-                Math.Abs(_lastZoneBarRemainingKm - lastRemainingKm) < 0.05 &&
-                Math.Abs(_lastZoneBarDistZ3Km - lastDistZ3Km) < 0.05)
-            {
-                zoneBg.Visible = true;
-                zoneAccent.Visible = true;
-                zoneMsg.Visible = true;
-                zoneDistMsg.Visible = true;
-                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-                return;
-            }
-
-            _lastZoneBarZoneIndex = currentZoneIndex;
-            _lastZoneBarInSpace = inSpace;
-            _lastZoneBarMinimapMode = minimapMode;
-            _lastZoneBarMode = zoneBarMode;
-            _lastZoneBarToLowerKm = lastToLowerKm;
-            _lastZoneBarRemainingKm = lastRemainingKm;
-            _lastZoneBarDistZ3Km = lastDistZ3Km;
-
-            zoneText.Clear();
-            zoneDistText.Clear();
-            zoneNextText.Clear();
-
-            if (inSpace)
-            {
-                zoneAccent.BillBoardColor = Color.Magenta;
-                zoneText.Append("<color=255,80,255>[ SPAAAAAACE!!! ]");
-                zoneDistText.Append("<color=220,220,220>Kharak gravity: <color=255,80,255>LOST<color=100,140,180> | <color=220,220,220>Below: ")
-                            .Append(currentZoneIndex == 0 ? "<color=50,255,100>" : currentZoneIndex == 1 ? "<color=255,230,50>" : currentZoneIndex == 2 ? "<color=255,165,0>" : "<color=255,50,50>")
-                            .Append("Zone ").Append(currentZoneIndex);
-
-                zoneBg.Visible = true;
-                zoneAccent.Visible = true;
-                zoneMsg.Visible = true;
-                zoneDistMsg.Visible = true;
-                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-                return;
-            }
-
-            switch (currentZoneIndex)
-            {
-                case 0:
-                    zoneAccent.BillBoardColor = Color.LimeGreen;
-                    zoneText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                    zoneDistText.Append("<color=255,255,255>------<color=100,140,180> | <color=220,220,220>Zone 1: <color=255,230,50>")
-                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    break;
-                case 1:
-                    zoneAccent.BillBoardColor = Color.Yellow;
-                    zoneText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                    zoneDistText.Append("<color=220,220,220>Zone 0: <color=50,255,100>")
-                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
-                                .Append("<color=100,140,180> | <color=220,220,220>Zone 2: <color=255,165,0>")
-                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    break;
-                case 2:
-                    zoneAccent.BillBoardColor = Color.Orange;
-                    zoneText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                    zoneDistText.Append("<color=220,220,220>Zone 1: <color=255,230,50>")
-                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
-                                .Append("<color=100,140,180> | <color=220,220,220>Zone 3: <color=255,50,50>")
-                                .Append(lastRemainingKm.ToString("F1")).Append(" km");
-                    break;
-                default:
-                    zoneAccent.BillBoardColor = Color.Red;
-                    zoneText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                    zoneDistText.Append("<color=220,220,220>Zone 2: <color=255,165,0>")
-                                .Append(lastToLowerKm.ToString("F1")).Append(" km")
-                                .Append("<color=100,140,180> | <color=255,255,255>------");
-                    break;
-            }
-
-            zoneBg.Visible = true;
-            zoneAccent.Visible = true;
-            zoneMsg.Visible = true;
-            zoneDistMsg.Visible = true;
-            if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-        }
-
-        private void HideHudApiZoneBar()
-        {
-            if (!_zoneBarElementsVisible) return;
-            _zoneBarElementsVisible = false;
-            if (zoneBg != null) zoneBg.Visible = false;
-            if (zoneAccent != null) zoneAccent.Visible = false;
-            if (zoneMsg != null) zoneMsg.Visible = false;
-            if (zoneDistMsg != null) zoneDistMsg.Visible = false;
-            if (zoneNextMsg != null) zoneNextMsg.Visible = false;
+            BuildScreenSpaceZoneBar(targetPos, zoneWidth, zoneHeight, currentScale, isCompact);
         }
 
         /// <summary>
-        /// Screen API zone bar: the Text HUD API layout above, in the same units. Each colour that was a colour
-        /// tag is its own text run. pos is the card centre.
+        /// Zone bar card (the Text HUD API zone bar's layout, in the same units). Each colour that was a colour
+        /// tag under Text HUD API is its own text run. pos is the card centre.
         /// </summary>
         private void BuildScreenSpaceZoneBar(Vector2D pos, float zoneWidth, float zoneHeight, float s, bool isCompact)
         {
@@ -2982,26 +1613,14 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// Updates the corner minimap or tactical vector radar using pre-allocated billboard pool (Zero GC allocations).
+        /// Updates the corner minimap or tactical vector radar.
         /// </summary>
         private void UpdateMinimap(Vector3D playerPos)
         {
-            bool screenSpace = GvkScreenLayer.UseScreenApi;
-            if (!showMinimap || showFullMap || (!screenSpace && minimapTerrain == null))
+            if (!showMinimap || showFullMap)
             {
-                HideHudApiMinimap();
                 _ssMinimap.Clear();
                 return;
-            }
-            if (screenSpace)
-            {
-                HideHudApiMinimap();
-            }
-            else
-            {
-                _ssMinimap.Clear();
-                _minimapElementsVisible = true;
-                minimapBg.Visible = true;
             }
 
             float aspect = GetScreenAspect();
@@ -3032,252 +1651,7 @@ namespace GVK.Navigation
             }
 
             Color zoneCol = GetCurrentAccentColor();
-            if (screenSpace)
-            {
-                BuildScreenSpaceMinimap(playerPos, aspect, minimapBgWidth, minimapBgHeight, radarBoxWidth, zoneCol);
-                return;
-            }
-
-            if (minimapAccent != null)
-            {
-                minimapAccent.Origin = minimapPosition;
-                minimapAccent.Width = 0.005f * minimapScale;
-                minimapAccent.Height = minimapBgHeight - 0.006f * minimapScale;
-                minimapAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.005f * minimapScale, 0.0);
-                minimapAccent.BillBoardColor = zoneCol;
-                minimapAccent.Visible = true;
-            }
-
-            int mIdx = 0;
-
-            if (minimapMode == MinimapDisplayMode.StrategicMap)
-            {
-                minimapTerrain.Visible = true;
-                if (radarGrid != null) radarGrid.Visible = false;
-                if (radarFovLeft != null) radarFovLeft.Visible = false;
-                if (radarFovRight != null) radarFovRight.Visible = false;
-                if (minimapLabel != null) minimapLabel.Visible = false;
-                if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
-                if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
-
-                // Map UV position of player relative to center of minimap box
-                Vector2 uv = WorldToMapUV(playerPos);
-                Vector2D dotOffset = new Vector2D(
-                    (uv.X - 0.5) * minimapSize.X,
-                    (0.5 - uv.Y) * minimapSize.Y
-                );
-
-                double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
-
-                // Render all active waypoints using pre-allocated pool
-                for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
-                {
-                    var wp = activeHudWaypoints[i];
-                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
-                    Vector2 wpUV = wp.MapUV;
-                    Vector2D wpOffset = new Vector2D(
-                        (wpUV.X - 0.5) * minimapSize.X,
-                        (0.5 - wpUV.Y) * minimapSize.Y
-                    );
-
-                    var icon = minimapMarkerPool[mIdx++];
-                    icon.Material = GetWaypointMaterial(ref wp, playerElevation);
-                    icon.Rotation = 0f;
-                    float mSize = 0.012f * minimapScale;
-                    icon.Width = mSize;
-                    icon.Height = mSize * aspect;
-                    icon.BillBoardColor = GetMarkerColor(ref wp);
-                    icon.Offset = wpOffset;
-                    icon.Visible = true;
-                }
-
-                // Update player arrow with gold pulse
-                minimapPlayerDot.Offset = dotOffset;
-                minimapPlayerDot.Rotation = -playerHeadingRad;
-                minimapPlayerDot.BillBoardColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
-                minimapPlayerDot.Visible = true;
-            }
-            else // MinimapDisplayMode.TacticalRadar
-            {
-                minimapTerrain.Visible = false;
-                if (radarGrid != null) radarGrid.Visible = true;
-
-                minimapLabel.Message.Clear();
-                if (radarScale == RadarScaleMode.Logarithmic)
-                {
-                    minimapLabel.Message.Append("<color=200,200,200>30 KM <color=187,233,246>(LOG)");
-                }
-                else
-                {
-                    int rangeKmInt = (int)(radarRangeMeters * 0.001);
-                    int rangeKmDec = (int)((radarRangeMeters * 0.001 - rangeKmInt) * 10.0);
-                    minimapLabel.Message.Append("<color=200,200,200>");
-                    minimapLabel.Message.Append(rangeKmInt);
-                    if (rangeKmDec > 0)
-                        minimapLabel.Message.Append('.').Append(rangeKmDec);
-                    minimapLabel.Message.Append(" KM");
-                }
-
-                double labelX = minimapPosition.X + (radarBoxWidth * 0.5) - (0.052f * minimapScale);
-                double labelY = minimapPosition.Y - (minimapBgHeight * 0.5) + (0.016f * minimapScale);
-                minimapLabel.Origin = new Vector2D(labelX, labelY);
-                minimapLabel.Scale = 0.46 * minimapScale;
-                minimapLabel.Visible = true;
-
-                // Radar circular radius on screen (aspect corrected for 1:1 circle)
-                float radarRadiusY = (float)minimapSize.Y * 0.46f;
-                float radarRadiusX = radarRadiusY / aspect;
-
-                var camera = MyAPIGateway.Session.Camera;
-
-                // Dynamic Camera View Frustum "V" Indicator (widens/narrows with game FOV and zoom)
-                if (showRadarFovLines && radarFovLeft != null && radarFovRight != null)
-                {
-                    float vFov = camera != null ? camera.FovWithZoom : 1.2217f;
-                    float halfVFov = vFov * 0.5f;
-                    float halfHFov = (float)Math.Atan(aspect * Math.Tan(halfVFov));
-
-                    // Screen-space vector for right arm from (0,0) to perimeter
-                    double armX = Math.Sin(halfHFov) * radarRadiusX;
-                    double armY = Math.Cos(halfHFov) * radarRadiusY;
-
-                    // Sleek tactical HUD line: 0.0008f width matching Keen HUD cyan
-                    Color fovLineColor = new Color(187, 233, 246, 110);
-
-                    // Right arm of V (opens upward-right)
-                    radarFovRight.Origin = minimapPosition;
-                    radarFovRight.Height = radarRadiusY;
-                    radarFovRight.Width = 0.0008f;
-                    radarFovRight.Offset = new Vector2D(armX * 0.5, armY * 0.5);
-                    radarFovRight.Rotation = halfHFov;
-                    radarFovRight.BillBoardColor = fovLineColor;
-                    radarFovRight.Visible = true;
-
-                    // Left arm of V (opens upward-left)
-                    radarFovLeft.Origin = minimapPosition;
-                    radarFovLeft.Height = radarRadiusY;
-                    radarFovLeft.Width = 0.0008f;
-                    radarFovLeft.Offset = new Vector2D(-armX * 0.5, armY * 0.5);
-                    radarFovLeft.Rotation = -halfHFov;
-                    radarFovLeft.BillBoardColor = fovLineColor;
-                    radarFovLeft.Visible = true;
-                }
-                else
-                {
-                    if (radarFovLeft != null) radarFovLeft.Visible = false;
-                    if (radarFovRight != null) radarFovRight.Visible = false;
-                }
-
-                // Tangent plane orientation relative to Kharak's local gravity (Camera-Facing orientation)
-                Vector3D upNormal, fwdTangent, rightTangent, forward;
-                GetRadarFrame(playerPos, camera, out upNormal, out fwdTangent, out rightTangent, out forward);
-                double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
-
-                for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
-                {
-                    var wp = activeHudWaypoints[i];
-                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
-                    Vector2D wpOffset;
-                    bool isClamped;
-                    if (!TryGetRadarMarkerOffset(ref wp, playerPos, fwdTangent, rightTangent, radarRadiusX, radarRadiusY, out wpOffset, out isClamped)) continue;
-
-                    var icon = minimapMarkerPool[mIdx++];
-                    icon.Material = GetWaypointMaterial(ref wp, playerElevation);
-                    icon.Rotation = 0f;
-
-                    float rSize = 0.012f * minimapScale;
-                    icon.Width = rSize;
-                    icon.Height = rSize * aspect;
-                    icon.BillBoardColor = isClamped ? GetMarkerColor(ref wp) * 0.80f : GetMarkerColor(ref wp);
-
-                    icon.Offset = wpOffset;
-                    icon.Visible = true;
-                }
-
-                // Player vehicle/character orientation arrow relative to camera heading
-                float vehAngleRad = GetRadarVehicleAngle(upNormal, fwdTangent, rightTangent, forward);
-
-                minimapPlayerDot.Offset = Vector2D.Zero;
-                minimapPlayerDot.Rotation = vehAngleRad;
-                // High-visibility pulse: Electric Gold <-> Amber
-                minimapPlayerDot.BillBoardColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
-                minimapPlayerDot.Visible = true;
-
-                // Direction vector lines to nearest lower and higher zones
-                double angleToLower, angleToHigher;
-                if (TryGetRadarZoneAngles(playerPos, upNormal, fwdTangent, rightTangent, out angleToLower, out angleToHigher))
-                {
-                    float lineWidth = 0.0014f * minimapScale;
-                    float lineSegmentHeight = radarRadiusY * (1f / 3f);
-                    const double MID_RADIUS_FACTOR = 5.0 / 6.0;
-
-                    // Lower Zone Vector Line (Radially inward toward Crossroads, outer 1/3rd of radar)
-                    if (showRadarZoneLines && currentZoneIndex > 0 && radarLowerZoneLine != null)
-                    {
-                        int lowerZoneIdx = currentZoneIndex - 1;
-                        Color lowerCol = GetZoneColor(lowerZoneIdx);
-                        double midX = Math.Sin(angleToLower) * radarRadiusX * MID_RADIUS_FACTOR;
-                        double midY = Math.Cos(angleToLower) * radarRadiusY * MID_RADIUS_FACTOR;
-
-                        radarLowerZoneLine.Origin = minimapPosition;
-                        radarLowerZoneLine.Width = lineWidth;
-                        radarLowerZoneLine.Height = lineSegmentHeight;
-                        radarLowerZoneLine.Offset = new Vector2D(midX, midY);
-                        radarLowerZoneLine.Rotation = (float)angleToLower;
-                        radarLowerZoneLine.BillBoardColor = new Color(lowerCol.R, lowerCol.G, lowerCol.B, 220);
-                        radarLowerZoneLine.Visible = true;
-                    }
-                    else if (radarLowerZoneLine != null)
-                    {
-                        radarLowerZoneLine.Visible = false;
-                    }
-
-                    // Higher Zone Vector Line (Radially outward away from Crossroads, outer 1/3rd of radar)
-                    if (showRadarZoneLines && currentZoneIndex < 3 && radarHigherZoneLine != null)
-                    {
-                        int higherZoneIdx = currentZoneIndex + 1;
-                        Color higherCol = GetZoneColor(higherZoneIdx);
-                        double midX = Math.Sin(angleToHigher) * radarRadiusX * MID_RADIUS_FACTOR;
-                        double midY = Math.Cos(angleToHigher) * radarRadiusY * MID_RADIUS_FACTOR;
-
-                        radarHigherZoneLine.Origin = minimapPosition;
-                        radarHigherZoneLine.Width = lineWidth;
-                        radarHigherZoneLine.Height = lineSegmentHeight;
-                        radarHigherZoneLine.Offset = new Vector2D(midX, midY);
-                        radarHigherZoneLine.Rotation = (float)angleToHigher;
-                        radarHigherZoneLine.BillBoardColor = new Color(higherCol.R, higherCol.G, higherCol.B, 220);
-                        radarHigherZoneLine.Visible = true;
-                    }
-                    else if (radarHigherZoneLine != null)
-                    {
-                        radarHigherZoneLine.Visible = false;
-                    }
-                }
-                else
-                {
-                    if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
-                    if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
-                }
-            }
-
-            // Hide unused pool slots
-            for (int i = mIdx; i < minimapMarkerPool.Count; i++)
-                minimapMarkerPool[i].Visible = false;
-        }
-
-        private void HideHudApiMinimap()
-        {
-            if (!_minimapElementsVisible) return;
-            _minimapElementsVisible = false;
-            if (minimapBg != null) minimapBg.Visible = false;
-            if (minimapAccent != null) minimapAccent.Visible = false;
-            if (minimapTerrain != null) minimapTerrain.Visible = false;
-            if (radarGrid != null) radarGrid.Visible = false;
-            if (radarFovLeft != null) radarFovLeft.Visible = false;
-            if (radarFovRight != null) radarFovRight.Visible = false;
-            if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
-            if (minimapLabel != null) minimapLabel.Visible = false;
-            HideMinimapPool();
+            BuildScreenSpaceMinimap(playerPos, aspect, minimapBgWidth, minimapBgHeight, radarBoxWidth, zoneCol);
         }
 
         /// <summary>
@@ -3316,7 +1690,7 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// A marker's offset from the radar centre in Text HUD API units. False when it isn't plotted: beyond
+        /// A marker's offset from the radar centre in HUD units. False when it isn't plotted: beyond
         /// 100 km, or a signal within 30 m (own-construct clutter). clamped is true when it's pinned to the rim.
         /// </summary>
         private bool TryGetRadarMarkerOffset(ref ActiveHudWaypoint wp, Vector3D playerPos, Vector3D fwdTangent, Vector3D rightTangent,
@@ -3404,8 +1778,7 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// Screen API minimap and tactical radar: the Text HUD API layout above, in the same units and in the
-        /// order its elements were created (card, accent, map or grid, FOV lines, zone lines, label, markers, arrow).
+        /// Minimap and tactical radar, drawn in the layout and order the Text HUD API minimap had (card, accent, map or grid, FOV lines, zone lines, label, markers, arrow).
         /// </summary>
         private void BuildScreenSpaceMinimap(Vector3D playerPos, float aspect, float bgWidth, float bgHeight, float radarBoxWidth, Color zoneCol)
         {
@@ -3536,188 +1909,6 @@ namespace GVK.Navigation
             return _ssRangeText;
         }
 
-        private void HideMinimapPool()
-        {
-            for (int i = 0; i < minimapMarkerPool.Count; i++)
-                minimapMarkerPool[i].Visible = false;
-            if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
-            if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
-        }
-
-        /// <summary>
-        /// Updates the Full Satellite Map using pre-allocated billboard and text pool (Zero GC allocations).
-        /// </summary>
-        private void UpdateFullMap(Vector3D playerPos)
-        {
-            if (mapTerrain == null || !showFullMap) return;
-
-            float fullMapWidth = cachedFullMapWidth;
-            float fullMapHeight = cachedFullMapHeight;
-
-            mapDimmer.Visible = true;
-            mapFrame.Visible = true;
-            mapTerrain.Visible = true;
-            mapPlayerDot.Visible = false; // Deferred show — re-shown after all cluster markers so it renders on top (Z-order)
-            mapHeaderBg.Visible = true;
-            mapHeaderAccent.Visible = true;
-            mapHeaderMsg.Visible = true;
-            mapHeaderSubMsg.Visible = true;
-
-            double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
-            Vector2 uv = WorldToMapUV(playerPos);
-            Vector2D playerOffset = new Vector2D(
-                (uv.X - 0.5) * fullMapWidth,
-                (0.5 - uv.Y) * fullMapHeight
-            );
-            mapPlayerDot.Offset = playerOffset;
-            mapPlayerDot.Rotation = -playerHeadingRad;
-            mapPlayerDot.BillBoardColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
-
-            // 1. Clusters and label placement are cached; rebuilt only when waypoints, label toggles or screen size change
-            if (_mapLayoutDirty)
-            {
-                _mapLayoutDirty = false;
-                BuildMapLayout(fullMapWidth, fullMapHeight, 0.5, 0.5, fullMapWidth, fullMapHeight, false);
-            }
-
-            DrawKothRings(fullMapWidth, fullMapHeight);
-
-            // 2. Unlabelled markers first, at their true positions, so label stacks draw on top of them
-            int sIdx = 0; // Sprite pool index
-            int lIdx = 0; // Label pool index
-
-            for (int k = 0; k < _mapPlainWps.Count && sIdx < fullMapMarkerPool.Count; k++)
-            {
-                int wpIdx = _mapPlainWps[k];
-                DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, fullMapWidth, fullMapHeight), playerElevation);
-            }
-
-            for (int j = 0; j < _mapLabelWps.Count && sIdx < fullMapMarkerPool.Count; j++)
-            {
-                if (stackMapIcons && _cachedMapClusters[_mapLabelRoots[j]].Labelled) continue;
-                int wpIdx = _mapLabelWps[j];
-                DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, fullMapWidth, fullMapHeight), playerElevation);
-            }
-
-            // 3. Labelled clusters with Vertical Waterfall Deconfliction (4 names nearest first, then "+N more...")
-            for (int c = 0; c < _mapClusterShown.Count; c++)
-                _mapClusterShown[c] = 0;
-
-            for (int j = 0; j < _mapLabelWps.Count && lIdx < fullMapLabelPool.Count; j++)
-            {
-                int root = _mapLabelRoots[j];
-                var cluster = _cachedMapClusters[root];
-                if (!cluster.Labelled) continue;
-
-                int slot = _mapClusterShown[root]++;
-                int itemsToShow = (cluster.Count <= 5) ? cluster.Count : 4;
-                if (slot >= itemsToShow) continue;
-
-                int wpIdx = _mapLabelWps[j];
-                Vector2D slotPos = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * slot);
-                if (stackMapIcons)
-                {
-                    if (sIdx >= fullMapMarkerPool.Count) break;
-                    DrawMapMarker(fullMapMarkerPool[sIdx++], wpIdx, slotPos, playerElevation);
-                }
-
-                var label = fullMapLabelPool[lIdx++];
-                FormatWaypointLabel(label, activeHudWaypoints[wpIdx].Name);
-                label.Offset = slotPos + new Vector2D(GetMapLabelOffsetX(ref cluster, _mapLabelWidths[j]), MAP_LABEL_OFFSET_Y + cluster.NudgeY);
-                label.Visible = true;
-            }
-
-            // If > 5 markers, slot 5 displays the overflow tag: "+N more..."
-            for (int c = 0; c < _cachedMapClusters.Count && lIdx < fullMapLabelPool.Count; c++)
-            {
-                var cluster = _cachedMapClusters[c];
-                if (!cluster.Labelled || cluster.Count <= 5) continue;
-
-                Vector2D slotPosOverflow = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * 4f);
-                var labelOverflow = fullMapLabelPool[lIdx++];
-                FormatMapOverflowLabel(labelOverflow, cluster.Count - 4);
-                labelOverflow.Offset = slotPosOverflow + new Vector2D(GetMapLabelOffsetX(ref cluster, _mapOverflowWidth), MAP_LABEL_OFFSET_Y);
-                labelOverflow.Visible = true;
-            }
-
-            // Hide unused slots in the pools
-            for (int i = sIdx; i < fullMapMarkerPool.Count; i++)
-                fullMapMarkerPool[i].Visible = false;
-
-            for (int i = lIdx; i < fullMapLabelPool.Count; i++)
-                fullMapLabelPool[i].Visible = false;
-
-            // Ensure player arrow is drawn on top of map markers and rotates with heading
-            mapPlayerDot.Rotation = -playerHeadingRad;
-            mapPlayerDot.Visible = true;
-
-            // Update Tactical Header Panel docked seamlessly above top of the map frame
-            float topOfFrame = (fullMapHeight + 0.01f * cachedAspect) * 0.5f;
-            float mapHeaderHeight = 0.056f;
-            float mapHeaderWidth = fullMapWidth + 0.02f;
-            float mapHeaderCenterY = topOfFrame + 0.004f + (mapHeaderHeight * 0.5f);
-
-            mapHeaderBg.Origin = new Vector2D(0.0, mapHeaderCenterY);
-            mapHeaderAccent.Origin = new Vector2D(0.0, mapHeaderCenterY);
-            mapHeaderAccent.Offset = new Vector2D(-mapHeaderWidth * 0.5f + 0.005f, 0.0);
-            mapHeaderMsg.Origin = new Vector2D(-mapHeaderWidth * 0.5f + 0.016f, mapHeaderCenterY + 0.013f);
-            mapHeaderSubMsg.Origin = new Vector2D(-mapHeaderWidth * 0.5f + 0.016f, mapHeaderCenterY - 0.011f);
-
-            int distWhole = (int)lastDistKm;
-            int distTenths = (int)((lastDistKm - distWhole) * 10.0);
-
-            Color zoneAccentColor;
-            mapHeaderText.Clear();
-            mapHeaderText.Append("<color=255,220,0>KHARAK TACTICAL SATELLITE MAP<color=180,195,210> | Current Sector: ");
-
-            mapHeaderSubText.Clear();
-            mapHeaderSubText.Append("<color=220,230,240>Crossroads: <color=255,255,255>")
-                            .Append(distWhole).Append('.').Append(distTenths).Append(" km<color=180,195,210> | ");
-
-            switch (currentZoneIndex)
-            {
-                case 0:
-                    zoneAccentColor = Color.LimeGreen;
-                    mapHeaderText.Append("<color=50,255,100>[ ZONE 0: SAFE HUB ]");
-                    double rem0 = lastRemainingKm;
-                    int rem0Whole = (int)rem0;
-                    int rem0Tenths = (int)((rem0 - rem0Whole) * 10.0);
-                    mapHeaderSubText.Append("Z1 Border in: <color=255,230,50>")
-                                    .Append(rem0Whole).Append('.').Append(rem0Tenths).Append(" km");
-                    break;
-                case 1:
-                    zoneAccentColor = Color.Yellow;
-                    mapHeaderText.Append("<color=255,230,50>[ ZONE 1: PVE FRONTIER ]");
-                    double rem1 = lastRemainingKm;
-                    int rem1Whole = (int)rem1;
-                    int rem1Tenths = (int)((rem1 - rem1Whole) * 10.0);
-                    mapHeaderSubText.Append("PvP Border in: <color=255,165,0>")
-                                    .Append(rem1Whole).Append('.').Append(rem1Tenths).Append(" km");
-                    break;
-                case 2:
-                    zoneAccentColor = Color.Orange;
-                    mapHeaderText.Append("<color=255,165,0>[ ZONE 2: CONTESTED (PVP) ]");
-                    double rem2 = lastRemainingKm;
-                    int rem2Whole = (int)rem2;
-                    int rem2Tenths = (int)((rem2 - rem2Whole) * 10.0);
-                    mapHeaderSubText.Append("Z3 Border in: <color=255,50,50>")
-                                    .Append(rem2Whole).Append('.').Append(rem2Tenths).Append(" km");
-                    break;
-                case 3:
-                default:
-                    zoneAccentColor = Color.Red;
-                    mapHeaderText.Append("<color=255,50,50>[ ZONE 3: GAALSIEN HEART ]");
-                    int z3Whole = (int)lastDistZ3Km;
-                    int z3Tenths = (int)((lastDistZ3Km - z3Whole) * 10.0);
-                    mapHeaderSubText.Append("Core Dist: <color=255,50,50>")
-                                    .Append(z3Whole).Append('.').Append(z3Tenths).Append(" km");
-                    break;
-            }
-
-            mapHeaderSubText.Append("          <color=160,180,200>[ Press '").Append(mapKeyLabel).Append("' or ESC to Close ]");
-            mapHeaderAccent.BillBoardColor = inSpace ? Color.Magenta : zoneAccentColor;
-        }
-
         private const double MAP_CLUSTER_DIST_SQ = 0.038 * 0.038;   // ~2-3 km: markers this close share one stack
         private const double MAP_MERGE_MAX_DIST_SQ = 0.076 * 0.076; // Overlapping stacks closer than this merge; farther ones fall back to dots
         private const float MAP_LINE_SPACING = 0.024f;
@@ -3732,9 +1923,9 @@ namespace GVK.Navigation
         /// waypoints whose label is toggled off become plain dots. Nearby stacks that would overlap merge; a stack that would still overlap a nearer one
         /// draws its markers as dots at their true positions. Runs only when <see cref="_mapLayoutDirty"/> is set.
         /// The map is drawn mapWidth x mapHeight with map UV (viewU, viewV) at the frame centre; waypoints outside
-        /// the frame are left out. Screen measures labels with the screen API font, else with Text HUD API.
+        /// the frame are left out. Labels are measured with the screen API font.
         /// </summary>
-        private void BuildMapLayout(float mapWidth, float mapHeight, double viewU, double viewV, float frameWidth, float frameHeight, bool screen)
+        private void BuildMapLayout(float mapWidth, float mapHeight, double viewU, double viewV, float frameWidth, float frameHeight)
         {
             _mapPlainWps.Clear();
             _mapLabelWps.Clear();
@@ -3758,15 +1949,7 @@ namespace GVK.Navigation
                 }
 
                 float width;
-                if (screen)
-                {
-                    GetSsMapLabel(i, out width);
-                }
-                else
-                {
-                    if (_mapLabelMeasure != null) FormatWaypointLabel(_mapLabelMeasure, wp.Name);
-                    width = MeasureMapLabel();
-                }
+                GetSsMapLabel(i, out width);
 
                 int found = -1;
                 for (int c = 0; c < _cachedMapClusters.Count; c++)
@@ -3796,21 +1979,10 @@ namespace GVK.Navigation
                 _mapLabelWidths.Add(width);
             }
 
-            float overflowWidth;
-            double textHeight;
-            if (screen)
-            {
-                float labelScale = MAP_LABEL_SCALE * _ssMapTextScale;
-                overflowWidth = (float)_ssMap.MeasureWidthHud(GetSsMapOverflowText(99), labelScale);
-                if (overflowWidth <= 0f) overflowWidth = 0.15f;
-                textHeight = _ssMap.LineHeightHud(labelScale);
-            }
-            else
-            {
-                if (_mapLabelMeasure != null) FormatMapOverflowLabel(_mapLabelMeasure, 99);
-                overflowWidth = MeasureMapLabel();
-                textHeight = _mapLabelMeasure != null ? Math.Abs(_mapLabelMeasure.GetTextLength().Y) : 0.0;
-            }
+            float labelScale = MAP_LABEL_SCALE * _ssMapTextScale;
+            float overflowWidth = (float)_ssMap.MeasureWidthHud(GetSsMapOverflowText(99), labelScale);
+            if (overflowWidth <= 0f) overflowWidth = 0.15f; // About the width of a full-length label
+            double textHeight = _ssMap.LineHeightHud(labelScale);
             _mapOverflowWidth = overflowWidth;
             _mapTextHeight = textHeight > 0.0 ? textHeight : 0.016;
 
@@ -3900,12 +2072,6 @@ namespace GVK.Navigation
             return false;
         }
 
-        private float MeasureMapLabel()
-        {
-            float width = _mapLabelMeasure != null ? (float)_mapLabelMeasure.GetTextLength().X : 0f;
-            return width > 0f ? width : 0.15f; // Fallback: about the width of a full-length label
-        }
-
         private bool MapStacksOverlap(ref MapCluster a, bool aIcons, ref MapCluster b, bool bIcons, float overflowWidth)
         {
             double aMinX, aMaxX, aMinY, aMaxY, bMinX, bMaxX, bMinY, bMaxY;
@@ -3964,92 +2130,8 @@ namespace GVK.Navigation
         private static Vector2D GetMapOffset(Vector2 uv, float fullMapWidth, float fullMapHeight, double viewU = 0.5, double viewV = 0.5)
             => new Vector2D((uv.X - viewU) * fullMapWidth, (viewV - uv.Y) * fullMapHeight);
 
-        private void DrawMapMarker(HudAPIv2.BillBoardHUDMessage sprite, int wpIdx, Vector2D offset, double playerElevation)
-        {
-            var wp = activeHudWaypoints[wpIdx];
-            sprite.Material = GetWaypointMaterial(ref wp, playerElevation);
-            sprite.Rotation = 0f;
-            sprite.BillBoardColor = GetMarkerColor(ref wp);
-            sprite.Offset = offset;
-            sprite.Visible = true;
-        }
-
-        private void FormatMapOverflowLabel(HudAPIv2.HUDMessage label, int hiddenCount)
-        {
-            label.Message.Clear()
-                 .Append("<color=170,210,245>+")
-                 .Append(hiddenCount)
-                 .Append(" more...");
-        }
-
         /// <summary>
-        /// Slices waypoint name if longer than 20 characters into [First 12]...[Last 4] with zero heap allocations.
-        /// </summary>
-        private void FormatWaypointLabel(HudAPIv2.HUDMessage label, string wpName)
-        {
-            label.Message.Clear();
-            string name = wpName ?? string.Empty;
-            if (name.Length > 20)
-            {
-                label.Message.Append(name, 0, 12)
-                             .Append("...")
-                             .Append(name, name.Length - 4, 4);
-            }
-            else
-            {
-                label.Message.Append(name);
-            }
-        }
-
-        private void HideFullMapPool()
-        {
-            // Loop each pool by its OWN count - coupling the bounds invites IndexOutOfRange if one pool is resized.
-            for (int i = 0; i < fullMapMarkerPool.Count; i++)
-                fullMapMarkerPool[i].Visible = false;
-
-            for (int i = 0; i < fullMapLabelPool.Count; i++)
-                fullMapLabelPool[i].Visible = false;
-
-            for (int i = 0; i < kothRingPool.Count; i++)
-                kothRingPool[i].Visible = false;
-        }
-
-        /// <summary>
-        /// Draws each KOTH's capture radius as a ring of dots on the satellite map. The ring's size comes from
-        /// projecting a point one radius away along the planet surface, so it matches the map's scale there.
-        /// </summary>
-        private void DrawKothRings(float fullMapWidth, float fullMapHeight)
-        {
-            int dot = 0;
-            for (int w = 0; w < activeHudWaypoints.Count; w++)
-            {
-                var wp = activeHudWaypoints[w];
-                if (wp.KothState == 0 || wp.KothRadius <= 0 || !showMapKoth)
-                    continue;
-                if (dot + KOTH_RING_DOTS > kothRingPool.Count)
-                    break;
-
-                Vector2D center = GetMapOffset(wp.MapUV, fullMapWidth, fullMapHeight);
-                double radius = wp.KothMapRadius * fullMapWidth;
-                if (radius < 0.004)
-                    radius = 0.004; // Keep tiny zones visible as a ring around the icon
-
-                Color color = GetMarkerColor(ref wp);
-                for (int i = 0; i < KOTH_RING_DOTS; i++)
-                {
-                    var ringDot = kothRingPool[dot++];
-                    ringDot.Offset = center + new Vector2D(KOTH_RING_COS[i] * radius, KOTH_RING_SIN[i] * radius * cachedAspect);
-                    ringDot.BillBoardColor = color;
-                    ringDot.Visible = true;
-                }
-            }
-
-            for (int i = dot; i < kothRingPool.Count; i++)
-                kothRingPool[i].Visible = false;
-        }
-
-        /// <summary>
-        /// Draw list for the satellite map's game screen: the Text HUD API map's layout seen through the zoom and
+        /// Draw list for the satellite map's game screen: the map's layout seen through the zoom and
         /// pan view. Rebuilt on the HUD tick and whenever the view moves. The map picture and KOTH rings are clipped
         /// to the frame; markers outside it are left out, so labels near an edge stay whole.
         /// </summary>
@@ -4085,7 +2167,7 @@ namespace GVK.Navigation
             if (_mapLayoutDirty)
             {
                 _mapLayoutDirty = false;
-                BuildMapLayout(mapW, mapH, viewU, viewV, frameW, frameH, true);
+                BuildMapLayout(mapW, mapH, viewU, viewV, frameW, frameH);
             }
 
             Color card = GetCardBgColor();
@@ -4097,7 +2179,7 @@ namespace GVK.Navigation
             AddSsKothRings(mapW, mapH, viewU, viewV, aspect);
             _ssMap.EndClip();
 
-            // Unlabelled markers first, then label stacks on top, as the Text HUD API map does
+            // Unlabelled markers first, then label stacks on top
             _mapHits.Clear();
             for (int k = 0; k < _mapPlainWps.Count; k++)
             {
@@ -4157,7 +2239,7 @@ namespace GVK.Navigation
             AddSsMapHeader(frameW, frameH, aspect, textScale, card);
         }
 
-        /// <summary>Header docked above the frame (same text as the Text HUD API map), and the controls below it.</summary>
+        /// <summary>Header docked above the frame, and the controls below it.</summary>
         private void AddSsMapHeader(float frameW, float frameH, float aspect, float textScale, Color card)
         {
             float topOfFrame = (frameH + 0.01f * aspect) * 0.5f;
@@ -4670,11 +2752,11 @@ namespace GVK.Navigation
             }
             catch (Exception ex)
             {
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map screen draw failed, switching back to Text HUD API: {ex}");
-                GvkScreenLayer.UseScreenApi = false;
-                ClearScreenSpaceHud();
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map screen draw failed, map off for this session: {ex}");
+                _ssMapDrawFailed = true;
                 _ssMap.Clear();
                 _ssMapTip.Clear();
+                _ssMapButton.Clear();
                 CloseMapMenu();
                 CloseFullMap();
             }
@@ -4684,7 +2766,7 @@ namespace GVK.Navigation
         {
             if (isUnloading)
             {
-                showFullMap = false; // The session is ending; Text HUD API elements are going away with it
+                showFullMap = false; // The session is ending
                 return;
             }
             CloseFullMap();
@@ -4726,25 +2808,10 @@ namespace GVK.Navigation
             return 1.0f;
         }
 
-        /// <summary>
-        /// Synchronizes all HUD background card billboard colors with Keen's HUD slate blue (41, 54, 62)
-        /// scaled by the user's HUD background opacity setting.
-        /// </summary>
+        /// <summary>Re-reads the player's HUD background opacity, which GetCardBgColor uses for every card.</summary>
         private void UpdateCardBackgroundOpacities()
         {
-            float hudOpacity = GetUserHudOpacity();
-            cachedHudBkOpacity = hudOpacity;
-
-            byte cardAlpha = (byte)MathHelper.Clamp((int)(255f * hudOpacity), 0, 255);
-
-            // Keen signature HUD background slate blue: RGB (41, 54, 62)
-            Color cardBgColor = new Color(41, 54, 62, cardAlpha);
-
-            if (compassBg != null) compassBg.BillBoardColor = cardBgColor;
-            if (zoneBg != null) zoneBg.BillBoardColor = cardBgColor;
-            if (minimapBg != null) minimapBg.BillBoardColor = cardBgColor;
-            if (mapHeaderBg != null) mapHeaderBg.BillBoardColor = cardBgColor;
-            if (mapFrame != null) mapFrame.BillBoardColor = cardBgColor;
+            cachedHudBkOpacity = GetUserHudOpacity();
         }
 
         /// <summary>Compass ribbon total width at the given scale factor. Single source of truth for all callers.</summary>
@@ -4840,7 +2907,6 @@ namespace GVK.Navigation
                         }
                         _refreshMinimapNextFrame = true;
                         SaveConfig();
-                        UpdateMenuTexts();
                         string rStr = radarScale == RadarScaleMode.Logarithmic ? "30.0 km (Logarithmic)" : $"{(radarRangeMeters * 0.001):0.#} km (Linear)";
                         MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Tactical Radar Range: {rStr}", 2500, MyFontEnum.Green);
                         return;
@@ -4861,13 +2927,6 @@ namespace GVK.Navigation
             {
                 sendToOthers = false;
                 OpenSettingsScreen(showFullMap); // Over an open map, swap it out the same way the map's button does
-                return;
-            }
-
-            if (msg.Equals("/gvk ss", StringComparison.OrdinalIgnoreCase))
-            {
-                sendToOthers = false;
-                ToggleScreenSpaceHud();
                 return;
             }
 
@@ -4898,6 +2957,13 @@ namespace GVK.Navigation
                 CycleUpdateTickRate();
                 return;
             }
+
+            // Any other /gvk command (a typo, or the removed /gvk ss) stays out of public chat
+            if (msg.StartsWith("/gvk ", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                MyAPIGateway.Utilities.ShowMessage("GVK", "Unknown command. Type /gvk for the list.");
+            }
         }
 
         private void ToggleFullMap()
@@ -4926,106 +2992,56 @@ namespace GVK.Navigation
             CloseMapMenu();
             _mapHits.Clear();
             _mapDragging = false;
-            if (mapDimmer != null) mapDimmer.Visible = false;
-            if (mapFrame != null) mapFrame.Visible = false;
-            if (mapTerrain != null) mapTerrain.Visible = false;
-            if (mapPlayerDot != null) mapPlayerDot.Visible = false;
-            if (mapHeaderBg != null) mapHeaderBg.Visible = false;
-            if (mapHeaderAccent != null) mapHeaderAccent.Visible = false;
-            if (mapHeaderMsg != null) mapHeaderMsg.Visible = false;
-            if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
-            HideFullMapPool();
-            // Hide the zone telemetry line immediately: UpdateZoneBar is skipped while the map is open.
-            if (zoneDistMsg != null) zoneDistMsg.Visible = false;
             _refreshMinimapNextFrame = true;
             _refreshCompassNextFrame = true;
         }
 
         /// <summary>
-        /// Opens the satellite map: as a game screen with the screen API, else as Text HUD API billboards.
-        /// If the game refuses the screen (four mod screens already open), the Text HUD API map is the fallback.
+        /// Opens the satellite map as a game screen. If the game refuses it (four mod screens already open),
+        /// the player is told and nothing changes.
         /// </summary>
         private void OpenFullMap(bool keepView = false)
         {
             if (showFullMap) return;
-            if (GvkScreenLayer.UseScreenApi)
+            if (_ssMapDrawFailed)
             {
-                if (_mapScreen == null) _mapScreen = new GvkMapScreen(this);
-                _mapScreen.Open();
-                if (!_mapScreen.IsOpen && !(hudApi != null && hudApi.Heartbeat)) return;
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] The satellite map hit an error and is off until you rejoin", 2500, MyFontEnum.Red);
+                return;
+            }
+            if (_mapScreen == null) _mapScreen = new GvkMapScreen(this);
+            _mapScreen.Open();
+            if (!_mapScreen.IsOpen)
+            {
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Can't open the satellite map: too many screens are open", 2500, MyFontEnum.Red);
+                return;
             }
 
             showFullMap = true;
             _mapReopenTicks = 0;          // This map is the one a pending reopen after settings was for
             _settingsReturnToMap = false;
-            _mapLayoutDirty = true; // The two renderers lay the map out at different scales
-            _fullMapNeedsRedraw = true;
+            _mapLayoutDirty = true;
+            _fullMapNeedsRedraw = false;
 
-            // Immediately hide compass and minimap elements when pulling up the satellite map
-            if (compassBg != null) compassBg.Visible = false;
-            if (compassLeftAccent != null) compassLeftAccent.Visible = false;
-            if (compassRightAccent != null) compassRightAccent.Visible = false;
-            if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
-            HideTapePool();
-            HideSpritePool();
-
-            if (minimapBg != null) minimapBg.Visible = false;
-            if (minimapAccent != null) minimapAccent.Visible = false;
-            if (minimapTerrain != null) minimapTerrain.Visible = false;
-            if (radarGrid != null) radarGrid.Visible = false;
-            if (radarFovLeft != null) radarFovLeft.Visible = false;
-            if (radarFovRight != null) radarFovRight.Visible = false;
-            if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
-            if (minimapLabel != null) minimapLabel.Visible = false;
-            HideMinimapPool();
-
-            if (zoneBg != null) zoneBg.Visible = false;
-            if (zoneAccent != null) zoneAccent.Visible = false;
-            if (zoneMsg != null) zoneMsg.Visible = false;
-            if (zoneDistMsg != null) zoneDistMsg.Visible = false; // also hidden: UpdateZoneBar is skipped while showFullMap is true
-            _compassElementsVisible = false;
-            _minimapElementsVisible = false;
-            _zoneBarElementsVisible = false;
-
-            if (MapScreenOpen)
+            // Open on the player at the last zoom; the map key that opened it must be let go before it closes it
+            // (keepView: back from the settings screen, so it keeps the view the player left)
+            Vector3D? pos = GetPlayerPosition();
+            if (pos.HasValue) _mapPlayerPos = pos.Value;
+            if (!keepView)
             {
-                // Open on the player at the last zoom; the map key that opened it must be let go before it closes it
-                // (keepView: back from the settings screen, so it keeps the view the player left)
-                Vector3D? pos = GetPlayerPosition();
-                if (pos.HasValue) _mapPlayerPos = pos.Value;
-                if (!keepView)
-                {
-                    Vector2 uv = WorldToMapUV(_mapPlayerPos);
-                    _mapViewU = uv.X;
-                    _mapViewV = uv.Y;
-                }
-                _mapKeyLatch = true;
-                _mapDragging = false;
-                _fullMapNeedsRedraw = false;
-                BuildScreenSpaceFullMap();
+                Vector2 uv = WorldToMapUV(_mapPlayerPos);
+                _mapViewU = uv.X;
+                _mapViewV = uv.Y;
             }
+            _mapKeyLatch = true;
+            _mapDragging = false;
+            BuildScreenSpaceFullMap();
         }
 
         private void ToggleMinimap()
         {
             showMinimap = !showMinimap;
-            if (!showMinimap)
-            {
-                _minimapElementsVisible = false;
-                if (radarGrid != null) radarGrid.Visible = false;
-                if (radarFovLeft != null) radarFovLeft.Visible = false;
-                if (radarFovRight != null) radarFovRight.Visible = false;
-                if (minimapBg != null) minimapBg.Visible = false;
-                if (minimapAccent != null) minimapAccent.Visible = false;
-                if (minimapTerrain != null) minimapTerrain.Visible = false;
-                if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
-                if (minimapLabel != null) minimapLabel.Visible = false;
-                HideMinimapPool();
-            }
             _refreshMinimapNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
             string status = showMinimap ? "ENABLED" : "DISABLED";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Corner Minimap: {status}", 2500, showMinimap ? MyFontEnum.Green : MyFontEnum.Red);
         }
@@ -5038,10 +3054,8 @@ namespace GVK.Navigation
                 minimapMode = MinimapDisplayMode.StrategicMap;
 
             ApplyMinimapScale(minimapScale);
-            _lastZoneBarZoneIndex = -1;
             _refreshMinimapNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
             string modeName = (minimapMode == MinimapDisplayMode.TacticalRadar) ? "TACTICAL RADAR (LOCAL)" : "STRATEGIC MAP (GLOBAL)";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Mode: {modeName}", 2500, MyFontEnum.Green);
         }
@@ -5060,7 +3074,6 @@ namespace GVK.Navigation
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
             int pct = (int)Math.Round(minimapScale * 100);
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Minimap Size: {pct}%", 2500, MyFontEnum.Green);
         }
@@ -5098,70 +3111,6 @@ namespace GVK.Navigation
 
             minimapPosition = new Vector2D(posX, posY);
             _minimapLayoutBgWidth = minimapBgWidth;
-
-            if (minimapLabel != null)
-            {
-                if (minimapMode == MinimapDisplayMode.TacticalRadar)
-                {
-                    double labelX = minimapPosition.X + (radarBoxWidth * 0.5) - (0.052f * scale);
-                    double labelY = minimapPosition.Y - (minimapBgHeight * 0.5) + (0.016f * scale);
-                    minimapLabel.Origin = new Vector2D(labelX, labelY);
-                    minimapLabel.Scale = 0.46 * scale;
-                }
-                else
-                {
-                    minimapLabel.Visible = false;
-                }
-            }
-            if (minimapBg != null)
-            {
-                minimapBg.Origin = minimapPosition;
-                minimapBg.Width = minimapBgWidth;
-                minimapBg.Height = minimapBgHeight;
-            }
-            if (minimapAccent != null)
-            {
-                minimapAccent.Origin = minimapPosition;
-                minimapAccent.Width = 0.005f * scale;
-                minimapAccent.Height = minimapBgHeight - 0.006f * scale;
-                minimapAccent.Offset = new Vector2D(-minimapBgWidth * 0.5f + 0.005f * scale, 0.0);
-            }
-            if (minimapTerrain != null)
-            {
-                minimapTerrain.Origin = minimapPosition;
-                minimapTerrain.Width = (float)minimapSize.X;
-                minimapTerrain.Height = (float)minimapSize.Y;
-            }
-            if (radarGrid != null)
-            {
-                radarGrid.Origin = minimapPosition;
-                radarGrid.Width = radarGridDiameter / aspect;
-                radarGrid.Height = radarGridDiameter;
-            }
-            if (radarFovLeft != null)
-            {
-                radarFovLeft.Origin = minimapPosition;
-            }
-            if (radarFovRight != null)
-            {
-                radarFovRight.Origin = minimapPosition;
-            }
-            if (minimapPlayerDot != null)
-            {
-                minimapPlayerDot.Origin = minimapPosition;
-                float dotSize = 0.017f * scale;
-                minimapPlayerDot.Width = dotSize;
-                minimapPlayerDot.Height = dotSize * aspect;
-            }
-            if (radarLowerZoneLine != null) radarLowerZoneLine.Origin = minimapPosition;
-            if (radarHigherZoneLine != null) radarHigherZoneLine.Origin = minimapPosition;
-            for (int i = 0; i < minimapMarkerPool.Count; i++)
-            {
-                minimapMarkerPool[i].Origin = minimapPosition;
-                float mSize = 0.012f * scale;
-                minimapMarkerPool[i].Width = mSize;
-                minimapMarkerPool[i].Height = mSize * aspect;
-            }
         }
 
         private void CycleMinimapPreset()
@@ -5186,25 +3135,15 @@ namespace GVK.Navigation
         {
             minimapOffsetX = MathHelper.Clamp(x, -1.0, 1.0);
             minimapOffsetY = MathHelper.Clamp(y, -1.0, 1.0);
-            UpdateMinimapSliderPercents();
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
         }
 
         private void ResetMinimapOffset()
         {
             SetMinimapOffset(1.0, 1.0);
             MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Minimap Position reset to Top-Right (1.0, 1.0)", 2500, MyFontEnum.Green);
-        }
-
-        private void UpdateMinimapSliderPercents()
-        {
-            if (minimapSliderX != null)
-                minimapSliderX.InitialPercent = MathHelper.Clamp((float)((minimapOffsetX + 1.0) * 0.5), 0f, 1f);
-            if (minimapSliderY != null)
-                minimapSliderY.InitialPercent = MathHelper.Clamp((float)((minimapOffsetY + 1.0) * 0.5), 0f, 1f);
         }
 
         private void CycleRadarRange()
@@ -5236,7 +3175,6 @@ namespace GVK.Navigation
 
             _refreshMinimapNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
         }
 
 
@@ -5244,7 +3182,6 @@ namespace GVK.Navigation
         {
             updateTickRate = Math.Max(1, Math.Min(60, ticks));
             SaveConfig();
-            UpdateMenuTexts();
             double hz = 60.0 / updateTickRate;
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] HUD Refresh Rate: {updateTickRate} ticks ({hz:F1} Hz)", 2500, MyFontEnum.Green);
         }
@@ -5274,7 +3211,6 @@ namespace GVK.Navigation
 
             ApplyCompassScale(compassScale);
             SaveConfig();
-            UpdateMenuTexts();
             int pct = (int)Math.Round(compassScale * 100);
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon Size: {pct}%", 2500, MyFontEnum.Green);
         }
@@ -5301,12 +3237,9 @@ namespace GVK.Navigation
         {
             compassOffsetX = MathHelper.Clamp(x, -1.0, 1.0);
             compassOffsetY = MathHelper.Clamp(y, -1.0, 1.0);
-            UpdateCompassSliderPercents();
             ApplyCompassScale(compassScale);
-            if (zoneBarMode == ZoneBarMode.CompassDock) _lastZoneBarZoneIndex = -1;
             _refreshCompassNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
         }
 
         private void ResetCompassOffset()
@@ -5315,126 +3248,17 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Compass Position reset to Top-Center (0.0, 1.0)", 2500, MyFontEnum.Green);
         }
 
-        private void UpdateCompassSliderPercents()
-        {
-            if (compassSliderX != null)
-                compassSliderX.InitialPercent = MathHelper.Clamp((float)((compassOffsetX + 1.0) * 0.5), 0f, 1f);
-            if (compassSliderY != null)
-                compassSliderY.InitialPercent = MathHelper.Clamp((float)((compassOffsetY + 1.0) * 0.5), 0f, 1f);
-        }
-
         private void ApplyCompassScale(float scale)
         {
-            compassScale = scale;
-            float aspect = GetScreenAspect();
-
-            float baseWidth = GetCompassBaseWidth(scale);
-            float baseHeight = GetCompassBaseHeight(scale);
-
-            double maxCompassCenterX = 0.999 - (baseWidth * 0.5);
-            double compassCenterX = compassOffsetX * maxCompassCenterX;
-
-            double maxCompassCenterY = 0.999 - (baseHeight * 0.5);
-            double minCompassCenterY = -0.999 + (baseHeight * 0.5);
-            double compassT = (compassOffsetY + 1.0) * 0.5;
-            double compassCenterY = minCompassCenterY + compassT * (maxCompassCenterY - minCompassCenterY);
-
-            Vector2D compassOrigin = new Vector2D(compassCenterX, compassCenterY);
-
-            float accentWidth = 0.005f * scale;
-            float accentHeight = baseHeight - 0.006f * scale;
-
-            if (compassBg != null)
-            {
-                compassBg.Origin = compassOrigin;
-                compassBg.Width = baseWidth;
-                compassBg.Height = baseHeight;
-            }
-            if (compassLeftAccent != null)
-            {
-                compassLeftAccent.Origin = compassOrigin;
-                compassLeftAccent.Width = accentWidth;
-                compassLeftAccent.Height = accentHeight;
-                compassLeftAccent.Offset = new Vector2D(-baseWidth * 0.5f + 0.005f * scale, 0.0);
-            }
-            if (compassRightAccent != null)
-            {
-                compassRightAccent.Origin = compassOrigin;
-                compassRightAccent.Width = accentWidth;
-                compassRightAccent.Height = accentHeight;
-                compassRightAccent.Offset = new Vector2D(baseWidth * 0.5f - 0.005f * scale, 0.0);
-            }
-            if (compassCenterPointer != null)
-            {
-                float pWidth = 0.010f * scale;
-                float pHeight = pWidth * aspect;
-                compassCenterPointer.Origin = compassOrigin;
-                compassCenterPointer.Width = pWidth;
-                compassCenterPointer.Height = pHeight;
-                compassCenterPointer.Offset = new Vector2D(0.0, baseHeight * 0.5);
-            }
-            if (compassCenterBottomPip != null)
-            {
-                float pWidth = 0.008f * scale;
-                float pHeight = pWidth * aspect;
-                compassCenterBottomPip.Origin = compassOrigin;
-                compassCenterBottomPip.Width = pWidth;
-                compassCenterBottomPip.Height = pHeight;
-                compassCenterBottomPip.Offset = new Vector2D(0.0, -baseHeight * 0.5);
-            }
-            for (int i = 0; i < compassTapePool.Count; i++)
-            {
-                if (compassTapePool[i] != null)
-                {
-                    compassTapePool[i].Scale = 0.55 * scale;
-                }
-            }
-            for (int i = 0; i < waypointSpritePool.Count; i++)
-            {
-                if (waypointSpritePool[i] != null)
-                {
-                    float wWidth = 0.011f * scale;
-                    float wHeight = wWidth * aspect;
-                    waypointSpritePool[i].Width = wWidth;
-                    waypointSpritePool[i].Height = wHeight;
-                }
-                if (waypointDistPool[i] != null)
-                {
-                    waypointDistPool[i].Scale = 0.42 * scale;
-                }
-            }
-            for (int i = 0; i < COMPASS_GRADUATIONS.Length; i++)
-            {
-                COMPASS_GRADUATIONS[i].BaseTopHalfWidth = -1.0;
-                COMPASS_GRADUATIONS[i].BaseBottomHalfWidth = -1.0;
-            }
-            if (zoneBarMode == ZoneBarMode.CompassDock)
-            {
-                _lastZoneBarZoneIndex = -1;
-            }
+            compassScale = scale; // The compass lays itself out from this on its next build
             _refreshCompassNextFrame = true;
         }
 
         private void ToggleCompass()
         {
             showCompass = !showCompass;
-            if (!showCompass)
-            {
-                _compassElementsVisible = false;
-                if (compassBg != null) compassBg.Visible = false;
-                if (compassLeftAccent != null) compassLeftAccent.Visible = false;
-                if (compassRightAccent != null) compassRightAccent.Visible = false;
-                if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
-                HideTapePool();
-                HideSpritePool();
-            }
-            else
-            {
-                _refreshCompassNextFrame = true;
-            }
+            _refreshCompassNextFrame = true;
             SaveConfig();
-            UpdateMenuTexts();
             string status = showCompass ? "ENABLED" : "DISABLED";
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Ribbon: {status}", 2500, showCompass ? MyFontEnum.Green : MyFontEnum.Red);
         }
@@ -5459,7 +3283,6 @@ namespace GVK.Navigation
             mapKeyAlt = alt;
             UpdateMapKeyLabel();
             SaveConfig();
-            UpdateMenuTexts();
             MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Satellite Map Key: " + mapKeyLabel, 2500, MyFontEnum.Green);
         }
 
@@ -5480,7 +3303,6 @@ namespace GVK.Navigation
             _mapLayoutDirty = true;
             _fullMapNeedsRedraw = true;
             SaveConfig();
-            UpdateMenuTexts();
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] {name}: {(setting ? "ENABLED" : "DISABLED")}", 2500, setting ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
@@ -5584,22 +3406,10 @@ namespace GVK.Navigation
             else
                 zoneBarMode = ZoneBarMode.CompassDock;
 
-            if (zoneBarMode == ZoneBarMode.Off)
-            {
-                _zoneBarElementsVisible = false;
-                if (zoneBg != null) zoneBg.Visible = false;
-                if (zoneAccent != null) zoneAccent.Visible = false;
-                if (zoneMsg != null) zoneMsg.Visible = false;
-                if (zoneDistMsg != null) zoneDistMsg.Visible = false;
-                if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-            }
-
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
             _refreshCompassNextFrame = true;
-            _lastZoneBarZoneIndex = -1;
             SaveConfig();
-            UpdateMenuTexts();
 
             string modeName;
             switch (zoneBarMode)
@@ -5642,13 +3452,7 @@ namespace GVK.Navigation
         {
             showRadarZoneLines = !showRadarZoneLines;
             SaveConfig();
-            if (!showRadarZoneLines)
-            {
-                if (radarLowerZoneLine != null) radarLowerZoneLine.Visible = false;
-                if (radarHigherZoneLine != null) radarHigherZoneLine.Visible = false;
-            }
             _refreshMinimapNextFrame = true;
-            UpdateMenuTexts();
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Direction Vectors: {(showRadarZoneLines ? "ENABLED" : "DISABLED")}", 2500, showRadarZoneLines ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
@@ -5656,13 +3460,7 @@ namespace GVK.Navigation
         {
             showRadarFovLines = !showRadarFovLines;
             SaveConfig();
-            if (!showRadarFovLines)
-            {
-                if (radarFovLeft != null) radarFovLeft.Visible = false;
-                if (radarFovRight != null) radarFovRight.Visible = false;
-            }
             _refreshMinimapNextFrame = true;
-            UpdateMenuTexts();
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Camera Frustum FOV: {(showRadarFovLines ? "ENABLED" : "DISABLED")}", 2500, showRadarFovLines ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
@@ -5707,14 +3505,10 @@ namespace GVK.Navigation
 
             ApplyMinimapScale(minimapScale);
             ApplyCompassScale(compassScale);
-            UpdateMinimapSliderPercents();
-            UpdateCompassSliderPercents();
             UpdateCardBackgroundOpacities();
             _refreshMinimapNextFrame = true;
             _refreshCompassNextFrame = true;
-            _lastZoneBarZoneIndex = -1;
             SaveConfig();
-            UpdateMenuTexts();
 
             MyAPIGateway.Utilities.ShowNotification("[GVK NAV] All Navigation & Radar settings reset to factory defaults.", 3000, MyFontEnum.Green);
         }
@@ -5728,7 +3522,7 @@ namespace GVK.Navigation
             double hz = 60.0 / updateTickRate;
 
             MyAPIGateway.Utilities.ShowMessage("GVK", $"Radar [{mStatus} {mRange}] | Compass [{cStatus}] | Zone [{zMode}] | {hz:0.#}Hz");
-            MyAPIGateway.Utilities.ShowMessage("GVK", "Commands: /gvk radar, range, compass, zone, reset, card. Press [F2] for GUI.");
+            MyAPIGateway.Utilities.ShowMessage("GVK", "Commands: /gvk settings, map, radar, range, compass, zone, rate, reset, card.");
         }
 
         private void ShowMissionScreenCard()
@@ -5769,13 +3563,12 @@ namespace GVK.Navigation
             sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
             sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
             sb.AppendLine("• /gvk settings    : Open the Navigation Settings screen");
-            sb.AppendLine("• /gvk ss          : HUD Renderer Test (Screen API vs Text HUD API)");
             sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
             sb.AppendLine($"• /gvk map (or {mapKeyLabel})  : Open Full-Screen Topographical Kharak Map");
-            sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Frequency (15, 12, 10, 6 Hz)");
+            sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Rate (6 to 60 Hz)");
             sb.AppendLine("• /gvk reset       : Factory Reset All Positions & Preferences");
             sb.AppendLine();
-            sb.AppendLine("Press [F2] anytime to open the interactive Mod Settings GUI.");
+            sb.AppendLine("Every setting is on /gvk settings, or the Settings button on the satellite map.");
 
             MyAPIGateway.Utilities.ShowMissionScreen(
                 "GVK NAVIGATION SUITE",
@@ -5786,106 +3579,6 @@ namespace GVK.Navigation
                 "CLOSE"
             );
         }
-
-        private void UpdateMenuTexts()
-        {
-            if (menuRootMinimap != null)
-                menuRootMinimap.Text = $"Minimap: {(showMinimap ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuRootCompass != null)
-                menuRootCompass.Text = $"Compass Ribbon: {(showCompass ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuRootZone != null)
-            {
-                string zText = zoneBarMode == ZoneBarMode.RadarDock ? "<color=187,233,246>[RADAR DOCK]" :
-                               zoneBarMode == ZoneBarMode.CompassDock ? "<color=187,233,246>[COMPASS DOCK]" :
-                               "<color=255,90,90>[OFF]";
-                menuRootZone.Text = $"Zone Telemetry: {zText}";
-            }
-
-            if (menuSubMinimapMode != null)
-                menuSubMinimapMode.Text = (minimapMode == MinimapDisplayMode.TacticalRadar)
-                    ? "Mode: <color=187,233,246>[TACTICAL RADAR] <color=130,130,130>(Sector Map)"
-                    : "Mode: <color=130,130,130>(Tactical Radar) <color=187,233,246>[SECTOR MAP]";
-
-            if (menuSubRadarRange != null)
-                menuSubRadarRange.Text = (radarScale == RadarScaleMode.Logarithmic)
-                    ? "Radar Range: <color=255,230,40>[30 KM (Log)]"
-                    : $"Radar Range: <color=255,230,40>[{(int)(radarRangeMeters * 0.001):0.#} KM (Linear)]";
-
-            if (menuSubMinimapScale != null)
-                menuSubMinimapScale.Text = $"Minimap Size: <color=255,230,40>[{(int)Math.Round(minimapScale * 100)}%]";
-
-            if (menuSubZoneLines != null)
-                menuSubZoneLines.Text = $"Zone Direction Vectors: {(showRadarZoneLines ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubFovLines != null)
-                menuSubFovLines.Text = $"Camera Frustum FOV: {(showRadarFovLines ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMinimapPreset != null)
-            {
-                int pIdx = GetCurrentMinimapPresetIndex();
-                menuSubMinimapPreset.Text = $"Snap Position: <color=187,233,246>[{MinimapPresets[pIdx].Name}]";
-            }
-
-            if (menuSubCompassToggle != null)
-                menuSubCompassToggle.Text = $"Compass Tape: {(showCompass ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubCompassGps != null)
-                menuSubCompassGps.Text = $"GPS: {(showCompassGps ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubCompassSignals != null)
-                menuSubCompassSignals.Text = $"Signals: {(showCompassSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubCompassOwnSignals != null)
-                menuSubCompassOwnSignals.Text = $"Own & Faction Signals: {(showCompassOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-            if (menuSubCompassKoth != null)
-                menuSubCompassKoth.Text = $"KOTH: {(showCompassKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubCompassScale != null)
-                menuSubCompassScale.Text = $"Compass Size: <color=255,230,40>[{(int)Math.Round(compassScale * 100)}%]";
-
-            if (menuSubCompassPreset != null)
-            {
-                int cIdx = GetCurrentCompassPresetIndex();
-                menuSubCompassPreset.Text = $"Snap Position: <color=187,233,246>[{CompassPresets[cIdx].Name}]";
-            }
-
-            if (menuSubMapGpsLabels != null)
-                menuSubMapGpsLabels.Text = $"GPS Labels: {(showMapGpsLabels ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMapSignalLabels != null)
-                menuSubMapSignalLabels.Text = $"Signal Labels: {(showMapSignalLabels ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMapOwnSignals != null)
-                menuSubMapOwnSignals.Text = $"Own & Faction Signals: {(showMapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-            if (menuSubMapKoth != null)
-                menuSubMapKoth.Text = $"KOTH: {(showMapKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuRootOpenMap != null)
-                menuRootOpenMap.Text = $"<color=187,233,246>[{mapKeyLabel}] Open Satellite Map";
-
-            if (menuSubMapKey != null)
-                menuSubMapKey.Text = $"Map Key: <color=255,230,40>[{mapKeyLabel}]";
-
-            if (menuSubMapStackIcons != null)
-                menuSubMapStackIcons.Text = $"Stack Icons: {(stackMapIcons ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMinimapGps != null)
-                menuSubMinimapGps.Text = $"GPS: {(showMinimapGps ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMinimapSignals != null)
-                menuSubMinimapSignals.Text = $"Signals: {(showMinimapSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubMinimapOwnSignals != null)
-                menuSubMinimapOwnSignals.Text = $"Own & Faction Signals: {(showMinimapOwnSignals ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-            if (menuSubMinimapKoth != null)
-                menuSubMinimapKoth.Text = $"KOTH: {(showMinimapKoth ? "<color=lime>[ON]" : "<color=255,90,90>[OFF]")}";
-
-            if (menuSubRate != null)
-                menuSubRate.Text = $"Update Frequency: <color=255,230,40>[{updateTickRate} Ticks ({(60f / updateTickRate):0.#} Hz)]";
-        }
-
 
         private Vector3D? GetPlayerPosition()
         {

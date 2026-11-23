@@ -47,7 +47,6 @@ Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk hel
 | `/gvk card` | Full-screen Avionics Mission Briefing |
 | `/gvk reset` | Reset all navigation positions and preferences |
 | `/gvk settings` | Open the navigation settings screen (also the Settings button on the satellite map) |
-| `/gvk ss` | Switch the HUD renderer between the game's screen API and Text HUD API (test) |
 <!-- /GENERATED:player-commands -->
 
 Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to those plugins and are explained in the Steam guide.
@@ -75,11 +74,9 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `NoThrusterZone_*.cs` | Switch off non-NPC thrusters near rover-only KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
 | `KOTHNoSafezone_*.cs` | Switch off player safezone generators and projectors near KOTH sites | [Zone enforcement scripts](Docs/design/zone-enforcement.md) |
 | `GVK_ZoneNavCommand.cs` | The /gvk HUD: compass, radar, minimap and satellite map | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
-| `HudAPIv2.cs` | The Text HUD API the HUD draws with | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
-| `GVK_HudApiShared.cs` | The one Text HUD API instance the /gvk HUD and the KOTH client share | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
-| `GVK_ScreenLayer.cs` | Draw list for the game's own screen API (SE 1.211), in Text HUD API units | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_ScreenLayer.cs` | Draw list for the game's own screen API (SE 1.211), in HUD units (-1..1, Y up) | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_MapScreen.cs` | The satellite map as a game screen (mouse and keyboard) with the screen API | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
-| `GVK_SettingsScreen.cs` | The /gvk settings screen: the F2 menu's settings as a game screen with the mouse | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_SettingsScreen.cs` | The /gvk settings screen: every navigation setting in a game screen with the mouse | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what
@@ -116,7 +113,7 @@ Patterns here that are worth borrowing, each with the file to read:
 - **Track blocks and grids through add and remove events** instead of scanning every tick (`SafezoneH2.cs`, `GVK_PredictionSwitcher.cs`).
 - **Keep server-only and client-only code apart** (`FixUnknownSignal.cs` runs on the server, `GVK_PredictionSwitcher.cs` on the client).
 - **Let the data define the rule**: banned blocks, faction reputations and economy settings live in SBC files, not in code.
-- **A full HUD on the Text HUD API**: [zone nav HUD](Docs/design/zone-nav-hud.md).
+- **A full HUD and game screens on the game's own screen API** (SE 1.211), with no other mod needed: [zone nav HUD](Docs/design/zone-nav-hud.md).
 
 ## Contributing
 Open issues in the hub tracker, [GV-Server-Mods/GVK-Settings](https://github.com/GV-Server-Mods/GVK-Settings/issues), for every GVK repo; set the Component field so it lands with the right repo. The labels and triage roles are in [Docs/agents/triage-labels.md](Docs/agents/triage-labels.md) and the tracker rules in [Docs/agents/issue-tracker.md](Docs/agents/issue-tracker.md).

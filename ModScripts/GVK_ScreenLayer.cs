@@ -9,25 +9,49 @@ namespace GVK.Navigation
 {
     /// <summary>
     /// Draw list for the vanilla screen-space API (MyScreenSpaceSprite / MyScreenSpaceText, SE 1.211).
-    /// Layout code fills it at its own tick rate using Text HUD API units (-1..1, Y up, whole window);
-    /// Draw() replays it every frame and must be called from a session component's Draw().
-    /// Items draw in the order they were added.
+    /// Layout code fills it at its own tick rate in HUD units (-1..1, Y up, whole window; the units the HUD
+    /// was laid out in under Text HUD API); Draw() replays it every frame and must be called from a session
+    /// component's Draw(). Items draw in the order they were added.
     /// </summary>
     public class GvkScreenLayer
     {
         public const string FONT = "White";
 
-        /// <summary>
-        /// Screen API text scale per Text HUD API scale unit. Measured in game 2026-11-22 at 2560x1440 (Text HUD API
-        /// width 0.15586 vs screen API 289.6 px); it holds at any resolution but only at that UI scale.
-        /// </summary>
+        /// <summary>Text scale used when the font can't be measured (2560x1440 at the owner's UI scale).</summary>
         public const float TEXT_SCALE_DEFAULT = 0.689f;
 
-        /// <summary>Renderer switch (/gvk ss) shared by the navigation HUD and the KOTH panel.</summary>
-        public static bool UseScreenApi = true;
+        /// <summary>
+        /// Text HUD API drew text at a size set by the window height alone: CAL_TEXT at scale 1 was
+        /// CAL_HEIGHT_RATIO x window height wide (its FontTexture.cs and ModHUDMessage.GetLength; measured
+        /// 0.15586 of the width at 2560x1440 in game, 2026-11-22). The screen API's font follows the UI scale,
+        /// so its scale is measured against that, which keeps text the size the HUD was laid out for.
+        /// </summary>
+        private const string CAL_TEXT = "0123456789NESW";
+        private const float CAL_HEIGHT_RATIO = 0.13854f;
 
-        /// <summary>Current text scale; the navigation HUD re-measures it against Text HUD API when it can.</summary>
+        /// <summary>Screen API text scale per HUD text scale unit, from the last MeasureTextScale.</summary>
         public static float TextScale = TEXT_SCALE_DEFAULT;
+
+        private static Vector2 _calViewport;
+        private static float _calWidth = -1f;
+        private static float _calScale = TEXT_SCALE_DEFAULT; // Scale for _calViewport and _calWidth
+
+        /// <summary>Screen API text scale per HUD text scale unit for this window; re-measured when the
+        /// window size or the UI scale changes. Also sets TextScale.</summary>
+        public static float MeasureTextScale(Vector2 viewport)
+        {
+            float width = MeasureWidthPixels(CAL_TEXT, 1f);
+            if (width <= 0f || viewport.Y <= 0f)
+                return TEXT_SCALE_DEFAULT; // Not measurable this call (font or window not ready); the cache is kept
+            if (viewport == _calViewport && Math.Abs(width - _calWidth) < 0.01f)
+                return TextScale = _calScale;
+            _calViewport = viewport;
+            _calWidth = width;
+            _calScale = CAL_HEIGHT_RATIO * viewport.Y / width;
+            TextScale = _calScale;
+            MyLog.Default.WriteLineAndConsole($"[GVK] Screen API text scale {TextScale:0.0000} at {viewport.X:0}x{viewport.Y:0} (font width {width:0.0} px)");
+            return TextScale;
+        }
 
         private const byte KIND_SPRITE = 0;
         private const byte KIND_TEXT = 1;
@@ -71,21 +95,21 @@ namespace GVK.Navigation
             _items.Clear();
         }
 
-        /// <summary>Text HUD API point (-1..1, Y up) to the screen API's normalized space.</summary>
+        /// <summary>HUD point (-1..1, Y up) to the screen API's normalized space.</summary>
         public Vector2 HudToNormalized(double x, double y)
         {
             var px = new Vector2((float)((x + 1.0) * 0.5 * _viewport.X), (float)((1.0 - y) * 0.5 * _viewport.Y));
             return MyScreenSpace.PixelsToNormalized(px);
         }
 
-        /// <summary>Text HUD API size (2 = whole window) to the screen API's normalized size.</summary>
+        /// <summary>HUD size (2 = whole window) to the screen API's normalized size.</summary>
         public Vector2 HudSizeToNormalized(double width, double height)
         {
             var px = new Vector2((float)(width * 0.5 * _viewport.X), (float)(height * 0.5 * _viewport.Y));
             return MyScreenSpace.PixelSizeToNormalized(px);
         }
 
-        /// <summary>The mouse cursor as a Text HUD API point. False when there is no cursor (gamepad in use).</summary>
+        /// <summary>The mouse cursor as a HUD point. False when there is no cursor (gamepad in use).</summary>
         public bool TryGetCursorHud(out Vector2D hud)
         {
             Vector2 px;
@@ -98,13 +122,13 @@ namespace GVK.Navigation
             return true;
         }
 
-        /// <summary>Width of text in FONT, in Text HUD API units (2 = whole window), at a screen API scale.</summary>
+        /// <summary>Width of text in FONT, in HUD units (2 = whole window), at a screen API scale.</summary>
         public double MeasureWidthHud(string text, float scale)
         {
             return _viewport.X > 0f ? MeasureWidthPixels(text, scale) / _viewport.X * 2.0 : 0.0;
         }
 
-        /// <summary>One line of FONT, in Text HUD API units, at a screen API scale.</summary>
+        /// <summary>One line of FONT, in HUD units, at a screen API scale.</summary>
         public double LineHeightHud(float scale)
         {
             if (_viewport.Y <= 0f) return 0.0;
@@ -112,7 +136,7 @@ namespace GVK.Navigation
             return px / _viewport.Y * 2.0;
         }
 
-        /// <summary>Clips everything added after this to a rectangle centred on a Text HUD API point, until EndClip.</summary>
+        /// <summary>Clips everything added after this to a rectangle centred on a HUD point, until EndClip.</summary>
         public void BeginClip(double x, double y, double width, double height)
         {
             _items.Add(new Item
@@ -128,7 +152,7 @@ namespace GVK.Navigation
             _items.Add(new Item { Kind = KIND_UNCLIP });
         }
 
-        /// <summary>Sprite centred on a Text HUD API point; size in Text HUD API units.</summary>
+        /// <summary>Sprite centred on a HUD point; size in HUD units.</summary>
         public void AddSprite(MyStringId material, double x, double y, double width, double height, Color color, float rotation = 0f)
         {
             if (width <= 0.0 || height <= 0.0) return;
@@ -142,7 +166,7 @@ namespace GVK.Navigation
             });
         }
 
-        /// <summary>Text anchored at a Text HUD API point; align picks which part of the text sits there.</summary>
+        /// <summary>Text anchored at a HUD point; align picks which part of the text sits there.</summary>
         public void AddText(string text, double x, double y, float scale, Color color, MyGuiDrawAlignEnum align, bool shadow)
         {
             if (string.IsNullOrEmpty(text) || scale <= 0f) return;
@@ -164,7 +188,7 @@ namespace GVK.Navigation
         private bool _runShadow;
 
         /// <summary>
-        /// Starts a line of differently coloured text runs, top-left at a Text HUD API point. Text HUD API did
+        /// Starts a line of differently coloured text runs, top-left at a HUD point. Text HUD API did
         /// this with colour tags; the screen API has none, so each run is its own draw placed after the last.
         /// </summary>
         public void BeginRuns(double x, double y, float scale, bool shadow)
