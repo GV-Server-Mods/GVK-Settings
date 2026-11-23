@@ -57,6 +57,7 @@ The Medium Hydrogen Tank (`RB_HydrogenTankMedium_Small`, small grid only) joins 
 ### GVK_Settings
 
 - **New group `GVK_AdminBlocks`, "GVK Admin Blocks"**: Limited Prod Zone, NoLargeGridZone Beacon, NoThrusterZone Beacon, CU Refinery (`LargeRefinery_NPC_CU`) and SafeZoneNPC (`SafeZoneBlockNPC`, from the siegable safe zones mod 3605260551). Limited Prod Zone is first, so it is the icon.
+- **`BeaconGroup`, "Core Beacons"**: keeps Keen's Id so Keen's beacon slot shows the GVK core beacons; its icon is the upright Light core (`Core_Light.dds`), not Keen's beacon (owner, 2026-11-23).
 - **`TankGroup`**: Keen's list plus the Medium Hydrogen Tank.
 - **New `BlockPositions.sbc`** with the GVK_Settings rows in the table.
 - **GV Kharak Items (`GVK`)**: add the admin group; drop the duplicate second size of MnM and the Cargo Scanner (same pair, one icon either way). The two prototech blocks (Prototech Reactor, Prototech Oxygen Generator) stay as two single icons: they are members of Keen's 10-block Prototech group, so listing the group's head would show the jump drive instead.
