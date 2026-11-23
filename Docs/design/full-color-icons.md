@@ -60,7 +60,7 @@ Blue-icon counts are from the hub #766 inventory (2026-11-20); step 1 recounts t
 - GV_DrillBlocker and GV_MnM: Keen's ore detector and projector icons, baked with the owner's GV logo and crown images. The first try was dark, and the GV logo had a white box (owner, in game, 2026-11-23). The game draws icons with premultiplied alpha, and the logo's clear background is white at low alpha, so that white showed. The darkness came from an earlier PNG export of Keen's icon. They are now stored like Keen's icons: decoded fresh from Keen's file, premultiplied, BC7_UNORM_SRGB with full mips. The same goes for `GV_Icon_Overlay.dds`.
 - GVK_Settings: `Textures\Icons\GV_Icon_Overlay.dds` (the GV logo, lower right) is a second `<Icon>` layer on the NoThrusterZone and NoLargeGridZone beacons, the Limited Prod Zone and the Turbo Encabulator component (owner, 2026-11-23). The Limited Prod Zone now uses Keen's ore detector icon to match its model, and its old blue `DrillBlocker.dds` is removed.
 - The Core Beacons G menu group uses `Core_Light.dds` instead of Keen's `beacon.dds` (owner, 2026-11-23).
-- Left in GVK_Settings: the Respawn Rover picture (`BaserunnerStart.png`), which needs a picture of the ship.
+- None left in the GVK mods. `tools/icon_inventory.py` had flagged the Respawn Rover (`BaserunnerStart.png`), but that is the respawn screen's screenshot of the Baserunner, and the sky read as blue (owner, 2026-11-23: it "doesn't show a blue icon in the respawn screen"). The inventory now skips respawn ships.
 
 ## Steps
 

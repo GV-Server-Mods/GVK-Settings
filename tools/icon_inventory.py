@@ -40,6 +40,8 @@ def definitions(mod):
                     continue
                 t = (idn.findtext('TypeId') or idn.get('Type') or '').replace('MyObjectBuilder_', '')
                 s = idn.findtext('SubtypeId') or idn.get('Subtype') or ''
+                if t == 'RespawnShipDefinition':
+                    continue  # respawn screen pictures are screenshots, not icons; a sky reads as blue
                 kind = 'group' if el.tag == 'BlockVariantGroup' else ('block' if el.find('CubeSize') is not None else 'item')
                 yield kind, t, s, icons[0], el.findtext('Model') or '', f
 
