@@ -4259,7 +4259,7 @@ namespace GVK.Navigation
         private void ResetAllToFactoryDefaults()
         {
             showMinimap = true;
-            minimapMode = MinimapDisplayMode.TacticalRadar;
+            minimapMode = MinimapDisplayMode.StrategicMap;
             radarScale = RadarScaleMode.Linear;
             radarRangeMeters = 3000.0;
             minimapScale = 1.0f;
@@ -4290,7 +4290,7 @@ namespace GVK.Navigation
             compassOffsetX = 0.0;
             compassOffsetY = 1.0;
 
-            zoneBarMode = ZoneBarMode.RadarDock;
+            zoneBarMode = ZoneBarMode.CompassDock;
             updateTickRate = 5;
             showRadarZoneLines = true;
             showRadarFovLines = true;
