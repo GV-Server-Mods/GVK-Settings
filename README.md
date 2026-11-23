@@ -36,7 +36,7 @@ Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk hel
 | --- | --- |
 | `/toggleprediction` | Client only: switch the multiplayer prediction mode |
 | `/gvk help` | Avionics status report card and command list (also plain /gvk) |
-| `/gvk map` | Full-screen satellite map with GPS and signals (the map key, default M, does the same) |
+| `/gvk map` | Full-screen satellite map with GPS and signals (the map key, default =, does the same) |
 | `/gvk minimap` | Corner minimap on or off |
 | `/gvk radar` | Cycle the minimap between Strategic Map and Tactical Radar |
 | `/gvk range` | Set the radar range (1.5, 3, 5 or 30 km), or cycle it |
