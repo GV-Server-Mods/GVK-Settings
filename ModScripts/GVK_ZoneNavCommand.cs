@@ -21,7 +21,7 @@ namespace GVK.Navigation
     /// projection aligned to KharakMap.dds. Configurable via chat commands and F2 mod menu.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
-    public class GVK_ZoneNavCommand : MySessionComponentBase
+    public partial class GVK_ZoneNavCommand : MySessionComponentBase
     {
         // Planetary Constants for Pertam
         private static readonly Vector3D PLANET_CENTER = new Vector3D(33032.44, 32395.99, 32074.17);
@@ -333,6 +333,12 @@ namespace GVK.Navigation
         private MapHit _mapMenuOk;          // Button boxes from the last menu build
         private MapHit _mapMenuCancel;
         private int _mapPointNext = 1;      // Next "Map Point N", so quick adds don't wait on the server's GPS list
+
+        // Settings button at the right end of the map header; drawn every frame so it lights up under the cursor
+        private readonly GvkScreenLayer _ssMapButton = new GvkScreenLayer();
+        private MapHit _mapSettingsBox;
+        private float _mapSettingsScale;
+        private const string MAP_SETTINGS_TEXT = "Settings";
         private Vector3D _mapPlayerPos;
         private float _mapZoom = 1f;
         private double _mapViewU = 0.5;
@@ -1681,10 +1687,12 @@ namespace GVK.Navigation
                 ToggleFullMap();
             }
 
-            if (showFullMap && !MapScreenOpen && MyAPIGateway.Input.IsNewKeyPressed(MyKeys.Escape))
+            // Not while the settings screen is up: its Esc (closing it, or cancelling a key capture) is not for the map
+            if (showFullMap && !MapScreenOpen && !SettingsScreenOpen && MyAPIGateway.Input.IsNewKeyPressed(MyKeys.Escape))
             {
                 CloseFullMap();
             }
+            UpdateMapReopen();
 
             Vector3D? pos = GetPlayerPosition();
             if (!pos.HasValue) return;
@@ -4182,6 +4190,17 @@ namespace GVK.Navigation
             }
             _ssMap.AddRun(_ssMapCloseText, MAP_HINT_COLOR);
 
+            // Settings button box; BuildMapSettingsButton draws it
+            _mapSettingsScale = 0.58f * textScale;
+            double buttonW = _ssMap.MeasureWidthHud(MAP_SETTINGS_TEXT, _mapSettingsScale) + 0.05;
+            double buttonH = headerH - 0.012f;
+            double buttonRight = headerW * 0.5f - 0.008f;
+            _mapSettingsBox = new MapHit
+            {
+                Wp = -1, MinX = buttonRight - buttonW, MaxX = buttonRight,
+                MinY = headerY - buttonH * 0.5, MaxY = headerY + buttonH * 0.5
+            };
+
             // Controls line on its own card docked under the frame, mirroring the header
             float hintScale = MAP_HINT_SCALE * textScale;
             double hintW = _ssMap.MeasureWidthHud(MAP_CONTROLS_HINT, hintScale) + 0.04;
@@ -4306,6 +4325,17 @@ namespace GVK.Navigation
             bool viewMoved = false;
             int wheel = input.DeltaMouseScrollWheelValue();
 
+            // Settings button in the header swaps the map for the settings screen
+            bool onSettings = hasCursor && !_mapMenuOpen && IsInMapHit(ref _mapSettingsBox, cursor);
+            if (onSettings && input.IsNewLeftMousePressed())
+            {
+                _ssMapTip.Clear();
+                _mapDragging = false;
+                OpenSettingsScreen(true); // Closes the map; it reopens when settings closes
+                return;
+            }
+            BuildMapSettingsButton(onSettings);
+
             // The right-click menu takes the clicks while it is open; Esc is handled in OnMapScreenCancelling
             if (_mapMenuOpen)
             {
@@ -4374,6 +4404,19 @@ namespace GVK.Navigation
             }
 
             UpdateMapTooltip(inFrame && !_mapDragging, cursor);
+        }
+
+        private void BuildMapSettingsButton(bool hover)
+        {
+            if (!_ssMapButton.Begin(_ssMapViewport)) return;
+            var b = _mapSettingsBox;
+            double cx = (b.MinX + b.MaxX) * 0.5;
+            double cy = (b.MinY + b.MaxY) * 0.5;
+            _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, cy, b.MaxX - b.MinX, b.MaxY - b.MinY,
+                hover ? new Color(70, 95, 112, 255) : new Color(31, 41, 48, 255));
+            if (hover) _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, b.MinY + 0.002, b.MaxX - b.MinX, 0.004, new Color(187, 233, 246));
+            _ssMapButton.AddText(MAP_SETTINGS_TEXT, cx, cy, _mapSettingsScale, hover ? Color.White : new Color(187, 233, 246),
+                MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
         }
 
         /// <summary>The marker or label under a point, last drawn first; -1 if none.</summary>
@@ -4621,6 +4664,7 @@ namespace GVK.Navigation
             try
             {
                 _ssMap.Draw(MyScreenSpaceLayer.BelowHud, alpha);
+                _ssMapButton.Draw(MyScreenSpaceLayer.BelowHud, alpha);
                 _ssMapTip.Draw(MyScreenSpaceLayer.BelowHud, alpha);
                 _ssMapMenu.Draw(MyScreenSpaceLayer.BelowHud, alpha);
             }
@@ -4813,6 +4857,13 @@ namespace GVK.Navigation
                 return;
             }
 
+            if (msg.Equals("/gvk settings", StringComparison.OrdinalIgnoreCase))
+            {
+                sendToOthers = false;
+                OpenSettingsScreen(showFullMap); // Over an open map, swap it out the same way the map's button does
+                return;
+            }
+
             if (msg.Equals("/gvk ss", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
@@ -4871,6 +4922,7 @@ namespace GVK.Navigation
             showFullMap = false;
             _ssMap.Clear();
             _ssMapTip.Clear();
+            _ssMapButton.Clear();
             CloseMapMenu();
             _mapHits.Clear();
             _mapDragging = false;
@@ -4893,7 +4945,7 @@ namespace GVK.Navigation
         /// Opens the satellite map: as a game screen with the screen API, else as Text HUD API billboards.
         /// If the game refuses the screen (four mod screens already open), the Text HUD API map is the fallback.
         /// </summary>
-        private void OpenFullMap()
+        private void OpenFullMap(bool keepView = false)
         {
             if (showFullMap) return;
             if (GvkScreenLayer.UseScreenApi)
@@ -4904,6 +4956,8 @@ namespace GVK.Navigation
             }
 
             showFullMap = true;
+            _mapReopenTicks = 0;          // This map is the one a pending reopen after settings was for
+            _settingsReturnToMap = false;
             _mapLayoutDirty = true; // The two renderers lay the map out at different scales
             _fullMapNeedsRedraw = true;
 
@@ -4937,11 +4991,15 @@ namespace GVK.Navigation
             if (MapScreenOpen)
             {
                 // Open on the player at the last zoom; the map key that opened it must be let go before it closes it
+                // (keepView: back from the settings screen, so it keeps the view the player left)
                 Vector3D? pos = GetPlayerPosition();
                 if (pos.HasValue) _mapPlayerPos = pos.Value;
-                Vector2 uv = WorldToMapUV(_mapPlayerPos);
-                _mapViewU = uv.X;
-                _mapViewV = uv.Y;
+                if (!keepView)
+                {
+                    Vector2 uv = WorldToMapUV(_mapPlayerPos);
+                    _mapViewU = uv.X;
+                    _mapViewV = uv.Y;
+                }
                 _mapKeyLatch = true;
                 _mapDragging = false;
                 _fullMapNeedsRedraw = false;
@@ -5553,7 +5611,11 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Zone Status: {modeName}", 2500, zoneBarMode != ZoneBarMode.Off ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
-        private int GetCurrentMinimapPresetIndex()
+        private int GetCurrentMinimapPresetIndex() => Math.Max(0, FindMinimapPresetIndex());
+        private int GetCurrentCompassPresetIndex() => Math.Max(0, FindCompassPresetIndex());
+
+        /// <summary>The preset the minimap sits at, or -1 for a custom position.</summary>
+        private int FindMinimapPresetIndex()
         {
             for (int i = 0; i < MinimapPresets.Length; i++)
             {
@@ -5561,10 +5623,11 @@ namespace GVK.Navigation
                     Math.Abs(minimapOffsetY - MinimapPresets[i].PosY) < 0.08)
                     return i;
             }
-            return 0;
+            return -1;
         }
 
-        private int GetCurrentCompassPresetIndex()
+        /// <summary>The preset the compass sits at, or -1 for a custom position.</summary>
+        private int FindCompassPresetIndex()
         {
             for (int i = 0; i < CompassPresets.Length; i++)
             {
@@ -5572,7 +5635,7 @@ namespace GVK.Navigation
                     Math.Abs(compassOffsetY - CompassPresets[i].PosY) < 0.08)
                     return i;
             }
-            return 0;
+            return -1;
         }
 
         private void ToggleRadarZoneLines()
@@ -5705,6 +5768,7 @@ namespace GVK.Navigation
             sb.AppendLine("• /gvk radar       : Toggle Tactical Radar vs Sector Map");
             sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
             sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
+            sb.AppendLine("• /gvk settings    : Open the Navigation Settings screen");
             sb.AppendLine("• /gvk ss          : HUD Renderer Test (Screen API vs Text HUD API)");
             sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
             sb.AppendLine($"• /gvk map (or {mapKeyLabel})  : Open Full-Screen Topographical Kharak Map");
