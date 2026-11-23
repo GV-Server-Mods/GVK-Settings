@@ -183,7 +183,14 @@ namespace GVK.Navigation
             public int KothState;      // 0 = not a KOTH, KOTH_OPEN (flashes) or KOTH_NEXT (steady, dimmed)
             public double KothRadius;  // KOTH capture radius in metres, for the satellite map ring
             public double KothMapRadius; // That radius as a fraction of the map width (UV units)
+            public byte Relation;      // Signals only: REL_OWN, REL_FACTION, REL_HOSTILE, REL_NPC or REL_NEUTRAL
         }
+
+        private const byte REL_NEUTRAL = 0;
+        private const byte REL_OWN = 1;
+        private const byte REL_FACTION = 2;
+        private const byte REL_HOSTILE = 3;
+        private const byte REL_NPC = 4;
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
@@ -287,6 +294,50 @@ namespace GVK.Navigation
         private bool _ssMaterialsChecked = false;
         private static readonly string[] _ssDistanceTenths = new string[100]; // "0.0k".."9.9k", filled on first use
         private static readonly string[] _ssDistanceWhole = new string[1000]; // "10k".."999k", filled on first use
+
+        // Satellite map as a game screen (screen API): zoom about the cursor, drag to pan, hover for details,
+        // right-click to add a GPS. The view is the map UV at the frame centre and a zoom of 1 (whole map) to 3.
+        private GvkMapScreen _mapScreen;
+        private readonly GvkScreenLayer _ssMap = new GvkScreenLayer();
+        private readonly GvkScreenLayer _ssMapTip = new GvkScreenLayer();
+        private const float MAP_MAX_ZOOM = 3f;          // The 2160 px map picture is soft past this
+        private const double MAP_ZOOM_STEP = 1.25;      // Per mouse-wheel notch
+        private const double MAP_HOVER_HALF = 0.009;    // Hover box half width around a marker (height scaled by aspect)
+        private const float MAP_LABEL_SCALE = 0.60f;    // Text HUD API scale of the map labels
+        private struct MapHit
+        {
+            public int Wp;
+            public double MinX, MaxX, MinY, MaxY;
+        }
+        private readonly List<MapHit> _mapHits = new List<MapHit>(128); // Markers and labels drawn, for hover
+        private readonly List<string> _ssMapLabelSrc = new List<string>(64);  // Name each cached label was cut from
+        private readonly List<string> _ssMapLabelText = new List<string>(64);
+        private readonly List<float> _ssMapLabelWidth = new List<float>(64);
+        private readonly string[] _ssMapOverflowText = new string[100];
+        private static readonly string[] MAP_BORDER_LABELS = { "Z1 Border in: ", "PvP Border in: ", "Z3 Border in: ", "Core Dist: " };
+        private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
+        private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
+        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add GPS   |   Point at a marker for details";
+        private Vector3D _mapPlayerPos;
+        private float _mapZoom = 1f;
+        private double _mapViewU = 0.5;
+        private double _mapViewV = 0.5;
+        private float _ssMapW;              // Frame size in Text HUD API units from the last build; 0 before the first
+        private float _ssMapH;
+        private Vector2 _ssMapViewport;
+        private float _ssMapTextScale;
+        private bool _mapDragging;
+        private Vector2D _mapDragLast;
+        private bool _mapKeyLatch;          // Ignore the map key until the press that opened the map is let go
+        private int _gpsRescanTicks;        // Re-read the GPS list this many ticks after adding one from the map
+        private long _ssMapCrossKey = long.MinValue;
+        private string _ssMapCrossText;
+        private long _ssMapBorderKey = long.MinValue;
+        private string _ssMapBorderText;
+        private long _ssTipDistKey = long.MinValue;
+        private string _ssTipDistText;
+        private string _ssMapCloseKeyLabel;
+        private string _ssMapCloseText;
 
         // 2. Zone Bar Elements (Docked directly beneath Corner Minimap in Top-Right)
         private HudAPIv2.HUDMessage zoneMsg;
@@ -1609,21 +1660,15 @@ namespace GVK.Navigation
             if (MyAPIGateway.Utilities.IsDedicated) return;
 
             // Handle the map key (default =); modifiers must match exactly so Ctrl+M doesn't also fire on M
-            if (!MyAPIGateway.Gui.ChatEntryVisible && !MyAPIGateway.Gui.IsCursorVisible)
-            {
-                var input = MyAPIGateway.Input;
-                if (input.IsNewKeyPressed(mapKey)
-                    && input.IsAnyShiftKeyPressed() == mapKeyShift
-                    && input.IsAnyCtrlKeyPressed() == mapKeyCtrl
-                    && input.IsAnyAltKeyPressed() == mapKeyAlt)
-                {
-                    ToggleFullMap();
-                }
-            }
-
-            if (showFullMap && MyAPIGateway.Input.IsNewKeyPressed(MyKeys.Escape))
+            // (The map's game screen shows the cursor, so it handles its own key and Esc.)
+            if (!MyAPIGateway.Gui.ChatEntryVisible && !MyAPIGateway.Gui.IsCursorVisible && IsMapKeyNewPress())
             {
                 ToggleFullMap();
+            }
+
+            if (showFullMap && !MapScreenOpen && MyAPIGateway.Input.IsNewKeyPressed(MyKeys.Escape))
+            {
+                CloseFullMap();
             }
 
             Vector3D? pos = GetPlayerPosition();
@@ -1641,7 +1686,9 @@ namespace GVK.Navigation
             // KOTH flash phase for this tick: bright for 36 of every 60 ticks (0.6 s of each second)
             _kothFlashBright = tickCounter % 60 < 36;
 
-            if (tickCounter % 100 == 0)
+            // A GPS added from the map reaches the GPS list after a server round trip; re-read it soon after
+            bool gpsRescan = _gpsRescanTicks > 0 && --_gpsRescanTicks == 0;
+            if (tickCounter % 100 == 0 || gpsRescan)
             {
                 KothClientData.Changed = false;
                 UpdateBackgroundData(pos.Value);
@@ -1675,7 +1722,16 @@ namespace GVK.Navigation
 
             if (showFullMap)
             {
-                if (hudApiReady && (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw))
+                if (MapScreenOpen)
+                {
+                    _mapPlayerPos = pos.Value;
+                    if (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw)
+                    {
+                        _fullMapNeedsRedraw = false;
+                        BuildScreenSpaceFullMap();
+                    }
+                }
+                else if (hudApiReady && (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw))
                 {
                     _fullMapNeedsRedraw = false;
                     UpdateFullMap(pos.Value);
@@ -1890,21 +1946,26 @@ namespace GVK.Navigation
                 bool isOwnOrFaction = isOwner || relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner;
 
                 Color signalColor;
+                byte signalRelation;
                 if (isOwner)
                 {
                     signalColor = new Color(100, 230, 255);
+                    signalRelation = REL_OWN;
                 }
                 else if (relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner)
                 {
                     signalColor = new Color(100, 240, 100);
+                    signalRelation = REL_FACTION;
                 }
                 else if (relation == MyRelationsBetweenPlayerAndBlock.Enemies)
                 {
                     signalColor = new Color(255, 60, 60);
+                    signalRelation = REL_HOSTILE;
                 }
                 else
                 {
                     signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
+                    signalRelation = isNpc ? REL_NPC : REL_NEUTRAL;
                 }
 
                 // One marker per grid (de-clutter rule): track the NEAREST in-range broadcasting block.
@@ -1962,6 +2023,7 @@ namespace GVK.Navigation
                         MapUV = WorldToMapUV(bestPos),
                         IsSignal = true,
                         IsOwnOrFaction = isOwnOrFaction,
+                        Relation = signalRelation,
                         PlanetaryElevation = Vector3D.Distance(bestPos, PLANET_CENTER) - PLANET_RADIUS
                     });
                 }
@@ -2581,6 +2643,7 @@ namespace GVK.Navigation
 
         private void ToggleScreenSpaceHud()
         {
+            if (showFullMap && !MapScreenOpen) CloseFullMap(); // The map reopens in the other renderer
             GvkScreenLayer.UseScreenApi = !GvkScreenLayer.UseScreenApi;
             ClearScreenSpaceHud();
             // Text HUD API minimap re-places itself only when its card width is off; force that on the way back
@@ -3491,7 +3554,7 @@ namespace GVK.Navigation
             if (_mapLayoutDirty)
             {
                 _mapLayoutDirty = false;
-                BuildMapLayout(fullMapWidth, fullMapHeight);
+                BuildMapLayout(fullMapWidth, fullMapHeight, 0.5, 0.5, fullMapWidth, fullMapHeight, false);
             }
 
             DrawKothRings(fullMapWidth, fullMapHeight);
@@ -3645,29 +3708,42 @@ namespace GVK.Navigation
         /// Groups labelled waypoints into label stacks so no two stacks overlap. Filtered-out signals are skipped;
         /// waypoints whose label is toggled off become plain dots. Nearby stacks that would overlap merge; a stack that would still overlap a nearer one
         /// draws its markers as dots at their true positions. Runs only when <see cref="_mapLayoutDirty"/> is set.
+        /// The map is drawn mapWidth x mapHeight with map UV (viewU, viewV) at the frame centre; waypoints outside
+        /// the frame are left out. Screen measures labels with the screen API font, else with Text HUD API.
         /// </summary>
-        private void BuildMapLayout(float fullMapWidth, float fullMapHeight)
+        private void BuildMapLayout(float mapWidth, float mapHeight, double viewU, double viewV, float frameWidth, float frameHeight, bool screen)
         {
             _mapPlainWps.Clear();
             _mapLabelWps.Clear();
             _mapLabelRoots.Clear();
             _mapLabelWidths.Clear();
             _cachedMapClusters.Clear();
+            double halfW = frameWidth * 0.5;
+            double halfH = frameHeight * 0.5;
 
             // Proximity clustering around each cluster's running centre (waypoints arrive nearest first)
             for (int i = 0; i < activeHudWaypoints.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
                 if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals, showMapKoth)) continue;
+                Vector2D wpOffset = GetMapOffset(wp.MapUV, mapWidth, mapHeight, viewU, viewV);
+                if (Math.Abs(wpOffset.X) > halfW || Math.Abs(wpOffset.Y) > halfH) continue;
                 if (wp.KothState == 0 && !(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels)) // KOTH labels always show
                 {
                     _mapPlainWps.Add(i);
                     continue;
                 }
 
-                Vector2D wpOffset = GetMapOffset(wp.MapUV, fullMapWidth, fullMapHeight);
-                if (_mapLabelMeasure != null) FormatWaypointLabel(_mapLabelMeasure, wp.Name);
-                float width = MeasureMapLabel();
+                float width;
+                if (screen)
+                {
+                    GetSsMapLabel(i, out width);
+                }
+                else
+                {
+                    if (_mapLabelMeasure != null) FormatWaypointLabel(_mapLabelMeasure, wp.Name);
+                    width = MeasureMapLabel();
+                }
 
                 int found = -1;
                 for (int c = 0; c < _cachedMapClusters.Count; c++)
@@ -3697,10 +3773,22 @@ namespace GVK.Navigation
                 _mapLabelWidths.Add(width);
             }
 
-            if (_mapLabelMeasure != null) FormatMapOverflowLabel(_mapLabelMeasure, 99);
-            float overflowWidth = MeasureMapLabel();
+            float overflowWidth;
+            double textHeight;
+            if (screen)
+            {
+                float labelScale = MAP_LABEL_SCALE * _ssMapTextScale;
+                overflowWidth = (float)_ssMap.MeasureWidthHud(GetSsMapOverflowText(99), labelScale);
+                if (overflowWidth <= 0f) overflowWidth = 0.15f;
+                textHeight = _ssMap.LineHeightHud(labelScale);
+            }
+            else
+            {
+                if (_mapLabelMeasure != null) FormatMapOverflowLabel(_mapLabelMeasure, 99);
+                overflowWidth = MeasureMapLabel();
+                textHeight = _mapLabelMeasure != null ? Math.Abs(_mapLabelMeasure.GetTextLength().Y) : 0.0;
+            }
             _mapOverflowWidth = overflowWidth;
-            double textHeight = _mapLabelMeasure != null ? Math.Abs(_mapLabelMeasure.GetTextLength().Y) : 0.0;
             _mapTextHeight = textHeight > 0.0 ? textHeight : 0.016;
 
             // Merge nearby clusters whose stacks overlap; the nearer (lower index) cluster absorbs the other
@@ -3849,8 +3937,9 @@ namespace GVK.Navigation
         /// <summary>Stacks grow downward, or upward when the cluster is near the bottom edge of the map.</summary>
         private float GetMapStackDir(Vector2D pos) => pos.Y < -0.40 ? 1.0f : -1.0f;
 
-        private static Vector2D GetMapOffset(Vector2 uv, float fullMapWidth, float fullMapHeight)
-            => new Vector2D((uv.X - 0.5) * fullMapWidth, (0.5 - uv.Y) * fullMapHeight);
+        /// <summary>Map UV to a point on the map frame, the map drawn width x height with (viewU, viewV) at the centre.</summary>
+        private static Vector2D GetMapOffset(Vector2 uv, float fullMapWidth, float fullMapHeight, double viewU = 0.5, double viewV = 0.5)
+            => new Vector2D((uv.X - viewU) * fullMapWidth, (viewV - uv.Y) * fullMapHeight);
 
         private void DrawMapMarker(HudAPIv2.BillBoardHUDMessage sprite, int wpIdx, Vector2D offset, double playerElevation)
         {
@@ -3934,6 +4023,437 @@ namespace GVK.Navigation
 
             for (int i = dot; i < kothRingPool.Count; i++)
                 kothRingPool[i].Visible = false;
+        }
+
+        /// <summary>
+        /// Draw list for the satellite map's game screen: the Text HUD API map's layout seen through the zoom and
+        /// pan view. Rebuilt on the HUD tick and whenever the view moves. The map picture and KOTH rings are clipped
+        /// to the frame; markers outside it are left out, so labels near an edge stay whole.
+        /// </summary>
+        private void BuildScreenSpaceFullMap()
+        {
+            var camera = MyAPIGateway.Session?.Camera;
+            if (camera == null || !_ssMap.Begin(camera.ViewportSize)) return;
+            CheckScreenSpaceAssets();
+            Vector2 viewport = camera.ViewportSize;
+            float aspect = viewport.X / viewport.Y;
+            float textScale = GetScreenSpaceTextScale(viewport);
+            if (viewport != _ssMapViewport || textScale != _ssMapTextScale)
+            {
+                _ssMapViewport = viewport;
+                _ssMapTextScale = textScale;
+                _ssMapLabelSrc.Clear(); // Label widths were measured at the old size
+                _ssMapLabelText.Clear();
+                _ssMapLabelWidth.Clear();
+                _mapLayoutDirty = true;
+            }
+
+            float frameW = 1.40f;
+            float frameH = 0.70f * aspect;
+            _ssMapW = frameW;
+            _ssMapH = frameH;
+            ClampMapView();
+            float mapW = frameW * _mapZoom;
+            float mapH = frameH * _mapZoom;
+            double viewU = _mapViewU;
+            double viewV = _mapViewV;
+            double playerElevation = Vector3D.Distance(_mapPlayerPos, PLANET_CENTER) - PLANET_RADIUS;
+
+            if (_mapLayoutDirty)
+            {
+                _mapLayoutDirty = false;
+                BuildMapLayout(mapW, mapH, viewU, viewV, frameW, frameH, true);
+            }
+
+            Color card = GetCardBgColor();
+            _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, 0.0, 2.0, 2.0, new Color(0, 0, 0, 190));
+            _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, 0.0, frameW + 0.02f, frameH + 0.01f * aspect, card);
+
+            _ssMap.BeginClip(0.0, 0.0, frameW, frameH);
+            _ssMap.AddSprite(MATERIAL_MAP, (0.5 - viewU) * mapW, (viewV - 0.5) * mapH, mapW, mapH, Color.White);
+            AddSsKothRings(mapW, mapH, viewU, viewV, aspect);
+            _ssMap.EndClip();
+
+            // Unlabelled markers first, then label stacks on top, as the Text HUD API map does
+            _mapHits.Clear();
+            for (int k = 0; k < _mapPlainWps.Count; k++)
+            {
+                int wpIdx = _mapPlainWps[k];
+                AddSsMapMarker(wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, mapW, mapH, viewU, viewV), playerElevation, aspect);
+            }
+            for (int j = 0; j < _mapLabelWps.Count; j++)
+            {
+                if (stackMapIcons && _cachedMapClusters[_mapLabelRoots[j]].Labelled) continue;
+                int wpIdx = _mapLabelWps[j];
+                AddSsMapMarker(wpIdx, GetMapOffset(activeHudWaypoints[wpIdx].MapUV, mapW, mapH, viewU, viewV), playerElevation, aspect);
+            }
+
+            for (int c = 0; c < _mapClusterShown.Count; c++)
+                _mapClusterShown[c] = 0;
+            float labelScale = MAP_LABEL_SCALE * textScale;
+            for (int j = 0; j < _mapLabelWps.Count; j++)
+            {
+                int root = _mapLabelRoots[j];
+                var cluster = _cachedMapClusters[root];
+                if (!cluster.Labelled) continue;
+
+                int slot = _mapClusterShown[root]++;
+                int itemsToShow = (cluster.Count <= 5) ? cluster.Count : 4;
+                if (slot >= itemsToShow) continue;
+
+                int wpIdx = _mapLabelWps[j];
+                Vector2D slotPos = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * slot);
+                if (stackMapIcons) AddSsMapMarker(wpIdx, slotPos, playerElevation, aspect);
+
+                float width;
+                string text = GetSsMapLabel(wpIdx, out width);
+                double lx = slotPos.X + GetMapLabelOffsetX(ref cluster, width);
+                double ly = slotPos.Y + MAP_LABEL_OFFSET_Y + cluster.NudgeY;
+                _ssMap.AddText(text, lx, ly, labelScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
+                AddMapHit(wpIdx, lx, lx + width, ly - _mapTextHeight, ly);
+            }
+
+            var overflowColor = new Color(170, 210, 245);
+            for (int c = 0; c < _cachedMapClusters.Count; c++)
+            {
+                var cluster = _cachedMapClusters[c];
+                if (!cluster.Labelled || cluster.Count <= 5) continue;
+                Vector2D slotPos = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * 4f);
+                _ssMap.AddText(GetSsMapOverflowText(cluster.Count - 4), slotPos.X + GetMapLabelOffsetX(ref cluster, _mapOverflowWidth),
+                    slotPos.Y + MAP_LABEL_OFFSET_Y, labelScale, overflowColor, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
+            }
+
+            // Player arrow on top, while it is inside the frame
+            Vector2D playerOffset = GetMapOffset(WorldToMapUV(_mapPlayerPos), mapW, mapH, viewU, viewV);
+            if (Math.Abs(playerOffset.X) <= frameW * 0.5 && Math.Abs(playerOffset.Y) <= frameH * 0.5)
+            {
+                Color arrowColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
+                _ssMap.AddSprite(MATERIAL_NAV_ARROW, playerOffset.X, playerOffset.Y, 0.018f, 0.018f * aspect, arrowColor, -playerHeadingRad);
+            }
+
+            AddSsMapHeader(frameW, frameH, aspect, textScale, card);
+        }
+
+        /// <summary>Header docked above the frame (same text as the Text HUD API map), and the controls below it.</summary>
+        private void AddSsMapHeader(float frameW, float frameH, float aspect, float textScale, Color card)
+        {
+            float topOfFrame = (frameH + 0.01f * aspect) * 0.5f;
+            float headerH = 0.056f;
+            float headerW = frameW + 0.02f;
+            float headerY = topOfFrame + 0.004f + headerH * 0.5f;
+            int zone = MathHelper.Clamp(currentZoneIndex, 0, 3);
+
+            _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, headerY, headerW, headerH, card);
+            _ssMap.AddSprite(MATERIAL_SQUARE, -headerW * 0.5f + 0.005f, headerY, 0.005f, headerH - 0.006f,
+                inSpace ? Color.Magenta : GetZoneColor(zone));
+
+            double textX = -headerW * 0.5f + 0.016f;
+            _ssMap.BeginRuns(textX, headerY + 0.013f, 0.62f * textScale, true);
+            _ssMap.AddRun("KHARAK TACTICAL SATELLITE MAP", new Color(255, 220, 0));
+            _ssMap.AddRun(" | Current Sector: ", MAP_HEADER_GREY);
+            _ssMap.AddRun(ZONE_TITLES[zone], ZONE_TEXT_COLORS[zone]);
+
+            _ssMap.BeginRuns(textX, headerY - 0.011f, 0.50f * textScale, true);
+            _ssMap.AddRun("Crossroads: ", new Color(220, 230, 240));
+            _ssMap.AddRun(FormatZoneKm(lastDistKm, ref _ssMapCrossKey, ref _ssMapCrossText), Color.White);
+            _ssMap.AddRun(" | ", MAP_HEADER_GREY);
+            _ssMap.AddRun(MAP_BORDER_LABELS[zone], MAP_HEADER_GREY);
+            _ssMap.AddRun(FormatZoneKm(zone == 3 ? lastDistZ3Km : lastRemainingKm, ref _ssMapBorderKey, ref _ssMapBorderText),
+                ZONE_TEXT_COLORS[zone == 3 ? 3 : zone + 1]);
+            if (_ssMapCloseText == null || !ReferenceEquals(_ssMapCloseKeyLabel, mapKeyLabel))
+            {
+                _ssMapCloseKeyLabel = mapKeyLabel;
+                _ssMapCloseText = "          [ Press '" + mapKeyLabel + "' or ESC to Close ]";
+            }
+            _ssMap.AddRun(_ssMapCloseText, MAP_HINT_COLOR);
+
+            _ssMap.AddText(MAP_CONTROLS_HINT, 0.0, -topOfFrame - 0.006f, 0.46f * textScale, MAP_HINT_COLOR,
+                MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_TOP, true);
+        }
+
+        private void AddSsMapMarker(int wpIdx, Vector2D pos, double playerElevation, float aspect)
+        {
+            var wp = activeHudWaypoints[wpIdx];
+            _ssMap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), pos.X, pos.Y, 0.0225f, 0.0225f * aspect, GetMarkerColor(ref wp));
+            AddMapHit(wpIdx, pos.X - MAP_HOVER_HALF, pos.X + MAP_HOVER_HALF, pos.Y - MAP_HOVER_HALF * aspect, pos.Y + MAP_HOVER_HALF * aspect);
+        }
+
+        private void AddMapHit(int wpIdx, double minX, double maxX, double minY, double maxY)
+        {
+            _mapHits.Add(new MapHit { Wp = wpIdx, MinX = minX, MaxX = maxX, MinY = minY, MaxY = maxY });
+        }
+
+        private void AddSsKothRings(float mapW, float mapH, double viewU, double viewV, float aspect)
+        {
+            if (!showMapKoth) return;
+            for (int w = 0; w < activeHudWaypoints.Count; w++)
+            {
+                var wp = activeHudWaypoints[w];
+                if (wp.KothState == 0 || wp.KothRadius <= 0) continue;
+                Vector2D center = GetMapOffset(wp.MapUV, mapW, mapH, viewU, viewV);
+                double radius = Math.Max(wp.KothMapRadius * mapW, 0.004);
+                Color color = GetMarkerColor(ref wp);
+                for (int i = 0; i < KOTH_RING_DOTS; i++)
+                {
+                    _ssMap.AddSprite(MATERIAL_SQUARE, center.X + KOTH_RING_COS[i] * radius, center.Y + KOTH_RING_SIN[i] * radius * aspect,
+                        0.0025f, 0.0025f * aspect, color);
+                }
+            }
+        }
+
+        /// <summary>A waypoint's map label (names past 20 characters cut to first 12...last 4) and its width, cached.</summary>
+        private string GetSsMapLabel(int wpIdx, out float width)
+        {
+            while (_ssMapLabelSrc.Count <= wpIdx)
+            {
+                _ssMapLabelSrc.Add(null);
+                _ssMapLabelText.Add(null);
+                _ssMapLabelWidth.Add(0f);
+            }
+
+            string name = activeHudWaypoints[wpIdx].Name ?? string.Empty;
+            if (_ssMapLabelSrc[wpIdx] != name)
+            {
+                string text = name.Length > 20 ? name.Substring(0, 12) + "..." + name.Substring(name.Length - 4) : name;
+                float measured = (float)_ssMap.MeasureWidthHud(text, MAP_LABEL_SCALE * _ssMapTextScale);
+                _ssMapLabelSrc[wpIdx] = name;
+                _ssMapLabelText[wpIdx] = text;
+                _ssMapLabelWidth[wpIdx] = measured > 0f ? measured : 0.15f;
+            }
+            width = _ssMapLabelWidth[wpIdx];
+            return _ssMapLabelText[wpIdx];
+        }
+
+        private string GetSsMapOverflowText(int hiddenCount)
+        {
+            if (hiddenCount < 0 || hiddenCount >= _ssMapOverflowText.Length) return "+" + hiddenCount + " more...";
+            return _ssMapOverflowText[hiddenCount] ?? (_ssMapOverflowText[hiddenCount] = "+" + hiddenCount + " more...");
+        }
+
+        /// <summary>Keeps the zoom in range and the view inside the map picture, so the frame is always full.</summary>
+        private void ClampMapView()
+        {
+            _mapZoom = MathHelper.Clamp(_mapZoom, 1f, MAP_MAX_ZOOM);
+            double half = 0.5 / _mapZoom;
+            _mapViewU = MathHelper.Clamp(_mapViewU, half, 1.0 - half);
+            _mapViewV = MathHelper.Clamp(_mapViewV, half, 1.0 - half);
+        }
+
+        /// <summary>Zooms by mouse-wheel notches, keeping the map point under <paramref name="at"/> in place.</summary>
+        private bool ZoomMap(int wheelDelta, Vector2D at)
+        {
+            float oldZoom = _mapZoom;
+            float newZoom = MathHelper.Clamp((float)(oldZoom * Math.Pow(MAP_ZOOM_STEP, wheelDelta / 120.0)), 1f, MAP_MAX_ZOOM);
+            if (newZoom == oldZoom) return false;
+            double u = _mapViewU + at.X / (_ssMapW * oldZoom);
+            double v = _mapViewV - at.Y / (_ssMapH * oldZoom);
+            _mapZoom = newZoom;
+            _mapViewU = u - at.X / (_ssMapW * newZoom);
+            _mapViewV = v + at.Y / (_ssMapH * newZoom);
+            ClampMapView();
+            return true;
+        }
+
+        private bool IsMapKeyNewPress()
+        {
+            var input = MyAPIGateway.Input;
+            return input.IsNewKeyPressed(mapKey)
+                && input.IsAnyShiftKeyPressed() == mapKeyShift
+                && input.IsAnyCtrlKeyPressed() == mapKeyCtrl
+                && input.IsAnyAltKeyPressed() == mapKeyAlt;
+        }
+
+        /// <summary>Map screen input, every frame it has focus: close key, wheel zoom, drag pan, right-click GPS, hover.</summary>
+        public void HandleMapScreenInput()
+        {
+            if (!showFullMap || _ssMapW <= 0f) return;
+            var input = MyAPIGateway.Input;
+
+            if (_mapKeyLatch)
+            {
+                if (!input.IsKeyPress(mapKey)) _mapKeyLatch = false;
+            }
+            else if (IsMapKeyNewPress())
+            {
+                CloseFullMap();
+                return;
+            }
+
+            Vector2D cursor;
+            bool hasCursor = _ssMap.TryGetCursorHud(out cursor);
+            bool inFrame = hasCursor && Math.Abs(cursor.X) <= _ssMapW * 0.5 && Math.Abs(cursor.Y) <= _ssMapH * 0.5;
+            bool viewMoved = false;
+
+            int wheel = input.DeltaMouseScrollWheelValue();
+            if (wheel != 0) viewMoved = ZoomMap(wheel, inFrame ? cursor : Vector2D.Zero);
+
+            if (_mapDragging)
+            {
+                if (!hasCursor || !input.IsLeftMousePressed())
+                {
+                    _mapDragging = false;
+                }
+                else if (cursor != _mapDragLast)
+                {
+                    _mapViewU -= (cursor.X - _mapDragLast.X) / (_ssMapW * _mapZoom);
+                    _mapViewV += (cursor.Y - _mapDragLast.Y) / (_ssMapH * _mapZoom);
+                    _mapDragLast = cursor;
+                    ClampMapView();
+                    viewMoved = true;
+                }
+            }
+            else if (inFrame && input.IsNewLeftMousePressed())
+            {
+                _mapDragging = true;
+                _mapDragLast = cursor;
+            }
+
+            if (inFrame && input.IsNewRightMousePressed())
+                AddGpsFromMap(cursor);
+
+            if (viewMoved)
+            {
+                _mapLayoutDirty = true;
+                BuildScreenSpaceFullMap();
+            }
+
+            UpdateMapTooltip(inFrame && !_mapDragging, cursor);
+        }
+
+        /// <summary>Card beside the cursor for the marker or label under it: full name, what it is, how far.</summary>
+        private void UpdateMapTooltip(bool active, Vector2D cursor)
+        {
+            _ssMapTip.Clear();
+            if (!active) return;
+
+            int wpIdx = -1;
+            for (int i = _mapHits.Count - 1; i >= 0; i--) // Last drawn is on top
+            {
+                var h = _mapHits[i];
+                if (cursor.X >= h.MinX && cursor.X <= h.MaxX && cursor.Y >= h.MinY && cursor.Y <= h.MaxY)
+                {
+                    wpIdx = h.Wp;
+                    break;
+                }
+            }
+            if (wpIdx < 0 || wpIdx >= activeHudWaypoints.Count || !_ssMapTip.Begin(_ssMapViewport)) return;
+
+            var wp = activeHudWaypoints[wpIdx];
+            float nameScale = 0.60f * _ssMapTextScale;
+            float infoScale = 0.50f * _ssMapTextScale;
+            string name = wp.Name ?? string.Empty;
+            string kind = GetMapMarkerKind(ref wp);
+            string dist = FormatZoneKm(Vector3D.Distance(_mapPlayerPos, wp.Coords) * 0.001, ref _ssTipDistKey, ref _ssTipDistText);
+            const string GAP = "   ";
+
+            double nameW = _ssMapTip.MeasureWidthHud(name, nameScale);
+            double infoW = _ssMapTip.MeasureWidthHud(kind, infoScale) + _ssMapTip.MeasureWidthHud(GAP, infoScale)
+                         + _ssMapTip.MeasureWidthHud(dist, infoScale);
+            double nameH = _ssMapTip.LineHeightHud(nameScale);
+            double infoH = _ssMapTip.LineHeightHud(infoScale);
+            float aspect = _ssMapViewport.X / _ssMapViewport.Y;
+            double padX = 0.008;
+            double padY = 0.006 * aspect;
+            double boxW = 0.004 + padX * 2.0 + Math.Max(nameW, infoW);
+            double boxH = padY * 2.0 + nameH + infoH;
+
+            // Below and right of the cursor, flipped where it would run off the window
+            double left = cursor.X + 0.016;
+            double top = cursor.Y - 0.016 * aspect;
+            if (left + boxW > 0.99) left = cursor.X - 0.016 - boxW;
+            if (top - boxH < -0.99) top = cursor.Y + 0.016 * aspect + boxH;
+
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 235));
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, wp.DisplayColor);
+            double textX = left + 0.004 + padX;
+            _ssMapTip.AddText(name, textX, top - padY, nameScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
+            _ssMapTip.BeginRuns(textX, top - padY - nameH, infoScale, true);
+            _ssMapTip.AddRun(kind, wp.DisplayColor);
+            _ssMapTip.AddRun(GAP, Color.White);
+            _ssMapTip.AddRun(dist, new Color(200, 200, 200));
+        }
+
+        private static string GetMapMarkerKind(ref ActiveHudWaypoint wp)
+        {
+            if (wp.KothState == KOTH_OPEN) return "KOTH, open now";
+            if (wp.KothState == KOTH_NEXT) return "KOTH, opens next";
+            if (!wp.IsSignal) return "GPS point";
+            switch (wp.Relation)
+            {
+                case REL_OWN: return "Your signal";
+                case REL_FACTION: return "Faction signal";
+                case REL_HOSTILE: return "Hostile signal";
+                case REL_NPC: return "NPC signal";
+                default: return "Neutral signal";
+            }
+        }
+
+        /// <summary>
+        /// Adds a GPS on the ground at a point on the map: the map projection run backwards gives the direction
+        /// from the planet centre, then the planet's surface along it. Named "Map Point N", the next free N.
+        /// </summary>
+        private void AddGpsFromMap(Vector2D cursor)
+        {
+            var player = MyAPIGateway.Session?.Player;
+            if (player == null) return;
+
+            double u = MathHelper.Clamp(_mapViewU + cursor.X / (_ssMapW * _mapZoom), 0.0, 1.0);
+            double v = MathHelper.Clamp(_mapViewV - cursor.Y / (_ssMapH * _mapZoom), 0.0, 1.0);
+            double lat = Math.PI * 0.5 - v * Math.PI;
+            double lon = u * 2.0 * Math.PI - Math.PI + 0.2540 * 2.0 * Math.PI; // Undo WorldToMapUV's prime meridian shift
+            var dir = new Vector3D(Math.Cos(lat) * Math.Cos(lon), -Math.Sin(lat), Math.Cos(lat) * Math.Sin(lon));
+            Vector3D point = PLANET_CENTER + dir * PLANET_RADIUS;
+            var planet = Sandbox.Game.Entities.MyGamePruningStructure.GetClosestPlanet(point);
+            if (planet != null) point = planet.GetClosestSurfacePointGlobal(ref point);
+
+            cachedGpsList.Clear();
+            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
+            int next = 1;
+            for (int i = 0; i < cachedGpsList.Count; i++)
+            {
+                string gpsName = cachedGpsList[i].Name;
+                int n;
+                if (gpsName != null && gpsName.StartsWith("Map Point ", StringComparison.Ordinal)
+                    && int.TryParse(gpsName.Substring(10), out n) && n >= next)
+                    next = n + 1;
+            }
+
+            string name = "Map Point " + next;
+            var gps = MyAPIGateway.Session.GPS.Create(name, "Added from the GVK satellite map", point, true);
+            MyAPIGateway.Session.GPS.AddGps(player.IdentityId, gps);
+            _gpsRescanTicks = 30;
+            double km = Vector3D.Distance(_mapPlayerPos, point) * 0.001;
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Added GPS '{name}', {km:0.0} km away", 2500, MyFontEnum.Green);
+        }
+
+        /// <summary>The map screen's draw, every frame while it is open, faded with the screen.</summary>
+        public void DrawMapScreen(float alpha)
+        {
+            if (!showFullMap) return;
+            try
+            {
+                _ssMap.Draw(MyScreenSpaceLayer.BelowHud, alpha);
+                _ssMapTip.Draw(MyScreenSpaceLayer.BelowHud, alpha);
+            }
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map screen draw failed, switching back to Text HUD API: {ex}");
+                GvkScreenLayer.UseScreenApi = false;
+                ClearScreenSpaceHud();
+                _ssMap.Clear();
+                _ssMapTip.Clear();
+                CloseFullMap();
+            }
+        }
+
+        public void OnMapScreenClosed(bool isUnloading)
+        {
+            if (isUnloading)
+            {
+                showFullMap = false; // The session is ending; Text HUD API elements are going away with it
+                return;
+            }
+            CloseFullMap();
         }
 
 
@@ -4141,53 +4661,99 @@ namespace GVK.Navigation
 
         private void ToggleFullMap()
         {
-            showFullMap = !showFullMap;
-            if (!showFullMap)
+            if (showFullMap) CloseFullMap();
+            else OpenFullMap();
+        }
+
+        private bool MapScreenOpen => _mapScreen != null && _mapScreen.IsOpen;
+
+        private void CloseFullMap()
+        {
+            if (!showFullMap) return;
+            if (MapScreenOpen)
             {
-                if (mapDimmer != null) mapDimmer.Visible = false;
-                if (mapFrame != null) mapFrame.Visible = false;
-                if (mapTerrain != null) mapTerrain.Visible = false;
-                if (mapPlayerDot != null) mapPlayerDot.Visible = false;
-                if (mapHeaderBg != null) mapHeaderBg.Visible = false;
-                if (mapHeaderAccent != null) mapHeaderAccent.Visible = false;
-                if (mapHeaderMsg != null) mapHeaderMsg.Visible = false;
-                if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
-                HideFullMapPool();
-                // Hide the zone telemetry line immediately: UpdateZoneBar is skipped while the map is open.
-                if (zoneDistMsg != null) zoneDistMsg.Visible = false;
-                _refreshMinimapNextFrame = true;
-                _refreshCompassNextFrame = true;
+                _ssMapTip.Clear();
+                _mapScreen.Close(); // Fades out; OnMapScreenClosed comes back here to finish
+                return;
             }
-            else
+
+            showFullMap = false;
+            _ssMap.Clear();
+            _ssMapTip.Clear();
+            _mapHits.Clear();
+            _mapDragging = false;
+            if (mapDimmer != null) mapDimmer.Visible = false;
+            if (mapFrame != null) mapFrame.Visible = false;
+            if (mapTerrain != null) mapTerrain.Visible = false;
+            if (mapPlayerDot != null) mapPlayerDot.Visible = false;
+            if (mapHeaderBg != null) mapHeaderBg.Visible = false;
+            if (mapHeaderAccent != null) mapHeaderAccent.Visible = false;
+            if (mapHeaderMsg != null) mapHeaderMsg.Visible = false;
+            if (mapHeaderSubMsg != null) mapHeaderSubMsg.Visible = false;
+            HideFullMapPool();
+            // Hide the zone telemetry line immediately: UpdateZoneBar is skipped while the map is open.
+            if (zoneDistMsg != null) zoneDistMsg.Visible = false;
+            _refreshMinimapNextFrame = true;
+            _refreshCompassNextFrame = true;
+        }
+
+        /// <summary>
+        /// Opens the satellite map: as a game screen with the screen API, else as Text HUD API billboards.
+        /// If the game refuses the screen (four mod screens already open), the Text HUD API map is the fallback.
+        /// </summary>
+        private void OpenFullMap()
+        {
+            if (showFullMap) return;
+            if (GvkScreenLayer.UseScreenApi)
             {
-                _fullMapNeedsRedraw = true;
+                if (_mapScreen == null) _mapScreen = new GvkMapScreen(this);
+                _mapScreen.Open();
+                if (!_mapScreen.IsOpen && !(hudApi != null && hudApi.Heartbeat)) return;
+            }
 
-                // Immediately hide compass and minimap elements when pulling up the satellite map
-                if (compassBg != null) compassBg.Visible = false;
-                if (compassLeftAccent != null) compassLeftAccent.Visible = false;
-                if (compassRightAccent != null) compassRightAccent.Visible = false;
-                if (compassCenterPointer != null) compassCenterPointer.Visible = false;
-                if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
-                HideTapePool();
-                HideSpritePool();
+            showFullMap = true;
+            _mapLayoutDirty = true; // The two renderers lay the map out at different scales
+            _fullMapNeedsRedraw = true;
 
-                if (minimapBg != null) minimapBg.Visible = false;
-                if (minimapAccent != null) minimapAccent.Visible = false;
-                if (minimapTerrain != null) minimapTerrain.Visible = false;
-                if (radarGrid != null) radarGrid.Visible = false;
-                if (radarFovLeft != null) radarFovLeft.Visible = false;
-                if (radarFovRight != null) radarFovRight.Visible = false;
-                if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
-                if (minimapLabel != null) minimapLabel.Visible = false;
-                HideMinimapPool();
+            // Immediately hide compass and minimap elements when pulling up the satellite map
+            if (compassBg != null) compassBg.Visible = false;
+            if (compassLeftAccent != null) compassLeftAccent.Visible = false;
+            if (compassRightAccent != null) compassRightAccent.Visible = false;
+            if (compassCenterPointer != null) compassCenterPointer.Visible = false;
+            if (compassCenterBottomPip != null) compassCenterBottomPip.Visible = false;
+            HideTapePool();
+            HideSpritePool();
 
-                if (zoneBg != null) zoneBg.Visible = false;
-                if (zoneAccent != null) zoneAccent.Visible = false;
-                if (zoneMsg != null) zoneMsg.Visible = false;
-                if (zoneDistMsg != null) zoneDistMsg.Visible = false; // also hidden: UpdateZoneBar is skipped while showFullMap is true
-                _compassElementsVisible = false;
-                _minimapElementsVisible = false;
-                _zoneBarElementsVisible = false;
+            if (minimapBg != null) minimapBg.Visible = false;
+            if (minimapAccent != null) minimapAccent.Visible = false;
+            if (minimapTerrain != null) minimapTerrain.Visible = false;
+            if (radarGrid != null) radarGrid.Visible = false;
+            if (radarFovLeft != null) radarFovLeft.Visible = false;
+            if (radarFovRight != null) radarFovRight.Visible = false;
+            if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
+            if (minimapLabel != null) minimapLabel.Visible = false;
+            HideMinimapPool();
+
+            if (zoneBg != null) zoneBg.Visible = false;
+            if (zoneAccent != null) zoneAccent.Visible = false;
+            if (zoneMsg != null) zoneMsg.Visible = false;
+            if (zoneDistMsg != null) zoneDistMsg.Visible = false; // also hidden: UpdateZoneBar is skipped while showFullMap is true
+            _compassElementsVisible = false;
+            _minimapElementsVisible = false;
+            _zoneBarElementsVisible = false;
+
+            if (MapScreenOpen)
+            {
+                // Open on the player at the last zoom; the map key that opened it must be let go before it closes it
+                Vector3D? pos = GetPlayerPosition();
+                if (pos.HasValue) _mapPlayerPos = pos.Value;
+                Vector2 uv = WorldToMapUV(_mapPlayerPos);
+                _mapViewU = uv.X;
+                _mapViewV = uv.Y;
+                _mapKeyLatch = true;
+                _mapDragging = false;
+                _fullMapNeedsRedraw = false;
+                BuildScreenSpaceFullMap();
             }
         }
 

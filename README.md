@@ -76,6 +76,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `HudAPIv2.cs` | The Text HUD API the HUD draws with | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_HudApiShared.cs` | The one Text HUD API instance the /gvk HUD and the KOTH client share | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_ScreenLayer.cs` | Draw list for the game's own screen API (SE 1.211), in Text HUD API units | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_MapScreen.cs` | The satellite map as a game screen (mouse and keyboard) with the screen API | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what

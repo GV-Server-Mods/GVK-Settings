@@ -5,11 +5,13 @@ covers:
   - ModScripts/API/HudAPIv2.cs
   - ModScripts/GVK_HudApiShared.cs
   - ModScripts/GVK_ScreenLayer.cs
+  - ModScripts/GVK_MapScreen.cs
 scripts:
   - ModScripts/GVK_ZoneNavCommand.cs: The /gvk HUD: compass, radar, minimap and satellite map
   - ModScripts/API/HudAPIv2.cs: The Text HUD API the HUD draws with
   - ModScripts/GVK_HudApiShared.cs: The one Text HUD API instance the /gvk HUD and the KOTH client share
   - ModScripts/GVK_ScreenLayer.cs: Draw list for the game's own screen API (SE 1.211), in Text HUD API units
+  - ModScripts/GVK_MapScreen.cs: The satellite map as a game screen (mouse and keyboard) with the screen API
 commands:
   - /gvk help: Avionics status report card and command list (also plain /gvk)
   - /gvk map: Full-screen satellite map with GPS and signals (the map key, default =, does the same)
@@ -27,11 +29,12 @@ commands:
 
 # Zone navigation HUD (`/gvk`)
 
-- **Screen API renderer (branch `screen-space-hud`, in test)**: the compass, zone bar, corner minimap and tactical radar, and the [KOTH](koth-client.md) capture panel can draw with the game's own screen API (SE 1.211: `MyScreenSpaceSprite`, `MyScreenSpaceText`) instead of Text HUD API. `/gvk ss` switches renderers (`GvkScreenLayer.UseScreenApi`, saved as `UseScreenApi`, on by default). The satellite map and the F2 menu still need Text HUD API.
+- **Screen API renderer (branch `screen-space-hud`, in test)**: the compass, zone bar, corner minimap and tactical radar, and the [KOTH](koth-client.md) capture panel can draw with the game's own screen API (SE 1.211: `MyScreenSpaceSprite`, `MyScreenSpaceText`) instead of Text HUD API. `/gvk ss` switches renderers (`GvkScreenLayer.UseScreenApi`, saved as `UseScreenApi`, on by default). The satellite map opens as a game screen with the mouse (below); the F2 menu still needs Text HUD API.
   - Same layout math in Text HUD API units: `GvkScreenLayer` converts them to the screen API's space (which covers a centred 4:3 box, not the window) through window pixels. The layout code fills a draw list at the HUD refresh rate; `Draw()` replays it every frame in the order Text HUD API created its elements.
   - The screen API has no colour tags, so each coloured stretch of text is its own run placed after the last (`BeginRuns`, `AddRun`, `NewLine`).
   - Text size: screen API scale = Text HUD API scale × 0.689, re-measured against a hidden Text HUD API message when it is loaded (logged as `Screen API text scale`). 0.689 is the in-game measurement at 2560×1440, used without Text HUD API.
   - Screen API drawing doesn't hide with the HUD on its own, so `Draw()` skips while `Session.Config.MinimalHud` is set. A draw error logs, switches back to Text HUD API for the session and keeps the game running.
+  - **Satellite map as a game screen** (`GvkMapScreen`, a `MyModScreen`): while it is open it takes the mouse and keyboard, so the vehicle coasts, and it closes on Esc or the map key (the key that opened it must be let go first). It draws the Text HUD API map's layout through a view: mouse wheel zooms about the cursor from the whole map (1×) to 3×, the picture's limit, and a left-button drag pans; it reopens centred on the player at the last zoom. The map picture and KOTH rings are clipped to the frame (`BeginClip`), and markers outside the frame are left out so labels near an edge stay whole. Pointing at a marker or label shows its full name, what it is (GPS point; your, faction, hostile, NPC or neutral signal; KOTH open now or opens next) and its distance. Right-click adds a GPS on the ground there, `Map Point N` (the next free N): the map projection run backwards gives the direction from the planet centre, then `MyPlanet.GetClosestSurfacePointGlobal` the ground. If the game refuses the screen (four mod screens open), the Text HUD API map opens instead.
 - **One Text HUD API per mod**: HudAPIv2 registers only one instance per mod; a second one never registers and its callback never runs. The `/gvk` HUD and the [KOTH client](koth-client.md) both take the shared instance from `GvkHudApi.Register` (`GVK_HudApiShared.cs`), which runs each script's setup once the API is active and closes it after the last `Release`. Never call `new HudAPIv2` in another script of this mod.
 - **Top-Center Tactical Compass Ribbon**:
   - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
@@ -81,7 +84,7 @@ commands:
     - Seamlessly docked directly beneath the minimap card in the top-right corner (or top-center compass dock), leaving the upper-center area below the compass completely clear for WeaponCore target lock and lead indicator HUDs.
       - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`
       - **Zone 3**: Red `[ ZONE 3: GAALSIEN HEART ]` | `Crossroads: 54.2 km | Core Dist: 12.8 km`
-- **Interactive Full-Screen Satellite Map (`M` Key / `/gvk map`)**:
+- **Interactive Full-Screen Satellite Map (`=` key / `/gvk map`)**:
   - Toggled with the map key (default **`=`**, remappable in F2 > Satellite Map Settings) or `/gvk map`, with zero plugin or LCD screen requirements. The default was `M` until 2026-11-22, which clashed with mirror mode; `=` is free in the game's default bindings and on 60% keyboards. A saved config still on `M` from before then moves to `=` once (`MapKeyVersion`).
   - Displays high-resolution topographical Kharak map with 20 / 35 / 50 km zone boundaries.
   - **Real-Time "You Are Here" Blip**: Blinking player reticle tracking spherical lat/long on Pertam.

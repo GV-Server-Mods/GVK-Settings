@@ -29,9 +29,14 @@ namespace GVK.Navigation
         /// <summary>Current text scale; the navigation HUD re-measures it against Text HUD API when it can.</summary>
         public static float TextScale = TEXT_SCALE_DEFAULT;
 
+        private const byte KIND_SPRITE = 0;
+        private const byte KIND_TEXT = 1;
+        private const byte KIND_CLIP = 2;   // Starts clipping to the rectangle at Position, Size
+        private const byte KIND_UNCLIP = 3; // Ends the last clip
+
         private struct Item
         {
-            public bool IsText;
+            public byte Kind;
             public MyStringId Material;
             public string Text;
             public Vector2 Position; // Normalized: sprite centre or text anchor
@@ -44,6 +49,7 @@ namespace GVK.Navigation
         }
 
         private readonly List<Item> _items = new List<Item>(128);
+        private readonly List<MyScreenSpace.MyScissorScope> _clips = new List<MyScreenSpace.MyScissorScope>(2);
         private Vector2 _viewport;
         private Vector2 _outline; // Text outline thickness, normalized
 
@@ -79,6 +85,49 @@ namespace GVK.Navigation
             return MyScreenSpace.PixelSizeToNormalized(px);
         }
 
+        /// <summary>The mouse cursor as a Text HUD API point. False when there is no cursor (gamepad in use).</summary>
+        public bool TryGetCursorHud(out Vector2D hud)
+        {
+            Vector2 px;
+            if (_viewport.X <= 0f || !MyScreenSpace.TryGetCursorPositionPixels(out px))
+            {
+                hud = Vector2D.Zero;
+                return false;
+            }
+            hud = new Vector2D(px.X / _viewport.X * 2.0 - 1.0, 1.0 - px.Y / _viewport.Y * 2.0);
+            return true;
+        }
+
+        /// <summary>Width of text in FONT, in Text HUD API units (2 = whole window), at a screen API scale.</summary>
+        public double MeasureWidthHud(string text, float scale)
+        {
+            return _viewport.X > 0f ? MeasureWidthPixels(text, scale) / _viewport.X * 2.0 : 0.0;
+        }
+
+        /// <summary>One line of FONT, in Text HUD API units, at a screen API scale.</summary>
+        public double LineHeightHud(float scale)
+        {
+            if (_viewport.Y <= 0f) return 0.0;
+            float px = MyScreenSpace.NormalizedSizeToPixels(new Vector2(0f, MyScreenSpaceText.GetLineHeight(FONT, scale))).Y;
+            return px / _viewport.Y * 2.0;
+        }
+
+        /// <summary>Clips everything added after this to a rectangle centred on a Text HUD API point, until EndClip.</summary>
+        public void BeginClip(double x, double y, double width, double height)
+        {
+            _items.Add(new Item
+            {
+                Kind = KIND_CLIP,
+                Position = HudToNormalized(x - width * 0.5, y + height * 0.5),
+                Size = HudSizeToNormalized(width, height)
+            });
+        }
+
+        public void EndClip()
+        {
+            _items.Add(new Item { Kind = KIND_UNCLIP });
+        }
+
         /// <summary>Sprite centred on a Text HUD API point; size in Text HUD API units.</summary>
         public void AddSprite(MyStringId material, double x, double y, double width, double height, Color color, float rotation = 0f)
         {
@@ -99,7 +148,7 @@ namespace GVK.Navigation
             if (string.IsNullOrEmpty(text) || scale <= 0f) return;
             _items.Add(new Item
             {
-                IsText = true,
+                Kind = KIND_TEXT,
                 Text = text,
                 Position = HudToNormalized(x, y),
                 Scale = scale,
@@ -131,7 +180,7 @@ namespace GVK.Navigation
             if (string.IsNullOrEmpty(text) || _runScale <= 0f) return;
             _items.Add(new Item
             {
-                IsText = true,
+                Kind = KIND_TEXT,
                 Text = text,
                 Position = _runPos,
                 Scale = _runScale,
@@ -150,30 +199,54 @@ namespace GVK.Navigation
             _runPos.Y += MyScreenSpaceText.GetLineHeight(FONT, _runScale);
         }
 
-        public void Draw(MyScreenSpaceLayer layer = MyScreenSpaceLayer.BelowHud)
+        /// <summary>Draws the list. Alpha below 1 fades everything, as a game screen's open and close fades need.</summary>
+        public void Draw(MyScreenSpaceLayer layer = MyScreenSpaceLayer.BelowHud, float alpha = 1f)
         {
-            for (int i = 0; i < _items.Count; i++)
+            bool fade = alpha < 1f;
+            try
             {
-                var it = _items[i];
-                if (it.IsText)
+                for (int i = 0; i < _items.Count; i++)
                 {
-                    if (it.Shadow)
+                    var it = _items[i];
+                    Color color = fade ? it.Color * alpha : it.Color;
+                    switch (it.Kind)
                     {
-                        // Text HUD API's shadow is each letter 10% larger in black behind it: an even outline,
-                        // about a pixel thick. Four black copies offset diagonally make the same outline.
-                        var black = new Color(0, 0, 0, it.Color.A);
-                        var o = _outline;
-                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
-                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position - o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
-                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(o.X, -o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
-                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(-o.X, o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                        case KIND_TEXT:
+                            if (it.Shadow)
+                            {
+                                // Text HUD API's shadow is each letter 10% larger in black behind it: an even outline,
+                                // about a pixel thick. Four black copies offset diagonally make the same outline.
+                                var black = new Color(0, 0, 0, color.A);
+                                var o = _outline;
+                                MyScreenSpaceText.Draw(FONT, it.Text, it.Position + o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                                MyScreenSpaceText.Draw(FONT, it.Text, it.Position - o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                                MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(o.X, -o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                                MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(-o.X, o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                            }
+                            MyScreenSpaceText.Draw(FONT, it.Text, it.Position, it.Scale, color, it.Align, float.PositiveInfinity, layer);
+                            break;
+                        case KIND_CLIP:
+                            _clips.Add(MyScreenSpace.UsingScissorRectangle(new RectangleF(it.Position.X, it.Position.Y, it.Size.X, it.Size.Y), layer));
+                            break;
+                        case KIND_UNCLIP:
+                            if (_clips.Count > 0)
+                            {
+                                _clips[_clips.Count - 1].Dispose();
+                                _clips.RemoveAt(_clips.Count - 1);
+                            }
+                            break;
+                        default:
+                            MyScreenSpaceSprite.Draw(it.Material, it.Position, it.Size, color, MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, it.Rotation, layer);
+                            break;
                     }
-                    MyScreenSpaceText.Draw(FONT, it.Text, it.Position, it.Scale, it.Color, it.Align, float.PositiveInfinity, layer);
                 }
-                else
-                {
-                    MyScreenSpaceSprite.Draw(it.Material, it.Position, it.Size, it.Color, MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, it.Rotation, layer);
-                }
+            }
+            finally
+            {
+                // A clip left open would cut off everything else drawn this frame
+                for (int i = _clips.Count - 1; i >= 0; i--)
+                    _clips[i].Dispose();
+                _clips.Clear();
             }
         }
 

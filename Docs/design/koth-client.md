@@ -16,7 +16,7 @@ The player side of the GVK KOTH Torch plugin ([GV-Server-Mods/GVK-KOTH-Plugin](h
 - Listens on network channel `47410` (`RegisterSecureMessageHandler`, server messages only). The format is in the plugin's `docs/CLIENT_PROTOCOL.md`.
 - About once a second while a KOTH is open (every 10 seconds otherwise) the plugin sends every open zone (name, position, radius, bar %, players counted) and the next slot's zone with its start time. Each message replaces the whole list in `KothClientData`.
 - No message for 30 seconds (plugin stopped or not installed): the list is cleared.
-- `KothClientData` is shared with the `/gvk` navigation HUD, which shows KOTH markers from it (see [Zone navigation HUD](zone-nav-hud.md)).
+- `KothClientData` is shared with the `/gvk` navigation HUD, which shows KOTH markers from it (see [Zone navigation HUD](zone-nav-hud.md)). On the satellite map's game screen, pointing at one says whether it is open now or opens next.
 
 ## Capture panel
 - Shown while the player is inside an open KOTH: name, bar %, a 20-step bar and the number of players counted. Left side of the screen, under Text HUD API, on the instance it shares with the `/gvk` HUD (`GvkHudApi`, see [Zone navigation HUD](zone-nav-hud.md)).
