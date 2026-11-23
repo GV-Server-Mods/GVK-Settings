@@ -12,7 +12,7 @@ scripts:
   - ModScripts/GVK_ScreenLayer.cs: Draw list for the game's own screen API (SE 1.211), in Text HUD API units
 commands:
   - /gvk help: Avionics status report card and command list (also plain /gvk)
-  - /gvk map: Full-screen satellite map with GPS and signals (the map key, default M, does the same)
+  - /gvk map: Full-screen satellite map with GPS and signals (the map key, default =, does the same)
   - /gvk minimap: Corner minimap on or off
   - /gvk radar: Cycle the minimap between Strategic Map and Tactical Radar
   - /gvk range: Set the radar range (1.5, 3, 5 or 30 km), or cycle it
@@ -82,7 +82,7 @@ commands:
       - **Zone 2**: Orange `[ ZONE 2: CONTESTED (PVP) ]` | `Crossroads: 41.3 km | Z3 Border in: 8.7 km`
       - **Zone 3**: Red `[ ZONE 3: GAALSIEN HEART ]` | `Crossroads: 54.2 km | Core Dist: 12.8 km`
 - **Interactive Full-Screen Satellite Map (`M` Key / `/gvk map`)**:
-  - Toggled with the map key (default **`M`**, remappable in F2 > Satellite Map Settings) or `/gvk map`, with zero plugin or LCD screen requirements.
+  - Toggled with the map key (default **`=`**, remappable in F2 > Satellite Map Settings) or `/gvk map`, with zero plugin or LCD screen requirements. The default was `M` until 2026-11-22, which clashed with mirror mode; `=` is free in the game's default bindings and on 60% keyboards. A saved config still on `M` from before then moves to `=` once (`MapKeyVersion`).
   - Displays high-resolution topographical Kharak map with 20 / 35 / 50 km zone boundaries.
   - **Real-Time "You Are Here" Blip**: Blinking player reticle tracking spherical lat/long on Pertam.
   - **Auto-Plotted Personal GPS List & Signals**: Reads `MyAPIGateway.Session.GPS` and active radio broadcasts, plotting them with 50% enlarged Keen icons and relation colors (Allied green, Derelict white, Hostile red, Neutral gold).

@@ -16,7 +16,7 @@ namespace GVK.Navigation
 {
     /// <summary>
     /// Kharak Tactical Navigation Suite: HUD compass ribbon, corner minimap / tactical radar,
-    /// zone status bar, and full-screen satellite map on [M]. Uses pre-allocated billboard pools
+    /// zone status bar, and full-screen satellite map on the map key (default =). Uses pre-allocated billboard pools
     /// (zero GC in hot paths), Keen vanilla HUD marker icons, and a calibrated WorldToMapUV
     /// projection aligned to KharakMap.dds. Configurable via chat commands and F2 mod menu.
     /// </summary>
@@ -430,10 +430,11 @@ namespace GVK.Navigation
             public bool ShowMapSignalLabels { get; set; } = true;
             public bool ShowMapOwnSignals { get; set; } = true;
             public bool StackMapIcons { get; set; } = true;
-            public int MapKey { get; set; } = (int)MyKeys.M;
+            public int MapKey { get; set; } = (int)DEFAULT_MAP_KEY;
             public bool MapKeyShift { get; set; } = false;
             public bool MapKeyCtrl { get; set; } = false;
             public bool MapKeyAlt { get; set; } = false;
+            public int MapKeyVersion { get; set; } = 0; // Missing in configs saved while the default was M
             public float CompassScale { get; set; } = 1.0f;
             public double CompassOffsetX { get; set; } = 0.0;
             public double CompassOffsetY { get; set; } = 1.0;
@@ -451,13 +452,17 @@ namespace GVK.Navigation
 
         private const string CONFIG_FILENAME = "GVK_ZoneNavConfig.xml";
 
-        // 4. Interactive Full-Screen Satellite Map ([M] Key, true 2:1 ratio)
+        // 4. Interactive Full-Screen Satellite Map (map key, true 2:1 ratio)
+        // Default key: =, free in the game's default bindings and on 60% keyboards. It was M until 2026-11-22,
+        // which clashed with mirror mode; configs still on M from before then move to = once (MapKeyVersion).
+        private const MyKeys DEFAULT_MAP_KEY = MyKeys.OemPlus;
+        private const int MAP_KEY_VERSION = 1;
         private bool showFullMap = false;
-        private MyKeys mapKey = MyKeys.M;
+        private MyKeys mapKey = DEFAULT_MAP_KEY;
         private bool mapKeyShift = false;
         private bool mapKeyCtrl = false;
         private bool mapKeyAlt = false;
-        private string mapKeyLabel = "M"; // e.g. "Ctrl+M"; rebuilt only when the binding changes
+        private string mapKeyLabel = "="; // e.g. "Ctrl+M"; rebuilt only when the binding changes
         private HudAPIv2.MenuItem menuRootOpenMap;
         private HudAPIv2.MenuKeybindInput menuSubMapKey;
         private HudAPIv2.BillBoardHUDMessage mapDimmer;
@@ -622,7 +627,9 @@ namespace GVK.Navigation
                                 showMapKoth = cfg.ShowMapKoth;
                                 showMinimapKoth = cfg.ShowMinimapKoth;
                                 showCompassKoth = cfg.ShowCompassKoth;
-                                if (IsValidMapKey((MyKeys)cfg.MapKey))
+                                bool oldDefaultKey = cfg.MapKeyVersion < MAP_KEY_VERSION && cfg.MapKey == (int)MyKeys.M
+                                    && !cfg.MapKeyShift && !cfg.MapKeyCtrl && !cfg.MapKeyAlt;
+                                if (IsValidMapKey((MyKeys)cfg.MapKey) && !oldDefaultKey)
                                 {
                                     mapKey = (MyKeys)cfg.MapKey;
                                     mapKeyShift = cfg.MapKeyShift;
@@ -692,6 +699,7 @@ namespace GVK.Navigation
                     MapKeyShift = mapKeyShift,
                     MapKeyCtrl = mapKeyCtrl,
                     MapKeyAlt = mapKeyAlt,
+                    MapKeyVersion = MAP_KEY_VERSION,
                     ShowMinimapGps = showMinimapGps,
                     ShowMinimapSignals = showMinimapSignals,
                     ShowMinimapOwnSignals = showMinimapOwnSignals,
@@ -1276,7 +1284,7 @@ namespace GVK.Navigation
                 );
                 zoneNextMsg.Visible = false;
 
-                // 4. Interactive Full-Screen Satellite Map ([M] Key, true 2:1 ratio)
+                // 4. Interactive Full-Screen Satellite Map (map key, true 2:1 ratio)
                 mapDimmer = new HudAPIv2.BillBoardHUDMessage(
                     Material: MATERIAL_SQUARE,
                     Origin: Vector2D.Zero,
@@ -1477,7 +1485,7 @@ namespace GVK.Navigation
                 // 5. Register TextHUDAPI Mod Menu (Organized Color-Coded Avionics Suite)
                 var rootCategory = new HudAPIv2.MenuRootCategory("GVK Navigation Suite", HudAPIv2.MenuRootCategory.MenuFlag.PlayerMenu, "GVK Navigation & Map Settings");
 
-                menuRootOpenMap = new HudAPIv2.MenuItem("<color=187,233,246>[M] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
+                menuRootOpenMap = new HudAPIv2.MenuItem("<color=187,233,246>[=] Open Satellite Map", rootCategory, () => { ToggleFullMap(); });
                 menuRootMinimap = new HudAPIv2.MenuItem("Minimap: ...", rootCategory, () => { ToggleMinimap(); });
                 menuRootCompass = new HudAPIv2.MenuItem("Compass Ribbon: ...", rootCategory, () => { ToggleCompass(); });
                 menuRootZone = new HudAPIv2.MenuItem("Zone Telemetry: ...", rootCategory, () => { CycleZoneBarMode(); });
@@ -1600,7 +1608,7 @@ namespace GVK.Navigation
         {
             if (MyAPIGateway.Utilities.IsDedicated) return;
 
-            // Handle the map key (default [M]); modifiers must match exactly so Ctrl+M doesn't also fire on M
+            // Handle the map key (default =); modifiers must match exactly so Ctrl+M doesn't also fire on M
             if (!MyAPIGateway.Gui.ChatEntryVisible && !MyAPIGateway.Gui.IsCursorVisible)
             {
                 var input = MyAPIGateway.Input;
@@ -4641,7 +4649,8 @@ namespace GVK.Navigation
 
         private void UpdateMapKeyLabel()
         {
-            string name = MyAPIGateway.Input?.GetKeyName(mapKey);
+            // The game names OemPlus "Plus"; its keycap reads = (with + above) on US and UK keyboards
+            string name = mapKey == MyKeys.OemPlus ? "=" : MyAPIGateway.Input?.GetKeyName(mapKey);
             if (string.IsNullOrEmpty(name)) name = mapKey.ToString();
             mapKeyLabel = (mapKeyCtrl ? "Ctrl+" : "") + (mapKeyShift ? "Shift+" : "") + (mapKeyAlt ? "Alt+" : "") + name;
         }
@@ -4857,7 +4866,7 @@ namespace GVK.Navigation
             showMapKoth = true;
             showMinimapKoth = true;
             showCompassKoth = true;
-            mapKey = MyKeys.M;
+            mapKey = DEFAULT_MAP_KEY;
             mapKeyShift = false;
             mapKeyCtrl = false;
             mapKeyAlt = false;
