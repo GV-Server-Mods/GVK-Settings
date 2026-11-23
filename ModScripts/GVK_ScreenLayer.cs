@@ -45,7 +45,7 @@ namespace GVK.Navigation
 
         private readonly List<Item> _items = new List<Item>(128);
         private Vector2 _viewport;
-        private Vector2 _shadowOffset;
+        private Vector2 _outline; // Text outline thickness, normalized
 
         public int Count => _items.Count;
 
@@ -56,7 +56,7 @@ namespace GVK.Navigation
             if (viewportPixels.X <= 0f || viewportPixels.Y <= 0f) return false;
             _viewport = viewportPixels;
             float px = Math.Max(1f, (float)Math.Round(viewportPixels.Y / 1080f));
-            _shadowOffset = MyScreenSpace.PixelSizeToNormalized(new Vector2(px, px));
+            _outline = MyScreenSpace.PixelSizeToNormalized(new Vector2(px, px));
             return true;
         }
 
@@ -158,7 +158,16 @@ namespace GVK.Navigation
                 if (it.IsText)
                 {
                     if (it.Shadow)
-                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + _shadowOffset, it.Scale, new Color(0, 0, 0, it.Color.A), it.Align, float.PositiveInfinity, layer);
+                    {
+                        // Text HUD API's shadow is each letter 10% larger in black behind it: an even outline,
+                        // about a pixel thick. Four black copies offset diagonally make the same outline.
+                        var black = new Color(0, 0, 0, it.Color.A);
+                        var o = _outline;
+                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position - o, it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(o.X, -o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                        MyScreenSpaceText.Draw(FONT, it.Text, it.Position + new Vector2(-o.X, o.Y), it.Scale, black, it.Align, float.PositiveInfinity, layer);
+                    }
                     MyScreenSpaceText.Draw(FONT, it.Text, it.Position, it.Scale, it.Color, it.Align, float.PositiveInfinity, layer);
                 }
                 else
