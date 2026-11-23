@@ -144,27 +144,6 @@
 			</Position>
 		</BlockPosition>
 		<BlockPosition>
-			<Name>AQD_ConveyorEndcap</Name>
-			<Position>
-				<X>8</X>
-				<Y>22</Y>
-			</Position>
-		</BlockPosition>
-		<BlockPosition>
-			<Name>AQD_ConveyorJunctionTubes</Name>
-			<Position>
-				<X>9</X>
-				<Y>22</Y>
-			</Position>
-		</BlockPosition>
-		<BlockPosition>
-			<Name>{LOC:DisplayName_AQD_LG_ConveyorX}</Name>
-			<Position>
-				<X>10</X>
-				<Y>22</Y>
-			</Position>
-		</BlockPosition>
-		<BlockPosition>
 			<Name>MultiTool</Name>
 			<Position>
 				<X>5</X>

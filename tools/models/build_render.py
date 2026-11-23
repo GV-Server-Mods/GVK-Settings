@@ -6,7 +6,10 @@ yaw 225, pitch 35.
 Env: MAIN (the main model's JSON name; default: the only JSON in the folder), LAYFLAT=1 (turn the model's +Y face
 up), SIZE (camera distance factor), EXPOSURE, DENOISE, ORTHO, GLOSS, FLIPV, DROP_TURRET_ROT, FRAME_EXCLUDE,
 NO_PAINT (regex of materials that skip the grey paint), DECALS (regex of decal materials: camera-only, no shadows),
-ALIAS ("Part=SeutMaterial[:cm.png];...": render a part with another library material), SEUT_MATERIALS (SEUT's
+ALIAS ("Part=SeutMaterial[:x_cm.png,x_ng.png];...": render a part with another library material, textures swapped
+by suffix; Part is a material name, or tex:<CM file name> for every part using that texture), EMISSIVE_TINT ("r,g,b,strength": the SetEmissiveParts colour and emissivity), EMISSIVE_GAIN (how
+fast the base colour fades under the mask) and EMISSIVE (regex of the materials the block lights), REFLECT (an .exr seen only
+in reflections; REFLECT_STRENGTH, REFLECT_ROT degrees), SHINY_ROUGH (factor) and SHINY (regex), SEUT_MATERIALS (SEUT's
 Materials.blend).
 """
 import bpy, bmesh, glob, json, math, os, re, sys
@@ -28,12 +31,27 @@ SIZE = float(os.environ.get("SIZE", "1.12"))
 DROP = os.environ.get("DROP_TURRET_ROT", "0") == "1"   # MyLargeTurretBase.RotateModels
 def mkey(n):
     return re.sub(r"\.\d{3}$", "", n) if n else n
-# ALIAS="Part=SeutMaterial[:cm.png];...": render a mesh part with another library material, optionally with its CM swapped
+# ALIAS="Part=SeutMaterial[:file,file...];...": render a mesh part with another library material, optionally with
+# textures swapped; each file replaces the template's texture with the same suffix (_cm, _ng, _add, _alphamask)
 ALIAS = {}
 for item in filter(None, os.environ.get("ALIAS", "").split(";")):
     part, rest = item.split("=", 1)
-    tmpl, _, cm = rest.partition(":")
-    ALIAS[part] = (tmpl, cm or None)
+    tmpl, _, files = rest.partition(":")
+    ALIAS[part] = (tmpl, [f for f in files.split(",") if f])
+
+
+def part_key(p):
+    """A part's material key: "tex:<its CM file name>" when ALIAS names that texture (mods reuse names like
+    "Material.125" for different textures), else its material name without the .001 suffix."""
+    cm = os.path.splitext(os.path.basename(p.get("textures", {}).get("ColorMetalTexture", "").replace("\\", "/")))[0]
+    if cm and "tex:" + cm.lower() in ALIAS:
+        return "tex:" + cm.lower()
+    return mkey(p["material"]) or "NONE"
+
+
+def tex_kind(name):
+    m = re.search(r"_(cm|ng|add|alphamask)(\.\w+)?$", name.lower())
+    return m.group(1) if m else None
 
 for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)
@@ -62,7 +80,7 @@ def build_mesh(name, d):
     faces, fmat, slots, flips = [], [], [], 0
     seen, skipped = set(), 0
     for p in d["MeshParts"]:
-        key = mkey(p["material"]) or "NONE"
+        key = part_key(p)
         if key not in slots:
             slots.append(key)
         si = slots.index(key)
@@ -83,17 +101,17 @@ def build_mesh(name, d):
     for key in slots:
         m = mats.get(key)
         if key in ALIAS:
-            tmpl, cm = ALIAS[key]
+            tmpl, files = ALIAS[key]
             m = bpy.data.materials.get(key + "_alias")
             if m is None:
                 m = mats[tmpl].copy(); m.name = key + "_alias"; m["alias"] = True
-                if cm:
-                    img = bpy.data.images.load(cm)
-                    for nd in m.node_tree.nodes:
-                        if nd.type == "TEX_IMAGE" and nd.image and "_cm" in nd.image.name.lower():
+                for fp in files:
+                    img = bpy.data.images.load(fp)
+                    for nd in m.node_tree.nodes:      # node groups hold no images in SEUT materials: top level only
+                        if nd.type == "TEX_IMAGE" and nd.image and tex_kind(nd.image.name) == tex_kind(fp):
                             img.colorspace_settings.name = nd.image.colorspace_settings.name
                             img.alpha_mode = nd.image.alpha_mode      # CM alpha is metalness: keep RGB where it is 0
-                            print("alias", key, "CM", nd.image.name, "->", os.path.basename(cm)); nd.image = img
+                            print("alias", key, nd.image.name, "->", os.path.basename(fp)); nd.image = img
                 print("alias", key, "uses", tmpl)
         if m is None:
             metal = {"Copper": (0.72, 0.42, 0.20, 1)}.get(key)     # texture the game lacks: plain metal of that colour
@@ -181,6 +199,71 @@ for o in bpy.data.objects:
             o.material_slots[i].link = "OBJECT"
             o.material_slots[i].material = loc
 
+# EMISSIVE_TINT="r,g,b,strength": light the emissive parts (EMISSIVE regex of material names) in that colour, masked
+# by the ADD map's green channel as in game, e.g. a block's "working" green. SEUT's node group has no emissive colour.
+TINT = os.environ.get("EMISSIVE_TINT", "")
+if TINT:
+    r_, g_, b_, k_ = (float(x) for x in TINT.split(","))
+    EMI = re.compile(os.environ.get("EMISSIVE", r"(?i)^emissive"))
+    tinted = None
+    for m in {sl.material for o in bpy.data.objects for sl in o.material_slots if sl.material}:
+        g = next((n for n in m.node_tree.nodes if n.type == "GROUP"), None)
+        if not g or m.library or not EMI.search(m.name):
+            continue
+        if tinted is None:
+            tinted = g.node_tree.copy(); tinted.name = "SEUT Node Group (tinted)"
+            sep = next(n for n in tinted.nodes if n.type == "SEPRGB")
+            bsdf = next(n for n in tinted.nodes if n.type == "BSDF_PRINCIPLED")
+            mul = tinted.nodes.new("ShaderNodeMixRGB"); mul.blend_type = "MULTIPLY"; mul.inputs[0].default_value = 1.0
+            mul.inputs[2].default_value = (r_, g_, b_, 1.0)
+            lin = tinted.nodes.new("ShaderNodeMath"); lin.operation = "POWER"; lin.inputs[1].default_value = 1 / 2.2
+            tinted.links.new(sep.outputs["G"], lin.inputs[0])       # SEUT loads ADD maps as sRGB; the game reads them raw
+            raw = lin.outputs[0]
+            tinted.links.new(raw, mul.inputs[1])                    # glow = mask x colour x strength, as in game
+            tinted.links.new(mul.outputs[0], bsdf.inputs["Emission Color"])
+            gain = tinted.nodes.new("ShaderNodeMath"); gain.operation = "MULTIPLY"; gain.use_clamp = True
+            gain.inputs[1].default_value = float(os.environ.get("EMISSIVE_GAIN", "4"))   # Keen's masks are ~0.25
+            tinted.links.new(raw, gain.inputs[0])
+            mask = gain.outputs[0]                                   # where it glows at all: drop base and specular
+            # As in game: the glow lights nothing else and shows in no reflection (camera rays only), and the lit
+            # area has no white base colour or specular of its own to wash the colour out.
+            lp = tinted.nodes.new("ShaderNodeLightPath")
+            ks = tinted.nodes.new("ShaderNodeMath"); ks.operation = "MULTIPLY"
+            gin = next(n for n in tinted.nodes if n.type == "GROUP_INPUT")
+            tinted.links.new(gin.outputs["Emission Strength"], ks.inputs[0]); tinted.links.new(lp.outputs["Is Camera Ray"], ks.inputs[1])
+            tinted.links.new(ks.outputs[0], bsdf.inputs["Emission Strength"])
+            base = bsdf.inputs["Base Color"].links[0].from_socket
+            dk = tinted.nodes.new("ShaderNodeMixRGB"); dk.inputs[2].default_value = (0, 0, 0, 1)
+            tinted.links.new(mask, dk.inputs[0]); tinted.links.new(base, dk.inputs[1])
+            tinted.links.new(dk.outputs[0], bsdf.inputs["Base Color"])
+            sp = tinted.nodes.new("ShaderNodeMath"); sp.operation = "MULTIPLY_ADD"     # 0.5 * (1 - mask)
+            sp.inputs[1].default_value = -0.5; sp.inputs[2].default_value = 0.5
+            tinted.links.new(mask, sp.inputs[0]); tinted.links.new(sp.outputs[0], bsdf.inputs["Specular IOR Level"])
+        g.node_tree = tinted
+        g.inputs["Emission Strength"].default_value = k_
+        print("emissive tint on", m.name)
+
+# SHINY_ROUGH=<factor>: scale the roughness of the chrome-like materials (SHINY regex), which read as satin in Cycles
+# where Icon Studio draws them as near mirrors.
+SR = os.environ.get("SHINY_ROUGH", "")
+if SR:
+    SHI = re.compile(os.environ.get("SHINY", r"(?i)Metal_Shiny|Chrome|Aluminum glossy"))
+    glossy = {}
+    for m in {sl.material for o in bpy.data.objects for sl in o.material_slots if sl.material}:
+        g = next((n for n in m.node_tree.nodes if n.type == "GROUP"), None)
+        if not g or m.library or not SHI.search(m.name):
+            continue
+        src = g.node_tree
+        if src.name not in glossy:
+            t = src.copy(); t.name = src.name + " (shiny)"
+            bsdf = next(n for n in t.nodes if n.type == "BSDF_PRINCIPLED")
+            ln = bsdf.inputs["Roughness"].links[0]
+            mul = t.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = float(SR)
+            t.links.new(ln.from_socket, mul.inputs[0]); t.links.new(mul.outputs[0], bsdf.inputs["Roughness"])
+            glossy[src.name] = t
+        g.node_tree = glossy[src.name]
+        print("shiny", m.name)
+
 # The game draws decals with no shadows or bounce light; in Cycles their quads darken the paint behind them.
 # Split the decal faces into their own camera-only object.
 DEC = re.compile(os.environ.get("DECALS", r"Atlas|Decal|Paneling|Doodads"))
@@ -235,7 +318,22 @@ world = bpy.data.worlds.new("W"); sc.world = world; world.use_nodes = True
 bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
 bg.inputs[0].default_value = (1, 1, 1, 1); bg.inputs[1].default_value = 0.9
 GLOSS = float(os.environ.get("GLOSS", "1"))
-if GLOSS != 1:                                             # brighter sky in reflections only, like a studio environment
+REFLECT = os.environ.get("REFLECT", "")
+if REFLECT:                         # an HDRI seen only in reflections, for contrast on chrome; diffuse light stays even
+    nt = world.node_tree
+    lp = nt.nodes.new("ShaderNodeLightPath")
+    env = nt.nodes.new("ShaderNodeTexEnvironment"); env.image = bpy.data.images.load(REFLECT)
+    mp = nt.nodes.new("ShaderNodeMapping"); tc = nt.nodes.new("ShaderNodeTexCoord")
+    mp.inputs["Rotation"].default_value[2] = math.radians(float(os.environ.get("REFLECT_ROT", "0")))
+    nt.links.new(tc.outputs["Generated"], mp.inputs["Vector"]); nt.links.new(mp.outputs[0], env.inputs[0])
+    bg2 = nt.nodes.new("ShaderNodeBackground"); bg2.inputs[1].default_value = float(os.environ.get("REFLECT_STRENGTH", "1"))
+    nt.links.new(env.outputs[0], bg2.inputs[0])
+    mix = nt.nodes.new("ShaderNodeMixShader")
+    out = next(n for n in nt.nodes if n.type == "OUTPUT_WORLD")
+    nt.links.new(lp.outputs["Is Glossy Ray"], mix.inputs[0])
+    nt.links.new(bg.outputs[0], mix.inputs[1]); nt.links.new(bg2.outputs[0], mix.inputs[2])
+    nt.links.new(mix.outputs[0], out.inputs["Surface"])
+elif GLOSS != 1:                                            # brighter sky in reflections only, like a studio environment
     nt = world.node_tree
     lp = nt.nodes.new("ShaderNodeLightPath")
     mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY_ADD"

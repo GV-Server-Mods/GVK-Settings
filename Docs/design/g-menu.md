@@ -21,6 +21,7 @@ Status: **applied, built and deployed 2026-11-22** (owner: "Go"); in-game check 
 - **Position** is keyed by the primary's `BlockPairName` (a block without one uses its `DisplayName`). No position means the first empty slot from row 0. Any mod can add or move a position; the last loaded wins for the same name. Past column 8 a row wraps.
 - **Category tabs** draw every listed pair as its own icon. List one block per group, `StrictSearch` true.
 - A variant group that names a block from a mod that isn't loaded just drops that block.
+- **Load order:** definitions load in the world's `Sandbox_config.sbc` mod list order, top first, so the **last** entry wins a group or position both mods define (`MyDefinitionManager.LoadData`). GVK_Settings must be the last mod in the list. The production S11 world has it last; the NPC Dev test world had it 9th until 2026-11-23, which left Keen's bulk cargos, cargo terminals and bulk hydrogen tank, SC Blockers' group and the Extra Reinforced Conveyors ducts loose on Home (owner's screenshot, 2026-11-23).
 
 ## Owner choices (2026-11-22)
 
@@ -46,7 +47,7 @@ Each mod sets positions only for its own blocks; GVK_Settings sets the admin gro
 | 20 | 7 | GVK Admin Blocks (group) | `LimitedProdZone` | GVK_Settings |
 | 21 cargo | 6 | Shared cargo containers (group) | `SmallCargoContainer_Shared` | GVK_Settings |
 | 21 | 7 | Pipeline cargo (single) | `Pipeline_Cargo` | GVK_PipelinesNoPhysics |
-| 22 conveyors | 6 | Reinforced ducts (Extra Reinforced Conveyors' group) | `ConveyorTubeDuct` | GVK_Settings |
+| 22 conveyors | 6 | Reinforced ducts (GVK_Settings' copy of the group, with Extra Reinforced Conveyors' four ducts) | `ConveyorTubeDuct` | GVK_Settings |
 | 22 | 7 | AQD 5x1 conveyor (single) | `AQD_ConveyorStraight5x1` | GVK_Settings |
 
 The Medium Hydrogen Tank (`RB_HydrogenTankMedium_Small`, small grid only) joins Keen's tank group instead of getting its own icon. GVK_Settings redefines `TankGroup` as Keen's list plus that tank, the way GVK_Suspension added the 7x7 to Keen's suspension groups. The Water Tank mod (3633905517) also redefines `TankGroup` (adding `WaterTank`, dropping the bulk tanks) and the last loaded wins, so the GVK copy keeps `WaterTank` too, and the tank also gets a fallback Home spot (row 23, X 5) in case Water Tank loads last.
@@ -60,7 +61,7 @@ The Medium Hydrogen Tank (`RB_HydrogenTankMedium_Small`, small grid only) joins 
 - **New `BlockPositions.sbc`** with the GVK_Settings rows in the table.
 - **GV Kharak Items (`GVK`)**: add the admin group; drop the duplicate second size of MnM and the Cargo Scanner (same pair, one icon either way). The two prototech blocks (Prototech Reactor, Prototech Oxygen Generator) stay as two single icons: they are members of Keen's 10-block Prototech group, so listing the group's head would show the jump drive instead.
 - **Utility (`GVK_Utility`)**: add the admin group and the Cargo Scanner.
-- **Keen's tabs** (Large Blocks, Small Blocks, Nonarmor, Utility, Logistics): trim to one block per group. The 8 beacon variants become the one Beacon group head, the 3 or 4 shared cargo sizes become the shared cargo head, and the four reinforced ducts become the duct group head.
+- **Keen's tabs** (Large Blocks, Small Blocks, Nonarmor, Utility, Logistics): trim to one block per group. The 8 beacon variants become the one Beacon group head, the 3 or 4 shared cargo sizes become the shared cargo head, and the reinforced ducts become the duct group head.
 
 ### GVK_HoverEngines
 
@@ -91,7 +92,7 @@ The Medium Hydrogen Tank (`RB_HydrogenTankMedium_Small`, small grid only) joins 
 
 ### Deliberate single icons in the GVK tabs
 
-These are members of non-GVK groups, listed on their own so the GVK tab shows the GVK block rather than another group's head: Prototech Reactor and Prototech Oxygen Generator (Keen's Prototech group), the Medium Hydrogen Tank (tank group), the four reinforced ducts (the conveyor mods' thick conveyor group) and GVK_Suspension's 7x7 pair.
+These are members of non-GVK groups, listed on their own so the GVK tab shows the GVK block rather than another group's head: Prototech Reactor and Prototech Oxygen Generator (Keen's Prototech group), the Medium Hydrogen Tank (tank group) and GVK_Suspension's 7x7 pair.
 
 ### No change
 
@@ -118,12 +119,11 @@ The owner asked for these too (2026-11-22: "yeah we need to do these too"). All 
 | 5 structure | 5 | MA 15m Pole | `MA_Pole` |
 | 14 power | 5 | MA Stackable Wind Turbine | `MA_Windmill` |
 | 19 lights | 6 | MA Lantern | `MA_Lantern` |
-| 22 conveyors | 8 to 10 | AQD Endcap, Junction Tubes, Conveyor X | `AQD_ConveyorEndcap`, `AQD_ConveyorJunctionTubes`, `{LOC:DisplayName_AQD_LG_ConveyorX}` |
 | 25 control | 5 | Build Info's Multi Tool | `MultiTool` |
 
 **Keen's conveyors back on the conveyor row:** AQD Conveyor Expansion moves Keen's conveyor (`Conveyor`) and conveyor tube (`ConveyorTube`) to the cockpit row (13). GVK_Settings puts them back at row 22, X 0 and 1. Same load-order caveat.
 
-AQD's three conveyors sit loose because AQD and Extra Reinforced Conveyors both redefine `ConveyorThickGroup` and Extra Reinforced's copy (without them) wins; they get positions rather than a merged group.
+**Conveyor groups** (2026-11-23): AQD and Extra Reinforced Conveyors both redefine `ConveyorThickGroup`, and AQD loads later, so AQD's Endcap, Junction Tubes and Conveyor X sit in Keen's conveyor tube icon, and Extra Reinforced's four ducts (4-way, elbow, 4-way alt, 5-way) would be loose. GVK_Settings redefines `ConveyorReinforcedGroup` as AQD's copy plus those four ducts (owner, 2026-11-23: "Into reinforced ducts"). The GVK tabs list the conveyor tube and reinforced duct group heads instead of the seven blocks.
 
 ## Round 3: other mods' blocks in the GVK tabs, their own tabs hidden (applied 2026-11-22; runbook E22 passed in game the same day)
 
@@ -141,7 +141,7 @@ Owner, 2026-11-22: "include most of these modded blocks in the GVK Items tabs to
 
 **New sub-tab `GVK_Structure`, "   Structure"** (owner, 2026-11-22), group heads only: P.O.M XL's four groups, MA Buster, Long Hangar Doors, MA 15m Pole, MA Lantern and GVK's Runway Middle Wide.
 
-**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group and AQD's 5x1, Endcap, Junction Tubes and Conveyor X. The admin group (with KOTH and SC Blockers) and the Cargo Scanner are already there.
+**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group, AQD's 5x1 and the conveyor tube group (with AQD's Endcap, Junction Tubes and Conveyor X; changed 2026-11-23). The admin group (with KOTH and SC Blockers) and the Cargo Scanner are already there.
 
 **GV Kharak Items gets** everything above, one block per group.
 

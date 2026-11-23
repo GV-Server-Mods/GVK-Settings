@@ -38,6 +38,26 @@
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="AQD_LG_ConveyorAccess"/>
 			</Blocks>
 		</BlockVariantGroup>
+		<!-- AQD - Conveyor Expansion's (1864380341) reinforced duct group plus the four Extra Reinforced Conveyors (2800974378) ducts, which that mod puts in
+		     ConveyorThickGroup; AQD loads later and replaces that group without them (owner, 2026-11-23: "Into reinforced ducts") -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="ConveyorReinforcedGroup"/>
+			<Icon>Textures\GUI\Icons\Cubes\ConveyorDuct.dds</Icon>
+			<DisplayName>DisplayName_ConveyorTubeDuct</DisplayName>
+			<Description>Description_ConveyorTubeDuct</Description>
+			<Blocks>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuct"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctCurved"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctT"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorElbowDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor4WayAltDuct"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="Conveyor5WayDuct"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmall"/>
+				<Block Type="MyObjectBuilder_ConveyorConnector" Subtype="ConveyorTubeDuctSmallCurved"/>
+				<Block Type="MyObjectBuilder_Conveyor" Subtype="ConveyorTubeDuctSmallT"/>
+			</Blocks>
+		</BlockVariantGroup>
 		<!-- Keeps vanilla Id so the vanilla radial-menu beacon slot shows the GVK core beacons -->
 		<BlockVariantGroup>
 			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="BeaconGroup"/>
