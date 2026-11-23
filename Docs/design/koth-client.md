@@ -3,6 +3,7 @@ title: KOTH client (HUD panel, boundary, fireworks)
 covers:
   - ModScripts/GVK_KothClient.cs
   - ModScripts/GVK_HudApiShared.cs
+  - ModScripts/GVK_ScreenLayer.cs
 scripts:
   - ModScripts/GVK_KothClient.cs: Client only: KOTH capture panel, zone boundary and fireworks from the GVK KOTH plugin
 ---
@@ -20,6 +21,7 @@ The player side of the GVK KOTH Torch plugin ([GV-Server-Mods/GVK-KOTH-Plugin](h
 ## Capture panel
 - Shown while the player is inside an open KOTH: name, bar %, a 20-step bar and the number of players counted. Left side of the screen, under Text HUD API, on the instance it shares with the `/gvk` HUD (`GvkHudApi`, see [Zone navigation HUD](zone-nav-hud.md)).
 - Rebuilt every 10 ticks, and the text only when the %, the count or the zone changes.
+- With `/gvk ss` on (`GvkScreenLayer.UseScreenApi`, branch `screen-space-hud`), the panel draws with the game's screen API instead, same layout, from `Draw()`, and hides with the HUD. See [Zone navigation HUD](zone-nav-hud.md).
 
 ## Zone boundary
 - A faint orange wireframe sphere at the capture radius, drawn only when the camera is within the radius plus 1 km. Zones are visual only; nothing about them is a safe zone.

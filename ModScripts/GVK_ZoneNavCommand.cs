@@ -251,17 +251,37 @@ namespace GVK.Navigation
         private const int COMPASS_MAX_LABELS = 30;
         private const int COMPASS_MAX_WAYPOINTS = 16;
 
-        // Screen-space renderer test (vanilla screen API, SE 1.211): draws the compass without Text HUD API.
-        // /gvk ss switches between it and the Text HUD API compass. Same layout math, so the two should match.
-        private bool useScreenSpaceCompass = true;
+        // Screen API renderer (vanilla screen API, SE 1.211): draws the compass, zone bar and minimap without
+        // Text HUD API. /gvk ss (GvkScreenLayer.UseScreenApi) switches between it and the Text HUD API HUD.
+        // Same layout math in the same units, so the two should match. Drawn in this order, as created before.
         private readonly GvkScreenLayer _ssCompass = new GvkScreenLayer();
+        private readonly GvkScreenLayer _ssMinimap = new GvkScreenLayer();
+        private readonly GvkScreenLayer _ssZoneBar = new GvkScreenLayer();
+        private const int MINIMAP_MAX_MARKERS = 30;
         private HudAPIv2.HUDMessage _ssTextCalibrator; // Hidden; matches screen API text size to Text HUD API's
         private const string SS_CALIBRATION_TEXT = "0123456789NESW";
-        // Used when Text HUD API can't be measured. Measured in game 2026-11-22 at 2560x1440: Text HUD API width
-        // 0.15586 vs screen API 289.6 px. It holds at any resolution, but only at the UI scale it was measured at.
-        private const float SS_TEXT_SCALE_FALLBACK = 0.689f;
-        private float _ssTextScale = -1f;                  // Screen API scale per Text HUD API scale unit
+        private float _ssTextScale = -1f;                  // Measured screen API scale per Text HUD API scale unit
         private Vector2 _ssTextCalibViewport = Vector2.Zero;
+        private float _minimapLayoutBgWidth = -1f;         // Minimap card width as ApplyMinimapScale last laid it out
+        private long _ssRangeKey = long.MinValue;          // Radar range label, re-formatted only when it changes
+        private string _ssRangeText;
+        private long _ssLowerKmKey = long.MinValue;
+        private string _ssLowerKmText;
+        private long _ssHigherKmKey = long.MinValue;
+        private string _ssHigherKmText;
+        private static readonly string[] ZONE_TITLES =
+        {
+            "[ ZONE 0: SAFE HUB ]", "[ ZONE 1: PVE FRONTIER ]", "[ ZONE 2: CONTESTED (PVP) ]", "[ ZONE 3: GAALSIEN HEART ]"
+        };
+        private static readonly string[] ZONE_SHORT_NAMES = { "Zone 0", "Zone 1", "Zone 2", "Zone 3" };
+        private static readonly string[] ZONE_DIST_LABELS = { "Zone 0: ", "Zone 1: ", "Zone 2: ", "Zone 3: " };
+        private static readonly Color SPACE_TEXT_COLOR = new Color(255, 80, 255);
+        private static readonly Color[] ZONE_TEXT_COLORS =
+        {
+            new Color(50, 255, 100), new Color(255, 230, 50), new Color(255, 165, 0), new Color(255, 50, 50)
+        };
+        private static readonly Color ZONE_LABEL_COLOR = new Color(220, 220, 220);
+        private static readonly Color ZONE_SEPARATOR_COLOR = new Color(100, 140, 180);
         private float _ssCalibSsWidth = 0f;
         private bool _ssLoggedFallback = false;
         private bool _ssMaterialsChecked = false;
@@ -424,7 +444,7 @@ namespace GVK.Navigation
             public int UpdateTickRate { get; set; } = 5;
             public bool ShowRadarZoneLines { get; set; } = true;
             public bool ShowRadarFovLines { get; set; } = true;
-            public bool UseScreenSpaceCompass { get; set; } = true;
+            public bool UseScreenApi { get; set; } = true;
 
             public ZoneNavConfig() { }
         }
@@ -625,7 +645,7 @@ namespace GVK.Navigation
                                 updateTickRate = (cfg.UpdateTickRate >= 1 && cfg.UpdateTickRate <= 60) ? cfg.UpdateTickRate : 5;
                                 showRadarZoneLines = cfg.ShowRadarZoneLines;
                                 showRadarFovLines = cfg.ShowRadarFovLines;
-                                useScreenSpaceCompass = cfg.UseScreenSpaceCompass;
+                                GvkScreenLayer.UseScreenApi = cfg.UseScreenApi;
                                 minimapOffsetX = MathHelper.Clamp(cfg.MinimapOffsetX, -1.0, 1.0);
                                 minimapOffsetY = MathHelper.Clamp(cfg.MinimapOffsetY, -1.0, 1.0);
                                 compassOffsetX = MathHelper.Clamp(cfg.CompassOffsetX, -1.0, 1.0);
@@ -684,7 +704,7 @@ namespace GVK.Navigation
                     UpdateTickRate = updateTickRate,
                     ShowRadarZoneLines = showRadarZoneLines,
                     ShowRadarFovLines = showRadarFovLines,
-                    UseScreenSpaceCompass = useScreenSpaceCompass
+                    UseScreenApi = GvkScreenLayer.UseScreenApi
                 };
 
                 string xml = MyAPIGateway.Utilities.SerializeToXML(cfg);
@@ -1637,29 +1657,27 @@ namespace GVK.Navigation
             // dial in their preferred smoothness vs performance balance via /nav rate or F2 Mod Menu.
             bool hudApiReady = hudApi != null && hudApi.Heartbeat;
 
-            // The screen-space compass doesn't need Text HUD API, so it updates without it
-            if ((hudApiReady || useScreenSpaceCompass) && (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame))
+            // The screen API HUD doesn't need Text HUD API, so it updates without it. The full map still does.
+            bool screenApi = GvkScreenLayer.UseScreenApi;
+            if ((hudApiReady || screenApi) && (tickCounter % updateTickRate == 0 || _refreshCompassNextFrame))
             {
                 _refreshCompassNextFrame = false;
                 UpdateCompassAndWaypoints(pos.Value);
             }
 
-            if (hudApiReady)
+            if (showFullMap)
             {
-                if (showFullMap)
+                if (hudApiReady && (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw))
                 {
-                    if (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw)
-                    {
-                        _fullMapNeedsRedraw = false;
-                        UpdateFullMap(pos.Value);
-                    }
+                    _fullMapNeedsRedraw = false;
+                    UpdateFullMap(pos.Value);
                 }
-                else if (tickCounter % updateTickRate == 0 || _refreshMinimapNextFrame)
-                {
-                    _refreshMinimapNextFrame = false;
-                    UpdateZoneBar();
-                    UpdateMinimap(pos.Value);
-                }
+            }
+            else if ((hudApiReady || screenApi) && (tickCounter % updateTickRate == 0 || _refreshMinimapNextFrame))
+            {
+                _refreshMinimapNextFrame = false;
+                UpdateZoneBar();
+                UpdateMinimap(pos.Value);
             }
         }
         private void CheckAndPopulateDefaultGps()
@@ -2032,7 +2050,7 @@ namespace GVK.Navigation
             else if (vehCompass > (float)Math.PI * 2f) vehCompass -= (float)Math.PI * 2f;
             playerHeadingRad = vehCompass;
 
-            bool screenSpace = useScreenSpaceCompass;
+            bool screenSpace = GvkScreenLayer.UseScreenApi;
             if (!showCompass || showFullMap || (!screenSpace && compassBg == null))
             {
                 HideHudApiCompass();
@@ -2465,6 +2483,7 @@ namespace GVK.Navigation
         /// <summary>
         /// Screen API text scale that matches one unit of Text HUD API scale, measured from a hidden Text HUD API
         /// message. Re-measured when the window size or the player's UI scale changes the screen API's width.
+        /// Also sets GvkScreenLayer.TextScale for the KOTH panel.
         /// </summary>
         private float GetScreenSpaceTextScale(Vector2 viewport)
         {
@@ -2472,12 +2491,14 @@ namespace GVK.Navigation
             if (_ssTextScale > 0f && viewport == _ssTextCalibViewport && Math.Abs(ssWidth - _ssCalibSsWidth) < 0.01f)
                 return _ssTextScale;
 
-            double hudWidth = _ssTextCalibrator != null ? _ssTextCalibrator.GetTextLength().X : 0.0;
+            bool hudApiReady = hudApi != null && hudApi.Heartbeat;
+            double hudWidth = (hudApiReady && _ssTextCalibrator != null) ? _ssTextCalibrator.GetTextLength().X : 0.0;
             if (ssWidth > 0f && hudWidth > 0.0)
             {
                 _ssTextScale = (float)(hudWidth * 0.5 * viewport.X / ssWidth);
                 _ssTextCalibViewport = viewport;
                 _ssCalibSsWidth = ssWidth;
+                GvkScreenLayer.TextScale = _ssTextScale;
                 MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale {_ssTextScale:0.0000} at {viewport.X:0}x{viewport.Y:0}: Text HUD API width {hudWidth:0.00000}, screen API width {ssWidth:0.0} px");
                 return _ssTextScale;
             }
@@ -2485,9 +2506,10 @@ namespace GVK.Navigation
             if (!_ssLoggedFallback)
             {
                 _ssLoggedFallback = true;
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale: Text HUD API not measurable, using {SS_TEXT_SCALE_FALLBACK}");
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API text scale: Text HUD API not measurable, using {GvkScreenLayer.TEXT_SCALE_DEFAULT}");
             }
-            return SS_TEXT_SCALE_FALLBACK;
+            GvkScreenLayer.TextScale = GvkScreenLayer.TEXT_SCALE_DEFAULT;
+            return GvkScreenLayer.TEXT_SCALE_DEFAULT;
         }
 
         /// <summary>Logs once if the screen API can't resolve a compass material or the font.</summary>
@@ -2501,6 +2523,8 @@ namespace GVK.Navigation
             LogIfMaterialMissing(MATERIAL_SIGNAL_UP);
             LogIfMaterialMissing(MATERIAL_SIGNAL_DOWN);
             LogIfMaterialMissing(MATERIAL_SIGNAL_LEVEL);
+            LogIfMaterialMissing(MATERIAL_MAP);
+            LogIfMaterialMissing(MATERIAL_RADAR_GRID);
             if (!MyScreenSpaceText.IsFontAvailable(GvkScreenLayer.FONT))
                 MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API: font '{GvkScreenLayer.FONT}' not found");
         }
@@ -2520,30 +2544,42 @@ namespace GVK.Navigation
 
         public override void Draw()
         {
-            if (!useScreenSpaceCompass || !showCompass || showFullMap || _ssCompass.Count == 0) return;
+            if (!GvkScreenLayer.UseScreenApi || showFullMap) return;
             if (GvkScreenLayer.IsHudHidden()) return;
             try
             {
-                _ssCompass.Draw();
+                // Same order the Text HUD API elements were created in: compass, minimap, zone bar
+                if (showCompass && _ssCompass.Count > 0) _ssCompass.Draw();
+                if (showMinimap && _ssMinimap.Count > 0) _ssMinimap.Draw();
+                if (zoneBarMode != ZoneBarMode.Off && _ssZoneBar.Count > 0) _ssZoneBar.Draw();
             }
             catch (Exception ex)
             {
-                // A renderer test must not take the game down: fall back to the Text HUD API compass
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API compass draw failed, switching back to Text HUD API: {ex}");
-                useScreenSpaceCompass = false;
-                _ssCompass.Clear();
-                _refreshCompassNextFrame = true;
+                // The new renderer must not take the game down: fall back to the Text HUD API HUD
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Screen API HUD draw failed, switching back to Text HUD API: {ex}");
+                GvkScreenLayer.UseScreenApi = false;
+                ClearScreenSpaceHud();
             }
         }
 
-        private void ToggleScreenSpaceCompass()
+        private void ClearScreenSpaceHud()
         {
-            useScreenSpaceCompass = !useScreenSpaceCompass;
-            if (!useScreenSpaceCompass) _ssCompass.Clear();
+            _ssCompass.Clear();
+            _ssMinimap.Clear();
+            _ssZoneBar.Clear();
             _refreshCompassNextFrame = true;
+            _refreshMinimapNextFrame = true;
+        }
+
+        private void ToggleScreenSpaceHud()
+        {
+            GvkScreenLayer.UseScreenApi = !GvkScreenLayer.UseScreenApi;
+            ClearScreenSpaceHud();
+            // Text HUD API minimap re-places itself only when its card width is off; force that on the way back
+            _minimapLayoutBgWidth = -1f;
             SaveConfig();
-            string renderer = useScreenSpaceCompass ? "SCREEN API (new)" : "TEXT HUD API (old)";
-            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Compass Renderer: {renderer}", 2500, MyFontEnum.Green);
+            string renderer = GvkScreenLayer.UseScreenApi ? "SCREEN API (new)" : "TEXT HUD API (old)";
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] HUD Renderer: {renderer}", 2500, MyFontEnum.Green);
         }
 
         private void HideTapePool()
@@ -2570,20 +2606,15 @@ namespace GVK.Navigation
         /// </summary>
         private void UpdateZoneBar()
         {
-            if (zoneMsg == null || zoneBarMode == ZoneBarMode.Off || showFullMap)
+            bool screenSpace = GvkScreenLayer.UseScreenApi;
+            if (zoneBarMode == ZoneBarMode.Off || showFullMap || (!screenSpace && zoneMsg == null))
             {
-                if (_zoneBarElementsVisible)
-                {
-                    _zoneBarElementsVisible = false;
-                    if (zoneBg != null) zoneBg.Visible = false;
-                    if (zoneAccent != null) zoneAccent.Visible = false;
-                    if (zoneMsg != null) zoneMsg.Visible = false;
-                    if (zoneDistMsg != null) zoneDistMsg.Visible = false;
-                    if (zoneNextMsg != null) zoneNextMsg.Visible = false;
-                }
+                HideHudApiZoneBar();
+                _ssZoneBar.Clear();
                 return;
             }
-            _zoneBarElementsVisible = true;
+            if (screenSpace) HideHudApiZoneBar();
+            else _ssZoneBar.Clear();
 
             float currentScale;
             float zoneWidth;
@@ -2643,6 +2674,13 @@ namespace GVK.Navigation
                     targetPos = new Vector2D(posX, posY);
                 }
             }
+
+            if (screenSpace)
+            {
+                BuildScreenSpaceZoneBar(targetPos, zoneWidth, zoneHeight, currentScale, isCompact);
+                return;
+            }
+            _zoneBarElementsVisible = true;
 
             if (zonePosition != targetPos || Math.Abs(zoneBg.Width - zoneWidth) > 0.001f || Math.Abs(zoneBg.Height - zoneHeight) > 0.001f)
             {
@@ -2755,30 +2793,122 @@ namespace GVK.Navigation
             zoneDistMsg.Visible = true;
             if (zoneNextMsg != null) zoneNextMsg.Visible = false;
         }
+
+        private void HideHudApiZoneBar()
+        {
+            if (!_zoneBarElementsVisible) return;
+            _zoneBarElementsVisible = false;
+            if (zoneBg != null) zoneBg.Visible = false;
+            if (zoneAccent != null) zoneAccent.Visible = false;
+            if (zoneMsg != null) zoneMsg.Visible = false;
+            if (zoneDistMsg != null) zoneDistMsg.Visible = false;
+            if (zoneNextMsg != null) zoneNextMsg.Visible = false;
+        }
+
+        /// <summary>
+        /// Screen API zone bar: the Text HUD API layout above, in the same units. Each colour that was a colour
+        /// tag is its own text run. pos is the card centre.
+        /// </summary>
+        private void BuildScreenSpaceZoneBar(Vector2D pos, float zoneWidth, float zoneHeight, float s, bool isCompact)
+        {
+            var camera = MyAPIGateway.Session?.Camera;
+            if (camera == null || !_ssZoneBar.Begin(camera.ViewportSize)) return;
+            float textScale = GetScreenSpaceTextScale(camera.ViewportSize);
+
+            double left = pos.X - zoneWidth * 0.5;
+            _ssZoneBar.AddSprite(MATERIAL_SQUARE, pos.X, pos.Y, zoneWidth, zoneHeight, GetCardBgColor());
+            _ssZoneBar.AddSprite(MATERIAL_SQUARE, left + 0.005 * s, pos.Y, 0.005f * s, zoneHeight - 0.006f * s, GetCurrentAccentColor());
+
+            double textX, line1Y, line2Y;
+            float scale1, scale2;
+            if (zoneBarMode == ZoneBarMode.CompassDock)
+            {
+                textX = left + 0.010 * s;
+                line1Y = pos.Y + 0.014 * s;
+                line2Y = pos.Y - 0.006 * s;
+                scale1 = 0.48f * s;
+                scale2 = 0.40f * s;
+            }
+            else
+            {
+                textX = left + 0.016 * s;
+                line1Y = pos.Y + 0.018 * s;
+                line2Y = pos.Y - 0.008 * s;
+                scale1 = (isCompact ? 0.54f : 0.60f) * s;
+                scale2 = (isCompact ? 0.46f : 0.50f) * s;
+            }
+
+            int zone = MathHelper.Clamp(currentZoneIndex, 0, 3);
+            var white = new Color(255, 255, 255);
+            const string SEPARATOR = " | ";
+            const string NO_ZONE = "------";
+
+            _ssZoneBar.BeginRuns(textX, line1Y, scale1 * textScale, true);
+            if (inSpace) _ssZoneBar.AddRun("[ SPAAAAAACE!!! ]", SPACE_TEXT_COLOR);
+            else _ssZoneBar.AddRun(ZONE_TITLES[zone], ZONE_TEXT_COLORS[zone]);
+
+            _ssZoneBar.BeginRuns(textX, line2Y, scale2 * textScale, true);
+            if (inSpace)
+            {
+                _ssZoneBar.AddRun("Kharak gravity: ", ZONE_LABEL_COLOR);
+                _ssZoneBar.AddRun("LOST", SPACE_TEXT_COLOR);
+                _ssZoneBar.AddRun(SEPARATOR, ZONE_SEPARATOR_COLOR);
+                _ssZoneBar.AddRun("Below: ", ZONE_LABEL_COLOR);
+                _ssZoneBar.AddRun(ZONE_SHORT_NAMES[zone], ZONE_TEXT_COLORS[zone]);
+                return;
+            }
+
+            // Lower zone and its distance, or a dash in Zone 0
+            if (zone == 0) _ssZoneBar.AddRun(NO_ZONE, white);
+            else
+            {
+                _ssZoneBar.AddRun(ZONE_DIST_LABELS[zone - 1], ZONE_LABEL_COLOR);
+                _ssZoneBar.AddRun(FormatZoneKm(lastToLowerKm, ref _ssLowerKmKey, ref _ssLowerKmText), ZONE_TEXT_COLORS[zone - 1]);
+            }
+            _ssZoneBar.AddRun(SEPARATOR, ZONE_SEPARATOR_COLOR);
+            // Higher zone and its distance, or a dash in Zone 3
+            if (zone == 3) _ssZoneBar.AddRun(NO_ZONE, white);
+            else
+            {
+                _ssZoneBar.AddRun(ZONE_DIST_LABELS[zone + 1], ZONE_LABEL_COLOR);
+                _ssZoneBar.AddRun(FormatZoneKm(lastRemainingKm, ref _ssHigherKmKey, ref _ssHigherKmText), ZONE_TEXT_COLORS[zone + 1]);
+            }
+        }
+
+        /// <summary>"12.3 km", re-formatted only when the shown tenth changes.</summary>
+        private static string FormatZoneKm(double km, ref long key, ref string text)
+        {
+            long k = (long)Math.Round(km * 10.0);
+            if (text == null || k != key)
+            {
+                key = k;
+                text = (k / 10.0).ToString("F1") + " km";
+            }
+            return text;
+        }
+
         /// <summary>
         /// Updates the corner minimap or tactical vector radar using pre-allocated billboard pool (Zero GC allocations).
         /// </summary>
         private void UpdateMinimap(Vector3D playerPos)
         {
-            if (minimapTerrain == null || !showMinimap || showFullMap)
+            bool screenSpace = GvkScreenLayer.UseScreenApi;
+            if (!showMinimap || showFullMap || (!screenSpace && minimapTerrain == null))
             {
-                if (_minimapElementsVisible)
-                {
-                    _minimapElementsVisible = false;
-                    if (minimapBg != null) minimapBg.Visible = false;
-                    if (minimapAccent != null) minimapAccent.Visible = false;
-                    if (minimapTerrain != null) minimapTerrain.Visible = false;
-                    if (radarGrid != null) radarGrid.Visible = false;
-                    if (radarFovLeft != null) radarFovLeft.Visible = false;
-                    if (radarFovRight != null) radarFovRight.Visible = false;
-                    if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
-                    if (minimapLabel != null) minimapLabel.Visible = false;
-                    HideMinimapPool();
-                }
+                HideHudApiMinimap();
+                _ssMinimap.Clear();
                 return;
             }
-            _minimapElementsVisible = true;
-            minimapBg.Visible = true;
+            if (screenSpace)
+            {
+                HideHudApiMinimap();
+            }
+            else
+            {
+                _ssMinimap.Clear();
+                _minimapElementsVisible = true;
+                minimapBg.Visible = true;
+            }
 
             float aspect = GetScreenAspect();
             float radarGridDiameter = (float)minimapSize.Y * 0.95f;
@@ -2802,12 +2932,18 @@ namespace GVK.Navigation
             double t = (minimapOffsetY + 1.0) * 0.5;
             double targetPosY = minCenterY + t * (maxCenterY - minCenterY);
 
-            if (Math.Abs(minimapPosition.X - targetPosX) > 0.0005 || Math.Abs(minimapPosition.Y - targetPosY) > 0.0005 || Math.Abs(minimapBg.Width - minimapBgWidth) > 0.001f)
+            if (Math.Abs(minimapPosition.X - targetPosX) > 0.0005 || Math.Abs(minimapPosition.Y - targetPosY) > 0.0005 || Math.Abs(_minimapLayoutBgWidth - minimapBgWidth) > 0.001f)
             {
                 ApplyMinimapScale(minimapScale);
             }
 
             Color zoneCol = GetCurrentAccentColor();
+            if (screenSpace)
+            {
+                BuildScreenSpaceMinimap(playerPos, aspect, minimapBgWidth, minimapBgHeight, radarBoxWidth, zoneCol);
+                return;
+            }
+
             if (minimapAccent != null)
             {
                 minimapAccent.Origin = minimapPosition;
@@ -2938,95 +3074,18 @@ namespace GVK.Navigation
                     if (radarFovRight != null) radarFovRight.Visible = false;
                 }
 
-                // Tangent plane orientation relative to Pertam's local gravity (Camera-Facing orientation)
-                Vector3D upNormal = Vector3D.Normalize(playerPos - PLANET_CENTER);
+                // Tangent plane orientation relative to Kharak's local gravity (Camera-Facing orientation)
+                Vector3D upNormal, fwdTangent, rightTangent, forward;
+                GetRadarFrame(playerPos, camera, out upNormal, out fwdTangent, out rightTangent, out forward);
                 double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
-                Vector3D forward = Vector3D.Forward;
-
-                if (camera != null)
-                {
-                    forward = camera.WorldMatrix.Forward;
-                }
-                else
-                {
-                    var controlled = MyAPIGateway.Session.ControlledObject;
-                    var cubeBlock = controlled as IMyCubeBlock;
-                    var playerGrid = cubeBlock?.CubeGrid;
-                    if (playerGrid != null)
-                        forward = playerGrid.WorldMatrix.Forward;
-                    else if (controlled?.Entity != null)
-                        forward = controlled.Entity.WorldMatrix.Forward;
-                }
-
-                Vector3D fwdTangent = forward - Vector3D.Dot(forward, upNormal) * upNormal;
-                if (fwdTangent.LengthSquared() < 0.001)
-                {
-                    Vector3D altVec = camera != null ? camera.WorldMatrix.Up : Vector3D.Up;
-                    fwdTangent = altVec - Vector3D.Dot(altVec, upNormal) * upNormal;
-                }
-                if (fwdTangent.LengthSquared() < 0.001) fwdTangent = Vector3D.Forward;
-                fwdTangent.Normalize();
-                Vector3D rightTangent = Vector3D.Cross(fwdTangent, upNormal);
-                rightTangent.Normalize();
-
-                // Plot contacts relative to player rover heading (up to 100 km)
-                const double MAX_RADAR_TRACK_DIST = 100000.0;
 
                 for (int i = 0; i < activeHudWaypoints.Count && mIdx < minimapMarkerPool.Count; i++)
                 {
                     var wp = activeHudWaypoints[i];
                     if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
-                    Vector3D toTarget = wp.Coords - playerPos;
-                    double fwdDist = Vector3D.Dot(toTarget, fwdTangent);
-                    double rightDist = Vector3D.Dot(toTarget, rightTangent);
-                    double horizDist = Math.Sqrt(fwdDist * fwdDist + rightDist * rightDist);
-
-                    // < 30m dead-zone applies only to signals (own-construct clutter); GPS waypoints still plot at center.
-                    if (horizDist > MAX_RADAR_TRACK_DIST || (wp.IsSignal && horizDist < 30.0)) continue;
-
-                    double normDist;
-                    bool isClamped = false;
-
-                    if (radarScale == RadarScaleMode.Logarithmic)
-                    {
-                        // 3-Decade Log Scale:
-                        // Inner Ring  (r = 1/3): 300 m  (CQB / rover proximity)
-                        // Middle Ring (r = 2/3): 3 km   (Visual line-of-sight / standard artillery)
-                        // Outer Ring  (r = 1.0): 30 km  (Planetary horizon)
-                        if (horizDist <= 300.0)
-                        {
-                            normDist = (horizDist / 300.0) * LOG_THIRD;
-                        }
-                        else if (horizDist <= 30000.0)
-                        {
-                            normDist = LOG_THIRD + (LOG_THIRD * Math.Log10(horizDist / 300.0));
-                            if (normDist > 0.98) normDist = 0.98;
-                        }
-                        else
-                        {
-                            // Beyond 30km: max out to outer edge perimeter (up to 100km)
-                            normDist = 0.98;
-                            isClamped = true;
-                        }
-                    }
-                    else // Linear Mode
-                    {
-                        if (horizDist <= radarRangeMeters)
-                        {
-                            normDist = horizDist / radarRangeMeters;
-                        }
-                        else
-                        {
-                            normDist = 0.98; // Clamp to outer rim
-                            isClamped = true;
-                        }
-                    }
-
-                    double angle = Math.Atan2(rightDist, fwdDist); // 0 = fwd, pi/2 = right
-                    Vector2D wpOffset = new Vector2D(
-                        Math.Sin(angle) * radarRadiusX * normDist,
-                        Math.Cos(angle) * radarRadiusY * normDist
-                    );
+                    Vector2D wpOffset;
+                    bool isClamped;
+                    if (!TryGetRadarMarkerOffset(ref wp, playerPos, fwdTangent, rightTangent, radarRadiusX, radarRadiusY, out wpOffset, out isClamped)) continue;
 
                     var icon = minimapMarkerPool[mIdx++];
                     icon.Material = GetWaypointMaterial(ref wp, playerElevation);
@@ -3042,26 +3101,7 @@ namespace GVK.Navigation
                 }
 
                 // Player vehicle/character orientation arrow relative to camera heading
-                Vector3D vehForward = Vector3D.Forward;
-                var controlledObj = MyAPIGateway.Session.ControlledObject;
-                var cb = controlledObj as IMyCubeBlock;
-                var pGrid = cb?.CubeGrid;
-                if (pGrid != null)
-                    vehForward = pGrid.WorldMatrix.Forward;
-                else if (controlledObj?.Entity != null)
-                    vehForward = controlledObj.Entity.WorldMatrix.Forward;
-                else
-                    vehForward = forward;
-
-                Vector3D vehTangent = vehForward - Vector3D.Dot(vehForward, upNormal) * upNormal;
-                float vehAngleRad = 0f;
-                if (vehTangent.LengthSquared() > 0.001)
-                {
-                    vehTangent.Normalize();
-                    double vehFwd = Vector3D.Dot(vehTangent, fwdTangent);
-                    double vehRight = Vector3D.Dot(vehTangent, rightTangent);
-                    vehAngleRad = (float)Math.Atan2(vehRight, vehFwd);
-                }
+                float vehAngleRad = GetRadarVehicleAngle(upNormal, fwdTangent, rightTangent, forward);
 
                 minimapPlayerDot.Offset = Vector2D.Zero;
                 minimapPlayerDot.Rotation = vehAngleRad;
@@ -3070,18 +3110,9 @@ namespace GVK.Navigation
                 minimapPlayerDot.Visible = true;
 
                 // Direction vector lines to nearest lower and higher zones
-                Vector3D toCrossroads = CROSSROADS_BEACON - playerPos;
-                Vector3D toCrossroadsTangent = toCrossroads - Vector3D.Dot(toCrossroads, upNormal) * upNormal;
-
-                if (toCrossroadsTangent.LengthSquared() > 0.001)
+                double angleToLower, angleToHigher;
+                if (TryGetRadarZoneAngles(playerPos, upNormal, fwdTangent, rightTangent, out angleToLower, out angleToHigher))
                 {
-                    toCrossroadsTangent.Normalize();
-                    double fwdDot = Vector3D.Dot(toCrossroadsTangent, fwdTangent);
-                    double rightDot = Vector3D.Dot(toCrossroadsTangent, rightTangent);
-                    double angleToLower = Math.Atan2(rightDot, fwdDot); // 0 = forward (up), pi/2 = right, -pi/2 = left, pi = rear
-                    double angleToHigher = angleToLower + Math.PI;
-                    if (angleToHigher > Math.PI) angleToHigher -= 2.0 * Math.PI;
-
                     float lineWidth = 0.0014f * minimapScale;
                     float lineSegmentHeight = radarRadiusY * (1f / 3f);
                     const double MID_RADIUS_FACTOR = 5.0 / 6.0;
@@ -3138,6 +3169,277 @@ namespace GVK.Navigation
             // Hide unused pool slots
             for (int i = mIdx; i < minimapMarkerPool.Count; i++)
                 minimapMarkerPool[i].Visible = false;
+        }
+
+        private void HideHudApiMinimap()
+        {
+            if (!_minimapElementsVisible) return;
+            _minimapElementsVisible = false;
+            if (minimapBg != null) minimapBg.Visible = false;
+            if (minimapAccent != null) minimapAccent.Visible = false;
+            if (minimapTerrain != null) minimapTerrain.Visible = false;
+            if (radarGrid != null) radarGrid.Visible = false;
+            if (radarFovLeft != null) radarFovLeft.Visible = false;
+            if (radarFovRight != null) radarFovRight.Visible = false;
+            if (minimapPlayerDot != null) minimapPlayerDot.Visible = false;
+            if (minimapLabel != null) minimapLabel.Visible = false;
+            HideMinimapPool();
+        }
+
+        /// <summary>
+        /// Radar frame on the ground: forward is the camera's look flattened against Kharak's gravity.
+        /// cameraForward is the unflattened look, for GetRadarVehicleAngle.
+        /// </summary>
+        private void GetRadarFrame(Vector3D playerPos, IMyCamera camera, out Vector3D upNormal, out Vector3D fwdTangent,
+            out Vector3D rightTangent, out Vector3D cameraForward)
+        {
+            upNormal = Vector3D.Normalize(playerPos - PLANET_CENTER);
+            cameraForward = Vector3D.Forward;
+            if (camera != null)
+            {
+                cameraForward = camera.WorldMatrix.Forward;
+            }
+            else
+            {
+                var controlled = MyAPIGateway.Session.ControlledObject;
+                var playerGrid = (controlled as IMyCubeBlock)?.CubeGrid;
+                if (playerGrid != null)
+                    cameraForward = playerGrid.WorldMatrix.Forward;
+                else if (controlled?.Entity != null)
+                    cameraForward = controlled.Entity.WorldMatrix.Forward;
+            }
+
+            fwdTangent = cameraForward - Vector3D.Dot(cameraForward, upNormal) * upNormal;
+            if (fwdTangent.LengthSquared() < 0.001)
+            {
+                Vector3D altVec = camera != null ? camera.WorldMatrix.Up : Vector3D.Up;
+                fwdTangent = altVec - Vector3D.Dot(altVec, upNormal) * upNormal;
+            }
+            if (fwdTangent.LengthSquared() < 0.001) fwdTangent = Vector3D.Forward;
+            fwdTangent.Normalize();
+            rightTangent = Vector3D.Cross(fwdTangent, upNormal);
+            rightTangent.Normalize();
+        }
+
+        /// <summary>
+        /// A marker's offset from the radar centre in Text HUD API units. False when it isn't plotted: beyond
+        /// 100 km, or a signal within 30 m (own-construct clutter). clamped is true when it's pinned to the rim.
+        /// </summary>
+        private bool TryGetRadarMarkerOffset(ref ActiveHudWaypoint wp, Vector3D playerPos, Vector3D fwdTangent, Vector3D rightTangent,
+            float radiusX, float radiusY, out Vector2D offset, out bool clamped)
+        {
+            const double MAX_RADAR_TRACK_DIST = 100000.0;
+            offset = Vector2D.Zero;
+            clamped = false;
+
+            Vector3D toTarget = wp.Coords - playerPos;
+            double fwdDist = Vector3D.Dot(toTarget, fwdTangent);
+            double rightDist = Vector3D.Dot(toTarget, rightTangent);
+            double horizDist = Math.Sqrt(fwdDist * fwdDist + rightDist * rightDist);
+            if (horizDist > MAX_RADAR_TRACK_DIST || (wp.IsSignal && horizDist < 30.0)) return false;
+
+            double normDist;
+            if (radarScale == RadarScaleMode.Logarithmic)
+            {
+                // 3-decade log scale: inner ring (1/3) 300 m, middle ring (2/3) 3 km, outer ring 30 km
+                if (horizDist <= 300.0)
+                {
+                    normDist = (horizDist / 300.0) * LOG_THIRD;
+                }
+                else if (horizDist <= 30000.0)
+                {
+                    normDist = LOG_THIRD + (LOG_THIRD * Math.Log10(horizDist / 300.0));
+                    if (normDist > 0.98) normDist = 0.98;
+                }
+                else
+                {
+                    normDist = 0.98; // Beyond 30 km (up to 100 km): on the rim
+                    clamped = true;
+                }
+            }
+            else if (horizDist <= radarRangeMeters)
+            {
+                normDist = horizDist / radarRangeMeters;
+            }
+            else
+            {
+                normDist = 0.98; // Beyond range: on the rim
+                clamped = true;
+            }
+
+            double angle = Math.Atan2(rightDist, fwdDist); // 0 = fwd, pi/2 = right
+            offset = new Vector2D(Math.Sin(angle) * radiusX * normDist, Math.Cos(angle) * radiusY * normDist);
+            return true;
+        }
+
+        /// <summary>Heading of the player's vehicle or character on the radar, clockwise from camera forward.</summary>
+        private float GetRadarVehicleAngle(Vector3D upNormal, Vector3D fwdTangent, Vector3D rightTangent, Vector3D cameraForward)
+        {
+            Vector3D vehForward;
+            var controlledObj = MyAPIGateway.Session.ControlledObject;
+            var pGrid = (controlledObj as IMyCubeBlock)?.CubeGrid;
+            if (pGrid != null)
+                vehForward = pGrid.WorldMatrix.Forward;
+            else if (controlledObj?.Entity != null)
+                vehForward = controlledObj.Entity.WorldMatrix.Forward;
+            else
+                vehForward = cameraForward;
+
+            Vector3D vehTangent = vehForward - Vector3D.Dot(vehForward, upNormal) * upNormal;
+            if (vehTangent.LengthSquared() <= 0.001) return 0f;
+            vehTangent.Normalize();
+            return (float)Math.Atan2(Vector3D.Dot(vehTangent, rightTangent), Vector3D.Dot(vehTangent, fwdTangent));
+        }
+
+        /// <summary>Radar angles toward the Crossroads (lower zone) and away from it (higher zone). False on top of it.</summary>
+        private bool TryGetRadarZoneAngles(Vector3D playerPos, Vector3D upNormal, Vector3D fwdTangent, Vector3D rightTangent,
+            out double angleToLower, out double angleToHigher)
+        {
+            angleToLower = 0.0;
+            angleToHigher = 0.0;
+            Vector3D toCrossroads = CROSSROADS_BEACON - playerPos;
+            Vector3D toCrossroadsTangent = toCrossroads - Vector3D.Dot(toCrossroads, upNormal) * upNormal;
+            if (toCrossroadsTangent.LengthSquared() <= 0.001) return false;
+
+            toCrossroadsTangent.Normalize();
+            // 0 = forward (up), pi/2 = right, -pi/2 = left, pi = rear
+            angleToLower = Math.Atan2(Vector3D.Dot(toCrossroadsTangent, rightTangent), Vector3D.Dot(toCrossroadsTangent, fwdTangent));
+            angleToHigher = angleToLower + Math.PI;
+            if (angleToHigher > Math.PI) angleToHigher -= 2.0 * Math.PI;
+            return true;
+        }
+
+        /// <summary>
+        /// Screen API minimap and tactical radar: the Text HUD API layout above, in the same units and in the
+        /// order its elements were created (card, accent, map or grid, FOV lines, zone lines, label, markers, arrow).
+        /// </summary>
+        private void BuildScreenSpaceMinimap(Vector3D playerPos, float aspect, float bgWidth, float bgHeight, float radarBoxWidth, Color zoneCol)
+        {
+            var camera = MyAPIGateway.Session?.Camera;
+            if (camera == null || !_ssMinimap.Begin(camera.ViewportSize)) return;
+            CheckScreenSpaceAssets();
+            float s = minimapScale;
+            double cx = minimapPosition.X;
+            double cy = minimapPosition.Y;
+
+            _ssMinimap.AddSprite(MATERIAL_SQUARE, cx, cy, bgWidth, bgHeight, GetCardBgColor());
+            _ssMinimap.AddSprite(MATERIAL_SQUARE, cx - bgWidth * 0.5 + 0.005 * s, cy, 0.005f * s, bgHeight - 0.006f * s, zoneCol);
+
+            float markerSize = 0.012f * s;
+            float arrowSize = 0.017f * s;
+            // High-visibility pulse: Electric Gold <-> Amber
+            Color arrowColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
+            double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
+            int markers = 0;
+
+            if (minimapMode == MinimapDisplayMode.StrategicMap)
+            {
+                _ssMinimap.AddSprite(MATERIAL_MAP, cx, cy, minimapSize.X, minimapSize.Y, Color.White);
+
+                for (int i = 0; i < activeHudWaypoints.Count && markers < MINIMAP_MAX_MARKERS; i++)
+                {
+                    var wp = activeHudWaypoints[i];
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
+                    markers++;
+                    _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation),
+                        cx + (wp.MapUV.X - 0.5) * minimapSize.X, cy + (0.5 - wp.MapUV.Y) * minimapSize.Y,
+                        markerSize, markerSize * aspect, GetMarkerColor(ref wp));
+                }
+
+                Vector2 uv = WorldToMapUV(playerPos);
+                _ssMinimap.AddSprite(MATERIAL_NAV_ARROW, cx + (uv.X - 0.5) * minimapSize.X, cy + (0.5 - uv.Y) * minimapSize.Y,
+                    arrowSize, arrowSize * aspect, arrowColor, -playerHeadingRad);
+                return;
+            }
+
+            // Tactical radar
+            float gridDiameter = (float)minimapSize.Y * 0.95f;
+            _ssMinimap.AddSprite(MATERIAL_RADAR_GRID, cx, cy, gridDiameter / aspect, gridDiameter, new Color(187, 233, 246, 200));
+
+            // Radar circle radius on screen (aspect corrected for a 1:1 circle)
+            float radiusY = (float)minimapSize.Y * 0.46f;
+            float radiusX = radiusY / aspect;
+
+            // Camera view "V": widens and narrows with game FOV and zoom
+            if (showRadarFovLines)
+            {
+                float halfHFov = (float)Math.Atan(aspect * Math.Tan(camera.FovWithZoom * 0.5f));
+                double armX = Math.Sin(halfHFov) * radiusX;
+                double armY = Math.Cos(halfHFov) * radiusY;
+                var fovLineColor = new Color(187, 233, 246, 110);
+                _ssMinimap.AddSprite(MATERIAL_SQUARE, cx - armX * 0.5, cy + armY * 0.5, 0.0008, radiusY, fovLineColor, -halfHFov);
+                _ssMinimap.AddSprite(MATERIAL_SQUARE, cx + armX * 0.5, cy + armY * 0.5, 0.0008, radiusY, fovLineColor, halfHFov);
+            }
+
+            Vector3D upNormal, fwdTangent, rightTangent, forward;
+            GetRadarFrame(playerPos, camera, out upNormal, out fwdTangent, out rightTangent, out forward);
+
+            // Lines toward the lower zone and away to the higher one, on the outer third of the radar
+            double angleToLower, angleToHigher;
+            if (showRadarZoneLines && TryGetRadarZoneAngles(playerPos, upNormal, fwdTangent, rightTangent, out angleToLower, out angleToHigher))
+            {
+                const double MID_RADIUS_FACTOR = 5.0 / 6.0;
+                float lineWidth = 0.0014f * s;
+                float lineHeight = radiusY * (1f / 3f);
+                if (currentZoneIndex > 0)
+                {
+                    Color c = GetZoneColor(currentZoneIndex - 1);
+                    _ssMinimap.AddSprite(MATERIAL_SQUARE,
+                        cx + Math.Sin(angleToLower) * radiusX * MID_RADIUS_FACTOR, cy + Math.Cos(angleToLower) * radiusY * MID_RADIUS_FACTOR,
+                        lineWidth, lineHeight, new Color(c.R, c.G, c.B, 220), (float)angleToLower);
+                }
+                if (currentZoneIndex < 3)
+                {
+                    Color c = GetZoneColor(currentZoneIndex + 1);
+                    _ssMinimap.AddSprite(MATERIAL_SQUARE,
+                        cx + Math.Sin(angleToHigher) * radiusX * MID_RADIUS_FACTOR, cy + Math.Cos(angleToHigher) * radiusY * MID_RADIUS_FACTOR,
+                        lineWidth, lineHeight, new Color(c.R, c.G, c.B, 220), (float)angleToHigher);
+                }
+            }
+
+            // Range label, bottom right of the card
+            float textScale = GetScreenSpaceTextScale(camera.ViewportSize);
+            var labelGrey = new Color(200, 200, 200);
+            _ssMinimap.BeginRuns(cx + radarBoxWidth * 0.5 - 0.052 * s, cy - bgHeight * 0.5 + 0.016 * s, 0.46f * s * textScale, true);
+            if (radarScale == RadarScaleMode.Logarithmic)
+            {
+                _ssMinimap.AddRun("30 KM ", labelGrey);
+                _ssMinimap.AddRun("(LOG)", new Color(187, 233, 246));
+            }
+            else
+            {
+                _ssMinimap.AddRun(GetRadarRangeText(), labelGrey);
+            }
+
+            for (int i = 0; i < activeHudWaypoints.Count && markers < MINIMAP_MAX_MARKERS; i++)
+            {
+                var wp = activeHudWaypoints[i];
+                if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
+                Vector2D offset;
+                bool clamped;
+                if (!TryGetRadarMarkerOffset(ref wp, playerPos, fwdTangent, rightTangent, radiusX, radiusY, out offset, out clamped)) continue;
+                markers++;
+                Color c = GetMarkerColor(ref wp);
+                _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), cx + offset.X, cy + offset.Y,
+                    markerSize, markerSize * aspect, clamped ? c * 0.80f : c);
+            }
+
+            _ssMinimap.AddSprite(MATERIAL_NAV_ARROW, cx, cy, arrowSize, arrowSize * aspect, arrowColor,
+                GetRadarVehicleAngle(upNormal, fwdTangent, rightTangent, forward));
+        }
+
+        /// <summary>Linear radar range label, "3 KM" or "1.5 KM"; re-formatted only when the range changes.</summary>
+        private string GetRadarRangeText()
+        {
+            int rangeKmInt = (int)(radarRangeMeters * 0.001);
+            int rangeKmDec = (int)((radarRangeMeters * 0.001 - rangeKmInt) * 10.0);
+            long key = rangeKmInt * 10L + rangeKmDec;
+            if (_ssRangeText == null || key != _ssRangeKey)
+            {
+                _ssRangeKey = key;
+                _ssRangeText = rangeKmDec > 0 ? rangeKmInt + "." + rangeKmDec + " KM" : rangeKmInt + " KM";
+            }
+            return _ssRangeText;
         }
 
         private void HideMinimapPool()
@@ -3796,7 +4098,7 @@ namespace GVK.Navigation
             if (msg.Equals("/gvk ss", StringComparison.OrdinalIgnoreCase))
             {
                 sendToOthers = false;
-                ToggleScreenSpaceCompass();
+                ToggleScreenSpaceHud();
                 return;
             }
 
@@ -3971,6 +4273,7 @@ namespace GVK.Navigation
             double posY = minCenterY + t * (maxCenterY - minCenterY);
 
             minimapPosition = new Vector2D(posX, posY);
+            _minimapLayoutBgWidth = minimapBgWidth;
 
             if (minimapLabel != null)
             {
@@ -4635,7 +4938,7 @@ namespace GVK.Navigation
             sb.AppendLine("• /gvk radar       : Toggle Tactical Radar vs Sector Map");
             sb.AppendLine("• /gvk range <km>  : Set Radar Range (1.5, 3.0, 5.0, 30.0)");
             sb.AppendLine("• /gvk compass     : Toggle Compass Tape Ribbon");
-            sb.AppendLine("• /gvk ss          : Compass Renderer Test (Screen API vs Text HUD API)");
+            sb.AppendLine("• /gvk ss          : HUD Renderer Test (Screen API vs Text HUD API)");
             sb.AppendLine("• /gvk zone        : Cycle Zone Telemetry Dock (Radar/Compass/Off)");
             sb.AppendLine($"• /gvk map (or {mapKeyLabel})  : Open Full-Screen Topographical Kharak Map");
             sb.AppendLine("• /gvk rate        : Cycle HUD Refresh Frequency (15, 12, 10, 6 Hz)");

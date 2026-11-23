@@ -46,6 +46,7 @@ Player chat commands from this mod (all start with `/gvk`; the in-game `/gvk hel
 | `/gvk rate` | Cycle the HUD refresh rate |
 | `/gvk card` | Full-screen Avionics Mission Briefing |
 | `/gvk reset` | Reset all navigation positions and preferences |
+| `/gvk ss` | Switch the HUD renderer between the game's screen API and Text HUD API (test) |
 <!-- /GENERATED:player-commands -->
 
 Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bounty`) belong to those plugins and are explained in the Steam guide.
@@ -74,6 +75,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `GVK_ZoneNavCommand.cs` | The /gvk HUD: compass, radar, minimap and satellite map | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `HudAPIv2.cs` | The Text HUD API the HUD draws with | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_HudApiShared.cs` | The one Text HUD API instance the /gvk HUD and the KOTH client share | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_ScreenLayer.cs` | Draw list for the game's own screen API (SE 1.211), in Text HUD API units | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what

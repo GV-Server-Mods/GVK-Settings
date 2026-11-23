@@ -17,6 +17,18 @@ namespace GVK.Navigation
     {
         public const string FONT = "White";
 
+        /// <summary>
+        /// Screen API text scale per Text HUD API scale unit. Measured in game 2026-11-22 at 2560x1440 (Text HUD API
+        /// width 0.15586 vs screen API 289.6 px); it holds at any resolution but only at that UI scale.
+        /// </summary>
+        public const float TEXT_SCALE_DEFAULT = 0.689f;
+
+        /// <summary>Renderer switch (/gvk ss) shared by the navigation HUD and the KOTH panel.</summary>
+        public static bool UseScreenApi = true;
+
+        /// <summary>Current text scale; the navigation HUD re-measures it against Text HUD API when it can.</summary>
+        public static float TextScale = TEXT_SCALE_DEFAULT;
+
         private struct Item
         {
             public bool IsText;
@@ -95,6 +107,47 @@ namespace GVK.Navigation
                 Align = align,
                 Shadow = shadow
             });
+        }
+
+        private Vector2 _runPos;
+        private float _runStartX;
+        private float _runScale;
+        private bool _runShadow;
+
+        /// <summary>
+        /// Starts a line of differently coloured text runs, top-left at a Text HUD API point. Text HUD API did
+        /// this with colour tags; the screen API has none, so each run is its own draw placed after the last.
+        /// </summary>
+        public void BeginRuns(double x, double y, float scale, bool shadow)
+        {
+            _runPos = HudToNormalized(x, y);
+            _runStartX = _runPos.X;
+            _runScale = scale;
+            _runShadow = shadow;
+        }
+
+        public void AddRun(string text, Color color)
+        {
+            if (string.IsNullOrEmpty(text) || _runScale <= 0f) return;
+            _items.Add(new Item
+            {
+                IsText = true,
+                Text = text,
+                Position = _runPos,
+                Scale = _runScale,
+                Color = color,
+                Align = MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP,
+                Shadow = _runShadow
+            });
+            _measure.Clear().Append(text);
+            _runPos.X += MyScreenSpaceText.Measure(FONT, _measure, _runScale).X;
+        }
+
+        /// <summary>Moves the runs down one line of the font, back to the line's start.</summary>
+        public void NewLine()
+        {
+            _runPos.X = _runStartX;
+            _runPos.Y += MyScreenSpaceText.GetLineHeight(FONT, _runScale);
         }
 
         public void Draw(MyScreenSpaceLayer layer = MyScreenSpaceLayer.BelowHud)

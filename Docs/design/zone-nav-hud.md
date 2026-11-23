@@ -4,10 +4,12 @@ covers:
   - ModScripts/GVK_ZoneNavCommand.cs
   - ModScripts/API/HudAPIv2.cs
   - ModScripts/GVK_HudApiShared.cs
+  - ModScripts/GVK_ScreenLayer.cs
 scripts:
   - ModScripts/GVK_ZoneNavCommand.cs: The /gvk HUD: compass, radar, minimap and satellite map
   - ModScripts/API/HudAPIv2.cs: The Text HUD API the HUD draws with
   - ModScripts/GVK_HudApiShared.cs: The one Text HUD API instance the /gvk HUD and the KOTH client share
+  - ModScripts/GVK_ScreenLayer.cs: Draw list for the game's own screen API (SE 1.211), in Text HUD API units
 commands:
   - /gvk help: Avionics status report card and command list (also plain /gvk)
   - /gvk map: Full-screen satellite map with GPS and signals (the map key, default M, does the same)
@@ -20,10 +22,16 @@ commands:
   - /gvk rate: Cycle the HUD refresh rate
   - /gvk card: Full-screen Avionics Mission Briefing
   - /gvk reset: Reset all navigation positions and preferences
+  - /gvk ss: Switch the HUD renderer between the game's screen API and Text HUD API (test)
 ---
 
 # Zone navigation HUD (`/gvk`)
 
+- **Screen API renderer (branch `screen-space-hud`, in test)**: the compass, zone bar, corner minimap and tactical radar, and the [KOTH](koth-client.md) capture panel can draw with the game's own screen API (SE 1.211: `MyScreenSpaceSprite`, `MyScreenSpaceText`) instead of Text HUD API. `/gvk ss` switches renderers (`GvkScreenLayer.UseScreenApi`, saved as `UseScreenApi`, on by default). The satellite map and the F2 menu still need Text HUD API.
+  - Same layout math in Text HUD API units: `GvkScreenLayer` converts them to the screen API's space (which covers a centred 4:3 box, not the window) through window pixels. The layout code fills a draw list at the HUD refresh rate; `Draw()` replays it every frame in the order Text HUD API created its elements.
+  - The screen API has no colour tags, so each coloured stretch of text is its own run placed after the last (`BeginRuns`, `AddRun`, `NewLine`).
+  - Text size: screen API scale = Text HUD API scale × 0.689, re-measured against a hidden Text HUD API message when it is loaded (logged as `Screen API text scale`). 0.689 is the in-game measurement at 2560×1440, used without Text HUD API.
+  - Screen API drawing doesn't hide with the HUD on its own, so `Draw()` skips while `Session.Config.MinimalHud` is set. A draw error logs, switches back to Text HUD API for the session and keeps the game running.
 - **One Text HUD API per mod**: HudAPIv2 registers only one instance per mod; a second one never registers and its callback never runs. The `/gvk` HUD and the [KOTH client](koth-client.md) both take the shared instance from `GvkHudApi.Register` (`GVK_HudApiShared.cs`), which runs each script's setup once the API is active and closes it after the last `Release`. Never call `new HudAPIv2` in another script of this mod.
 - **Top-Center Tactical Compass Ribbon**:
   - Full $360^\circ$ planetary heading tape (N, NE, E, SE, S, SW, W, NW and degree marks) projected along Pertam's local horizon.
