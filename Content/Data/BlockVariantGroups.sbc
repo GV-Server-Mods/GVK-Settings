@@ -73,5 +73,79 @@
 				<Block Type="MyObjectBuilder_HydrogenEngine" Subtype="LargePrototechReactor"/>
 			</Blocks>
 		</BlockVariantGroup>
+		<!-- Staff and NPC blocks in one Home icon (owner, 2026-11-22). SafeZoneBlockNPC is from the siegable safe zones mod (3605260551); the game drops it if that mod is not loaded. -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_AdminBlocks"/>
+			<DisplayName>GVK Admin Blocks</DisplayName>
+			<Description/>
+			<Blocks>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="LimitedProdZone"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="GVK_NoLargeGridZone"/>
+				<Block Type="MyObjectBuilder_Beacon" Subtype="GVK_NoThrusterZone"/>
+				<Block Type="MyObjectBuilder_Refinery" Subtype="LargeRefinery_NPC_CU"/>
+				<Block Type="MyObjectBuilder_SafeZoneBlock" Subtype="SafeZoneBlockNPC"/>
+				<!-- King of the Hill (SkunkWorks, 2863919629) -->
+				<Block Type="MyObjectBuilder_Beacon" Subtype="ZoneBlock"/>
+				<Block Type="MyObjectBuilder_CargoContainer" Subtype="Prizebox"/>
+				<!-- SC Blockers (2661300547); its own BlockerCubeGroup is disabled below -->
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x200 Square"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="100x100 Square"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="50x50 Square"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x100 Rectangle"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x50 Rectangle"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="100x50 Rectangle"/>
+				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="Sphere"/>
+			</Blocks>
+		</BlockVariantGroup>
+		<!-- Keen's TankGroup plus the GVK Medium Hydrogen Tank. Also keeps the Water Tank mod's (3633905517) WaterTank, since that mod redefines this group too and the last loaded wins. -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="TankGroup"/>
+			<Icon>Textures\GUI\Icons\Cubes\OxygenTank.dds</Icon>
+			<DisplayName>DisplayName_BlockGroup_TankGroup</DisplayName>
+			<Description>Description_BlockGroup_TankGroup</Description>
+			<Blocks>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype=""/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SmallOxygenTankSmall"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="OxygenTankSmall"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeBlockOxygenTankLab"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeHydrogenTank"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeHydrogenTankSmall"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeHydrogenTankSmallLab"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SmallHydrogenTankLab"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SmallHydrogenTank"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SmallHydrogenTankSmall"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeHydrogenTankIndustrial"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LargeHydrogenTankBulk"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SmallHydrogenTankBulk"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="WaterTank"/>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="RB_HydrogenTankMedium_Small"/>
+			</Blocks>
+		</BlockVariantGroup>
+		<!-- SC Blockers' shapes live in GVK Admin Blocks (owner, 2026-11-22); works when GVK_Settings loads after SC Blockers -->
+		<BlockVariantGroup Enabled="false">
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="BlockerCubeGroup"/>
+			<Blocks/>
+		</BlockVariantGroup>
+		<!-- Spawn_Point_IR (1738223560): large and small spawn point in one icon -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_SpawnPoints"/>
+			<DisplayName>Spawn Points</DisplayName>
+			<Description/>
+			<Blocks>
+				<Block Type="MyObjectBuilder_MedicalRoom" Subtype="Spawn_Point_IR"/>
+				<Block Type="MyObjectBuilder_MedicalRoom" Subtype="Small_Spawn_Point_IR"/>
+			</Blocks>
+		</BlockVariantGroup>
+		<!-- Longer Hangar Doors (3419249780): the three lengths in one icon -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="GVK_LongHangarDoors"/>
+			<DisplayName>Long Hangar Doors</DisplayName>
+			<Description/>
+			<Blocks>
+				<Block Type="MyObjectBuilder_AirtightHangarDoor" Subtype="UOH_Hangar_x3"/>
+				<Block Type="MyObjectBuilder_AirtightHangarDoor" Subtype="UOH_Hangar_x4"/>
+				<Block Type="MyObjectBuilder_AirtightHangarDoor" Subtype="UOH_Hangar_x5"/>
+			</Blocks>
+		</BlockVariantGroup>
 	</BlockVariantGroups>
 </Definitions>
