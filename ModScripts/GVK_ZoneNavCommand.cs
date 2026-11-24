@@ -43,6 +43,8 @@ namespace GVK.Navigation
 
         // Tactical HUD Markers (from Textures\HUD\)
         private static readonly MyStringId MATERIAL_MARKER_GPS = MyStringId.GetOrCompute("marker_gps");
+        private static readonly MyStringId MATERIAL_SITE_BASE = MyStringId.GetOrCompute("POI_Home");   // House icon
+        private static readonly MyStringId MATERIAL_SITE_TRADE = MyStringId.GetOrCompute("POI_Trade"); // Circled C (credits) icon
         private static readonly MyStringId MATERIAL_NAV_ARROW = MyStringId.GetOrCompute("nav_arrow");
         private static readonly MyStringId MATERIAL_SIGNAL_UP = MyStringId.GetOrCompute("signal_up");
         private static readonly MyStringId MATERIAL_SIGNAL_DOWN = MyStringId.GetOrCompute("signal_down");
@@ -160,7 +162,7 @@ namespace GVK.Navigation
             new CompassGraduation(0.97222f, GraduationType.MinorFive, null, null)    // 355°
         };
 
-        // Active HUD Waypoint (GPS or real broadcast signal)
+        // Active HUD Waypoint (GPS point, real broadcast signal, KOTH or known site)
         private struct ActiveHudWaypoint
         {
             public MyStringId Sprite;
@@ -177,6 +179,13 @@ namespace GVK.Navigation
             public double KothRadius;  // KOTH capture radius in metres, for the satellite map ring
             public double KothMapRadius; // That radius as a fraction of the map width (UV units)
             public byte Relation;      // Signals only: REL_OWN, REL_FACTION, REL_HOSTILE, REL_NPC or REL_NEUTRAL
+            public bool IsNpcOwned;    // Signals only: the grid's owner is in an NPC faction (hostile or not)
+            public Vector3D GridOrigin; // Signals only: the broadcasting grid's origin, where MES places a static encounter
+            public byte SiteKind;      // 0 = not a known site, else SITE_BASE, SITE_TRADE, SITE_REFINERY, SITE_DEPOT or SITE_CARRIER
+            public int SiteIndex;      // Sites only: index into _knownSites
+            public double StandInRadiusSq; // Sites only: a GPS point this close (squared metres) can stand in for the site
+            public bool HasStandIn;    // Sites only, per scan: a GPS point or NPC signal in the list stands in for this site
+            public int StandsInFor;    // GPS points and NPC signals, per scan: 1 + the _knownSites index this marks, 0 = none
         }
 
         private const byte REL_NEUTRAL = 0;
@@ -184,6 +193,55 @@ namespace GVK.Navigation
         private const byte REL_FACTION = 2;
         private const byte REL_HOSTILE = 3;
         private const byte REL_NPC = 4;
+
+        private const byte SITE_BASE = 1;
+        private const byte SITE_TRADE = 2;
+        private const byte SITE_REFINERY = 3;
+        private const byte SITE_DEPOT = 4;
+        private const byte SITE_CARRIER = 5;
+        private static readonly Color SITE_COLOR = new Color(175, 140, 255);
+        private const double SITE_GPS_DEDUPE_DIST = 150.0;             // Default: a GPS point this close stands in for its nearest site
+        private const double SITE_GRID_DEDUPE_DIST_SQ = 25.0 * 25.0;   // An NPC grid whose origin is this close is the site itself
+        private const double COMPASS_SITE_MAX_DIST = 20000.0;     // The compass shows known sites only within 20 km
+        private const string BASE_SITE_PREFIX = "GVK-Alliance-PresetBases-Site-SpawnGroup-"; // Every Base Site, named by its beacon text
+
+        // Known sites: MES static encounters (GVK_Derelicts) the HUD marks without a GPS point, by spawn group SubtypeId
+        private struct KnownSiteEntry
+        {
+            public string SubtypeId;
+            public string Name;
+            public byte Kind;
+            public double GpsRadius;   // Metres from the grid origin a GPS point on the station can be; wider for long stations
+            public KnownSiteEntry(string subtypeId, string name, byte kind, double gpsRadius = SITE_GPS_DEDUPE_DIST)
+            {
+                SubtypeId = subtypeId;
+                Name = name;
+                Kind = kind;
+                GpsRadius = gpsRadius;
+            }
+        }
+
+        private static readonly KnownSiteEntry[] KNOWN_SITES = new KnownSiteEntry[]
+        {
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Sevastopol", "Sevastopol", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Skyport", "Skyport", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Mastodon", "Mastodon", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Rustys", "Rusty's", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounter-TradeStations-SpawnGroup-COALITIONBase", "Coalition Base", SITE_TRADE, 330.0),
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-RoverSales01", "Vehicle Store (Crossroads)", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-RoverSales02", "Vehicle Store (Sevastopol)", SITE_TRADE),
+            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation1", "KOTH Camp Khar Toba", SITE_TRADE),
+            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation2", "KOTH Camp Kalash", SITE_TRADE),
+            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation3", "KOTH Camp Crashed Starship", SITE_TRADE),
+            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation4", "KOTH Camp Scraptown", SITE_TRADE),
+            new KnownSiteEntry("GVK-StaticEncounter-SpawnGroup-CURefinery01", "Scrap Refinery", SITE_REFINERY),
+            new KnownSiteEntry("GVK-Alliance-SupplyDepot1-SpawnGroup", "Supply Depot 1", SITE_DEPOT, 250.0),
+            new KnownSiteEntry("GVK-Alliance-SupplyDepot2-SpawnGroup", "Supply Depot 2", SITE_DEPOT, 250.0),
+            new KnownSiteEntry("GVK-Alliance-SupplyDepot3-SpawnGroup", "Supply Depot 3", SITE_DEPOT, 250.0),
+            new KnownSiteEntry("GVK-Alliance-SupplyDepot4-SpawnGroup", "Supply Depot 4", SITE_DEPOT, 250.0),
+            new KnownSiteEntry("GVK-Alliance-Carrier-SpawnGroup-KHAANEPH", "KHAANEPH Carrier", SITE_CARRIER),
+            new KnownSiteEntry("GVK-Alliance-Carrier-SpawnGroup-SOBAN", "SOBAN Carrier", SITE_CARRIER, 180.0)
+        };
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
@@ -242,6 +300,7 @@ namespace GVK.Navigation
         private readonly GvkScreenLayer _ssMinimap = new GvkScreenLayer();
         private readonly GvkScreenLayer _ssZoneBar = new GvkScreenLayer();
         private const int MINIMAP_MAX_MARKERS = 30;
+        private const int MINIMAP_MAX_SITES = 48;          // Known sites count apart, so they never push out GPS points or signals
         private float _minimapLayoutBgWidth = -1f;         // Minimap card width as ApplyMinimapScale last laid it out
         private bool _hudLayoutInit;                       // First-tick layout done (see UpdateBeforeSimulation)
         private bool _ssHudDrawFailed;                     // A draw error turns the HUD off for the session
@@ -420,10 +479,13 @@ namespace GVK.Navigation
             public bool ShowMinimapSignals { get; set; } = true;
             public bool ShowMinimapOwnSignals { get; set; } = true;
             public bool ShowMinimapKoth { get; set; } = true;
+            public bool ShowMinimapSites { get; set; } = true;
 
             public bool ShowCompass { get; set; } = true;
             public bool ShowCompassKoth { get; set; } = true;
             public bool ShowMapKoth { get; set; } = true;
+            public bool ShowCompassSites { get; set; } = true;
+            public bool ShowMapSites { get; set; } = true;
             public bool ShowCompassGps { get; set; } = true;
             public bool ShowCompassSignals { get; set; } = true;
             public bool ShowCompassOwnSignals { get; set; } = true;
@@ -492,6 +554,10 @@ namespace GVK.Navigation
 
         // Active HUD Waypoints Buffer
         private List<ActiveHudWaypoint> activeHudWaypoints = new List<ActiveHudWaypoint>();
+        private readonly List<ActiveHudWaypoint> _knownSites = new List<ActiveHudWaypoint>(48); // Built once, see LoadKnownSites
+        private bool[] _knownSiteHasStandIn = new bool[0];  // Per scan: a GPS point or NPC signal stands in for this site
+        private bool[] _siteStandInDrawn = new bool[0];     // Per view draw: this site's stand-in got a slot, so the site is skipped
+        private bool _knownSitesLoaded;
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
         private List<IMySlimBlock> blockBuffer = new List<IMySlimBlock>();
@@ -557,6 +623,9 @@ namespace GVK.Navigation
         private bool showMapKoth = true;
         private bool showMinimapKoth = true;
         private bool showCompassKoth = true;
+        private bool showMapSites = true;
+        private bool showMinimapSites = true;
+        private bool showCompassSites = true;
         private const int KOTH_RING_DOTS = 24;
         private static readonly double[] KOTH_RING_COS = BuildRingTable(true);
         private static readonly double[] KOTH_RING_SIN = BuildRingTable(false);
@@ -594,6 +663,9 @@ namespace GVK.Navigation
                                 showMapKoth = cfg.ShowMapKoth;
                                 showMinimapKoth = cfg.ShowMinimapKoth;
                                 showCompassKoth = cfg.ShowCompassKoth;
+                                showMapSites = cfg.ShowMapSites;
+                                showMinimapSites = cfg.ShowMinimapSites;
+                                showCompassSites = cfg.ShowCompassSites;
                                 bool oldDefaultKey = cfg.MapKeyVersion < MAP_KEY_VERSION && cfg.MapKey == (int)MyKeys.M
                                     && !cfg.MapKeyShift && !cfg.MapKeyCtrl && !cfg.MapKeyAlt;
                                 if (IsValidMapKey((MyKeys)cfg.MapKey) && !oldDefaultKey)
@@ -659,6 +731,9 @@ namespace GVK.Navigation
                     ShowMapKoth = showMapKoth,
                     ShowMinimapKoth = showMinimapKoth,
                     ShowCompassKoth = showCompassKoth,
+                    ShowMapSites = showMapSites,
+                    ShowMinimapSites = showMinimapSites,
+                    ShowCompassSites = showCompassSites,
                     MapKey = (int)mapKey,
                     MapKeyShift = mapKeyShift,
                     MapKeyCtrl = mapKeyCtrl,
@@ -1105,12 +1180,17 @@ namespace GVK.Navigation
                         IsSignal = true,
                         IsOwnOrFaction = isOwnOrFaction,
                         Relation = signalRelation,
+                        IsNpcOwned = isNpc,
+                        GridOrigin = grid.PositionComp.GetPosition(),
                         PlanetaryElevation = Vector3D.Distance(bestPos, PLANET_CENTER) - PLANET_RADIUS
                     });
                 }
             }
 
-            // 3. KOTH zones from the GVK KOTH plugin
+            // 3. Known sites from the MES spawn groups
+            AddKnownSiteWaypoints(playerPos);
+
+            // 4. KOTH zones from the GVK KOTH plugin
             AddKothWaypoints(playerPos);
 
             // Sort by distance using cached IComparer struct — zero allocation, whitelisted by SE ModAPI.
@@ -1120,6 +1200,174 @@ namespace GVK.Navigation
             // Flag full satellite map for redraw on next frame if currently open
             if (showFullMap)
                 _fullMapNeedsRedraw = true;
+        }
+
+        /// <summary>
+        /// Adds the known sites (bases, trade stations, depots, Carriers) to the waypoint list. Each GPS point stands in
+        /// for the one site nearest it within that site's radius (150 m, more for long stations), and an NPC signal for
+        /// the site its grid origin sits on (MES places these grids by origin; their beacons can be 150 m off it).
+        /// A view skips a site only once it has drawn the GPS point or signal standing in for it. Player signals stand in for nothing.
+        /// </summary>
+        private void AddKnownSiteWaypoints(Vector3D playerPos)
+        {
+            if (!_knownSitesLoaded) LoadKnownSites();
+            int siteCount = _knownSites.Count;
+            if (siteCount == 0) return;
+
+            Array.Clear(_knownSiteHasStandIn, 0, siteCount);
+            int before = activeHudWaypoints.Count;
+            for (int i = 0; i < before; i++)
+            {
+                var wp = activeHudWaypoints[i];
+                if (wp.IsSignal && !wp.IsNpcOwned) continue;
+                Vector3D from = wp.IsSignal ? wp.GridOrigin : wp.Coords;
+                int nearest = -1;
+                double nearestSq = double.MaxValue;
+                for (int s = 0; s < siteCount; s++)
+                {
+                    double dSq = Vector3D.DistanceSquared(from, _knownSites[s].Coords);
+                    double limitSq = wp.IsSignal ? SITE_GRID_DEDUPE_DIST_SQ : _knownSites[s].StandInRadiusSq;
+                    if (dSq <= limitSq && dSq < nearestSq)
+                    {
+                        nearestSq = dSq;
+                        nearest = s;
+                    }
+                }
+                if (nearest < 0) continue;
+                wp.StandsInFor = nearest + 1;
+                activeHudWaypoints[i] = wp;
+                _knownSiteHasStandIn[nearest] = true;
+            }
+
+            for (int s = 0; s < siteCount; s++)
+            {
+                var site = _knownSites[s];
+                site.DistanceMeters = Vector3D.Distance(playerPos, site.Coords);
+                site.HasStandIn = _knownSiteHasStandIn[s];
+                activeHudWaypoints.Add(site);
+            }
+        }
+
+        /// <summary>
+        /// Builds the known-site list once, from the MES spawn group definitions. Every machine loads them with
+        /// GVK_Derelicts, so this needs no networking. Logs table entries that match no usable spawn group.
+        /// </summary>
+        private void LoadKnownSites()
+        {
+            _knownSitesLoaded = true;
+            _knownSites.Clear();
+            try
+            {
+                var found = new bool[KNOWN_SITES.Length];
+                int baseSites = 0;
+                var defs = Sandbox.Definitions.MyDefinitionManager.Static.GetSpawnGroupDefinitions();
+                for (int i = 0; i < defs.Count; i++)
+                {
+                    var def = defs[i];
+                    if (def == null) continue;
+                    string id = def.Id.SubtypeName;
+                    if (string.IsNullOrEmpty(id)) continue;
+
+                    byte kind = 0;
+                    string name = null;
+                    int entry = -1;
+                    double gpsRadius = SITE_GPS_DEDUPE_DIST;
+                    if (id.StartsWith(BASE_SITE_PREFIX, StringComparison.Ordinal))
+                    {
+                        kind = SITE_BASE;
+                        string beacon = def.Prefabs.Count > 0 ? def.Prefabs[0].BeaconText : null;
+                        name = string.IsNullOrWhiteSpace(beacon) ? "Base Site" : beacon.Trim();
+                    }
+                    else
+                    {
+                        for (int k = 0; k < KNOWN_SITES.Length; k++)
+                        {
+                            if (KNOWN_SITES[k].SubtypeId != id) continue;
+                            entry = k;
+                            kind = KNOWN_SITES[k].Kind;
+                            name = KNOWN_SITES[k].Name;
+                            gpsRadius = KNOWN_SITES[k].GpsRadius;
+                            break;
+                        }
+                    }
+                    if (kind == 0) continue;
+
+                    Vector3D coords;
+                    if (!def.Enabled || !def.IsValid || !TryGetStaticEncounterCoords(def.DescriptionText, out coords)) continue;
+                    if (entry >= 0) found[entry] = true;
+                    else baseSites++;
+
+                    _knownSites.Add(new ActiveHudWaypoint
+                    {
+                        Name = name,
+                        Coords = coords,
+                        Sprite = kind == SITE_TRADE || kind == SITE_REFINERY ? MATERIAL_SITE_TRADE : MATERIAL_SITE_BASE,
+                        DisplayColor = SITE_COLOR,
+                        MapUV = WorldToMapUV(coords),
+                        PlanetaryElevation = Vector3D.Distance(coords, PLANET_CENTER) - PLANET_RADIUS,
+                        SiteKind = kind,
+                        SiteIndex = _knownSites.Count,
+                        StandInRadiusSq = gpsRadius * gpsRadius
+                    });
+                }
+
+                for (int k = 0; k < KNOWN_SITES.Length; k++)
+                {
+                    if (!found[k])
+                        MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites: no usable spawn group '{KNOWN_SITES[k].SubtypeId}'");
+                }
+                if (baseSites == 0)
+                    MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites: no usable spawn group starting '{BASE_SITE_PREFIX}'");
+            }
+            catch (Exception ex)
+            {
+                _knownSites.Clear();
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites failed to load: {ex}");
+            }
+            _knownSiteHasStandIn = new bool[_knownSites.Count];
+            _siteStandInDrawn = new bool[_knownSites.Count];
+        }
+
+        /// <summary>
+        /// Reads a spawn group's static position the way MES does: needs the MES header and [StaticEncounter:true],
+        /// takes the last [StaticEncounterCoords:{X:.. Y:.. Z:..}], and skips groups placed by planet direction instead.
+        /// </summary>
+        private static bool TryGetStaticEncounterCoords(string description, out Vector3D coords)
+        {
+            coords = Vector3D.Zero;
+            if (string.IsNullOrEmpty(description) || !description.Contains("[Modular Encounters SpawnGroup]")) return false;
+
+            bool isStatic = false;
+            bool byPlanetDirection = false;
+            string[] lines = description.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string tag = lines[i].Trim();
+                if (tag.Length > 0 && tag[0] == '[') tag = tag.Substring(1);
+                if (tag.Length > 0 && tag[tag.Length - 1] == ']') tag = tag.Substring(0, tag.Length - 1);
+                int colon = tag.IndexOf(':');
+                if (colon <= 0) continue;
+                string key = tag.Substring(0, colon);
+                string value = tag.Substring(colon + 1);
+                bool flag;
+
+                if (key == "StaticEncounter")
+                {
+                    if (bool.TryParse(value, out flag)) isStatic = flag;
+                }
+                else if (key == "StaticEncounterUsePlanetDirectionAndAltitude")
+                {
+                    if (bool.TryParse(value, out flag)) byPlanetDirection = flag;
+                }
+                else if (key == "StaticEncounterCoords")
+                {
+                    if (value.Length > 0 && value[0] == '{') value = value.Substring(1);
+                    if (value.Length > 0 && value[value.Length - 1] == '}') value = value.Substring(0, value.Length - 1);
+                    Vector3D parsed;
+                    if (Vector3D.TryParse(value, out parsed)) coords = parsed;
+                }
+            }
+            return isStatic && !byPlanetDirection && coords != Vector3D.Zero;
         }
 
         /// <summary>
@@ -1241,16 +1489,21 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// Fills _compassVisibleWps with up to maxCount shown waypoints that fall on the compass tape,
-        /// nearest first (activeHudWaypoints is sorted by distance).
+        /// Fills _compassVisibleWps with up to maxCount shown waypoints that fall on the compass tape, nearest first
+        /// (activeHudWaypoints is sorted by distance), then known sites in what room is left, so they never push off a GPS point,
+        /// signal or KOTH, and a site whose stand-in made the tape is skipped.
         /// </summary>
         private void CollectCompassWaypoints(Vector3D playerPos, IMyCamera camera, float playerAzimuth, float fovCoeff, float fovCubic, float tapeSpan, int maxCount)
         {
             _compassVisibleWps.Clear();
+            Array.Clear(_siteStandInDrawn, 0, _siteStandInDrawn.Length);
+            for (int pass = 0; pass < 2; pass++)
             for (int i = 0; i < activeHudWaypoints.Count && _compassVisibleWps.Count < maxCount; i++)
             {
                 var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth)) continue;
+                if (SkipForPass(ref wp, pass)) continue;
+                if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth, showCompassSites)) continue;
+                if (wp.SiteKind != 0 && wp.DistanceMeters > COMPASS_SITE_MAX_DIST) continue;
 
                 Vector3 toWp = (Vector3)(wp.Coords - playerPos);
 
@@ -1277,7 +1530,23 @@ namespace GVK.Navigation
                 if (poiScreenOffset >= -tapeSpan && poiScreenOffset <= tapeSpan)
                 {
                     _compassVisibleWps.Add(new CompassVisibleWp(i, poiScreenOffset));
+                    MarkStandInDrawn(ref wp);
                 }
+            }
+
+            // Sites came in a second pass: sort back to nearest first (at most maxCount items, no allocation),
+            // so the farthest-first draw still puts nearer icons on top
+            for (int j = 1; j < _compassVisibleWps.Count; j++)
+            {
+                var item = _compassVisibleWps[j];
+                double dist = activeHudWaypoints[item.WpIndex].DistanceMeters;
+                int k = j - 1;
+                while (k >= 0 && activeHudWaypoints[_compassVisibleWps[k].WpIndex].DistanceMeters > dist)
+                {
+                    _compassVisibleWps[k + 1] = _compassVisibleWps[k];
+                    k--;
+                }
+                _compassVisibleWps[k + 1] = item;
             }
         }
 
@@ -1411,6 +1680,8 @@ namespace GVK.Navigation
             LogIfMaterialMissing(MATERIAL_SQUARE);
             LogIfMaterialMissing(MATERIAL_NAV_ARROW);
             LogIfMaterialMissing(MATERIAL_MARKER_GPS);
+            LogIfMaterialMissing(MATERIAL_SITE_BASE);
+            LogIfMaterialMissing(MATERIAL_SITE_TRADE);
             LogIfMaterialMissing(MATERIAL_SIGNAL_UP);
             LogIfMaterialMissing(MATERIAL_SIGNAL_DOWN);
             LogIfMaterialMissing(MATERIAL_SIGNAL_LEVEL);
@@ -1804,19 +2075,34 @@ namespace GVK.Navigation
             Color arrowColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
             double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
             int markers = 0;
+            int sites = 0;
 
             if (minimapMode == MinimapDisplayMode.StrategicMap)
             {
                 _ssMinimap.AddSprite(MATERIAL_MAP, cx, cy, minimapSize.X, minimapSize.Y, Color.White);
 
-                for (int i = 0; i < activeHudWaypoints.Count && markers < MINIMAP_MAX_MARKERS; i++)
+                // Pass 0 picks the other markers and marks the sites they stand in for, pass 1 draws the sites,
+                // pass 2 draws pass 0's picks again on top (same order and tests, so the same picks)
+                Array.Clear(_siteStandInDrawn, 0, _siteStandInDrawn.Length);
+                for (int pass = 0; pass < 3; pass++)
                 {
-                    var wp = activeHudWaypoints[i];
-                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
-                    markers++;
-                    _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation),
-                        cx + (wp.MapUV.X - 0.5) * minimapSize.X, cy + (0.5 - wp.MapUV.Y) * minimapSize.Y,
-                        markerSize, markerSize * aspect, GetMarkerColor(ref wp));
+                    if (pass == 2) markers = 0;
+                    for (int i = 0; i < activeHudWaypoints.Count; i++)
+                    {
+                        if (pass == 1 ? sites >= MINIMAP_MAX_SITES : markers >= MINIMAP_MAX_MARKERS) break;
+                        var wp = activeHudWaypoints[i];
+                        if (SkipForPass(ref wp, pass)) continue;
+                        if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth, showMinimapSites)) continue;
+                        if (!TakeMinimapSlot(ref wp, ref markers, ref sites)) continue;
+                        if (pass == 0)
+                        {
+                            MarkStandInDrawn(ref wp);
+                            continue;
+                        }
+                        _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation),
+                            cx + (wp.MapUV.X - 0.5) * minimapSize.X, cy + (0.5 - wp.MapUV.Y) * minimapSize.Y,
+                            markerSize, markerSize * aspect, GetMarkerColor(ref wp));
+                    }
                 }
 
                 Vector2 uv = WorldToMapUV(playerPos);
@@ -1884,17 +2170,31 @@ namespace GVK.Navigation
                 _ssMinimap.AddRun(GetRadarRangeText(), labelGrey);
             }
 
-            for (int i = 0; i < activeHudWaypoints.Count && markers < MINIMAP_MAX_MARKERS; i++)
+            // The sector map's three passes: pick and mark, draw the sites, draw the picks on top
+            Array.Clear(_siteStandInDrawn, 0, _siteStandInDrawn.Length);
+            for (int pass = 0; pass < 3; pass++)
             {
-                var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth)) continue;
-                Vector2D offset;
-                bool clamped;
-                if (!TryGetRadarMarkerOffset(ref wp, playerPos, fwdTangent, rightTangent, radiusX, radiusY, out offset, out clamped)) continue;
-                markers++;
-                Color c = GetMarkerColor(ref wp);
-                _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), cx + offset.X, cy + offset.Y,
-                    markerSize, markerSize * aspect, clamped ? c * 0.80f : c);
+                if (pass == 2) markers = 0;
+                for (int i = 0; i < activeHudWaypoints.Count; i++)
+                {
+                    if (pass == 1 ? sites >= MINIMAP_MAX_SITES : markers >= MINIMAP_MAX_MARKERS) break;
+                    var wp = activeHudWaypoints[i];
+                    if (SkipForPass(ref wp, pass)) continue;
+                    if (!IsMarkerShown(ref wp, showMinimapGps, showMinimapSignals, showMinimapOwnSignals, showMinimapKoth, showMinimapSites)) continue;
+                    Vector2D offset;
+                    bool clamped;
+                    if (!TryGetRadarMarkerOffset(ref wp, playerPos, fwdTangent, rightTangent, radiusX, radiusY, out offset, out clamped)) continue;
+                    if (clamped && wp.SiteKind != 0) continue; // Sites show only inside the radar range, not pinned to the rim
+                    if (!TakeMinimapSlot(ref wp, ref markers, ref sites)) continue;
+                    if (pass == 0)
+                    {
+                        MarkStandInDrawn(ref wp);
+                        continue;
+                    }
+                    Color c = GetMarkerColor(ref wp);
+                    _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), cx + offset.X, cy + offset.Y,
+                        markerSize, markerSize * aspect, clamped ? c * 0.80f : c);
+                }
             }
 
             _ssMinimap.AddSprite(MATERIAL_NAV_ARROW, cx, cy, arrowSize, arrowSize * aspect, arrowColor,
@@ -1945,10 +2245,11 @@ namespace GVK.Navigation
             for (int i = 0; i < activeHudWaypoints.Count; i++)
             {
                 var wp = activeHudWaypoints[i];
-                if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals, showMapKoth)) continue;
+                if (!IsMarkerShown(ref wp, true, true, showMapOwnSignals, showMapKoth, showMapSites)) continue;
+                if (wp.SiteKind != 0 && wp.HasStandIn) continue; // Its GPS point or NPC signal shows here instead (the map shows every one)
                 Vector2D wpOffset = GetMapOffset(wp.MapUV, mapWidth, mapHeight, viewU, viewV);
                 if (Math.Abs(wpOffset.X) > halfW || Math.Abs(wpOffset.Y) > halfH) continue;
-                if (wp.KothState == 0 && !(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels)) // KOTH labels always show
+                if (wp.KothState == 0 && !(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels)) // KOTH labels always show; sites follow GPS Labels
                 {
                     _mapPlainWps.Add(i);
                     continue;
@@ -2539,14 +2840,15 @@ namespace GVK.Navigation
 
         /// <summary>
         /// Right-click menu at a point: on a GPS marker or label it offers to remove that GPS, anywhere else to add
-        /// one there. Signals and KOTH markers aren't GPS points, so a click on them offers to add one.
+        /// one there. Signals, KOTH and known-site markers aren't GPS points, so a click on them offers to add one.
         /// </summary>
         private void OpenMapMenu(Vector2D cursor)
         {
             _ssMapTip.Clear();
             _mapDragging = false;
             int wpIdx = FindMapHit(cursor);
-            _mapMenuRemove = wpIdx >= 0 && !activeHudWaypoints[wpIdx].IsSignal && activeHudWaypoints[wpIdx].KothState == 0;
+            _mapMenuRemove = wpIdx >= 0 && !activeHudWaypoints[wpIdx].IsSignal && activeHudWaypoints[wpIdx].KothState == 0
+                && activeHudWaypoints[wpIdx].SiteKind == 0;
             _mapMenuAt = cursor;
             if (_mapMenuRemove)
             {
@@ -2688,6 +2990,14 @@ namespace GVK.Navigation
         {
             if (wp.KothState == KOTH_OPEN) return "KOTH, open now";
             if (wp.KothState == KOTH_NEXT) return "KOTH, opens next";
+            switch (wp.SiteKind)
+            {
+                case SITE_BASE: return "Alliance base site";
+                case SITE_TRADE: return "Trade station";
+                case SITE_REFINERY: return "Scrap refinery";
+                case SITE_DEPOT: return "Alliance supply depot";
+                case SITE_CARRIER: return "Alliance carrier";
+            }
             if (!wp.IsSignal) return "GPS point";
             switch (wp.Relation)
             {
@@ -3355,10 +3665,41 @@ namespace GVK.Navigation
             MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] {name}: {(setting ? "ENABLED" : "DISABLED")}", 2500, setting ? MyFontEnum.Green : MyFontEnum.Red);
         }
 
-        private static bool IsMarkerShown(ref ActiveHudWaypoint wp, bool showGps, bool showSignals, bool showOwnSignals, bool showKoth)
+        private static bool IsMarkerShown(ref ActiveHudWaypoint wp, bool showGps, bool showSignals, bool showOwnSignals, bool showKoth, bool showSites)
         {
             if (wp.KothState != 0) return showKoth;
+            if (wp.SiteKind != 0) return showSites; // Views also skip a site that has a stand-in: SkipForPass, or HasStandIn on the map
             return wp.IsSignal ? showSignals && (showOwnSignals || !wp.IsOwnOrFaction) : showGps;
+        }
+
+        /// <summary>
+        /// Multi-pass marker loops (pass 1 known sites, every other pass everything else): true if this marker belongs to
+        /// another pass, or is a site whose GPS point or signal this view has already picked (MarkStandInDrawn).
+        /// </summary>
+        private bool SkipForPass(ref ActiveHudWaypoint wp, int pass)
+        {
+            if ((wp.SiteKind != 0) != (pass == 1)) return true;
+            return pass == 1 && wp.SiteIndex < _siteStandInDrawn.Length && _siteStandInDrawn[wp.SiteIndex];
+        }
+
+        private void MarkStandInDrawn(ref ActiveHudWaypoint wp)
+        {
+            int s = wp.StandsInFor - 1;
+            if (s >= 0 && s < _siteStandInDrawn.Length) _siteStandInDrawn[s] = true;
+        }
+
+        /// <summary>Counts a minimap marker against its budget. Known sites have their own, so they never push out GPS points or signals.</summary>
+        private static bool TakeMinimapSlot(ref ActiveHudWaypoint wp, ref int markers, ref int sites)
+        {
+            if (wp.SiteKind != 0)
+            {
+                if (sites >= MINIMAP_MAX_SITES) return false;
+                sites++;
+                return true;
+            }
+            if (markers >= MINIMAP_MAX_MARKERS) return false;
+            markers++;
+            return true;
         }
 
         /// <summary>
@@ -3531,6 +3872,9 @@ namespace GVK.Navigation
             showMapKoth = true;
             showMinimapKoth = true;
             showCompassKoth = true;
+            showMapSites = true;
+            showMinimapSites = true;
+            showCompassSites = true;
             mapKey = DEFAULT_MAP_KEY;
             mapKeyShift = false;
             mapKeyCtrl = false;
