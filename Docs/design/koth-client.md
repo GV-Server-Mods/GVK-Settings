@@ -18,7 +18,7 @@ The player side of the GVK KOTH Torch plugin ([GV-Server-Mods/GVK-KOTH-Plugin](h
 - `KothClientData` is shared with the `/gvk` navigation HUD, which shows KOTH markers from it (see [Zone navigation HUD](zone-nav-hud.md)). On the satellite map's game screen, pointing at one says whether it is open now or opens next.
 
 ## Capture panel
-- Shown while the player is inside an open KOTH: name, bar %, a 20-step bar and the number of players counted, on the left of the screen. Drawn with the game's screen API from `Draw()` (`GvkScreenLayer`, see [Zone navigation HUD](zone-nav-hud.md)), at the text size `GvkScreenLayer.MeasureTextScale` gives, and hidden with the HUD and while the satellite map is open (`KothClientData.MapOpen`, set each tick by the nav HUD). A draw error turns the panel off for the session.
+- Shown while the player is inside an open KOTH: name, bar %, a 20-step bar and the number of players counted, on the left of the screen. Drawn with the game's screen API from `Draw()` (`GvkScreenLayer`, see [Zone navigation HUD](zone-nav-hud.md); its sprites and text only, not the pixel-snapped rectangles the territory tint uses), at the text size `GvkScreenLayer.MeasureTextScale` gives, and hidden with the HUD and while the satellite map is open (`KothClientData.MapOpen`, set each tick by the nav HUD). A draw error turns the panel off for the session.
 - Rebuilt every 10 ticks.
 
 ## Zone boundary
