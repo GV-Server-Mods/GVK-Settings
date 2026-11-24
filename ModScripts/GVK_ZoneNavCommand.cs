@@ -200,15 +200,17 @@ namespace GVK.Navigation
             public int KothState;      // 0 = not a KOTH, KOTH_OPEN (flashes) or KOTH_NEXT (steady, dimmed)
             public double KothRadius;  // KOTH capture radius in metres, for the satellite map ring
             public double KothMapRadius; // That radius as a fraction of the map width (UV units)
-            public byte Relation;      // Signals only: REL_OWN, REL_FACTION, REL_HOSTILE, REL_NPC or REL_NEUTRAL
+            public byte Relation;      // Signals only: REL_OWN, REL_FACTION, REL_FRIENDLY, REL_HOSTILE, REL_NPC or REL_NEUTRAL
             public bool IsNpcOwned;    // Signals only: the grid's owner is in an NPC faction (hostile or not)
             public Vector3D GridOrigin; // Signals only: the broadcasting grid's origin, where MES places a static encounter
             public byte SiteKind;      // 0 = not a known site, else SITE_BASE, SITE_TRADE, SITE_REFINERY, SITE_DEPOT or SITE_CARRIER
             public int SiteIndex;      // Sites only: index into _knownSites
             public double StandInRadiusSq; // Sites only: a GPS point this close (squared metres) can stand in for the site
-            public bool HasStandIn;    // Sites only, per scan: a GPS point or NPC signal in the list stands in for this site
+            public bool HasStandIn;    // Sites only, per scan: a GPS point in the list stands in for this site
             public string KindText;    // Sites only: the hover card's "what it is", from the server's site status
-            public int StandsInFor;    // GPS points and NPC signals, per scan: 1 + the _knownSites index this marks, 0 = none
+            public int StandsInFor;    // GPS points, per scan: 1 + the _knownSites index this marks, 0 = none
+            public int FoldedInto;     // NPC signals, per scan: 1 + the _knownSites index whose icon shows it, 0 = none
+            public bool HasSignal;     // Sites only, per scan: the site's own NPC signal is in range (folded into the icon)
         }
 
         private const byte REL_NEUTRAL = 0;
@@ -216,6 +218,7 @@ namespace GVK.Navigation
         private const byte REL_FACTION = 2;
         private const byte REL_HOSTILE = 3;
         private const byte REL_NPC = 4;
+        private const byte REL_FRIENDLY = 5; // Another faction the player is Friendly with: by reputation for an NPC faction
 
         private const byte SITE_BASE = GvkKnownSites.BASE;       // Kinds and the site table: GVK_SiteStatus.cs
         private const byte SITE_TRADE = GvkKnownSites.TRADE;
@@ -554,7 +557,10 @@ namespace GVK.Navigation
         // Active HUD Waypoints Buffer
         private List<ActiveHudWaypoint> activeHudWaypoints = new List<ActiveHudWaypoint>();
         private readonly List<ActiveHudWaypoint> _knownSites = new List<ActiveHudWaypoint>(48); // Built once, see LoadKnownSites
-        private bool[] _knownSiteHasStandIn = new bool[0];  // Per scan: a GPS point or NPC signal stands in for this site
+        private bool[] _knownSiteHasStandIn = new bool[0];  // Per scan: a GPS point stands in for this site
+        private bool[] _siteHasSignal = new bool[0];        // Per scan: the site's own NPC signal is in range
+        private byte[] _siteSignalRel = new byte[0];        // Per scan: that signal's REL_* (live colour for trade stations)
+        private string[] _siteSignalName = new string[0];   // Per scan: that signal's name, for the hover card
         private bool[] _siteStandInDrawn = new bool[0];     // Per view draw: this site's stand-in got a slot, so the site is skipped
         private bool _knownSitesLoaded;
         private int _siteStatusVersion = int.MinValue;      // GvkSiteStatus.Version last read into the arrays below
@@ -1083,7 +1089,7 @@ namespace GVK.Navigation
             var controlled = MyAPIGateway.Session.ControlledObject?.Entity;
             var playerGrid = (controlled as IMyCubeBlock)?.CubeGrid ?? (controlled as IMyCubeGrid);
             long localPlayerId = MyAPIGateway.Session.Player?.IdentityId ?? 0;
-            var localPlayer = MyAPIGateway.Session.Player;
+            IMyFaction localFaction = localPlayerId != 0 ? MyAPIGateway.Session.Factions.TryGetPlayerFaction(localPlayerId) : null;
 
             foreach (var ent in entityBuffer)
             {
@@ -1104,45 +1110,13 @@ namespace GVK.Navigation
                 grid.GetBlocks(blockBuffer, IsBroadcastBlockPredicate);
 
                 long gridOwner = grid.BigOwners.Count > 0 ? grid.BigOwners[0] : 0;
-
-                // Guard: Player can be null during respawn/disconnect — fall back to NoOwnership rather than throw.
-                var relation = localPlayer?.GetRelationTo(gridOwner) ?? MyRelationsBetweenPlayerAndBlock.NoOwnership;
-
                 bool isOwner = (gridOwner == localPlayerId && localPlayerId != 0);
 
                 // gridOwner == 0 means the grid is UNOWNED (no player set ownership), not necessarily an NPC.
                 // Rely solely on the faction NPC check for correct NPC gold color; unowned shows as neutral white.
-                bool isNpc = false;
-                if (gridOwner != 0)
-                {
-                    var faction = MyAPIGateway.Session.Factions.TryGetPlayerFaction(gridOwner);
-                    if (faction != null && faction.IsEveryoneNpc()) isNpc = true;
-                }
-
-                bool isOwnOrFaction = isOwner || relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner;
-
-                Color signalColor;
-                byte signalRelation;
-                if (isOwner)
-                {
-                    signalColor = new Color(100, 230, 255);
-                    signalRelation = REL_OWN;
-                }
-                else if (relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner)
-                {
-                    signalColor = new Color(100, 240, 100);
-                    signalRelation = REL_FACTION;
-                }
-                else if (relation == MyRelationsBetweenPlayerAndBlock.Enemies)
-                {
-                    signalColor = new Color(255, 60, 60);
-                    signalRelation = REL_HOSTILE;
-                }
-                else
-                {
-                    signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
-                    signalRelation = isNpc ? REL_NPC : REL_NEUTRAL;
-                }
+                IMyFaction ownerFaction = gridOwner != 0 ? MyAPIGateway.Session.Factions.TryGetPlayerFaction(gridOwner) : null;
+                bool isNpc = ownerFaction != null && ownerFaction.IsEveryoneNpc();
+                bool sameFaction = !isOwner && localFaction != null && ownerFaction == localFaction;
 
                 // One marker per grid (de-clutter rule): track the NEAREST in-range broadcasting block.
                 // GetBlocks() ordering is arbitrary, so the old first-found 'break' could pin a far beacon
@@ -1150,6 +1124,7 @@ namespace GVK.Navigation
                 double bestDistSq = double.MaxValue;
                 Vector3D bestPos = Vector3D.Zero;
                 string bestName = null;
+                IMyCubeBlock bestBlock = null;
 
                 for (int bIdx = 0; bIdx < blockBuffer.Count; bIdx++)
                 {
@@ -1184,11 +1159,46 @@ namespace GVK.Navigation
                         bestDistSq = distSq;
                         bestPos = blockPos;
                         bestName = blockName;
+                        bestBlock = fat;
                     }
                 }
 
                 if (bestDistSq < double.MaxValue)
                 {
+                    // Friend or foe as the vanilla HUD works it out (MyIDModule.GetRelationPlayerBlock): the broadcasting
+                    // block's owner against the player, with the player's own reputation for an NPC faction.
+                    // IMyPlayer.GetRelationTo compares factions only, so it showed Friendly NPC stations red.
+                    var relation = localPlayerId != 0 ? bestBlock.GetUserRelationToOwner(localPlayerId) : MyRelationsBetweenPlayerAndBlock.NoOwnership;
+                    bool isOwnOrFaction = isOwner || sameFaction || relation == MyRelationsBetweenPlayerAndBlock.FactionShare || relation == MyRelationsBetweenPlayerAndBlock.Owner;
+
+                    Color signalColor;
+                    byte signalRelation;
+                    if (isOwner || relation == MyRelationsBetweenPlayerAndBlock.Owner)
+                    {
+                        signalColor = new Color(100, 230, 255);
+                        signalRelation = REL_OWN;
+                    }
+                    else if (sameFaction || relation == MyRelationsBetweenPlayerAndBlock.FactionShare)
+                    {
+                        signalColor = new Color(100, 240, 100);
+                        signalRelation = REL_FACTION;
+                    }
+                    else if (relation == MyRelationsBetweenPlayerAndBlock.Friends)
+                    {
+                        signalColor = new Color(100, 240, 100);
+                        signalRelation = REL_FRIENDLY;
+                    }
+                    else if (relation == MyRelationsBetweenPlayerAndBlock.Enemies)
+                    {
+                        signalColor = new Color(255, 60, 60);
+                        signalRelation = REL_HOSTILE;
+                    }
+                    else
+                    {
+                        signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
+                        signalRelation = isNpc ? REL_NPC : REL_NEUTRAL;
+                    }
+
                     activeHudWaypoints.Add(new ActiveHudWaypoint
                     {
                         Name = bestName,
@@ -1225,9 +1235,11 @@ namespace GVK.Navigation
 
         /// <summary>
         /// Adds the known sites (bases, trade stations, depots, Carriers) to the waypoint list. Each GPS point stands in
-        /// for the one site nearest it within that site's radius (150 m, more for long stations), and an NPC signal for
-        /// the site its grid origin sits on (MES places these grids by origin; their beacons can be 150 m off it).
-        /// A view skips a site only once it has drawn the GPS point or signal standing in for it. Player signals stand in for nothing.
+        /// for the one site nearest it within that site's radius (150 m, more for long stations); a view skips a site only
+        /// once it has drawn that GPS point. An NPC signal whose grid origin sits on a site (MES places these grids by
+        /// origin; their beacons can be 150 m off it) is the site's own beacon: it folds into the site icon, which stays
+        /// (owner, 2026-11-24), and a view that shows sites hides the signal. A trade station or the refinery then takes
+        /// the signal's live colour, and the hover card adds the beacon's name. Player signals fold into nothing.
         /// </summary>
         private void AddKnownSiteWaypoints(Vector3D playerPos)
         {
@@ -1237,6 +1249,7 @@ namespace GVK.Navigation
             if (_siteStatusVersion != GvkSiteStatus.Version) RefreshSiteStatus();
 
             Array.Clear(_knownSiteHasStandIn, 0, siteCount);
+            Array.Clear(_siteHasSignal, 0, siteCount);
             int before = activeHudWaypoints.Count;
             for (int i = 0; i < before; i++)
             {
@@ -1256,9 +1269,19 @@ namespace GVK.Navigation
                     }
                 }
                 if (nearest < 0) continue;
-                wp.StandsInFor = nearest + 1;
+                if (wp.IsSignal)
+                {
+                    wp.FoldedInto = nearest + 1;
+                    _siteHasSignal[nearest] = true;
+                    _siteSignalRel[nearest] = wp.Relation;
+                    _siteSignalName[nearest] = wp.Name;
+                }
+                else
+                {
+                    wp.StandsInFor = nearest + 1;
+                    _knownSiteHasStandIn[nearest] = true;
+                }
                 activeHudWaypoints[i] = wp;
-                _knownSiteHasStandIn[nearest] = true;
             }
 
             for (int s = 0; s < siteCount; s++)
@@ -1266,8 +1289,12 @@ namespace GVK.Navigation
                 var site = _knownSites[s];
                 site.DistanceMeters = Vector3D.Distance(playerPos, site.Coords);
                 site.HasStandIn = _knownSiteHasStandIn[s];
-                site.DisplayColor = GetSiteColor(s); // Every scan, since the player's standing can change
-                site.KindText = _siteKindText[s];
+                site.HasSignal = _siteHasSignal[s];
+                bool live = site.HasSignal && (site.SiteKind == SITE_TRADE || site.SiteKind == SITE_REFINERY);
+                site.DisplayColor = live ? GetSignalSiteColor(_siteSignalRel[s]) : GetSiteColor(s); // Every scan: standing can change
+                site.KindText = site.HasSignal && !string.IsNullOrEmpty(_siteSignalName[s])
+                    ? _siteKindText[s] + ", " + _siteSignalName[s]
+                    : _siteKindText[s];
                 activeHudWaypoints.Add(site);
             }
         }
@@ -1297,6 +1324,9 @@ namespace GVK.Navigation
             }
             int n = _knownSites.Count;
             _knownSiteHasStandIn = new bool[n];
+            _siteHasSignal = new bool[n];
+            _siteSignalRel = new byte[n];
+            _siteSignalName = new string[n];
             _siteStandInDrawn = new bool[n];
             _siteState = new byte[n];
             _siteFaction = new long[n];
@@ -1360,6 +1390,14 @@ namespace GVK.Navigation
             if (kind == SITE_BASE && state == GvkSiteStatus.UNCLAIMED) return SITE_DIM; // UNKNOWN (no status yet) stays white
             if (state != GvkSiteStatus.HELD || _siteFaction[s] == 0) return SITE_WHITE;
             return GetStandingColor(MyAPIGateway.Session.Factions.TryGetFactionById(_siteFaction[s]));
+        }
+
+        /// <summary>A site icon's colour from its own signal's relation: green own, faction or Friendly, red hostile, else white.</summary>
+        private static Color GetSignalSiteColor(byte relation)
+        {
+            if (relation == REL_HOSTILE) return SITE_HOSTILE;
+            if (relation == REL_OWN || relation == REL_FACTION || relation == REL_FRIENDLY) return SITE_FRIENDLY;
+            return SITE_WHITE;
         }
 
         /// <summary>The player's standing with an NPC faction: green Friendly, red hostile, white neutral, unowned (UNKN) or unknown.</summary>
@@ -1689,7 +1727,7 @@ namespace GVK.Navigation
                 var wp = activeHudWaypoints[i];
                 if (SkipForPass(ref wp, pass)) continue;
                 if (!IsMarkerShown(ref wp, showCompassGps, showCompassSignals, showCompassOwnSignals, showCompassKoth, showCompassSites)) continue;
-                if (wp.SiteKind != 0 && wp.DistanceMeters > COMPASS_SITE_MAX_DIST) continue;
+                if (wp.SiteKind != 0 && wp.DistanceMeters > COMPASS_SITE_MAX_DIST && !wp.HasSignal) continue; // In beacon range it shows like the signal did
 
                 Vector3 toWp = (Vector3)(wp.Coords - playerPos);
 
@@ -3308,6 +3346,7 @@ namespace GVK.Navigation
             {
                 case REL_OWN: return "Your signal";
                 case REL_FACTION: return "Faction signal";
+                case REL_FRIENDLY: return "Friendly signal";
                 case REL_HOSTILE: return "Hostile signal";
                 case REL_NPC: return "NPC signal";
                 default: return "Neutral signal";
@@ -3976,6 +4015,7 @@ namespace GVK.Navigation
         {
             if (wp.KothState != 0) return showKoth;
             if (wp.SiteKind != 0) return showSites; // Views also skip a site that has a stand-in: SkipForPass, or HasStandIn on the map
+            if (wp.FoldedInto != 0 && showSites) return false; // A site's own beacon: the site icon shows it
             return wp.IsSignal ? showSignals && (showOwnSignals || !wp.IsOwnOrFaction) : showGps;
         }
 
