@@ -546,10 +546,11 @@ namespace GVK.Navigation
         private Color[] _territoryColor = new Color[0];     // Standing colour per territory, every scan
         private readonly List<List<TerritoryRow>> _territoryRows = new List<List<TerritoryRow>>(2); // Inside, as map UV strips
 
-        /// <summary>One strip of a territory's inside: map row V (centre), from U0 to U1.</summary>
+        /// <summary>One strip of a territory's inside: map row Row (of TERRITORY_FILL_ROWS, from the top), from U0 to U1.</summary>
         private struct TerritoryRow
         {
-            public float V, U0, U1;
+            public int Row;
+            public float U0, U1;
         }
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
@@ -1412,7 +1413,7 @@ namespace GVK.Navigation
             if (cosA <= -1.0)        // It covers the whole planet: no edge, all inside
             {
                 for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
-                    rows.Add(new TerritoryRow { V = (r + 0.5f) / TERRITORY_FILL_ROWS, U0 = 0f, U1 = 1f });
+                    rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = 1f });
                 return;
             }
             double sinA = Math.Sqrt(1.0 - cosA * cosA);
@@ -1442,22 +1443,22 @@ namespace GVK.Navigation
                 if (k >= 1.0) continue;                  // The whole row is outside
                 if (k <= -1.0)                           // The whole row is inside
                 {
-                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = 1f });
+                    rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = 1f });
                     continue;
                 }
                 double half = Math.Acos(k) / (2.0 * Math.PI);
                 double u0 = cuv.X - half, u1 = cuv.X + half;
                 if (u0 < 0.0)
                 {
-                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = (float)u1 });
-                    rows.Add(new TerritoryRow { V = (float)v, U0 = (float)(u0 + 1.0), U1 = 1f });
+                    rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = (float)u1 });
+                    rows.Add(new TerritoryRow { Row = r, U0 = (float)(u0 + 1.0), U1 = 1f });
                 }
                 else if (u1 > 1.0)
                 {
-                    rows.Add(new TerritoryRow { V = (float)v, U0 = (float)u0, U1 = 1f });
-                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = (float)(u1 - 1.0) });
+                    rows.Add(new TerritoryRow { Row = r, U0 = (float)u0, U1 = 1f });
+                    rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = (float)(u1 - 1.0) });
                 }
-                else rows.Add(new TerritoryRow { V = (float)v, U0 = (float)u0, U1 = (float)u1 });
+                else rows.Add(new TerritoryRow { Row = r, U0 = (float)u0, U1 = (float)u1 });
             }
         }
 
@@ -1472,19 +1473,21 @@ namespace GVK.Navigation
             double halfW, double halfH, float aspect, float dotSize, double spacing)
         {
             double spacingSq = spacing * spacing;
-            double rowH = h / TERRITORY_FILL_ROWS;
             for (int t = 0; t < _territoryRows.Count; t++)
             {
                 Color fill = _territoryColor[t] * TERRITORY_FILL_ALPHA;
                 var rows = _territoryRows[t];
                 for (int i = 0; i < rows.Count; i++)
                 {
-                    double y = (viewV - rows[i].V) * h;
-                    if (Math.Abs(y) > halfH + rowH) continue;
+                    // Neighbouring rows compute their shared edge the same way, and AddPixelRect snaps both to the same
+                    // pixel, so the strips tile exactly: a fractional overlap showed as faint grey lines that moved with zoom
+                    double yTop = Math.Min((viewV - rows[i].Row / (double)TERRITORY_FILL_ROWS) * h, halfH);
+                    double yBottom = Math.Max((viewV - (rows[i].Row + 1) / (double)TERRITORY_FILL_ROWS) * h, -halfH);
+                    if (yBottom >= yTop) continue;
                     double x0 = Math.Max((rows[i].U0 - viewU) * w, -halfW);
                     double x1 = Math.Min((rows[i].U1 - viewU) * w, halfW);
                     if (x1 <= x0) continue;
-                    layer.AddSprite(MATERIAL_SQUARE, ox + (x0 + x1) * 0.5, oy + y, x1 - x0, rowH, fill); // Exact height: overlaps would double the tint
+                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, fill);
                 }
             }
             for (int t = 0; t < _territoryUV.Count; t++)
