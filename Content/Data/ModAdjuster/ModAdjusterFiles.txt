@@ -9,6 +9,13 @@ CubeBlocks\CubeBlocks_Production.xml
 CubeBlocks\CubeBlocks_StorageShelves.xml
 CubeBlocks\CubeBlocks_Thrusters.xml
 CubeBlocks\CubeBlocks_Tools.xml
+CubeBlocks\CubeBlocks_AQDConveyorExpansion.xml
+CubeBlocks\CubeBlocks_CowboyHats.xml
+CubeBlocks\CubeBlocks_KingOfTheHill.xml
+CubeBlocks\CubeBlocks_MABuster.xml
+CubeBlocks\CubeBlocks_MES.xml
+CubeBlocks\CubeBlocks_POMXL.xml
+CubeBlocks\CubeBlocks_WaterTank.xml
 Game\SessionComponents_GVDropContainers.xml
 BlockVariantGroups_AQDConveyorExpansion.xml
 Components_Vanilla.xml
@@ -16,3 +23,7 @@ Components_ZoneChips.xml
 PhysicalItems_Vanilla.xml
 PhysicalItems_Economy.xml
 VoxelMaterials_Ice_03.xml
+BlockVariantGroups_MABuster.xml
+BlockVariantGroups_POMXL.xml
+BlueprintClasses_KingOfTheHill.xml
+Components_KingOfTheHill.xml

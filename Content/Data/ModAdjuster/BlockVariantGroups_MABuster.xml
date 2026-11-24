@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<BlockVariantGroups>
+		<!-- MA Buster Blocks (2449073590): full-color icons, hub #766 -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="MA_Buster"/>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Block.dds</Icon>
+		</BlockVariantGroup>
+	</BlockVariantGroups>
+</Definitions>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- AQD Conveyor Expansion (1864380341): full-color icons, hub #766 -->
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>AQD_LG_ConveyorT</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_LG_ConveyorT.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>AirVent</TypeId>
+				<SubtypeId>AQD_LG_ConveyorVent</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_LG_ConveyorVent.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>Conveyor</TypeId>
+				<SubtypeId>AQD_SG_ConveyorAdapter</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_SG_ConveyorAdapter.dds</Icon>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

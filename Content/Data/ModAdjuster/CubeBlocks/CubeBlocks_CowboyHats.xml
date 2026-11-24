@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Cowboy Hats (2233651927): full-color icons, hub #766 -->
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>LG_Cowboyhat_Bigboy</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\CowboyHats\Bigboy_Icon.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>LG_Cowboyhat_Def</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\CowboyHats\LG_Cowboyhat_Icon.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>SG_Cowboyhat_Def</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\CowboyHats\SG_Cowboyhat_Icon.dds</Icon>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

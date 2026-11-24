@@ -7,7 +7,6 @@
 				<SubtypeId>Conveyor4WayDuct</SubtypeId>
 			</Id>
 			<DisplayName>Reinforced Conveyor X Junction</DisplayName>
-			<Icon>Textures\GUI\Icons\Cubes\Rein4Way.dds</Icon>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 			<Components>
@@ -27,7 +26,6 @@
 				<SubtypeId>ConveyorElbowDuct</SubtypeId>
 			</Id>
 			<DisplayName>Reinforced Conveyor 3-Way Corner</DisplayName>
-			<Icon>Textures\GUI\Icons\Cubes\Rein3way.dds</Icon>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 			<Components>
@@ -47,7 +45,6 @@
 				<SubtypeId>Conveyor4WayAltDuct</SubtypeId>
 			</Id>
 			<DisplayName>Reinforced Conveyor 4-Way T Junction</DisplayName>
-			<Icon>Textures\GUI\Icons\Cubes\Rein4wayAlt.dds</Icon>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 			<Components>
@@ -67,7 +64,6 @@
 				<SubtypeId>Conveyor5WayDuct</SubtypeId>
 			</Id>
 			<DisplayName>Reinforced Conveyor 5-Way Junction</DisplayName>
-			<Icon>Textures\GUI\Icons\Cubes\Rein5way.dds</Icon>
 			<GuiVisible>false</GuiVisible>
 			<Public>true</Public>
 			<Components>

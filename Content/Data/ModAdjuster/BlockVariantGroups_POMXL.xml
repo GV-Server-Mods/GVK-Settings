@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<BlockVariantGroups>
+		<!-- P.O.M XL Blocks (2943729620): full-color icons, hub #766 -->
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="XL1xs"/>
+			<Icon>Textures\GUI\Icons\POMXL\XL_1x_Thumb.dds</Icon>
+		</BlockVariantGroup>
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="XLBlocks"/>
+			<Icon>Textures\GUI\Icons\POMXL\XL_Block_Thumb.dds</Icon>
+		</BlockVariantGroup>
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="XLHalfBlocks"/>
+			<Icon>Textures\GUI\Icons\POMXL\XL_HalfBlock_Thumb.dds</Icon>
+		</BlockVariantGroup>
+		<BlockVariantGroup>
+			<Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="XLUniques"/>
+			<Icon>Textures\GUI\Icons\POMXL\XL_PassageCorner_Thumb.dds</Icon>
+		</BlockVariantGroup>
+	</BlockVariantGroups>
+</Definitions>

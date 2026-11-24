@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Components>
+		<!-- King of the Hill (2863919629): full-color icons, hub #766 -->
+		<Component>
+			<Id>
+				<TypeId>Component</TypeId>
+				<SubtypeId>AdminKit</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\KingOfTheHill\construction_components_component.dds</Icon>
+		</Component>
+	</Components>
+</Definitions>

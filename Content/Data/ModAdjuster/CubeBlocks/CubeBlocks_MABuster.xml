@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- MA Buster Blocks (2449073590): full-color icons, hub #766 -->
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>MA_Buster_ArmorBlock</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Block.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CameraBlock</TypeId>
+				<SubtypeId>MA_Buster_Camera</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Camera.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>ConveyorConnector</TypeId>
+				<SubtypeId>MA_Buster_Conveyor</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Conveyor.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>MA_Buster_Passage</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Passage.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>InteriorLight</TypeId>
+				<SubtypeId>MA_Buster_Passage_Crossing</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Passage_Crossing.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>MA_Buster_Window</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MABuster\MA_Buster_Window.dds</Icon>
+		</Definition>
+	</CubeBlocks>
+</Definitions>

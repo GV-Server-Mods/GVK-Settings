@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- Modular Encounters Systems (1521905890): full-color icons, hub #766 -->
+		<Definition>
+			<Id>
+				<TypeId>ButtonPanel</TypeId>
+				<SubtypeId>MES-Blocks-SuitUpgradeStation</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\MES\ML_Suit_Upgrade.dds</Icon>
+		</Definition>
+	</CubeBlocks>
+</Definitions>
