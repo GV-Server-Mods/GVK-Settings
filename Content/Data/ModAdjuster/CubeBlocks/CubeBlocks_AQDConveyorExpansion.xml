@@ -8,6 +8,15 @@
 				<SubtypeId>AQD_LG_ConveyorT</SubtypeId>
 			</Id>
 			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_LG_ConveyorT.dds</Icon>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_Logo.dds</Icon>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>ConveyorConnector</TypeId>
+				<SubtypeId>AQD_LG_ConveyorStraight5x1</SubtypeId>
+			</Id>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_LG_ConveyorStraight5x1.dds</Icon>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_Logo.dds</Icon>
 		</Definition>
 		<Definition>
 			<Id>
@@ -15,6 +24,7 @@
 				<SubtypeId>AQD_LG_ConveyorVent</SubtypeId>
 			</Id>
 			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_LG_ConveyorVent.dds</Icon>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_Logo.dds</Icon>
 		</Definition>
 		<Definition>
 			<Id>
@@ -22,6 +32,7 @@
 				<SubtypeId>AQD_SG_ConveyorAdapter</SubtypeId>
 			</Id>
 			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_SG_ConveyorAdapter.dds</Icon>
+			<Icon>Textures\GUI\Icons\AQDConveyorExpansion\AQD_Logo.dds</Icon>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

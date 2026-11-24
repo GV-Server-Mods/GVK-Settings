@@ -26,7 +26,7 @@ Status: **applied, built and deployed 2026-11-22** (owner: "Go"); in-game check 
 ## Owner choices (2026-11-22)
 
 - Staff and NPC blocks: **one admin group**, also in the GV Kharak Utility tab.
-- Non-GVK Workshop blocks loose on Home: **place them** from GVK_Settings (Tank Tracks Builder, GV Cargo Scan, Extra Reinforced Conveyors' duct group, AQD's 5x1 conveyor); **GV Cargo Scan also goes in the Utility tab**.
+- Non-GVK Workshop blocks loose on Home: **place them** from GVK_Settings (Tank Tracks Builder, GV Cargo Scan, Extra Reinforced Conveyors' duct group); **GV Cargo Scan also goes in the Utility tab**. AQD's 5x1 conveyor, which AQD leaves out of every group, now sits in GVK_Settings' copy of AQD's `ConveyorThickGroup`, second after Keen's conveyor tube, with no Home spot or tab entry of its own (owner, 2026-11-23).
 
 ## Home positions
 
@@ -48,7 +48,6 @@ Each mod sets positions only for its own blocks; GVK_Settings sets the admin gro
 | 21 cargo | 6 | Shared cargo containers (group) | `SmallCargoContainer_Shared` | GVK_Settings |
 | 21 | 7 | Pipeline cargo (single) | `Pipeline_Cargo` | GVK_PipelinesNoPhysics |
 | 22 conveyors | 6 | Reinforced ducts (GVK_Settings' copy of the group, with Extra Reinforced Conveyors' four ducts) | `ConveyorTubeDuct` | GVK_Settings |
-| 22 | 7 | AQD 5x1 conveyor (single) | `AQD_ConveyorStraight5x1` | GVK_Settings |
 
 The Medium Hydrogen Tank (`RB_HydrogenTankMedium_Small`, small grid only) joins Keen's tank group instead of getting its own icon. GVK_Settings redefines `TankGroup` as Keen's list plus that tank, the way GVK_Suspension added the 7x7 to Keen's suspension groups. The Water Tank mod (3633905517) also redefines `TankGroup` (adding `WaterTank`, dropping the bulk tanks) and the last loaded wins, so the GVK copy keeps `WaterTank` too, and the tank also gets a fallback Home spot (row 23, X 5) in case Water Tank loads last.
 
@@ -124,7 +123,7 @@ The owner asked for these too (2026-11-22: "yeah we need to do these too"). All 
 
 **Keen's conveyors back on the conveyor row:** AQD Conveyor Expansion moves Keen's conveyor (`Conveyor`) and conveyor tube (`ConveyorTube`) to the cockpit row (13). GVK_Settings puts them back at row 22, X 0 and 1. Same load-order caveat.
 
-**Conveyor groups** (2026-11-23): AQD and Extra Reinforced Conveyors both redefine `ConveyorThickGroup`, and AQD loads later, so AQD's Endcap, Junction Tubes and Conveyor X sit in Keen's conveyor tube icon, and Extra Reinforced's four ducts (4-way, elbow, 4-way alt, 5-way) would be loose. GVK_Settings redefines `ConveyorReinforcedGroup` as AQD's copy plus those four ducts (owner, 2026-11-23: "Into reinforced ducts"). The GVK tabs list the conveyor tube and reinforced duct group heads instead of the seven blocks.
+**Conveyor groups** (2026-11-23): AQD and Extra Reinforced Conveyors both redefine `ConveyorThickGroup`, and AQD loads later, so AQD's Endcap, Junction Tubes and Conveyor X sit in Keen's conveyor tube icon, and Extra Reinforced's four ducts (4-way, elbow, 4-way alt, 5-way) would be loose. GVK_Settings redefines `ConveyorReinforcedGroup` as AQD's copy plus those four ducts (owner, 2026-11-23: "Into reinforced ducts"). The GVK tabs list the conveyor tube and reinforced duct group heads instead of the seven blocks. GVK_Settings also redefines `ConveyorThickGroup` as AQD's copy with AQD's 5x1 tube added second, since AQD leaves the 5x1 out of every group (owner, 2026-11-23); this copy has to load after AQD's too.
 
 ## Round 3: other mods' blocks in the GVK tabs, their own tabs hidden (applied 2026-11-22; runbook E22 passed in game the same day)
 
@@ -142,7 +141,7 @@ Owner, 2026-11-22: "include most of these modded blocks in the GVK Items tabs to
 
 **New sub-tab `GVK_Structure`, "   Structure"** (owner, 2026-11-22), group heads only: P.O.M XL's four groups, MA Buster, Long Hangar Doors, MA 15m Pole, MA Lantern and GVK's Runway Middle Wide.
 
-**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group, AQD's 5x1 and the conveyor tube group (with AQD's Endcap, Junction Tubes and Conveyor X; changed 2026-11-23). The admin group (with KOTH and the GVK admin blockers) and the Cargo Scanner are already there.
+**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group and the conveyor tube group (with AQD's Endcap, Junction Tubes, Conveyor X and 5x1; changed 2026-11-23). The admin group (with KOTH and the GVK admin blockers) and the Cargo Scanner are already there.
 
 **GV Kharak Items gets** everything above, one block per group.
 

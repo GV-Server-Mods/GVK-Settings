@@ -33,7 +33,6 @@
 				<string>WindTurbine/MA_Windmill</string>
 				<string>CubeBlock/BuildInfo_MultiTool_Large</string>
 				<string>ConveyorConnector/ConveyorTubeDuct</string>
-				<string>ConveyorConnector/AQD_LG_ConveyorStraight5x1</string>
 				<string>ConveyorConnector/ConveyorTube</string>
 			</ItemIds>
 		</Category>
@@ -56,7 +55,6 @@
 				<string>CubeBlock/BuildInfo_MultiTool_Large</string>
 				<string>Projector/MnMLarge</string>
 				<string>ConveyorConnector/ConveyorTubeDuct</string>
-				<string>ConveyorConnector/AQD_LG_ConveyorStraight5x1</string>
 				<string>ConveyorConnector/ConveyorTube</string>
 			</ItemIds>
 		</Category>

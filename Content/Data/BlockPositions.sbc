@@ -45,13 +45,6 @@
 			</Position>
 		</BlockPosition>
 		<BlockPosition>
-			<Name>AQD_ConveyorStraight5x1</Name>
-			<Position>
-				<X>7</X>
-				<Y>22</Y>
-			</Position>
-		</BlockPosition>
-		<BlockPosition>
 			<Name>RB_HydrogenTankMedium</Name>
 			<Position>
 				<X>5</X>
