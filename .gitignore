@@ -10,3 +10,6 @@ mdk.local.ini
 *.orig
 desktop.ini
 __pycache__/
+# Blender backups and checkpoint copies (the working .blend is tracked)
+*.blend1
+*_before_*.blend
