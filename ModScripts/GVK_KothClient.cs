@@ -67,7 +67,7 @@ namespace GVK.Navigation
 
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
         private static readonly MyStringId MATERIAL_LINE = MyStringId.GetOrCompute("WeaponLaser");
-        private static readonly Vector3D PLANET_CENTER = new Vector3D(33032.44, 32395.99, 32074.17);
+        private static readonly Vector3D PLANET_CENTER = new Vector3D(32768.0, 32768.0, 32768.0); // Kharak's centre; see GVK_ZoneNavCommand
         private static readonly string[] FIREWORK_EFFECTS =
         {
             "Explosion_Firework_Red", "Explosion_Firework_Blue", "Explosion_Firework_Green",

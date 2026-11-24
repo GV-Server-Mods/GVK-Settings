@@ -20,8 +20,10 @@ namespace GVK.Navigation
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public partial class GVK_ZoneNavCommand : MySessionComponentBase
     {
-        // Planetary Constants for Pertam
-        private static readonly Vector3D PLANET_CENTER = new Vector3D(33032.44, 32395.99, 32074.17);
+        // Planetary Constants for Kharak (PertamKharak). The planet's corner is at 0,0,0 in the save and its voxel
+        // storage is 65536 m across (radius 30 km + 5% hills, rounded up to a power of two), so its centre is exactly
+        // half that on every axis. The old hand-measured centre was about 820 m off and skewed every map marker.
+        private static readonly Vector3D PLANET_CENTER = new Vector3D(32768.0, 32768.0, 32768.0);
         private const double PLANET_RADIUS = 30000.0;
         private static readonly Vector3 BASE_SOUTH = new Vector3(0f, 1f, 0f);
 
@@ -39,6 +41,7 @@ namespace GVK.Navigation
         // Texture Materials (screen API sprites)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
         private static readonly MyStringId MATERIAL_MAP = MyStringId.GetOrCompute("KharakMap");
+        private const double MAP_LON_SHIFT = 0.25; // Turns of longitude from -X to the map's left edge (WorldToMapUV)
         private static readonly MyStringId MATERIAL_RADAR_GRID = MyStringId.GetOrCompute("RadarGrid");
 
         // Tactical HUD Markers (from Textures\HUD\)
@@ -3321,7 +3324,7 @@ namespace GVK.Navigation
             if (player == null) return;
 
             double lat = Math.PI * 0.5 - v * Math.PI;
-            double lon = u * 2.0 * Math.PI - Math.PI + 0.2540 * 2.0 * Math.PI; // Undo WorldToMapUV's prime meridian shift
+            double lon = u * 2.0 * Math.PI - Math.PI + MAP_LON_SHIFT * 2.0 * Math.PI; // Undo WorldToMapUV's prime meridian shift
             var dir = new Vector3D(Math.Cos(lat) * Math.Cos(lon), -Math.Sin(lat), Math.Cos(lat) * Math.Sin(lon));
             Vector3D point = PLANET_CENTER + dir * PLANET_RADIUS;
             var planet = Sandbox.Game.Entities.MyGamePruningStructure.GetClosestPlanet(point);
@@ -3479,8 +3482,9 @@ namespace GVK.Navigation
         private float GetCompassBaseHeight(float scale) => 0.057f * scale;
 
         /// <summary>
-        /// Converts planetary 3D world position to UV [0, 1] matching KharakMap.dds / Kharak Zone Map V3.
-        /// Includes the -91.4° (-0.254) longitude shift to align Crossroads (U=0.273) and Zone 3 (U=0.749).
+        /// Converts planetary 3D world position to UV [0, 1] on KharakMercator1080.dds (equirectangular).
+        /// The map's left edge is a quarter turn round from -X (MAP_LON_SHIFT). Fitted against the planet heightmaps
+        /// sampled the way the game does; the old hand-fitted 0.254 put every marker about 9 map pixels west.
         /// Inverts Y to match the map texture's North/South latitude orientation.
         /// </summary>
         private Vector2 WorldToMapUV(Vector3D worldPos)
@@ -3491,7 +3495,7 @@ namespace GVK.Navigation
 
             Vector3D u = R / len;
             double lat = Math.Asin(MathHelper.Clamp(-u.Y, -1.0, 1.0)); // Invert Y for map orientation
-            double lon = Math.Atan2(u.Z, u.X) - 0.2540 * 2.0 * Math.PI; // Align to map prime meridian
+            double lon = Math.Atan2(u.Z, u.X) - MAP_LON_SHIFT * 2.0 * Math.PI; // Align to map prime meridian
 
             while (lon > Math.PI) lon -= 2.0 * Math.PI;
             while (lon < -Math.PI) lon += 2.0 * Math.PI;
