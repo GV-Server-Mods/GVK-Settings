@@ -13,6 +13,7 @@ namespace GVK.Navigation
     /// <summary>
     /// Known sites: MES static encounters (GVK_Derelicts) the nav HUD marks without a GPS point, read once per machine
     /// from the spawn group definitions every machine loads. Both the HUD and the server's status scan use this list.
+    /// Also the alliance territories: the MES zone profiles the HUD draws as rings.
     /// </summary>
     public static class GvkKnownSites
     {
@@ -23,6 +24,19 @@ namespace GVK.Navigation
         public const byte CARRIER = 5;
         public const double DEFAULT_GPS_RADIUS = 150.0;  // A GPS point this close stands in for its nearest site
         public const string BASE_SITE_PREFIX = "GVK-Alliance-PresetBases-Site-SpawnGroup-"; // Every Base Site, named by its beacon text
+
+        /// <summary>An alliance territory: an MES zone, a sphere around the alliance's carrier, resized by its Influence ladder.</summary>
+        public struct Territory
+        {
+            public string Tag;          // The alliance's faction tag
+            public Vector3D Center;     // The zone profile's [Coordinates:]
+            public double BaseRadius;   // The zone profile's [Radius:], metres: the size until the ladder first sets one
+            public string TierCounter;  // Sandbox counter the ladder writes the current radius to, in km (GVK-Alliance-Events-ZoneSize.sbc)
+        }
+
+        private static readonly string[] TERRITORY_TAGS = { "SOBAN", "KHAANEPH" };
+        private const string TERRITORY_PREFIX = "GVK-Alliance-Zone-";   // Zone profile SubtypeId: prefix + tag
+        public static readonly List<Territory> Territories = new List<Territory>(2);
 
         public struct Site
         {
@@ -80,6 +94,7 @@ namespace GVK.Navigation
         {
             _loaded = false;
             Sites.Clear();
+            Territories.Clear();
         }
 
         /// <summary>
@@ -91,6 +106,8 @@ namespace GVK.Navigation
             if (_loaded) return;
             _loaded = true;
             Sites.Clear();
+            Territories.Clear();
+            LoadTerritories();
             try
             {
                 var found = new bool[TABLE.Length];
@@ -150,6 +167,89 @@ namespace GVK.Navigation
             }
         }
 
+        /// <summary>Reads the alliance zone profiles (EntityComponent definitions with the [MES Zone] header).</summary>
+        private static void LoadTerritories()
+        {
+            try
+            {
+                var comps = Sandbox.Definitions.MyDefinitionManager.Static.GetEntityComponentDefinitions();
+                for (int t = 0; t < TERRITORY_TAGS.Length; t++)
+                {
+                    string id = TERRITORY_PREFIX + TERRITORY_TAGS[t];
+                    bool found = false;
+                    foreach (var comp in comps)
+                    {
+                        if (comp == null || comp.Id.SubtypeName != id) continue;
+                        Vector3D center;
+                        double radius;
+                        if (!TryGetZoneProfile(comp.DescriptionText, out center, out radius)) continue;
+                        Territories.Add(new Territory
+                        {
+                            Tag = TERRITORY_TAGS[t],
+                            Center = center,
+                            BaseRadius = radius,
+                            TierCounter = TERRITORY_TAGS[t] + "_Tier"
+                        });
+                        found = true;
+                        break;
+                    }
+                    if (!found)
+                        MyLog.Default.WriteLineAndConsole($"[GVK_SiteStatus] Known sites: no usable zone profile '{id}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                Territories.Clear();
+                MyLog.Default.WriteLineAndConsole($"[GVK_SiteStatus] Territories failed to load: {ex}");
+            }
+        }
+
+        /// <summary>Reads an MES zone profile's centre and radius: the [MES Zone] header, [Coordinates:{X:.. Y:.. Z:..}], [Radius:].</summary>
+        private static bool TryGetZoneProfile(string description, out Vector3D center, out double radius)
+        {
+            center = Vector3D.Zero;
+            radius = 0.0;
+            if (string.IsNullOrEmpty(description) || !description.Contains("[MES Zone]")) return false;
+            string[] lines = description.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string key, value;
+                if (!SplitTag(lines[i], out key, out value)) continue;
+                if (key == "Coordinates")
+                {
+                    Vector3D parsed;
+                    if (Vector3D.TryParse(StripBraces(value), out parsed)) center = parsed;
+                }
+                else if (key == "Radius")
+                {
+                    double parsed;
+                    if (double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out parsed)) radius = parsed;
+                }
+            }
+            return center != Vector3D.Zero && radius > 0.0;
+        }
+
+        /// <summary>Splits one MES tag line, "[Key:Value]", into key and value.</summary>
+        private static bool SplitTag(string line, out string key, out string value)
+        {
+            key = value = null;
+            string tag = line.Trim();
+            if (tag.Length > 0 && tag[0] == '[') tag = tag.Substring(1);
+            if (tag.Length > 0 && tag[tag.Length - 1] == ']') tag = tag.Substring(0, tag.Length - 1);
+            int colon = tag.IndexOf(':');
+            if (colon <= 0) return false;
+            key = tag.Substring(0, colon);
+            value = tag.Substring(colon + 1);
+            return true;
+        }
+
+        private static string StripBraces(string value)
+        {
+            if (value.Length > 0 && value[0] == '{') value = value.Substring(1);
+            if (value.Length > 0 && value[value.Length - 1] == '}') value = value.Substring(0, value.Length - 1);
+            return value;
+        }
+
         /// <summary>
         /// Reads a spawn group's static position the way MES does: needs the MES header and [StaticEncounter:true],
         /// takes the last [StaticEncounterCoords:{X:.. Y:.. Z:..}], and skips groups placed by planet direction instead.
@@ -164,13 +264,8 @@ namespace GVK.Navigation
             string[] lines = description.Split('\n');
             for (int i = 0; i < lines.Length; i++)
             {
-                string tag = lines[i].Trim();
-                if (tag.Length > 0 && tag[0] == '[') tag = tag.Substring(1);
-                if (tag.Length > 0 && tag[tag.Length - 1] == ']') tag = tag.Substring(0, tag.Length - 1);
-                int colon = tag.IndexOf(':');
-                if (colon <= 0) continue;
-                string key = tag.Substring(0, colon);
-                string value = tag.Substring(colon + 1);
+                string key, value;
+                if (!SplitTag(lines[i], out key, out value)) continue;
                 bool flag;
 
                 if (key == "StaticEncounter")
@@ -183,10 +278,8 @@ namespace GVK.Navigation
                 }
                 else if (key == "StaticEncounterCoords")
                 {
-                    if (value.Length > 0 && value[0] == '{') value = value.Substring(1);
-                    if (value.Length > 0 && value[value.Length - 1] == '}') value = value.Substring(0, value.Length - 1);
                     Vector3D parsed;
-                    if (Vector3D.TryParse(value, out parsed)) coords = parsed;
+                    if (Vector3D.TryParse(StripBraces(value), out parsed)) coords = parsed;
                 }
             }
             return isStatic && !byPlanetDirection && coords != Vector3D.Zero;
@@ -211,23 +304,34 @@ namespace GVK.Navigation
             public string Tag;
         }
 
+        public const string TERRITORY_LINE = "@T";   // Message line "@T\tTag\tkm": an alliance territory's radius (0 = the zone profile's)
+
         public static readonly Dictionary<string, Entry> BySubtypeId = new Dictionary<string, Entry>();
+        public static readonly Dictionary<string, int> TerritoryKm = new Dictionary<string, int>();
         public static int Version;        // Bumped on every update, so the HUD knows to re-read
 
         public static void Reset()
         {
             BySubtypeId.Clear();
+            TerritoryKm.Clear();
             Version++;
         }
 
-        /// <summary>Message text: one line per site, "SubtypeId\tState\tFactionId\tTag".</summary>
+        /// <summary>Message text: one line per site, "SubtypeId\tState\tFactionId\tTag", then one per territory, "@T\tTag\tkm".</summary>
         public static void Parse(string text)
         {
             BySubtypeId.Clear();
+            TerritoryKm.Clear();
             string[] lines = text.Split('\n');
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] f = lines[i].Split('\t');
+                if (f.Length >= 3 && f[0] == TERRITORY_LINE)
+                {
+                    int km;
+                    if (int.TryParse(f[2], out km)) TerritoryKm[f[1]] = km;
+                    continue;
+                }
                 if (f.Length < 4) continue;
                 byte state;
                 long factionId;
@@ -334,7 +438,7 @@ namespace GVK.Navigation
             GvkKnownSites.EnsureLoaded();
             var sites = GvkKnownSites.Sites;
             int n = sites.Count;
-            if (n == 0) return;
+            if (n == 0 && GvkKnownSites.Territories.Count == 0) return;
             if (_baseFaction.Length != n)
             {
                 _bestBaseDistSq = new double[n];
@@ -413,6 +517,15 @@ namespace GVK.Navigation
                 IMyFaction faction = factionId != 0 ? factions.TryGetFactionById(factionId) : null;
                 _sb.Append(sites[s].SubtypeId).Append('\t').Append(state).Append('\t').Append(factionId).Append('\t')
                     .Append(faction != null ? faction.Tag : "").Append('\n');
+            }
+
+            // Territory radii: the Influence ladder writes each one to a sandbox counter in km as it resizes the zone
+            var territories = GvkKnownSites.Territories;
+            for (int t = 0; t < territories.Count; t++)
+            {
+                int km;
+                if (!MyAPIGateway.Utilities.GetVariable<int>(territories[t].TierCounter, out km)) km = 0;
+                _sb.Append(GvkSiteStatus.TERRITORY_LINE).Append('\t').Append(territories[t].Tag).Append('\t').Append(km).Append('\n');
             }
 
             string text = _sb.ToString();

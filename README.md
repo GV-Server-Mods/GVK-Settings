@@ -76,7 +76,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `GVK_ScreenLayer.cs` | Draw list for the game's own screen API (SE 1.211), in HUD units (-1..1, Y up) | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_MapScreen.cs` | The satellite map as a game screen (mouse and keyboard) with the screen API | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_SettingsScreen.cs` | The /gvk settings screen: every navigation setting in a game screen with the mouse | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
-| `GVK_SiteStatus.cs` | Known bases and stations for the nav HUD, and the server's feed of who holds each one | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_SiteStatus.cs` | Known bases, stations and alliance territories for the nav HUD, and the server's feed of who holds each site and how big each territory is | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what

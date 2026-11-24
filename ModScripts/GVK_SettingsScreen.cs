@@ -49,11 +49,11 @@ namespace GVK.Navigation
         private const int S_OPEN_MAP = 1, S_MINIMAP = 2, S_COMPASS = 3, S_ZONE_BAR = 4;
         private const int S_MM_MODE = 10, S_MM_RANGE = 11, S_MM_SIZE = 12, S_MM_ZONE_LINES = 13, S_MM_FOV = 14;
         private const int S_MM_GPS = 15, S_MM_SIGNALS = 16, S_MM_OWN = 17, S_MM_KOTH = 18, S_MM_SNAP = 19;
-        private const int S_MM_X = 20, S_MM_Y = 21, S_MM_RESET = 22, S_MM_SITES = 23;
+        private const int S_MM_X = 20, S_MM_Y = 21, S_MM_RESET = 22, S_MM_SITES = 23, S_MM_TERRITORY = 24;
         private const int S_C_TAPE = 30, S_C_GPS = 31, S_C_SIGNALS = 32, S_C_OWN = 33, S_C_KOTH = 34, S_C_SIZE = 35;
         private const int S_C_SNAP = 36, S_C_X = 37, S_C_Y = 38, S_C_RESET = 39, S_C_SITES = 40;
         private const int S_MAP_OWN = 50, S_MAP_KOTH = 51, S_MAP_GPS_LABELS = 52, S_MAP_SIGNAL_LABELS = 53;
-        private const int S_MAP_STACK = 54, S_MAP_KEY = 55, S_MAP_SITES = 56;
+        private const int S_MAP_STACK = 54, S_MAP_KEY = 55, S_MAP_SITES = 56, S_MAP_TERRITORY = 57;
         private const int S_RATE = 70, S_DEFAULT_GPS = 72, S_FACTORY_RESET = 73;
         private const int HIT_CLOSE = -1;       // Hit codes below zero: the Close button, then the tabs
         private const int HIT_TAB = -100;       // HIT_TAB - tab index
@@ -63,12 +63,12 @@ namespace GVK.Navigation
         {
             new[] { S_OPEN_MAP, S_MINIMAP, S_COMPASS, S_ZONE_BAR },
             new[] { S_MM_MODE, S_MM_RANGE, S_MM_SIZE, S_MM_ZONE_LINES, S_MM_FOV, S_MM_GPS, S_MM_SIGNALS, S_MM_OWN, S_MM_KOTH,
-                    S_MM_SITES, S_MM_SNAP, S_MM_X, S_MM_Y, S_MM_RESET },
+                    S_MM_SITES, S_MM_TERRITORY, S_MM_SNAP, S_MM_X, S_MM_Y, S_MM_RESET },
             new[] { S_C_TAPE, S_C_GPS, S_C_SIGNALS, S_C_OWN, S_C_KOTH, S_C_SITES, S_C_SIZE, S_C_SNAP, S_C_X, S_C_Y, S_C_RESET },
-            new[] { S_MAP_OWN, S_MAP_KOTH, S_MAP_SITES, S_MAP_GPS_LABELS, S_MAP_SIGNAL_LABELS, S_MAP_STACK, S_MAP_KEY },
+            new[] { S_MAP_OWN, S_MAP_KOTH, S_MAP_SITES, S_MAP_TERRITORY, S_MAP_GPS_LABELS, S_MAP_SIGNAL_LABELS, S_MAP_STACK, S_MAP_KEY },
             new[] { S_RATE, S_DEFAULT_GPS, S_FACTORY_RESET },
         };
-        private const int SETTINGS_MAX_ROWS = 14;
+        private const int SETTINGS_MAX_ROWS = 15;
 
         private static readonly Color SET_ON = new Color(80, 255, 120);
         private static readonly Color SET_OFF = new Color(255, 90, 90);
@@ -391,6 +391,7 @@ namespace GVK.Navigation
                 case S_MM_OWN: ToggleMarkerFilter(ref showMinimapOwnSignals, "Minimap Own & Faction Signals"); break;
                 case S_MM_KOTH: ToggleMarkerFilter(ref showMinimapKoth, "Minimap KOTH"); break;
                 case S_MM_SITES: ToggleMarkerFilter(ref showMinimapSites, "Minimap Bases & Stations"); break;
+                case S_MM_TERRITORY: ToggleMarkerFilter(ref showMinimapTerritories, "Minimap Alliance Territory"); break;
                 case S_MM_SNAP: CycleMinimapPreset(); break;
                 case S_MM_RESET: ResetMinimapOffset(); break;
                 case S_C_GPS: ToggleMarkerFilter(ref showCompassGps, "Compass GPS"); break;
@@ -404,6 +405,7 @@ namespace GVK.Navigation
                 case S_MAP_OWN: ToggleMarkerFilter(ref showMapOwnSignals, "Map Own & Faction Signals"); break;
                 case S_MAP_KOTH: ToggleMarkerFilter(ref showMapKoth, "Map KOTH"); break;
                 case S_MAP_SITES: ToggleMarkerFilter(ref showMapSites, "Map Bases & Stations"); break;
+                case S_MAP_TERRITORY: ToggleMarkerFilter(ref showMapTerritories, "Map Alliance Territory"); break;
                 case S_MAP_GPS_LABELS: ToggleMarkerFilter(ref showMapGpsLabels, "Map GPS Labels"); break;
                 case S_MAP_SIGNAL_LABELS: ToggleMarkerFilter(ref showMapSignalLabels, "Map Signal Labels"); break;
                 case S_MAP_STACK: ToggleMarkerFilter(ref stackMapIcons, "Map Icon Stacking"); break;
@@ -450,6 +452,8 @@ namespace GVK.Navigation
                 case S_MM_SITES:
                 case S_C_SITES:
                 case S_MAP_SITES: return "Bases & Stations";
+                case S_MM_TERRITORY:
+                case S_MAP_TERRITORY: return "Alliance Territory";
                 case S_MM_SNAP:
                 case S_C_SNAP: return "Snap Position";
                 case S_MM_X:
@@ -502,6 +506,7 @@ namespace GVK.Navigation
                 case S_MM_OWN: return OnOff(showMinimapOwnSignals, out color);
                 case S_MM_KOTH: return OnOff(showMinimapKoth, out color);
                 case S_MM_SITES: return OnOff(showMinimapSites, out color);
+                case S_MM_TERRITORY: return OnOff(showMinimapTerritories, out color);
                 case S_MM_SNAP:
                     color = SET_CHOICE;
                     { int mi = FindMinimapPresetIndex(); return mi < 0 ? "Custom" : MinimapPresets[mi].Name; }
@@ -521,6 +526,7 @@ namespace GVK.Navigation
                 case S_MAP_OWN: return OnOff(showMapOwnSignals, out color);
                 case S_MAP_KOTH: return OnOff(showMapKoth, out color);
                 case S_MAP_SITES: return OnOff(showMapSites, out color);
+                case S_MAP_TERRITORY: return OnOff(showMapTerritories, out color);
                 case S_MAP_GPS_LABELS: return OnOff(showMapGpsLabels, out color);
                 case S_MAP_SIGNAL_LABELS: return OnOff(showMapSignalLabels, out color);
                 case S_MAP_STACK: return OnOff(stackMapIcons, out color);

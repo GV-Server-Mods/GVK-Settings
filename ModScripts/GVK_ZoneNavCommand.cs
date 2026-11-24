@@ -212,6 +212,13 @@ namespace GVK.Navigation
         private const float SITE_ICON_SCALE = 0.8f;  // Site icons are a little smaller than GPS and signal markers
         private const double SITE_GRID_DEDUPE_DIST_SQ = 25.0 * 25.0;   // An NPC grid whose origin is this close is the site itself
         private const double COMPASS_SITE_MAX_DIST = 20000.0;     // The compass shows known sites only within 20 km
+        private const double TERRITORY_POINT_SPACING_M = 100.0;   // Ground distance between the ring's sample points
+        private const int TERRITORY_MIN_POINTS = 64;
+        private const int TERRITORY_MAX_POINTS = 2048;
+        private const double TERRITORY_MAP_DOT_SPACING = 0.008;   // Least distance between two drawn dots (HUD units, X scale)
+        private const float TERRITORY_RING_ALPHA = 0.85f;        // Colours are premultiplied: scale all four channels
+        private const float TERRITORY_FILL_ALPHA = 0.16f;        // Faint tint inside, so a ring larger than a hemisphere reads right
+        private const int TERRITORY_FILL_ROWS = 180;             // One fill strip per degree of latitude
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
@@ -450,12 +457,14 @@ namespace GVK.Navigation
             public bool ShowMinimapOwnSignals { get; set; } = true;
             public bool ShowMinimapKoth { get; set; } = true;
             public bool ShowMinimapSites { get; set; } = true;
+            public bool ShowMinimapTerritories { get; set; } = true;
 
             public bool ShowCompass { get; set; } = true;
             public bool ShowCompassKoth { get; set; } = true;
             public bool ShowMapKoth { get; set; } = true;
             public bool ShowCompassSites { get; set; } = true;
             public bool ShowMapSites { get; set; } = true;
+            public bool ShowMapTerritories { get; set; } = true;
             public bool ShowCompassGps { get; set; } = true;
             public bool ShowCompassSignals { get; set; } = true;
             public bool ShowCompassOwnSignals { get; set; } = true;
@@ -532,6 +541,16 @@ namespace GVK.Navigation
         private byte[] _siteState = new byte[0];            // GvkSiteStatus state per site
         private long[] _siteFaction = new long[0];          // Owner faction per site (0 = none)
         private string[] _siteKindText = new string[0];     // Hover text per site, rebuilt only when the status changes
+        private readonly List<List<Vector2>> _territoryUV = new List<List<Vector2>>(2); // Ring points per territory (map UV)
+        private double[] _territoryRadius = new double[0];  // Radius each ring was built for (0 = no size from the server yet)
+        private Color[] _territoryColor = new Color[0];     // Standing colour per territory, every scan
+        private readonly List<List<TerritoryRow>> _territoryRows = new List<List<TerritoryRow>>(2); // Inside, as map UV strips
+
+        /// <summary>One strip of a territory's inside: map row V (centre), from U0 to U1.</summary>
+        private struct TerritoryRow
+        {
+            public float V, U0, U1;
+        }
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
         private List<IMySlimBlock> blockBuffer = new List<IMySlimBlock>();
@@ -600,6 +619,8 @@ namespace GVK.Navigation
         private bool showMapSites = true;
         private bool showMinimapSites = true;
         private bool showCompassSites = true;
+        private bool showMapTerritories = true;
+        private bool showMinimapTerritories = true;
         private const int KOTH_RING_DOTS = 24;
         private static readonly double[] KOTH_RING_COS = BuildRingTable(true);
         private static readonly double[] KOTH_RING_SIN = BuildRingTable(false);
@@ -640,6 +661,8 @@ namespace GVK.Navigation
                                 showMapSites = cfg.ShowMapSites;
                                 showMinimapSites = cfg.ShowMinimapSites;
                                 showCompassSites = cfg.ShowCompassSites;
+                                showMapTerritories = cfg.ShowMapTerritories;
+                                showMinimapTerritories = cfg.ShowMinimapTerritories;
                                 bool oldDefaultKey = cfg.MapKeyVersion < MAP_KEY_VERSION && cfg.MapKey == (int)MyKeys.M
                                     && !cfg.MapKeyShift && !cfg.MapKeyCtrl && !cfg.MapKeyAlt;
                                 if (IsValidMapKey((MyKeys)cfg.MapKey) && !oldDefaultKey)
@@ -708,6 +731,8 @@ namespace GVK.Navigation
                     ShowMapSites = showMapSites,
                     ShowMinimapSites = showMinimapSites,
                     ShowCompassSites = showCompassSites,
+                    ShowMapTerritories = showMapTerritories,
+                    ShowMinimapTerritories = showMinimapTerritories,
                     MapKey = (int)mapKey,
                     MapKeyShift = mapKeyShift,
                     MapKeyCtrl = mapKeyCtrl,
@@ -1161,8 +1186,9 @@ namespace GVK.Navigation
                 }
             }
 
-            // 3. Known sites from the MES spawn groups
+            // 3. Known sites from the MES spawn groups, and the alliance territory rings
             AddKnownSiteWaypoints(playerPos);
+            UpdateTerritories();
 
             // 4. KOTH zones from the GVK KOTH plugin
             AddKothWaypoints(playerPos);
@@ -1312,15 +1338,199 @@ namespace GVK.Navigation
             if (kind == SITE_TRADE || kind == SITE_REFINERY) return SITE_WHITE;
             if (kind == SITE_BASE && state == GvkSiteStatus.UNCLAIMED) return SITE_DIM; // UNKNOWN (no status yet) stays white
             if (state != GvkSiteStatus.HELD || _siteFaction[s] == 0) return SITE_WHITE;
+            return GetStandingColor(MyAPIGateway.Session.Factions.TryGetFactionById(_siteFaction[s]));
+        }
 
-            var factions = MyAPIGateway.Session.Factions;
-            var faction = factions.TryGetFactionById(_siteFaction[s]);
+        /// <summary>The player's standing with an NPC faction: green Friendly, red hostile, white neutral, unowned (UNKN) or unknown.</summary>
+        private static Color GetStandingColor(IMyFaction faction)
+        {
             long me = MyAPIGateway.Session.Player?.IdentityId ?? 0;
             if (faction == null || faction.Tag == "UNKN" || me == 0) return SITE_WHITE;
-            int rep = factions.GetReputationBetweenPlayerAndFaction(me, faction.FactionId);
+            int rep = MyAPIGateway.Session.Factions.GetReputationBetweenPlayerAndFaction(me, faction.FactionId);
             if (rep >= SITE_FRIENDLY_REP) return SITE_FRIENDLY;
             if (rep < SITE_HOSTILE_REP) return SITE_HOSTILE;
             return SITE_WHITE;
+        }
+
+        /// <summary>
+        /// Rebuilds a territory ring when the server reports a new size, and recolours it by standing. A ring shows only
+        /// once the server has sent its size, so a client never shows the zone profile's 10 km before the real one.
+        /// </summary>
+        private void UpdateTerritories()
+        {
+            var territories = GvkKnownSites.Territories;
+            int n = territories.Count;
+            if (_territoryUV.Count != n)
+            {
+                _territoryUV.Clear();
+                _territoryRows.Clear();
+                for (int t = 0; t < n; t++)
+                {
+                    _territoryUV.Add(new List<Vector2>());
+                    _territoryRows.Add(new List<TerritoryRow>());
+                }
+                _territoryRadius = new double[n];
+                _territoryColor = new Color[n];
+            }
+            for (int t = 0; t < n; t++)
+            {
+                var territory = territories[t];
+                int km;
+                double radius = 0.0;
+                if (GvkSiteStatus.TerritoryKm.TryGetValue(territory.Tag, out km))
+                    radius = km > 0 ? km * 1000.0 : territory.BaseRadius; // 0: the ladder hasn't set a size yet
+                if (radius != _territoryRadius[t])
+                {
+                    _territoryRadius[t] = radius;
+                    BuildTerritoryRing(territory.Center, radius, _territoryUV[t], _territoryRows[t]);
+                    _refreshMinimapNextFrame = true;
+                }
+                _territoryColor[t] = GetStandingColor(MyAPIGateway.Session.Factions.TryGetFactionByTag(territory.Tag));
+            }
+        }
+
+        /// <summary>
+        /// Where a territory sphere meets the ground: a circle on the planet (sea level, PLANET_RADIUS) whose angular
+        /// radius A comes from the triangle planet centre, zone centre, edge point: cos A = (R² + d² - r²) / 2Rd.
+        /// Points are spaced evenly round that circle on the globe and put through <see cref="WorldToMapUV"/>, so the ring
+        /// takes the map's own stretch (east-west by 1 / cos latitude) and wraps at its edges like everything else on it.
+        /// The inside is kept as one strip per map row: a point at latitude p is inside when
+        /// sin p sin pc + cos p cos pc cos(dLon) >= cos A, which gives each row's longitude span exactly.
+        /// </summary>
+        private void BuildTerritoryRing(Vector3D center, double radius, List<Vector2> uv, List<TerritoryRow> rows)
+        {
+            uv.Clear();
+            rows.Clear();
+            if (radius <= 0.0) return;
+            Vector3D toCenter = center - PLANET_CENTER;
+            double d = toCenter.Length();
+            if (d < 1.0) return;
+            Vector3D c = toCenter / d;
+            double r2 = PLANET_RADIUS * PLANET_RADIUS;
+            double cosA = (r2 + d * d - radius * radius) / (2.0 * PLANET_RADIUS * d);
+            if (cosA >= 1.0) return; // The sphere misses the ground
+            if (cosA <= -1.0)        // It covers the whole planet: no edge, all inside
+            {
+                for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
+                    rows.Add(new TerritoryRow { V = (r + 0.5f) / TERRITORY_FILL_ROWS, U0 = 0f, U1 = 1f });
+                return;
+            }
+            double sinA = Math.Sqrt(1.0 - cosA * cosA);
+
+            Vector3D axis = Math.Abs(c.Y) < 0.9 ? Vector3D.Up : Vector3D.Right;
+            Vector3D e1 = Vector3D.Normalize(Vector3D.Cross(axis, c));
+            Vector3D e2 = Vector3D.Cross(c, e1);
+            int count = MathHelper.Clamp((int)(2.0 * Math.PI * PLANET_RADIUS * sinA / TERRITORY_POINT_SPACING_M),
+                TERRITORY_MIN_POINTS, TERRITORY_MAX_POINTS);
+            for (int i = 0; i < count; i++)
+            {
+                double a = 2.0 * Math.PI * i / count;
+                Vector3D dir = c * cosA + (e1 * Math.Cos(a) + e2 * Math.Sin(a)) * sinA;
+                uv.Add(WorldToMapUV(PLANET_CENTER + dir * PLANET_RADIUS));
+            }
+
+            // Inside strips, in the map's own lat/lon (WorldToMapUV: U linear in longitude, V linear in latitude)
+            Vector2 cuv = WorldToMapUV(center);
+            double latC = Math.PI * 0.5 - cuv.Y * Math.PI;
+            double sinC = Math.Sin(latC), cosC = Math.Cos(latC);
+            for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
+            {
+                double v = (r + 0.5) / TERRITORY_FILL_ROWS;
+                double lat = Math.PI * 0.5 - v * Math.PI;
+                double denom = Math.Cos(lat) * cosC;
+                double k = denom > 1e-9 ? (cosA - Math.Sin(lat) * sinC) / denom : (Math.Sin(lat) * sinC >= cosA ? -2.0 : 2.0);
+                if (k >= 1.0) continue;                  // The whole row is outside
+                if (k <= -1.0)                           // The whole row is inside
+                {
+                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = 1f });
+                    continue;
+                }
+                double half = Math.Acos(k) / (2.0 * Math.PI);
+                double u0 = cuv.X - half, u1 = cuv.X + half;
+                if (u0 < 0.0)
+                {
+                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = (float)u1 });
+                    rows.Add(new TerritoryRow { V = (float)v, U0 = (float)(u0 + 1.0), U1 = 1f });
+                }
+                else if (u1 > 1.0)
+                {
+                    rows.Add(new TerritoryRow { V = (float)v, U0 = (float)u0, U1 = 1f });
+                    rows.Add(new TerritoryRow { V = (float)v, U0 = 0f, U1 = (float)(u1 - 1.0) });
+                }
+                else rows.Add(new TerritoryRow { V = (float)v, U0 = (float)u0, U1 = (float)u1 });
+            }
+        }
+
+        /// <summary>
+        /// Draws the territory insides (a faint tint, one strip per map row) and their rings as dots, on a map drawn
+        /// w x h with map UV (viewU, viewV) at (ox, oy). Points outside
+        /// halfW x halfH are left out; a point closer than spacing (on screen) to the last dot drawn is skipped, and where two
+        /// neighbouring points land further apart (a ring passing close to a pole stretches far east-west) dots are added
+        /// between them, so the dots stay evenly spaced at any zoom. No dots are added across the map's wrap seam.
+        /// </summary>
+        private void AddTerritoryDots(GvkScreenLayer layer, double ox, double oy, double w, double h, double viewU, double viewV,
+            double halfW, double halfH, float aspect, float dotSize, double spacing)
+        {
+            double spacingSq = spacing * spacing;
+            double rowH = h / TERRITORY_FILL_ROWS;
+            for (int t = 0; t < _territoryRows.Count; t++)
+            {
+                Color fill = _territoryColor[t] * TERRITORY_FILL_ALPHA;
+                var rows = _territoryRows[t];
+                for (int i = 0; i < rows.Count; i++)
+                {
+                    double y = (viewV - rows[i].V) * h;
+                    if (Math.Abs(y) > halfH + rowH) continue;
+                    double x0 = Math.Max((rows[i].U0 - viewU) * w, -halfW);
+                    double x1 = Math.Min((rows[i].U1 - viewU) * w, halfW);
+                    if (x1 <= x0) continue;
+                    layer.AddSprite(MATERIAL_SQUARE, ox + (x0 + x1) * 0.5, oy + y, x1 - x0, rowH, fill); // Exact height: overlaps would double the tint
+                }
+            }
+            for (int t = 0; t < _territoryUV.Count; t++)
+            {
+                var points = _territoryUV[t];
+                if (points.Count == 0) continue;
+                Color color = _territoryColor[t] * TERRITORY_RING_ALPHA;
+                double lastX = 0.0, lastY = 0.0, prevX = 0.0, prevY = 0.0, prevU = 0.0;
+                bool any = false, prevShown = false;
+                int count = points.Count;
+                for (int k = 0; k <= count; k++) // k == count closes the ring back to the first point
+                {
+                    int i = k == count ? 0 : k;
+                    double x = (points[i].X - viewU) * w;
+                    double y = (viewV - points[i].Y) * h;
+                    bool shown = Math.Abs(x) <= halfW && Math.Abs(y) <= halfH;
+                    if (shown && prevShown && Math.Abs(points[i].X - prevU) < 0.5) // Same side of the wrap seam
+                    {
+                        double gx = x - prevX;
+                        double gy = (y - prevY) / aspect; // HUD Y units are aspect times shorter on screen
+                        int steps = (int)(Math.Sqrt(gx * gx + gy * gy) / spacing);
+                        for (int st = 1; st < steps; st++)
+                        {
+                            double f = (double)st / steps;
+                            lastX = prevX + (x - prevX) * f;
+                            lastY = prevY + (y - prevY) * f;
+                            layer.AddSprite(MATERIAL_SQUARE, ox + lastX, oy + lastY, dotSize, dotSize * aspect, color);
+                        }
+                    }
+                    prevX = x;
+                    prevY = y;
+                    prevU = points[i].X;
+                    prevShown = shown;
+                    if (!shown || k == count) continue;
+                    if (any)
+                    {
+                        double dx = x - lastX;
+                        double dy = (y - lastY) / aspect;
+                        if (dx * dx + dy * dy < spacingSq) continue;
+                    }
+                    any = true;
+                    lastX = x;
+                    lastY = y;
+                    layer.AddSprite(MATERIAL_SQUARE, ox + x, oy + y, dotSize, dotSize * aspect, color);
+                }
+            }
         }
 
         /// <summary>
@@ -2035,6 +2245,9 @@ namespace GVK.Navigation
             if (minimapMode == MinimapDisplayMode.StrategicMap)
             {
                 _ssMinimap.AddSprite(MATERIAL_MAP, cx, cy, minimapSize.X, minimapSize.Y, Color.White);
+                if (showMinimapTerritories)
+                    AddTerritoryDots(_ssMinimap, cx, cy, minimapSize.X, minimapSize.Y, 0.5, 0.5, minimapSize.X * 0.5, minimapSize.Y * 0.5,
+                        aspect, 0.0015f * s, 0.005 * s);
 
                 // Pass 0 picks the other markers and marks the sites they stand in for, pass 1 draws the sites,
                 // pass 2 draws pass 0's picks again on top (same order and tests, so the same picks)
@@ -2440,6 +2653,8 @@ namespace GVK.Navigation
 
             _ssMap.BeginClip(0.0, 0.0, frameW, frameH);
             _ssMap.AddSprite(MATERIAL_MAP, (0.5 - viewU) * mapW, (viewV - 0.5) * mapH, mapW, mapH, Color.White);
+            if (showMapTerritories)
+                AddTerritoryDots(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect, 0.0022f, TERRITORY_MAP_DOT_SPACING);
             AddSsKothRings(mapW, mapH, viewU, viewV, aspect);
             _ssMap.EndClip();
 
@@ -3826,6 +4041,8 @@ namespace GVK.Navigation
             showMapSites = true;
             showMinimapSites = true;
             showCompassSites = true;
+            showMapTerritories = true;
+            showMinimapTerritories = true;
             mapKey = DEFAULT_MAP_KEY;
             mapKeyShift = false;
             mapKeyCtrl = false;
