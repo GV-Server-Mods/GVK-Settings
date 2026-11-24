@@ -44,7 +44,7 @@ namespace GVK.Navigation
         // Tactical HUD Markers (from Textures\HUD\)
         private static readonly MyStringId MATERIAL_MARKER_GPS = MyStringId.GetOrCompute("marker_gps");
         // Known-site icons: white with a black outline baked in, so a tint keeps the outline
-        private static readonly MyStringId MATERIAL_SITE_TRADE = MyStringId.GetOrCompute("POI_SiteTrade");     // Credits sign
+        private static readonly MyStringId MATERIAL_SITE_TRADE = MyStringId.GetOrCompute("POI_SiteTrade");     // Shop front
         private static readonly MyStringId MATERIAL_SITE_BASE = MyStringId.GetOrCompute("POI_SiteBase");       // Watchtower
         private static readonly MyStringId MATERIAL_SITE_DEPOT = MyStringId.GetOrCompute("POI_SiteDepot");     // Supply crate
         private static readonly MyStringId MATERIAL_SITE_CARRIER = MyStringId.GetOrCompute("POI_SiteCarrier"); // Ship
@@ -52,6 +52,22 @@ namespace GVK.Navigation
         private static readonly MyStringId MATERIAL_SIGNAL_UP = MyStringId.GetOrCompute("signal_up");
         private static readonly MyStringId MATERIAL_SIGNAL_DOWN = MyStringId.GetOrCompute("signal_down");
         private static readonly MyStringId MATERIAL_SIGNAL_LEVEL = MyStringId.GetOrCompute("signal_level");
+
+        // Satellite map filter buttons, top to bottom: the Satellite Map settings tab's toggles except the map key (KOTH
+        // first), with their icons
+        private static readonly int[] MAP_FILTER_IDS =
+            { S_MAP_KOTH, S_MAP_OWN, S_MAP_SITES, S_MAP_TERRITORY, S_MAP_GPS_LABELS, S_MAP_SIGNAL_LABELS, S_MAP_STACK };
+        private static readonly MyStringId[] MAP_FILTER_ICONS =
+        {
+            MyStringId.GetOrCompute("POI_KOTH"),
+            MyStringId.GetOrCompute("MapBtn_Signals"),
+            MyStringId.GetOrCompute("POI_SiteBase"),
+            MyStringId.GetOrCompute("MapBtn_Territory"),
+            MyStringId.GetOrCompute("MapBtn_GpsLabels"),
+            MyStringId.GetOrCompute("MapBtn_SignalLabels"),
+            MyStringId.GetOrCompute("MapBtn_Stack")
+        };
+        private const double MAP_FILTER_BTN_W = 0.036;  // Button width (HUD units; height x aspect, so square)
 
 
         /// <summary>
@@ -346,6 +362,7 @@ namespace GVK.Navigation
         // Settings button at the right end of the map header; drawn every frame so it lights up under the cursor
         private readonly GvkScreenLayer _ssMapButton = new GvkScreenLayer();
         private MapHit _mapSettingsBox;
+        private readonly MapHit[] _mapFilterBoxes = new MapHit[MAP_FILTER_IDS.Length]; // Filter buttons right of the frame
         private float _mapSettingsScale;
         private const string MAP_SETTINGS_TEXT = "Settings";
         private Vector3D _mapPlayerPos;
@@ -2543,6 +2560,12 @@ namespace GVK.Navigation
             // A lone marker's icon stays at its true position whether or not it gets a label, so only its text
             // can collide. Placed stacks keep their icons in the box so later labels don't cover them.
             bool candidateIcons = cluster.Count > 1;
+
+            // Text running past the frame's right edge would go under the filter buttons: try the other side instead
+            double minX, maxX, minY, maxY;
+            GetMapStackBox(ref cluster, overflowWidth, false, out minX, out maxX, out minY, out maxY);
+            if (maxX > _ssMapW * 0.5) return true;
+
             for (int p = 0; p < clusterIndex; p++)
             {
                 var placed = _cachedMapClusters[p];
@@ -2765,6 +2788,24 @@ namespace GVK.Navigation
                 MinY = headerY - buttonH * 0.5, MaxY = headerY + buttonH * 0.5
             };
 
+            // Filter buttons: a column on its own card docked to the right of the frame, top aligned with it
+            double btnW = MAP_FILTER_BTN_W;
+            double btnH = btnW * aspect;
+            double gapY = 0.005 * aspect;
+            double colW = btnW + 0.010;
+            double colH = MAP_FILTER_IDS.Length * (btnH + gapY) + gapY;
+            double colX = headerW * 0.5 + 0.004 + colW * 0.5;
+            _ssMap.AddSprite(MATERIAL_SQUARE, colX, topOfFrame - colH * 0.5, colW, colH, card);
+            for (int f = 0; f < MAP_FILTER_IDS.Length; f++)
+            {
+                double cyBtn = topOfFrame - gapY - btnH * 0.5 - f * (btnH + gapY);
+                _mapFilterBoxes[f] = new MapHit
+                {
+                    Wp = -1, MinX = colX - btnW * 0.5, MaxX = colX + btnW * 0.5,
+                    MinY = cyBtn - btnH * 0.5, MaxY = cyBtn + btnH * 0.5
+                };
+            }
+
             // Controls line on its own card docked under the frame, mirroring the header
             float hintScale = MAP_HINT_SCALE * textScale;
             double hintW = _ssMap.MeasureWidthHud(MAP_CONTROLS_HINT, hintScale) + 0.04;
@@ -2912,7 +2953,29 @@ namespace GVK.Navigation
                 OpenSettingsScreen(true); // Closes the map; it reopens when settings closes
                 return;
             }
-            BuildMapSettingsButton(onSettings);
+            // Filter buttons right of the frame flip the Satellite Map settings in place
+            int onFilter = -1;
+            if (hasCursor && !_mapMenuOpen && !_mapDragging)
+            {
+                for (int f = 0; f < _mapFilterBoxes.Length; f++)
+                {
+                    if (_mapFilterBoxes[f].MaxX > _mapFilterBoxes[f].MinX && IsInMapHit(ref _mapFilterBoxes[f], cursor))
+                    {
+                        onFilter = f;
+                        break;
+                    }
+                }
+            }
+            if (onFilter >= 0 && input.IsNewLeftMousePressed())
+            {
+                _ssMapTip.Clear();
+                DoSetting(MAP_FILTER_IDS[onFilter]);
+                _mapLayoutDirty = true;
+                BuildScreenSpaceFullMap();
+                BuildMapSettingsButton(onSettings, onFilter);
+                return;
+            }
+            BuildMapSettingsButton(onSettings, onFilter);
 
             // The right-click menu takes the clicks while it is open; Esc is handled in OnMapScreenCancelling
             if (_mapMenuOpen)
@@ -2984,9 +3047,32 @@ namespace GVK.Navigation
             UpdateMapTooltip(inFrame && !_mapDragging, cursor);
         }
 
-        private void BuildMapSettingsButton(bool hover)
+        /// <summary>
+        /// The header's Settings button and the filter buttons, rebuilt every input frame for their hover look. A filter
+        /// button that is on shows its icon white, off dimmed; hovering one names its setting and state beside it.
+        /// </summary>
+        private void BuildMapSettingsButton(bool hover, int hoverFilter)
         {
             if (!_ssMapButton.Begin(_ssMapViewport)) return;
+            float aspect = _ssMapViewport.X / _ssMapViewport.Y;
+            for (int f = 0; f < _mapFilterBoxes.Length; f++)
+            {
+                var fb = _mapFilterBoxes[f];
+                if (fb.MaxX <= fb.MinX) continue;
+                bool on = IsMapFilterOn(MAP_FILTER_IDS[f]);
+                bool over = f == hoverFilter;
+                double fx = (fb.MinX + fb.MaxX) * 0.5;
+                double fy = (fb.MinY + fb.MaxY) * 0.5;
+                double fw = fb.MaxX - fb.MinX;
+                _ssMapButton.AddSprite(MATERIAL_SQUARE, fx, fy, fw, fb.MaxY - fb.MinY,
+                    over ? new Color(70, 95, 112, 255) : on ? new Color(31, 41, 48, 255) : new Color(18, 23, 27, 255));
+                if (on) _ssMapButton.AddSprite(MATERIAL_SQUARE, fb.MinX + 0.002, fy, 0.003, (fb.MaxY - fb.MinY) * 0.7, new Color(187, 233, 246));
+                double icon = fw * 0.72;
+                _ssMapButton.AddSprite(MAP_FILTER_ICONS[f], fx, fy, icon, icon * aspect, on ? Color.White : Color.White * 0.32f);
+            }
+            if (hoverFilter >= 0 && hoverFilter < _mapFilterBoxes.Length)
+                AddMapFilterTip(hoverFilter, aspect);
+
             var b = _mapSettingsBox;
             double cx = (b.MinX + b.MaxX) * 0.5;
             double cy = (b.MinY + b.MaxY) * 0.5;
@@ -2995,6 +3081,47 @@ namespace GVK.Navigation
             if (hover) _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, b.MinY + 0.002, b.MaxX - b.MinX, 0.004, new Color(187, 233, 246));
             _ssMapButton.AddText(MAP_SETTINGS_TEXT, cx, cy, _mapSettingsScale, hover ? Color.White : new Color(187, 233, 246),
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
+        }
+
+        private bool IsMapFilterOn(int id)
+        {
+            switch (id)
+            {
+                case S_MAP_KOTH: return showMapKoth;
+                case S_MAP_OWN: return showMapOwnSignals;
+                case S_MAP_SITES: return showMapSites;
+                case S_MAP_TERRITORY: return showMapTerritories;
+                case S_MAP_GPS_LABELS: return showMapGpsLabels;
+                case S_MAP_SIGNAL_LABELS: return showMapSignalLabels;
+                case S_MAP_STACK: return stackMapIcons;
+            }
+            return false;
+        }
+
+        /// <summary>"Setting: On/Off" in a box to the left of a hovered filter button.</summary>
+        private void AddMapFilterTip(int f, float aspect)
+        {
+            var fb = _mapFilterBoxes[f];
+            int id = MAP_FILTER_IDS[f];
+            Color valueColor;
+            string label = GetSettingLabel(id);
+            string value = GetSettingValue(id, out valueColor);
+            const string SEP = ": ";
+            float scale = _mapSettingsScale;
+            double textW = _ssMapButton.MeasureWidthHud(label, scale) + _ssMapButton.MeasureWidthHud(SEP, scale)
+                         + _ssMapButton.MeasureWidthHud(value, scale);
+            double lineH = _ssMapButton.LineHeightHud(scale);
+            double padX = 0.008;
+            double padY = 0.005 * aspect;
+            double boxW = textW + padX * 2.0;
+            double boxH = lineH + padY * 2.0;
+            double right = fb.MinX - 0.008;
+            double cy = (fb.MinY + fb.MaxY) * 0.5;
+            _ssMapButton.AddSprite(MATERIAL_SQUARE, right - boxW * 0.5, cy, boxW, boxH, new Color(10, 16, 24, 245));
+            _ssMapButton.BeginRuns(right - boxW + padX, cy + lineH * 0.5, scale, true);
+            _ssMapButton.AddRun(label, Color.White);
+            _ssMapButton.AddRun(SEP, MAP_HEADER_GREY);
+            _ssMapButton.AddRun(value, valueColor);
         }
 
         /// <summary>The marker or label under a point, last drawn first; -1 if none.</summary>
@@ -3059,7 +3186,13 @@ namespace GVK.Navigation
         /// <summary>Esc closes the right-click menu first, then the map.</summary>
         public bool OnMapScreenCancelling()
         {
-            if (!_mapMenuOpen) return true;
+            if (!_mapMenuOpen)
+            {
+                // The map fades out without input frames, so drop hover looks and tooltips now
+                _ssMapTip.Clear();
+                BuildMapSettingsButton(false, -1);
+                return true;
+            }
             CloseMapMenu();
             return false;
         }
@@ -3498,6 +3631,7 @@ namespace GVK.Navigation
             if (MapScreenOpen)
             {
                 _ssMapTip.Clear();
+                BuildMapSettingsButton(false, -1); // No input frames during the fade: drop the hover look and tooltip
                 CloseMapMenu();
                 _mapScreen.Close(); // Fades out; OnMapScreenClosed comes back here to finish
                 return;
