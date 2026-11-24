@@ -10,7 +10,7 @@ checked: -
 
 # GVK admin blockers (replacing SC Blockers)
 
-Status: **passed the NPC Dev world test and committed 2026-11-23** (GVK_Settings 543bed8, GVK_Derelicts 1f9b4b1; owner approved the plan the same day; choices under [Decisions](#decisions)). Not published. SC Blockers was removed from the NPC Dev world the same day (owner). Next: switching-over step 3, publishing on the owner's "go". Build log: `Source/Blockers/build-log.md`. Started 2026-11-23, while the full-color icon batch (hub #766, [full-color-icons.md](full-color-icons.md)) was re-rendering SC Blockers' icon. Owner: the blocks "look like crap" and should become GVK's own, with better textures. The icon batch leaves SC Blockers out.
+Status: **passed the NPC Dev world test and committed 2026-11-23** (GVK_Settings 543bed8, GVK_Derelicts 1f9b4b1; owner approved the plan the same day; choices under [Decisions](#decisions)). GVK_Settings published 2026-11-23 (tag `workshop-20261123-1744`); GVK_Derelicts not yet (owner). SC Blockers was removed from the NPC Dev world the same day (owner). Next: publish GVK_Derelicts on the owner's "go", and drop SC from the Steam collection. Build log: `Source/Blockers/build-log.md`. Started 2026-11-23, while the full-color icon batch (hub #766, [full-color-icons.md](full-color-icons.md)) was re-rendering SC Blockers' icon. Owner: the blocks "look like crap" and should become GVK's own, with better textures. The icon batch leaves SC Blockers out.
 
 ## What SC Blockers is
 
