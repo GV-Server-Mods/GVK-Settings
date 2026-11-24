@@ -9,6 +9,17 @@ copy built into SEIconStudio.pck, are never changed. Run it again after a Steam 
 
     python tools/icon_tilt.py <mod folder> [<mod folder> ...] [--dry-run]
 
+--frame instead gives every block and ammo magazine its own camera, kept within Keen's own weapon angles
+(owner, 2026-11-23: 60 up was "way too steep"). Blocks stay at Keen's 155 degrees around and rise from 20 up
+to at most 35; ammo magazines try 105 to 165 around and 25 to 45 up. A camera replaces the default only if
+its outline covers at least 10% more of a square tile. --long names long guns, which keep Keen's small
+autocannon camera (160 around, 20 up); --model-rot turns a model (Griffin missile, so it points down to the
+right). Every block gets an entry, even at the default: a subtype without one falls back to Keen's entry
+for its TypeId (`LargeMissileTurret#EMPTY_SUBTYPE`, 20 up), not to the 35 up default. _NPC copies follow
+their player block. --sheet draws each outline at the old and new camera; --only limits the run.
+
+    python tools/icon_tilt.py <mod folder> --frame [--long SUBTYPE ...] [--model-rot SUBTYPE=X,Y,Z ...]
+
 A mod folder is a deployed mod (%APPDATA%\\SpaceEngineers\\Mods\\<mod>) or a Workshop download
 (steamapps\\workshop\\content\\244850\\<id>). Then run Icon Studio on it as usual.
 """
@@ -98,6 +109,95 @@ def tilt(pts):
     return int(5 * round(raw / 5)), ratio
 
 
+# --- --frame: a camera per block or magazine that fills the tile ---
+# Keen's weapon cameras (default_icon_render_overrides.json): turrets 20 up and 155 around, fixed guns 20 up
+# and 160 around, ammo 35-40 up and 145 around, never above 40. Owner, 2026-11-23: weapon blocks start from Keen's
+# turret camera and look down at most to 35; long guns (--long) take the small autocannon's camera; magazines may
+# turn so a long round tips toward the camera, at most 45 up. 60 up looked "way too steep".
+# kind: (default yaw, default pitch, yaws, pitches)
+CAMERAS = {"block": (-155, 20, [-155], range(20, 36, 5)),
+           "long": (-160, 20, [-160], [20]),
+           "magazine": (-135, 35, range(-165, -104, 5), range(25, 46, 5))}
+GAIN = 1.10                                               # a new camera must cover 10% more of the tile
+
+
+def project(pts, yaw, pitch):
+    """Image x, y of each point for a Godot camera at cam_rot (-pitch, yaw, 0): basis Ry(yaw) * Rx(-pitch)."""
+    y_, p_ = math.radians(yaw), -math.radians(pitch)
+    cy, sy, cp, sp = math.cos(y_), math.sin(y_), math.cos(p_), math.sin(p_)
+    return [(x * cy - z * sy, x * sy * sp + y * cp + z * cy * sp) for x, y, z in pts]
+
+
+def hull(pts2):
+    pts2 = sorted(set(pts2))
+    if len(pts2) < 3:
+        return pts2
+    def half(seq):
+        h = []
+        for p in seq:
+            while len(h) >= 2 and (h[-1][0] - h[-2][0]) * (p[1] - h[-2][1]) - (h[-1][1] - h[-2][1]) * (p[0] - h[-2][0]) <= 0:
+                h.pop()
+            h.append(p)
+        return h[:-1]
+    return half(pts2) + half(pts2[::-1])
+
+
+def cover(pts2):
+    """Share of the square tile the outline covers, with the longest side scaled to the tile (Icon Studio's fit)."""
+    h = hull(pts2)
+    xs, ys = [p[0] for p in pts2], [p[1] for p in pts2]
+    side = max(max(xs) - min(xs), max(ys) - min(ys), 1e-6)
+    area = abs(sum(h[i][0] * h[i - 1][1] - h[i - 1][0] * h[i][1] for i in range(len(h)))) / 2
+    return area / side ** 2
+
+
+def frame(pts, kind):
+    """(yaw, pitch, cover) of the best camera, and the default camera's cover."""
+    y0, p0, yaws, pitches = CAMERAS[kind]
+    pts = [(round(x, 2), round(y, 2), round(z, 2)) for x, y, z in pts]
+    base = cover(project(pts, y0, p0))
+    best = max(((cover(project(pts, y, p)), -abs(y - y0) - abs(p - p0), y, p) for y in yaws for p in pitches))
+    if best[0] < base * GAIN:
+        return y0, p0, base, base
+    return best[2], best[3], best[0], base
+
+
+def rotate(pts, deg):
+    """Points turned by Icon Studio's model_rot (Godot Euler, basis Ry * Rx * Rz), given in degrees."""
+    ax, ay, az = (math.radians(v) for v in deg)
+    out = []
+    for x, y, z in pts:
+        x, y = x * math.cos(az) - y * math.sin(az), x * math.sin(az) + y * math.cos(az)
+        y, z = y * math.cos(ax) - z * math.sin(ax), y * math.sin(ax) + z * math.cos(ax)
+        x, z = x * math.cos(ay) + z * math.sin(ay), -x * math.sin(ay) + z * math.cos(ay)
+        out.append((x, y, z))
+    return out
+
+
+def outline_cell(pts, yaw, pitch, size=128, fill=0.75):
+    from PIL import Image, ImageDraw
+    p2 = project(pts, yaw, pitch)
+    xs, ys = [p[0] for p in p2], [p[1] for p in p2]
+    s = fill * size / max(max(xs) - min(xs), max(ys) - min(ys), 1e-6)
+    cx, cy = (max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2
+    img = Image.new("RGB", (size, size), (40, 44, 52))
+    ImageDraw.Draw(img).polygon([(size / 2 + (x - cx) * s, size / 2 - (y - cy) * s) for x, y in hull(p2)], fill=(200, 200, 200))
+    return img
+
+
+def sheet(rows, out):
+    from PIL import Image, ImageDraw
+    cols, cw, ch = 4, 270, 150
+    img = Image.new("RGB", (cols * cw, ((len(rows) + cols - 1) // cols) * ch + 4), (24, 26, 30))
+    d = ImageDraw.Draw(img)
+    for i, (key, pts, y, p, new, old) in enumerate(rows):
+        x0, y0 = (i % cols) * cw + 4, (i // cols) * ch + 4
+        img.paste(outline_cell(pts, -135, BASE), (x0, y0))
+        img.paste(outline_cell(pts, y, p), (x0 + 132, y0))
+        d.text((x0, y0 + 130), f"{key[:26]}  {old:.2f}>{new:.2f}  {-y} {p}", fill=(230, 230, 230))
+    img.save(out)
+
+
 # --- definitions and Icon Studio's override file ---
 def definitions(mod):
     for path in glob.glob(os.path.join(mod, "Data", "**", "*.sbc"), recursive=True):
@@ -111,7 +211,9 @@ def definitions(mod):
                 continue
             t = idn.findtext("TypeId") or idn.get("Type") or ""
             s = idn.findtext("SubtypeId") or idn.get("Subtype") or ""
-            yield (s or re.sub("^MyObjectBuilder_", "", t) + "#EMPTY_SUBTYPE"), model, icon
+            kind = "block" if d.find("CubeSize") is not None else (
+                "magazine" if re.sub("^MyObjectBuilder_", "", t) == "AmmoMagazine" else "")
+            yield (s or re.sub("^MyObjectBuilder_", "", t) + "#EMPTY_SUBTYPE"), model, icon, kind
 
 
 def keen_keys():
@@ -129,13 +231,20 @@ def main():
     ap.add_argument("--content", default=os.path.join(STEAM, r"SpaceEngineers\Content"))
     ap.add_argument("--overrides", default=os.path.join(STUDIO, "default_icon_render_overrides.json"))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--frame", action="store_true", help="blocks and ammo magazines: pick each one's camera to fill the tile")
+    ap.add_argument("--only", nargs="+", help="with --frame: only these subtypes")
+    ap.add_argument("--long", nargs="+", default=[], help="with --frame: long guns (their _NPC copies too)")
+    ap.add_argument("--model-rot", nargs="+", default=[], metavar="SUBTYPE=X,Y,Z",
+                    help="with --frame: turn a model in degrees first, e.g. lay a standing missile down")
+    ap.add_argument("--sheet", help="with --frame: write a PNG of each block's outline at the old and new camera")
     a = ap.parse_args()
     keen = keen_keys()
     cur = json.load(open(a.overrides, encoding="utf-8"))
-    changed = 0
+    changed, rows = 0, []
+    turns = {k: [float(v) for v in r.split(",")] for k, r in (m.split("=", 1) for m in a.model_rot)}
     for mod in a.mods:
         seen, own = set(), 0
-        for key, model, icon in definitions(mod):
+        for key, model, icon, kind in definitions(mod):
             if key in seen or key in keen:
                 continue
             seen.add(key)
@@ -148,10 +257,34 @@ def main():
             path = next((p for p in (os.path.join(mod, model), os.path.join(a.content, model)) if os.path.exists(p)), None)
             if not path:
                 print(f"  {key}: model not found ({model})"); continue
+            if a.frame and (not kind or (a.only and key not in a.only)):
+                continue
             try:
-                pitch, ratio = tilt(points(path))
-            except (KeyError, IndexError, struct.error) as e:
+                pts = points(path)
+                pitch, ratio = tilt(pts)
+                yaw = -135
+                base_key = re.sub("_NPC$", "", key)
+                turn = turns.get(key) or turns.get(base_key)
+                if a.frame:
+                    if kind == "block" and base_key in a.long:
+                        kind = "long"
+                    if turn:
+                        pts = rotate(pts, turn)
+                    yaw, pitch, new, old = frame(pts, kind)
+                    rows.append((key, pts, yaw, pitch, new, old))
+                    ratio = new / old
+            except (KeyError, IndexError, struct.error, ValueError) as e:
                 print(f"  {key}: cannot read {model} ({e!r})"); continue
+            # Always written: without its own entry, Icon Studio falls back to Keen's entry for the vanilla block
+            # of the same type (LargeMissileTurret#EMPTY_SUBTYPE is 20 up, 155 around), not 45/35 (owner, 2026-11-23).
+            if a.frame:
+                want = {"cam_rot": [-math.radians(pitch), math.radians(yaw), 0.0]}
+                if turn:
+                    want["model_rot"] = [math.radians(v) for v in turn]
+                if cur.get(key) != want:
+                    print(f"  {key}: around {-yaw}, up {pitch} (covers {ratio:.2f}x the tile)")
+                    cur[key] = want; changed += 1
+                continue
             want = {"cam_rot": [-math.radians(pitch), YAW, 0.0]} if pitch != BASE else None
             if want and cur.get(key) != want:
                 print(f"  {key}: tilt {pitch} (height/width {ratio:.2f})")
@@ -164,6 +297,9 @@ def main():
         with open(a.overrides, "w", encoding="utf-8", newline="\n") as f:
             json.dump(cur, f, indent=2, ensure_ascii=False)
     print(f"{changed} entries {'would change' if a.dry_run else 'changed'} in {a.overrides}")
+    if a.sheet and rows:
+        sheet(rows, a.sheet)
+        print(f"outlines: {a.sheet}")
 
 
 if __name__ == "__main__":

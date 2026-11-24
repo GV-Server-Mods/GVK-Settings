@@ -4,7 +4,7 @@ vanilla materials, and render an icon PNG with Icon Studio's look. Run in a back
 <hatch deg> turns subparts whose dummy name holds "Hatch" about their X axis (0 for none). Icon Studio's camera is
 yaw 225, pitch 35.
 Env: MAIN (the main model's JSON name; default: the only JSON in the folder), LAYFLAT=1 (turn the model's +Y face
-up), SIZE (camera distance factor), EXPOSURE, DENOISE, ORTHO, GLOSS, FLIPV, DROP_TURRET_ROT, FRAME_EXCLUDE,
+up), SIZE (camera distance factor), EXPOSURE, DENOISE, ORTHO, GLOSS, FLIPV, DROP_TURRET_ROT, TURN, FRAME_EXCLUDE,
 NO_PAINT (regex of materials that skip the grey paint), DECALS (regex of decal materials: camera-only, no shadows),
 ALIAS ("Part=SeutMaterial[:x_cm.png,x_ng.png];...": render a part with another library material, textures swapped
 by suffix; Part is a material name, or tex:<CM file name> for every part using that texture), EMISSIVE_TINT ("r,g,b,strength": the SetEmissiveParts colour and emissivity), EMISSIVE_GAIN (how
@@ -29,6 +29,8 @@ MAIN = os.environ.get("MAIN", "")
 G = Matrix.Rotation(math.radians(90), 4, "X") if os.environ.get("LAYFLAT", "0") == "1" else Matrix()   # +Y face up
 SIZE = float(os.environ.get("SIZE", "1.12"))
 DROP = os.environ.get("DROP_TURRET_ROT", "0") == "1"   # MyLargeTurretBase.RotateModels
+# TURN="regex=deg;...": turn subparts whose dummy name matches about their own X axis, e.g. a turret's elevation part
+TURN = [(r, float(d)) for r, d in (t.rsplit("=", 1) for t in filter(None, os.environ.get("TURN", "").split(";")))]
 def mkey(n):
     return re.sub(r"\.\d{3}$", "", n) if n else n
 # ALIAS="Part=SeutMaterial[:file,file...];...": render a mesh part with another library material, optionally with
@@ -167,6 +169,9 @@ def place(model, parent_mw):
         mw = parent_mw @ dmx
         if "Hatch" in f and HATCH:
             mw = mw @ (C @ Matrix.Rotation(math.radians(HATCH), 3, "X") @ CI).to_4x4()   # WeaponCore turns about the subpart X
+        for rx, deg in TURN:
+            if re.search(rx, dm["name"]):
+                mw = mw @ (C @ Matrix.Rotation(math.radians(deg), 3, "X") @ CI).to_4x4()
         o.matrix_world = mw
         placed += 1
         place(f, mw)
