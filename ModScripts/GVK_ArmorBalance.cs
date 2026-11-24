@@ -27,6 +27,11 @@ namespace MikeDude.ArmorBalance
         private readonly MyComponentDefinition unobtainiumComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "GVK_Unobtanium"));
         private readonly MyComponentDefinition steelPlateComponent = MyDefinitionManager.Static.GetComponentDefinition(new MyDefinitionId(typeof(MyObjectBuilder_Component), "SteelPlate"));
 
+        private static readonly HashSet<string> AdminBlockers = new HashSet<string>
+        {
+            "GVK_Blocker_50x50", "GVK_Blocker_100x50", "GVK_Blocker_100x100", "GVK_Blocker_200x50", "GVK_Blocker_200x100", "GVK_Blocker_200x200"
+        };
+
         private void DoWork()
         {
             foreach (var blockDef in MyDefinitionManager.Static.GetDefinitionsOfType<MyCubeBlockDefinition>())
@@ -58,6 +63,10 @@ namespace MikeDude.ArmorBalance
 				var basicMissionDef = blockDef as MyBasicMissionBlockDefinition;
 				var programmableBlockDef = blockDef as MyProgrammableBlockDefinition;
 				var turretControllerDef = blockDef as MyTurretControlBlockDefinition;
+
+				// GVK admin blockers keep their SBC values (unbreakable); see GVK_Blockers.sbc
+				if (blockDef.Id.TypeId == typeof(MyObjectBuilder_TerminalBlock) && AdminBlockers.Contains(blockDef.Id.SubtypeName))
+					continue;
 
 				// attempt to make things able to place better in tight spaces
 				blockDef.UseModelIntersection = true; 

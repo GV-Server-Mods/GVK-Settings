@@ -107,14 +107,13 @@
 				<!-- King of the Hill (SkunkWorks, 2863919629) -->
 				<Block Type="MyObjectBuilder_Beacon" Subtype="ZoneBlock"/>
 				<Block Type="MyObjectBuilder_CargoContainer" Subtype="Prizebox"/>
-				<!-- SC Blockers (2661300547); its own BlockerCubeGroup is disabled below -->
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x200 Square"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="100x100 Square"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="50x50 Square"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x100 Rectangle"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="200x50 Rectangle"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="100x50 Rectangle"/>
-				<Block Type="MyObjectBuilder_BatteryBlock" Subtype="Sphere"/>
+				<!-- GVK admin blockers (Cubeblocks/GVK_Blockers.sbc), replacing SC Blockers (2661300547), whose own group is disabled below -->
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_200x200"/>
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_100x100"/>
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_50x50"/>
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_200x100"/>
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_200x50"/>
+				<Block Type="MyObjectBuilder_TerminalBlock" Subtype="GVK_Blocker_100x50"/>
 			</Blocks>
 		</BlockVariantGroup>
 		<!-- Keen's TankGroup plus the GVK Medium Hydrogen Tank. Also keeps the Water Tank mod's (3633905517) WaterTank, since that mod redefines this group too and the last loaded wins. -->

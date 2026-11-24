@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CubeBlocks>
+		<!-- GVK admin blockers, replacing SC Blockers (2661300547). Plan: Docs/design/admin-blockers.md -->
+		<!-- TerminalBlock only so Block Restrictions can hide them from players (it ignores plain CubeBlock types); no power, no updates -->
+		<!-- Unbreakable: GVK_ArmorBalance.cs skips these subtypes, so the values below stand -->
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_50x50</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 50x50 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_50x50.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="20" y="20" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_50x50.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="20" EndY="20"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="20" EndY="20"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="20" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="20" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_100x50</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 100x50 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_100x50.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="40" y="20" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x50.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="40" EndY="20"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="40" EndY="20"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="40" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="40" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_100x100</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 100x100 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_100x100.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="40" y="40" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x100.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="40" EndY="40"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="40" EndY="40"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="40"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="40"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="40" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="40" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_200x50</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 200x50 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_200x50.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="80" y="20" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x50.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="20"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="20"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="20"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="80" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="80" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_200x100</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 200x100 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_200x100.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="80" y="40" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x100.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="40"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="40"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="40"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="40"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="80" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="80" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>GVK_Blocker_200x200</SubtypeId>
+			</Id>
+			<DisplayName>Blocker 200x200 m</DisplayName>
+			<Description>Admin blocker. Indestructible.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\GVK_Blocker_200x200.dds</Icon>
+			<Icon>Textures\Icons\GV_Icon_Overlay.dds</Icon>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>Cube</BlockTopology>
+			<Size x="80" y="80" z="4"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x200.mwm</Model>
+			<Components>
+				<Component Subtype="Girder" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="100000"/>
+			</Components>
+			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<MountPoints>
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="80"/>
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="80"/>
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="4" EndY="80"/>
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="4" EndY="80"/>
+				<MountPoint Side="Top" StartX="0" StartY="0" EndX="80" EndY="4"/>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="80" EndY="4"/>
+			</MountPoints>
+			<IsAirTight>true</IsAirTight>
+			<HasPhysics>true</HasPhysics>
+			<UseModelIntersection>true</UseModelIntersection>
+			<DeformationRatio>0</DeformationRatio>
+			<GeneralDamageMultiplier>0</GeneralDamageMultiplier>
+			<PCU>1</PCU>
+		</Definition>
+	</CubeBlocks>
+</Definitions>
