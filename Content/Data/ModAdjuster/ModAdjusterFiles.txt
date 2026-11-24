@@ -10,6 +10,7 @@ CubeBlocks\CubeBlocks_StorageShelves.xml
 CubeBlocks\CubeBlocks_Thrusters.xml
 CubeBlocks\CubeBlocks_Tools.xml
 CubeBlocks\CubeBlocks_AQDConveyorExpansion.xml
+CubeBlocks\CubeBlocks_CargoScanner.xml
 CubeBlocks\CubeBlocks_CowboyHats.xml
 CubeBlocks\CubeBlocks_KingOfTheHill.xml
 CubeBlocks\CubeBlocks_MABuster.xml
