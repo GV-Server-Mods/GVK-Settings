@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Sandbox.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
@@ -37,7 +36,7 @@ namespace GVK.Navigation
         private const double ZONE_2_RADIUS = 49300.0;
         private const double ZONE_3_RADIUS = 34000.0;
 
-        // Texture Materials (compass frame is drawn with Square billboards)
+        // Texture Materials (screen API sprites)
         private static readonly MyStringId MATERIAL_SQUARE = MyStringId.GetOrCompute("Square");
         private static readonly MyStringId MATERIAL_MAP = MyStringId.GetOrCompute("KharakMap");
         private static readonly MyStringId MATERIAL_RADAR_GRID = MyStringId.GetOrCompute("RadarGrid");
@@ -306,7 +305,6 @@ namespace GVK.Navigation
         private Vector3D _mapMenuGpsCoords;
         private string _mapMenuTitle;
         private MapHit _mapMenuOk;          // Button boxes from the last menu build
-        private MapHit _mapMenuCancel;
         private int _mapPointNext = 1;      // Next "Map Point N", so quick adds don't wait on the server's GPS list
 
         // Settings button at the right end of the map header; drawn every frame so it lights up under the cursor
@@ -715,7 +713,7 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// Gets the current monitor aspect ratio (Width / Height) so 2D billboards render un-squished.
+        /// Gets the current monitor aspect ratio (Width / Height) so screen sprites keep their shape.
         /// </summary>
         private float GetScreenAspect()
         {
@@ -745,6 +743,7 @@ namespace GVK.Navigation
             }
 
             UpdateMapReopen();
+            KothClientData.MapOpen = showFullMap;
 
             Vector3D? pos = GetPlayerPosition();
             if (!pos.HasValue) return;
@@ -802,13 +801,20 @@ namespace GVK.Navigation
 
             if (showFullMap)
             {
-                if (MapScreenOpen)
+                if (MapScreenOpen && !_ssMapDrawFailed)
                 {
                     _mapPlayerPos = pos.Value;
                     if (tickCounter % updateTickRate == 0 || _fullMapNeedsRedraw)
                     {
                         _fullMapNeedsRedraw = false;
-                        BuildScreenSpaceFullMap();
+                        try
+                        {
+                            BuildScreenSpaceFullMap();
+                        }
+                        catch (Exception ex)
+                        {
+                            FailMapScreen("build", ex);
+                        }
                     }
                 }
             }
@@ -2388,6 +2394,19 @@ namespace GVK.Navigation
         /// <summary>Map screen input, every frame it has focus: close key, wheel zoom, drag pan, right-click GPS, hover.</summary>
         public void HandleMapScreenInput()
         {
+            if (_ssMapDrawFailed) return; // Fading out after an error
+            try
+            {
+                HandleMapScreenInputCore();
+            }
+            catch (Exception ex)
+            {
+                FailMapScreen("input", ex);
+            }
+        }
+
+        private void HandleMapScreenInputCore()
+        {
             if (!showFullMap || _ssMapW <= 0f) return;
             var input = MyAPIGateway.Input;
 
@@ -2606,7 +2625,7 @@ namespace GVK.Navigation
 
             double buttonTop = top - padY * 2.0 - titleH;
             _mapMenuOk = AddMapMenuButton(okText, textX, buttonTop, buttonW, buttonH, buttonScale, accent, hasCursor, cursor);
-            _mapMenuCancel = AddMapMenuButton(CANCEL_TEXT, textX + buttonW + gap, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
+            AddMapMenuButton(CANCEL_TEXT, textX + buttonW + gap, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
         }
 
         private MapHit AddMapMenuButton(string text, double left, double top, double width, double height, float scale, Color color, bool hasCursor, Vector2D cursor)
@@ -2742,7 +2761,7 @@ namespace GVK.Navigation
         /// <summary>The map screen's draw, every frame while it is open, faded with the screen.</summary>
         public void DrawMapScreen(float alpha)
         {
-            if (!showFullMap) return;
+            if (!showFullMap || _ssMapDrawFailed) return;
             try
             {
                 _ssMap.Draw(MyScreenSpaceLayer.BelowHud, alpha);
@@ -2752,24 +2771,51 @@ namespace GVK.Navigation
             }
             catch (Exception ex)
             {
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map screen draw failed, map off for this session: {ex}");
-                _ssMapDrawFailed = true;
+                FailMapScreen("draw", ex);
+            }
+        }
+
+        /// <summary>An error in the map screen's draw or input: log it, close the map and keep it off for the session.</summary>
+        private void FailMapScreen(string where, Exception ex)
+        {
+            if (_ssMapDrawFailed) return; // Already closing from an earlier error
+            _ssMapDrawFailed = true;
+            MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map screen {where} failed, map off for this session: {ex}");
+            try
+            {
                 _ssMap.Clear();
                 _ssMapTip.Clear();
                 _ssMapButton.Clear();
                 CloseMapMenu();
+                // No fade: a screen opened this frame is still queued, and a fading close of it is lost when the game adds it.
+                // CloseNow delivers OnMapScreenClosed before it returns, which finishes CloseFullMap.
+                if (MapScreenOpen) _mapScreen.CloseNow();
                 CloseFullMap();
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] The satellite map hit an error and closed", 2500, MyFontEnum.Red);
+            }
+            catch (Exception ex2)
+            {
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map close after an error failed: {ex2}");
+                showFullMap = false; // Let the HUD draw again
             }
         }
 
         public void OnMapScreenClosed(bool isUnloading)
         {
-            if (isUnloading)
+            try
             {
-                showFullMap = false; // The session is ending
-                return;
+                if (isUnloading)
+                {
+                    showFullMap = false; // The session is ending
+                    return;
+                }
+                CloseFullMap();
             }
-            CloseFullMap();
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Satellite map close failed: {ex}");
+                showFullMap = false; // Let the HUD draw again
+            }
         }
 
 
@@ -3001,7 +3047,10 @@ namespace GVK.Navigation
                 MyAPIGateway.Utilities.ShowNotification("[GVK NAV] The satellite map hit an error and is off until you rejoin", 2500, MyFontEnum.Red);
                 return;
             }
-            if (_mapScreen == null) _mapScreen = new GvkMapScreen(this);
+            // A new screen object each time: the game removes a closed screen a frame after OnClosed, and that removal
+            // closes whatever the same MyModScreen has opened since (MyModScreen.DeliverClosed doesn't check the host),
+            // so reusing it for a reopen in that frame (settings refused or failing right after the map closed) leaves a blank screen
+            _mapScreen = new GvkMapScreen(this);
             _mapScreen.Open();
             if (!_mapScreen.IsOpen)
             {
@@ -3027,7 +3076,14 @@ namespace GVK.Navigation
             }
             _mapKeyLatch = true;
             _mapDragging = false;
-            BuildScreenSpaceFullMap();
+            try
+            {
+                BuildScreenSpaceFullMap();
+            }
+            catch (Exception ex)
+            {
+                FailMapScreen("open", ex); // Blamed on the map, not on the screen or command that opened it
+            }
         }
 
         private void ToggleMinimap()
@@ -3512,7 +3568,7 @@ namespace GVK.Navigation
             double hz = 60.0 / updateTickRate;
 
             MyAPIGateway.Utilities.ShowMessage("GVK", $"Radar [{mStatus} {mRange}] | Compass [{cStatus}] | Zone [{zMode}] | {hz:0.#}Hz");
-            MyAPIGateway.Utilities.ShowMessage("GVK", "Commands: /gvk settings, map, radar, range, compass, zone, rate, reset.");
+            MyAPIGateway.Utilities.ShowMessage("GVK", "Commands: /gvk settings, map, minimap, radar, range, compass, zone, gps, rate, reset.");
         }
 
         private Vector3D? GetPlayerPosition()

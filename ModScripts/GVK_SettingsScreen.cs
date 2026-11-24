@@ -92,6 +92,7 @@ namespace GVK.Navigation
         private bool _settingsCaptureSkipFrame;      // The click that started the capture is not the key
         private bool _settingsResetArmed;            // Factory reset asks for a second click
         private bool _settingsReturnToMap;           // Opened from the map's Settings button; reopen the map on close
+        private bool _settingsFailed;                // An error turned the settings screen off for this session
         private int _mapReopenTicks;                 // Ticks left to reopen the map once its fade-out has finished
         private const double SETTINGS_TRACK_GRAB = 0.02; // Slack around the slider track for the press, HUD units
         private const int MAP_REOPEN_TICKS = 60;
@@ -106,7 +107,12 @@ namespace GVK.Navigation
         private void OpenSettingsScreen(bool fromMap = false)
         {
             if (SettingsScreenOpen) return;
-            if (_settingsScreen == null) _settingsScreen = new GvkSettingsScreen(this);
+            if (_settingsFailed)
+            {
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] The settings screen hit an error and is off until you rejoin", 2500, MyFontEnum.Red);
+                return;
+            }
+            _settingsScreen = new GvkSettingsScreen(this); // A new screen object each time, as for the map (see OpenFullMap)
             _settingsReturnToMap = false;
             if (fromMap)
             {
@@ -120,8 +126,20 @@ namespace GVK.Navigation
             _settingsResetArmed = false;
             _settingsDirty = true;
             _settingsScreen.Open();
-            if (SettingsScreenOpen) BuildSettingsScreen(false, Vector2D.Zero);
-            else if (_settingsReturnToMap)
+            if (SettingsScreenOpen)
+            {
+                try
+                {
+                    BuildSettingsScreen(false, Vector2D.Zero);
+                }
+                catch (Exception ex)
+                {
+                    FailSettingsScreen("open", ex); // Blamed on settings, not on the map or command that opened it
+                }
+                return;
+            }
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Can't open settings: too many screens are open", 2500, MyFontEnum.Red);
+            if (_settingsReturnToMap)
             {
                 _settingsReturnToMap = false; // The game refused the screen; put the map back
                 _mapReopenTicks = MAP_REOPEN_TICKS;
@@ -152,12 +170,19 @@ namespace GVK.Navigation
 
         public void OnSettingsClosed(bool isUnloading)
         {
-            if (_settingsDragRow != 0 && !isUnloading) EndSettingsDrag();
+            bool returnToMap = _settingsReturnToMap;
+            _settingsReturnToMap = false;
+            try
+            {
+                if (_settingsDragRow != 0 && !isUnloading) EndSettingsDrag();
+            }
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Settings screen close failed: {ex}");
+            }
             _settingsDragRow = 0;
             _settingsCapturing = false;
             _ssSettings.Clear();
-            bool returnToMap = _settingsReturnToMap;
-            _settingsReturnToMap = false;
             if (isUnloading) return;
             // Settings may have changed what the map shows
             _mapLayoutDirty = true;
@@ -167,19 +192,51 @@ namespace GVK.Navigation
 
         public void DrawSettingsScreen(float alpha)
         {
+            if (_settingsFailed) return;
             try
             {
                 _ssSettings.Draw(MyScreenSpaceLayer.BelowHud, alpha);
             }
             catch (Exception ex)
             {
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Settings screen draw failed: {ex}");
+                FailSettingsScreen("draw", ex);
+            }
+        }
+
+        /// <summary>An error in the settings screen's draw or input: log it, close the screen and keep it off for the session.</summary>
+        private void FailSettingsScreen(string where, Exception ex)
+        {
+            if (_settingsFailed) return; // Already closing from an earlier error
+            _settingsFailed = true;
+            MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Settings screen {where} failed, settings screen off for this session: {ex}");
+            _settingsDragRow = 0; // No slider save from a half-done input
+            _settingsCapturing = false;
+            try
+            {
                 _ssSettings.Clear();
-                _settingsScreen.Close();
+                if (SettingsScreenOpen) _settingsScreen.CloseNow(); // No fade, as for the map: a fading close of a just-opened screen is lost
+                MyAPIGateway.Utilities.ShowNotification("[GVK NAV] The settings screen hit an error and closed", 2500, MyFontEnum.Red);
+            }
+            catch (Exception ex2)
+            {
+                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Settings screen close after an error failed: {ex2}");
             }
         }
 
         public void HandleSettingsInput()
+        {
+            if (_settingsFailed) return; // Fading out after an error
+            try
+            {
+                HandleSettingsInputCore();
+            }
+            catch (Exception ex)
+            {
+                FailSettingsScreen("input", ex);
+            }
+        }
+
+        private void HandleSettingsInputCore()
         {
             var input = MyAPIGateway.Input;
             Vector2D cursor;

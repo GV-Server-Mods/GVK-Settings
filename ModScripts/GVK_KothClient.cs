@@ -17,6 +17,8 @@ namespace GVK.Navigation
     /// </summary>
     public static class KothClientData
     {
+        public static bool MapOpen; // Set each tick by the nav HUD: the satellite map is up, so the capture panel hides like the rest of the HUD
+
         public struct Zone
         {
             public string Name;
@@ -124,6 +126,7 @@ namespace GVK.Navigation
 
             KothClientData.Zones.Clear();
             KothClientData.Changed = true;
+            KothClientData.MapOpen = false;
         }
 
         // --- Messages from the plugin ------------------------------------------------------------------------
@@ -359,7 +362,7 @@ namespace GVK.Navigation
 
         private void DrawScreenPanel()
         {
-            if (_ssPanelDrawFailed || _ssPanel.Count == 0 || GvkScreenLayer.IsHudHidden())
+            if (_ssPanelDrawFailed || _ssPanel.Count == 0 || KothClientData.MapOpen || GvkScreenLayer.IsHudHidden())
                 return;
             try
             {

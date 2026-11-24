@@ -158,6 +158,7 @@ namespace GVK.Navigation
             if (width <= 0.0 || height <= 0.0) return;
             _items.Add(new Item
             {
+                Kind = KIND_SPRITE,
                 Material = material,
                 Position = HudToNormalized(x, y),
                 Size = HudSizeToNormalized(width, height),
