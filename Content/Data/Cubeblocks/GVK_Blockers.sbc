@@ -20,7 +20,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_50x50.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
@@ -54,7 +55,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x50.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
@@ -88,7 +90,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x100.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
@@ -122,7 +125,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x50.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
@@ -156,7 +160,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x100.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
@@ -190,7 +195,8 @@
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x200.mwm</Model>
 			<Components>
 				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="100000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="50000"/>
 			</Components>
 			<CriticalComponent Subtype="SteelPlate" Index="0"/>
 			<MountPoints>
