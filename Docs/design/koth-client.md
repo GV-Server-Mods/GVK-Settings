@@ -5,6 +5,7 @@ covers:
   - ModScripts/GVK_ScreenLayer.cs
 scripts:
   - ModScripts/GVK_KothClient.cs: Client only: KOTH capture panel, zone boundary and fireworks from the GVK KOTH plugin
+checked: 2026-11-24
 ---
 
 # KOTH client (HUD panel, boundary, fireworks)
