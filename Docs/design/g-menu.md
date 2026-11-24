@@ -105,7 +105,7 @@ Applied, built and deployed 2026-11-22 (owner: "Go"); in-game check is runbook E
 
 The owner asked for these too (2026-11-22: "yeah we need to do these too"). All set from GVK_Settings; a mod that isn't loaded leaves an unused position or a dropped group member.
 
-**Staff blocks into GVK Admin Blocks** (owner, 2026-11-22): KOTH's `ZoneBlock` and `Prizebox` (Golden Cargo Container), SC Blockers' six blocker shapes and its `Sphere`. SC Blockers' own `BlockerCubeGroup` is disabled from GVK_Settings so its shapes stay in the admin icon. That relies on GVK_Settings loading after SC Blockers; if not, the SC group shows as its own icon.
+**Staff blocks into GVK Admin Blocks** (owner, 2026-11-22): KOTH's `ZoneBlock` and `Prizebox` (Golden Cargo Container), and the six GVK admin blockers (`GVK_Blocker_<size>`, `Content/Data/Cubeblocks/GVK_Blockers.sbc`), which replaced SC Blockers' six shapes and its `Sphere` on 2026-11-23 (plan: `Docs/design/admin-blockers.md`). SC Blockers' own `BlockerCubeGroup` stays disabled from GVK_Settings, which relies on GVK_Settings loading after SC Blockers; if not, the SC group shows as its own icon.
 
 **New groups** (other mods' blocks, GVK-defined):
 - `GVK_SpawnPoints`, "Spawn Points": Spawn_Point_IR's large and small spawn point. Medical row (17), X 5.
@@ -142,7 +142,7 @@ Owner, 2026-11-22: "include most of these modded blocks in the GVK Items tabs to
 
 **New sub-tab `GVK_Structure`, "   Structure"** (owner, 2026-11-22), group heads only: P.O.M XL's four groups, MA Buster, Long Hangar Doors, MA 15m Pole, MA Lantern and GVK's Runway Middle Wide.
 
-**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group, AQD's 5x1 and the conveyor tube group (with AQD's Endcap, Junction Tubes and Conveyor X; changed 2026-11-23). The admin group (with KOTH and SC Blockers) and the Cargo Scanner are already there.
+**Utility gets:** Spawn Points, MA Stackable Wind Turbine, Build Info's Multi Tool, the MnM projector, the reinforced ducts group, AQD's 5x1 and the conveyor tube group (with AQD's Endcap, Junction Tubes and Conveyor X; changed 2026-11-23). The admin group (with KOTH and the GVK admin blockers) and the Cargo Scanner are already there.
 
 **GV Kharak Items gets** everything above, one block per group.
 

@@ -36,4 +36,4 @@ commands:
 - **`GVK_PredictionSwitcher.cs`** (client only): The integrated Multiplayer Prediction Switcher (original mod by Invalid, Workshop 3032417765), with a `/toggleprediction` chat command.
 
 ## Armor rebalancing
-- **`GVK_ArmorBalance.cs`**: Dynamic armor deformation and resistance adjustments to balance rover-on-rover combat and missile impacts. It also retunes player thrusters at load: hydrogen thrust fades from full at air density 0.25 to none at 0, and flat atmospherics plus small-grid regular and sci-fi atmospherics share one profile, full at 0.75 to none at 0.25 (hovers and NPC thrusters are skipped).
+- **`GVK_ArmorBalance.cs`**: Dynamic armor deformation and resistance adjustments to balance rover-on-rover combat and missile impacts. It also retunes player thrusters at load: hydrogen thrust fades from full at air density 0.25 to none at 0, and flat atmospherics plus small-grid regular and sci-fi atmospherics share one profile, full at 0.75 to none at 0.25 (hovers and NPC thrusters are skipped). The six GVK admin blockers (`GVK_Blocker_<size>`) are skipped entirely, so they keep their unbreakable SBC values (since 2026-11-23).
