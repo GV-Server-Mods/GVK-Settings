@@ -43,8 +43,11 @@ namespace GVK.Navigation
 
         // Tactical HUD Markers (from Textures\HUD\)
         private static readonly MyStringId MATERIAL_MARKER_GPS = MyStringId.GetOrCompute("marker_gps");
-        private static readonly MyStringId MATERIAL_SITE_BASE = MyStringId.GetOrCompute("POI_Home");   // House icon
-        private static readonly MyStringId MATERIAL_SITE_TRADE = MyStringId.GetOrCompute("POI_Trade"); // Circled C (credits) icon
+        // Known-site icons: white with a black outline baked in, so a tint keeps the outline
+        private static readonly MyStringId MATERIAL_SITE_TRADE = MyStringId.GetOrCompute("POI_SiteTrade");     // Credits sign
+        private static readonly MyStringId MATERIAL_SITE_BASE = MyStringId.GetOrCompute("POI_SiteBase");       // Watchtower
+        private static readonly MyStringId MATERIAL_SITE_DEPOT = MyStringId.GetOrCompute("POI_SiteDepot");     // Supply crate
+        private static readonly MyStringId MATERIAL_SITE_CARRIER = MyStringId.GetOrCompute("POI_SiteCarrier"); // Ship
         private static readonly MyStringId MATERIAL_NAV_ARROW = MyStringId.GetOrCompute("nav_arrow");
         private static readonly MyStringId MATERIAL_SIGNAL_UP = MyStringId.GetOrCompute("signal_up");
         private static readonly MyStringId MATERIAL_SIGNAL_DOWN = MyStringId.GetOrCompute("signal_down");
@@ -185,6 +188,7 @@ namespace GVK.Navigation
             public int SiteIndex;      // Sites only: index into _knownSites
             public double StandInRadiusSq; // Sites only: a GPS point this close (squared metres) can stand in for the site
             public bool HasStandIn;    // Sites only, per scan: a GPS point or NPC signal in the list stands in for this site
+            public string KindText;    // Sites only: the hover card's "what it is", from the server's site status
             public int StandsInFor;    // GPS points and NPC signals, per scan: 1 + the _knownSites index this marks, 0 = none
         }
 
@@ -194,54 +198,20 @@ namespace GVK.Navigation
         private const byte REL_HOSTILE = 3;
         private const byte REL_NPC = 4;
 
-        private const byte SITE_BASE = 1;
-        private const byte SITE_TRADE = 2;
-        private const byte SITE_REFINERY = 3;
-        private const byte SITE_DEPOT = 4;
-        private const byte SITE_CARRIER = 5;
-        private static readonly Color SITE_COLOR = new Color(175, 140, 255);
-        private const double SITE_GPS_DEDUPE_DIST = 150.0;             // Default: a GPS point this close stands in for its nearest site
+        private const byte SITE_BASE = GvkKnownSites.BASE;       // Kinds and the site table: GVK_SiteStatus.cs
+        private const byte SITE_TRADE = GvkKnownSites.TRADE;
+        private const byte SITE_REFINERY = GvkKnownSites.REFINERY;
+        private const byte SITE_DEPOT = GvkKnownSites.DEPOT;
+        private const byte SITE_CARRIER = GvkKnownSites.CARRIER;
+        private static readonly Color SITE_WHITE = Color.White;                    // Trade stations, and neutral or unowned sites
+        private static readonly Color SITE_DIM = new Color(150, 150, 150, 150);    // No alliance Base on a Base Site, or not spawned
+        private static readonly Color SITE_FRIENDLY = new Color(100, 240, 100);    // Same green as faction signals
+        private static readonly Color SITE_HOSTILE = new Color(255, 60, 60);       // Same red as hostile signals
+        private const int SITE_FRIENDLY_REP = 500;   // GVK's Friendly standing (contracts need 500+)
+        private const int SITE_HOSTILE_REP = -500;   // Below this the game counts a faction hostile
+        private const float SITE_ICON_SCALE = 0.8f;  // Site icons are a little smaller than GPS and signal markers
         private const double SITE_GRID_DEDUPE_DIST_SQ = 25.0 * 25.0;   // An NPC grid whose origin is this close is the site itself
         private const double COMPASS_SITE_MAX_DIST = 20000.0;     // The compass shows known sites only within 20 km
-        private const string BASE_SITE_PREFIX = "GVK-Alliance-PresetBases-Site-SpawnGroup-"; // Every Base Site, named by its beacon text
-
-        // Known sites: MES static encounters (GVK_Derelicts) the HUD marks without a GPS point, by spawn group SubtypeId
-        private struct KnownSiteEntry
-        {
-            public string SubtypeId;
-            public string Name;
-            public byte Kind;
-            public double GpsRadius;   // Metres from the grid origin a GPS point on the station can be; wider for long stations
-            public KnownSiteEntry(string subtypeId, string name, byte kind, double gpsRadius = SITE_GPS_DEDUPE_DIST)
-            {
-                SubtypeId = subtypeId;
-                Name = name;
-                Kind = kind;
-                GpsRadius = gpsRadius;
-            }
-        }
-
-        private static readonly KnownSiteEntry[] KNOWN_SITES = new KnownSiteEntry[]
-        {
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Sevastopol", "Sevastopol", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Skyport", "Skyport", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Mastodon", "Mastodon", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-Rustys", "Rusty's", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounter-TradeStations-SpawnGroup-COALITIONBase", "Coalition Base", SITE_TRADE, 330.0),
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-RoverSales01", "Vehicle Store (Crossroads)", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounters-TradeStations-SpawnGroup-RoverSales02", "Vehicle Store (Sevastopol)", SITE_TRADE),
-            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation1", "KOTH Camp Khar Toba", SITE_TRADE),
-            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation2", "KOTH Camp Kalash", SITE_TRADE),
-            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation3", "KOTH Camp Crashed Starship", SITE_TRADE),
-            new KnownSiteEntry("GVK-TradeStations-SpawnGroup-KOTHTradeStation4", "KOTH Camp Scraptown", SITE_TRADE),
-            new KnownSiteEntry("GVK-StaticEncounter-SpawnGroup-CURefinery01", "Scrap Refinery", SITE_REFINERY),
-            new KnownSiteEntry("GVK-Alliance-SupplyDepot1-SpawnGroup", "Supply Depot 1", SITE_DEPOT, 250.0),
-            new KnownSiteEntry("GVK-Alliance-SupplyDepot2-SpawnGroup", "Supply Depot 2", SITE_DEPOT, 250.0),
-            new KnownSiteEntry("GVK-Alliance-SupplyDepot3-SpawnGroup", "Supply Depot 3", SITE_DEPOT, 250.0),
-            new KnownSiteEntry("GVK-Alliance-SupplyDepot4-SpawnGroup", "Supply Depot 4", SITE_DEPOT, 250.0),
-            new KnownSiteEntry("GVK-Alliance-Carrier-SpawnGroup-KHAANEPH", "KHAANEPH Carrier", SITE_CARRIER),
-            new KnownSiteEntry("GVK-Alliance-Carrier-SpawnGroup-SOBAN", "SOBAN Carrier", SITE_CARRIER, 180.0)
-        };
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
@@ -558,6 +528,10 @@ namespace GVK.Navigation
         private bool[] _knownSiteHasStandIn = new bool[0];  // Per scan: a GPS point or NPC signal stands in for this site
         private bool[] _siteStandInDrawn = new bool[0];     // Per view draw: this site's stand-in got a slot, so the site is skipped
         private bool _knownSitesLoaded;
+        private int _siteStatusVersion = int.MinValue;      // GvkSiteStatus.Version last read into the arrays below
+        private byte[] _siteState = new byte[0];            // GvkSiteStatus state per site
+        private long[] _siteFaction = new long[0];          // Owner faction per site (0 = none)
+        private string[] _siteKindText = new string[0];     // Hover text per site, rebuilt only when the status changes
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
         private List<IMySlimBlock> blockBuffer = new List<IMySlimBlock>();
@@ -1213,6 +1187,7 @@ namespace GVK.Navigation
             if (!_knownSitesLoaded) LoadKnownSites();
             int siteCount = _knownSites.Count;
             if (siteCount == 0) return;
+            if (_siteStatusVersion != GvkSiteStatus.Version) RefreshSiteStatus();
 
             Array.Clear(_knownSiteHasStandIn, 0, siteCount);
             int before = activeHudWaypoints.Count;
@@ -1244,130 +1219,108 @@ namespace GVK.Navigation
                 var site = _knownSites[s];
                 site.DistanceMeters = Vector3D.Distance(playerPos, site.Coords);
                 site.HasStandIn = _knownSiteHasStandIn[s];
+                site.DisplayColor = GetSiteColor(s); // Every scan, since the player's standing can change
+                site.KindText = _siteKindText[s];
                 activeHudWaypoints.Add(site);
             }
         }
 
-        /// <summary>
-        /// Builds the known-site list once, from the MES spawn group definitions. Every machine loads them with
-        /// GVK_Derelicts, so this needs no networking. Logs table entries that match no usable spawn group.
-        /// </summary>
+        /// <summary>Builds the HUD's site markers once, from the shared table (<see cref="GvkKnownSites"/>).</summary>
         private void LoadKnownSites()
         {
             _knownSitesLoaded = true;
             _knownSites.Clear();
-            try
+            GvkKnownSites.EnsureLoaded();
+            var sites = GvkKnownSites.Sites;
+            for (int i = 0; i < sites.Count; i++)
             {
-                var found = new bool[KNOWN_SITES.Length];
-                int baseSites = 0;
-                var defs = Sandbox.Definitions.MyDefinitionManager.Static.GetSpawnGroupDefinitions();
-                for (int i = 0; i < defs.Count; i++)
+                var site = sites[i];
+                _knownSites.Add(new ActiveHudWaypoint
                 {
-                    var def = defs[i];
-                    if (def == null) continue;
-                    string id = def.Id.SubtypeName;
-                    if (string.IsNullOrEmpty(id)) continue;
-
-                    byte kind = 0;
-                    string name = null;
-                    int entry = -1;
-                    double gpsRadius = SITE_GPS_DEDUPE_DIST;
-                    if (id.StartsWith(BASE_SITE_PREFIX, StringComparison.Ordinal))
-                    {
-                        kind = SITE_BASE;
-                        string beacon = def.Prefabs.Count > 0 ? def.Prefabs[0].BeaconText : null;
-                        name = string.IsNullOrWhiteSpace(beacon) ? "Base Site" : beacon.Trim();
-                    }
-                    else
-                    {
-                        for (int k = 0; k < KNOWN_SITES.Length; k++)
-                        {
-                            if (KNOWN_SITES[k].SubtypeId != id) continue;
-                            entry = k;
-                            kind = KNOWN_SITES[k].Kind;
-                            name = KNOWN_SITES[k].Name;
-                            gpsRadius = KNOWN_SITES[k].GpsRadius;
-                            break;
-                        }
-                    }
-                    if (kind == 0) continue;
-
-                    Vector3D coords;
-                    if (!def.Enabled || !def.IsValid || !TryGetStaticEncounterCoords(def.DescriptionText, out coords)) continue;
-                    if (entry >= 0) found[entry] = true;
-                    else baseSites++;
-
-                    _knownSites.Add(new ActiveHudWaypoint
-                    {
-                        Name = name,
-                        Coords = coords,
-                        Sprite = kind == SITE_TRADE || kind == SITE_REFINERY ? MATERIAL_SITE_TRADE : MATERIAL_SITE_BASE,
-                        DisplayColor = SITE_COLOR,
-                        MapUV = WorldToMapUV(coords),
-                        PlanetaryElevation = Vector3D.Distance(coords, PLANET_CENTER) - PLANET_RADIUS,
-                        SiteKind = kind,
-                        SiteIndex = _knownSites.Count,
-                        StandInRadiusSq = gpsRadius * gpsRadius
-                    });
-                }
-
-                for (int k = 0; k < KNOWN_SITES.Length; k++)
-                {
-                    if (!found[k])
-                        MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites: no usable spawn group '{KNOWN_SITES[k].SubtypeId}'");
-                }
-                if (baseSites == 0)
-                    MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites: no usable spawn group starting '{BASE_SITE_PREFIX}'");
+                    Name = site.Name,
+                    Coords = site.Coords,
+                    Sprite = GetSiteMaterial(site.Kind),
+                    DisplayColor = SITE_WHITE,
+                    MapUV = WorldToMapUV(site.Coords),
+                    PlanetaryElevation = Vector3D.Distance(site.Coords, PLANET_CENTER) - PLANET_RADIUS,
+                    SiteKind = site.Kind,
+                    SiteIndex = i,
+                    StandInRadiusSq = site.GpsRadius * site.GpsRadius
+                });
             }
-            catch (Exception ex)
+            int n = _knownSites.Count;
+            _knownSiteHasStandIn = new bool[n];
+            _siteStandInDrawn = new bool[n];
+            _siteState = new byte[n];
+            _siteFaction = new long[n];
+            _siteKindText = new string[n];
+            _siteStatusVersion = int.MinValue;
+        }
+
+        private static MyStringId GetSiteMaterial(byte kind)
+        {
+            switch (kind)
             {
-                _knownSites.Clear();
-                MyLog.Default.WriteLineAndConsole($"[GVK_ZoneNavCommand] Known sites failed to load: {ex}");
+                case SITE_BASE: return MATERIAL_SITE_BASE;
+                case SITE_DEPOT: return MATERIAL_SITE_DEPOT;
+                case SITE_CARRIER: return MATERIAL_SITE_CARRIER;
+                default: return MATERIAL_SITE_TRADE;
             }
-            _knownSiteHasStandIn = new bool[_knownSites.Count];
-            _siteStandInDrawn = new bool[_knownSites.Count];
+        }
+
+        /// <summary>Reads the server's site status (<see cref="GvkSiteStatus"/>) into the per-site arrays and hover text.</summary>
+        private void RefreshSiteStatus()
+        {
+            _siteStatusVersion = GvkSiteStatus.Version;
+            var sites = GvkKnownSites.Sites;
+            for (int s = 0; s < _knownSites.Count && s < sites.Count; s++)
+            {
+                GvkSiteStatus.Entry e;
+                if (!GvkSiteStatus.BySubtypeId.TryGetValue(sites[s].SubtypeId, out e)) e = new GvkSiteStatus.Entry();
+                _siteState[s] = e.State;
+                _siteFaction[s] = e.FactionId;
+                _siteKindText[s] = GetSiteKindText(_knownSites[s].SiteKind, e.State, e.Tag);
+            }
+        }
+
+        private static string GetSiteKindText(byte kind, byte state, string tag)
+        {
+            bool missing = state == GvkSiteStatus.MISSING;
+            bool alliance = !string.IsNullOrEmpty(tag) && tag != "UNKN";
+            switch (kind)
+            {
+                case SITE_BASE:
+                    if (state == GvkSiteStatus.HELD) return alliance ? tag + " base" : "Alliance base";
+                    if (state == GvkSiteStatus.UNCLAIMED) return "Base site, unclaimed";
+                    return missing ? "Base site, not spawned" : "Alliance base site";
+                case SITE_TRADE: return missing ? "Trade station, not spawned" : "Trade station";
+                case SITE_REFINERY: return missing ? "Scrap refinery, not spawned" : "Scrap refinery";
+                case SITE_DEPOT: return missing ? "Supply depot, not spawned" : alliance ? tag + " supply depot" : "Supply depot";
+                default: return missing ? "Carrier, not spawned" : alliance ? tag + " carrier" : "Alliance carrier";
+            }
         }
 
         /// <summary>
-        /// Reads a spawn group's static position the way MES does: needs the MES header and [StaticEncounter:true],
-        /// takes the last [StaticEncounterCoords:{X:.. Y:.. Z:..}], and skips groups placed by planet direction instead.
+        /// Site colour for this scan: trade stations white (owner, 2026-11-24); a Base Site without an alliance Base, or a
+        /// site not spawned, dimmed; otherwise the player's standing with the owner: green Friendly, red hostile, white neutral.
         /// </summary>
-        private static bool TryGetStaticEncounterCoords(string description, out Vector3D coords)
+        private Color GetSiteColor(int s)
         {
-            coords = Vector3D.Zero;
-            if (string.IsNullOrEmpty(description) || !description.Contains("[Modular Encounters SpawnGroup]")) return false;
+            byte state = _siteState[s];
+            byte kind = _knownSites[s].SiteKind;
+            if (state == GvkSiteStatus.MISSING) return SITE_DIM;
+            if (kind == SITE_TRADE || kind == SITE_REFINERY) return SITE_WHITE;
+            if (kind == SITE_BASE && state == GvkSiteStatus.UNCLAIMED) return SITE_DIM; // UNKNOWN (no status yet) stays white
+            if (state != GvkSiteStatus.HELD || _siteFaction[s] == 0) return SITE_WHITE;
 
-            bool isStatic = false;
-            bool byPlanetDirection = false;
-            string[] lines = description.Split('\n');
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string tag = lines[i].Trim();
-                if (tag.Length > 0 && tag[0] == '[') tag = tag.Substring(1);
-                if (tag.Length > 0 && tag[tag.Length - 1] == ']') tag = tag.Substring(0, tag.Length - 1);
-                int colon = tag.IndexOf(':');
-                if (colon <= 0) continue;
-                string key = tag.Substring(0, colon);
-                string value = tag.Substring(colon + 1);
-                bool flag;
-
-                if (key == "StaticEncounter")
-                {
-                    if (bool.TryParse(value, out flag)) isStatic = flag;
-                }
-                else if (key == "StaticEncounterUsePlanetDirectionAndAltitude")
-                {
-                    if (bool.TryParse(value, out flag)) byPlanetDirection = flag;
-                }
-                else if (key == "StaticEncounterCoords")
-                {
-                    if (value.Length > 0 && value[0] == '{') value = value.Substring(1);
-                    if (value.Length > 0 && value[value.Length - 1] == '}') value = value.Substring(0, value.Length - 1);
-                    Vector3D parsed;
-                    if (Vector3D.TryParse(value, out parsed)) coords = parsed;
-                }
-            }
-            return isStatic && !byPlanetDirection && coords != Vector3D.Zero;
+            var factions = MyAPIGateway.Session.Factions;
+            var faction = factions.TryGetFactionById(_siteFaction[s]);
+            long me = MyAPIGateway.Session.Player?.IdentityId ?? 0;
+            if (faction == null || faction.Tag == "UNKN" || me == 0) return SITE_WHITE;
+            int rep = factions.GetReputationBetweenPlayerAndFaction(me, faction.FactionId);
+            if (rep >= SITE_FRIENDLY_REP) return SITE_FRIENDLY;
+            if (rep < SITE_HOSTILE_REP) return SITE_HOSTILE;
+            return SITE_WHITE;
         }
 
         /// <summary>
@@ -1642,7 +1595,7 @@ namespace GVK.Navigation
                 // Full size at 100 m or closer, 70% at 30 km or farther
                 float distT = (float)MathHelper.Clamp((wp.DistanceMeters - 100.0) / (30000.0 - 100.0), 0.0, 1.0);
                 float distFactor = 1.0f - 0.30f * distT;
-                float wWidth = 0.011f * s * distFactor;
+                float wWidth = 0.011f * s * distFactor * (wp.SiteKind != 0 ? SITE_ICON_SCALE : 1f);
                 float wHeight = wWidth * aspect;
                 double spriteCenterY = topY - 0.026 * s;
                 double textY = spriteCenterY - wHeight * 0.5 - 0.0015 * s;
@@ -1680,8 +1633,10 @@ namespace GVK.Navigation
             LogIfMaterialMissing(MATERIAL_SQUARE);
             LogIfMaterialMissing(MATERIAL_NAV_ARROW);
             LogIfMaterialMissing(MATERIAL_MARKER_GPS);
-            LogIfMaterialMissing(MATERIAL_SITE_BASE);
             LogIfMaterialMissing(MATERIAL_SITE_TRADE);
+            LogIfMaterialMissing(MATERIAL_SITE_BASE);
+            LogIfMaterialMissing(MATERIAL_SITE_DEPOT);
+            LogIfMaterialMissing(MATERIAL_SITE_CARRIER);
             LogIfMaterialMissing(MATERIAL_SIGNAL_UP);
             LogIfMaterialMissing(MATERIAL_SIGNAL_DOWN);
             LogIfMaterialMissing(MATERIAL_SIGNAL_LEVEL);
@@ -2099,9 +2054,10 @@ namespace GVK.Navigation
                             MarkStandInDrawn(ref wp);
                             continue;
                         }
+                        float ms = wp.SiteKind != 0 ? markerSize * SITE_ICON_SCALE : markerSize;
                         _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation),
                             cx + (wp.MapUV.X - 0.5) * minimapSize.X, cy + (0.5 - wp.MapUV.Y) * minimapSize.Y,
-                            markerSize, markerSize * aspect, GetMarkerColor(ref wp));
+                            ms, ms * aspect, GetMarkerColor(ref wp));
                     }
                 }
 
@@ -2192,8 +2148,9 @@ namespace GVK.Navigation
                         continue;
                     }
                     Color c = GetMarkerColor(ref wp);
+                    float ms = wp.SiteKind != 0 ? markerSize * SITE_ICON_SCALE : markerSize;
                     _ssMinimap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), cx + offset.X, cy + offset.Y,
-                        markerSize, markerSize * aspect, clamped ? c * 0.80f : c);
+                        ms, ms * aspect, clamped ? c * 0.80f : c);
                 }
             }
 
@@ -2603,7 +2560,8 @@ namespace GVK.Navigation
         private void AddSsMapMarker(int wpIdx, Vector2D pos, double playerElevation, float aspect)
         {
             var wp = activeHudWaypoints[wpIdx];
-            _ssMap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), pos.X, pos.Y, 0.0225f, 0.0225f * aspect, GetMarkerColor(ref wp));
+            float iconSize = wp.SiteKind != 0 ? 0.0225f * SITE_ICON_SCALE : 0.0225f;
+            _ssMap.AddSprite(GetWaypointMaterial(ref wp, playerElevation), pos.X, pos.Y, iconSize, iconSize * aspect, GetMarkerColor(ref wp));
             AddMapHit(wpIdx, pos.X - MAP_HOVER_HALF, pos.X + MAP_HOVER_HALF, pos.Y - MAP_HOVER_HALF * aspect, pos.Y + MAP_HOVER_HALF * aspect);
         }
 
@@ -2990,14 +2948,7 @@ namespace GVK.Navigation
         {
             if (wp.KothState == KOTH_OPEN) return "KOTH, open now";
             if (wp.KothState == KOTH_NEXT) return "KOTH, opens next";
-            switch (wp.SiteKind)
-            {
-                case SITE_BASE: return "Alliance base site";
-                case SITE_TRADE: return "Trade station";
-                case SITE_REFINERY: return "Scrap refinery";
-                case SITE_DEPOT: return "Alliance supply depot";
-                case SITE_CARRIER: return "Alliance carrier";
-            }
+            if (wp.SiteKind != 0) return wp.KindText ?? "Known site";
             if (!wp.IsSignal) return "GPS point";
             switch (wp.Relation)
             {
