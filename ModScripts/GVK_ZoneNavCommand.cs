@@ -350,8 +350,8 @@ namespace GVK.Navigation
         private static readonly string[] MAP_BORDER_LABELS = { "Z1 Border in: ", "PvP Border in: ", "Z3 Border in: ", "Core Dist: " };
         private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
         private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
-        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point at the map for details";
-        private const string MAP_CONTROLS_HINT_TERRITORY = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point for details   |   Stripes: contested territory";
+        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add, hide or delete a GPS   |   Point at the map for details";
+        private const string MAP_CONTROLS_HINT_TERRITORY = "Wheel: zoom   |   Drag: pan   |   Right-click: add, hide or delete a GPS   |   Point for details   |   Stripes: contested territory";
         private const string MAP_TITLE_TEXT = "KHARAK TACTICAL SATELLITE MAP";
         private const string MAP_SECTOR_TEXT = " | Current Sector: ";
         private const string MAP_TERRITORY_TEXT = " | Territory: ";
@@ -359,17 +359,18 @@ namespace GVK.Navigation
         private const string CONTESTED_LABEL = "Contested territory";
         private const float MAP_HINT_SCALE = 0.62f;     // HUD text scale of the controls line (was 0.46, too small)
 
-        // Right-click menu: asks before adding a GPS at the click, or before removing the GPS clicked
+        // Right-click menu: asks before adding a GPS at the click, or offers to hide or delete the GPS clicked
         private readonly GvkScreenLayer _ssMapMenu = new GvkScreenLayer();
         private bool _mapMenuOpen;
-        private bool _mapMenuRemove;        // False: add a GPS at the click; true: remove the GPS clicked
+        private bool _mapMenuRemove;        // False: add a GPS at the click; true: hide or delete the GPS clicked
         private Vector2D _mapMenuAt;        // Click point, HUD units
         private double _mapMenuU;           // Map UV of the click, for adding
         private double _mapMenuV;
         private string _mapMenuGpsName;     // GPS to remove, found again by name and position
         private Vector3D _mapMenuGpsCoords;
         private string _mapMenuTitle;
-        private MapHit _mapMenuOk;          // Button boxes from the last menu build
+        private MapHit _mapMenuOk;          // Button boxes from the last menu build: Add GPS, or Hide for a GPS
+        private MapHit _mapMenuDelete;      // Delete, on a GPS's menu only
         private int _mapPointNext = 1;      // Next "Map Point N", so quick adds don't wait on the server's GPS list
 
         // Settings button at the right end of the map header; drawn every frame so it lights up under the cursor
@@ -3262,6 +3263,11 @@ namespace GVK.Navigation
                     ConfirmMapMenu();
                     return;
                 }
+                if (leftClick && _mapMenuRemove && IsInMapHit(ref _mapMenuDelete, cursor))
+                {
+                    ConfirmMapMenu(true);
+                    return;
+                }
                 if (leftClick)
                 {
                     CloseMapMenu(); // Cancel, or a click anywhere else
@@ -3418,7 +3424,7 @@ namespace GVK.Navigation
         }
 
         /// <summary>
-        /// Right-click menu at a point: on a GPS marker or label it offers to remove that GPS, anywhere else to add
+        /// Right-click menu at a point: on a GPS marker or label it offers to hide or delete that GPS, anywhere else to add
         /// one there. Signals, KOTH and known-site markers aren't GPS points, so a click on them offers to add one.
         /// </summary>
         private void OpenMapMenu(Vector2D cursor)
@@ -3434,7 +3440,7 @@ namespace GVK.Navigation
                 var wp = activeHudWaypoints[wpIdx];
                 _mapMenuGpsName = wp.Name ?? string.Empty;
                 _mapMenuGpsCoords = wp.Coords;
-                _mapMenuTitle = "Remove GPS '" + _mapMenuGpsName + "'?";
+                _mapMenuTitle = "GPS '" + _mapMenuGpsName + "'";
             }
             else
             {
@@ -3451,12 +3457,14 @@ namespace GVK.Navigation
             _ssMapMenu.Clear();
         }
 
-        private void ConfirmMapMenu()
+        /// <summary>The menu's first button (Enter too): Add GPS, or Hide on a GPS's menu. delete: its Delete button.</summary>
+        private void ConfirmMapMenu(bool delete = false)
         {
-            bool remove = _mapMenuRemove;
+            bool gpsMenu = _mapMenuRemove;
             CloseMapMenu();
-            if (remove) RemoveGpsFromMap(_mapMenuGpsName, _mapMenuGpsCoords);
-            else AddGpsFromMap(_mapMenuU, _mapMenuV);
+            if (!gpsMenu) AddGpsFromMap(_mapMenuU, _mapMenuV);
+            else if (delete) RemoveGpsFromMap(_mapMenuGpsName, _mapMenuGpsCoords);
+            else HideGpsFromMap(_mapMenuGpsName, _mapMenuGpsCoords);
         }
 
         /// <summary>Esc closes the right-click menu first, then the map.</summary>
@@ -3473,7 +3481,10 @@ namespace GVK.Navigation
             return false;
         }
 
-        /// <summary>The right-click menu card: a question, then the action and Cancel buttons; the one under the cursor lights up.</summary>
+        /// <summary>
+        /// The right-click menu card: a title, then the buttons (Add GPS and Cancel, or for a GPS Hide, Delete and Cancel);
+        /// the one under the cursor lights up.
+        /// </summary>
         private void BuildMapMenu(bool hasCursor, Vector2D cursor)
         {
             _ssMapTip.Clear();
@@ -3481,8 +3492,10 @@ namespace GVK.Navigation
             float aspect = _ssMapViewport.X / _ssMapViewport.Y;
             float titleScale = 0.60f * _ssMapTextScale;
             float buttonScale = 0.60f * _ssMapTextScale;
-            string okText = _mapMenuRemove ? "Remove" : "Add GPS";
+            string okText = _mapMenuRemove ? "Hide" : "Add GPS";
+            const string DELETE_TEXT = "Delete";
             const string CANCEL_TEXT = "Cancel";
+            int buttons = _mapMenuRemove ? 3 : 2;
 
             // Where the new GPS goes, so the player sees the spot before confirming
             if (!_mapMenuRemove)
@@ -3491,12 +3504,13 @@ namespace GVK.Navigation
             double titleW = _ssMapMenu.MeasureWidthHud(_mapMenuTitle, titleScale);
             double titleH = _ssMapMenu.LineHeightHud(titleScale);
             double buttonTextH = _ssMapMenu.LineHeightHud(buttonScale);
-            double buttonW = Math.Max(_ssMapMenu.MeasureWidthHud(okText, buttonScale), _ssMapMenu.MeasureWidthHud(CANCEL_TEXT, buttonScale)) + 0.03;
+            double buttonW = Math.Max(Math.Max(_ssMapMenu.MeasureWidthHud(okText, buttonScale), _ssMapMenu.MeasureWidthHud(CANCEL_TEXT, buttonScale)),
+                _ssMapMenu.MeasureWidthHud(DELETE_TEXT, buttonScale)) + 0.03;
             double buttonH = buttonTextH + 0.008 * aspect;
             double padX = 0.010;
             double padY = 0.008 * aspect;
             double gap = 0.010;
-            double boxW = 0.004 + padX * 2.0 + Math.Max(titleW, buttonW * 2.0 + gap);
+            double boxW = 0.004 + padX * 2.0 + Math.Max(titleW, buttonW * buttons + gap * (buttons - 1));
             double boxH = padY * 3.0 + titleH + buttonH;
 
             double left = _mapMenuAt.X + 0.016;
@@ -3504,15 +3518,22 @@ namespace GVK.Navigation
             if (left + boxW > 0.99) left = _mapMenuAt.X - 0.016 - boxW;
             if (top - boxH < -0.99) top = _mapMenuAt.Y + 0.016 * aspect + boxH;
 
-            Color accent = _mapMenuRemove ? GvkPalette.SettingOff : new Color(187, 233, 246);
+            Color accent = new Color(187, 233, 246);
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 245));
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, accent);
             double textX = left + 0.004 + padX;
             _ssMapMenu.AddText(_mapMenuTitle, textX, top - padY, titleScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
 
             double buttonTop = top - padY * 2.0 - titleH;
-            _mapMenuOk = AddMapMenuButton(okText, textX, buttonTop, buttonW, buttonH, buttonScale, accent, hasCursor, cursor);
-            AddMapMenuButton(CANCEL_TEXT, textX + buttonW + gap, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
+            double x = textX;
+            _mapMenuOk = AddMapMenuButton(okText, x, buttonTop, buttonW, buttonH, buttonScale, accent, hasCursor, cursor);
+            x += buttonW + gap;
+            if (_mapMenuRemove)
+            {
+                _mapMenuDelete = AddMapMenuButton(DELETE_TEXT, x, buttonTop, buttonW, buttonH, buttonScale, GvkPalette.SettingOff, hasCursor, cursor);
+                x += buttonW + gap;
+            }
+            AddMapMenuButton(CANCEL_TEXT, x, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
         }
 
         private MapHit AddMapMenuButton(string text, double left, double top, double width, double height, float scale, Color color, bool hasCursor, Vector2D cursor)
@@ -3714,6 +3735,31 @@ namespace GVK.Navigation
                     MyAPIGateway.Session.GPS.RemoveGps(player.IdentityId, gps);
                     _gpsRescanTicks = 30;
                     MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Removed GPS '{name}'", 2500, MyFontEnum.Green);
+                    return;
+                }
+            }
+            MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] GPS '{name}' is already gone", 2500, MyFontEnum.Red);
+        }
+
+        /// <summary>
+        /// Turns off Show on HUD for the player's GPS with this name at this position: it leaves the map, compass and
+        /// minimap (they show only Show on HUD points) but stays in the GPS list, where the player can turn it back on.
+        /// </summary>
+        private void HideGpsFromMap(string name, Vector3D coords)
+        {
+            var player = MyAPIGateway.Session?.Player;
+            if (player == null) return;
+
+            cachedGpsList.Clear();
+            MyAPIGateway.Session.GPS.GetGpsList(player.IdentityId, cachedGpsList);
+            for (int i = 0; i < cachedGpsList.Count; i++)
+            {
+                var gps = cachedGpsList[i];
+                if (gps.Name == name && Vector3D.DistanceSquared(gps.Coords, coords) < 1.0)
+                {
+                    MyAPIGateway.Session.GPS.SetShowOnHud(player.IdentityId, gps, false);
+                    _gpsRescanTicks = 30;
+                    MyAPIGateway.Utilities.ShowNotification($"[GVK NAV] Hid GPS '{name}' (Show on HUD is off; it stays in your GPS list)", 3500, MyFontEnum.Green);
                     return;
                 }
             }
