@@ -241,6 +241,26 @@ namespace GVK.Navigation
         }
 
         /// <summary>Moves the runs down one line of the font, back to the line's start.</summary>
+        /// <summary>
+        /// Shrinks the runs added since <paramref name="mark"/> (a <see cref="Count"/> taken right after BeginRuns) so the
+        /// line is at most maxWidthHud wide, left edge fixed. Text is sized by window height, so a narrow window needs it.
+        /// </summary>
+        public void FitRuns(int mark, double maxWidthHud)
+        {
+            float width = _runPos.X - _runStartX;
+            float max = HudSizeToNormalized(maxWidthHud, 0.0).X;
+            if (width <= max || max <= 0f) return;
+            float f = max / width;
+            for (int i = mark; i < _items.Count; i++)
+            {
+                var item = _items[i];
+                item.Scale *= f;
+                item.Position.X = _runStartX + (item.Position.X - _runStartX) * f;
+                _items[i] = item;
+            }
+            _runPos.X = _runStartX + width * f;
+        }
+
         public void NewLine()
         {
             _runPos.X = _runStartX;

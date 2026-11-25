@@ -614,6 +614,7 @@ namespace GVK.Navigation
         private double[] _territoryCosA = new double[0];    // Cosine of the ring's angular radius on the ground (2 = none)
         private string[] _territoryName = new string[0];    // Alliance name per territory, every scan
         private string[] _territoryLabel = new string[0];   // "<name> territory", for the hover card
+        private string[] _territoryUpper = new string[0];   // Upper-case name, for the zone bar title
         private string[] _territoryStanding = new string[0]; // "Friendly", "Hostile" or "Neutral", every scan
         private int _playerTerritoryMask;                   // Territories the player is inside (bit per territory), every scan
         private int[] _segRowCursor = new int[0];           // BuildTerritorySegments scratch
@@ -731,7 +732,7 @@ namespace GVK.Navigation
                                 minimapMode = (MinimapDisplayMode)cfg.MinimapMode;
                                 radarScale = (RadarScaleMode)cfg.RadarScale;
                                 radarRangeMeters = (cfg.RadarRangeMeters >= 500.0 && cfg.RadarRangeMeters <= 50000.0) ? cfg.RadarRangeMeters : 3000.0;
-                                minimapScale = (cfg.MinimapScale >= 0.70f && cfg.MinimapScale <= 1.60f) ? cfg.MinimapScale : 1.0f;
+                                minimapScale = (cfg.MinimapScale >= HUD_SCALE_MIN && cfg.MinimapScale <= HUD_SCALE_MAX) ? cfg.MinimapScale : 1.0f;
                                 showCompass = cfg.ShowCompass;
                                 showCompassGps = cfg.ShowCompassGps;
                                 showCompassSignals = cfg.ShowCompassSignals;
@@ -764,7 +765,7 @@ namespace GVK.Navigation
                                 showMinimapGps = cfg.ShowMinimapGps;
                                 showMinimapSignals = cfg.ShowMinimapSignals;
                                 showMinimapOwnSignals = cfg.ShowMinimapOwnSignals;
-                                compassScale = (cfg.CompassScale >= 0.70f && cfg.CompassScale <= 1.60f) ? cfg.CompassScale : 1.0f;
+                                compassScale = (cfg.CompassScale >= HUD_SCALE_MIN && cfg.CompassScale <= HUD_SCALE_MAX) ? cfg.CompassScale : 1.0f;
                                 if (cfg.ZoneBarMode >= 0 && cfg.ZoneBarMode <= 2)
                                     zoneBarMode = (ZoneBarMode)cfg.ZoneBarMode;
                                 else if (!cfg.ShowZoneBar) // Legacy: pre-ZoneBarMode configs — disabled
@@ -1511,6 +1512,7 @@ namespace GVK.Navigation
                 _territoryCosA = new double[n];
                 _territoryName = new string[n];
                 _territoryLabel = new string[n];
+                _territoryUpper = new string[n];
                 _territoryStanding = new string[n];
                 for (int t = 0; t < n; t++) _territoryCosA[t] = 2.0;
                 _territorySegsDirty = true;
@@ -1541,6 +1543,7 @@ namespace GVK.Navigation
                 {
                     _territoryName[t] = name;
                     _territoryLabel[t] = name + " territory";
+                    _territoryUpper[t] = name.ToUpperInvariant();
                 }
                 if (radius > 0.0 && Vector3D.DistanceSquared(playerPos, territory.Center) <= radius * radius)
                     _playerTerritoryMask |= 1 << t;
@@ -2427,11 +2430,17 @@ namespace GVK.Navigation
             const string SEPARATOR = " | ";
             const string NO_ZONE = "------";
 
+            double room = zoneWidth - (textX - left) - 0.006 * s; // Both lines shrink to this on narrow (4:3) windows
+
             _ssZoneBar.BeginRuns(textX, line1Y, scale1 * textScale, true);
+            int mark = _ssZoneBar.Count;
             if (inSpace) _ssZoneBar.AddRun("[ SPAAAAAACE!!! ]", SPACE_TEXT_COLOR);
+            else if (_playerTerritoryMask != 0) AddZoneBarTerritoryTitle(zone, room, scale1 * textScale);
             else _ssZoneBar.AddRun(ZONE_TITLES[zone], ZONE_TEXT_COLORS[zone]);
+            _ssZoneBar.FitRuns(mark, room);
 
             _ssZoneBar.BeginRuns(textX, line2Y, scale2 * textScale, true);
+            mark = _ssZoneBar.Count;
             if (inSpace)
             {
                 _ssZoneBar.AddRun("Kharak gravity: ", ZONE_LABEL_COLOR);
@@ -2439,6 +2448,7 @@ namespace GVK.Navigation
                 _ssZoneBar.AddRun(SEPARATOR, ZONE_SEPARATOR_COLOR);
                 _ssZoneBar.AddRun("Below: ", ZONE_LABEL_COLOR);
                 _ssZoneBar.AddRun(ZONE_SHORT_NAMES[zone], ZONE_TEXT_COLORS[zone]);
+                _ssZoneBar.FitRuns(mark, room);
                 return;
             }
 
@@ -2457,6 +2467,37 @@ namespace GVK.Navigation
                 _ssZoneBar.AddRun(ZONE_DIST_LABELS[zone + 1], ZONE_LABEL_COLOR);
                 _ssZoneBar.AddRun(FormatZoneKm(lastRemainingKm, ref _ssHigherKmKey, ref _ssHigherKmText), ZONE_TEXT_COLORS[zone + 1]);
             }
+            _ssZoneBar.FitRuns(mark, room);
+        }
+
+        private static readonly string[] ZONE_BAR_PREFIXES = { "[ ZONE 0: ", "[ ZONE 1: ", "[ ZONE 2: ", "[ ZONE 3: " };
+        private const string ZONE_BAR_SUFFIX = " ]";
+
+        /// <summary>
+        /// Zone bar line 1 inside alliance territory: "[ ZONE 2: <ALLIANCE> ]" in place of the zone's nickname
+        /// (owner, 2026-11-24), the name in the player's standing colour. The tag stands in when the name won't fit;
+        /// where territories overlap, each tag, split by " / ".
+        /// </summary>
+        private void AddZoneBarTerritoryTitle(int zone, double room, float scale)
+        {
+            int mask = _playerTerritoryMask;
+            bool contested = (mask & (mask - 1)) != 0;
+            Color zoneColor = ZONE_TEXT_COLORS[zone];
+            _ssZoneBar.AddRun(ZONE_BAR_PREFIXES[zone], zoneColor);
+            bool first = true;
+            for (int t = 0; t < _territoryUpper.Length; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (!first) _ssZoneBar.AddRun(" / ", ZONE_SEPARATOR_COLOR);
+                first = false;
+                string tag = GvkKnownSites.Territories[t].Tag;
+                string name = _territoryUpper[t] ?? tag;
+                if (contested || _ssZoneBar.MeasureWidthHud(ZONE_BAR_PREFIXES[zone], scale) + _ssZoneBar.MeasureWidthHud(name, scale)
+                                 + _ssZoneBar.MeasureWidthHud(ZONE_BAR_SUFFIX, scale) > room)
+                    name = tag;
+                _ssZoneBar.AddRun(name, _territoryColor[t]);
+            }
+            _ssZoneBar.AddRun(ZONE_BAR_SUFFIX, zoneColor);
         }
 
         /// <summary>"12.3 km", re-formatted only when the shown tenth changes.</summary>
@@ -2748,11 +2789,16 @@ namespace GVK.Navigation
             // Range label, bottom right of the card
             float textScale = GetScreenSpaceTextScale(camera.ViewportSize);
             var labelGrey = new Color(200, 200, 200);
-            _ssMinimap.BeginRuns(cx + radarBoxWidth * 0.5 - 0.052 * s, cy - bgHeight * 0.5 + 0.016 * s, 0.46f * s * textScale, true);
-            if (radarScale == RadarScaleMode.Logarithmic)
+            // Right-aligned by measure: a fixed start ran off the card on narrow (4:3) windows, where text is wider in HUD units
+            float rangeScale = 0.46f * s * textScale;
+            bool logScale = radarScale == RadarScaleMode.Logarithmic;
+            double rangeW = logScale ? _ssMinimap.MeasureWidthHud(RADAR_LOG_TEXT, rangeScale) + _ssMinimap.MeasureWidthHud(RADAR_LOG_TAG, rangeScale)
+                                     : _ssMinimap.MeasureWidthHud(GetRadarRangeText(), rangeScale);
+            _ssMinimap.BeginRuns(cx + radarBoxWidth * 0.5 - 0.008 * s - rangeW, cy - bgHeight * 0.5 + 0.016 * s, rangeScale, true);
+            if (logScale)
             {
-                _ssMinimap.AddRun("30 KM ", labelGrey);
-                _ssMinimap.AddRun("(LOG)", new Color(187, 233, 246));
+                _ssMinimap.AddRun(RADAR_LOG_TEXT, labelGrey);
+                _ssMinimap.AddRun(RADAR_LOG_TAG, new Color(187, 233, 246));
             }
             else
             {
@@ -2790,6 +2836,8 @@ namespace GVK.Navigation
             _ssMinimap.AddSprite(MATERIAL_NAV_ARROW, cx, cy, arrowSize, arrowSize * aspect, arrowColor,
                 GetRadarVehicleAngle(upNormal, fwdTangent, rightTangent, forward));
         }
+
+        private const string RADAR_LOG_TEXT = "30 KM ", RADAR_LOG_TAG = "(LOG)";
 
         /// <summary>Linear radar range label, "3 KM" or "1.5 KM"; re-formatted only when the range changes.</summary>
         private string GetRadarRangeText()
@@ -4304,14 +4352,7 @@ namespace GVK.Navigation
 
         private void CycleMinimapScale()
         {
-            if (minimapScale < 0.85f)
-                minimapScale = 1.0f;
-            else if (minimapScale < 1.1f)
-                minimapScale = 1.25f;
-            else if (minimapScale < 1.35f)
-                minimapScale = 1.5f;
-            else
-                minimapScale = 0.75f;
+            minimapScale = NextHudScale(minimapScale);
 
             ApplyMinimapScale(minimapScale);
             _refreshMinimapNextFrame = true;
@@ -4440,16 +4481,20 @@ namespace GVK.Navigation
             else SetUpdateTickRate(5);
         }
 
+        /// <summary>Next Minimap/Compass Size step: 75, 100, 125, 150, 175, 200%, then back to 75%. 175 and 200 are for low resolutions.</summary>
+        private static float NextHudScale(float scale)
+        {
+            for (int i = 0; i < HUD_SCALE_STEPS.Length; i++)
+                if (scale < HUD_SCALE_STEPS[i] - 0.1f) return HUD_SCALE_STEPS[i];
+            return HUD_SCALE_STEPS[0];
+        }
+
+        private static readonly float[] HUD_SCALE_STEPS = { 0.75f, 1.0f, 1.25f, 1.5f, 1.75f, 2.0f };
+        private const float HUD_SCALE_MIN = 0.70f, HUD_SCALE_MAX = 2.10f; // Saved sizes outside this load as 100%
+
         private void CycleCompassScale()
         {
-            if (compassScale < 0.85f)
-                compassScale = 1.0f;
-            else if (compassScale < 1.1f)
-                compassScale = 1.25f;
-            else if (compassScale < 1.35f)
-                compassScale = 1.5f;
-            else
-                compassScale = 0.75f;
+            compassScale = NextHudScale(compassScale);
 
             ApplyCompassScale(compassScale);
             SaveConfig();
