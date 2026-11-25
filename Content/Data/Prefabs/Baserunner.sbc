@@ -3,6 +3,10 @@
   <Prefabs>
     <Prefab xsi:type="MyObjectBuilder_PrefabDefinition">
       <Id Type="MyObjectBuilder_PrefabDefinition" Subtype="Baserunner" />
+      <DisplayName>Starter Baserunner</DisplayName>
+      <Description>Large Grid, Light Core, Uses DLC</Description>
+      <Icon>Textures\GUI\Prefabs\StarterBaserunner.dds</Icon>
+      <TooltipImage>Textures\GUI\Prefabs\StarterBaserunner.dds</TooltipImage>
       <CubeGrids>
         <CubeGrid>
           <SubtypeName />
