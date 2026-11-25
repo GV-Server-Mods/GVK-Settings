@@ -1588,6 +1588,24 @@ namespace GVK.Navigation
             return true;
         }
 
+        /// <summary>True when every territory in the mask has the same standing colour (one territory included).</summary>
+        private bool TryGetUniformColor(int mask, out Color color)
+        {
+            color = default(Color);
+            bool any = false;
+            for (int t = 0; t < _territoryColor.Length; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (!any)
+                {
+                    color = _territoryColor[t];
+                    any = true;
+                }
+                else if (_territoryColor[t] != color) return false;
+            }
+            return any;
+        }
+
         /// <summary>The colour at opacity a: the screen API blends with straight alpha, so RGB stays as it is.</summary>
         private static Color WithAlpha(Color c, float a)
         {
@@ -1683,7 +1701,7 @@ namespace GVK.Navigation
         /// Draws the territory insides (a faint tint, one strip per map row) and their rings as dots, on a map drawn
         /// w x h with map UV (viewU, viewV) at (ox, oy). Where territories overlap (Contested) the inside is striped in
         /// bands of fixed screen height (stripeH, HUD Y units), each band in one alliance's colour in turn; a band whose colour an earlier one in the cycle
-        /// already has is left clear, so two Hostile alliances still show stripes, not one solid tint. Points outside
+        /// already has is left clear (three or more alliances). Where the player stands the same with every alliance there, the overlap gets the one plain tint instead (TryGetUniformColor). Points outside
         /// halfW x halfH are left out; a point closer than spacing (on screen) to the last dot drawn is skipped, and where two
         /// neighbouring points land further apart (a ring passing close to a pole stretches far east-west) dots are added
         /// between them, so the dots stay evenly spaced at any zoom. No dots are added across the map's wrap seam.
@@ -1706,12 +1724,12 @@ namespace GVK.Navigation
                 if (x1 <= x0) continue;
 
                 int mask = segs[i].Mask;
-                if ((mask & (mask - 1)) == 0) // One territory
+                // One territory, or overlapping ones the player stands the same with: one plain tint. Hostile and
+                // hostile is just hostile ground (owner, 2026-11-24: "shouldn't hostile/hostile just be all red?")
+                Color plain;
+                if (TryGetUniformColor(mask, out plain))
                 {
-                    int t = 0;
-                    while ((mask >> t) != 1) t++;
-                    if (t >= _territoryColor.Length) continue;
-                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, WithAlpha(_territoryColor[t], TERRITORY_FILL_ALPHA));
+                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, WithAlpha(plain, TERRITORY_FILL_ALPHA));
                     continue;
                 }
 
