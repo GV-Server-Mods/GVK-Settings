@@ -23,7 +23,8 @@ The player side of the GVK KOTH Torch plugin ([GV-Server-Mods/GVK-KOTH-Plugin](h
 - Rebuilt every 10 ticks.
 
 ## Zone boundary
-- A faint orange wireframe sphere at the capture radius, drawn only when the camera is within the radius plus 1 km. Zones are visual only; nothing about them is a safe zone.
+- A faint wireframe sphere at the capture radius, drawn only when the camera is within the radius plus 1 km. Zones are visual only; nothing about them is a safe zone.
+- KOTH markers and the sphere take the KOTH colour from the nav HUD's **Colors** setting (`GvkPalette.Koth`): orange in Standard, pink in Red-green safe, violet in Blue-yellow safe.
 - For NPC zones (Flying KOTH) the server sends the grid's entity id, and the sphere and the inside-zone check follow that grid every frame while it is loaded on the client, so a moving zone's boundary moves smoothly. If the grid isn't loaded, they use the last position the server sent (about once a second).
 
 ## Fireworks
