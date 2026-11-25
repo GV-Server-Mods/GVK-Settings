@@ -88,7 +88,7 @@ namespace GVK.Navigation
         private const float PANEL_HEIGHT = 0.075f;
         private const float PANEL_TEXT_SCALE = 0.62f;
         private static readonly Color PANEL_BG_COLOR = new Color(10, 16, 24, 220);
-        private static readonly Color KOTH_ORANGE = new Color(255, 128, 31);
+        private static Color KOTH_ORANGE => GvkPalette.Koth; // The palette setting's KOTH colour
         private static readonly Color PANEL_LABEL_COLOR = new Color(180, 195, 210);
         private static readonly Color BAR_FILLED_COLOR = new Color(255, 200, 60);
         private static readonly Color BAR_EMPTY_COLOR = new Color(90, 100, 110);
@@ -354,7 +354,7 @@ namespace GVK.Navigation
                     continue;
 
                 var matrix = MatrixD.CreateTranslation(center);
-                var color = new Color(255, 128, 31) * 0.35f;
+                var color = GvkPalette.Koth * 0.35f;
                 MySimpleObjectDraw.DrawTransparentSphere(ref matrix, (float)zone.Radius, ref color,
                     MySimpleObjectRasterizer.Wireframe, 16, null, MATERIAL_LINE, 1.0f, -1, null, BlendTypeEnum.Standard);
             }

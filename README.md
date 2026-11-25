@@ -77,6 +77,7 @@ Server plugin commands (`/alliance`, `/pipeline`, `/hangar`, `/core check`, `/bo
 | `GVK_MapScreen.cs` | The satellite map as a game screen (mouse and keyboard) with the screen API | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_SettingsScreen.cs` | The /gvk settings screen: every navigation setting in a game screen with the mouse | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 | `GVK_SiteStatus.cs` | Known bases, stations and alliance territories for the nav HUD, and the server's feed of who holds each site and how big each territory is | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
+| `GVK_Palette.cs` | The nav HUD's colour palettes (Standard, Red-green safe, Blue-yellow safe) for every view | [Zone navigation HUD (`/gvk`)](Docs/design/zone-nav-hud.md) |
 <!-- /GENERATED:scripts -->
 
 ## Who enforces what

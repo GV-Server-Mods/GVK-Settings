@@ -227,8 +227,8 @@ namespace GVK.Navigation
         private const byte SITE_CARRIER = GvkKnownSites.CARRIER;
         private static readonly Color SITE_WHITE = Color.White;                    // Trade stations, and neutral or unowned sites
         private static readonly Color SITE_DIM = new Color(150, 150, 150, 150);    // No alliance Base on a Base Site, or not spawned
-        private static readonly Color SITE_FRIENDLY = new Color(100, 240, 100);    // Same green as faction signals
-        private static readonly Color SITE_HOSTILE = new Color(255, 60, 60);       // Same red as hostile signals
+        private static Color SITE_FRIENDLY => GvkPalette.Friendly;  // Same colour as faction signals
+        private static Color SITE_HOSTILE => GvkPalette.Hostile;    // Same colour as hostile signals
         private const int SITE_FRIENDLY_REP = 500;   // GVK's Friendly standing (contracts need 500+)
         private const int SITE_HOSTILE_REP = -500;   // Below this the game counts a faction hostile
         private const float SITE_ICON_SCALE = 0.8f;  // Site icons are a little smaller than GPS and signal markers
@@ -238,13 +238,17 @@ namespace GVK.Navigation
         private const int TERRITORY_MIN_POINTS = 64;
         private const int TERRITORY_MAX_POINTS = 2048;
         private const double TERRITORY_MAP_DOT_SPACING = 0.008;   // Least distance between two drawn dots (HUD units, X scale)
-        private const float TERRITORY_RING_ALPHA = 0.85f;        // Colours are premultiplied: scale all four channels
+        // The screen API blends with straight alpha: set A alone (WithAlpha). Scaling all four channels, as the first build did,
+        // drew a 16% tint as a 16% black wash, so overlaps and Contested stripes read grey (owner, 2026-11-24, in game)
+        private const float TERRITORY_RING_ALPHA = 0.85f;
         private const float TERRITORY_FILL_ALPHA = 0.16f;        // Faint tint inside, so a ring larger than a hemisphere reads right
         private const int TERRITORY_FILL_ROWS = 180;             // One fill strip per degree of latitude
+        private const float TERRITORY_STRIPE_ALPHA = 0.12f;      // Overlap stripes, each in one alliance's colour (owner's pick, 2026-11-24)
+        private const double TERRITORY_STRIPE_HUD = 0.022;       // Stripe height on the map in HUD Y units, at any zoom: about 12 px at 1080p
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
-        private static readonly Color KOTH_COLOR = new Color(255, 128, 31);
+        private static Color KOTH_COLOR => GvkPalette.Koth;
 
         // Default GPS entries populated for joining players
         private struct DefaultGpsEntry
@@ -312,15 +316,12 @@ namespace GVK.Navigation
         private string _ssHigherKmText;
         private static readonly string[] ZONE_TITLES =
         {
-            "[ ZONE 0: SAFE HUB ]", "[ ZONE 1: PVE FRONTIER ]", "[ ZONE 2: CONTESTED (PVP) ]", "[ ZONE 3: GAALSIEN HEART ]"
+            "[ ZONE 0: SAFE HUB ]", "[ ZONE 1: PVE FRONTIER ]", "[ ZONE 2: OPEN PVP ]", "[ ZONE 3: GAALSIEN HEART ]"
         };
         private static readonly string[] ZONE_SHORT_NAMES = { "Zone 0", "Zone 1", "Zone 2", "Zone 3" };
         private static readonly string[] ZONE_DIST_LABELS = { "Zone 0: ", "Zone 1: ", "Zone 2: ", "Zone 3: " };
         private static readonly Color SPACE_TEXT_COLOR = new Color(255, 80, 255);
-        private static readonly Color[] ZONE_TEXT_COLORS =
-        {
-            new Color(50, 255, 100), new Color(255, 230, 50), new Color(255, 165, 0), new Color(255, 50, 50)
-        };
+        private static readonly Color[] ZONE_TEXT_COLORS = GvkPalette.ZoneText; // The palette refills this array in place
         private static readonly Color ZONE_LABEL_COLOR = new Color(220, 220, 220);
         private static readonly Color ZONE_SEPARATOR_COLOR = new Color(100, 140, 180);
         private bool _ssMaterialsChecked = false;
@@ -349,7 +350,13 @@ namespace GVK.Navigation
         private static readonly string[] MAP_BORDER_LABELS = { "Z1 Border in: ", "PvP Border in: ", "Z3 Border in: ", "Core Dist: " };
         private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
         private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
-        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point at a marker for details";
+        private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point at the map for details";
+        private const string MAP_CONTROLS_HINT_TERRITORY = "Wheel: zoom   |   Drag: pan   |   Right-click: add or remove a GPS   |   Point for details   |   Stripes: contested territory";
+        private const string MAP_TITLE_TEXT = "KHARAK TACTICAL SATELLITE MAP";
+        private const string MAP_SECTOR_TEXT = " | Current Sector: ";
+        private const string MAP_TERRITORY_TEXT = " | Territory: ";
+        private const string MAP_CONTESTED_TEXT = " | Contested: ";
+        private const string CONTESTED_LABEL = "Contested territory";
         private const float MAP_HINT_SCALE = 0.62f;     // HUD text scale of the controls line (was 0.46, too small)
 
         // Right-click menu: asks before adding a GPS at the click, or before removing the GPS clicked
@@ -488,6 +495,7 @@ namespace GVK.Navigation
             public bool ShowCompassSites { get; set; } = true;
             public bool ShowMapSites { get; set; } = true;
             public bool ShowMapTerritories { get; set; } = true;
+            public int ColorPalette { get; set; } = 0;   // GvkPalette: 0 Standard, 1 Red-green safe, 2 Blue-yellow safe
             public bool ShowCompassGps { get; set; } = true;
             public bool ShowCompassSignals { get; set; } = true;
             public bool ShowCompassOwnSignals { get; set; } = true;
@@ -572,11 +580,29 @@ namespace GVK.Navigation
         private Color[] _territoryColor = new Color[0];     // Standing colour per territory, every scan
         private readonly List<List<TerritoryRow>> _territoryRows = new List<List<TerritoryRow>>(2); // Inside, as map UV strips
 
-        /// <summary>One strip of a territory's inside: map row Row (of TERRITORY_FILL_ROWS, from the top), from U0 to U1.</summary>
+        private readonly List<TerritoryRow> _territorySegs = new List<TerritoryRow>(256); // All insides, cut where they overlap
+        private bool _territorySegsDirty;
+        private Vector3D[] _territoryDir = new Vector3D[0]; // Planet centre to zone centre, unit (ground hover)
+        private double[] _territoryCosA = new double[0];    // Cosine of the ring's angular radius on the ground (2 = none)
+        private string[] _territoryName = new string[0];    // Alliance name per territory, every scan
+        private string[] _territoryLabel = new string[0];   // "<name> territory", for the hover card
+        private string[] _territoryStanding = new string[0]; // "Friendly", "Hostile" or "Neutral", every scan
+        private int _playerTerritoryMask;                   // Territories the player is inside (bit per territory), every scan
+        private int[] _segRowCursor = new int[0];           // BuildTerritorySegments scratch
+        private readonly List<float> _segCuts = new List<float>(16);
+        private readonly List<TerritoryRow> _segSpans = new List<TerritoryRow>(8);
+        private const byte STANDING_NEUTRAL = 0, STANDING_FRIENDLY = 1, STANDING_HOSTILE = 2;
+        private static readonly string[] STANDING_WORDS = { "Neutral", "Friendly", "Hostile" };
+
+        /// <summary>
+        /// One strip of a territory's inside: map row Row (of TERRITORY_FILL_ROWS, from the top), from U0 to U1. In
+        /// _territorySegs, Mask holds the territories covering it (bit per territory).
+        /// </summary>
         private struct TerritoryRow
         {
             public int Row;
             public float U0, U1;
+            public int Mask;
         }
         private List<IMyGps> cachedGpsList = new List<IMyGps>();
         private HashSet<IMyEntity> entityBuffer = new HashSet<IMyEntity>();
@@ -689,6 +715,7 @@ namespace GVK.Navigation
                                 showMinimapSites = cfg.ShowMinimapSites;
                                 showCompassSites = cfg.ShowCompassSites;
                                 showMapTerritories = cfg.ShowMapTerritories;
+                                GvkPalette.Apply(cfg.ColorPalette);
                                 showMinimapTerritories = cfg.ShowMinimapTerritories;
                                 bool oldDefaultKey = cfg.MapKeyVersion < MAP_KEY_VERSION && cfg.MapKey == (int)MyKeys.M
                                     && !cfg.MapKeyShift && !cfg.MapKeyCtrl && !cfg.MapKeyAlt;
@@ -759,6 +786,7 @@ namespace GVK.Navigation
                     ShowMinimapSites = showMinimapSites,
                     ShowCompassSites = showCompassSites,
                     ShowMapTerritories = showMapTerritories,
+                    ColorPalette = GvkPalette.Current,
                     ShowMinimapTerritories = showMinimapTerritories,
                     MapKey = (int)mapKey,
                     MapKeyShift = mapKeyShift,
@@ -1175,27 +1203,27 @@ namespace GVK.Navigation
                     byte signalRelation;
                     if (isOwner || relation == MyRelationsBetweenPlayerAndBlock.Owner)
                     {
-                        signalColor = new Color(100, 230, 255);
+                        signalColor = GvkPalette.Own;
                         signalRelation = REL_OWN;
                     }
                     else if (sameFaction || relation == MyRelationsBetweenPlayerAndBlock.FactionShare)
                     {
-                        signalColor = new Color(100, 240, 100);
+                        signalColor = GvkPalette.Friendly;
                         signalRelation = REL_FACTION;
                     }
                     else if (relation == MyRelationsBetweenPlayerAndBlock.Friends)
                     {
-                        signalColor = new Color(100, 240, 100);
+                        signalColor = GvkPalette.Friendly;
                         signalRelation = REL_FRIENDLY;
                     }
                     else if (relation == MyRelationsBetweenPlayerAndBlock.Enemies)
                     {
-                        signalColor = new Color(255, 60, 60);
+                        signalColor = GvkPalette.Hostile;
                         signalRelation = REL_HOSTILE;
                     }
                     else
                     {
-                        signalColor = isNpc ? new Color(240, 180, 50) : Color.White;
+                        signalColor = isNpc ? GvkPalette.Npc : GvkPalette.Neutral;
                         signalRelation = isNpc ? REL_NPC : REL_NEUTRAL;
                     }
 
@@ -1219,7 +1247,7 @@ namespace GVK.Navigation
 
             // 3. Known sites from the MES spawn groups, and the alliance territory rings
             AddKnownSiteWaypoints(playerPos);
-            UpdateTerritories();
+            UpdateTerritories(playerPos);
 
             // 4. KOTH zones from the GVK KOTH plugin
             AddKothWaypoints(playerPos);
@@ -1403,22 +1431,33 @@ namespace GVK.Navigation
         /// <summary>The player's standing with an NPC faction: green Friendly, red hostile, white neutral, unowned (UNKN) or unknown.</summary>
         private static Color GetStandingColor(IMyFaction faction)
         {
+            return GetStandingColor(GetStanding(faction));
+        }
+
+        private static Color GetStandingColor(byte standing)
+        {
+            return standing == STANDING_FRIENDLY ? SITE_FRIENDLY : standing == STANDING_HOSTILE ? SITE_HOSTILE : SITE_WHITE;
+        }
+
+        /// <summary>The player's standing with a faction as STANDING_*; GVK's Friendly is 500 and up, hostile below -500.</summary>
+        private static byte GetStanding(IMyFaction faction)
+        {
             long me = MyAPIGateway.Session.Player?.IdentityId ?? 0;
-            if (faction == null || faction.Tag == "UNKN" || me == 0) return SITE_WHITE;
+            if (faction == null || faction.Tag == "UNKN" || me == 0) return STANDING_NEUTRAL;
             int rep = MyAPIGateway.Session.Factions.GetReputationBetweenPlayerAndFaction(me, faction.FactionId);
-            if (rep >= SITE_FRIENDLY_REP) return SITE_FRIENDLY;
-            if (rep < SITE_HOSTILE_REP) return SITE_HOSTILE;
-            return SITE_WHITE;
+            if (rep >= SITE_FRIENDLY_REP) return STANDING_FRIENDLY;
+            if (rep < SITE_HOSTILE_REP) return STANDING_HOSTILE;
+            return STANDING_NEUTRAL;
         }
 
         /// <summary>
         /// Rebuilds a territory ring when the server reports a new size, and recolours it by standing. A ring shows only
         /// once the server has sent its size, so a client never shows the zone profile's 10 km before the real one.
         /// </summary>
-        private void UpdateTerritories()
+        private void UpdateTerritories(Vector3D playerPos)
         {
             var territories = GvkKnownSites.Territories;
-            int n = territories.Count;
+            int n = Math.Min(territories.Count, 31); // Overlap masks hold a bit per territory
             if (_territoryUV.Count != n)
             {
                 _territoryUV.Clear();
@@ -1430,7 +1469,15 @@ namespace GVK.Navigation
                 }
                 _territoryRadius = new double[n];
                 _territoryColor = new Color[n];
+                _territoryDir = new Vector3D[n];
+                _territoryCosA = new double[n];
+                _territoryName = new string[n];
+                _territoryLabel = new string[n];
+                _territoryStanding = new string[n];
+                for (int t = 0; t < n; t++) _territoryCosA[t] = 2.0;
+                _territorySegsDirty = true;
             }
+            _playerTerritoryMask = 0;
             for (int t = 0; t < n; t++)
             {
                 var territory = territories[t];
@@ -1441,11 +1488,121 @@ namespace GVK.Navigation
                 if (radius != _territoryRadius[t])
                 {
                     _territoryRadius[t] = radius;
-                    BuildTerritoryRing(territory.Center, radius, _territoryUV[t], _territoryRows[t]);
+                    _territoryCosA[t] = BuildTerritoryRing(territory.Center, radius, _territoryUV[t], _territoryRows[t]);
+                    Vector3D toCenter = territory.Center - PLANET_CENTER;
+                    _territoryDir[t] = toCenter.LengthSquared() > 1.0 ? Vector3D.Normalize(toCenter) : Vector3D.Zero;
+                    _territorySegsDirty = true;
                     _refreshMinimapNextFrame = true;
                 }
-                _territoryColor[t] = GetStandingColor(MyAPIGateway.Session.Factions.TryGetFactionByTag(territory.Tag));
+                var faction = MyAPIGateway.Session.Factions.TryGetFactionByTag(territory.Tag);
+                byte standing = GetStanding(faction);
+                _territoryColor[t] = GetStandingColor(standing);
+                _territoryStanding[t] = STANDING_WORDS[standing];
+                string name = string.IsNullOrEmpty(faction?.Name) ? territory.Tag : faction.Name;
+                if (!ReferenceEquals(name, _territoryName[t]))
+                {
+                    _territoryName[t] = name;
+                    _territoryLabel[t] = name + " territory";
+                }
+                if (radius > 0.0 && Vector3D.DistanceSquared(playerPos, territory.Center) <= radius * radius)
+                    _playerTerritoryMask |= 1 << t;
             }
+            if (_territorySegsDirty) BuildTerritorySegments();
+        }
+
+        /// <summary>
+        /// Cuts every territory's inside strips at each other's edges, row by row, into _territorySegs: each piece knows
+        /// which territories cover it, so an overlap can be drawn as stripes instead of two tints stacked into grey.
+        /// Runs only when a ring changes size.
+        /// </summary>
+        private void BuildTerritorySegments()
+        {
+            _territorySegsDirty = false;
+            _territorySegs.Clear();
+            int n = _territoryRows.Count;
+            var cursor = _segRowCursor.Length == n ? _segRowCursor : (_segRowCursor = new int[n]);
+            Array.Clear(cursor, 0, n);
+            for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
+            {
+                _segCuts.Clear();
+                _segSpans.Clear();
+                for (int t = 0; t < n; t++)
+                {
+                    var rows = _territoryRows[t]; // Sorted by row: BuildTerritoryRing adds them top to bottom
+                    while (cursor[t] < rows.Count && rows[cursor[t]].Row == r)
+                    {
+                        var span = rows[cursor[t]++];
+                        span.Mask = 1 << t;
+                        _segSpans.Add(span);
+                        _segCuts.Add(span.U0);
+                        _segCuts.Add(span.U1);
+                    }
+                }
+                if (_segSpans.Count == 0) continue;
+                _segCuts.Sort();
+                int lastIndex = -1;
+                for (int c = 0; c + 1 < _segCuts.Count; c++)
+                {
+                    float u0 = _segCuts[c], u1 = _segCuts[c + 1];
+                    if (u1 <= u0) continue;
+                    float mid = (u0 + u1) * 0.5f;
+                    int mask = 0;
+                    for (int s = 0; s < _segSpans.Count; s++)
+                        if (mid >= _segSpans[s].U0 && mid <= _segSpans[s].U1) mask |= _segSpans[s].Mask;
+                    if (mask == 0) continue;
+                    if (lastIndex >= 0 && _territorySegs[lastIndex].Mask == mask && _territorySegs[lastIndex].U1 == u0)
+                    {
+                        var prev = _territorySegs[lastIndex];
+                        prev.U1 = u1;
+                        _territorySegs[lastIndex] = prev;
+                        continue;
+                    }
+                    _territorySegs.Add(new TerritoryRow { Row = r, U0 = u0, U1 = u1, Mask = mask });
+                    lastIndex = _territorySegs.Count - 1;
+                }
+            }
+        }
+
+        /// <summary>
+        /// A Contested stripe's colour: band b takes the overlapping territories in turn. False (leave the band clear)
+        /// when an earlier territory in the turn already has that colour.
+        /// </summary>
+        private bool TryGetStripeColor(int mask, int band, out Color fill)
+        {
+            fill = default(Color);
+            int count = 0;
+            for (int t = 0; t < _territoryColor.Length; t++)
+                if ((mask & (1 << t)) != 0) count++;
+            if (count == 0) return false;
+            int pick = band % count, seen = 0, chosen = -1;
+            for (int t = 0; t < _territoryColor.Length && chosen < 0; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (seen++ == pick) chosen = t;
+            }
+            if (chosen < 0) return false;
+            for (int t = 0; t < chosen; t++)
+                if ((mask & (1 << t)) != 0 && _territoryColor[t] == _territoryColor[chosen]) return false;
+            fill = WithAlpha(_territoryColor[chosen], TERRITORY_STRIPE_ALPHA);
+            return true;
+        }
+
+        /// <summary>The colour at opacity a: the screen API blends with straight alpha, so RGB stays as it is.</summary>
+        private static Color WithAlpha(Color c, float a)
+        {
+            return new Color(c.R, c.G, c.B, (byte)MathHelper.Clamp((int)(a * 255f + 0.5f), 0, 255));
+        }
+
+        /// <summary>Territories whose ground circle holds map point (u, v) (bit per territory).</summary>
+        private int GetTerritoryMaskAt(double u, double v)
+        {
+            double lat = Math.PI * 0.5 - v * Math.PI;
+            double lon = u * 2.0 * Math.PI - Math.PI + MAP_LON_SHIFT * 2.0 * Math.PI; // As AddGpsFromMap
+            var dir = new Vector3D(Math.Cos(lat) * Math.Cos(lon), -Math.Sin(lat), Math.Cos(lat) * Math.Sin(lon));
+            int mask = 0;
+            for (int t = 0; t < _territoryCosA.Length; t++)
+                if (_territoryCosA[t] <= 1.0 && Vector3D.Dot(dir, _territoryDir[t]) >= _territoryCosA[t]) mask |= 1 << t;
+            return mask;
         }
 
         /// <summary>
@@ -1456,23 +1613,23 @@ namespace GVK.Navigation
         /// The inside is kept as one strip per map row: a point at latitude p is inside when
         /// sin p sin pc + cos p cos pc cos(dLon) >= cos A, which gives each row's longitude span exactly.
         /// </summary>
-        private void BuildTerritoryRing(Vector3D center, double radius, List<Vector2> uv, List<TerritoryRow> rows)
+        private double BuildTerritoryRing(Vector3D center, double radius, List<Vector2> uv, List<TerritoryRow> rows)
         {
             uv.Clear();
             rows.Clear();
-            if (radius <= 0.0) return;
+            if (radius <= 0.0) return 2.0;
             Vector3D toCenter = center - PLANET_CENTER;
             double d = toCenter.Length();
-            if (d < 1.0) return;
+            if (d < 1.0) return 2.0;
             Vector3D c = toCenter / d;
             double r2 = PLANET_RADIUS * PLANET_RADIUS;
             double cosA = (r2 + d * d - radius * radius) / (2.0 * PLANET_RADIUS * d);
-            if (cosA >= 1.0) return; // The sphere misses the ground
-            if (cosA <= -1.0)        // It covers the whole planet: no edge, all inside
+            if (cosA >= 1.0) return 2.0; // The sphere misses the ground
+            if (cosA <= -1.0)            // It covers the whole planet: no edge, all inside
             {
                 for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
                     rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = 1f });
-                return;
+                return -2.0;
             }
             double sinA = Math.Sqrt(1.0 - cosA * cosA);
 
@@ -1518,41 +1675,65 @@ namespace GVK.Navigation
                 }
                 else rows.Add(new TerritoryRow { Row = r, U0 = (float)u0, U1 = (float)u1 });
             }
+            return cosA;
         }
 
         /// <summary>
         /// Draws the territory insides (a faint tint, one strip per map row) and their rings as dots, on a map drawn
-        /// w x h with map UV (viewU, viewV) at (ox, oy). Points outside
+        /// w x h with map UV (viewU, viewV) at (ox, oy). Where territories overlap (Contested) the inside is striped in
+        /// bands of fixed screen height (stripeH, HUD Y units), each band in one alliance's colour in turn; a band whose colour an earlier one in the cycle
+        /// already has is left clear, so two Hostile alliances still show stripes, not one solid tint. Points outside
         /// halfW x halfH are left out; a point closer than spacing (on screen) to the last dot drawn is skipped, and where two
         /// neighbouring points land further apart (a ring passing close to a pole stretches far east-west) dots are added
         /// between them, so the dots stay evenly spaced at any zoom. No dots are added across the map's wrap seam.
         /// </summary>
         private void AddTerritoryDots(GvkScreenLayer layer, double ox, double oy, double w, double h, double viewU, double viewV,
-            double halfW, double halfH, float aspect, float dotSize, double spacing)
+            double halfW, double halfH, float aspect, float dotSize, double spacing, double stripeH)
         {
             double spacingSq = spacing * spacing;
-            for (int t = 0; t < _territoryRows.Count; t++)
+            var segs = _territorySegs;
+            double mapTop = viewV * h; // Map row 0's top edge: stripes are counted down from it, so they pan with the map
+            for (int i = 0; i < segs.Count; i++)
             {
-                Color fill = _territoryColor[t] * TERRITORY_FILL_ALPHA;
-                var rows = _territoryRows[t];
-                for (int i = 0; i < rows.Count; i++)
+                // Neighbouring rows compute their shared edge the same way, and AddPixelRect snaps both to the same
+                // pixel, so the strips tile exactly: a fractional overlap showed as faint grey lines that moved with zoom
+                double yTop = Math.Min((viewV - segs[i].Row / (double)TERRITORY_FILL_ROWS) * h, halfH);
+                double yBottom = Math.Max((viewV - (segs[i].Row + 1) / (double)TERRITORY_FILL_ROWS) * h, -halfH);
+                if (yBottom >= yTop) continue;
+                double x0 = Math.Max((segs[i].U0 - viewU) * w, -halfW);
+                double x1 = Math.Min((segs[i].U1 - viewU) * w, halfW);
+                if (x1 <= x0) continue;
+
+                int mask = segs[i].Mask;
+                if ((mask & (mask - 1)) == 0) // One territory
                 {
-                    // Neighbouring rows compute their shared edge the same way, and AddPixelRect snaps both to the same
-                    // pixel, so the strips tile exactly: a fractional overlap showed as faint grey lines that moved with zoom
-                    double yTop = Math.Min((viewV - rows[i].Row / (double)TERRITORY_FILL_ROWS) * h, halfH);
-                    double yBottom = Math.Max((viewV - (rows[i].Row + 1) / (double)TERRITORY_FILL_ROWS) * h, -halfH);
-                    if (yBottom >= yTop) continue;
-                    double x0 = Math.Max((rows[i].U0 - viewU) * w, -halfW);
-                    double x1 = Math.Min((rows[i].U1 - viewU) * w, halfW);
-                    if (x1 <= x0) continue;
-                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, fill);
+                    int t = 0;
+                    while ((mask >> t) != 1) t++;
+                    if (t >= _territoryColor.Length) continue;
+                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, WithAlpha(_territoryColor[t], TERRITORY_FILL_ALPHA));
+                    continue;
+                }
+
+                // Contested: stripes a fixed height on screen, cut where they cross this strip. Stripes tied to map
+                // rows were about 4 pixels tall zoomed out, and faint green and red that thin blended to grey
+                // (owner, 2026-11-24, in game)
+                int k0 = (int)Math.Floor((mapTop - yTop) / stripeH);
+                int k1 = (int)Math.Floor((mapTop - yBottom) / stripeH);
+                for (int k = k0; k <= k1; k++)
+                {
+                    double bandTop = Math.Min(mapTop - k * stripeH, yTop);
+                    double bandBottom = Math.Max(mapTop - (k + 1) * stripeH, yBottom);
+                    if (bandBottom >= bandTop) continue;
+                    Color fill;
+                    if (!TryGetStripeColor(mask, k < 0 ? -k : k, out fill)) continue;
+                    layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + bandTop, ox + x1, oy + bandBottom, fill);
                 }
             }
             for (int t = 0; t < _territoryUV.Count; t++)
             {
                 var points = _territoryUV[t];
                 if (points.Count == 0) continue;
-                Color color = _territoryColor[t] * TERRITORY_RING_ALPHA;
+                Color color = WithAlpha(_territoryColor[t], TERRITORY_RING_ALPHA);
                 double lastX = 0.0, lastY = 0.0, prevX = 0.0, prevY = 0.0, prevU = 0.0;
                 bool any = false, prevShown = false;
                 int count = points.Count;
@@ -2308,7 +2489,7 @@ namespace GVK.Navigation
                 _ssMinimap.AddSprite(MATERIAL_MAP, cx, cy, minimapSize.X, minimapSize.Y, Color.White);
                 if (showMinimapTerritories)
                     AddTerritoryDots(_ssMinimap, cx, cy, minimapSize.X, minimapSize.Y, 0.5, 0.5, minimapSize.X * 0.5, minimapSize.Y * 0.5,
-                        aspect, 0.0015f * s, 0.005 * s);
+                        aspect, 0.0015f * s, 0.005 * s, TERRITORY_STRIPE_HUD * 0.6 * s);
 
                 // Pass 0 picks the other markers and marks the sites they stand in for, pass 1 draws the sites,
                 // pass 2 draws pass 0's picks again on top (same order and tests, so the same picks)
@@ -2721,7 +2902,7 @@ namespace GVK.Navigation
             _ssMap.BeginClip(0.0, 0.0, frameW, frameH);
             _ssMap.AddSprite(MATERIAL_MAP, (0.5 - viewU) * mapW, (viewV - 0.5) * mapH, mapW, mapH, Color.White);
             if (showMapTerritories)
-                AddTerritoryDots(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect, 0.0022f, TERRITORY_MAP_DOT_SPACING);
+                AddTerritoryDots(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect, 0.0022f, TERRITORY_MAP_DOT_SPACING, TERRITORY_STRIPE_HUD);
             AddSsKothRings(mapW, mapH, viewU, viewV, aspect);
             _ssMap.EndClip();
 
@@ -2799,10 +2980,18 @@ namespace GVK.Navigation
                 inSpace ? Color.Magenta : GetZoneColor(zone));
 
             double textX = -headerW * 0.5f + 0.016f;
-            _ssMap.BeginRuns(textX, headerY + 0.013f, 0.62f * textScale, true);
-            _ssMap.AddRun("KHARAK TACTICAL SATELLITE MAP", new Color(255, 220, 0));
-            _ssMap.AddRun(" | Current Sector: ", MAP_HEADER_GREY);
+            float line1Scale = 0.62f * textScale;
+            _ssMap.BeginRuns(textX, headerY + 0.013f, line1Scale, true);
+            _ssMap.AddRun(MAP_TITLE_TEXT, new Color(255, 220, 0));
+            _ssMap.AddRun(MAP_SECTOR_TEXT, MAP_HEADER_GREY);
             _ssMap.AddRun(ZONE_TITLES[zone], ZONE_TEXT_COLORS[zone]);
+            if (showMapTerritories && _playerTerritoryMask != 0)
+            {
+                double used = _ssMap.MeasureWidthHud(MAP_TITLE_TEXT, line1Scale) + _ssMap.MeasureWidthHud(MAP_SECTOR_TEXT, line1Scale)
+                            + _ssMap.MeasureWidthHud(ZONE_TITLES[zone], line1Scale);
+                double buttonLeft = headerW * 0.5f - 0.008f - (_ssMap.MeasureWidthHud(MAP_SETTINGS_TEXT, 0.58f * textScale) + 0.05);
+                AddHeaderTerritory(buttonLeft - 0.012 - textX - used, line1Scale);
+            }
 
             _ssMap.BeginRuns(textX, headerY - 0.011f, 0.50f * textScale, true);
             _ssMap.AddRun("Crossroads: ", new Color(220, 230, 240));
@@ -2849,12 +3038,58 @@ namespace GVK.Navigation
 
             // Controls line on its own card docked under the frame, mirroring the header
             float hintScale = MAP_HINT_SCALE * textScale;
-            double hintW = _ssMap.MeasureWidthHud(MAP_CONTROLS_HINT, hintScale) + 0.04;
+            string hint = showMapTerritories && _territoryUV.Count > 1 ? MAP_CONTROLS_HINT_TERRITORY : MAP_CONTROLS_HINT;
+            double hintW = _ssMap.MeasureWidthHud(hint, hintScale) + 0.04;
+            if (hintW > headerW && !ReferenceEquals(hint, MAP_CONTROLS_HINT)) // The key is the first thing to go
+            {
+                hint = MAP_CONTROLS_HINT;
+                hintW = _ssMap.MeasureWidthHud(hint, hintScale) + 0.04;
+            }
             double hintH = _ssMap.LineHeightHud(hintScale) + 0.012;
             double hintTop = -topOfFrame - 0.004;
             _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, hintTop - hintH * 0.5, hintW, hintH, card);
-            _ssMap.AddText(MAP_CONTROLS_HINT, 0.0, hintTop - 0.006, hintScale, new Color(220, 230, 240),
+            _ssMap.AddText(hint, 0.0, hintTop - 0.006, hintScale, new Color(220, 230, 240),
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_TOP, true);
+        }
+
+        /// <summary>
+        /// Header line 1's tail: the alliance territory the player is in, or "Contested:" and each alliance where they
+        /// overlap, names in the player's standing colour. Alliance tags stand in where names would run under the
+        /// Settings button; with no room even for those, it is left out.
+        /// </summary>
+        private void AddHeaderTerritory(double room, float scale)
+        {
+            int mask = _playerTerritoryMask;
+            bool contested = (mask & (mask - 1)) != 0;
+            for (int pass = 0; pass < 2; pass++)
+            {
+                bool tags = pass == 1;
+                if (MeasureHeaderTerritory(mask, contested, tags, scale) > room) continue;
+                _ssMap.AddRun(contested ? MAP_CONTESTED_TEXT : MAP_TERRITORY_TEXT, MAP_HEADER_GREY);
+                bool first = true;
+                for (int t = 0; t < _territoryName.Length; t++)
+                {
+                    if ((mask & (1 << t)) == 0) continue;
+                    if (!first) _ssMap.AddRun(" / ", MAP_HEADER_GREY);
+                    first = false;
+                    _ssMap.AddRun(tags ? GvkKnownSites.Territories[t].Tag : _territoryName[t], _territoryColor[t]);
+                }
+                return;
+            }
+        }
+
+        private double MeasureHeaderTerritory(int mask, bool contested, bool tags, float scale)
+        {
+            double w = _ssMap.MeasureWidthHud(contested ? MAP_CONTESTED_TEXT : MAP_TERRITORY_TEXT, scale);
+            bool first = true;
+            for (int t = 0; t < _territoryName.Length; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (!first) w += _ssMap.MeasureWidthHud(" / ", scale);
+                first = false;
+                w += _ssMap.MeasureWidthHud(tags ? GvkKnownSites.Territories[t].Tag : _territoryName[t] ?? string.Empty, scale);
+            }
+            return w;
         }
 
         private void AddSsMapMarker(int wpIdx, Vector2D pos, double playerElevation, float aspect)
@@ -3269,7 +3504,7 @@ namespace GVK.Navigation
             if (left + boxW > 0.99) left = _mapMenuAt.X - 0.016 - boxW;
             if (top - boxH < -0.99) top = _mapMenuAt.Y + 0.016 * aspect + boxH;
 
-            Color accent = _mapMenuRemove ? new Color(255, 80, 70) : new Color(187, 233, 246);
+            Color accent = _mapMenuRemove ? GvkPalette.SettingOff : new Color(187, 233, 246);
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 245));
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, accent);
             double textX = left + 0.004 + padX;
@@ -3299,7 +3534,12 @@ namespace GVK.Navigation
             if (!active) return;
 
             int wpIdx = FindMapHit(cursor);
-            if (wpIdx < 0 || !_ssMapTip.Begin(_ssMapViewport)) return;
+            if (wpIdx < 0)
+            {
+                AddGroundTooltip(cursor);
+                return;
+            }
+            if (!_ssMapTip.Begin(_ssMapViewport)) return;
 
             var wp = activeHudWaypoints[wpIdx];
             float nameScale = 0.60f * _ssMapTextScale;
@@ -3334,6 +3574,74 @@ namespace GVK.Navigation
             _ssMapTip.AddRun(kind, wp.DisplayColor);
             _ssMapTip.AddRun(GAP, Color.White);
             _ssMapTip.AddRun(dist, new Color(200, 200, 200));
+        }
+
+        /// <summary>
+        /// Hover card for bare ground (the player's own arrow included): the alliance territory under the cursor and the
+        /// player's standing with it, or "Contested territory" and each alliance's standing where they overlap.
+        /// </summary>
+        private void AddGroundTooltip(Vector2D cursor)
+        {
+            if (!showMapTerritories || _territoryCosA.Length == 0) return;
+            double u = _mapViewU + cursor.X / (_ssMapW * _mapZoom);
+            double v = _mapViewV - cursor.Y / (_ssMapH * _mapZoom);
+            if (u < 0.0 || u > 1.0 || v < 0.0 || v > 1.0) return;
+            int mask = GetTerritoryMaskAt(u, v);
+            if (mask == 0 || !_ssMapTip.Begin(_ssMapViewport)) return;
+
+            bool contested = (mask & (mask - 1)) != 0;
+            int only = 0;
+            if (!contested) while ((mask >> only) != 1) only++;
+            float nameScale = 0.60f * _ssMapTextScale;
+            float infoScale = 0.50f * _ssMapTextScale;
+            string name = contested ? CONTESTED_LABEL : _territoryLabel[only] ?? string.Empty;
+            const string GAP = "   ";
+
+            // Info line: the standing alone, or "<alliance> <standing>" per alliance where they overlap
+            double infoW = 0.0;
+            bool first = true;
+            for (int t = 0; t < _territoryCosA.Length; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (!first) infoW += _ssMapTip.MeasureWidthHud(GAP, infoScale);
+                first = false;
+                if (contested) infoW += _ssMapTip.MeasureWidthHud(_territoryName[t] ?? string.Empty, infoScale)
+                                      + _ssMapTip.MeasureWidthHud(" ", infoScale);
+                infoW += _ssMapTip.MeasureWidthHud(_territoryStanding[t] ?? string.Empty, infoScale);
+            }
+            double nameW = _ssMapTip.MeasureWidthHud(name, nameScale);
+            double nameH = _ssMapTip.LineHeightHud(nameScale);
+            double infoH = _ssMapTip.LineHeightHud(infoScale);
+            float aspect = _ssMapViewport.X / _ssMapViewport.Y;
+            double padX = 0.008;
+            double padY = 0.006 * aspect;
+            double boxW = 0.004 + padX * 2.0 + Math.Max(nameW, infoW);
+            double boxH = padY * 2.0 + nameH + infoH;
+
+            double left = cursor.X + 0.016;
+            double top = cursor.Y - 0.016 * aspect;
+            if (left + boxW > 0.99) left = cursor.X - 0.016 - boxW;
+            if (top - boxH < -0.99) top = cursor.Y + 0.016 * aspect + boxH;
+
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 235));
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH,
+                contested ? Color.White : _territoryColor[only]);
+            double textX = left + 0.004 + padX;
+            _ssMapTip.AddText(name, textX, top - padY, nameScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
+            _ssMapTip.BeginRuns(textX, top - padY - nameH, infoScale, true);
+            first = true;
+            for (int t = 0; t < _territoryCosA.Length; t++)
+            {
+                if ((mask & (1 << t)) == 0) continue;
+                if (!first) _ssMapTip.AddRun(GAP, Color.White);
+                first = false;
+                if (contested)
+                {
+                    _ssMapTip.AddRun(_territoryName[t] ?? string.Empty, new Color(200, 200, 200));
+                    _ssMapTip.AddRun(" ", Color.White);
+                }
+                _ssMapTip.AddRun(_territoryStanding[t] ?? string.Empty, _territoryColor[t]);
+            }
         }
 
         private static string GetMapMarkerKind(ref ActiveHudWaypoint wp)
@@ -3480,13 +3788,7 @@ namespace GVK.Navigation
 
         private Color GetZoneColor(int zone)
         {
-            switch (zone)
-            {
-                case 0: return Color.LimeGreen;
-                case 1: return Color.Yellow;
-                case 2: return Color.Orange;
-                default: return Color.Red;
-            }
+            return GvkPalette.ZoneAccent[MathHelper.Clamp(zone, 0, 3)];
         }
 
         /// <summary>
@@ -4134,6 +4436,19 @@ namespace GVK.Navigation
             }
         }
 
+        /// <summary>Next colour palette. Signal, site and territory colours are set at scan time, so it rescans next tick.</summary>
+        private void CycleColorPalette()
+        {
+            GvkPalette.Apply((GvkPalette.Current + 1) % GvkPalette.COUNT);
+            _gpsRescanTicks = 1;
+            _refreshCompassNextFrame = true;
+            _refreshMinimapNextFrame = true;
+            _mapLayoutDirty = true;
+            _fullMapNeedsRedraw = true;
+            SaveConfig();
+            MyAPIGateway.Utilities.ShowNotification("[GVK NAV] Colors: " + GvkPalette.NAMES[GvkPalette.Current], 2500, MyFontEnum.White);
+        }
+
         private void CycleZoneBarMode()
         {
             if (zoneBarMode == ZoneBarMode.CompassDock)
@@ -4224,6 +4539,8 @@ namespace GVK.Navigation
             showCompassSites = true;
             showMapTerritories = true;
             showMinimapTerritories = true;
+            GvkPalette.Apply(GvkPalette.STANDARD);
+            _gpsRescanTicks = 1; // Signal and site colours are set at scan time
             mapKey = DEFAULT_MAP_KEY;
             mapKeyShift = false;
             mapKeyCtrl = false;

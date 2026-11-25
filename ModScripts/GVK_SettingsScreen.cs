@@ -46,7 +46,7 @@ namespace GVK.Navigation
     public partial class GVK_ZoneNavCommand
     {
         // Row ids. Each tab lists its rows in order; labels, values and actions switch on the id.
-        private const int S_OPEN_MAP = 1, S_MINIMAP = 2, S_COMPASS = 3, S_ZONE_BAR = 4;
+        private const int S_OPEN_MAP = 1, S_MINIMAP = 2, S_COMPASS = 3, S_ZONE_BAR = 4, S_PALETTE = 5;
         private const int S_MM_MODE = 10, S_MM_RANGE = 11, S_MM_SIZE = 12, S_MM_ZONE_LINES = 13, S_MM_FOV = 14;
         private const int S_MM_GPS = 15, S_MM_SIGNALS = 16, S_MM_OWN = 17, S_MM_KOTH = 18, S_MM_SNAP = 19;
         private const int S_MM_X = 20, S_MM_Y = 21, S_MM_RESET = 22, S_MM_SITES = 23, S_MM_TERRITORY = 24;
@@ -61,7 +61,7 @@ namespace GVK.Navigation
         private static readonly string[] SETTINGS_TABS = { "General", "Radar & Minimap", "Compass", "Satellite Map", "Performance" };
         private static readonly int[][] SETTINGS_ROWS =
         {
-            new[] { S_OPEN_MAP, S_MINIMAP, S_COMPASS, S_ZONE_BAR },
+            new[] { S_OPEN_MAP, S_MINIMAP, S_COMPASS, S_ZONE_BAR, S_PALETTE },
             new[] { S_MM_MODE, S_MM_RANGE, S_MM_SIZE, S_MM_ZONE_LINES, S_MM_FOV, S_MM_GPS, S_MM_SIGNALS, S_MM_OWN, S_MM_KOTH,
                     S_MM_SITES, S_MM_TERRITORY, S_MM_SNAP, S_MM_X, S_MM_Y, S_MM_RESET },
             new[] { S_C_TAPE, S_C_GPS, S_C_SIGNALS, S_C_OWN, S_C_KOTH, S_C_SITES, S_C_SIZE, S_C_SNAP, S_C_X, S_C_Y, S_C_RESET },
@@ -70,8 +70,8 @@ namespace GVK.Navigation
         };
         private const int SETTINGS_MAX_ROWS = 15;
 
-        private static readonly Color SET_ON = new Color(80, 255, 120);
-        private static readonly Color SET_OFF = new Color(255, 90, 90);
+        private static Color SET_ON => GvkPalette.SettingOn;
+        private static Color SET_OFF => GvkPalette.SettingOff;
         private static readonly Color SET_VALUE = new Color(255, 230, 40);
         private static readonly Color SET_CHOICE = new Color(187, 233, 246);
         private static readonly Color SET_LABEL = new Color(220, 230, 240);
@@ -381,6 +381,7 @@ namespace GVK.Navigation
                 case S_COMPASS:
                 case S_C_TAPE: ToggleCompass(); break;
                 case S_ZONE_BAR: CycleZoneBarMode(); break;
+                case S_PALETTE: CycleColorPalette(); break;
                 case S_MM_MODE: ToggleMinimapMode(); break;
                 case S_MM_RANGE: CycleRadarRange(); break;
                 case S_MM_SIZE: CycleMinimapScale(); break;
@@ -434,6 +435,7 @@ namespace GVK.Navigation
                 case S_MINIMAP: return "Minimap";
                 case S_COMPASS: return "Compass Ribbon";
                 case S_ZONE_BAR: return "Zone Telemetry";
+                case S_PALETTE: return "Colors";
                 case S_MM_MODE: return "Mode";
                 case S_MM_RANGE: return "Radar Range";
                 case S_MM_SIZE: return "Minimap Size";
@@ -493,6 +495,9 @@ namespace GVK.Navigation
                 case S_ZONE_BAR:
                     color = zoneBarMode == ZoneBarMode.Off ? SET_OFF : SET_CHOICE;
                     return zoneBarMode == ZoneBarMode.RadarDock ? "Radar Dock" : zoneBarMode == ZoneBarMode.CompassDock ? "Compass Dock" : "Off";
+                case S_PALETTE:
+                    color = SET_CHOICE;
+                    return GvkPalette.NAMES[GvkPalette.Current];
                 case S_MM_MODE:
                     color = SET_CHOICE;
                     return minimapMode == MinimapDisplayMode.TacticalRadar ? "Tactical Radar" : "Sector Map";
