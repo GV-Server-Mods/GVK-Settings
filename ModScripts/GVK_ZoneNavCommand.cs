@@ -15,7 +15,7 @@ namespace GVK.Navigation
     /// Kharak Tactical Navigation Suite: HUD compass ribbon, corner minimap / tactical radar,
     /// zone status bar, and full-screen satellite map on the map key (default =), all drawn with the game's
     /// screen API (SE 1.211), Keen vanilla HUD marker icons, and a calibrated WorldToMapUV projection aligned
-    /// to KharakMap.dds. Configurable with /gvk chat commands and the /gvk settings screen.
+    /// to the KharakMap material (KharakMercator.dds, built by tools/kharak_map.py). Configurable with /gvk chat commands and the /gvk settings screen.
     /// </summary>
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public partial class GVK_ZoneNavCommand : MySessionComponentBase
@@ -59,13 +59,16 @@ namespace GVK.Navigation
         // Satellite map filter buttons, top to bottom: the Satellite Map settings tab's toggles except the map key (KOTH
         // first), with their icons
         private static readonly int[] MAP_FILTER_IDS =
-            { S_MAP_KOTH, S_MAP_OWN, S_MAP_SITES, S_MAP_TERRITORY, S_MAP_GPS_LABELS, S_MAP_SIGNAL_LABELS, S_MAP_STACK };
+            { S_MAP_KOTH, S_MAP_OWN, S_MAP_SITES, S_MAP_TERRITORY, S_MAP_ZONES, S_MAP_ZONE_TINT, S_MAP_GPS_LABELS,
+              S_MAP_SIGNAL_LABELS, S_MAP_STACK };
         private static readonly MyStringId[] MAP_FILTER_ICONS =
         {
             MyStringId.GetOrCompute("POI_KOTH"),
             MyStringId.GetOrCompute("MapBtn_Signals"),
             MyStringId.GetOrCompute("POI_SiteBase"),
             MyStringId.GetOrCompute("MapBtn_Territory"),
+            MyStringId.GetOrCompute("MapBtn_Zones"),
+            MyStringId.GetOrCompute("MapBtn_ZoneTint"),
             MyStringId.GetOrCompute("MapBtn_GpsLabels"),
             MyStringId.GetOrCompute("MapBtn_SignalLabels"),
             MyStringId.GetOrCompute("MapBtn_Stack")
@@ -240,11 +243,32 @@ namespace GVK.Navigation
         private const double TERRITORY_MAP_DOT_SPACING = 0.008;   // Least distance between two drawn dots (HUD units, X scale)
         // The screen API blends with straight alpha: set A alone (WithAlpha). Scaling all four channels, as the first build did,
         // drew a 16% tint as a 16% black wash, so overlaps and Contested stripes read grey (owner, 2026-11-24, in game)
-        private const float TERRITORY_RING_ALPHA = 0.85f;
+        private const float TERRITORY_RING_ALPHA = 0.95f;         // 0.85 with no outline was hard to see; 1.0 at 0.0032 with a 1.7x outline was too much
+        private const float TERRITORY_MAP_DOT = 0.0027f;          // Dot size on the map (HUD units)
+        private const float TERRITORY_MINIMAP_DOT = 0.0018f;      // Times the minimap scale
+        private const double TERRITORY_DOT_OUTLINE = 1.4;         // Dark backing square, times the dot size
+        private static readonly Color TERRITORY_DOT_BACK = new Color(0, 0, 0, 100);
         private const float TERRITORY_FILL_ALPHA = 0.16f;        // Faint tint inside, so a ring larger than a hemisphere reads right
         private const int TERRITORY_FILL_ROWS = 180;             // One fill strip per degree of latitude
         private const float TERRITORY_STRIPE_ALPHA = 0.12f;      // Overlap stripes, each in one alliance's colour (owner's pick, 2026-11-24)
         private const double TERRITORY_STRIPE_HUD = 0.022;       // Stripe height on the map in HUD Y units, at any zoom: about 12 px at 1080p
+
+        // Safety zone overlay (owner, 2026-11-24: zones off the map picture into "an overlay to turn on/off", "lines plus
+        // faint tint", with a toggle for the tint). Seen from the ground, Zone 3 is a disc round Z3_CENTER, Zone 2 the
+        // band past it to 49.3 km, which wraps round most of the planet, and Zone 1 the region beyond that round
+        // Crossroads, with Zone 0 inside it. Zone 1's own 57 km sphere edge lies inside Zone 0, so it is never a boundary.
+        // As on the old hand-made map: Zone 0, Zone 1 and Zone 3 are tinted and the Zone 2 band stays clear; the rings are
+        // Zone 0's edge, Zone 1's edge (where Zone 2 starts) and Zone 3's edge, each in that zone's colour.
+        private const float ZONE_LINE_ALPHA = 0.9f;
+        private const float ZONE_FILL_ALPHA = 0.10f;
+        private const int ZONE_FILL_ROWS = 360;                  // Half a degree of latitude per strip: finer than territories
+        private const double ZONE_MAP_LINE_W = 0.0022;           // Line thickness on the map (HUD units, X scale)
+        private const double ZONE_MAP_MIN_SEG = 0.006;           // Points closer than this on screen merge into one segment
+        private static readonly int[] ZONE_OVERLAY_ZONE = { 0, 1, 3 }; // Zone number of each ring and fill below
+        private readonly List<Vector2>[] _zoneRingUV = { new List<Vector2>(), new List<Vector2>(), new List<Vector2>() };
+        private readonly List<TerritoryRow>[] _zoneFill = { new List<TerritoryRow>(), new List<TerritoryRow>(), new List<TerritoryRow>() };
+        private readonly List<Vector2> _zonePieces = new List<Vector2>(4);
+        private bool _zoneOverlayBuilt;
 
         private const int KOTH_OPEN = 1;
         private const int KOTH_NEXT = 2;
@@ -333,7 +357,7 @@ namespace GVK.Navigation
         private GvkMapScreen _mapScreen;
         private readonly GvkScreenLayer _ssMap = new GvkScreenLayer();
         private readonly GvkScreenLayer _ssMapTip = new GvkScreenLayer();
-        private const float MAP_MAX_ZOOM = 3f;          // The 2160 px map picture is soft past this
+        private const float MAP_MAX_ZOOM = 3f;          // The 4096 px map picture is about 1:1 here at 1080p
         private const double MAP_ZOOM_STEP = 1.25;      // Per mouse-wheel notch
         private const double MAP_HOVER_HALF = 0.009;    // Hover box half width around a marker (height scaled by aspect)
         private const float MAP_LABEL_SCALE = 0.60f;    // HUD text scale of the map labels
@@ -496,6 +520,9 @@ namespace GVK.Navigation
             public bool ShowCompassSites { get; set; } = true;
             public bool ShowMapSites { get; set; } = true;
             public bool ShowMapTerritories { get; set; } = true;
+            public bool ShowMapZones { get; set; } = true;
+            public bool ShowMinimapZones { get; set; } = true;
+            public bool ShowZoneTint { get; set; } = true;
             public int ColorPalette { get; set; } = 0;   // GvkPalette: 0 Standard, 1 Red-green safe, 2 Blue-yellow safe
             public bool ShowCompassGps { get; set; } = true;
             public bool ShowCompassSignals { get; set; } = true;
@@ -660,6 +687,7 @@ namespace GVK.Navigation
         private readonly List<int> _mapLabelWps = new List<int>(64);    // Labelled waypoints, nearest first
         private readonly List<int> _mapLabelRoots = new List<int>(64);  // Final cluster of each labelled waypoint
         private readonly List<float> _mapLabelWidths = new List<float>(64);   // Measured width of each labelled waypoint's name
+        private readonly List<bool> _mapLabelHasText = new List<bool>(64);   // False: label toggled off, the icon stacks without a name
         private float _mapOverflowWidth;
         private double _mapTextHeight = 0.016; // Measured height of one label line
         private readonly List<int> _mapClusterShown = new List<int>(32);
@@ -675,6 +703,9 @@ namespace GVK.Navigation
         private bool showCompassSites = true;
         private bool showMapTerritories = true;
         private bool showMinimapTerritories = true;
+        private bool showMapZones = true;      // Safety zone boundaries (the map picture has none baked in since 2026-11-24)
+        private bool showMinimapZones = true;
+        private bool showZoneTint = true;      // Faint fill inside the zones, on both views
         private const int KOTH_RING_DOTS = 24;
         private static readonly double[] KOTH_RING_COS = BuildRingTable(true);
         private static readonly double[] KOTH_RING_SIN = BuildRingTable(false);
@@ -716,6 +747,9 @@ namespace GVK.Navigation
                                 showMinimapSites = cfg.ShowMinimapSites;
                                 showCompassSites = cfg.ShowCompassSites;
                                 showMapTerritories = cfg.ShowMapTerritories;
+                                showMapZones = cfg.ShowMapZones;
+                                showMinimapZones = cfg.ShowMinimapZones;
+                                showZoneTint = cfg.ShowZoneTint;
                                 GvkPalette.Apply(cfg.ColorPalette);
                                 showMinimapTerritories = cfg.ShowMinimapTerritories;
                                 bool oldDefaultKey = cfg.MapKeyVersion < MAP_KEY_VERSION && cfg.MapKey == (int)MyKeys.M
@@ -787,6 +821,9 @@ namespace GVK.Navigation
                     ShowMinimapSites = showMinimapSites,
                     ShowCompassSites = showCompassSites,
                     ShowMapTerritories = showMapTerritories,
+                    ShowMapZones = showMapZones,
+                    ShowMinimapZones = showMinimapZones,
+                    ShowZoneTint = showZoneTint,
                     ColorPalette = GvkPalette.Current,
                     ShowMinimapTerritories = showMinimapTerritories,
                     MapKey = (int)mapKey,
@@ -1632,7 +1669,8 @@ namespace GVK.Navigation
         /// The inside is kept as one strip per map row: a point at latitude p is inside when
         /// sin p sin pc + cos p cos pc cos(dLon) >= cos A, which gives each row's longitude span exactly.
         /// </summary>
-        private double BuildTerritoryRing(Vector3D center, double radius, List<Vector2> uv, List<TerritoryRow> rows)
+        private double BuildTerritoryRing(Vector3D center, double radius, List<Vector2> uv, List<TerritoryRow> rows,
+            int fillRows = TERRITORY_FILL_ROWS)
         {
             uv.Clear();
             rows.Clear();
@@ -1646,7 +1684,7 @@ namespace GVK.Navigation
             if (cosA >= 1.0) return 2.0; // The sphere misses the ground
             if (cosA <= -1.0)            // It covers the whole planet: no edge, all inside
             {
-                for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
+                for (int r = 0; r < fillRows; r++)
                     rows.Add(new TerritoryRow { Row = r, U0 = 0f, U1 = 1f });
                 return -2.0;
             }
@@ -1668,9 +1706,9 @@ namespace GVK.Navigation
             Vector2 cuv = WorldToMapUV(center);
             double latC = Math.PI * 0.5 - cuv.Y * Math.PI;
             double sinC = Math.Sin(latC), cosC = Math.Cos(latC);
-            for (int r = 0; r < TERRITORY_FILL_ROWS; r++)
+            for (int r = 0; r < fillRows; r++)
             {
-                double v = (r + 0.5) / TERRITORY_FILL_ROWS;
+                double v = (r + 0.5) / fillRows;
                 double lat = Math.PI * 0.5 - v * Math.PI;
                 double denom = Math.Cos(lat) * cosC;
                 double k = denom > 1e-9 ? (cosA - Math.Sin(lat) * sinC) / denom : (Math.Sin(lat) * sinC >= cosA ? -2.0 : 2.0);
@@ -1772,7 +1810,7 @@ namespace GVK.Navigation
                             double f = (double)st / steps;
                             lastX = prevX + (x - prevX) * f;
                             lastY = prevY + (y - prevY) * f;
-                            layer.AddSprite(MATERIAL_SQUARE, ox + lastX, oy + lastY, dotSize, dotSize * aspect, color);
+                            AddTerritoryDot(layer, ox + lastX, oy + lastY, dotSize, aspect, color);
                         }
                     }
                     prevX = x;
@@ -1789,7 +1827,125 @@ namespace GVK.Navigation
                     any = true;
                     lastX = x;
                     lastY = y;
-                    layer.AddSprite(MATERIAL_SQUARE, ox + x, oy + y, dotSize, dotSize * aspect, color);
+                    AddTerritoryDot(layer, ox + x, oy + y, dotSize, aspect, color);
+                }
+            }
+        }
+
+        /// <summary>
+        /// One ring dot on a dark outline, so it reads on light highlands and dark basins alike (owner, 2026-11-24:
+        /// "I want the alliance borders dotted lines to be a little easier to see").
+        /// </summary>
+        private static void AddTerritoryDot(GvkScreenLayer layer, double x, double y, double size, float aspect, Color color)
+        {
+            double back = size * TERRITORY_DOT_OUTLINE;
+            layer.AddSprite(MATERIAL_SQUARE, x, y, back, back * aspect, TERRITORY_DOT_BACK);
+            layer.AddSprite(MATERIAL_SQUARE, x, y, size, size * aspect, color);
+        }
+
+        /// <summary>
+        /// The safety zone rings and fills, once: the zones never move. Zone 1's fill is every row less Zone 2's sphere
+        /// and Zone 0's disc, so no two fills stack.
+        /// </summary>
+        private void BuildZoneOverlay()
+        {
+            _zoneOverlayBuilt = true;
+            var zone2 = new List<TerritoryRow>();
+            BuildTerritoryRing(CROSSROADS_BEACON, ZONE_0_RADIUS, _zoneRingUV[0], _zoneFill[0], ZONE_FILL_ROWS);
+            BuildTerritoryRing(Z3_CENTER, ZONE_2_RADIUS, _zoneRingUV[1], zone2, ZONE_FILL_ROWS);
+            BuildTerritoryRing(Z3_CENTER, ZONE_3_RADIUS, _zoneRingUV[2], _zoneFill[2], ZONE_FILL_ROWS);
+            var zone1 = _zoneFill[1];
+            zone1.Clear();
+            for (int r = 0; r < ZONE_FILL_ROWS; r++)
+            {
+                _zonePieces.Clear();
+                _zonePieces.Add(new Vector2(0f, 1f));
+                CutZonePieces(r, zone2);
+                CutZonePieces(r, _zoneFill[0]);
+                for (int p = 0; p < _zonePieces.Count; p++)
+                    zone1.Add(new TerritoryRow { Row = r, U0 = _zonePieces[p].X, U1 = _zonePieces[p].Y });
+            }
+        }
+
+        /// <summary>Removes row r of the given strips from the spans in _zonePieces.</summary>
+        private void CutZonePieces(int r, List<TerritoryRow> hole)
+        {
+            for (int b = 0; b < hole.Count; b++)
+            {
+                if (hole[b].Row != r) continue;
+                for (int p = _zonePieces.Count - 1; p >= 0; p--)
+                {
+                    Vector2 piece = _zonePieces[p];
+                    if (hole[b].U1 <= piece.X || hole[b].U0 >= piece.Y) continue; // No overlap
+                    _zonePieces.RemoveAt(p);
+                    if (hole[b].U0 > piece.X) _zonePieces.Add(new Vector2(piece.X, hole[b].U0));
+                    if (hole[b].U1 < piece.Y) _zonePieces.Add(new Vector2(hole[b].U1, piece.Y));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws the safety zones on a map drawn w x h with map UV (viewU, viewV) at (ox, oy): a faint tint inside
+        /// (when tint is on) and solid boundary lines, each line a run of rotated thin rectangles between ring points at
+        /// least minSeg apart on screen. Parts outside halfW x halfH are left out; nothing is drawn across the wrap seam.
+        /// </summary>
+        private void AddZoneOverlay(GvkScreenLayer layer, double ox, double oy, double w, double h, double viewU, double viewV,
+            double halfW, double halfH, float aspect, double lineW, double minSeg, bool tint)
+        {
+            if (!_zoneOverlayBuilt) BuildZoneOverlay();
+            if (tint)
+            {
+                for (int z = 0; z < _zoneFill.Length; z++)
+                {
+                    Color fill = WithAlpha(GetZoneColor(ZONE_OVERLAY_ZONE[z]), ZONE_FILL_ALPHA);
+                    var rows = _zoneFill[z];
+                    for (int i = 0; i < rows.Count; i++)
+                    {
+                        double yTop = Math.Min((viewV - rows[i].Row / (double)ZONE_FILL_ROWS) * h, halfH);
+                        double yBottom = Math.Max((viewV - (rows[i].Row + 1) / (double)ZONE_FILL_ROWS) * h, -halfH);
+                        if (yBottom >= yTop) continue;
+                        double x0 = Math.Max((rows[i].U0 - viewU) * w, -halfW);
+                        double x1 = Math.Min((rows[i].U1 - viewU) * w, halfW);
+                        if (x1 <= x0) continue;
+                        layer.AddPixelRect(MATERIAL_SQUARE, ox + x0, oy + yTop, ox + x1, oy + yBottom, fill);
+                    }
+                }
+            }
+            double minSegSq = minSeg * minSeg;
+            for (int z = 0; z < _zoneRingUV.Length; z++)
+            {
+                var points = _zoneRingUV[z];
+                if (points.Count < 2) continue;
+                Color color = WithAlpha(GetZoneColor(ZONE_OVERLAY_ZONE[z]), ZONE_LINE_ALPHA);
+                double ax = (points[0].X - viewU) * w, ay = (viewV - points[0].Y) * h;
+                double prevU = points[0].X;
+                int count = points.Count;
+                for (int k = 1; k <= count; k++) // k == count closes the ring back to the first point
+                {
+                    int i = k == count ? 0 : k;
+                    double x = (points[i].X - viewU) * w;
+                    double y = (viewV - points[i].Y) * h;
+                    bool seam = Math.Abs(points[i].X - prevU) >= 0.5;
+                    prevU = points[i].X;
+                    if (seam)
+                    {
+                        ax = x;
+                        ay = y;
+                        continue;
+                    }
+                    double dx = x - ax;
+                    double dy = (y - ay) / aspect; // HUD Y units are aspect times shorter on screen
+                    double lenSq = dx * dx + dy * dy;
+                    if (lenSq < minSegSq && k < count) continue;
+                    bool off = Math.Min(ax, x) > halfW || Math.Max(ax, x) < -halfW || Math.Min(ay, y) > halfH || Math.Max(ay, y) < -halfH;
+                    if (!off && lenSq > 0.0)
+                    {
+                        double len = Math.Sqrt(lenSq);
+                        layer.AddSprite(MATERIAL_SQUARE, ox + (ax + x) * 0.5, oy + (ay + y) * 0.5, len + lineW * 0.5, lineW * aspect,
+                            color, (float)-Math.Atan2(dy, dx));
+                    }
+                    ax = x;
+                    ay = y;
                 }
             }
         }
@@ -2506,9 +2662,12 @@ namespace GVK.Navigation
             if (minimapMode == MinimapDisplayMode.StrategicMap)
             {
                 _ssMinimap.AddSprite(MATERIAL_MAP, cx, cy, minimapSize.X, minimapSize.Y, Color.White);
+                if (showMinimapZones)
+                    AddZoneOverlay(_ssMinimap, cx, cy, minimapSize.X, minimapSize.Y, 0.5, 0.5, minimapSize.X * 0.5, minimapSize.Y * 0.5,
+                        aspect, 0.0015 * s, 0.004 * s, showZoneTint);
                 if (showMinimapTerritories)
                     AddTerritoryDots(_ssMinimap, cx, cy, minimapSize.X, minimapSize.Y, 0.5, 0.5, minimapSize.X * 0.5, minimapSize.Y * 0.5,
-                        aspect, 0.0015f * s, 0.005 * s, TERRITORY_STRIPE_HUD * 0.6 * s);
+                        aspect, TERRITORY_MINIMAP_DOT * s, 0.0055 * s, TERRITORY_STRIPE_HUD * 0.6 * s);
 
                 // Pass 0 picks the other markers and marks the sites they stand in for, pass 1 draws the sites,
                 // pass 2 draws pass 0's picks again on top (same order and tests, so the same picks)
@@ -2668,6 +2827,7 @@ namespace GVK.Navigation
             _mapLabelWps.Clear();
             _mapLabelRoots.Clear();
             _mapLabelWidths.Clear();
+            _mapLabelHasText.Clear();
             _cachedMapClusters.Clear();
             double halfW = frameWidth * 0.5;
             double halfH = frameHeight * 0.5;
@@ -2680,14 +2840,18 @@ namespace GVK.Navigation
                 if (wp.SiteKind != 0 && wp.HasStandIn) continue; // Its GPS point or NPC signal shows here instead (the map shows every one)
                 Vector2D wpOffset = GetMapOffset(wp.MapUV, mapWidth, mapHeight, viewU, viewV);
                 if (Math.Abs(wpOffset.X) > halfW || Math.Abs(wpOffset.Y) > halfH) continue;
-                if (wp.KothState == 0 && !(wp.IsSignal ? showMapSignalLabels : showMapGpsLabels)) // KOTH labels always show; sites follow GPS Labels
+                // KOTH labels always show; sites follow GPS Labels. With its label off a marker still joins a stack when
+                // Stack Icons is on, as an icon with no name (owner, 2026-11-24: "icons without labels should be allowed
+                // to stack if needed"); with stacking off too it is a plain dot at its true position
+                bool hasText = wp.KothState != 0 || (wp.IsSignal ? showMapSignalLabels : showMapGpsLabels);
+                if (!hasText && !stackMapIcons)
                 {
                     _mapPlainWps.Add(i);
                     continue;
                 }
 
-                float width;
-                GetSsMapLabel(i, out width);
+                float width = 0f;
+                if (hasText) GetSsMapLabel(i, out width);
 
                 int found = -1;
                 for (int c = 0; c < _cachedMapClusters.Count; c++)
@@ -2715,6 +2879,7 @@ namespace GVK.Navigation
                 _mapLabelWps.Add(i);
                 _mapLabelRoots.Add(found);
                 _mapLabelWidths.Add(width);
+                _mapLabelHasText.Add(hasText);
             }
 
             float labelScale = MAP_LABEL_SCALE * _ssMapTextScale;
@@ -2920,8 +3085,11 @@ namespace GVK.Navigation
 
             _ssMap.BeginClip(0.0, 0.0, frameW, frameH);
             _ssMap.AddSprite(MATERIAL_MAP, (0.5 - viewU) * mapW, (viewV - 0.5) * mapH, mapW, mapH, Color.White);
+            if (showMapZones)
+                AddZoneOverlay(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect,
+                    ZONE_MAP_LINE_W, ZONE_MAP_MIN_SEG, showZoneTint);
             if (showMapTerritories)
-                AddTerritoryDots(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect, 0.0022f, TERRITORY_MAP_DOT_SPACING, TERRITORY_STRIPE_HUD);
+                AddTerritoryDots(_ssMap, 0.0, 0.0, mapW, mapH, viewU, viewV, frameW * 0.5, frameH * 0.5, aspect, TERRITORY_MAP_DOT, TERRITORY_MAP_DOT_SPACING, TERRITORY_STRIPE_HUD);
             AddSsKothRings(mapW, mapH, viewU, viewV, aspect);
             _ssMap.EndClip();
 
@@ -2955,6 +3123,7 @@ namespace GVK.Navigation
                 int wpIdx = _mapLabelWps[j];
                 Vector2D slotPos = cluster.Position + new Vector2D(0.0, cluster.DirY * MAP_LINE_SPACING * slot);
                 if (stackMapIcons) AddSsMapMarker(wpIdx, slotPos, playerElevation, aspect);
+                if (!_mapLabelHasText[j]) continue;
 
                 float width;
                 string text = GetSsMapLabel(wpIdx, out width);
@@ -3391,6 +3560,8 @@ namespace GVK.Navigation
                 case S_MAP_OWN: return showMapOwnSignals;
                 case S_MAP_SITES: return showMapSites;
                 case S_MAP_TERRITORY: return showMapTerritories;
+                case S_MAP_ZONES: return showMapZones;
+                case S_MAP_ZONE_TINT: return showZoneTint;
                 case S_MAP_GPS_LABELS: return showMapGpsLabels;
                 case S_MAP_SIGNAL_LABELS: return showMapSignalLabels;
                 case S_MAP_STACK: return stackMapIcons;
@@ -3887,7 +4058,7 @@ namespace GVK.Navigation
         private float GetCompassBaseHeight(float scale) => 0.057f * scale;
 
         /// <summary>
-        /// Converts planetary 3D world position to UV [0, 1] on KharakMercator1080.dds (equirectangular).
+        /// Converts planetary 3D world position to UV [0, 1] on KharakMercator.dds (equirectangular).
         /// The map's left edge is a quarter turn round from -X (MAP_LON_SHIFT). Fitted against the planet heightmaps
         /// sampled the way the game does; the old hand-fitted 0.254 put every marker about 9 map pixels west.
         /// Inverts Y to match the map texture's North/South latitude orientation.
@@ -4603,6 +4774,9 @@ namespace GVK.Navigation
             showCompassSites = true;
             showMapTerritories = true;
             showMinimapTerritories = true;
+            showMapZones = true;
+            showMinimapZones = true;
+            showZoneTint = true;
             GvkPalette.Apply(GvkPalette.STANDARD);
             _gpsRescanTicks = 1; // Signal and site colours are set at scan time
             mapKey = DEFAULT_MAP_KEY;

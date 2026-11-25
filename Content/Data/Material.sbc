@@ -14,7 +14,7 @@
 			<IgnoreDepth>false</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\KharakMercator1080.dds</Texture>
+			<Texture>Textures\KharakMercator.dds</Texture>
 			<Reflectivity>0</Reflectivity>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
@@ -293,6 +293,52 @@
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
 			<Texture>Textures\GUI\MapBtn_Territory.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_Zones</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_Zones.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_ZoneTint</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_ZoneTint.dds</Texture>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
 				<X>0</X>
