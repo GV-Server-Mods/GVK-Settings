@@ -239,8 +239,8 @@ namespace GVK.Navigation
         private const byte SITE_REFINERY = GvkKnownSites.REFINERY;
         private const byte SITE_DEPOT = GvkKnownSites.DEPOT;
         private const byte SITE_CARRIER = GvkKnownSites.CARRIER;
-        private static readonly Color SITE_WHITE = Color.White;                    // Trade stations, and neutral or unowned sites
-        private static readonly Color SITE_DIM = new Color(150, 150, 150, 150);    // No alliance Base on a Base Site, or not spawned
+        private static Color SITE_WHITE => GvkPalette.Neutral;                     // Trade stations, and neutral or unowned sites
+        private static readonly Color SITE_DIM = GvkUi.Dim;                        // No alliance Base on a Base Site, or not spawned
         private static Color SITE_FRIENDLY => GvkPalette.Friendly;  // Same colour as faction signals
         private static Color SITE_HOSTILE => GvkPalette.Hostile;    // Same colour as hostile signals
         private const int SITE_FRIENDLY_REP = 500;   // GVK's Friendly standing (contracts need 500+)
@@ -302,7 +302,15 @@ namespace GVK.Navigation
         private const int KOTH_NEXT = 2;
         private static Color KOTH_COLOR => GvkPalette.Koth;
 
-        // Default GPS entries populated for joining players
+        // Default GPS entries populated for joining players. Colours are the palette's at the time they are added, as the
+        // map shows the same places: Zone 0 Friendly, Zone 3 Hostile, trade stations Neutral white, KOTH sites KOTH.
+        private const byte GPS_ZONE0 = 0, GPS_ZONE3 = 1, GPS_STATION = 2, GPS_KOTH = 3;
+
+        private static Color GetDefaultGpsColor(byte kind)
+        {
+            return kind == GPS_ZONE0 ? GvkPalette.Friendly : kind == GPS_ZONE3 ? GvkPalette.Hostile : kind == GPS_KOTH ? GvkPalette.Koth : GvkPalette.Neutral;
+        }
+
         private struct DefaultGpsEntry
         {
             public string Name;
@@ -310,30 +318,30 @@ namespace GVK.Navigation
             public Vector3D Coords;
             public bool ShowOnHud;
             public bool AlwaysVisible;
-            public Color GpsColor;
-            public DefaultGpsEntry(string name, string desc, Vector3D coords, bool showOnHud, bool alwaysVis, Color color)
+            public byte Kind;          // GPS_ZONE0, GPS_ZONE3, GPS_STATION or GPS_KOTH: GetDefaultGpsColor
+            public DefaultGpsEntry(string name, string desc, Vector3D coords, bool showOnHud, bool alwaysVis, byte kind)
             {
                 Name = name;
                 Description = desc;
                 Coords = coords;
                 ShowOnHud = showOnHud;
                 AlwaysVisible = alwaysVis;
-                GpsColor = color;
+                Kind = kind;
             }
         }
 
         private static readonly DefaultGpsEntry[] DEFAULT_KHARAK_GPS = new DefaultGpsEntry[]
         {
-            new DefaultGpsEntry("Zone 0", "Zone 0 Safe Starter Hub", new Vector3D(62495.55, 28019.04, 37195.71), true, true, new Color(0, 255, 0)),
-            new DefaultGpsEntry("Zone 3", "Zone 3 Deep Desert Center", new Vector3D(3569.33, 36772.94, 26952.63), true, false, new Color(255, 0, 0)),
-            new DefaultGpsEntry("Sevastopol", "Coalition Trade Station", new Vector3D(2990.66, 30484.89, 34060.65), false, false, new Color(239, 220, 0)),
-            new DefaultGpsEntry("Skyport", "Aerial Trade Station", new Vector3D(40585.81, 59619.14, 46601.96), false, false, new Color(239, 220, 0)),
-            new DefaultGpsEntry("Mastodon", "Southern Trade Station", new Vector3D(33475.48, 5361.51, 20848.44), false, false, new Color(239, 220, 0)),
-            new DefaultGpsEntry("Rusty's", "Starter Trade Outpost", new Vector3D(61686.17, 27088.08, 38160.96), false, false, new Color(239, 220, 0)),
-            new DefaultGpsEntry("Coalition Base", "Coalition Headquarters", new Vector3D(61784.00, 28043.10, 38552.08), false, false, new Color(239, 220, 0)),
-            new DefaultGpsEntry("KOTH Khar Toba", "King of the Hill Site", new Vector3D(4115.21, 38891.59, 26152.68), false, false, new Color(255, 128, 31)),
-            new DefaultGpsEntry("KOTH Kalash Site", "King of the Hill Site", new Vector3D(8815.53, 14612.65, 35353.97), false, false, new Color(255, 128, 31)),
-            new DefaultGpsEntry("KOTH Crashed Starship", "King of the Hill Site", new Vector3D(25893.61, 61095.89, 25703.05), false, false, new Color(255, 128, 31))
+            new DefaultGpsEntry("Zone 0", "Zone 0 Safe Starter Hub", new Vector3D(62495.55, 28019.04, 37195.71), true, true, GPS_ZONE0),
+            new DefaultGpsEntry("Zone 3", "Zone 3 Deep Desert Center", new Vector3D(3569.33, 36772.94, 26952.63), true, false, GPS_ZONE3),
+            new DefaultGpsEntry("Sevastopol", "Coalition Trade Station", new Vector3D(2990.66, 30484.89, 34060.65), false, false, GPS_STATION),
+            new DefaultGpsEntry("Skyport", "Aerial Trade Station", new Vector3D(40585.81, 59619.14, 46601.96), false, false, GPS_STATION),
+            new DefaultGpsEntry("Mastodon", "Southern Trade Station", new Vector3D(33475.48, 5361.51, 20848.44), false, false, GPS_STATION),
+            new DefaultGpsEntry("Rusty's", "Starter Trade Outpost", new Vector3D(61686.17, 27088.08, 38160.96), false, false, GPS_STATION),
+            new DefaultGpsEntry("Coalition Base", "Coalition Headquarters", new Vector3D(61784.00, 28043.10, 38552.08), false, false, GPS_STATION),
+            new DefaultGpsEntry("KOTH Khar Toba", "King of the Hill Site", new Vector3D(4115.21, 38891.59, 26152.68), false, false, GPS_KOTH),
+            new DefaultGpsEntry("KOTH Kalash Site", "King of the Hill Site", new Vector3D(8815.53, 14612.65, 35353.97), false, false, GPS_KOTH),
+            new DefaultGpsEntry("KOTH Crashed Starship", "King of the Hill Site", new Vector3D(25893.61, 61095.89, 25703.05), false, false, GPS_KOTH)
         };
 
         // 1. Custom Programmatic Tactical HUD Compass Elements
@@ -372,10 +380,10 @@ namespace GVK.Navigation
         };
         private static readonly string[] ZONE_SHORT_NAMES = { "Zone 0", "Zone 1", "Zone 2", "Zone 3" };
         private static readonly string[] ZONE_DIST_LABELS = { "Zone 0: ", "Zone 1: ", "Zone 2: ", "Zone 3: " };
-        private static readonly Color SPACE_TEXT_COLOR = new Color(255, 80, 255);
+        private static readonly Color SPACE_TEXT_COLOR = GvkUi.Space;
         private static readonly Color[] ZONE_TEXT_COLORS = GvkPalette.ZoneText; // The palette refills this array in place
-        private static readonly Color ZONE_LABEL_COLOR = new Color(220, 220, 220);
-        private static readonly Color ZONE_SEPARATOR_COLOR = new Color(100, 140, 180);
+        private static readonly Color ZONE_LABEL_COLOR = GvkUi.Text;
+        private static readonly Color ZONE_SEPARATOR_COLOR = GvkUi.Separator;
         private bool _ssMaterialsChecked = false;
         private static readonly string[] _ssDistanceTenths = new string[100]; // "0.0k".."9.9k", filled on first use
         private static readonly string[] _ssDistanceWhole = new string[1000]; // "10k".."999k", filled on first use
@@ -400,8 +408,8 @@ namespace GVK.Navigation
         private readonly List<float> _ssMapLabelWidth = new List<float>(64);
         private readonly string[] _ssMapOverflowText = new string[100];
         private static readonly string[] MAP_BORDER_LABELS = { "Z1 Border in: ", "PvP Border in: ", "Z3 Border in: ", "Core Dist: " };
-        private static readonly Color MAP_HEADER_GREY = new Color(180, 195, 210);
-        private static readonly Color MAP_HINT_COLOR = new Color(160, 180, 200);
+        private static readonly Color MAP_HEADER_GREY = GvkUi.TextDim;
+        private static readonly Color MAP_HINT_COLOR = GvkUi.TextDim;
         private const string MAP_CONTROLS_HINT = "Wheel: zoom   |   Drag: pan   |   Right-click: add, hide or delete a GPS   |   Point at the map for details";
         private const string MAP_CONTROLS_HINT_TERRITORY = "Wheel: zoom   |   Drag: pan   |   Right-click: add, hide or delete a GPS   |   Point for details   |   Two colours: contested territory";
         private const string MAP_TITLE_TEXT = "KHARAK TACTICAL SATELLITE MAP";
@@ -1040,7 +1048,7 @@ namespace GVK.Navigation
                 if (!exists)
                 {
                     var gps = MyAPIGateway.Session.GPS.Create(entry.Name, entry.Description, entry.Coords, entry.ShowOnHud, entry.AlwaysVisible);
-                    gps.GPSColor = entry.GpsColor;
+                    gps.GPSColor = GetDefaultGpsColor(entry.Kind);
                     MyAPIGateway.Session.GPS.AddLocalGps(gps);
                     addedCount++;
                 }
@@ -1258,7 +1266,7 @@ namespace GVK.Navigation
                     }
                     else
                     {
-                        signalColor = isNpc ? GvkPalette.Npc : GvkPalette.Neutral;
+                        signalColor = GvkPalette.Neutral; // Neutral NPCs too, as in vanilla (owner, 2026-11-25)
                         signalRelation = isNpc ? REL_NPC : REL_NEUTRAL;
                     }
 
@@ -1455,11 +1463,12 @@ namespace GVK.Navigation
             return GetStandingColor(MyAPIGateway.Session.Factions.TryGetFactionById(_siteFaction[s]));
         }
 
-        /// <summary>A site icon's colour from its own signal's relation: green own, faction or Friendly, red hostile, else white.</summary>
+        /// <summary>A site icon's colour from its own signal's relation, as its signal shows: own, faction or Friendly, hostile, else white.</summary>
         private static Color GetSignalSiteColor(byte relation)
         {
             if (relation == REL_HOSTILE) return SITE_HOSTILE;
-            if (relation == REL_OWN || relation == REL_FACTION || relation == REL_FRIENDLY) return SITE_FRIENDLY;
+            if (relation == REL_OWN) return GvkPalette.Own;
+            if (relation == REL_FACTION || relation == REL_FRIENDLY) return SITE_FRIENDLY;
             return SITE_WHITE;
         }
 
@@ -1544,6 +1553,12 @@ namespace GVK.Navigation
         private static Color WithAlpha(Color c, float a)
         {
             return new Color(c.R, c.G, c.B, (byte)MathHelper.Clamp((int)(a * 255f + 0.5f), 0, 255));
+        }
+
+        /// <summary>Your arrow on the radar and map: the Own colour, pulsing toward white (owner, 2026-11-25; was gold).</summary>
+        private Color GetPlayerArrowColor()
+        {
+            return tickCounter % 40 < 20 ? GvkPalette.Own : Color.Lerp(GvkPalette.Own, Color.White, 0.5f);
         }
 
         /// <summary>Territories whose ground circle holds map point (u, v) (bit per territory).</summary>
@@ -1969,7 +1984,7 @@ namespace GVK.Navigation
             _ssCompass.AddSprite(MATERIAL_SQUARE, centerX - baseWidth * 0.5 + 0.005 * s, centerY, accentWidth, accentHeight, zoneCol);
             if (zoneBarMode != ZoneBarMode.CompassDock)
                 _ssCompass.AddSprite(MATERIAL_SQUARE, centerX + baseWidth * 0.5 - 0.005 * s, centerY, accentWidth, accentHeight, zoneCol);
-            var gold = new Color(255, 215, 60, 255);
+            var gold = GvkUi.Title;
             _ssCompass.AddSprite(MATERIAL_NAV_ARROW, centerX, centerY + baseHeight * 0.5, 0.010 * s, 0.010 * s * aspect, gold, (float)Math.PI);
             _ssCompass.AddSprite(MATERIAL_NAV_ARROW, centerX, centerY - baseHeight * 0.5, 0.008 * s, 0.008 * s * aspect, gold);
 
@@ -2001,7 +2016,7 @@ namespace GVK.Navigation
                         Color c;
                         switch (grad.Type)
                         {
-                            case GraduationType.Cardinal: h = 0.007f * s; c = new Color(255, 215, 60, 240); break;
+                            case GraduationType.Cardinal: h = 0.007f * s; c = WithAlpha(GvkUi.Title, 240f / 255f); break;
                             case GraduationType.Ordinal:
                             case GraduationType.MajorMark: h = 0.007f * s; c = new Color(255, 255, 255, 240); break;
                             case GraduationType.MediumTen: h = 0.005f * s; c = new Color(255, 255, 255, 200); break;
@@ -2016,13 +2031,13 @@ namespace GVK.Navigation
                     {
                         labels++;
                         _ssCompass.AddText(grad.TopLabel, x, topLabelY, 0.58f * s * textScale,
-                            cardinal ? new Color(255, 215, 60) : Color.White, TOP_CENTER, true);
+                            cardinal ? GvkUi.Title : Color.White, TOP_CENTER, true);
                     }
                     if (grad.BottomLabel != null && labels < COMPASS_MAX_LABELS)
                     {
                         labels++;
                         _ssCompass.AddText(grad.BottomLabel, x, bottomLabelY, 0.48f * s * textScale,
-                            cardinal ? new Color(255, 225, 120) : Color.White, TOP_CENTER, true);
+                            cardinal ? GvkUi.Title : Color.White, TOP_CENTER, true);
                     }
                 }
             }
@@ -2101,7 +2116,7 @@ namespace GVK.Navigation
         private Color GetCardBgColor()
         {
             float opacity = cachedHudBkOpacity >= 0f ? cachedHudBkOpacity : GetUserHudOpacity();
-            return new Color(41, 54, 62, (byte)MathHelper.Clamp((int)(255f * opacity), 0, 255));
+            return WithAlpha(GvkUi.Button, opacity);
         }
 
         public override void Draw()
@@ -2507,15 +2522,14 @@ namespace GVK.Navigation
 
             float markerSize = 0.012f * s;
             float arrowSize = 0.017f * s;
-            // High-visibility pulse: Electric Gold <-> Amber
-            Color arrowColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
+            Color arrowColor = GetPlayerArrowColor();
             double playerElevation = Vector3D.Distance(playerPos, PLANET_CENTER) - PLANET_RADIUS;
             int markers = 0;
             int sites = 0;
 
             // Tactical radar
             float gridDiameter = (float)minimapSize.Y * 0.95f;
-            _ssMinimap.AddSprite(MATERIAL_RADAR_GRID, cx, cy, gridDiameter / aspect, gridDiameter, new Color(187, 233, 246, 200));
+            _ssMinimap.AddSprite(MATERIAL_RADAR_GRID, cx, cy, gridDiameter / aspect, gridDiameter, WithAlpha(GvkUi.Accent, 200f / 255f));
 
             // Radar circle radius on screen (aspect corrected for a 1:1 circle)
             float radiusY = (float)minimapSize.Y * 0.46f;
@@ -2527,7 +2541,7 @@ namespace GVK.Navigation
                 float halfHFov = (float)Math.Atan(aspect * Math.Tan(camera.FovWithZoom * 0.5f));
                 double armX = Math.Sin(halfHFov) * radiusX;
                 double armY = Math.Cos(halfHFov) * radiusY;
-                var fovLineColor = new Color(187, 233, 246, 110);
+                var fovLineColor = WithAlpha(GvkUi.Accent, 110f / 255f);
                 _ssMinimap.AddSprite(MATERIAL_SQUARE, cx - armX * 0.5, cy + armY * 0.5, 0.0008, radiusY, fovLineColor, -halfHFov);
                 _ssMinimap.AddSprite(MATERIAL_SQUARE, cx + armX * 0.5, cy + armY * 0.5, 0.0008, radiusY, fovLineColor, halfHFov);
             }
@@ -2560,7 +2574,7 @@ namespace GVK.Navigation
 
             // Range label, bottom right of the card
             float textScale = GetScreenSpaceTextScale(camera.ViewportSize);
-            var labelGrey = new Color(200, 200, 200);
+            var labelGrey = GvkUi.TextDim;
             // Right-aligned by measure: a fixed start ran off the card on narrow (4:3) windows, where text is wider in HUD units
             float rangeScale = 0.46f * s * textScale;
             bool logScale = radarScale == RadarScaleMode.Logarithmic;
@@ -2570,7 +2584,7 @@ namespace GVK.Navigation
             if (logScale)
             {
                 _ssMinimap.AddRun(RADAR_LOG_TEXT, labelGrey);
-                _ssMinimap.AddRun(RADAR_LOG_TAG, new Color(187, 233, 246));
+                _ssMinimap.AddRun(RADAR_LOG_TAG, GvkUi.Accent);
             }
             else
             {
@@ -2956,7 +2970,7 @@ namespace GVK.Navigation
                 AddMapHit(wpIdx, lx, lx + width, ly - _mapTextHeight, ly);
             }
 
-            var overflowColor = new Color(170, 210, 245);
+            var overflowColor = GvkUi.Accent;
             for (int c = 0; c < _cachedMapClusters.Count; c++)
             {
                 var cluster = _cachedMapClusters[c];
@@ -2970,7 +2984,7 @@ namespace GVK.Navigation
             Vector2D playerOffset = GetMapOffset(WorldToMapUV(_mapPlayerPos), mapW, mapH, viewU, viewV);
             if (Math.Abs(playerOffset.X) <= frameW * 0.5 && Math.Abs(playerOffset.Y) <= frameH * 0.5)
             {
-                Color arrowColor = (tickCounter % 40 < 20) ? new Color(255, 230, 40, 255) : new Color(255, 255, 140, 255);
+                Color arrowColor = GetPlayerArrowColor();
                 _ssMap.AddSprite(MATERIAL_NAV_ARROW, playerOffset.X, playerOffset.Y, 0.018f, 0.018f * aspect, arrowColor, -playerHeadingRad);
             }
 
@@ -2988,12 +3002,12 @@ namespace GVK.Navigation
 
             _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, headerY, headerW, headerH, card);
             _ssMap.AddSprite(MATERIAL_SQUARE, -headerW * 0.5f + 0.005f, headerY, 0.005f, headerH - 0.006f,
-                inSpace ? Color.Magenta : GetZoneColor(zone));
+                inSpace ? GvkUi.Space : GetZoneColor(zone));
 
             double textX = -headerW * 0.5f + 0.016f;
             float line1Scale = 0.62f * textScale;
             _ssMap.BeginRuns(textX, headerY + 0.013f, line1Scale, true);
-            _ssMap.AddRun(MAP_TITLE_TEXT, new Color(255, 220, 0));
+            _ssMap.AddRun(MAP_TITLE_TEXT, GvkUi.Title);
             _ssMap.AddRun(MAP_SECTOR_TEXT, MAP_HEADER_GREY);
             _ssMap.AddRun(ZONE_TITLES[zone], ZONE_TEXT_COLORS[zone]);
             if (TerritoriesShown && _playerTerritoryMask != 0)
@@ -3005,7 +3019,7 @@ namespace GVK.Navigation
             }
 
             _ssMap.BeginRuns(textX, headerY - 0.011f, 0.50f * textScale, true);
-            _ssMap.AddRun("Crossroads: ", new Color(220, 230, 240));
+            _ssMap.AddRun("Crossroads: ", GvkUi.Text);
             _ssMap.AddRun(FormatZoneKm(lastDistKm, ref _ssMapCrossKey, ref _ssMapCrossText), Color.White);
             _ssMap.AddRun(" | ", MAP_HEADER_GREY);
             _ssMap.AddRun(MAP_BORDER_LABELS[zone], MAP_HEADER_GREY);
@@ -3059,7 +3073,7 @@ namespace GVK.Navigation
             double hintH = _ssMap.LineHeightHud(hintScale) + 0.012;
             double hintTop = -topOfFrame - 0.004;
             _ssMap.AddSprite(MATERIAL_SQUARE, 0.0, hintTop - hintH * 0.5, hintW, hintH, card);
-            _ssMap.AddText(hint, 0.0, hintTop - 0.006, hintScale, new Color(220, 230, 240),
+            _ssMap.AddText(hint, 0.0, hintTop - 0.006, hintScale, GvkUi.Text,
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_TOP, true);
         }
 
@@ -3357,8 +3371,8 @@ namespace GVK.Navigation
                 double fy = (fb.MinY + fb.MaxY) * 0.5;
                 double fw = fb.MaxX - fb.MinX;
                 _ssMapButton.AddSprite(MATERIAL_SQUARE, fx, fy, fw, fb.MaxY - fb.MinY,
-                    over ? new Color(70, 95, 112, 255) : on ? new Color(31, 41, 48, 255) : new Color(18, 23, 27, 255));
-                if (on) _ssMapButton.AddSprite(MATERIAL_SQUARE, fb.MinX + 0.002, fy, 0.003, (fb.MaxY - fb.MinY) * 0.7, new Color(187, 233, 246));
+                    over ? GvkUi.ButtonHover : on ? GvkUi.ButtonDim : GvkUi.ButtonOff);
+                if (on) _ssMapButton.AddSprite(MATERIAL_SQUARE, fb.MinX + 0.002, fy, 0.003, (fb.MaxY - fb.MinY) * 0.7, GvkUi.Accent);
                 double icon = fw * 0.72;
                 _ssMapButton.AddSprite(GetMapFilterIcon(f), fx, fy, icon, icon * aspect, on ? Color.White : Color.White * 0.32f);
             }
@@ -3369,9 +3383,9 @@ namespace GVK.Navigation
             double cx = (b.MinX + b.MaxX) * 0.5;
             double cy = (b.MinY + b.MaxY) * 0.5;
             _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, cy, b.MaxX - b.MinX, b.MaxY - b.MinY,
-                hover ? new Color(70, 95, 112, 255) : new Color(31, 41, 48, 255));
-            if (hover) _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, b.MinY + 0.002, b.MaxX - b.MinX, 0.004, new Color(187, 233, 246));
-            _ssMapButton.AddText(MAP_SETTINGS_TEXT, cx, cy, _mapSettingsScale, hover ? Color.White : new Color(187, 233, 246),
+                hover ? GvkUi.ButtonHover : GvkUi.ButtonDim);
+            if (hover) _ssMapButton.AddSprite(MATERIAL_SQUARE, cx, b.MinY + 0.002, b.MaxX - b.MinX, 0.004, GvkUi.Accent);
+            _ssMapButton.AddText(MAP_SETTINGS_TEXT, cx, cy, _mapSettingsScale, hover ? Color.White : GvkUi.Accent,
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
         }
 
@@ -3427,7 +3441,7 @@ namespace GVK.Navigation
             double boxH = lineH + padY * 2.0;
             double right = fb.MinX - 0.008;
             double cy = (fb.MinY + fb.MaxY) * 0.5;
-            _ssMapButton.AddSprite(MATERIAL_SQUARE, right - boxW * 0.5, cy, boxW, boxH, new Color(10, 16, 24, 245));
+            _ssMapButton.AddSprite(MATERIAL_SQUARE, right - boxW * 0.5, cy, boxW, boxH, GvkUi.Panel);
             _ssMapButton.BeginRuns(right - boxW + padX, cy + lineH * 0.5, scale, true);
             _ssMapButton.AddRun(label, Color.White);
             _ssMapButton.AddRun(SEP, MAP_HEADER_GREY);
@@ -3527,7 +3541,7 @@ namespace GVK.Navigation
 
             // Where the new GPS goes, so the player sees the spot before confirming
             if (!_mapMenuRemove)
-                _ssMapMenu.AddSprite(MATERIAL_MARKER_GPS, _mapMenuAt.X, _mapMenuAt.Y, 0.0225f, 0.0225f * aspect, new Color(187, 233, 246));
+                _ssMapMenu.AddSprite(MATERIAL_MARKER_GPS, _mapMenuAt.X, _mapMenuAt.Y, 0.0225f, 0.0225f * aspect, GvkUi.Accent);
 
             double titleW = _ssMapMenu.MeasureWidthHud(_mapMenuTitle, titleScale);
             double titleH = _ssMapMenu.LineHeightHud(titleScale);
@@ -3546,8 +3560,8 @@ namespace GVK.Navigation
             if (left + boxW > 0.99) left = _mapMenuAt.X - 0.016 - boxW;
             if (top - boxH < -0.99) top = _mapMenuAt.Y + 0.016 * aspect + boxH;
 
-            Color accent = new Color(187, 233, 246);
-            _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 245));
+            Color accent = GvkUi.Accent;
+            _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, GvkUi.Panel);
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, accent);
             double textX = left + 0.004 + padX;
             _ssMapMenu.AddText(_mapMenuTitle, textX, top - padY, titleScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
@@ -3561,7 +3575,7 @@ namespace GVK.Navigation
                 _mapMenuDelete = AddMapMenuButton(DELETE_TEXT, x, buttonTop, buttonW, buttonH, buttonScale, GvkPalette.SettingOff, hasCursor, cursor);
                 x += buttonW + gap;
             }
-            AddMapMenuButton(CANCEL_TEXT, x, buttonTop, buttonW, buttonH, buttonScale, new Color(200, 200, 200), hasCursor, cursor);
+            AddMapMenuButton(CANCEL_TEXT, x, buttonTop, buttonW, buttonH, buttonScale, GvkUi.TextDim, hasCursor, cursor);
         }
 
         private MapHit AddMapMenuButton(string text, double left, double top, double width, double height, float scale, Color color, bool hasCursor, Vector2D cursor)
@@ -3569,7 +3583,7 @@ namespace GVK.Navigation
             var box = new MapHit { Wp = -1, MinX = left, MaxX = left + width, MinY = top - height, MaxY = top };
             bool hover = hasCursor && IsInMapHit(ref box, cursor);
             _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + width * 0.5, top - height * 0.5, width, height,
-                hover ? new Color(70, 95, 112, 255) : new Color(41, 54, 62, 255));
+                hover ? GvkUi.ButtonHover : GvkUi.Button);
             if (hover) _ssMapMenu.AddSprite(MATERIAL_SQUARE, left + width * 0.5, top - height + 0.002, width, 0.004, color);
             _ssMapMenu.AddText(text, left + width * 0.5, top - height * 0.5, scale, hover ? Color.White : color,
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
@@ -3615,14 +3629,14 @@ namespace GVK.Navigation
             if (left + boxW > 0.99) left = cursor.X - 0.016 - boxW;
             if (top - boxH < -0.99) top = cursor.Y + 0.016 * aspect + boxH;
 
-            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 235));
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, GvkUi.Panel);
             _ssMapTip.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH, wp.DisplayColor);
             double textX = left + 0.004 + padX;
             _ssMapTip.AddText(name, textX, top - padY, nameScale, Color.White, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP, true);
             _ssMapTip.BeginRuns(textX, top - padY - nameH, infoScale, true);
             _ssMapTip.AddRun(kind, wp.DisplayColor);
             _ssMapTip.AddRun(GAP, Color.White);
-            _ssMapTip.AddRun(dist, new Color(200, 200, 200));
+            _ssMapTip.AddRun(dist, GvkUi.TextDim);
         }
 
         /// <summary>
@@ -3672,7 +3686,7 @@ namespace GVK.Navigation
             if (left + boxW > 0.99) left = cursor.X - 0.016 - boxW;
             if (top - boxH < -0.99) top = cursor.Y + 0.016 * aspect + boxH;
 
-            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, new Color(15, 22, 30, 235));
+            _ssMapTip.AddSprite(MATERIAL_SQUARE, left + boxW * 0.5, top - boxH * 0.5, boxW, boxH, GvkUi.Panel);
             _ssMapTip.AddSprite(MATERIAL_SQUARE, left + 0.002, top - boxH * 0.5, 0.003, boxH,
                 contested ? Color.White : _territoryColor[only]);
             double textX = left + 0.004 + padX;
@@ -3686,7 +3700,7 @@ namespace GVK.Navigation
                 first = false;
                 if (contested)
                 {
-                    _ssMapTip.AddRun(_territoryName[t] ?? string.Empty, new Color(200, 200, 200));
+                    _ssMapTip.AddRun(_territoryName[t] ?? string.Empty, GvkUi.TextDim);
                     _ssMapTip.AddRun(" ", Color.White);
                 }
                 _ssMapTip.AddRun(_territoryStanding[t] ?? string.Empty, _territoryColor[t]);
@@ -3857,7 +3871,7 @@ namespace GVK.Navigation
 
         private Color GetCurrentAccentColor()
         {
-            return inSpace ? Color.Magenta : GetZoneColor(currentZoneIndex);
+            return inSpace ? GvkUi.Space : GetZoneColor(currentZoneIndex);
         }
 
         private Color GetZoneColor(int zone)

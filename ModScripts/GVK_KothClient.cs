@@ -87,11 +87,11 @@ namespace GVK.Navigation
         private const float PANEL_WIDTH = 0.36f;
         private const float PANEL_HEIGHT = 0.075f;
         private const float PANEL_TEXT_SCALE = 0.62f;
-        private static readonly Color PANEL_BG_COLOR = new Color(10, 16, 24, 220);
-        private static Color KOTH_ORANGE => GvkPalette.Koth; // The palette setting's KOTH colour
-        private static readonly Color PANEL_LABEL_COLOR = new Color(180, 195, 210);
-        private static readonly Color BAR_FILLED_COLOR = new Color(255, 200, 60);
-        private static readonly Color BAR_EMPTY_COLOR = new Color(90, 100, 110);
+        private static readonly Color PANEL_BG_COLOR = GvkUi.HudPanel;
+        private static Color KOTH_COLOR => GvkPalette.Koth; // The palette setting's KOTH colour
+        private static readonly Color PANEL_LABEL_COLOR = GvkUi.TextDim;
+        private static Color BAR_FILLED_COLOR => GvkPalette.Koth; // Was gold; the KOTH colour, as the panel title
+        private static readonly Color BAR_EMPTY_COLOR = GvkUi.Track;
 
         // Capture panel, drawn with the screen API. Strings are cached so the 6 Hz rebuild doesn't allocate.
         private readonly GvkScreenLayer _ssPanel = new GvkScreenLayer();
@@ -256,7 +256,7 @@ namespace GVK.Navigation
                 return;
 
             _ssPanel.AddSprite(MATERIAL_SQUARE, PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT, PANEL_BG_COLOR);
-            _ssPanel.AddSprite(MATERIAL_SQUARE, PANEL_X - 0.18 + 0.004, PANEL_Y, 0.005, 0.069, KOTH_ORANGE);
+            _ssPanel.AddSprite(MATERIAL_SQUARE, PANEL_X - 0.18 + 0.004, PANEL_Y, 0.005, 0.069, KOTH_COLOR);
 
             if (_ssNameText == null || !string.Equals(name, _ssNameFor))
             {
@@ -273,7 +273,7 @@ namespace GVK.Navigation
             int filled = percent / 5;
 
             _ssPanel.BeginRuns(PANEL_X - 0.18 + 0.014, PANEL_Y + 0.028, PANEL_TEXT_SCALE * GvkScreenLayer.MeasureTextScale(camera.ViewportSize), true);
-            _ssPanel.AddRun(_ssNameText, KOTH_ORANGE);
+            _ssPanel.AddRun(_ssNameText, KOTH_COLOR);
             _ssPanel.AddRun("  |  ", PANEL_LABEL_COLOR);
             _ssPanel.AddRun(percentText, Color.White);
             _ssPanel.NewLine();

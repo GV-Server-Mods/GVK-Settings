@@ -73,10 +73,10 @@ namespace GVK.Navigation
 
         private static Color SET_ON => GvkPalette.SettingOn;
         private static Color SET_OFF => GvkPalette.SettingOff;
-        private static readonly Color SET_VALUE = new Color(255, 230, 40);
-        private static readonly Color SET_CHOICE = new Color(187, 233, 246);
-        private static readonly Color SET_LABEL = new Color(220, 230, 240);
-        private static readonly Color SET_ACTION = new Color(255, 180, 50);
+        private static readonly Color SET_VALUE = GvkUi.Title;
+        private static readonly Color SET_CHOICE = GvkUi.Accent;
+        private static readonly Color SET_LABEL = GvkUi.Text;
+        private static readonly Color SET_ACTION = GvkUi.Action;
 
         private GvkSettingsScreen _settingsScreen;
         private readonly GvkScreenLayer _ssSettings = new GvkScreenLayer();
@@ -578,12 +578,12 @@ namespace GVK.Navigation
             double right = panelW * 0.5;
             double top = panelH * 0.5;
 
-            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, 0.0, panelW, panelH, new Color(15, 22, 30, 242));
+            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, 0.0, panelW, panelH, GvkUi.Panel);
 
             // Title bar
-            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, top - headerH * 0.5, panelW, headerH, new Color(10, 16, 24, 250));
+            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, top - headerH * 0.5, panelW, headerH, GvkUi.PanelDark);
             _ssSettings.AddSprite(MATERIAL_SQUARE, left + 0.004, top - headerH * 0.5, 0.006, headerH, SET_CHOICE);
-            _ssSettings.AddText("GVK NAVIGATION SETTINGS", left + 0.022, top - headerH * 0.5, titleScale, new Color(255, 220, 0),
+            _ssSettings.AddText("GVK NAVIGATION SETTINGS", left + 0.022, top - headerH * 0.5, titleScale, GvkUi.Title,
                 MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_CENTER, true);
 
             // Tabs
@@ -597,7 +597,7 @@ namespace GVK.Navigation
                 var box = new MapHit { Wp = HIT_TAB - t, MinX = tl, MaxX = tl + tabW, MinY = tabTop - tabH, MaxY = tabTop };
                 bool active = t == _settingsTab;
                 bool hover = hasCursor && IsInMapHit(ref box, cursor);
-                Color bg = active ? new Color(60, 80, 95, 255) : hover ? new Color(48, 63, 74, 255) : new Color(31, 41, 48, 255);
+                Color bg = active ? new Color(60, 80, 95, 255) : hover ? new Color(48, 63, 74, 255) : GvkUi.ButtonDim;
                 _ssSettings.AddSprite(MATERIAL_SQUARE, tl + tabW * 0.5, tabTop - tabH * 0.5, tabW, tabH, bg);
                 if (active) _ssSettings.AddSprite(MATERIAL_SQUARE, tl + tabW * 0.5, tabTop - tabH + 0.003, tabW, 0.006, SET_CHOICE);
                 _ssSettings.AddText(SETTINGS_TABS[t], tl + tabW * 0.5, tabTop - tabH * 0.5, tabScale, active ? Color.White : SET_LABEL,
@@ -635,7 +635,7 @@ namespace GVK.Navigation
                 {
                     double v = id == S_MM_X ? minimapOffsetX : id == S_MM_Y ? minimapOffsetY : id == S_C_X ? compassOffsetX : compassOffsetY;
                     double knobX = _settingsTrackMin + (MathHelper.Clamp(v, -1.0, 1.0) + 1.0) * 0.5 * trackW;
-                    _ssSettings.AddSprite(MATERIAL_SQUARE, _settingsTrackMin + trackW * 0.5, cy, trackW, 0.003 * aspect, new Color(90, 110, 125));
+                    _ssSettings.AddSprite(MATERIAL_SQUARE, _settingsTrackMin + trackW * 0.5, cy, trackW, 0.003 * aspect, GvkUi.Track);
                     _ssSettings.AddSprite(MATERIAL_SQUARE, (_settingsTrackMin + knobX) * 0.5, cy, knobX - _settingsTrackMin, 0.003 * aspect, SET_CHOICE);
                     _ssSettings.AddSprite(MATERIAL_SQUARE, knobX, cy, 0.008, 0.008 * aspect * 1.6, hover ? Color.White : SET_CHOICE);
                     _ssSettings.AddText(value, _settingsTrackMin - 0.02, cy, rowScale, valueColor,
@@ -651,7 +651,7 @@ namespace GVK.Navigation
 
             // Footer: what to do, and Close
             double footTop = -top + footH;
-            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, -top + footH * 0.5, panelW, footH, new Color(10, 16, 24, 250));
+            _ssSettings.AddSprite(MATERIAL_SQUARE, 0.0, -top + footH * 0.5, panelW, footH, GvkUi.PanelDark);
             _ssSettings.AddText("Click a setting to change it   |   Drag a slider to move   |   Esc: close", left + 0.022, footTop - footH * 0.5,
                 footScale, MAP_HINT_COLOR, MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_CENTER, true);
             double closeW = _ssSettings.MeasureWidthHud("Close", rowScale) + 0.05;
@@ -660,7 +660,7 @@ namespace GVK.Navigation
             var closeBox = new MapHit { Wp = HIT_CLOSE, MinX = closeRight - closeW, MaxX = closeRight, MinY = footTop - footH * 0.5 - closeH * 0.5, MaxY = footTop - footH * 0.5 + closeH * 0.5 };
             bool closeHover = hasCursor && IsInMapHit(ref closeBox, cursor);
             _ssSettings.AddSprite(MATERIAL_SQUARE, closeRight - closeW * 0.5, footTop - footH * 0.5, closeW, closeH,
-                closeHover ? new Color(70, 95, 112, 255) : new Color(41, 54, 62, 255));
+                closeHover ? GvkUi.ButtonHover : GvkUi.Button);
             _ssSettings.AddText("Close", closeRight - closeW * 0.5, footTop - footH * 0.5, rowScale, closeHover ? Color.White : SET_LABEL,
                 MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, true);
             _settingsHits.Add(closeBox);
