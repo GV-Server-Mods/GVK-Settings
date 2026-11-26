@@ -46,6 +46,8 @@ CONTOUR_INDEX = 4                     # Every 4th contour (500 m) is drawn heavi
 CONTOUR_INDEX_OFFSET = 250.0          # ...from +250 m, so the plains' own 0 m line stays light
 CONTOUR_SMOOTH_PX = 1.0               # Height blur for contours only (px at 2160 wide): drops tiny rings in the plains
 CONTOUR_COLOR = (40, 38, 30)
+CONTOUR_ALPHA = 0.9                   # Opacity of ordinary contours (was 0.55: grey at 1x zoom, washed out under tints)...
+CONTOUR_INDEX_ALPHA = 1.0             # ...and of the heavy 500 m ones (was 0.8; owner picked "Stronger lines", 2026-11-25)
 LABEL_FONT = 'arial.ttf'              # Windows font folder
 LABEL_PX = 15                         # Height label size, px at 4096 wide (the map is about 4096 px across at 3x zoom)
 LABEL_GAP_PX = 300                    # Least distance between contour numbers, px at 4096 wide
@@ -388,6 +390,8 @@ def main():
     ap.add_argument('--heights', action='store_true',
                     help='add spot heights and contour numbers (tried 2026-11-24; off for the in-game map for now)')
     ap.add_argument('--fit', type=Path, help='print a RAMP fitted to this old map instead of rendering')
+    ap.add_argument('--contour-alpha', type=float, default=CONTOUR_ALPHA, help='opacity of ordinary contour lines')
+    ap.add_argument('--index-alpha', type=float, default=CONTOUR_INDEX_ALPHA, help='opacity of the heavy 500 m contours')
     args = ap.parse_args()
 
     W, H = args.width, args.width // 2
@@ -418,7 +422,7 @@ def main():
     hc = box_blur(h, int(round(CONTOUR_SMOOTH_PX * scale)))
     cover, _ = contour_cover(hc, CONTOUR_M, 0.9 * scale)
     index_cover, _ = contour_cover(hc - CONTOUR_INDEX_OFFSET, CONTOUR_M * CONTOUR_INDEX, 1.5 * scale)
-    a = np.maximum(cover * 0.55, index_cover * 0.8)[..., None]
+    a = np.maximum(cover * args.contour_alpha, index_cover * args.index_alpha)[..., None]
     rgb = rgb * (1 - a) + np.array(CONTOUR_COLOR, np.float32) * a
 
     # Roads: drawn on a map twice as fine, then averaged down, for smooth edges

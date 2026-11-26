@@ -57,7 +57,6 @@ namespace GVK.Navigation
         private const byte KIND_TEXT = 1;
         private const byte KIND_CLIP = 2;   // Starts clipping to the rectangle at Position, Size
         private const byte KIND_UNCLIP = 3; // Ends the last clip
-        private const byte KIND_PIXELS = 4; // Sprite on whole window pixels: Position = top left, Size = width, height
 
         private struct Item
         {
@@ -165,28 +164,6 @@ namespace GVK.Navigation
                 Size = HudSizeToNormalized(width, height),
                 Color = color,
                 Rotation = rotation
-            });
-        }
-
-        /// <summary>
-        /// Axis-aligned rectangle between two HUD corners, snapped to whole window pixels. Rectangles that share an edge
-        /// then share the same pixel row or column, so tiles never overlap (a darker line under a see-through colour) or
-        /// leave a gap, as fractional edges can.
-        /// </summary>
-        public void AddPixelRect(MyStringId material, double left, double top, double right, double bottom, Color color)
-        {
-            int x0 = (int)Math.Round((left + 1.0) * 0.5 * _viewport.X);
-            int x1 = (int)Math.Round((right + 1.0) * 0.5 * _viewport.X);
-            int y0 = (int)Math.Round((1.0 - top) * 0.5 * _viewport.Y);
-            int y1 = (int)Math.Round((1.0 - bottom) * 0.5 * _viewport.Y);
-            if (x1 <= x0 || y1 <= y0) return;
-            _items.Add(new Item
-            {
-                Kind = KIND_PIXELS,
-                Material = material,
-                Position = new Vector2(x0, y0),
-                Size = new Vector2(x1 - x0, y1 - y0),
-                Color = color
             });
         }
 
@@ -302,10 +279,6 @@ namespace GVK.Navigation
                                 _clips[_clips.Count - 1].Dispose();
                                 _clips.RemoveAt(_clips.Count - 1);
                             }
-                            break;
-                        case KIND_PIXELS:
-                            MyScreenSpaceSprite.DrawPixels(it.Material, new Rectangle((int)it.Position.X, (int)it.Position.Y, (int)it.Size.X, (int)it.Size.Y),
-                                null, color, 0f, layer);
                             break;
                         default:
                             MyScreenSpaceSprite.Draw(it.Material, it.Position, it.Size, color, MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, it.Rotation, layer);

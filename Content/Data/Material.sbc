@@ -283,7 +283,7 @@
 		<TransparentMaterial>
 			<Id>
 				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>MapBtn_Territory</SubtypeId>
+				<SubtypeId>GVK_Additive</SubtypeId>
 			</Id>
 			<AlphaMistingEnable>false</AlphaMistingEnable>
 			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
@@ -292,7 +292,30 @@
 			<IgnoreDepth>false</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\GUI\MapBtn_Territory.dds</Texture>
+			<Texture>Textures\GUI\GVK_Additive.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0.125</X>
+				<Y>0.125</Y>
+			</UVOffset>
+			<UVSize>
+				<X>0.25</X>
+				<Y>0.25</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_ZoneBoth</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_ZoneBoth.dds</Texture>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
 				<X>0</X>
@@ -306,7 +329,7 @@
 		<TransparentMaterial>
 			<Id>
 				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>MapBtn_Zones</SubtypeId>
+				<SubtypeId>MapBtn_ZoneLines</SubtypeId>
 			</Id>
 			<AlphaMistingEnable>false</AlphaMistingEnable>
 			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
@@ -315,7 +338,7 @@
 			<IgnoreDepth>false</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\GUI\MapBtn_Zones.dds</Texture>
+			<Texture>Textures\GUI\MapBtn_ZoneLines.dds</Texture>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
 				<X>0</X>
@@ -329,7 +352,7 @@
 		<TransparentMaterial>
 			<Id>
 				<TypeId>TransparentMaterialDefinition</TypeId>
-				<SubtypeId>MapBtn_ZoneTint</SubtypeId>
+				<SubtypeId>MapBtn_ZoneFade</SubtypeId>
 			</Id>
 			<AlphaMistingEnable>false</AlphaMistingEnable>
 			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
@@ -338,7 +361,122 @@
 			<IgnoreDepth>false</IgnoreDepth>
 			<NeedSort>false</NeedSort>
 			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
-			<Texture>Textures\GUI\MapBtn_ZoneTint.dds</Texture>
+			<Texture>Textures\GUI\MapBtn_ZoneFade.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_ZoneOff</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_ZoneOff.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_TerritoryBoth</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_TerritoryBoth.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_TerritoryLines</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_TerritoryLines.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_TerritoryFade</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_TerritoryFade.dds</Texture>
+			<UseAtlas>false</UseAtlas>
+			<UVOffset>
+				<X>0</X>
+				<Y>0</Y>
+			</UVOffset>
+			<UVSize>
+				<X>1</X>
+				<Y>1</Y>
+			</UVSize>
+		</TransparentMaterial>
+		<TransparentMaterial>
+			<Id>
+				<TypeId>TransparentMaterialDefinition</TypeId>
+				<SubtypeId>MapBtn_TerritoryOff</SubtypeId>
+			</Id>
+			<AlphaMistingEnable>false</AlphaMistingEnable>
+			<CanBeAffectedByOtherLights>false</CanBeAffectedByOtherLights>
+			<AlphaSaturation>1</AlphaSaturation>
+			<Emissivity>1</Emissivity>
+			<IgnoreDepth>false</IgnoreDepth>
+			<NeedSort>false</NeedSort>
+			<SoftParticleDistanceScale>0</SoftParticleDistanceScale>
+			<Texture>Textures\GUI\MapBtn_TerritoryOff.dds</Texture>
 			<UseAtlas>false</UseAtlas>
 			<UVOffset>
 				<X>0</X>

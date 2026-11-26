@@ -37,13 +37,12 @@ namespace GVK.Navigation
                 case RED_GREEN:
                     Own = new Color(150, 200, 255);
                     Friendly = new Color(40, 120, 255);
-                    Hostile = new Color(255, 150, 20);
+                    Hostile = new Color(230, 100, 0);    // Was 255,150,20; Zone 3's orange keeps it apart from Zone 2's amber
                     Npc = new Color(255, 240, 170);
                     Koth = new Color(204, 121, 167);
                     SettingOn = new Color(100, 170, 255);
                     SettingOff = new Color(255, 150, 20);
-                    SetZones(new Color(40, 120, 255), new Color(230, 230, 230), new Color(255, 200, 0), new Color(230, 100, 0));
-                    for (int z = 0; z < 4; z++) ZoneAccent[z] = ZoneText[z];
+                    SetZones(new Color(230, 230, 230), new Color(255, 200, 0));
                     break;
                 case BLUE_YELLOW:
                     Own = new Color(255, 110, 230);
@@ -53,8 +52,7 @@ namespace GVK.Navigation
                     Koth = new Color(180, 120, 255);
                     SettingOn = new Color(60, 230, 90);
                     SettingOff = new Color(255, 50, 50);
-                    SetZones(new Color(0, 210, 120), new Color(230, 230, 230), new Color(255, 150, 170), new Color(220, 30, 40));
-                    for (int z = 0; z < 4; z++) ZoneAccent[z] = ZoneText[z];
+                    SetZones(new Color(230, 230, 230), new Color(255, 150, 170));
                     break;
                 default:
                     Own = new Color(100, 230, 255);
@@ -64,21 +62,23 @@ namespace GVK.Navigation
                     Koth = new Color(255, 128, 31);
                     SettingOn = new Color(80, 255, 120);
                     SettingOff = new Color(255, 90, 90);
-                    SetZones(new Color(50, 255, 100), new Color(255, 230, 50), new Color(255, 165, 0), new Color(255, 50, 50));
-                    ZoneAccent[0] = Color.LimeGreen;
-                    ZoneAccent[1] = Color.Yellow;
-                    ZoneAccent[2] = Color.Orange;
-                    ZoneAccent[3] = Color.Red;
+                    SetZones(new Color(255, 230, 50), new Color(255, 165, 0));
                     break;
             }
         }
 
-        private static void SetZones(Color z0, Color z1, Color z2, Color z3)
+        /// <summary>
+        /// One colour per zone for text, lines and bars alike. Zone 0 is the Friendly colour and Zone 3 the Hostile one
+        /// (owner, 2026-11-25: "use one red", "make the greens consistent (friendly and Z0)"); until then each zone had a
+        /// text colour and a slightly different accent, and neither matched the relation colours.
+        /// </summary>
+        private static void SetZones(Color z1, Color z2)
         {
-            ZoneText[0] = z0;
+            ZoneText[0] = Friendly;
             ZoneText[1] = z1;
             ZoneText[2] = z2;
-            ZoneText[3] = z3;
+            ZoneText[3] = Hostile;
+            for (int z = 0; z < 4; z++) ZoneAccent[z] = ZoneText[z];
         }
     }
 }
