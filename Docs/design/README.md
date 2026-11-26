@@ -12,7 +12,7 @@ How the GVK_Settings scripts are built, one file per group, next to the files th
 | [Audio engineering notes](audio-engineering.md) | 1 | - |
 | [Full-color icons for the remaining GVK and Workshop mods](full-color-icons.md) | 1 | 2026-11-23 |
 | [G menu layout across the GVK mods](g-menu.md) | 1 | 2026-11-22 |
-| [KOTH client (HUD panel, boundary, fireworks)](koth-client.md) | 1 | 2026-11-24 |
+| [KOTH client (HUD panel, boundary, fireworks)](koth-client.md) | 1 | 2026-11-25 |
 | [Safezone, armor and utility scripts](safezone-and-utility-scripts.md) | 1 | - |
 | [Zone enforcement scripts](zone-enforcement.md) | 1 | - |
 | [Zone navigation HUD (`/gvk`)](zone-nav-hud.md) | 1 | - |
