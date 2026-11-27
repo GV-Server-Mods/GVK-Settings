@@ -19,11 +19,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_50x50.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="406"/>
+				<Component Subtype="SteelPlate" Count="4061"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="20" EndY="20"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="20" EndY="20"/>
@@ -54,11 +54,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x50.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="812"/>
+				<Component Subtype="SteelPlate" Count="8124"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="40" EndY="20"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="40" EndY="20"/>
@@ -89,11 +89,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_100x100.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="1625"/>
+				<Component Subtype="SteelPlate" Count="16249"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="40" EndY="40"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="40" EndY="40"/>
@@ -124,11 +124,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x50.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="1625"/>
+				<Component Subtype="SteelPlate" Count="16249"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="20"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="20"/>
@@ -159,11 +159,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x100.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="3250"/>
+				<Component Subtype="SteelPlate" Count="32499"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="40"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="40"/>
@@ -194,11 +194,11 @@
 			<ModelOffset x="0" y="0" z="0"/>
 			<Model>Models\Cubes\Large\Blockers\GVK_Blocker_200x200.mwm</Model>
 			<Components>
-				<Component Subtype="Girder" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
-				<Component Subtype="SteelPlate" Count="50000"/>
+				<Component Subtype="SteelPlate" Count="1"/>
+				<Component Subtype="Girder" Count="6500"/>
+				<Component Subtype="SteelPlate" Count="64999"/>
 			</Components>
-			<CriticalComponent Subtype="SteelPlate" Index="0"/>
+			<CriticalComponent Subtype="SteelPlate" Index="1"/>
 			<MountPoints>
 				<MountPoint Side="Front" StartX="0" StartY="0" EndX="80" EndY="80"/>
 				<MountPoint Side="Back" StartX="0" StartY="0" EndX="80" EndY="80"/>
