@@ -2519,7 +2519,7 @@
 					[AllowedForUnownedStaticOnly]false[/AllowedForUnownedStaticOnly]
 				[/DefaultSetting]
 				[DefaultSetting]
-					[Type]MyObjectBuilder_LargeMissileTurret/GVK_AvengerGatlingTurret_NPC[/Type]
+					[Type]MyObjectBuilder_ConveyorSorter/GVK_AvengerGatlingTurret_NPC[/Type]
 					[PlayerMaxCount]0[/PlayerMaxCount]
 					[GridMaxCount]0[/GridMaxCount]
 					[FactionMaxCount]0[/FactionMaxCount]
