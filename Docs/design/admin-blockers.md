@@ -5,7 +5,7 @@ covers:
   - Content/Data/BlockVariantGroups.sbc
   - Content/Data/BlockRestrictions_GVK.sbc
   - ModScripts/GVK_ArmorBalance.cs
-checked: -
+checked: 2026-11-28
 ---
 
 # GVK admin blockers (replacing SC Blockers)
